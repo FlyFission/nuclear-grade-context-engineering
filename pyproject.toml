@@ -1,0 +1,27 @@
+[project]
+name = "nuclear-grade"
+version = "0.1.0"
+description = "Configuration management for AI-assisted software work."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+
+[project.scripts]
+nuclear-grade = "nuclear_grade.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["nuclear_grade*"]
+exclude = ["skills*", "commands*", "templates*", "docs*", "tests*", "tools*"]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8",
+]
+
+[tool.pytest.ini_options]
+testpaths = [
+  "tests",
+  "docs/03-worked-examples/ai-agent-tool-permissions/tests",
+]
+pythonpath = ["."]
+addopts = "-q"

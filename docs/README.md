@@ -1,0 +1,40 @@
+# Documentation
+
+Nuclear-grade docs have two maps: use the workflow first, then inspect the source foundation when claims or citations matter.
+
+## Use the repo
+
+| Need | Start |
+|---|---|
+| Try the workflow | [`../QUICKSTART.md`](../QUICKSTART.md) |
+| Install or initialize | [`../INSTALL.md`](../INSTALL.md) |
+| Pick a workflow | [`../WORKFLOWS.md`](../WORKFLOWS.md) |
+| Use agent skills | [`../SKILLS.md`](../SKILLS.md) |
+| Use portable command prompts | [`../COMMANDS.md`](../COMMANDS.md) |
+| Inspect examples | [`../EXAMPLES.md`](../EXAMPLES.md) |
+| Start with questioning attitude | [`../skills/questioning-attitude/SKILL.md`](../skills/questioning-attitude/SKILL.md) |
+| Roll out to a team | [`04-adoption/enterprise-rollout.md`](04-adoption/enterprise-rollout.md) |
+| Review a packet | [`04-adoption/reviewer-playbook.md`](04-adoption/reviewer-playbook.md) |
+| Manage controlled configuration | [`02-operating-system/configuration-management.md`](02-operating-system/configuration-management.md) |
+| Understand CLI behavior | [`05-reference/cli-reference.md`](05-reference/cli-reference.md) |
+
+## Reference foundation
+
+```text
+00-standards-foundation/   public source map, citation safety, and boundary rules
+01-field-guide/            source-to-concept translation
+02-operating-system/       lifecycle, modes, packets, thresholds, validators, context packs
+03-worked-examples/        completed example packets and proof chains
+04-adoption/               team rollout, agent authority, reviewer playbook
+05-reference/              skill, command, and CLI contracts
+```
+
+## Suggested first path
+
+1. [`../README.md`](../README.md)
+2. [`../QUICKSTART.md`](../QUICKSTART.md)
+3. [`../WORKFLOWS.md`](../WORKFLOWS.md)
+4. [`02-operating-system/change-control-packets.md`](02-operating-system/change-control-packets.md)
+5. [`03-worked-examples/ai-agent-tool-permissions/README.md`](03-worked-examples/ai-agent-tool-permissions/README.md)
+
+Boundary reminder: this repo is public-source-inspired and non-compliance-claiming. See [`../DISCLAIMER.md`](../DISCLAIMER.md).

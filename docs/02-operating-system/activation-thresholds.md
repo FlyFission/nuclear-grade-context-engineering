@@ -1,0 +1,70 @@
+# Activation Thresholds
+
+**Purpose:** State exactly when Nuclear-grade artifacts turn on, what the minimum useful version is, and when to skip them.
+
+**Rule:** Rigor must earn its keep. Activate artifacts by decision value and consequence, not by aesthetic desire for a complete binder.
+
+---
+
+## Primary threshold dimensions
+
+Score informally; do not over-math the decision.
+
+| Dimension | Low | Escalating | High |
+|---|---|---|---|
+| Consequence | Cosmetic/local | User or team impact | Security/safety/privacy/financial/operational/trust impact |
+| Reversibility | Easy rollback | Some migration/state risk | Irreversible or expensive to restore |
+| Detectability | Obvious failure | Needs targeted tests/monitoring | Silent, delayed, intermittent, or hard to attribute |
+| Exposure | Internal/local | Production/customer-visible | External trust, public release, enterprise/government diligence |
+| Uncertainty | Known pattern | New integration/assumption | Novel architecture, AI autonomy, disputed basis |
+| Dependency trust | No new trust | Package/API/model/config changes | Critical supplier/model/build/data trust decision |
+| AI authority | Drafting only | Tool use under supervision | Write/execute/network/approval/data authority |
+
+---
+
+## Artifact trigger table
+
+| Trigger | Minimum artifact | Minimum useful version | Exit criteria | Overhead trap |
+|---|---|---|---|---|
+| Any non-trivial change | `risk.md` | scope, consequence, mode, proof needed | Mode is justified. | Writing a risk essay for a tiny diff. |
+| Low-risk reversible change | `proof.md` | command/check/eval and result | Evidence matches declared risk. | Treating test output as proof for unrelated claims. |
+| User-visible or durable behavior | Standard packet | basis, plan, trace, verification, ship | Important claims have evidence or explicit gaps. | Backfilling trace after release. |
+| New protected outcome or unacceptable outcome | `basis.md` / `design-basis.md` | what must remain true; assumptions; evidence required | Requirements/design features follow from basis. | Grand narrative without decisions. |
+| Important external dependency/model/API/SaaS | dependency trust basis section or record | intended use, consequence, source/version, evidence, revalidation trigger | Trust decision is scoped and revisit-able. | Package-name/version-only review. |
+| AI/agent tool authority changes | AI-control fields in packet | authority, permissions, approvals, independent checks | Agent cannot exceed intended envelope without detection/approval. | Letting AI document its own unchecked proof. |
+| Security/privacy/auth/data handling change | verification + ship security fields | threat/failure prompt, tests/reviews, rollback/monitoring | Security claim is evidence-backed. | Final scan treated as full assurance. |
+| Hard-to-detect or hard-to-reverse failure | Nuclear subset | change-impact, independent review, release readiness | Fresh reviewer can challenge basis and proof. | Creating every Nuclear artifact automatically. |
+| Release changes trust/ops/customer posture | `ship.md` / release readiness | baseline, evidence status, risks, rollback, monitoring, handoff | Ship/no-ship is explicit. | Shipping because CI passed once. |
+| Incident/near miss/eval failure | OPEX/corrective action | event, cause, action, verification, basis/test/control update | Lesson changes future behavior or is closed. | Postmortem theater. |
+
+---
+
+## Mode selection shortcut
+
+```text
+If it is local, reversible, and obvious → Quick.
+If users, dependencies, permissions, data, operations, or architecture care → Standard.
+If failure is severe, silent, hard to reverse, externally trusted, or agentic/autonomous → Nuclear subset.
+If something already went wrong → Incident.
+If the right answer is uncertain → Research Board.
+If the release itself changes trust posture → Release.
+```
+
+---
+
+## Required links
+
+When an artifact activates, it must link to:
+
+- the triggering condition;
+- the selected mode;
+- the source/basis if relevant;
+- the implementation or affected configuration item;
+- the verification evidence or named gap;
+- the release/rollback/monitoring decision when applicable.
+
+---
+
+## Source-lineage note
+
+This threshold system is an original software-native graded-rigor model inspired by public QA, configuration management, safety-in-design, software assurance, secure development, AI risk, and supply-chain sources listed in `../00-standards-foundation/source-map.md`. It does not claim compliance with those sources.

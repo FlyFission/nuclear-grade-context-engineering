@@ -1,0 +1,97 @@
+# Source-to-Concept Crosswalk
+
+**Purpose:** Translate the public source foundation into Nuclear-grade concepts, artifacts, and activation triggers without copying proprietary standards or implying compliance.
+
+**Use:** Field-guide and template authors should use this as the canonical bridge:
+
+```text
+public source → extracted concept → software translation → artifact/workflow → activation trigger
+```
+
+**Boundary:** This crosswalk is source-grounded but not a compliance matrix. It does not assert that any Nuclear-grade artifact satisfies DOE, NRC, NASA, NIST, CISA, OpenSSF, OWASP, SLSA, or other requirements.
+
+---
+
+## 1. Core crosswalk
+
+| Public source family | Extracted concept | Software translation | Artifact / workflow | Activation trigger |
+|---|---|---|---|---|
+| [DOE-HDBK-1028-2009](https://www.energy.gov/ehss/articles/doe-hdbk-1028-2009) | Questioning attitude, validate assumptions, pause when unsure, review practices, and operating learning reduce human error. | Before an agent builds or releases, challenge assumptions, verify facts, name stop conditions, and route the next evidence artifact. | `questioning-attitude.md`, `ng-question`, `questioning-attitude` skill, reviewer playbook | Vague, consequential, AI-authority-changing, dependency-changing, or release-facing work. |
+| [DOE-STD-1073-2016](https://www.energy.gov/ehss/articles/doe-std-1073-2016) | Configuration management preserves consistency among requirements, design, installed/current configuration, and records. | Treat code, prompts, models, dependencies, infra, evals, docs, and release artifacts as configuration items when they affect trust. | `configuration-management.md`, `controlled-items.md`, `change-impact.md`, `baseline.md`, `trace.md`, `ship.md` | Any change that alters behavior, dependency trust, operational posture, or release baseline. |
+| [DOE-STD-1189-2016](https://www.energy.gov/ehss/articles/doe-std-1189-2016) | Safety/risk considerations mature with design, not after design. | Security, reliability, agent permissions, data constraints, and failure controls should shape basis, plan, verification, and release. | lifecycle: Classify → Basis → Plan → Build → Prove → Ship → Learn | Meaningful feature, high-uncertainty design, AI/agent authority, enterprise-trust change. |
+| [DOE-STD-3024-2011](https://www.energy.gov/ehss/articles/doe-std-3024-2011) | Design descriptions collect requirements, bases, design features, and interfaces; they do not invent requirements. | Architecture docs must link to authoritative needs, assumptions, constraints, interfaces, evidence, and operations signals. | `basis.md`, future product/subsystem design descriptions | Complex subsystem, durable architecture, high-risk interface, long-lived operational component. |
+| [DOE-STD-3009-2014](https://www.energy.gov/ehss/articles/doe-std-3009-2014) | Hazard/failure analysis identifies unacceptable outcomes and controls. | Name what can go wrong, how bad it is, what prevents/mitigates it, and what proves the control works. | risk record, `basis.md`, failure-mode review, `verification.md` | High consequence, hard-to-detect failure, security/safety/privacy/reliability concern. |
+| [10 CFR 830 Subpart A](https://www.ecfr.gov/current/title-10/chapter-III/part-830/subpart-A) | Quality work processes, records, assessment, and correction. | Define lightweight work records, evidence expectations, review, and corrective loops proportional to risk. | packet records, validators, OPEX loop | Work must be repeatable, reviewed, or relied on later. |
+| [10 CFR 830 Subpart B](https://www.ecfr.gov/current/title-10/chapter-III/part-830/subpart-B) | Safety-basis posture: analyze hazards, select controls, preserve authorization/evidence basis. | For software, preserve the basis for critical claims and controls: what must remain true and how it is proven. | `basis.md`, `trace.md`, `ship.md`, future assurance case | Protected outcome, unacceptable outcome, or external trust claim exists. |
+| [10 CFR 50 Appendix B](https://www.ecfr.gov/current/title-10/chapter-I/part-50/appendix-Appendix%20B%20to%20Part%2050) | Public QA criteria including design control, procurement control, inspection/test control, records, corrective action. | Use quality concepts as inspiration for design review, dependency intake, verification evidence, release records, and corrective action. | source foundation, templates, validators | Use only as high-level public inspiration; never as compliance language. |
+| NRC RG 1.168–1.173 and RG 1.187 source family | Software lifecycle, V&V, CM, requirements, test documentation, unit testing, reviews/audits. | Treat requirements, tests/evals, review records, and configuration status as linked engineering evidence. | `verification.md`, `trace.md`, validators | Important software behavior, lifecycle evidence, independent review, test-quality need. |
+| NUREG software assurance source family | Software QA, high-integrity software, reliability, software requirements guidance. | Add rigor where software defects could cause serious operational, security, or trust failures. | verification ledger, evidence status, independent review | High-integrity or high-trust feature; exact URLs still to verify before direct citation. |
+| [NIST SP 800-218 SSDF](https://csrc.nist.gov/publications/detail/sp/800-218/final) | Secure software development practices. | Build security evidence into planning, implementation, review, and release instead of treating it as a final scan. | `verification.md`, `ship.md`, validators | Security-relevant code, build/release process, dependency or deployment change. |
+| [NIST SP 800-161](https://csrc.nist.gov/publications/detail/sp/800-161/rev-1/final) | Cybersecurity supply-chain risk management. | State intended use and trust evidence for dependencies, packages, models, APIs, build services, and data suppliers. | dependency trust basis; Standard `basis.md` section | Important external dependency or supplier/service trust decision. |
+| [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) | AI risk and trustworthiness framing. | Bound AI authority, assumptions, monitoring, evaluation, and human approval by consequence. | AI-assisted development controls; agent permission example | Model/prompt/tool behavior materially affects users, data, approvals, or operations. |
+| [CISA Secure by Design](https://www.cisa.gov/securebydesign) | Product security accountability and secure defaults. | Make security posture a product/design property, not a user burden. | `basis.md`, `verification.md`, `ship.md` | User-facing or externally exposed feature; auth, data, network, or permission change. |
+| [CISA SBOM](https://www.cisa.gov/sbom), [SLSA](https://slsa.dev/), [OpenSSF Scorecard](https://github.com/ossf/scorecard), [OpenSSF S2C2F](https://github.com/ossf/s2c2f) | Software supply-chain transparency, provenance, dependency health, secure consumption. | Track what is built, from what, by whom/what process, and which dependency signals matter for intended use. | dependency trust basis, release readiness, validators | New/updated important dependency, release provenance requirement, enterprise diligence. |
+| [OWASP ASVS](https://owasp.org/www-project-application-security-verification-standard/), [OWASP Top 10](https://owasp.org/www-project-top-ten/) | Application security verification and common risk classes. | Convert appsec concerns into concrete verification criteria and failure-mode prompts. | `verification.md`, security checklist inside basis/ship | Web/API/auth/data-handling behavior changes. |
+| [NASA Software Engineering Handbook](https://swehb.nasa.gov/) and [NPR 7150.2](https://nodis3.gsfc.nasa.gov/displayDir.cfm?t=NPR&c=7150&s=2) | Practical software lifecycle and engineering requirements. | Use lifecycle discipline, requirements clarity, reviews, and evidence proportional to software class/consequence. | lifecycle, modes, verification | Meaningful product/system change or high-reliability feature. |
+| [NASA-STD-8739.8](https://standards.nasa.gov/standard/nasa/nasa-std-87398) | Software assurance and software safety. | Make assurance evidence explicit for software whose failure can cause serious harm or mission loss. | verification ledger, independent review, release readiness | High-assurance or safety/security-significant software. |
+| [NASA Lessons Learned](https://llis.nasa.gov/) | Operating experience feeds future design and controls. | Incidents, near misses, eval failures, and release surprises update basis, tests, monitors, and templates. | Learn/OPEX workflow | Incident, escaped defect, near miss, significant post-release finding. |
+
+---
+
+## 2. Concept-to-artifact index
+
+| Nuclear-grade concept | Primary public lineage | Minimum useful artifact | Overhead trap | Exit criteria |
+|---|---|---|---|---|
+| Questioning attitude | DOE-HDBK-1028 | assumptions, facts to verify, warning signs, stop conditions, next artifact | Generic brainstorming with no decision impact | Doubts are resolved, gap-labeled, or escalated before work continues. |
+| Design basis for software | DOE-STD-1189, DOE-STD-3024, DOE-STD-3009, 10 CFR 830B | `basis.md` with mission, protected outcomes, unacceptable outcomes, assumptions, constraints, evidence needs | Writing a grand design essay detached from decisions | Builder and reviewer can answer “what must remain true?” |
+| Configuration management | DOE-STD-1073, NRC RG 1.169 | controlled item list, impact screen, baseline, variance/OPEX records | Treating Git history alone as design control | Change, evidence, accepted state, and revalidation triggers are navigable. |
+| Claims-to-evidence traceability | NRC software RG family, NASA SWEHB, NIST SSDF | `trace.md` rows for important claims | Backfilling giant matrices for every minor detail | Every important claim has evidence or a named gap. |
+| Dependency trust basis | NIST SP 800-161, CISA SBOM, SLSA, OpenSSF, SPDX/CycloneDX | intended use, consequence, version/source, evidence, revalidation trigger | “Dependency review” as package-name/version only | Trust decision is scoped and recheckable. |
+| AI-assisted development controls | NIST AI RMF, CISA Secure by Design, NASA/NRC software assurance concepts | AI scope, permissions, approvals, independent checks, evidence | Letting AI-generated docs outrun proof | AI authority and verification boundaries are explicit. |
+| Verification evidence | NRC RG 1.168/1.170/1.171, NASA SWEHB, OWASP ASVS | `verification.md` with commands/evals/reviews/results | Counting irrelevant/flaky tests as proof | Evidence is reproducible, relevant, and status-labeled. |
+| Release readiness | DOE/CM lifecycle logic, NIST SSDF, CISA, SLSA, NASA lifecycle | `ship.md` with baseline, evidence, risks, rollback, monitoring, handoff | Shipping on vibes because tests passed once | A skeptical reviewer can accept or block the release from the packet. |
+| OPEX learning loop | NASA Lessons Learned, public QA/corrective-action concepts | OPEX entry linked to basis/test/control update | Postmortem theater with no changed control | Lesson changes a requirement, test, monitor, control, or threshold. |
+
+---
+
+## 3. Required links for future field-guide pages
+
+Every field-guide page derived from this crosswalk should include:
+
+```text
+Source lineage
+Concept extracted
+Software translation
+Activation threshold
+Minimum useful version
+Overhead trap
+Example evidence
+What not to claim
+```
+
+This keeps doctrine source-grounded and prevents vibe drift.
+
+---
+
+## 4. What not to claim
+
+Do not claim that Nuclear-grade artifacts are:
+
+- compliant with DOE, NRC, NASA, NIST, CISA, OpenSSF, OWASP, SLSA, ASME, EPRI, IEEE, IEC, ISO, ANSI/ANS, NEI, or other standards;
+- substitutes for project-specific QA, regulatory, safety, security, legal, or certification work;
+- derived from paywalled/proprietary standards;
+- sufficient for actual regulated nuclear, medical, aviation, critical infrastructure, or safety-significant use without qualified project-specific controls.
+
+Use language like:
+
+> original software workflow inspired by public high-consequence engineering and public software assurance sources.
+
+---
+
+## 5. Public v0 source-status notes
+
+- Use `docs/00-standards-foundation/source-map.md` as the source of truth for `verified-public`, `supporting-context`, and `public-url-needed` status.
+- Do not use `public-url-needed` entries as direct template lineage.
+- NNSA SD 413.3-4 and direct NUREG/CR-6263 page references remain context only until official public source records are added.
+- Decide whether to add separate field-guide pages for each concept or keep the initial public surface thinner until the worked example proves the artifact spine.
+- Add examples only after Block 4/5 operating-system docs make packet modes stable.

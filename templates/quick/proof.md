@@ -1,0 +1,62 @@
+# Quick Proof Template
+
+**Purpose:** Capture the smallest credible evidence record for a Quick change.
+
+**Activation threshold:** Use with `risk.md` when a change is low-consequence, reversible, easy to verify, and does not trigger Standard mode.
+
+**Minimum useful version:** One proof command/check/eval, result, evidence link, and reviewer note.
+
+**Overhead trap:** Do not paste long logs. Link to the evidence and quote only the result that matters.
+
+---
+
+## Proof summary
+
+- Change slug:
+- Proof owner:
+- Date/time:
+- Risk record: `risk.md`
+
+## Claim proven
+
+> Example: The renamed command still starts successfully.
+
+Claim:
+
+## Method
+
+- Command/check/eval/review:
+- Environment:
+- Inputs/fixtures:
+- Expected result:
+
+## Result
+
+- Status: pass / fail / gap / not applicable
+- Actual result:
+- Evidence link or artifact path:
+- If failed/gap: follow-up action:
+
+## Reviewer note
+
+- Reviewer:
+- Review note:
+- Is Quick mode still valid after proof? yes/no:
+
+## Required links
+
+- Related PR/issue:
+- Relevant changed files:
+- CI run / test output / eval report / screenshot / log:
+- If AI-assisted: link to AI scope or independent check note:
+
+## Exit criteria
+
+- Evidence directly matches the claim in `risk.md`.
+- Result status is explicit.
+- Any failure or gap has a next action or escalation.
+- Reviewer can decide whether the Quick change is acceptable without reading unrelated docs.
+
+## Source-lineage note
+
+Original Nuclear-grade template inspired by public software test documentation, verification, work-record, and configuration-discipline concepts mapped in `docs/00-standards-foundation/source-map.md` and `docs/01-field-guide/source-to-concept-crosswalk.md`. No compliance claim is made.

@@ -1,0 +1,56 @@
+name: nuclear-grade
+version: 0.1.0
+description: Configuration-management workflow surface for AI-assisted software changes.
+validator_modes:
+  - quick
+  - standard
+templates:
+  quick:
+    - risk.md
+    - proof.md
+  standard:
+    - risk.md
+    - basis.md
+    - plan.md
+    - trace.md
+    - verification.md
+    - ship.md
+  cm:
+    - controlled-items.md
+    - change-impact.md
+    - baseline.md
+    - variance.md
+    - opex.md
+  golden-path:
+    - questioning-attitude.md
+    - spec.md
+    - decision.md
+skills:
+  - questioning-attitude
+  - using-nuclear-grade
+  - identifying-controlled-items
+  - screening-change-impact
+  - baselining-configuration
+  - classifying-change-risk
+  - creating-change-packets
+  - packing-agent-context
+  - proving-claims
+  - reviewing-ship-readiness
+  - checking-source-lineage
+  - checking-license-and-assurance-boundaries
+commands:
+  - ng-question.md
+  - ng-classify.md
+  - ng-new.md
+  - ng-cm-items.md
+  - ng-impact.md
+  - ng-baseline.md
+  - ng-context-pack.md
+  - ng-prove.md
+  - ng-ship-review.md
+  - ng-source-check.md
+  - ng-legal-check.md
+boundaries:
+  license: MIT
+  assurance: evidence visibility only
+  compliance_claim: none

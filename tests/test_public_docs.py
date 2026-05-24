@@ -86,3 +86,39 @@ def test_baseline_is_late_lifecycle_state():
     text = (ROOT / "docs" / "02-operating-system" / "lifecycle.md").read_text(encoding="utf-8")
 
     assert "Decide -> Baseline -> Operate -> Learn" in text
+
+
+def test_skill_workflow_comparison_covers_catalog():
+    comparison = (
+        ROOT / "docs" / "03-worked-examples" / "skill-workflow-comparison" / "README.md"
+    ).read_text(encoding="utf-8")
+    catalog = (ROOT / "nuclear-grade.yaml").read_text(encoding="utf-8")
+
+    skills_section = catalog.split("skills:", 1)[1].split("commands:", 1)[0]
+    skills = [
+        line.strip().removeprefix("- ").strip()
+        for line in skills_section.splitlines()
+        if line.strip().startswith("- ")
+    ]
+
+    for skill in skills:
+        assert f"`{skill}`" in comparison, f"comparison missing skill {skill}"
+
+
+def test_skill_workflow_comparison_covers_workflows():
+    comparison = (
+        ROOT / "docs" / "03-worked-examples" / "skill-workflow-comparison" / "README.md"
+    ).read_text(encoding="utf-8")
+
+    workflows = (
+        "Questioning attitude",
+        "Quick change",
+        "Standard change",
+        "Controlled configuration",
+        "Agent authority change",
+        "Release readiness",
+        "Source/legal check",
+    )
+
+    for workflow in workflows:
+        assert workflow in comparison, f"comparison missing workflow {workflow}"

@@ -90,7 +90,7 @@ def test_baseline_is_late_lifecycle_state():
 
 def test_skill_workflow_comparison_covers_catalog():
     comparison = (
-        ROOT / "docs" / "03-worked-examples" / "skill-workflow-comparison" / "README.md"
+        ROOT / "docs" / "03-worked-examples" / "skill-workflow-comparison" / "results-summary.md"
     ).read_text(encoding="utf-8")
     catalog = (ROOT / "nuclear-grade.yaml").read_text(encoding="utf-8")
 
@@ -103,11 +103,13 @@ def test_skill_workflow_comparison_covers_catalog():
 
     for skill in skills:
         assert f"`{skill}`" in comparison, f"comparison missing skill {skill}"
+        skill_line = next(line for line in comparison.splitlines() if f"`{skill}`" in line)
+        assert skill_line.count("U") >= 2, f"comparison must exercise {skill} in multiple trials"
 
 
 def test_skill_workflow_comparison_covers_workflows():
     comparison = (
-        ROOT / "docs" / "03-worked-examples" / "skill-workflow-comparison" / "README.md"
+        ROOT / "docs" / "03-worked-examples" / "skill-workflow-comparison" / "results-summary.md"
     ).read_text(encoding="utf-8")
 
     workflows = (
@@ -122,3 +124,45 @@ def test_skill_workflow_comparison_covers_workflows():
 
     for workflow in workflows:
         assert workflow in comparison, f"comparison missing workflow {workflow}"
+        workflow_line = next(line for line in comparison.splitlines() if f"| {workflow} |" in line)
+        assert workflow_line.count("U") >= 2, f"comparison must exercise {workflow} in multiple trials"
+
+
+def test_skill_workflow_comparison_has_inspectable_trial_records():
+    trial_dir = ROOT / "docs" / "03-worked-examples" / "skill-workflow-comparison" / "trial-records"
+    trials = sorted(trial_dir.glob("*.md"))
+
+    assert len(trials) >= 12
+
+    required_sections = (
+        "## Scenario Facts",
+        "## Simple Prompt Trial",
+        "## Nuclear-Grade Trial",
+        "## Scoring Rationale",
+        "## Decision",
+        "## Boundary Note",
+    )
+
+    for trial in trials:
+        text = trial.read_text(encoding="utf-8")
+        for section in required_sections:
+            assert section in text, f"{trial.name} missing {section}"
+
+
+def test_skill_workflow_comparison_scores_both_paths_for_each_trial():
+    summary = (
+        ROOT / "docs" / "03-worked-examples" / "skill-workflow-comparison" / "results-summary.md"
+    ).read_text(encoding="utf-8")
+
+    for index in range(1, 13):
+        trial_id = f"U{index:02d}"
+        simple_rows = [
+            line for line in summary.splitlines()
+            if line.startswith(f"| {trial_id} ") and "| Simple prompt |" in line
+        ]
+        nuclear_rows = [
+            line for line in summary.splitlines()
+            if line.startswith(f"| {trial_id} ") and "| Nuclear-grade |" in line
+        ]
+        assert simple_rows, f"missing simple-prompt score row for {trial_id}"
+        assert nuclear_rows, f"missing Nuclear-grade score row for {trial_id}"

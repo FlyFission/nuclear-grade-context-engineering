@@ -8,6 +8,8 @@
 | C-002 | The comparison uses every published workflow in at least two use cases. | Coverage matrix review and test coverage check. |
 | C-003 | The comparison distinguishes qualitative sandbox evaluation from benchmark, safety, security, compliance, or formal assurance evidence. | Boundary wording review and public-doc tests. |
 | C-004 | The comparison fairly preserves simple prompting as appropriate for tiny local reversible work. | U1 and bottom-line review. |
+| C-005 | The comparison preserves inspectable trial records rather than only summary conclusions. | Trial-record count and required-section tests. |
+| C-006 | The comparison scores both simple prompting and Nuclear-grade for every use case. | Score-row coverage tests. |
 
 ## Design basis
 
@@ -24,7 +26,7 @@ The artifact should answer a practical adoption question: when does Nuclear-grad
 ## Exit criteria
 
 - Claims are narrow enough for the evidence.
-- Coverage is explicit.
+- Coverage is explicit and backed by trial records.
 - Boundary language is near the scoring and conclusion.
 
 ## Source-lineage note

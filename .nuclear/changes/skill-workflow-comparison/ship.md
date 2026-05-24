@@ -8,6 +8,7 @@
 | Basis / claims | pass | `basis.md` |
 | Coverage verification | pass | `verification.md` |
 | Boundary review | pass | `verification.md` |
+| Trial-record depth | pass | `verification.md` |
 
 ## Residual risks and gaps
 

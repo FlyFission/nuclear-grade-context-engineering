@@ -144,7 +144,7 @@ def handle_new(args: argparse.Namespace) -> int:
     repo = args.repo.resolve()
     packet = repo / ".nuclear" / "changes" / args.slug
     files = QUICK_FILES if args.mode == "quick" else STANDARD_FILES
-    templates = repo / "templates"
+    templates = template_root_for(repo, args.mode)
     writes = [PlannedWrite(packet, is_dir=True)]
     writes.extend(
         PlannedWrite(packet / name, source=templates / args.mode / name)
@@ -176,6 +176,14 @@ def handle_doctor(args: argparse.Namespace) -> int:
 
     print("OK: Nuclear-grade doctor")
     return 0
+
+
+def template_root_for(repo: Path, mode: str) -> Path:
+    repo_templates = repo / "templates"
+    required = QUICK_FILES if mode == "quick" else STANDARD_FILES
+    if all((repo_templates / mode / name).exists() for name in required):
+        return repo_templates
+    return ROOT / "templates"
 
 
 def handle_list(args: argparse.Namespace) -> int:
@@ -239,6 +247,9 @@ def apply_writes(writes: list[PlannedWrite], dry_run: bool, overwrite: bool) -> 
 
 
 def collect_doctor_failures(repo: Path) -> list[str]:
+    if not looks_like_distribution_repo(repo):
+        return collect_workspace_failures(repo)
+
     failures: list[str] = []
     catalog = repo / "nuclear-grade.yaml"
     skills_dir = repo / "skills"
@@ -272,6 +283,29 @@ def collect_doctor_failures(repo: Path) -> list[str]:
         failures.append(f"missing commands directory: {commands_dir.name}")
     else:
         failures.extend(check_command_contracts(commands_dir))
+    return failures
+
+
+def looks_like_distribution_repo(repo: Path) -> bool:
+    return (repo / "nuclear-grade.yaml").exists() or all(
+        (repo / path).exists()
+        for path in ("templates", "skills", "commands")
+    )
+
+
+def collect_workspace_failures(repo: Path) -> list[str]:
+    failures: list[str] = []
+    if sys.version_info < (3, 11):
+        failures.append("Python 3.11 or newer is required")
+    if not repo.exists():
+        failures.append(f"repo path does not exist: {repo}")
+        return failures
+    if not (repo / ".nuclear").is_dir():
+        failures.append("missing initialized workspace: .nuclear")
+    if not (repo / ".nuclear" / "changes").is_dir():
+        failures.append("missing packet directory: .nuclear/changes")
+    if not (repo / ".nuclear" / "README.md").exists():
+        failures.append("missing workspace guide: .nuclear/README.md")
     return failures
 
 

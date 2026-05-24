@@ -20,11 +20,12 @@ If your shell only has `python3`, use `python3` in the same commands.
 
 ## Add to another repo
 
-Copy the repo or a vendored subset, then initialize the workspace:
+From this checkout, initialize the target workspace:
 
 ```bash
 python tools/ng.py init /path/to/your/repo --dry-run
 python tools/ng.py init /path/to/your/repo
+python tools/ng.py doctor /path/to/your/repo
 ```
 
 Create a packet:
@@ -33,6 +34,8 @@ Create a packet:
 python tools/ng.py new add-boundary --mode standard --repo /path/to/your/repo
 python tools/ng.py validate /path/to/your/repo/.nuclear/changes/add-boundary
 ```
+
+`new` uses templates in `/path/to/your/repo/templates/` when they exist. Otherwise it copies the bundled templates from this Nuclear-grade checkout, so a target repo only needs `.nuclear/` to get started.
 
 ## Tool and agent harness notes
 
@@ -47,7 +50,7 @@ python -m pip install -e .
 nuclear-grade doctor .
 ```
 
-The repo-local commands remain the canonical onboarding path for Public v0.
+The repo-local `python tools/ng.py ...` commands remain the canonical onboarding path for Public v0. The console script is a convenience for local checkout work, not a packaged marketplace or standalone distribution.
 
 ## Boundary note
 

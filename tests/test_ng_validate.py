@@ -2,6 +2,8 @@ from pathlib import Path
 
 from tools.ng_validate import validate_packet
 
+ROOT = Path(__file__).resolve().parents[1]
+
 
 COMMON_TAIL = """
 ## Required links
@@ -161,3 +163,27 @@ def test_verification_without_status_fails(tmp_path):
 
     assert not result.ok
     assert any("verification.md must include at least one evidence status" in message for message in result.messages)
+
+
+def test_unfilled_quick_template_fails(tmp_path):
+    packet = tmp_path / ".nuclear" / "changes" / "quick-template"
+    packet.mkdir(parents=True)
+    for name in ("risk.md", "proof.md"):
+        write(packet / name, (ROOT / "templates" / "quick" / name).read_text(encoding="utf-8"))
+
+    result = validate_packet(packet)
+
+    assert not result.ok
+    assert any("has unfilled template prompts" in message for message in result.messages)
+
+
+def test_unfilled_standard_template_fails(tmp_path):
+    packet = tmp_path / ".nuclear" / "changes" / "standard-template"
+    packet.mkdir(parents=True)
+    for name in ("risk.md", "basis.md", "plan.md", "trace.md", "verification.md", "ship.md"):
+        write(packet / name, (ROOT / "templates" / "standard" / name).read_text(encoding="utf-8"))
+
+    result = validate_packet(packet)
+
+    assert not result.ok
+    assert any("has unfilled template prompts" in message for message in result.messages)

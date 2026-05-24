@@ -133,13 +133,16 @@ def test_new_refuses_overwrite_without_force(tmp_path):
     assert "already exists" in result.stderr
 
 
-def test_new_reports_missing_template_source(tmp_path):
+def test_new_falls_back_to_bundled_templates_for_initialized_workspace(tmp_path):
     scaffold_repo(tmp_path, missing_templates=(("quick", "proof.md"),))
 
     result = run_ng("new", "demo", "--mode", "quick", "--repo", str(tmp_path))
 
-    assert result.returncode == 2
-    assert "missing source file" in result.stderr
+    assert result.returncode == 0, result.stderr
+    packet = tmp_path / ".nuclear" / "changes" / "demo"
+    assert (packet / "risk.md").exists()
+    assert (packet / "proof.md").exists()
+    assert "# Quick Risk Template" in (packet / "risk.md").read_text(encoding="utf-8")
 
 
 def test_doctor_checks_cm_templates(tmp_path):
@@ -182,6 +185,22 @@ def test_doctor_passes_on_this_repo():
 
     assert result.returncode == 0, result.stdout + result.stderr
     assert "OK:" in result.stdout
+
+
+def test_doctor_passes_on_initialized_workspace(tmp_path):
+    assert run_ng("init", str(tmp_path)).returncode == 0
+
+    result = run_ng("doctor", str(tmp_path))
+
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "OK:" in result.stdout
+
+
+def test_doctor_reports_uninitialized_workspace(tmp_path):
+    result = run_ng("doctor", str(tmp_path))
+
+    assert result.returncode == 1
+    assert "missing initialized workspace: .nuclear" in result.stdout
 
 
 def test_doctor_requires_repo_local_catalog(tmp_path):

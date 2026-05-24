@@ -20,6 +20,11 @@ STANDARD_ONLY_FILES = tuple(name for name in REQUIRED_STANDARD_FILES if name != 
 REQUIRED_SECTIONS = ("Required links", "Exit criteria", "Source-lineage note")
 EVIDENCE_STATUSES = ("pass", "fail", "gap", "deferred", "not applicable", "planned")
 MARKDOWN_LINK_PATTERN = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
+EMPTY_PROMPT_PATTERN = re.compile(
+    r"^\s*-\s+[^|\n:][^:\n]{1,80}:\s*$|^\s*(?:Claim|Question|Answer|Decision|Rationale):\s*$",
+    re.MULTILINE,
+)
+EMPTY_TABLE_CELL_PATTERN = re.compile(r"\|[ \t]*\|")
 PROHIBITED_CLAIMS = (
     "NQA-1 compliant",
     "ASME compliant",
@@ -83,6 +88,7 @@ def validate_packet(packet: str | Path) -> ValidationResult:
     for md_file in sorted(packet_path.glob("*.md")):
         text = md_file.read_text(encoding="utf-8")
         _check_required_sections(md_file, text, messages)
+        _check_unfilled_template_prompts(md_file, text, messages)
         _check_prohibited_claims(md_file, text, messages)
         _check_source_lineage(md_file, text, messages)
         _check_relative_links(packet_path, md_file, text, messages)
@@ -124,6 +130,25 @@ def _check_required_sections(md_file: Path, text: str, messages: list[str]) -> N
     for section in REQUIRED_SECTIONS:
         if section.lower() not in text.lower():
             messages.append(f"{md_file.name} missing required section: {section}")
+
+
+def _check_unfilled_template_prompts(md_file: Path, text: str, messages: list[str]) -> None:
+    if EMPTY_PROMPT_PATTERN.search(text) or EMPTY_TABLE_CELL_PATTERN.search(_table_body(text)):
+        messages.append(
+            f"{md_file.name} has unfilled template prompts; use concrete text, `not applicable`, `deferred`, or `gap`"
+        )
+
+
+def _table_body(text: str) -> str:
+    rows = []
+    for line in text.splitlines():
+        stripped = line.strip()
+        if not stripped.startswith("|"):
+            continue
+        if set(stripped.replace("|", "").replace(":", "").strip()) <= {"-"}:
+            continue
+        rows.append(line)
+    return "\n".join(rows)
 
 
 def _check_source_lineage(md_file: Path, text: str, messages: list[str]) -> None:

@@ -3,6 +3,7 @@
 Use these files when extending the product surface.
 
 - `skill-authoring-contract.md`
+- `skill-evaluation.md`
 - `command-authoring-contract.md`
 - `cli-reference.md`
 

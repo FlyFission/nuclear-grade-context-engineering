@@ -1,6 +1,6 @@
 ---
 name: packing-agent-context
-description: Use when preparing bounded context for a human or AI agent working on a packet.
+description: Use when preparing bounded context for an AI agent, human reviewer, verifier, or releaser with explicit authority, proof, and stop conditions.
 ---
 
 # Packing Agent Context

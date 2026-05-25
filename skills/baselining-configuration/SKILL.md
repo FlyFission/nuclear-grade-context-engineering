@@ -1,6 +1,6 @@
 ---
 name: baselining-configuration
-description: Use when recording the accepted controlled configuration after review, merge, release, or public-doc changes.
+description: Use when recording accepted controlled state after review, merge, release, prompt/model/tool changes, dependency updates, or public-doc changes.
 ---
 
 # Baselining Configuration

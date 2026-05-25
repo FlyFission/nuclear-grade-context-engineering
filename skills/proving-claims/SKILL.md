@@ -1,6 +1,6 @@
 ---
 name: proving-claims
-description: Use when mapping important change claims to evidence, status, and gaps.
+description: Use when mapping claims to evidence, statuses, gaps, tests, evals, reviews, traces, release posture, or narrowed non-claims.
 ---
 
 # Proving Claims

@@ -1,6 +1,6 @@
 ---
 name: identifying-controlled-items
-description: Use when deciding which files, prompts, tools, dependencies, docs, or release artifacts must be controlled.
+description: Use when deciding which code, prompts, models, tools, dependencies, docs, tests, evals, releases, or claims need controlled-state tracking.
 ---
 
 # Identifying Controlled Items

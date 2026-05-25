@@ -1,6 +1,6 @@
 ---
 name: classifying-change-risk
-description: Use when selecting the right Nuclear-grade mode for a proposed change.
+description: Use when selecting Quick, Standard, or stronger human-reviewed mode for code, docs, dependency, AI-authority, release, or public-claim changes.
 ---
 
 # Classifying Change Risk

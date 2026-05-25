@@ -1,6 +1,6 @@
 ---
 name: creating-change-packets
-description: Use when creating or updating Quick and Standard Nuclear-grade packets.
+description: Use when creating or updating Quick or Standard packets, adding required files, refreshing proof obligations, or preparing an evidence-backed PR.
 ---
 
 # Creating Change Packets

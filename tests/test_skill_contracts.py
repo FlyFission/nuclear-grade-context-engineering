@@ -5,6 +5,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SKILLS_DIR = ROOT / "skills"
 SKILLS_INDEX = ROOT / "SKILLS.md"
 CATALOG = ROOT / "nuclear-grade.yaml"
+SKILL_EVALUATION = ROOT / "docs" / "05-reference" / "skill-evaluation.md"
 
 EXPECTED_SKILLS = {
     "questioning-attitude",
@@ -60,6 +61,7 @@ def test_every_skill_has_valid_agent_operable_contract():
 
         assert frontmatter["name"] == skill_name
         assert frontmatter["description"].startswith("Use when")
+        assert len(frontmatter["description"]) >= 90
         assert len(frontmatter["description"]) <= 180
         assert " then " not in frontmatter["description"].lower()
         assert " step " not in frontmatter["description"].lower()
@@ -80,3 +82,14 @@ def test_catalog_lists_every_skill_folder():
 
     for skill_name in EXPECTED_SKILLS:
         assert f"  - {skill_name}" in catalog
+
+
+def test_skill_evaluation_prompts_cover_every_skill():
+    evaluation = SKILL_EVALUATION.read_text(encoding="utf-8")
+
+    for skill_name in EXPECTED_SKILLS:
+        heading = f"### `{skill_name}`"
+        assert heading in evaluation
+        block = evaluation.split(heading, 1)[1].split("\n### `", 1)[0]
+        assert block.count("Should trigger:") >= 3
+        assert block.count("Should not trigger:") >= 2

@@ -1,6 +1,6 @@
 ---
 name: using-nuclear-grade
-description: Use when adopting Nuclear-grade for an AI-assisted software change or repo workflow.
+description: Use when adopting Nuclear-grade for an AI-assisted change, repo workflow, packet path, evidence plan, mode choice, or release decision.
 ---
 
 # Using Nuclear-grade

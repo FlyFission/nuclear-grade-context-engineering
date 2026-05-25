@@ -1,6 +1,6 @@
 ---
 name: checking-license-and-assurance-boundaries
-description: Use when reviewing license, warranty, assurance, compliance, or public-use language.
+description: Use when reviewing public text for license, warranty, compliance, assurance, safety, security, certification, or adequacy overclaims.
 ---
 
 # Checking License and Assurance Boundaries

@@ -1,0 +1,117 @@
+# Skill Evaluation Prompts
+
+**Purpose:** Keep skill changes grounded in realistic trigger behavior instead of taste.
+
+Use these prompts when changing a skill description or process. Run the same prompt with a simple baseline and with the relevant skill, compare the outputs, and record whether the skill adds useful structure, proof discipline, or decision clarity. The negative prompts are near-misses; they should usually be handled by another skill, a normal answer, or no skill at all.
+
+Do not treat this file as proof that a skill is effective. It is the minimum prompt bank for future baseline-vs-skill evaluation.
+
+## Evaluation Method
+
+1. Snapshot the current skill before changing it.
+2. Run at least three `Should trigger:` prompts and two `Should not trigger:` prompts.
+3. Compare baseline, old-skill, and revised-skill outputs when improving an existing skill.
+4. Prefer concrete artifacts, decisions, and evidence links over long prose.
+5. Update the skill only when the revised behavior is clearly better, or when the trigger description fixes a clear miss.
+
+## Prompt Bank
+
+### `questioning-attitude`
+
+- Should trigger: Before this agent changes the billing webhook, grill the assumptions and stop conditions.
+- Should trigger: Review this plan for hidden risks before we let the coding agent edit files.
+- Should trigger: What facts would change the release decision for this dependency update?
+- Should not trigger: Fix a README typo and show the diff.
+- Should not trigger: Explain what this small Python helper function does.
+
+### `using-nuclear-grade`
+
+- Should trigger: Use Nuclear-grade for an AI-assisted API behavior change and tell me the packet and evidence path.
+- Should trigger: Set up the Nuclear-grade workflow for this repo before we let an agent change permissions.
+- Should trigger: Walk this proposed coding-agent change through the workflow from question to release decision.
+- Should not trigger: Summarize the README in five bullets.
+- Should not trigger: What license does this repository use?
+
+### `identifying-controlled-items`
+
+- Should trigger: Which prompts, dependencies, docs, and CI files become controlled items for this release?
+- Should trigger: Identify the controlled items for an agent tool-permission change.
+- Should trigger: After this public launch, what approved-state tracking do we need?
+- Should not trigger: Run the unit tests and paste the failing assertion.
+- Should not trigger: Convert these notes into cleaner prose.
+
+### `screening-change-impact`
+
+- Should trigger: This lifecycle rename may stale docs, skills, commands, validators, and examples; screen the impact.
+- Should trigger: If we change the packet template, what downstream artifacts need revalidation?
+- Should trigger: Does a prompt/model baseline update affect release docs or evidence?
+- Should not trigger: Create an empty Standard packet folder.
+- Should not trigger: What does the changelog say changed last week?
+
+### `baselining-configuration`
+
+- Should trigger: Record the accepted prompt, model, tool, doc, and validator state after this release.
+- Should trigger: Baseline this dependency update after review and verification pass.
+- Should trigger: Create the accepted configuration record for the public docs and validator change.
+- Should not trigger: Brainstorm better names for the workflow phases.
+- Should not trigger: Classify whether this typo fix is Quick or Standard.
+
+### `classifying-change-risk`
+
+- Should trigger: Classify whether this API permission plus docs change is Quick, Standard, or stronger.
+- Should trigger: Pick the right mode for a dependency bump that changes authentication behavior.
+- Should trigger: This small diff touches agent authority; classify the risk and proof obligation.
+- Should not trigger: Fill out the verification table for already-selected Standard mode.
+- Should not trigger: Write the source-lineage note for a citation change.
+
+### `creating-change-packets`
+
+- Should trigger: Create the packet files for a Standard change that updates skills and tests.
+- Should trigger: Update this Quick packet now that the proof command changed.
+- Should trigger: Prepare an evidence-backed PR packet for an AI-assisted workflow change.
+- Should not trigger: Decide whether this packet should ship.
+- Should not trigger: Only identify which files are controlled items.
+
+### `packing-agent-context`
+
+- Should trigger: Build a bounded context pack for an agent that can edit tests and run commands.
+- Should trigger: Prepare one-screen reviewer context with authority, proof, and stop conditions.
+- Should trigger: Distill this long implementation thread into what the next agent may do and must prove.
+- Should not trigger: Run the packet validator.
+- Should not trigger: Classify the change mode only.
+
+### `proving-claims`
+
+- Should trigger: Map these release claims to evidence, gaps, and narrowed non-claims.
+- Should trigger: Tests passed, but which claims do they actually prove?
+- Should trigger: Turn this basis and trace into a verification table with pass, gap, and deferred statuses.
+- Should not trigger: Create the packet directory structure.
+- Should not trigger: Make the README more concise.
+
+### `reviewing-ship-readiness`
+
+- Should trigger: Review this Standard packet and decide ship, defer, block, or ship-with-risk.
+- Should trigger: CI is green; decide whether the dependency update is release-ready and name residual risk.
+- Should trigger: Is this agent-authority change ready to release with the evidence we have?
+- Should not trigger: Identify controlled items before implementation starts.
+- Should not trigger: Draft the risk.md threshold screen.
+
+### `checking-source-lineage`
+
+- Should trigger: This doc cites DOE and NIST concepts; check whether the wording is source-safe.
+- Should trigger: Review these source-lineage claims before public launch.
+- Should trigger: Does this adoption doc imply we satisfy external standards?
+- Should not trigger: Fix the Python test failure.
+- Should not trigger: Create a context pack for the next coding agent.
+
+### `checking-license-and-assurance-boundaries`
+
+- Should trigger: Review the README for license, warranty, compliance, and assurance boundary problems.
+- Should trigger: This public copy may overpromise safety, security, certification, or adequacy; clean it up.
+- Should trigger: Does this text confuse MIT license permission with formal engineering adequacy?
+- Should not trigger: List changed files in the PR.
+- Should not trigger: Run the worked-example tests.
+
+## Source-lineage note
+
+This evaluation prompt bank is an original Nuclear-grade artifact informed by public skill-authoring practice: concise skills, realistic trigger prompts, baseline-vs-skill comparison, and iterative trigger-description improvement. It does not create formal assurance, compliance, certification, safety, security, or regulatory adequacy.

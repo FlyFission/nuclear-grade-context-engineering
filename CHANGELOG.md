@@ -10,6 +10,11 @@ This project uses changelog entries to record public-facing changes, not to impl
 
 - Configuration-management public positioning and activated CM workflow records.
 - Namespaced `nuclear_grade` package entry point for installed console scripts.
+- Skill evaluation prompt bank for baseline-vs-skill trigger checks.
+
+### Changed
+
+- Strengthened all skill trigger descriptions against skill-creator best practices.
 
 ## [0.1.1] - Unreleased
 

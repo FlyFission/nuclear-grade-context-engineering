@@ -1,6 +1,6 @@
 ---
 name: checking-source-lineage
-description: Use when public docs, templates, skills, or packets cite source families or borrowed concepts.
+description: Use when public docs, templates, skills, packets, or adoption copy cite source families, agencies, standards, or borrowed concepts.
 ---
 
 # Checking Source Lineage

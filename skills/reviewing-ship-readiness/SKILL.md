@@ -1,6 +1,6 @@
 ---
 name: reviewing-ship-readiness
-description: Use when deciding whether a packet is ready to release, defer, or block.
+description: Use when deciding ship, block, defer, or ship-with-risk for packets, PRs, releases, dependency changes, or agent-authority changes.
 ---
 
 # Reviewing Ship Readiness

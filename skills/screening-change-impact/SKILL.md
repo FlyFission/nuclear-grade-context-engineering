@@ -1,6 +1,6 @@
 ---
 name: screening-change-impact
-description: Use when a controlled change may invalidate docs, tests, skills, commands, validators, releases, or baselines.
+description: Use when a controlled change may stale docs, tests, skills, commands, templates, validators, prompts, releases, baselines, or evidence.
 ---
 
 # Screening Change Impact

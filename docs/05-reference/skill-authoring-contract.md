@@ -29,11 +29,12 @@ The file must include:
 ## Writing rules
 
 - One skill, one job.
-- Keep trigger descriptions short.
+- Make trigger descriptions concrete enough to catch realistic use cases.
 - Put process in the body, not in frontmatter.
 - Name exact artifacts or decisions the skill produces.
 - Include stop conditions and escalation triggers.
 - Include boundary language when public trust or assurance terms appear.
+- Maintain at least three should-trigger and two near-miss should-not-trigger prompts in `skill-evaluation.md` for each skill.
 
 ## Tests
 

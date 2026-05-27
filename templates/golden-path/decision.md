@@ -1,5 +1,7 @@
 # Decision Record
 
+<!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
+
 **Purpose:** Record the decision to ship, block, defer, or continue with named residual risk.
 
 **Activation threshold:** Use when evidence has been reviewed and the change needs an explicit decision before baseline, release, or operation.

@@ -1,5 +1,7 @@
 # Standard Verification Template
 
+<!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
+
 **Purpose:** Show that important claims, controls, and assumptions have evidence proportionate to the change.
 
 **Activation threshold:** Use for Standard changes and any Quick change whose proof needs more than one simple check.

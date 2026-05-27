@@ -1,5 +1,7 @@
 # Standard Risk Template
 
+<!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
+
 **Purpose:** Classify a meaningful change after questioning assumptions, justify Standard mode, and name any extra activated records.
 
 **Activation threshold:** Use for user-visible behavior, durable design decisions, important dependency/model/API/prompt/tool changes, security/privacy/data handling, operational posture, or anything with non-trivial consequence, uncertainty, or review value.

@@ -1,5 +1,7 @@
 # Quick Risk Template
 
+<!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
+
 ## Selected mode
 
 - **Mode:** Quick

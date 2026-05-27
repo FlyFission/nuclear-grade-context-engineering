@@ -1,5 +1,7 @@
 # Controlled Items Record
 
+<!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
+
 **Purpose:** Name the configuration items affected by this change and why their state matters.
 
 **Activation threshold:** Use when the affected items include prompts, models, tools, dependencies, source-lineage claims, release artifacts, public docs, validators, runbooks, or other trust-bearing state.

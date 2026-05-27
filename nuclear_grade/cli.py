@@ -70,6 +70,9 @@ REQUIRED_PUBLIC_FILES = (
     "SUPPORT.md",
     "GOVERNANCE.md",
     "AGENTS.md",
+    "SECURITY.md",
+    "CONTRIBUTING.md",
+    "CODE_OF_CONDUCT.md",
 )
 REQUIRED_SKILL_SECTIONS = (
     "## Overview",

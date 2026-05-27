@@ -27,7 +27,14 @@ python tools/ng.py new demo-change --mode quick
 python tools/ng.py validate .nuclear/changes/demo-change
 ```
 
-The fourth command is expected to print `FAILED: ...` with `has unfilled template prompts`. That is the demo: the validator catches an unfilled template just like it will when you skip a real prompt. Open `.nuclear/changes/demo-change/risk.md` and `proof.md`, fill the prompts that matter, then re-run `validate`.
+The fourth command is expected to print `FAILED: ...` with `still contains the placeholder marker`. That is the evidence gate working: every Nuclear-grade template ships with a `NUCLEAR-GRADE-PLACEHOLDER` marker line that the validator refuses to accept until you remove it. Fill in the prompts that matter, delete the marker line, then re-run `validate`:
+
+```bash
+# In .nuclear/changes/demo-change/risk.md and proof.md, fill the fields with
+# real content, then delete the line that starts with "<!-- NUCLEAR-GRADE-PLACEHOLDER".
+python tools/ng.py validate .nuclear/changes/demo-change
+# OK: .nuclear/changes/demo-change
+```
 
 Inspect the included evidence path:
 

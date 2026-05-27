@@ -1,5 +1,7 @@
 # Specification Record
 
+<!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
+
 **Purpose:** State the required behavior, protected outcomes, assumptions, and acceptance criteria after questioning and discovery.
 
 **Activation threshold:** Use for Standard changes where requirements, design-basis facts, interfaces, dependencies, AI authority, or user-visible behavior need explicit agreement.

@@ -35,6 +35,13 @@ python tools/ng.py new add-boundary --mode standard --repo /path/to/your/repo
 python tools/ng.py validate /path/to/your/repo/.nuclear/changes/add-boundary
 ```
 
+`validate` is **expected to fail** on the untouched packet. Each template ships with a `NUCLEAR-GRADE-PLACEHOLDER` marker line, and the validator refuses to accept any packet that still carries it. That is the gate working: fill the fields, set at least one real status (`pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`), delete the marker line in every file, and revalidate:
+
+```bash
+python tools/ng.py validate /path/to/your/repo/.nuclear/changes/add-boundary
+# OK: /path/to/your/repo/.nuclear/changes/add-boundary
+```
+
 `new` uses templates in `/path/to/your/repo/templates/` when they exist. Otherwise it copies the bundled templates from this Nuclear-grade checkout, so a target repo only needs `.nuclear/` to get started.
 
 ## Tool and agent harness notes

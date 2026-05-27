@@ -1,5 +1,7 @@
 # Standard Trace Template
 
+<!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
+
 **Purpose:** Link important claims to basis, design/control features, verification evidence, release posture, and gaps.
 
 **Activation threshold:** Use for Standard changes where reviewers need to see how requirements, claims, controls, tests/evals, and release decisions connect.

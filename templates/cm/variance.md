@@ -1,5 +1,7 @@
 # Variance Record
 
+<!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
+
 **Purpose:** Record a known deviation from accepted baseline before it becomes uncontrolled drift.
 
 **Activation threshold:** Use when actual state differs from baseline but the team is not immediately re-baselining.

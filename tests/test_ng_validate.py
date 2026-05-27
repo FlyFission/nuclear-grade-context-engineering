@@ -165,6 +165,24 @@ def test_verification_without_status_fails(tmp_path):
     assert any("verification.md must include at least one evidence status" in message for message in result.messages)
 
 
+def test_placeholder_marker_blocks_validation(tmp_path):
+    packet = minimal_quick_packet(tmp_path)
+    proof = packet / "proof.md"
+    proof.write_text(
+        "<!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->\n"
+        + proof.read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+
+    result = validate_packet(packet)
+
+    assert not result.ok
+    assert any(
+        "proof.md still contains the placeholder marker" in message
+        for message in result.messages
+    )
+
+
 def test_unfilled_quick_template_fails(tmp_path):
     packet = tmp_path / ".nuclear" / "changes" / "quick-template"
     packet.mkdir(parents=True)

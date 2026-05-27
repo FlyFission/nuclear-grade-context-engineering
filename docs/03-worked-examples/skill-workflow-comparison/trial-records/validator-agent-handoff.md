@@ -42,6 +42,7 @@ Skills exercised:
 - `classifying-change-risk`
 - `creating-change-packets`
 - `packing-agent-context`
+- `turning-over-agent-work`
 - `proving-claims`
 
 Workflows exercised:
@@ -50,6 +51,7 @@ Workflows exercised:
 - Quick change
 - Standard change
 - Agent authority change
+- Agent turnover
 
 Nuclear-grade output:
 
@@ -57,6 +59,7 @@ Nuclear-grade output:
 - Allowed files: validator and targeted tests.
 - Allowed commands: focused pytest and full pytest before completion.
 - Forbidden actions: weakening public boundary checks, editing unrelated docs, deleting tests, broad refactors.
+- Turnover: last completed repro, files touched, remaining proof, and stop criteria are recorded before another agent continues.
 - Mode: Quick if local false positive only; Standard if validation semantics change public packet behavior.
 - Proof: failing fixture before fix, passing fixture after fix, blank template still rejected.
 

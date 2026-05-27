@@ -14,6 +14,7 @@ Ship readiness is a decision record, not a mood. It ties baseline, evidence stat
 - A Standard packet is approaching merge or release.
 - A PR changes user behavior, security posture, dependencies, agent authority, or operational state.
 - Evidence gaps must be accepted or made blocking.
+- Turnover, support handoff, OPEX trigger, or conservative decision posture needs to be explicit.
 
 ## When Not to Use
 
@@ -31,13 +32,16 @@ Ship readiness is a decision record, not a mood. It ties baseline, evidence stat
 2. Review each evidence status and unresolved gap.
 3. Confirm rollback or restore path.
 4. Confirm monitoring and post-release checks.
-5. Record one decision: ship, block, defer, or ship with named residual risk.
+5. State why the decision is conservative enough for remaining uncertainty.
+6. Record one decision: ship, block, defer, or ship with named residual risk.
+7. Name owner, abort trigger, turnover need, OPEX trigger, and baseline trigger.
 
 ## Outputs
 
 - Updated `ship.md`.
 - Release decision and rationale.
 - Residual risks, owner, monitoring, and rollback notes.
+- Conservative decision posture, turnover, and OPEX trigger.
 
 ## Verification
 
@@ -55,6 +59,7 @@ Ship readiness is a decision record, not a mood. It ties baseline, evidence stat
 - "Green CI means ship." Release readiness includes residual risk and rollback.
 - "The gap is probably fine." Accepted residual risk must be named.
 - "Monitoring is overkill." Monitoring should scale by consequence, not habit.
+- "Support will figure it out." Operational handoff is part of release readiness.
 
 ## Red Flags
 

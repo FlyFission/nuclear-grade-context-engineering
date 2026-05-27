@@ -45,6 +45,9 @@ Skills exercised:
 - `classifying-change-risk`
 - `creating-change-packets`
 - `packing-agent-context`
+- `turning-over-agent-work`
+- `self-checking-agent-actions`
+- `checking-dependency-and-model-trust`
 - `proving-claims`
 - `reviewing-ship-readiness`
 
@@ -54,6 +57,9 @@ Workflows exercised:
 - Standard change
 - Controlled configuration
 - Agent authority change
+- Agent turnover
+- Critical action self-check
+- Trust check
 - Release readiness
 
 Nuclear-grade output:
@@ -61,8 +67,11 @@ Nuclear-grade output:
 - Mode: Standard because network, credentials, and write authority are involved.
 - Controlled items: API token scope, tool manifest, allowlist, audit log, prompt authority, dry-run behavior.
 - Context pack: allowed read endpoints, allowed comment endpoint, forbidden delete/close/assign/label actions, no production credentials in tests.
+- Self-check: exact token scope, API endpoint, expected denial/allow behavior, and stop condition are named before live calls.
+- Turnover: reviewer/releaser receives current permission state, remaining proof, approval gates, and forbidden actions.
+- Trust check: API/provider claims are separated from local dry-run, audit, permission, and approval evidence.
 - Proof claims: denied forbidden actions; dry-run records intended comment; live mode requires explicit approval; audit records tool call.
-- Ship decision: block if token scope cannot be least-privilege or audit proof is missing.
+- Release decision: block if token scope cannot be least-privilege or audit evidence is missing.
 - Baseline: accepted permission state and revalidation trigger when token, tool, prompt, or API surface changes.
 
 ## Scoring Rationale

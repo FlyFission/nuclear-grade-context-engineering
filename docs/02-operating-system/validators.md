@@ -47,7 +47,7 @@ Run validation when any of these are true:
 | Evidence status check | Evidence is labeled planned / run / passed / failed / blocked / not applicable. | `proof.md`, `verification.md`, `ship.md` | Evidence exists as prose but has no status or reproducible command/artifact link. |
 | AI-assisted change control | AI scope, permissions, approvals, and independent checks are declared when AI materially contributes. | AI-assisted packets | AI/tool actions altered code/docs/tests/release evidence without scope and verification record. |
 | Source-map reference check | Source-lineage notes reference `source-map.md` or approved public URLs. | Field guide/templates/examples | New source appears without source-map entry or public URL. |
-| Token/context discipline | Agent context packs are bounded to mode, packet, affected files, and relevant source excerpts. | Context packs | Prompt/context asks for whole repo or all standards without an activated reason. |
+| Token/context discipline | Agent context packs are focused on mode, packet, affected files, and relevant source excerpts. | Context packs | Prompt/context asks for whole repo or all standards without an activated reason. |
 | CM record visibility | Activated CM records name controlled items, impact, baseline, variance, OPEX, and triggers. | CM records | Controlled state changes without owner, evidence link, or revalidation trigger. |
 
 ---

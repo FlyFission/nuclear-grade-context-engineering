@@ -9,6 +9,7 @@ Check public source lineage and citation safety for docs, templates, skills, com
 - A public file cites source families, standards, agencies, or assurance concepts.
 - New methodology language is added.
 - A source status or public URL may be stale.
+- A dependency, model, API, or vendor claim may be confused with local proof.
 
 ## Do not use when
 
@@ -31,9 +32,11 @@ Inputs:
 - changed public text: <paste/link>
 - cited source families: <list>
 - source-map rows: <links>
+- source or vendor claims used as evidence: <list>
 
 Return:
 - verified-public, supporting-context, public-url-needed, or excluded-direct status
+- distinction between influence, source claim, local proof, requirement, and authority
 - wording changes needed to avoid compliance or approval claims
 - source-map or crosswalk updates
 - validation and scan commands
@@ -49,6 +52,7 @@ Return:
 
 - Source-safe wording.
 - Updated source status or explicit downgrade.
+- Local-proof vs source-claim distinction when needed.
 - Boundary-safe source-lineage note.
 
 ## Verification command

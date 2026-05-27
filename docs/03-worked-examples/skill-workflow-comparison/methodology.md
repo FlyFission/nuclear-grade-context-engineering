@@ -11,7 +11,7 @@ It does not ask whether Nuclear-grade makes code objectively safer, secure, comp
 Each trial uses the same scenario facts in two paths:
 
 1. **Simple prompt path:** A direct coding-agent prompt that a reasonable developer might write.
-2. **Nuclear-grade path:** The relevant skills and workflows applied to the same facts, producing bounded records, proof obligations, gaps, and decisions.
+2. **Nuclear-grade path:** The relevant skills and workflows applied to the same facts, producing focused records, evidence obligations, gaps, and decisions.
 
 The trial output is not an independent model benchmark. It is an artifact evaluation: given the produced records, can a reviewer answer what changed, why it matters, what evidence exists, what is missing, and whether to ship, defer, block, or baseline?
 

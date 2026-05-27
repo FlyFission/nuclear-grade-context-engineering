@@ -12,6 +12,8 @@ Question -> Discover -> Specify -> Plan -> Execute -> Verify -> Review -> Decide
 
 This is an operating model, not a compliance program. `Classify` remains inside `risk.md`: selected mode, escalation triggers, evidence obligation, and hold conditions.
 
+HPI overlays add consequence-scaled control behaviors beneath the spine: task preview, repo-site review, pause when unsure, self-checking, turnover, verification selection, conservative decision making, and OPEX learning. Use `hpi-overlays.md` for the micro-controls; keep this lifecycle stable.
+
 ---
 
 ## Phase map
@@ -22,9 +24,9 @@ This is an operating model, not a compliance program. `Classify` remains inside 
 | Discover | What sources and repo facts matter? | Public sources, prior packets, constraints, known gaps. | Specification is grounded, not invented. |
 | Specify | What state or behavior is required? | Requirements, claims, protected outcomes, assumptions, acceptance criteria. | Claims are testable or gap-labeled. |
 | Plan | How will controlled configuration change? | Steps, affected items, rollback, proof commands. | Work can proceed without rediscovering scope. |
-| Execute | Did implementation stay inside authority? | Diffs, commits, generated artifacts, AI-assist notes. | Deviations are recorded, not hidden drift. |
-| Verify | What evidence supports the claims? | Tests/evals/reviews/results with status and gaps. | Evidence matches the claim. |
-| Review | Can a skeptical reviewer accept this? | Claim-to-evidence review and residual risk disposition. | Accept/defer/block is reviewable. |
+| Execute | Did implementation stay inside authority? | Diffs, commits, generated artifacts, self-checks, AI-assist notes. | Deviations are recorded, not hidden drift. |
+| Verify | What evidence supports the claims? | Tests/evals/reviews/results with status, verification type, and gaps. | Evidence matches the claim. |
+| Review | Can a skeptical reviewer accept this? | Claim-to-evidence review, work-product review, and residual risk disposition. | Accept/defer/block is reviewable. |
 | Decide | Should the change proceed, ship, block, defer, or continue with residual risk? | Decision, conditions, owner, baseline trigger. | Release decision is explicit. |
 | Baseline | What accepted state is now controlled? | Commit/release/artifact plus controlled item state and triggers. | Future drift can be detected. |
 | Operate | What signals show drift or failure? | Monitors, support signals, incident triggers. | Operators know what to watch. |
@@ -73,8 +75,10 @@ Every lifecycle record should link backward and forward:
 - `risk.md` links to selected mode and escalation triggers.
 - `basis.md` or `spec.md` links to activated source-map concepts when relevant.
 - `plan.md` links to specification, affected files, dependencies, and rollback.
-- `verification.md` links to claims/acceptance criteria and results.
-- `decision.md` or `ship.md` links evidence, unresolved risks, rollback, monitoring, handoff, and baseline trigger.
+- `turnover.md` links current state, changed conditions, remaining work, authority, and incoming-owner confirmation when responsibility transfers.
+- `self-check.md` links critical action, target, expected result, stop condition, actual result, and evidence.
+- `verification.md` links to claims/acceptance criteria, verification type, and results.
+- `decision.md` or `ship.md` links evidence, unresolved risks, rollback, monitoring, handoff, conservative decision posture, and baseline trigger.
 - `baseline.md` links to accepted controlled state after review and decision.
 - `learn`/OPEX notes link to changed requirements, tests, monitors, or controls.
 

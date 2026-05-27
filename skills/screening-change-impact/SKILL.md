@@ -14,6 +14,7 @@ Impact screening asks what downstream artifacts become stale when controlled con
 - A change affects more than one artifact family.
 - Public claims, source lineage, validators, tests, templates, skills, commands, dependencies, prompts, or release posture may need updates.
 - A baseline or revalidation trigger may change.
+- A near miss, weak control, or OPEX item suggests hidden downstream impact.
 
 ## When Not to Use
 
@@ -30,9 +31,10 @@ Impact screening asks what downstream artifacts become stale when controlled con
 
 1. Identify artifact families that may be affected.
 2. For each family, choose update, no-op, defer, or block.
-3. Link evidence for each disposition.
-4. Record revalidation triggers.
-5. Reflect blockers or accepted gaps in `ship.md`.
+3. Name stale links, evidence, examples, claims, handoffs, or controls.
+4. Link evidence for each disposition.
+5. Record revalidation triggers.
+6. Reflect blockers or accepted gaps in `ship.md`.
 
 ## Outputs
 
@@ -56,6 +58,7 @@ Impact screening asks what downstream artifacts become stale when controlled con
 - "The diff is small." Small changes can invalidate docs, tests, or public claims.
 - "The README can lag." Public docs are controlled trust surfaces.
 - "Validator updates can come later." If docs claim behavior, validation drift matters now.
+- "The near miss is fixed." The control that allowed it may still be stale.
 
 ## Red Flags
 

@@ -9,6 +9,7 @@ Classify a proposed change into the smallest honest Nuclear-grade mode after que
 - A new change request arrives.
 - A PR scope changed.
 - Reviewers are unsure whether Quick evidence is enough.
+- Work is routine, procedural, novel, interrupted, resumed, delegated, or critical enough to require an HPI control.
 
 ## Do not use when
 
@@ -35,6 +36,7 @@ Inputs:
 Return:
 - selected mode: Quick, Standard, or human-reviewed stronger mode
 - consequence, reversibility, exposure, detectability, uncertainty
+- work mode and HPI control recommendation: none, context pack, turnover, self-check, independent verification, OPEX, or trust check
 - assumptions or facts that changed the mode
 - required packet files
 - minimum proof required
@@ -51,6 +53,7 @@ Return:
 - Selected mode.
 - Mode rationale.
 - Proof obligation.
+- HPI control recommendation when activated.
 - Escalation triggers.
 
 ## Verification command

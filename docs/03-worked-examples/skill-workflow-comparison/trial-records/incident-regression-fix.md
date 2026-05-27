@@ -42,6 +42,8 @@ Skills exercised:
 - `classifying-change-risk`
 - `creating-change-packets`
 - `packing-agent-context`
+- `turning-over-agent-work`
+- `learning-from-opex`
 - `proving-claims`
 
 Workflows exercised:
@@ -50,15 +52,18 @@ Workflows exercised:
 - Quick change
 - Standard change
 - Agent authority change
+- Agent turnover
+- OPEX learning
 
 Nuclear-grade output:
 
 - Mode: Quick for the code fix if local and reversible; Standard if docs/validator semantics changed.
 - Questioning attitude: why did previous validation miss external workspaces?
 - Context pack: agent may edit CLI, validator tests, and docs directly tied to external workspace behavior.
+- Turnover: fix state, changed conditions, proof run, remaining docs impact, and stop criteria are preserved for the next reviewer.
 - Proof claims: initialized external workspace passes doctor; blank template still fails; distribution repo doctor still checks contracts.
 - Impact screen: INSTALL and CLI reference may need updates.
-- Learn trigger: add future test whenever onboarding docs mention external repo behavior.
+- OPEX: record why earlier tests missed external workspaces and add a future test trigger whenever onboarding docs mention external repo behavior.
 
 ## Scoring Rationale
 

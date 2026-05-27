@@ -29,6 +29,7 @@ Claim:
 - Environment:
 - Inputs/fixtures:
 - Expected result:
+- Self-check used? yes/no; target if yes:
 
 ## Result
 
@@ -53,6 +54,7 @@ Claim:
 ## Exit criteria
 
 - Evidence directly matches the claim in `risk.md`.
+- Actual result is compared to the expected result named before proof.
 - Result status is explicit.
 - Any failure or gap has a next action or escalation.
 - Reviewer can decide whether the Quick change is acceptable without reading unrelated docs.

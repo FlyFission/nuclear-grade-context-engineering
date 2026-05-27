@@ -40,6 +40,7 @@ Skills exercised:
 - `screening-change-impact`
 - `classifying-change-risk`
 - `creating-change-packets`
+- `learning-from-opex`
 - `checking-source-lineage`
 - `checking-license-and-assurance-boundaries`
 
@@ -47,6 +48,7 @@ Workflows exercised:
 
 - Questioning attitude
 - Standard change
+- OPEX learning
 - Source/legal check
 
 Nuclear-grade output:
@@ -55,6 +57,7 @@ Nuclear-grade output:
 - Source-lineage check: every source family must be public, linkable, and mapped.
 - Boundary wording: "inspired by" and "translated from public concepts," not "satisfies" or "implements" requirements.
 - Impact screen: source-map, crosswalk, README, skill notes, command notes, and disclaimer alignment.
+- OPEX: if readers misinterpret source lineage as compliance, update source-map wording, templates, skills, commands, or disclaimer placement.
 - Proof: scan for prohibited overclaiming phrases; verify source-map links.
 - Decision: ship only if unresolved sources are downgraded or removed.
 

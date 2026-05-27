@@ -12,6 +12,7 @@ Nuclear-grade Public v0 is a usable workflow product, not a finished platform.
 - Skills and portable command prompts.
 - One validated worked example.
 - Public source foundation and boundary docs.
+- HPI overlays for AI-agent questioning, task briefing, self-checking, turnover, verification choice, conservative decisions, trust checks, and OPEX learning.
 
 ## v0.1
 
@@ -20,6 +21,7 @@ Nuclear-grade Public v0 is a usable workflow product, not a finished platform.
 - Additional packet validation for trace completeness.
 - Better link checks across public docs.
 - Starter policies for teams adopting packet review in PRs.
+- Sandbox-backed examples for turnover, self-check, OPEX, and dependency/model/API trust.
 
 ## v0.2
 
@@ -27,6 +29,7 @@ Nuclear-grade Public v0 is a usable workflow product, not a finished platform.
 - Optional packaging for specific agent harnesses.
 - Richer status reporting for active packets.
 - Release-mode and incident-mode validation once patterns stabilize.
+- Optional deterministic validation for activated HPI records after field use proves the templates.
 
 ## Not on the current roadmap
 

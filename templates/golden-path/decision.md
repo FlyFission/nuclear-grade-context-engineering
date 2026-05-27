@@ -32,6 +32,8 @@
 - Decision maker:
 - Rationale:
 - Conditions attached:
+- Decision posture: conservative enough / not conservative enough:
+- Abort or rollback trigger:
 
 ## Residual risks and gaps
 
@@ -56,6 +58,7 @@
 
 - Decision is explicit.
 - Gaps are not used as evidence.
+- Residual uncertainty is bounded, owned, or blocks/defer the decision.
 - Baseline or revalidation action is named when controlled state changes.
 
 ## Source-lineage note

@@ -62,6 +62,7 @@
 - Operator/customer/support notes:
 - Docs/runbook updated:
 - Communication needed:
+- Turnover record if activated:
 - Follow-up date:
 
 ## Release decision
@@ -70,6 +71,9 @@
 - Decision maker:
 - Rationale:
 - Conditions attached:
+- Decision posture: conservative enough / not conservative enough:
+- Abort or rollback trigger:
+- OPEX or post-release learning trigger:
 
 ## Baseline trigger
 
@@ -91,6 +95,7 @@
 - Release decision is explicit.
 - Baseline trigger is explicit when controlled state changes.
 - Evidence status and gaps are visible.
+- Residual uncertainty is bounded, owned, or blocks/defer the decision.
 - Rollback/restore path exists or the lack is consciously accepted.
 - Monitoring/handoff covers the claims most likely to fail in operation.
 - Any accepted residual risk has an owner and recheck trigger.

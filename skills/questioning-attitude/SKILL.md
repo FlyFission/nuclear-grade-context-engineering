@@ -15,6 +15,7 @@ Questioning attitude is the Nuclear-grade front door: challenge assumptions befo
 - A diff, plan, dependency, prompt, model, tool, or release claim needs skeptical review.
 - A reviewer asks "what are we assuming?" or "what would make this wrong?"
 - An agent is about to receive file, command, network, credential, approval, or release authority.
+- The work shows error precursors: many files, stale memory, hidden coupling, dirty workspace, first-answer bias, or completion pressure.
 
 ## When Not to Use
 
@@ -33,16 +34,18 @@ Questioning attitude is the Nuclear-grade front door: challenge assumptions befo
 
 1. Restate the change as a falsifiable decision question.
 2. List assumptions that must be true for the change to work.
-3. Identify uncertainty, warning signs, error-likely steps, and hidden Standard-mode triggers.
-4. Ask what evidence would change the decision.
-5. Validate facts before relying on memory, confidence, or agent-generated claims.
-6. Name stop conditions, hold conditions, and escalation triggers.
-7. Route the next artifact: Quick proof, Standard spec, context pack, CM record, or release decision.
+3. Separate known facts, assumptions, unknowns, and source quality.
+4. Identify uncertainty, danger words, warning signs, error-likely steps, and hidden Standard-mode triggers.
+5. Ask what evidence would change the decision.
+6. Validate facts before relying on memory, confidence, or agent-generated claims.
+7. Name pause conditions, hold conditions, and escalation triggers.
+8. Route the next artifact: Quick proof, Standard spec, context pack, turnover, self-check, CM record, or release decision.
 
 ## Outputs
 
 - Questioning-attitude screen or `questioning-attitude.md`.
 - Validated assumptions and unresolved uncertainties.
+- Knowns, unknowns, danger words, and source-quality concerns.
 - Mode/escalation triggers.
 - Evidence needed before execute, verify, review, decide, or baseline.
 
@@ -63,6 +66,7 @@ Questioning attitude is the Nuclear-grade front door: challenge assumptions befo
 
 - "It worked last time." Past success is not evidence that this state is still controlled.
 - "The agent seems confident." Confidence is not a source.
+- "The first answer was plausible." Plausible is not verified.
 - "We can classify later." Mode selection depends on assumptions and uncertainty now.
 - "It is just docs." Public wording can change trust and adoption behavior.
 
@@ -71,6 +75,7 @@ Questioning attitude is the Nuclear-grade front door: challenge assumptions befo
 - Unverified assumptions drive implementation.
 - The packet names proof after the work is already done.
 - Standard triggers are dismissed because the diff is small.
+- Words like "probably", "should", "safe", "secure", "approved", or "compliant" appear without evidence.
 - Release language says "safe", "secure", "approved", or "compliant" without qualified external authority.
 
 ## Source-lineage note

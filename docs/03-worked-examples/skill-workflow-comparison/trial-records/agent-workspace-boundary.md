@@ -62,7 +62,7 @@ Nuclear-grade output:
 - Mode: Standard because agent write authority changes a trust boundary.
 - Proof claims: allowed in-root write; parent traversal denied; absolute external path denied; symlink escape denied; denial emits audit event.
 - Context pack: agent may edit guard and tests only; may run targeted tests; may not broaden filesystem authority or claim production sandbox adequacy.
-- Ship decision: ship as scoped worked example with residual risk, not as production sandbox.
+- Release decision: ship as scoped worked example with residual risk, not as production sandbox.
 
 ## Scoring Rationale
 

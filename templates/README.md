@@ -26,6 +26,8 @@ templates/standard/ship.md
 
 Standard templates are intentionally lightweight. If an artifact does not need much detail, keep it short rather than deleting it.
 
+Use `templates/standard/supplier-trust.md` only when a dependency, model, API, SaaS tool, generated artifact, or vendor claim affects evidence, permissions, data, release posture, or public trust. It is an activated extension, not part of every Standard packet.
+
 ## Activated CM records
 
 Use `templates/cm/` when a change affects controlled configuration: prompts, models, tools, dependencies, docs, releases, runbooks, evals, or other items whose approved state matters.
@@ -47,6 +49,8 @@ Use `templates/golden-path/` when a change needs the public Questioning Attitude
 ```text
 templates/golden-path/questioning-attitude.md
 templates/golden-path/spec.md
+templates/golden-path/turnover.md
+templates/golden-path/self-check.md
 templates/golden-path/decision.md
 ```
 
@@ -57,6 +61,8 @@ Question -> Discover -> Specify -> Plan -> Execute -> Verify -> Review -> Decide
 ```
 
 Keep `Classify` inside the risk/mode screen. Keep `Baseline` late, after review and decision, as accepted configuration state.
+
+Use `turnover.md` when responsibility transfers to another human or agent. Use `self-check.md` before a critical action where wrong target, exceeded authority, public overclaim, irreversible state, or release confusion is plausible.
 
 ## Validation
 

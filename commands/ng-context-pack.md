@@ -2,13 +2,14 @@
 
 ## Purpose
 
-Prepare bounded context for a human or AI agent working from a packet. This is a portable command prompt.
+Prepare focused context for a human or AI agent working from a packet. This is a portable command prompt.
 
 ## Use when
 
 - An agent will edit files, run tools, or prepare evidence.
 - A reviewer needs a short operational summary.
 - A long thread needs distillation before work continues.
+- Work is resumed, delegated, or transferred and needs state, authority, proof, and stop criteria preserved.
 
 ## Do not use when
 
@@ -31,12 +32,16 @@ Inputs:
 - role: <builder|reviewer|verifier|releaser|researcher>
 - objective: <one paragraph>
 - affected files: <list>
+- last completed action:
+- changed conditions:
+- critical next action and likely error:
 - allowed commands/tools: <list>
 - forbidden actions: <list>
+- do-not-touch targets: <list>
 - approval gates: <list>
 - required evidence: <commands/links/reviews>
 
-Return a concise context pack with mode, objective, risk summary, basis summary, required evidence, authority boundaries, forbidden claims, open gaps, and next action.
+Return a concise context pack with mode, objective, risk summary, basis summary, required evidence, authority boundaries, forbidden claims, open gaps, last completed action, changed conditions, critical next action, and next action. If responsibility transfers, add incoming-owner confirmation.
 ```
 
 ## Files created or modified
@@ -46,9 +51,10 @@ Return a concise context pack with mode, objective, risk summary, basis summary,
 
 ## Expected outputs
 
-- Bounded context pack.
+- Focused context pack.
 - Clear authority boundaries.
 - Next action.
+- Resume point and incoming-owner confirmation when activated.
 
 ## Verification command
 
@@ -61,6 +67,7 @@ python tools/ng.py status .
 - Loading the whole repo without an activated reason.
 - Leaving file, command, network, credential, or release authority unstated.
 - Omitting forbidden claims.
+- Omitting last completed action for resumed or delegated work.
 
 ## Legal/assurance boundary note
 

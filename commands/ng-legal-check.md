@@ -9,6 +9,7 @@ Review license, warranty, public-use, and assurance boundary language before rel
 - Public docs, templates, skills, commands, examples, or release notes change.
 - Enterprise adoption or source lineage language is added.
 - The repo is preparing for public visibility.
+- A public trust claim needs a self-check before release.
 
 ## Do not use when
 
@@ -30,10 +31,12 @@ Inputs:
 - changed public text: <paste/link>
 - license/disclaimer files: <links>
 - target audience: <user/team/enterprise>
+- public trust claims to self-check: <list>
 
 Return:
 - whether MIT use permission remains clear
 - wording that separates use permission from assurance claims
+- whether each public trust claim is supported, narrowed, or removed
 - unsafe phrases and replacements
 - scan commands to run
 - final boundary note

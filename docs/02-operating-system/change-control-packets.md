@@ -6,7 +6,7 @@
 .nuclear/changes/<slug>/
 ```
 
-A packet is the bounded evidence context for one change. It lets humans and agents work from design basis, configuration discipline, traceability, verification, and release readiness without reading the whole repo or every source.
+A packet is the focused evidence bundle for one change. It lets humans and agents work from design basis, configuration discipline, traceability, verification, and release readiness without reading the whole repo or every source.
 
 ---
 
@@ -16,7 +16,7 @@ A packet is the bounded evidence context for one change. It lets humans and agen
 2. **Packets scale by mode.** Quick packets are tiny; Nuclear packets are activated only by consequence.
 3. **Links beat duplication.** The packet points to source files, tests, PRs, issues, docs, dashboards, and releases.
 4. **Evidence status is explicit.** `pass`, `fail`, `gap`, `deferred`, and `not applicable` are better than silent assumptions.
-5. **AI assistance is bounded.** If AI changed code/docs/configs or exercised tools, record scope, authority, and independent checks.
+5. **AI assistance is scoped.** If AI changed code/docs/configs or exercised tools, record scope, authority, and independent checks.
 
 ---
 

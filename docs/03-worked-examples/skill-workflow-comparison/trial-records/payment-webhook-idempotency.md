@@ -43,6 +43,8 @@ Skills exercised:
 - `classifying-change-risk`
 - `creating-change-packets`
 - `packing-agent-context`
+- `self-checking-agent-actions`
+- `checking-dependency-and-model-trust`
 - `proving-claims`
 - `reviewing-ship-readiness`
 
@@ -52,6 +54,8 @@ Workflows exercised:
 - Standard change
 - Controlled configuration
 - Agent authority change
+- Critical action self-check
+- Trust check
 - Release readiness
 
 Nuclear-grade output:
@@ -59,8 +63,10 @@ Nuclear-grade output:
 - Mode: Standard, possibly stronger human review, because money-moving behavior is affected.
 - Controlled items: webhook handler, event idempotency store, payment-provider event schema, ledger/credit side effects, monitoring alerts.
 - Context pack: agent may edit handler/tests; may not use live credentials, call production APIs, or alter billing data.
+- Self-check: exact payment-provider target, expected duplicate-event behavior, and stop condition are named before touching payment paths.
+- Trust check: provider event-schema claims are separated from local replay, invalid-signature, and partial-failure evidence.
 - Proof claims: duplicate event does not double-credit; partial failure can retry safely; invalid signature is denied; event replay is logged.
-- Ship decision: release only with rollback path, monitoring query, support note, and residual risk owner.
+- Release decision: release only with rollback path, monitoring query, support note, and residual risk owner.
 
 ## Scoring Rationale
 

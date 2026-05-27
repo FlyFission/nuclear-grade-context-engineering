@@ -10,6 +10,8 @@ Nuclear-grade:
 question -> specify -> execute -> verify -> decide -> baseline -> operation
 ```
 
+HPI for AI agents adds the micro-controls under that path: brief the work, self-check critical actions, turn over cleanly, verify independently when needed, decide conservatively, and learn from near misses.
+
 ## Workflow catalog
 
 | Workflow | Loop | Use when | Main artifact |
@@ -19,7 +21,11 @@ question -> specify -> execute -> verify -> decide -> baseline -> operation
 | Standard change | specify -> plan -> trace -> verify -> decide | User, dependency, security, AI, operational, or release consequence | Standard packet |
 | Controlled configuration | identify items -> impact screen -> baseline -> operate | Prompts, models, tools, deps, docs, releases, or agent authority become controlled | CM records |
 | Agent authority change | question -> context pack -> boundary proof -> release review | Agents can write files, call tools, use APIs, or affect releases | Packet plus context pack |
+| Agent turnover | state -> changed conditions -> remaining work -> authority -> closed-loop acceptance | Work transfers to another agent, reviewer, verifier, releaser, support owner, or resumed thread | `turnover.md` |
+| Critical action self-check | action -> target -> expected result -> stop condition -> after-action evidence | Wrong target, public overclaim, irreversible state, or exceeded authority is plausible | `self-check.md` |
 | Release readiness | evidence status -> residual risk -> rollback -> monitoring -> decision | A PR or release changes trust posture | `ship.md` |
+| OPEX learning | event -> weak control -> durable update -> verification -> re-baseline trigger | Near misses, bad handoffs, escaped defects, or review surprises should change future work | `opex.md` |
+| Trust check | intended use -> external claims -> local evidence -> controls -> release impact | Dependencies, models, APIs, SaaS, generated artifacts, or vendor claims affect trust | `supplier-trust.md` or packet section |
 | Source/legal check | claim -> source map -> boundary wording -> validator | Public docs or examples cite assurance concepts | Source-lineage notes |
 
 ## Quick change
@@ -73,11 +79,34 @@ Agent authority changes need explicit scope:
 
 Start with `skills/packing-agent-context/SKILL.md` and `docs/02-operating-system/context-packs.md`.
 
+## Agent turnover and self-checking
+
+Use turnover when work moves between agents, humans, verifiers, releasers, support owners, or resumed threads:
+
+```bash
+# Paste commands/ng-turnover.md into your agent, or copy the template:
+cp templates/golden-path/turnover.md .nuclear/changes/<slug>/
+```
+
+Use self-checking before critical actions where the wrong file, wrong command, public overclaim, dependency/model/API trust gap, irreversible state, or release decision could matter:
+
+```bash
+cp templates/golden-path/self-check.md .nuclear/changes/<slug>/
+```
+
+These records should stay short. They exist to stop bad action, not to explain HPI theory.
+
 ## Release readiness
 
 A release decision is not "tests passed." It records evidence status, residual risk, rollback, monitoring, handoff, decision, and baseline trigger.
 
 Use `skills/reviewing-ship-readiness/SKILL.md`.
+
+## OPEX and trust checks
+
+Use OPEX when an incident, near miss, bad handoff, escaped defect, review surprise, or user confusion should update a durable control. A lesson is complete only when it updates a basis, test, validator, template, skill, command, doc, monitor, threshold, or baseline, or when closure explicitly explains why no durable update is warranted.
+
+Use trust checks when dependencies, models, APIs, SaaS tools, generated artifacts, or vendor claims affect permissions, data, release posture, evidence, or public trust. Separate external claims from local proof.
 
 ## Source and legal boundary checks
 

@@ -16,8 +16,12 @@ EXPECTED_SKILLS = {
     "classifying-change-risk",
     "creating-change-packets",
     "packing-agent-context",
+    "turning-over-agent-work",
+    "self-checking-agent-actions",
     "proving-claims",
     "reviewing-ship-readiness",
+    "learning-from-opex",
+    "checking-dependency-and-model-trust",
     "checking-source-lineage",
     "checking-license-and-assurance-boundaries",
 }
@@ -59,12 +63,14 @@ def test_every_skill_has_valid_agent_operable_contract():
         text = skill_file.read_text(encoding="utf-8")
         frontmatter = read_frontmatter(text)
 
+        assert set(frontmatter) == {"name", "description"}
         assert frontmatter["name"] == skill_name
         assert frontmatter["description"].startswith("Use when")
         assert len(frontmatter["description"]) >= 90
         assert len(frontmatter["description"]) <= 180
         assert " then " not in frontmatter["description"].lower()
         assert " step " not in frontmatter["description"].lower()
+        assert len(text.splitlines()) <= 500
 
         for section in REQUIRED_SECTIONS:
             assert section in text, f"{skill_name} missing {section}"

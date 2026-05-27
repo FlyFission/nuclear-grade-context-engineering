@@ -11,10 +11,15 @@ This project uses changelog entries to record public-facing changes, not to impl
 - Configuration-management public positioning and activated CM workflow records.
 - Namespaced `nuclear_grade` package entry point for installed console scripts.
 - Skill evaluation prompt bank for baseline-vs-skill trigger checks.
+- HPI overlay operating doc for AI-agent task preview, self-checking, turnover, verification selection, conservative decisions, and OPEX learning.
+- Skills and command prompts for agent turnover, critical-action self-checking, OPEX learning, and dependency/model/API trust checks.
+- Golden-path templates for turnover and self-check records, plus an activated supplier-trust template.
+- Agent near-miss issue template.
 
 ### Changed
 
 - Strengthened all skill trigger descriptions against skill-creator best practices.
+- Strengthened context packs, verification, release decisions, templates, worked-example comparisons, and source lineage with HPI micro-controls.
 
 ## [0.1.1] - Unreleased
 

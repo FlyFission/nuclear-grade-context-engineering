@@ -9,6 +9,7 @@ Review release readiness and record ship, block, defer, or ship-with-risk decisi
 - A Standard packet is approaching merge or release.
 - Evidence gaps, rollback, monitoring, or residual risks need a decision.
 - A PR changes trust posture.
+- Turnover, support handoff, OPEX trigger, or conservative decision posture is unclear.
 
 ## Do not use when
 
@@ -31,12 +32,15 @@ Inputs:
 - unresolved gaps: <list>
 - rollback/restore path: <summary>
 - monitoring/post-release checks: <summary>
+- turnover/support handoff:
+- OPEX trigger:
 
 Return:
 - release decision: ship, block, defer, or ship with named residual risk
 - evidence summary
 - residual risks and owner
 - rollback and monitoring notes
+- conservative decision rationale, abort trigger, handoff, and OPEX trigger
 - exact packet updates needed
 ```
 
@@ -50,6 +54,7 @@ Return:
 - Explicit release decision.
 - Residual risk statement.
 - Rollback and monitoring record.
+- Conservative posture, turnover, and learning trigger.
 
 ## Verification command
 
@@ -62,6 +67,7 @@ python tools/ng.py validate .nuclear/changes/<slug>
 - Equating green CI with ship readiness.
 - Deferring evidence without owner or impact.
 - Missing rollback or monitoring.
+- Missing operational handoff or OPEX trigger.
 
 ## Legal/assurance boundary note
 

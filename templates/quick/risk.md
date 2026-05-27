@@ -42,6 +42,14 @@
 - Expected result:
 - Evidence link/location:
 
+## Critical-action self-check
+
+Use only if the Quick change has a wrong-target risk.
+
+- Exact target:
+- Expected result:
+- Stop condition:
+
 ## Escalation check
 
 Escalate to Standard if any are true:

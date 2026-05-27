@@ -88,6 +88,25 @@ def test_baseline_is_late_lifecycle_state():
     assert "Decide -> Baseline -> Operate -> Learn" in text
 
 
+def test_hpi_overlay_is_public_operating_doc():
+    text = (
+        ROOT / "docs" / "02-operating-system" / "hpi-overlays.md"
+    ).read_text(encoding="utf-8")
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+
+    assert "HPI for AI agents" in text
+    assert "turn over cleanly" in text
+    assert "No compliance claim is made" in text
+    assert "HPI for AI agents" in readme
+
+
+def test_golden_path_includes_hpi_microtool_templates():
+    templates = ROOT / "templates" / "golden-path"
+
+    assert (templates / "turnover.md").exists()
+    assert (templates / "self-check.md").exists()
+
+
 def test_skill_workflow_comparison_covers_catalog():
     comparison = (
         ROOT / "docs" / "03-worked-examples" / "skill-workflow-comparison" / "results-summary.md"

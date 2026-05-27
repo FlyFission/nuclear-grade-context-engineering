@@ -7,13 +7,14 @@ description: Use when adopting Nuclear-grade for an AI-assisted change, repo wor
 
 ## Overview
 
-Use Nuclear-grade to turn AI-assisted software work into a bounded evidence path: question assumptions, classify consequence inside the risk screen, create the smallest useful packet, specify intent, prove important claims, and make the release decision explicit.
+Use Nuclear-grade to turn AI-assisted software work into a focused evidence path: question assumptions, classify consequence inside the risk screen, create the smallest useful packet, specify intent, prove important claims, and make the release decision explicit.
 
 ## When to Use
 
 - A human or AI agent will change code, tests, docs, prompts, tooling, dependencies, or release evidence.
 - A reviewer needs more than a commit message and test output to understand risk.
 - Agent authority, dependency trust, security posture, or release readiness matters.
+- A team needs workflow adherence: follow the selected packet path, or record why it no longer fits.
 
 ## When Not to Use
 
@@ -33,16 +34,18 @@ Use Nuclear-grade to turn AI-assisted software work into a bounded evidence path
 1. Apply questioning attitude: decision question, assumptions, evidence gaps, stop conditions.
 2. Classify the change as Quick, Standard, or a human-reviewed stronger mode.
 3. Create or locate the packet under `.nuclear/changes/<slug>/`.
-4. Record the minimum specification/design basis, proof obligation, affected files, and forbidden claims.
-5. Keep implementation work linked to claims and evidence.
-6. Run the validator for Quick or Standard packets.
-7. Stop before release if evidence status, rollback, monitoring, decision, baseline trigger, or legal boundary wording is unclear.
+4. Record the minimum specification/design basis, evidence obligation, affected files, and forbidden claims.
+5. Record deviations when the selected workflow or template no longer fits actual conditions.
+6. Keep implementation work linked to claims and evidence.
+7. Run the validator for Quick or Standard packets.
+8. Stop before release if evidence status, rollback, monitoring, decision, baseline trigger, or legal boundary wording is unclear.
 
 ## Outputs
 
 - Selected mode and rationale.
 - Packet path.
 - Required evidence commands or explicit evidence gaps.
+- Deviation note when the normal packet path is not followed.
 - Release posture: ship, block, defer, or ship with named residual risk.
 
 ## Verification
@@ -62,6 +65,7 @@ Use Nuclear-grade to turn AI-assisted software work into a bounded evidence path
 - "The tests pass, so the packet is unnecessary." Passing tests do not preserve assumptions, scope, residual risk, or release decision.
 - "The agent remembers the context." Chat history is not a durable review artifact.
 - "This is only documentation." Public docs can create legal, trust, and assurance claims.
+- "The template is ceremony." Use the minimum useful version, but record why a selected path no longer fits.
 
 ## Red Flags
 

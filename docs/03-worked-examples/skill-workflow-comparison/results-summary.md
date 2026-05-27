@@ -41,8 +41,12 @@
 | `classifying-change-risk` | U01, U02, U03, U04, U05, U06, U07, U08, U09, U10, U11, U12 |
 | `creating-change-packets` | U01, U02, U03, U04, U06, U07, U08, U09, U10, U11, U12 |
 | `packing-agent-context` | U02, U06, U07, U10, U11 |
+| `turning-over-agent-work` | U06, U09, U10, U11 |
+| `self-checking-agent-actions` | U04, U07, U08, U11 |
 | `proving-claims` | U01, U02, U03, U05, U06, U07, U08, U09, U10, U11 |
 | `reviewing-ship-readiness` | U02, U03, U05, U07, U08, U09, U11 |
+| `learning-from-opex` | U06, U09, U10, U12 |
+| `checking-dependency-and-model-trust` | U03, U05, U07, U11 |
 | `checking-source-lineage` | U04, U05, U12 |
 | `checking-license-and-assurance-boundaries` | U04, U05, U12 |
 
@@ -55,17 +59,22 @@
 | Standard change | U02, U03, U04, U06, U07, U08, U09, U10, U11, U12 |
 | Controlled configuration | U02, U03, U05, U07, U08, U09, U11 |
 | Agent authority change | U02, U06, U07, U11 |
+| Agent turnover | U06, U09, U10, U11 |
+| Critical action self-check | U04, U07, U08, U11 |
 | Release readiness | U02, U03, U05, U07, U08, U09, U11 |
+| OPEX learning | U06, U09, U10, U12 |
+| Trust check | U03, U05, U07, U11 |
 | Source/legal check | U04, U05, U12 |
 
 ## Findings
 
 1. **Simple prompting is enough for U01-like work.** If the change is local, reversible, easy to inspect, and has no trust-bearing claim, Quick mode adds only a light audit trail. Standard mode would be waste.
-2. **Nuclear-grade wins when authority crosses a boundary.** U02, U06, U07, and U11 show that explicit allowed actions, forbidden actions, proof obligations, and stop conditions are the difference between a useful agent handoff and a vague instruction.
+2. **Nuclear-grade wins when authority crosses a boundary.** U02, U06, U07, and U11 show that explicit allowed actions, forbidden actions, evidence obligations, and stop conditions are the difference between a useful agent handoff and a vague instruction.
 3. **Nuclear-grade wins when evidence must support a decision, not a vibe.** U03, U07, U08, and U09 show that "tests pass" is not enough for dependency trust, data deletion, money-moving behavior, or release readiness.
 4. **Source/legal checks are launch-critical.** U04 and U12 show that simple prompting tends to make public docs more confident, while Nuclear-grade narrows claims to influence, lineage, and evidence.
 5. **Baselines matter most for drift-prone artifacts.** U05, U08, U09, and U11 show the value of naming accepted state and revalidation triggers for prompts, models, data policies, release artifacts, API permissions, and credentials.
-6. **The cost is real.** Nuclear-grade should be framed as consequence-scaled. It is not a universal replacement for good direct prompting.
+6. **HPI microtools add value at transfer and critical action points.** U06, U09, U10, and U11 show that turnover prevents lost state; U04, U07, U08, and U11 show that self-checking is useful before public claims, irreversible data work, payment paths, and API permissions.
+7. **The cost is real.** Nuclear-grade should be framed as consequence-scaled. It is not a universal replacement for good direct prompting.
 
 ## Repo Implications
 
@@ -73,7 +82,7 @@
 - Add future worked examples for dependency upgrades, prompt/model baselines, API tool permissions, and release readiness.
 - Keep "Questioning attitude" as the public hook, but immediately route to concrete artifacts.
 - Improve examples that show `gap`, `deferred`, and `block` as successful workflow outcomes.
-- Add a one-screen context-pack example for agent handoff.
+- Add one-screen context-pack, turnover, self-check, OPEX, and trust-check examples for agent handoff and critical-action scenarios.
 
 ## Boundary Note
 

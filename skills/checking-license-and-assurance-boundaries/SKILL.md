@@ -14,6 +14,7 @@ This skill keeps the MIT license permission separate from engineering assurance.
 - Updating README, install docs, public docs, templates, skills, commands, examples, or release notes.
 - Adding source families, assurance language, or enterprise adoption language.
 - Preparing the repo for public visibility.
+- A public claim needs a self-check before release or a qualified external review boundary.
 
 ## When Not to Use
 
@@ -30,9 +31,10 @@ This skill keeps the MIT license permission separate from engineering assurance.
 
 1. Confirm license language remains MIT.
 2. Separate permission to use from claims about adequacy.
-3. Add clear negative boundary language near onboarding, templates, commands, and CLI help.
-4. Replace broad assurance words with reviewable evidence wording.
-5. Run public scans for prohibited phrases and internal residue.
+3. Self-check the exact claim against available evidence and qualified authority.
+4. Add clear negative boundary language near onboarding, templates, commands, and CLI help.
+5. Replace broad assurance words with reviewable evidence wording.
+6. Run public scans for prohibited phrases and internal residue.
 
 ## Outputs
 

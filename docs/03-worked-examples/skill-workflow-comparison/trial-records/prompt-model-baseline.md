@@ -43,6 +43,7 @@ Skills exercised:
 - `screening-change-impact`
 - `baselining-configuration`
 - `classifying-change-risk`
+- `checking-dependency-and-model-trust`
 - `proving-claims`
 - `reviewing-ship-readiness`
 - `checking-source-lineage`
@@ -53,6 +54,7 @@ Workflows exercised:
 - Questioning attitude
 - Controlled configuration
 - Agent authority change
+- Trust check
 - Release readiness
 - Source/legal check
 
@@ -61,8 +63,9 @@ Nuclear-grade output:
 - Controlled items: model identifier, prompt version, tool authority, eval set, release docs.
 - Impact screen: tests, evals, docs, context packs, and authority records may need updates.
 - Baseline: accepted prompt/model/tool state, evidence links, excluded claims, revalidation triggers.
+- Trust check: model/provider claims are separated from local eval evidence and intended-use limits.
 - Evidence: eval pass/fail/gap statuses linked to behavior claims.
-- Ship decision: release only if behavior evidence supports the new baseline or defer with named gaps.
+- Release decision: release only if behavior evidence supports the new baseline or defer with named gaps.
 
 ## Scoring Rationale
 

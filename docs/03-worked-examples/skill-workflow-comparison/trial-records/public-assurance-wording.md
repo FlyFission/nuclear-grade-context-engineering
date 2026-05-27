@@ -41,6 +41,7 @@ Skills exercised:
 - `screening-change-impact`
 - `classifying-change-risk`
 - `creating-change-packets`
+- `self-checking-agent-actions`
 - `checking-source-lineage`
 - `checking-license-and-assurance-boundaries`
 
@@ -48,6 +49,7 @@ Workflows exercised:
 
 - Questioning attitude
 - Standard change
+- Critical action self-check
 - Source/legal check
 
 Nuclear-grade output:
@@ -55,9 +57,10 @@ Nuclear-grade output:
 - Decision question: can public copy be stronger without implying assurance the repo does not provide?
 - Mode: Standard because public trust and source-lineage claims change.
 - Source-lineage result: cite sources as public inspiration and concept lineage, not satisfied requirements.
+- Self-check: exact public claim, evidence basis, qualified authority gap, and stop condition are named before release wording is accepted.
 - Legal/assurance boundary result: MIT permission remains separate from fitness, compliance, safety, security, and production suitability.
 - Impact screen: README, DISCLAIMER, source-map, templates, skills, commands, and validator wording may need alignment.
-- Ship decision: ship only with boundary-safe wording and prohibited-claim scan.
+- Release decision: ship only with boundary-safe wording and prohibited-claim scan.
 
 ## Scoring Rationale
 

@@ -43,6 +43,7 @@ Skills exercised:
 - `baselining-configuration`
 - `classifying-change-risk`
 - `creating-change-packets`
+- `self-checking-agent-actions`
 - `proving-claims`
 - `reviewing-ship-readiness`
 
@@ -51,6 +52,7 @@ Workflows exercised:
 - Questioning attitude
 - Standard change
 - Controlled configuration
+- Critical action self-check
 - Release readiness
 
 Nuclear-grade output:
@@ -58,8 +60,9 @@ Nuclear-grade output:
 - Mode: Standard, with human review if policy/legal ownership is unclear.
 - Controlled items: retention policy, migration/job, backup/restore plan, dashboards, support docs, runbook.
 - Impact screen: data model, scheduler, retention docs, monitoring, customer promises, rollback path.
+- Self-check: exact migration/deletion target, expected dry-run result, and stop condition are named before irreversible action.
 - Proof claims: old eligible logs are selected; new logs retained; dry run count reviewed; restore path exists or irreversible deletion is consciously blocked.
-- Ship decision: block if restore/dry-run evidence is missing.
+- Release decision: block if restore/dry-run evidence is missing.
 - Baseline trigger: accepted retention policy and job configuration.
 
 ## Scoring Rationale

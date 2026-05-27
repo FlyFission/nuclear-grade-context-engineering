@@ -9,6 +9,7 @@ Record accepted controlled configuration state after review, merge, release, or 
 - A Standard packet ships.
 - Public docs, prompts, models, dependencies, tools, skills, commands, templates, validators, or release artifacts are accepted.
 - Operation or review feedback requires a re-baseline.
+- OPEX changed accepted state or revalidation triggers.
 
 ## Do not use when
 
@@ -32,6 +33,7 @@ Inputs:
 - included controlled items:
 - excluded items/claims:
 - verification evidence:
+- OPEX / near-miss links:
 - accepted gaps:
 
 Return a baseline record with included state, excluded state, evidence links, residual gaps, and revalidation or re-baseline triggers. Do not imply formal assurance or compliance.
@@ -46,6 +48,7 @@ Return a baseline record with included state, excluded state, evidence links, re
 - Baseline identity.
 - Included/excluded controlled items.
 - Revalidation and re-baseline triggers.
+- OPEX links when learning changed the baseline.
 
 ## Verification command
 

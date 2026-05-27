@@ -1,6 +1,6 @@
 ---
 name: creating-change-packets
-description: Use when creating or updating Quick or Standard packets, adding required files, refreshing proof obligations, or preparing an evidence-backed PR.
+description: Use when creating or updating Quick or Standard packets, adding required files, refreshing evidence obligations, or preparing an evidence-backed PR.
 ---
 
 # Creating Change Packets
@@ -14,6 +14,7 @@ A packet keeps scope, specification/design basis, plan, trace, evidence, and rel
 - Starting a meaningful AI-assisted change.
 - Updating a packet after scope, proof, risk, or release posture changed.
 - Preparing a PR that needs evidence beyond normal review notes.
+- Task preview, self-check, turnover, OPEX, or supplier trust has been activated and needs a record.
 
 ## When Not to Use
 
@@ -32,14 +33,16 @@ A packet keeps scope, specification/design basis, plan, trace, evidence, and rel
 
 1. Use `python tools/ng.py new <slug> --mode quick|standard`.
 2. Fill only the decision-useful parts of each packet file.
-3. Link to affected files, tests, reviews, source-map rows, and known gaps.
-4. Keep status labels explicit: `pass`, `fail`, `gap`, `deferred`, `not applicable`, or `planned`.
-5. Validate with `python tools/ng.py validate .nuclear/changes/<slug>`.
+3. Add HPI microtool records only when they change a decision or action.
+4. Link to affected files, tests, reviews, source-map rows, and known gaps.
+5. Keep status labels explicit: `pass`, `fail`, `gap`, `deferred`, `not applicable`, or `planned`.
+6. Validate with `python tools/ng.py validate .nuclear/changes/<slug>`.
 
 ## Outputs
 
 - Quick packet: `risk.md`, `proof.md`.
 - Standard packet: `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, `ship.md`.
+- Activated HPI records such as `turnover.md`, `self-check.md`, `opex.md`, or `supplier-trust.md` when consequence warrants them.
 - Validator result.
 
 ## Verification

@@ -38,11 +38,11 @@ What must not happen?
 |---|---|---|
 | | | |
 
-## Assumptions and constraints
+## Assumptions, constraints, and invalidation triggers
 
-| Assumption / constraint | Basis or source | Invalidation trigger | Owner |
-|---|---|---|---|
-| | | | |
+| Assumption / constraint | Fact / assumption / unknown | Basis or source | Invalidation trigger | Owner |
+|---|---|---|---|---|
+| | | | | |
 
 ## Interfaces and trust boundaries
 

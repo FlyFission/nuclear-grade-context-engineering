@@ -27,6 +27,21 @@ Number the minimum steps needed to complete the change.
 2.
 3.
 
+## HPI task preview
+
+| Critical step | Likely error | Consequence | Control / contingency | Evidence |
+|---|---|---|---|---|
+| | | | | |
+
+## Agent briefing
+
+- Role:
+- Authority source:
+- Active procedure/template:
+- Last completed action if resumed:
+- Handoff or turnover needed? yes/no:
+- Pause when unsure condition:
+
 ## Affected files and assets
 
 | File / asset | Change expected | Why it matters | Owner |
@@ -57,6 +72,7 @@ Use only if activated.
 | Build complete | Affected files match plan. | planned / pass / gap |
 | Verification complete | Evidence is linked in `verification.md`. | planned / pass / gap |
 | Release decision ready | Residual risks and rollback are recorded. | planned / pass / gap |
+| Turnover complete if activated | Next owner has state, authority, stop criteria, and remaining work. | planned / pass / gap |
 
 ## Rollback approach
 

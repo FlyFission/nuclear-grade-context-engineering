@@ -8,6 +8,7 @@ Screen downstream impact from a controlled configuration change. This is a porta
 
 - A controlled change may affect docs, tests, validators, skills, commands, templates, dependencies, release posture, source lineage, or operations.
 - A packet deletes, renames, or changes evidence that other records link to.
+- OPEX, near miss, or weak-control evidence suggests downstream records may be stale.
 
 ## Do not use when
 
@@ -29,7 +30,7 @@ Inputs:
 - controlled items:
 - planned or actual diff:
 
-For each artifact family, decide update, no-op, defer, or block. Name required updates, evidence links, owners, and revalidation triggers. Pay special attention to public claims, validator behavior, source-lineage notes, and release posture.
+For each artifact family, decide update, no-op, defer, or block. Name required updates, stale controls, evidence links, owners, and revalidation triggers. Pay special attention to public claims, validator behavior, source-lineage notes, handoffs, trust checks, OPEX, and release posture.
 
 ## Files created or modified
 
@@ -41,6 +42,7 @@ For each artifact family, decide update, no-op, defer, or block. Name required u
 - Impact screen.
 - Required updates or blockers.
 - Revalidation triggers.
+- Weak or stale controls that need durable updates.
 
 ## Verification command
 

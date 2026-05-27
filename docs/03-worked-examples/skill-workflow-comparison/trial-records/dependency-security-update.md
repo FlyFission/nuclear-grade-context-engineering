@@ -44,6 +44,7 @@ Skills exercised:
 - `classifying-change-risk`
 - `creating-change-packets`
 - `packing-agent-context`
+- `checking-dependency-and-model-trust`
 - `proving-claims`
 - `reviewing-ship-readiness`
 
@@ -52,12 +53,14 @@ Workflows exercised:
 - Questioning attitude
 - Standard change
 - Controlled configuration
+- Trust check
 - Release readiness
 
 Nuclear-grade output:
 
 - Mode: Standard because dependency trust and release posture may change.
 - Controlled items: dependency declaration, lockfile, advisory review, smoke tests, release note.
+- Trust check: package/version identity, source claims, advisory evidence, local smoke proof, rollback, and revalidation trigger stay separate.
 - Claims separated:
   - D-001: runtime behavior still works.
   - D-002: selected version has acceptable advisory posture.
@@ -66,7 +69,7 @@ Nuclear-grade output:
   - Runtime smoke: pass if tests run.
   - Advisory review: gap until checked.
   - Lockfile: deferred if project has no lockfile.
-- Ship decision: block or defer if advisory evidence is missing, even if tests pass.
+- Release decision: block or defer if advisory evidence is missing, even if tests pass.
 - Baseline trigger: re-baseline dependency state after accepted update.
 
 ## Scoring Rationale

@@ -14,6 +14,7 @@ Source lineage keeps public claims honest. It links concepts to public sources w
 - A doc, template, skill, command, or packet cites a source family.
 - New standards, frameworks, agencies, or assurance terms appear.
 - A public-facing claim may sound like compliance, certification, approval, or formal verification.
+- Dependency, model, API, or vendor source claims may be confused with local proof.
 
 ## When Not to Use
 
@@ -31,9 +32,10 @@ Source lineage keeps public claims honest. It links concepts to public sources w
 
 1. Identify every cited source family and assurance-sounding term.
 2. Confirm each direct lineage source is public, linkable, and listed in the source map.
-3. Downgrade unresolved sources to supporting context or public URL needed.
-4. Rewrite claims as influence, concept lineage, or workflow inspiration.
-5. Remove or negate language that implies compliance, approval, or formal assurance.
+3. Separate influence, analogy, evidence, requirement, authority, and vendor/source claim.
+4. Downgrade unresolved sources to supporting context or public URL needed.
+5. Rewrite claims as influence, concept lineage, or workflow inspiration.
+6. Remove or negate language that implies compliance, approval, or formal assurance.
 
 ## Outputs
 

@@ -32,7 +32,7 @@ Inputs:
 - known gaps: <list>
 
 Return:
-- claim -> basis -> control/design feature -> evidence -> status -> ship posture
+- claim -> basis -> control/design feature -> verification type -> evidence -> status -> ship posture
 - narrowed wording for overbroad claims
 - explicit gaps, deferrals, or blockers
 - validator command to run
@@ -48,6 +48,7 @@ Return:
 
 - Claim-to-evidence table.
 - Evidence status.
+- Verification type: self-check, peer-check, concurrent verification, independent verification, peer review, test, or eval.
 - Updated release posture.
 
 ## Verification command
@@ -59,6 +60,7 @@ python tools/ng.py validate .nuclear/changes/<slug>
 ## Failure modes
 
 - Treating CI as proof of unrelated claims.
+- Treating a self-check as independent verification.
 - Hiding gaps.
 - Using "safe", "secure", "approved", or "compliant" beyond the evidence.
 

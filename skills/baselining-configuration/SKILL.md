@@ -14,6 +14,7 @@ A baseline records the accepted state of controlled items and the evidence that 
 - A Standard packet ships or public-facing workflow state changes.
 - Controlled prompts, models, tools, dependencies, docs, templates, skills, commands, validators, or release artifacts are accepted.
 - OPEX or review feedback requires re-baselining.
+- A near miss or operating lesson changes the accepted state or revalidation trigger.
 
 ## When Not to Use
 
@@ -30,7 +31,7 @@ A baseline records the accepted state of controlled items and the evidence that 
 
 1. Name the baseline and decision point.
 2. Record included and excluded controlled items.
-3. Link basis, impact, trace, verification, and ship records.
+3. Link basis, impact, trace, verification, ship, and OPEX records.
 4. Name accepted residual risks and revalidation triggers.
 5. Record what would require re-baseline.
 
@@ -39,6 +40,7 @@ A baseline records the accepted state of controlled items and the evidence that 
 - `baseline.md` or baseline section in `ship.md`.
 - Re-baseline triggers.
 - Accepted gaps with owners.
+- OPEX link when learning changed the baseline.
 
 ## Verification
 

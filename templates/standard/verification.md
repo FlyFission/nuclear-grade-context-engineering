@@ -24,9 +24,20 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`.
 
 ## Claim-to-evidence table
 
-| Claim / requirement ID | Verification method | Acceptance criteria | Result status | Evidence link | Gap / follow-up |
-|---|---|---|---|---|---|
-| REQ-001 | | | | | |
+| Claim / requirement ID | Verification type | Verification method | Acceptance criteria | Result status | Evidence link | Gap / follow-up |
+|---|---|---|---|---|---|---|
+| REQ-001 | deterministic test / eval / self-check / peer-check / concurrent verification / independent verification / peer review | | | | | |
+
+## Verification type guide
+
+| Type | Use when |
+|---|---|
+| self-check | critical action target and expected result matter |
+| peer-check | another reviewer should prevent wrong action before it happens |
+| concurrent verification | high-consequence action must be observed as it happens |
+| independent verification | final state must be checked separately from the performer claim |
+| peer review | artifact quality, maintainability, usability, or boundary wording matters |
+| deterministic test / eval | reproducible behavior evidence exists |
 
 ## Commands, evals, and reviews
 
@@ -50,6 +61,7 @@ Use if AI materially contributed or had tool authority.
 - Model/tool used:
 - Permissions/actions allowed:
 - Independent checks performed:
+- Self-check / turnover records:
 - Hallucination/slop screening:
 - Human approval gates exercised:
 

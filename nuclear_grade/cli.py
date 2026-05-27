@@ -25,7 +25,14 @@ COMMANDS = ROOT / "commands"
 QUICK_FILES = ("risk.md", "proof.md")
 STANDARD_FILES = ("risk.md", "basis.md", "plan.md", "trace.md", "verification.md", "ship.md")
 CM_FILES = ("controlled-items.md", "change-impact.md", "baseline.md", "variance.md", "opex.md")
-GOLDEN_PATH_FILES = ("questioning-attitude.md", "spec.md", "decision.md")
+GOLDEN_PATH_FILES = (
+    "questioning-attitude.md",
+    "spec.md",
+    "turnover.md",
+    "self-check.md",
+    "decision.md",
+)
+OPTIONAL_FILES = ("standard/supplier-trust.md",)
 REQUIRED_PUBLIC_FILES = (
     "README.md",
     "DISCLAIMER.md",
@@ -192,6 +199,7 @@ def handle_list(args: argparse.Namespace) -> int:
     print("Standard files: " + ", ".join(STANDARD_FILES))
     print("Activated CM files: " + ", ".join(CM_FILES))
     print("Golden path files: " + ", ".join(GOLDEN_PATH_FILES))
+    print("Optional files: " + ", ".join(OPTIONAL_FILES))
     print("Skills:")
     for path in sorted(SKILLS.glob("*/SKILL.md")):
         print(f"- {path.parent.name}")
@@ -270,6 +278,10 @@ def collect_doctor_failures(repo: Path) -> list[str]:
         for name in files:
             if not (repo / "templates" / mode / name).exists():
                 failures.append(f"missing template: templates/{mode}/{name}")
+
+    for name in OPTIONAL_FILES:
+        if not (repo / "templates" / name).exists():
+            failures.append(f"missing template: templates/{name}")
 
     if not catalog.exists():
         failures.append("missing nuclear-grade.yaml")

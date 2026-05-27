@@ -57,8 +57,19 @@ A minimum useful packet is one a skeptical reviewer can navigate quickly.
 | `basis.md` | Mission, protected outcomes, unacceptable outcomes, assumptions, constraints, dependency/AI trust decisions, evidence needs. | What must remain true? |
 | `plan.md` | Build sequence, affected files/assets, non-goals, review checkpoints, rollback approach, proof commands. | How will we build this without losing scope or rollback thinking? |
 | `trace.md` | Important claim → basis → control/design feature → evidence → ship posture. | Can reviewers navigate from claim to proof quickly? |
-| `verification.md` | Claims, methods, commands/evals/reviews, acceptance criteria, results, gaps. | Does the proof match the claims? |
+| `verification.md` | Claims, methods, verification type, commands/evals/reviews, acceptance criteria, results, gaps. | Does the proof match the claims? |
 | `ship.md` | Baseline, evidence status, residual risks, rollback, monitoring, handoff, release decision. | Should this ship now? |
+
+Verification type matters:
+
+| Type | Use for |
+|---|---|
+| self-check | critical action target and expected result |
+| peer-check | another person or agent prevents a likely wrong action before it happens |
+| concurrent verification | high-consequence action is observed while it happens |
+| independent verification | final state or evidence is checked by a separate human, agent, or deterministic tool |
+| peer review | artifact quality, claim fit, maintainability, and boundary wording |
+| deterministic test / eval | reproducible behavior evidence |
 
 ---
 
@@ -72,7 +83,8 @@ Avoid:
 - writing long narratives where a link and status field would work;
 - filling Standard records for a clearly Quick change;
 - claiming test coverage proves unrelated safety/security/reliability claims;
-- letting AI-generated documentation outrun independent evidence.
+- letting AI-generated documentation outrun independent evidence;
+- letting the same agent's confident claim substitute for independent verification when consequence demands separation.
 
 Use links, status labels, and explicit gaps instead.
 

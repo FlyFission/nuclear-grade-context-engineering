@@ -9,7 +9,8 @@
 3. Inspect `trace.md` for claim-to-evidence links.
 4. Inspect `verification.md` for evidence status and gaps.
 5. Inspect `ship.md` or `decision.md` for release decision, rollback, monitoring, residual risk, and baseline trigger.
-6. Run or inspect validator output.
+6. Inspect `turnover.md` or `self-check.md` when work transferred or critical actions occurred.
+7. Run or inspect validator output.
 
 ## What to challenge
 
@@ -19,6 +20,21 @@
 - Missing rollback or monitoring for release-facing work.
 - AI authority broader than recorded.
 - Public wording that implies compliance, certification, approval, safety, security, or formal verification.
+- Missing turnover state when another agent, reviewer, verifier, releaser, support owner, or resumed thread continues work.
+- A critical action with no target, expected result, stop condition, or after-action evidence.
+- Vendor, model, API, or dependency claims treated as local proof.
+
+## Verification challenge
+
+Ask what kind of checking is being claimed:
+
+| Claim | Reviewer challenge |
+|---|---|
+| self-check | Was the target and expected result named before action? |
+| peer-check | Did another reviewer prevent a likely wrong action before it happened? |
+| concurrent verification | Was the high-consequence action observed as it happened? |
+| independent verification | Was final state checked separately from the performer claim? |
+| peer review | Was the artifact reviewed for usability, scoped claims, and evidence fit? |
 
 ## What not to demand
 

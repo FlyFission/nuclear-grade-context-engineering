@@ -30,11 +30,14 @@ jobs:
       - name: Run repo doctor
         run: python tools/ng.py doctor .
 
-      - name: Validate flagship packet
-        run: python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions
-
-      - name: Validate launch packet
-        run: python tools/ng.py validate .nuclear/changes/public-v0-launch
-
-      - name: Validate productization packet
-        run: python tools/ng.py validate .nuclear/changes/peer-ready-release
+      - name: Validate change packets
+        shell: bash
+        run: |
+          set -euo pipefail
+          for packet in .nuclear/changes/*; do
+            [ -d "$packet" ] || continue
+            python tools/ng.py validate "$packet"
+          done
+          while IFS= read -r packet; do
+            python tools/ng.py validate "$packet"
+          done < <(find docs/03-worked-examples -path '*/.nuclear/changes/*' -type d -prune -print)

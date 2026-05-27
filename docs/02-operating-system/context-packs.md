@@ -1,6 +1,6 @@
 # Context Packs
 
-**Purpose:** Define the bounded context bundles that let humans and AI agents work from the right evidence without rereading the whole repo or every source document.
+**Purpose:** Define the focused context bundles that let humans and AI agents work from the right evidence without rereading the whole repo or every source document.
 
 **Status:** Design spec. Context packs are operating aids, not compliance records.
 
@@ -11,10 +11,10 @@
 A context pack is a small, task-specific bundle:
 
 ```text
-role + mode + packet state + affected files + required evidence + approval gates + relevant source lineage
+role + mode + packet state + affected files + required evidence + approval gates + HPI controls + relevant source lineage
 ```
 
-It exists because Nuclear-grade is a control system for AI/LLM horsepower. Powerful agents should not receive unlimited context and ambiguous authority. They should receive a bounded packet, clear constraints, and proof obligations.
+It exists because Nuclear-grade is a control system for AI/LLM horsepower. Powerful agents should not receive unlimited context and ambiguous authority. They should receive a focused packet, clear constraints, and evidence obligations.
 
 ---
 
@@ -47,12 +47,17 @@ Packet: .nuclear/changes/<slug>/
 Objective: <one paragraph>
 Affected files: <paths>
 Current phase: Question / Specify / Plan / Execute / Verify / Review / Decide / Baseline / Operate / Learn
+Last completed action: <resume point>
+Changed conditions: <what changed since the prior agent/context>
 Risk summary: <top risks and escalation triggers>
 Basis summary: <what must remain true>
+Critical next action: <action, likely error, control>
 Required evidence: <commands, reviews, evals, links>
 Approval gates: <who/what must approve before next step>
 Source-lineage excerpts: <only the relevant source-map/crosswalk links>
 Forbidden actions: <scope and authority limits>
+Do-not-touch targets: <files, commands, systems, claims>
+Incoming confirmation: <owner restates objective, authority, proof, and stop criteria>
 Open gaps: <what is unknown or blocked>
 Next action: <single next move>
 ```
@@ -82,11 +87,16 @@ Every AI-facing context pack should state:
 - whether network/source lookup is allowed;
 - what approvals are required before side effects;
 - what claims it must not make;
-- what evidence it must produce before declaring completion.
+- what evidence it must produce before declaring completion;
+- whether a self-check or turnover record is required before continuing.
 
 For tool-bearing agents, include a denial rule:
 
 > If the requested action exceeds the context pack’s authority, stop and record the needed approval or escalation path instead of improvising.
+
+For handoffs, include a closed-loop rule:
+
+> The incoming owner restates objective, authority, required evidence, and stop criteria before acting when consequence warrants turnover.
 
 ---
 
@@ -113,6 +123,8 @@ A context pack is ready when a competent human or AI agent can answer:
 4. What must not be claimed?
 5. What should I read now, and what should I ignore?
 6. What is the next action?
+7. What changed since the prior owner or context?
+8. What critical action needs self-checking or turnover?
 
 A context pack should be archived or refreshed when it becomes stale, when mode changes, or when the packet’s risk/evidence state changes.
 

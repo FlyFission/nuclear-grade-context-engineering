@@ -15,6 +15,8 @@ python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.n
 
 Run source and boundary scans when docs, templates, skills, commands, or examples change.
 
+For HPI-activated changes, also confirm turnover, self-check, OPEX, and dependency/model/API trust records are used only when consequence warrants them.
+
 ## Versioning
 
 Public v0 uses semantic-ish public milestones:
@@ -32,10 +34,13 @@ Contributions should:
 - avoid new dependencies unless clearly justified;
 - update indexes when adding skills, commands, templates, or examples;
 - preserve MIT license and boundary language.
+- keep HPI language software-native and non-compliance-claiming.
 
 ## AI-assisted contributions
 
 If AI agents materially change code, docs, tests, templates, release evidence, or source-lineage wording, record the scope, evidence, and independent check in the relevant packet or PR.
+
+If work transfers to another agent or thread, record the turnover state. If a critical action is performed, record the target, expected result, stop condition, and after-action evidence.
 
 ## Boundary note
 

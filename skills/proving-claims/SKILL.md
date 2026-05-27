@@ -14,6 +14,7 @@ Evidence should answer named claims, not create a general feeling that the chang
 - A packet has implementation claims, safety/security wording, release readiness, or dependency trust assertions.
 - Tests pass but reviewers cannot see which claim each test supports.
 - Evidence gaps need to be accepted, deferred, or treated as blockers.
+- The proof needs the right verification type: self-check, peer-check, concurrent verification, independent verification, peer review, test, or eval.
 
 ## When Not to Use
 
@@ -29,15 +30,17 @@ Evidence should answer named claims, not create a general feeling that the chang
 ## Process
 
 1. Extract each important claim.
-2. Link each claim to basis, control/design feature, implementation, evidence, and ship posture.
-3. Assign evidence status: `pass`, `fail`, `gap`, `deferred`, `not applicable`, or `planned`.
-4. Narrow overbroad claims until the evidence genuinely supports them.
-5. Record gaps and release impact.
+2. Select the verification type needed for each claim.
+3. Link each claim to basis, control/design feature, implementation, evidence, and ship posture.
+4. Assign evidence status: `pass`, `fail`, `gap`, `deferred`, `not applicable`, or `planned`.
+5. Narrow overbroad claims until the evidence genuinely supports them.
+6. Record gaps and release impact.
 
 ## Outputs
 
 - Claim-to-evidence rows in `trace.md` or `verification.md`.
 - Reproducible evidence commands or artifact links.
+- Verification type for each important claim.
 - Updated ship posture when evidence changes.
 
 ## Verification
@@ -55,6 +58,7 @@ Evidence should answer named claims, not create a general feeling that the chang
 
 - "CI passed, so all claims pass." CI only proves what it checks.
 - "A reviewer can inspect the code." Review is evidence only when scope and result are recorded.
+- "The same agent checked itself." That may be a self-check, but not independent verification.
 - "We should not mention gaps." Hidden gaps create worse release decisions.
 
 ## Red Flags

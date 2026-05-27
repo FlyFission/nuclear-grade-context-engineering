@@ -24,7 +24,11 @@ templates:
   golden-path:
     - questioning-attitude.md
     - spec.md
+    - turnover.md
+    - self-check.md
     - decision.md
+  optional:
+    - standard/supplier-trust.md
 skills:
   - questioning-attitude
   - using-nuclear-grade
@@ -34,8 +38,12 @@ skills:
   - classifying-change-risk
   - creating-change-packets
   - packing-agent-context
+  - turning-over-agent-work
+  - self-checking-agent-actions
   - proving-claims
   - reviewing-ship-readiness
+  - learning-from-opex
+  - checking-dependency-and-model-trust
   - checking-source-lineage
   - checking-license-and-assurance-boundaries
 commands:
@@ -46,8 +54,12 @@ commands:
   - ng-impact.md
   - ng-baseline.md
   - ng-context-pack.md
+  - ng-turnover.md
+  - ng-self-check.md
   - ng-prove.md
   - ng-ship-review.md
+  - ng-opex.md
+  - ng-trust-check.md
   - ng-source-check.md
   - ng-legal-check.md
 boundaries:

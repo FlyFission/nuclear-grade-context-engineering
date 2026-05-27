@@ -37,6 +37,16 @@ Stop conditions: What would make us pause or escalate?
 Next artifact: Quick proof, Standard spec, context pack, CM record, or release decision.
 ```
 
+Add HPI controls only when they change the work:
+
+```text
+Task preview: What critical action could go wrong?
+Self-check: What exact target, expected result, and stop condition apply?
+Turnover: What changed, what remains, and who accepts authority next?
+OPEX: What durable control changes if a near miss or review surprise appears?
+Trust check: What dependency, model, API, SaaS, or vendor claim affects the decision?
+```
+
 | If the change is... | Use |
 |---|---|
 | Low consequence, reversible, easy to prove | Quick |
@@ -84,6 +94,8 @@ If the change needs the public golden path, copy the activated records:
 ```bash
 cp templates/golden-path/questioning-attitude.md .nuclear/changes/<slug>/
 cp templates/golden-path/spec.md .nuclear/changes/<slug>/
+cp templates/golden-path/turnover.md .nuclear/changes/<slug>/
+cp templates/golden-path/self-check.md .nuclear/changes/<slug>/
 cp templates/golden-path/decision.md .nuclear/changes/<slug>/
 ```
 
@@ -99,6 +111,7 @@ Answer only what helps a reviewer decide:
 6. What would escalate the mode?
 7. What decision is needed before release or merge?
 8. What baseline or revalidation trigger changes after the decision?
+9. What HPI control, if any, changes the next action or evidence obligation?
 
 ## 6. Prove one claim
 

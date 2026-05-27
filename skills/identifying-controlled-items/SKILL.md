@@ -14,6 +14,7 @@ Controlled items are the parts of a software system whose approved state matters
 - A change touches prompts, models, tools, dependencies, public docs, validators, templates, skills, commands, release artifacts, or runbooks.
 - A reviewer needs to know what state is approved and what drift would matter.
 - Agent authority or source-lineage wording changes.
+- Wrong-target work is plausible and exact item identity needs flagging before action.
 
 ## When Not to Use
 
@@ -30,12 +31,14 @@ Controlled items are the parts of a software system whose approved state matters
 
 1. List affected files, prompts, models, dependencies, tools, data sources, docs, tests, evals, release artifacts, and claims.
 2. Keep only items whose state affects trust, authority, release posture, reproducibility, or public understanding.
-3. Record current state, intended state, owner, evidence link, and revalidation trigger.
-4. Escalate to `change-impact.md` when multiple artifact families may become stale.
+3. Flag exact item identity, owner, and do-not-touch boundaries.
+4. Record current state, intended state, owner, evidence link, and revalidation trigger.
+5. Escalate to `change-impact.md` when multiple artifact families may become stale.
 
 ## Outputs
 
 - Controlled item list or `controlled-items.md`.
+- Exact target identity and do-not-touch boundaries when needed.
 - Revalidation triggers.
 - Named gaps for items that need later baseline work.
 

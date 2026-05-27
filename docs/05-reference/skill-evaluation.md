@@ -60,7 +60,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 
 - Should trigger: Classify whether this API permission plus docs change is Quick, Standard, or stronger.
 - Should trigger: Pick the right mode for a dependency bump that changes authentication behavior.
-- Should trigger: This small diff touches agent authority; classify the risk and proof obligation.
+- Should trigger: This small diff touches agent authority; classify the risk and evidence obligation.
 - Should not trigger: Fill out the verification table for already-selected Standard mode.
 - Should not trigger: Write the source-lineage note for a citation change.
 
@@ -74,11 +74,27 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 
 ### `packing-agent-context`
 
-- Should trigger: Build a bounded context pack for an agent that can edit tests and run commands.
+- Should trigger: Build a focused context pack for an agent that can edit tests and run commands.
 - Should trigger: Prepare one-screen reviewer context with authority, proof, and stop conditions.
 - Should trigger: Distill this long implementation thread into what the next agent may do and must prove.
 - Should not trigger: Run the packet validator.
 - Should not trigger: Classify the change mode only.
+
+### `turning-over-agent-work`
+
+- Should trigger: Hand this half-finished validator change to a new agent with last completed action, changed conditions, proof gaps, and stop criteria.
+- Should trigger: Prepare a release handoff for support after this Standard packet ships with residual risk and monitoring.
+- Should trigger: We are resuming a long thread after CI changed; create a turnover record before the next agent edits files.
+- Should not trigger: Summarize this README section without assigning follow-up work.
+- Should not trigger: Run a Quick proof command for a completed typo fix.
+
+### `self-checking-agent-actions`
+
+- Should trigger: Before running this broad file move command, self-check the exact target, expected result, stop condition, and after-action proof.
+- Should trigger: Self-check this public README claim before release because it says the workflow is secure.
+- Should trigger: The agent is about to update dependency and API permission files; check the intended action and evidence first.
+- Should not trigger: Explain what this shell command would do without running it.
+- Should not trigger: Create a whole Standard packet for a normal feature change.
 
 ### `proving-claims`
 
@@ -95,6 +111,22 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should trigger: Is this agent-authority change ready to release with the evidence we have?
 - Should not trigger: Identify controlled items before implementation starts.
 - Should not trigger: Draft the risk.md threshold screen.
+
+### `learning-from-opex`
+
+- Should trigger: An agent edited outside its context pack but tests caught it; create an OPEX record and durable control update.
+- Should trigger: A reviewer found a hallucinated source claim after merge; turn the near miss into a template or validator update.
+- Should trigger: Users misunderstood the release note and support needed a workaround; capture operating experience and rebaseline triggers.
+- Should not trigger: Fix the failing unit test immediately during incident containment.
+- Should not trigger: Assign blame for who approved the PR.
+
+### `checking-dependency-and-model-trust`
+
+- Should trigger: A dependency bump changes authentication behavior; separate vendor claims from local evidence and release impact.
+- Should trigger: We are switching models for an agent workflow; check intended use, eval evidence, gaps, and revalidation triggers.
+- Should trigger: This SaaS API will receive credentials and affect release automation; screen trust before shipping.
+- Should not trigger: Cite a public DOE handbook as source lineage for a docs paragraph.
+- Should not trigger: Fix a local typo in package comments with no dependency behavior change.
 
 ### `checking-source-lineage`
 

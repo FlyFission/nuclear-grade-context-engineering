@@ -14,8 +14,12 @@ EXPECTED_COMMANDS = {
     "ng-impact.md",
     "ng-baseline.md",
     "ng-context-pack.md",
+    "ng-turnover.md",
+    "ng-self-check.md",
     "ng-prove.md",
     "ng-ship-review.md",
+    "ng-opex.md",
+    "ng-trust-check.md",
     "ng-source-check.md",
     "ng-legal-check.md",
 }

@@ -55,6 +55,13 @@ def scaffold_repo(
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(f"# golden-path {name} from repo\n", encoding="utf-8")
 
+    for name in ng_cli.OPTIONAL_FILES:
+        if ("optional", name) in missing_templates:
+            continue
+        path = repo / "templates" / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(f"# optional {name} from repo\n", encoding="utf-8")
+
     if include_catalog:
         (repo / "nuclear-grade.yaml").write_text("name: test-catalog\n", encoding="utf-8")
 
@@ -163,12 +170,25 @@ def test_doctor_checks_golden_path_templates(tmp_path):
     assert "missing template: templates/golden-path/questioning-attitude.md" in result.stdout
 
 
+def test_doctor_checks_optional_templates(tmp_path):
+    scaffold_repo(tmp_path, missing_templates=(("optional", "standard/supplier-trust.md"),))
+
+    result = run_ng("doctor", str(tmp_path))
+
+    assert result.returncode == 1
+    assert "missing template: templates/standard/supplier-trust.md" in result.stdout
+
+
 def test_list_includes_golden_path_templates():
     result = run_ng("list")
 
     assert result.returncode == 0, result.stderr
     assert "Golden path files:" in result.stdout
     assert "questioning-attitude.md" in result.stdout
+    assert "turnover.md" in result.stdout
+    assert "self-check.md" in result.stdout
+    assert "Optional files:" in result.stdout
+    assert "standard/supplier-trust.md" in result.stdout
 
 
 def test_validate_delegates_to_packet_validator(tmp_path):

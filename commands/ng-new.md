@@ -9,6 +9,7 @@ Create the packet files for a Quick or Standard Nuclear-grade change. This is a 
 - A mode decision exists.
 - A questioning-attitude screen is complete when uncertainty or consequence is material.
 - A new change needs durable evidence in Git.
+- A turnover, self-check, OPEX, or supplier-trust record has been activated.
 
 ## Do not use when
 
@@ -19,7 +20,7 @@ Create the packet files for a Quick or Standard Nuclear-grade change. This is a 
 
 - Change slug.
 - Selected mode.
-- Initial scope, affected files, questioned assumptions, and proof obligation.
+- Initial scope, affected files, questioned assumptions, and evidence obligation.
 
 ## Prompt text
 
@@ -32,7 +33,8 @@ Inputs:
 - scope: <summary>
 - affected files/assets: <list>
 - questioned assumptions: <list>
-- proof obligation: <command/review/evidence>
+- evidence obligation: <command/review/evidence>
+- activated HPI records: <turnover/self-check/opex/supplier-trust/none>
 
 Use the repo templates. Keep the packet short, link-heavy, and evidence-oriented. Include required links, exit criteria, and source-lineage notes. Do not imply formal assurance or compliance.
 ```
@@ -46,6 +48,9 @@ Use the repo templates. Keep the packet short, link-heavy, and evidence-oriented
 - `.nuclear/changes/<slug>/trace.md`
 - `.nuclear/changes/<slug>/verification.md`
 - `.nuclear/changes/<slug>/ship.md`
+- `.nuclear/changes/<slug>/turnover.md` if activated
+- `.nuclear/changes/<slug>/self-check.md` if activated
+- `.nuclear/changes/<slug>/supplier-trust.md` if activated
 
 ## Expected outputs
 
@@ -64,6 +69,7 @@ python tools/ng.py validate .nuclear/changes/<slug>
 
 - Creating a Standard packet for a clearly Quick change.
 - Omitting source-lineage notes.
+- Adding HPI records by default instead of by consequence.
 - Copying long source excerpts instead of linking.
 
 ## Legal/assurance boundary note

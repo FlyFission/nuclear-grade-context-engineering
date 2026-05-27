@@ -6,6 +6,8 @@
 
 AI agents no longer just suggest code. They edit files, change prompts, call tools, update dependencies, produce evidence, and prepare releases. Nuclear-grade gives that work a controlled path: question assumptions, discover facts, specify required behavior, execute inside authority, verify claims, review evidence, decide, baseline the accepted configuration, and learn from operation.
 
+It also adds HPI for AI agents: small control behaviors that make fast agent work reviewable. Brief the work, self-check critical actions, turn over cleanly, verify independently when consequence demands it, decide conservatively, and learn from near misses.
+
 ```text
 Normal AI coding:
 prompt -> diff -> persuasion -> merge risk
@@ -25,7 +27,7 @@ python tools/ng.py new demo-change --mode quick
 python tools/ng.py validate .nuclear/changes/demo-change
 ```
 
-Inspect the included proof path:
+Inspect the included evidence path:
 
 ```bash
 python -m pytest docs/03-worked-examples/ai-agent-tool-permissions/tests/test_workspace_guard.py -q
@@ -38,9 +40,9 @@ If your shell only has `python3`, use `python3`.
 
 | Surface | What it does | Start |
 |---|---|---|
-| Workflows | Questioning-attitude and controlled-change loops for Quick, Standard, CM, agent authority, release review, and source/legal checks | [`WORKFLOWS.md`](WORKFLOWS.md) |
+| Workflows | Questioning-attitude, HPI overlays, and controlled-change loops for Quick, Standard, CM, agent authority, release review, and source/legal checks | [`WORKFLOWS.md`](WORKFLOWS.md) |
 | Skills | Agent-operable instructions with inputs, outputs, verification, escalation, and red flags | [`SKILLS.md`](SKILLS.md) |
-| Portable command prompts | Pasteable prompt cards for questioning, classification, CM impact, baselining, proof, release review, source checks, and legal boundaries | [`COMMANDS.md`](COMMANDS.md) |
+| Portable command prompts | Pasteable prompt cards for questioning, classification, CM impact, baselining, evidence review, release review, source checks, and legal boundaries | [`COMMANDS.md`](COMMANDS.md) |
 | Templates | Quick, Standard, activated CM, and golden-path records | [`templates/`](templates/) |
 | CLI | `init`, `new`, `validate`, `doctor`, `list`, and `status` | [`docs/05-reference/cli-reference.md`](docs/05-reference/cli-reference.md) |
 | Validator | Dependency-free Quick and Standard packet checks | [`tools/ng_validate.py`](tools/ng_validate.py) |
@@ -53,7 +55,7 @@ If your shell only has `python3`, use `python3`.
 |---|---|
 | Ask an agent, inspect the diff, run tests. | Question assumptions, identify controlled items, specify intent, verify evidence, decide, and baseline. |
 | PR prose tries to persuade reviewers. | A change package links intent, protected outcomes, controlled items, evidence, gaps, and decision. |
-| Agents receive broad context and fuzzy authority. | Agents receive role, allowed actions, forbidden actions, proof obligations, and stop conditions. |
+| Agents receive broad context and fuzzy authority. | Agents receive role, allowed actions, forbidden actions, evidence obligations, turnover state, and stop conditions. |
 | Green CI becomes a release argument. | Release readiness records evidence status, residual risk, rollback, monitoring, decision, and baseline trigger. |
 | Lessons vanish into chat history. | OPEX records feed future basis, tests, monitors, controls, or re-baselines. |
 
@@ -62,7 +64,7 @@ The central shift is:
 ```text
 diff review -> configuration review
 prompt memory -> controlled change record
-agent authority -> bounded context and proof obligation
+agent authority -> focused context and evidence obligation
 green CI -> explicit release decision and baseline trigger
 ```
 
@@ -79,6 +81,8 @@ Question -> Specify -> Execute -> Verify -> Decide
 ```
 
 Quick and Standard packets are the Git-native way to record that lifecycle. `Classify` stays inside the risk/mode screen so the public path stays teachable. Activated CM records add controlled items, change impact, baseline, variance, and OPEX detail only when consequence justifies it.
+
+HPI overlays sit underneath that path. Use them when they change the work: task preview before consequential execution, self-check before critical actions, turnover before another agent or human continues, independent verification before high-trust decisions, and OPEX after near misses or review surprises.
 
 ## Packet modes
 
@@ -103,7 +107,7 @@ Use Nuclear-grade if you are:
 - using coding agents on changes that matter more than a disposable script;
 - reviewing AI-assisted PRs and need evidence instead of persuasion;
 - leading a team that wants speed without losing control of risk and release posture;
-- creating internal workflows where humans and agents need bounded context and proof obligations.
+- creating internal workflows where humans and agents need focused context and evidence obligations.
 
 ## What this is not
 
@@ -122,12 +126,12 @@ Read before using:
 ```text
 skills/                         agent-operable workflow skills
 commands/                       portable command prompts
-templates/                      Quick and Standard packet templates
+templates/                      Quick, Standard, golden-path, and activated CM templates
 tools/                          local CLI and validator
 tests/                          validator, CLI, contract, and public-doc tests
 docs/00-standards-foundation/   source map, citation safety, compliance boundaries
 docs/01-field-guide/            source-to-concept translation
-docs/02-operating-system/       lifecycle, modes, packets, thresholds, validators, context packs
+docs/02-operating-system/       lifecycle, HPI overlays, modes, packets, thresholds, validators, context packs
 docs/03-worked-examples/        flagship worked example
 docs/04-adoption/               rollout, agent authority, reviewer playbook
 docs/05-reference/              skill, command, and CLI contracts
@@ -140,7 +144,7 @@ Included now:
 - action-first onboarding and repo WBS;
 - Quick and Standard templates;
 - activated CM templates for controlled items, change impact, baseline, variance, and OPEX;
-- golden-path templates for questioning attitude, specification, and decision records;
+- golden-path templates for questioning attitude, specification, turnover, self-check, and decision records;
 - local CLI and dependency-free validator;
 - agent-operable skills and portable command prompts;
 - public source foundation and source status labels;

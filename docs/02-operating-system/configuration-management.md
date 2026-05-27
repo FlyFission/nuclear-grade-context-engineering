@@ -72,6 +72,19 @@ Every controlled change should ask what downstream state may become stale:
 
 Use `templates/cm/change-impact.md` when more than one artifact family can be affected.
 
+## HPI control stack
+
+For material agent work, ask which controls exist:
+
+| Control family | Examples |
+|---|---|
+| deterministic | tests, validators, CI, evals, permission boundaries |
+| procedural | lifecycle, packet templates, command prompts, context packs |
+| review / oversight | peer review, independent verification, release review |
+| learning | OPEX record, near-miss issue, updated baseline, updated test/template/skill |
+
+Do not blame a model or human as the sole cause of drift. Ask which control was missing, weak, stale, or bypassed.
+
 ---
 
 ## Variance, drift, and OPEX
@@ -85,6 +98,8 @@ Record them when:
 - an agent exceeds or nearly exceeds authority;
 - dependencies, models, APIs, or source pages change;
 - verification evidence becomes stale.
+
+An OPEX lesson is closed only when it updates a durable control or records why no durable update is warranted.
 
 ---
 

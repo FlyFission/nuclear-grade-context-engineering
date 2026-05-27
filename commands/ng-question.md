@@ -38,11 +38,12 @@ Inputs:
 Return:
 - decision question in one sentence
 - assumptions that must be true
+- known facts, unknowns, danger words, and source-quality concerns
 - facts to verify before work continues
-- warning signs, error-likely steps, and hidden Standard-mode triggers
+- warning signs, agent error precursors, error-likely steps, and hidden Standard-mode triggers
 - evidence needed before execute, verify, review, decide, or baseline
-- stop conditions and escalation triggers
-- recommended next artifact: Quick proof, Standard spec, context pack, CM record, or release decision
+- pause conditions and escalation triggers
+- recommended next artifact: Quick proof, Standard spec, context pack, turnover, self-check, CM record, or release decision
 
 Prefer facts over confidence. Do not imply formal assurance, compliance, certification, safety, security, or regulatory adequacy.
 ```
@@ -58,6 +59,7 @@ Prefer facts over confidence. Do not imply formal assurance, compliance, certifi
 - Evidence gaps.
 - Stop/escalation conditions.
 - Next artifact recommendation.
+- Danger words or source-quality concerns that change the decision.
 
 ## Verification command
 

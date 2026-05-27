@@ -17,6 +17,7 @@
 
 - [ ] Packet validation passes if this PR creates or changes a `.nuclear/changes/<slug>/` packet.
 - [ ] CM impact/baseline records are updated if controlled items changed.
+- [ ] HPI records are updated if turnover, self-check, OPEX, or dependency/model/API trust is activated.
 - [ ] `git diff --check` passes.
 - [ ] New public docs contain no private paths, internal codenames, or stale launch residue.
 - [ ] New claims avoid compliance, certification, regulator approval, production sandbox, or formal QA overclaiming.

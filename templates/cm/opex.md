@@ -4,7 +4,7 @@
 
 **Activation threshold:** Use when operation teaches something that should affect basis, tests, controls, thresholds, docs, or baseline.
 
-**Minimum useful version:** Event, impact, evidence, corrective action, verification, and baseline/update disposition.
+**Minimum useful version:** Event, impact, evidence, weak or missing control, corrective action, verification, and baseline/update disposition.
 
 **Overhead trap:** Do not write postmortem theater. The lesson must update something or be explicitly closed.
 
@@ -19,9 +19,9 @@
 
 ## Learning and action
 
-| Finding | Impact | Action | Verification | Owner | Due / trigger |
-|---|---|---|---|---|---|
-| | | update basis / test / control / monitor / docs / baseline / close | | | |
+| Finding | Weak or missing control | Impact | Action | Verification | Owner | Due / trigger |
+|---|---|---|---|---|---|---|
+| | | | update basis / test / validator / template / skill / command / monitor / docs / baseline / close with rationale | | | |
 
 ## Required links
 
@@ -32,6 +32,7 @@
 ## Exit criteria
 
 - Each finding has an action or explicit closure.
+- Closure without durable update explains why no basis, test, validator, template, skill, command, monitor, doc, or baseline change is warranted.
 - Any re-baseline trigger is recorded.
 - Future reviewers can see what changed because of the lesson.
 

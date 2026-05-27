@@ -26,11 +26,28 @@ What decision must this change record make?
 |---|---|---|---|
 | | | | planned |
 
+## Knowns, unknowns, and danger words
+
+| Item | Type: fact / assumption / unknown | Source quality | Action |
+|---|---|---|---|
+| | | repo / source / test / owner / model claim | |
+
+Danger words to challenge: probably, should, seems, obvious, just docs, safe, secure, compliant, approved, we can classify later.
+
 ## Warning signs and uncertainty
 
 | Warning sign / uncertainty | Possible consequence | Resolve before |
 |---|---|---|
 | | | execute / verify / review / decide |
+
+## Agent error precursors
+
+| Precursor | Present? | Control |
+|---|---|---|
+| High task demand: many files, mixed objectives, hidden coupling, long context | yes/no | |
+| Capability gap: missing source, stale memory, unfamiliar tool or domain | yes/no | |
+| Work environment: dirty tree, failing tests, unclear branch, flaky CI | yes/no | |
+| Human/model nature: overconfidence, anchoring, completion pressure | yes/no | |
 
 ## Hidden escalation triggers
 
@@ -51,6 +68,8 @@ What decision must this change record make?
 - Quick proof:
 - Standard spec / design basis:
 - Context pack:
+- Turnover record:
+- Self-check record:
 - CM record:
 - Release decision:
 

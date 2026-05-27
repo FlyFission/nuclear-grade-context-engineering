@@ -34,11 +34,11 @@
 |---|---|---|---|
 | REQ-001 | | | |
 
-## Assumptions and constraints
+## Assumptions, constraints, and invalidation triggers
 
-| Assumption / constraint | Validation source | Invalidation trigger | Owner |
-|---|---|---|---|
-| | | | |
+| Assumption / constraint | Fact / assumption / unknown | Validation source | Invalidation trigger | Owner |
+|---|---|---|---|---|
+| | | | | |
 
 ## Acceptance scenarios
 

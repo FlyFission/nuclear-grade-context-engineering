@@ -7,13 +7,14 @@ description: Use when selecting Quick, Standard, or stronger human-reviewed mode
 
 ## Overview
 
-Classify the change before building so rigor scales by consequence. The output is a mode decision with proof obligations and escalation triggers.
+Classify the change before building so rigor scales by consequence. The output is a mode decision with evidence obligations and escalation triggers.
 
 ## When to Use
 
 - A change request is new, vague, or expanded.
 - A PR has AI-generated code, tests, docs, prompts, or release artifacts.
 - Reviewers disagree about whether Quick evidence is enough.
+- Work is routine, procedural, novel, interrupted, resumed, delegated, or high consequence and needs the right HPI control.
 
 ## When Not to Use
 
@@ -30,10 +31,11 @@ Classify the change before building so rigor scales by consequence. The output i
 ## Process
 
 1. Identify consequence, reversibility, exposure, detectability, uncertainty, and agent authority.
-2. Choose Quick only for local, reversible, easy-to-prove work with no new trust boundary.
-3. Choose Standard for user-visible, durable, dependency, permission, data, AI, operational, or release consequence.
-4. Mark Nuclear, Incident, Research Board, or Release as human-reviewed patterns when activated.
-5. Record escalation triggers and the minimum proof required.
+2. Screen work mode: routine, known procedure, novel/uncertain, interrupted/resumed, or critical action.
+3. Choose Quick only for local, reversible, easy-to-prove work with no new trust boundary.
+4. Choose Standard for user-visible, durable, dependency, permission, data, AI, operational, or release consequence.
+5. Mark Nuclear, Incident, Research Board, or Release as human-reviewed patterns when activated.
+6. Record escalation triggers and the minimum proof required.
 
 ## Outputs
 
@@ -41,6 +43,7 @@ Classify the change before building so rigor scales by consequence. The output i
 - Mode rationale.
 - Required packet files.
 - Proof command or evidence gap.
+- HPI control recommendation: self-check, turnover, context pack, independent verification, OPEX, or trust check.
 - Escalation triggers.
 
 ## Verification

@@ -70,7 +70,7 @@ This keeps the repo differentiated while absorbing the report's strongest recomm
 |---|---|
 | Own the "AI configuration control" lane | Emphasize prompts, models, tools, context packs, dependencies, permissions, evals, and release records as controlled items. |
 | Make evidence bundles shareable | Add `evidence-bundle.md`, `ng evidence`, and example bundles that users can copy into PRs. |
-| Borrow the report's golden path | Add `Intake -> Spec -> Scenarios -> Trace -> TDD -> Independent Verify -> Evidence Bundle -> Ship` as a public workflow chain. |
+| Translate the report's delivery chain | Keep the public path `Question -> Specify -> Execute -> Verify -> Decide`, and add optional scenario, traceability, evidence-bundle, and independent-review records where examples prove value. |
 | CI as the adoption bridge | Add GitHub Actions examples and validators that fail orphan requirements, missing evidence statuses, and broken packet links. |
 | Starter kits | Create API, frontend, and dependency/tool worked examples that show the same discipline across different work. |
 | Harness adapters | Provide install/adaptation guides for Codex, Claude Code, Cursor/Cline, Continue checks, Gemini/OpenCode as plain Markdown. |
@@ -147,20 +147,20 @@ Question -> Discover -> Specify -> Plan -> Execute -> Verify -> Review -> Decide
 
 **Report ideal:** Twelve workflow primitives, with top six creating the quality signature.
 
-**Repo state:** Eleven skills, strongest around CM, risk classification, packet creation, context packs, proof, ship readiness, source/legal boundaries.
+**Repo state:** Sixteen skills, strongest around questioning attitude, HPI turnover/self-check/OPEX/trust controls, CM, risk classification, packet creation, context packs, evidence review, release readiness, and source/legal boundaries.
 
 **Top-six gap:**
 
 | Report skill | Current equivalent | Gap |
 |---|---|---|
-| Hazard-Scoped Intake | partial: `classifying-change-risk`, `using-nuclear-grade` | No dedicated intake artifact with assumptions, hazards, impacted components, and hold points. |
-| Claim-Argument-Evidence Spec | partial: `proving-claims`, `basis.md` | No CAE spec template that precedes implementation. |
+| Hazard-Scoped Intake | partial: `questioning-attitude`, `classifying-change-risk`, HPI overlay, `risk.md` | The public term is now Question, not Intake; hold points remain a future optional record. |
+| Claim-Argument-Evidence Spec | partial: `proving-claims`, `spec.md`, `basis.md` | Claims are represented, but a formal CAE-style spec template remains optional future work. |
 | Acceptance Scenario Author | missing | No BDD/Given-When-Then skill or scenario template. |
 | Traceability Matrix Builder | partial: `trace.md` | No matrix artifact linking requirement -> scenario -> test -> code -> evidence. |
 | Red-Green-Refactor Executor | missing | No skill preserving TDD red/green evidence. |
-| Independent Verifier | partial: ship/review language | No separate verifier role or independent-review record. |
+| Independent Verifier | partial: verification type, ship/review language | No separate verifier role or independent-review record yet. |
 
-**Remediation:** Add the top-six skills before adding lower-priority extras.
+**Remediation:** Do not clone the report's top six as a parallel vocabulary. Keep Question -> Specify -> Execute -> Verify -> Decide as the launch path, keep HPI controls under it, and add scenario, traceability, evidence-bundle, hold-point, and independent-review records only where worked examples show recurring value.
 
 ### 5. Templates and Records
 
@@ -562,18 +562,18 @@ Question -> Discover -> Specify -> Plan -> Execute -> Verify -> Review -> Decide
 
 **Changes:**
 
-- Add tagline: "Configuration management and evidence gates for AI-assisted software work."
+- Add tagline: "Questioning attitude and configuration management for AI-assisted software work."
 - Add "Golden path" section:
 
 ```text
-Intake -> Spec -> Scenarios -> Trace -> Build/Test -> Independent Verify -> Evidence Bundle -> Ship
+Question -> Discover -> Specify -> Plan -> Execute -> Verify -> Review -> Decide -> Baseline -> Operate -> Learn
 ```
 
 - Add before/after artifact tree:
 
 ```text
 Before: prompt -> diff -> test output -> persuasive PR
-After: intake -> basis/spec -> scenarios -> traceability -> verification -> evidence bundle -> baseline/ship
+After: question -> spec/basis -> plan -> traceability -> verification -> release decision -> baseline/learn
 ```
 
 - Add "best first use cases" section: agent authority, dependency/tool introduction, release readiness, prompt/model/config change.
@@ -736,14 +736,14 @@ After: intake -> basis/spec -> scenarios -> traceability -> verification -> evid
 ## Recommended Execution Order
 
 1. Public surface reframe.
-2. Golden-path docs/templates.
-3. Top-six skills/commands.
+2. Questioning-attitude and HPI overlay docs/templates.
+3. Turnover, self-check, OPEX, and trust-check skills/commands.
 4. CLI evidence/trace/link tooling.
 5. Worked examples.
 6. Integration guides.
 7. Community/metrics loop.
 
-Do not add all twelve report skills at once. Add the top six first, then use real example friction to decide whether hold points, supplier qualification, corrective action, OPEX harvesting, and secure execution boundary need separate skills or can remain docs/templates.
+Do not add all twelve report skills at once. The HPI controls are the first public tranche. Use real example friction to decide whether scenarios, hold points, supplier qualification, corrective action, evidence bundles, and secure execution boundary need separate skills or can remain docs/templates.
 
 ## Source-Lineage and Boundary Note
 

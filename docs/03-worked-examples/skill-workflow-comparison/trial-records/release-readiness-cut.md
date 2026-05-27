@@ -43,6 +43,8 @@ Skills exercised:
 - `baselining-configuration`
 - `classifying-change-risk`
 - `creating-change-packets`
+- `turning-over-agent-work`
+- `learning-from-opex`
 - `proving-claims`
 - `reviewing-ship-readiness`
 
@@ -51,16 +53,20 @@ Workflows exercised:
 - Questioning attitude
 - Standard change
 - Controlled configuration
+- Agent turnover
 - Release readiness
+- OPEX learning
 
 Nuclear-grade output:
 
 - Controlled items: version, changelog, package metadata, docs, examples, CI result, release notes.
 - Impact screen: README, install docs, examples, package metadata, workflows, support docs.
 - Proof claims: install command works; examples validate; changelog matches changes; CI passes; no forbidden assurance claims.
-- Ship decision: ship, defer, block, or ship with residual risk.
+- Release decision: ship, defer, block, or ship with residual risk.
+- Turnover: releaser/support owner gets accepted artifact state, residual risk, monitoring, and rollback notes.
 - Baseline: release tag and accepted artifact state.
 - Monitoring: issue/discussion watch, package install smoke, post-release docs check.
+- OPEX: post-release surprises feed docs, tests, templates, monitors, or baseline changes.
 
 ## Scoring Rationale
 

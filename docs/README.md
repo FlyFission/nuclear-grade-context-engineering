@@ -16,6 +16,7 @@ Nuclear-grade docs have two maps: use the workflow first, then inspect the sourc
 | Roll out to a team | [`04-adoption/enterprise-rollout.md`](04-adoption/enterprise-rollout.md) |
 | Review a packet | [`04-adoption/reviewer-playbook.md`](04-adoption/reviewer-playbook.md) |
 | Manage controlled configuration | [`02-operating-system/configuration-management.md`](02-operating-system/configuration-management.md) |
+| Add HPI controls for agent work | [`02-operating-system/hpi-overlays.md`](02-operating-system/hpi-overlays.md) |
 | Understand CLI behavior | [`05-reference/cli-reference.md`](05-reference/cli-reference.md) |
 
 ## Reference foundation
@@ -23,7 +24,7 @@ Nuclear-grade docs have two maps: use the workflow first, then inspect the sourc
 ```text
 00-standards-foundation/   public source map, citation safety, and boundary rules
 01-field-guide/            source-to-concept translation
-02-operating-system/       lifecycle, modes, packets, thresholds, validators, context packs
+02-operating-system/       lifecycle, HPI overlays, modes, packets, thresholds, validators, context packs
 03-worked-examples/        completed example packets and proof chains
 04-adoption/               team rollout, agent authority, reviewer playbook
 05-reference/              skill, command, and CLI contracts

@@ -4,7 +4,7 @@
 
 **Activation threshold:** Use for user-visible behavior, durable design decisions, important dependency/model/API/prompt/tool changes, security/privacy/data handling, operational posture, or anything with non-trivial consequence, uncertainty, or review value.
 
-**Minimum useful version:** Scope, affected configuration items, threshold dimensions, selected mode, activated artifacts, and immediate proof obligations.
+**Minimum useful version:** Scope, affected configuration items, threshold dimensions, selected mode, activated artifacts, and immediate evidence obligations.
 
 **Overhead trap:** Do not score risk with fake precision. Use the screen to reveal consequences and evidence needs.
 
@@ -46,6 +46,16 @@ List affected code, docs, infra, dependencies, prompts, models, data, evals, rel
 | Dependency trust | | |
 | AI authority | | |
 
+## HPI work-mode screen
+
+| Work mode / precursor | Present? | Control |
+|---|---|---|
+| Routine/repetitive action where inattention is plausible | yes/no | self-check / proof |
+| Known procedure where workflow adherence matters | yes/no | packet path / deviation note |
+| Novel or uncertain work where assumptions may be wrong | yes/no | questioning attitude / research / review |
+| Interrupted, resumed, or handed-off work | yes/no | turnover / context pack |
+| High-consequence critical action | yes/no | self-check / peer-check / independent verification |
+
 ## Selected mode
 
 - Mode: Standard / Nuclear subset / Incident / Research Board / Release
@@ -61,9 +71,12 @@ List affected code, docs, infra, dependencies, prompts, models, data, evals, rel
 | `basis.md` | yes/no | | |
 | `verification.md` | yes/no | | |
 | `ship.md` | yes/no | | |
+| `turnover.md` | yes/no | | |
+| `self-check.md` | yes/no | | |
+| `supplier-trust.md` | yes/no | | |
 | Nuclear subset record | yes/no | | |
 
-## Immediate proof obligations
+## Immediate evidence obligations
 
 - Minimum evidence before build:
 - Minimum evidence before merge/release:
@@ -82,7 +95,7 @@ List affected code, docs, infra, dependencies, prompts, models, data, evals, rel
 
 - Mode is justified.
 - Activated artifacts are explicit.
-- Important risks, assumptions, and proof obligations are not hidden in chat or commit messages.
+- Important risks, assumptions, and evidence obligations are not hidden in chat or commit messages.
 
 ## Source-lineage note
 

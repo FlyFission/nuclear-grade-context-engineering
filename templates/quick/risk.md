@@ -1,5 +1,10 @@
 # Quick Risk Template
 
+## Selected mode
+
+- **Mode:** Quick
+- **Why this mode:** (one line; escalate to Standard if any answer below feels uncertain)
+
 **Purpose:** Decide whether a small change can safely stay in Quick mode and name the proof required.
 
 **Activation threshold:** Use for low-consequence, reversible, easy-to-detect changes with no new user trust boundary, dependency trust decision, security/privacy effect, release posture change, or AI authority change.

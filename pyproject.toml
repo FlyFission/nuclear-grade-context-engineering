@@ -1,6 +1,6 @@
 [project]
 name = "nuclear-grade"
-version = "0.1.0"
+version = "0.2.0"
 description = "Configuration management for AI-assisted software work."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -9,13 +9,39 @@ license = "MIT"
 [project.scripts]
 nuclear-grade = "nuclear_grade.cli:main"
 
-[tool.setuptools.packages.find]
-include = ["nuclear_grade*"]
-exclude = ["skills*", "commands*", "templates*", "docs*", "tests*", "tools*"]
-
 [project.optional-dependencies]
 dev = [
   "pytest>=8",
+  "ruff>=0.6",
+  "build>=1.2",
+]
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["nuclear_grade"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"templates" = "nuclear_grade/_bundled/templates"
+"skills" = "nuclear_grade/_bundled/skills"
+"commands" = "nuclear_grade/_bundled/commands"
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "/nuclear_grade",
+  "/templates",
+  "/skills",
+  "/commands",
+  "/tests",
+  "/tools",
+  "/docs",
+  "/README.md",
+  "/LICENSE",
+  "/CHANGELOG.md",
+  "/CITATION.cff",
+  "/pyproject.toml",
 ]
 
 [tool.pytest.ini_options]
@@ -25,3 +51,17 @@ testpaths = [
 ]
 pythonpath = ["."]
 addopts = "-q"
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"tools/ng.py" = ["E402", "F403", "F405"]
+"tools/ng_validate.py" = ["E402"]
+"nuclear_grade/cli.py" = ["E402", "UP036"]
+"nuclear_grade/__init__.py" = ["F401"]

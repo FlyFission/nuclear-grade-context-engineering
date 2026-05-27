@@ -5,7 +5,6 @@ from pathlib import Path
 from tests.test_ng_validate import minimal_quick_packet
 from tools import ng as ng_cli
 
-
 ROOT = Path(__file__).resolve().parents[1]
 NG = ROOT / "tools" / "ng.py"
 
@@ -265,3 +264,65 @@ def test_status_detects_active_packets(tmp_path):
 
     assert result.returncode == 0, result.stderr
     assert "demo: standard" in result.stdout
+
+
+def test_new_cm_packet_scaffolds_all_cm_files(tmp_path):
+    scaffold_repo(tmp_path)
+
+    result = run_ng("new", "cm-demo", "--mode", "cm", "--repo", str(tmp_path))
+
+    assert result.returncode == 0, result.stderr
+    packet = tmp_path / ".nuclear" / "changes" / "cm-demo"
+    assert {path.name for path in packet.glob("*.md")} == set(ng_cli.CM_FILES)
+
+
+def test_new_golden_path_packet_scaffolds_all_files(tmp_path):
+    scaffold_repo(tmp_path)
+
+    result = run_ng("new", "gp-demo", "--mode", "golden-path", "--repo", str(tmp_path))
+
+    assert result.returncode == 0, result.stderr
+    packet = tmp_path / ".nuclear" / "changes" / "gp-demo"
+    assert {path.name for path in packet.glob("*.md")} == set(ng_cli.GOLDEN_PATH_FILES)
+
+
+def test_migrate_inserts_standard_mode_block_when_standard_files_present(tmp_path):
+    packet = tmp_path / ".nuclear" / "changes" / "legacy"
+    packet.mkdir(parents=True)
+    (packet / "risk.md").write_text("# Risk\n\nLegacy content with no mode declaration.\n", encoding="utf-8")
+    (packet / "plan.md").write_text("# Plan\n", encoding="utf-8")
+
+    result = run_ng("migrate", str(packet))
+
+    assert result.returncode == 0, result.stderr
+    text = (packet / "risk.md").read_text(encoding="utf-8")
+    assert "## Selected mode" in text
+    assert "**Mode:** Standard" in text
+
+
+def test_migrate_inserts_quick_mode_block_when_only_quick_files_present(tmp_path):
+    packet = tmp_path / ".nuclear" / "changes" / "legacy-quick"
+    packet.mkdir(parents=True)
+    (packet / "risk.md").write_text("# Risk\n\nLegacy quick packet.\n", encoding="utf-8")
+    (packet / "proof.md").write_text("# Proof\n", encoding="utf-8")
+
+    result = run_ng("migrate", str(packet))
+
+    assert result.returncode == 0, result.stderr
+    text = (packet / "risk.md").read_text(encoding="utf-8")
+    assert "**Mode:** Quick" in text
+
+
+def test_migrate_is_idempotent_when_mode_already_declared(tmp_path):
+    packet = tmp_path / ".nuclear" / "changes" / "already-declared"
+    packet.mkdir(parents=True)
+    (packet / "risk.md").write_text(
+        "# Risk\n\n## Selected mode\n\n- **Mode:** Standard\n", encoding="utf-8"
+    )
+
+    result = run_ng("migrate", str(packet))
+
+    assert result.returncode == 0, result.stderr
+    assert "already declares mode" in result.stdout
+    text = (packet / "risk.md").read_text(encoding="utf-8")
+    assert text.count("## Selected mode") == 1

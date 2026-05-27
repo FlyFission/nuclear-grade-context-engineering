@@ -187,3 +187,81 @@ def test_unfilled_standard_template_fails(tmp_path):
 
     assert not result.ok
     assert any("has unfilled template prompts" in message for message in result.messages)
+
+
+def test_packet_without_mode_declaration_fails(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    risk_text = (packet / "risk.md").read_text(encoding="utf-8")
+    stripped = risk_text.replace("## Selected mode\n\n- **Mode:** Standard\n", "")
+    (packet / "risk.md").write_text(stripped, encoding="utf-8")
+
+    result = validate_packet(packet)
+
+    assert not result.ok
+    assert any("Selected mode" in message for message in result.messages)
+
+
+def test_long_label_empty_prompt_is_detected(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    with (packet / "basis.md").open("a", encoding="utf-8") as handle:
+        handle.write("\n- " + ("A" * 200) + ":\n")
+
+    result = validate_packet(packet)
+
+    assert not result.ok
+    assert any("has unfilled template prompts" in message for message in result.messages)
+
+
+PARAPHRASES_THAT_MUST_FAIL = (
+    "This system meets NQA-1 requirements.",
+    "The release is fully ASME qualified.",
+    "Our tests conform to IEEE 829.",
+    "The packet satisfies 10 CFR 50 Appendix B.",
+    "We implement quality assurance per NQA-1.",
+    "This deployment has been audited to NRC standards.",
+    "The product is regulator-approved.",
+)
+
+
+def test_paraphrased_compliance_claims_all_fail(tmp_path):
+    for index, phrase in enumerate(PARAPHRASES_THAT_MUST_FAIL):
+        packet = minimal_standard_packet(tmp_path / f"case-{index}")
+        basis = packet / "basis.md"
+        text = basis.read_text(encoding="utf-8")
+        marker = "## Source-lineage note"
+        idx = text.find(marker)
+        new_text = text[:idx] + f"## Independent assertion\n\n{phrase}\n\n" + text[idx:]
+        basis.write_text(new_text, encoding="utf-8")
+
+        result = validate_packet(packet)
+
+        assert not result.ok, f"Expected failure for paraphrase: {phrase}"
+        assert any(
+            "prohibited compliance claim" in message for message in result.messages
+        ), f"No prohibited-claim message for: {phrase}; got {result.messages}"
+
+
+BOUNDARY_PHRASES_THAT_MUST_PASS = (
+    "This work is inspired by NQA-1 concepts.",
+    "Influenced by ASME structure, not aligned with it.",
+    "We do not claim IEEE conformance.",
+    "This repo is not NRC compliant and does not claim to be.",
+    "No formal V&V is implied by this packet.",
+)
+
+
+def test_boundary_paraphrases_all_pass(tmp_path):
+    for index, phrase in enumerate(BOUNDARY_PHRASES_THAT_MUST_PASS):
+        packet = minimal_standard_packet(tmp_path / f"case-{index}")
+        basis = packet / "basis.md"
+        text = basis.read_text(encoding="utf-8")
+        marker = "## Source-lineage note"
+        idx = text.find(marker)
+        new_text = text[:idx] + f"## Boundary statement\n\n{phrase}\n\n" + text[idx:]
+        basis.write_text(new_text, encoding="utf-8")
+
+        result = validate_packet(packet)
+
+        assert result.ok, (
+            f"Expected pass for boundary phrase: {phrase}; got messages: {result.messages}"
+        )

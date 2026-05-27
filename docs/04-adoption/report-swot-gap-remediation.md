@@ -587,7 +587,9 @@ After: question -> spec/basis -> plan -> traceability -> verification -> release
 
 **Goal:** Add the report's missing quality-signature outputs without bloating Standard packets by default.
 
-**Files to create:**
+> *The "Files to create", "Skills to add", "Commands to add", "Files to modify", "CLI additions", "Tests to update", and "Examples to add" lists in Phases 1 through 4 below are proposed deliverables. They are not present in this repo today. Treat the file paths as design intent for a future PR, not as references to existing artifacts.*
+
+**Files to create (proposed):**
 
 - `docs/02-operating-system/golden-path.md`
 - `docs/02-operating-system/evidence-bundles.md`

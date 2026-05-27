@@ -17,10 +17,27 @@ if __package__ in (None, ""):
 
 from nuclear_grade.ng_validate import detect_packet_mode, validate_packet
 
+PACKAGE_DIR = Path(__file__).resolve().parent
+REPO_ROOT = PACKAGE_DIR.parent
+BUNDLED_ROOT = PACKAGE_DIR / "_bundled"
 
-ROOT = Path(__file__).resolve().parents[1]
-SKILLS = ROOT / "skills"
-COMMANDS = ROOT / "commands"
+
+def _resolve_resource_root(name: str) -> Path:
+    """Return the directory holding bundled resources ('templates', 'skills', 'commands').
+
+    Prefers the repo-relative path when running from a source checkout; falls back
+    to the wheel-bundled copy under nuclear_grade/_bundled/.
+    """
+
+    repo_path = REPO_ROOT / name
+    if repo_path.is_dir():
+        return repo_path
+    bundled = BUNDLED_ROOT / name
+    return bundled
+
+
+SKILLS = _resolve_resource_root("skills")
+COMMANDS = _resolve_resource_root("commands")
 
 QUICK_FILES = ("risk.md", "proof.md")
 STANDARD_FILES = ("risk.md", "basis.md", "plan.md", "trace.md", "verification.md", "ship.md")
@@ -33,6 +50,12 @@ GOLDEN_PATH_FILES = (
     "decision.md",
 )
 OPTIONAL_FILES = ("standard/supplier-trust.md",)
+MODE_FILES = {
+    "quick": QUICK_FILES,
+    "standard": STANDARD_FILES,
+    "cm": CM_FILES,
+    "golden-path": GOLDEN_PATH_FILES,
+}
 REQUIRED_PUBLIC_FILES = (
     "README.md",
     "DISCLAIMER.md",
@@ -74,6 +97,11 @@ REQUIRED_COMMAND_SECTIONS = (
     "## Legal/assurance boundary note",
 )
 
+MODE_DEFAULT_BLOCK = {
+    "quick": "## Selected mode\n\n- **Mode:** Quick\n",
+    "standard": "## Selected mode\n\n- **Mode:** Standard\n",
+}
+
 
 @dataclass(frozen=True)
 class PlannedWrite:
@@ -104,9 +132,13 @@ def build_parser() -> argparse.ArgumentParser:
     init_parser.add_argument("--yes", action="store_true", help="Overwrite managed files when needed.")
     init_parser.set_defaults(handler=handle_init)
 
-    new_parser = subcommands.add_parser("new", help="Create a Quick or Standard change packet.")
+    new_parser = subcommands.add_parser("new", help="Create a packet (quick, standard, cm, or golden-path).")
     new_parser.add_argument("slug")
-    new_parser.add_argument("--mode", required=True, choices=("quick", "standard"))
+    new_parser.add_argument(
+        "--mode",
+        required=True,
+        choices=("quick", "standard", "cm", "golden-path"),
+    )
     new_parser.add_argument("--repo", default=".", type=Path)
     new_parser.add_argument("--force", action="store_true")
     new_parser.set_defaults(handler=handle_new)
@@ -125,6 +157,19 @@ def build_parser() -> argparse.ArgumentParser:
     status_parser = subcommands.add_parser("status", help="List active packets and detected modes.")
     status_parser.add_argument("repo", nargs="?", default=".", type=Path)
     status_parser.set_defaults(handler=handle_status)
+
+    migrate_parser = subcommands.add_parser(
+        "migrate",
+        help="Insert a `## Selected mode` block into a legacy packet's risk.md.",
+    )
+    migrate_parser.add_argument("packet", type=Path)
+    migrate_parser.add_argument(
+        "--default",
+        choices=("quick", "standard"),
+        default=None,
+        help="Mode to record when it cannot be inferred (default: auto).",
+    )
+    migrate_parser.set_defaults(handler=handle_migrate)
 
     return parser
 
@@ -150,7 +195,7 @@ def handle_init(args: argparse.Namespace) -> int:
 def handle_new(args: argparse.Namespace) -> int:
     repo = args.repo.resolve()
     packet = repo / ".nuclear" / "changes" / args.slug
-    files = QUICK_FILES if args.mode == "quick" else STANDARD_FILES
+    files = MODE_FILES[args.mode]
     templates = template_root_for(repo, args.mode)
     writes = [PlannedWrite(packet, is_dir=True)]
     writes.extend(
@@ -185,16 +230,66 @@ def handle_doctor(args: argparse.Namespace) -> int:
     return 0
 
 
+def handle_migrate(args: argparse.Namespace) -> int:
+    packet = args.packet.resolve()
+    if not packet.is_dir():
+        print(f"packet is not a directory: {packet}", file=sys.stderr)
+        return 2
+
+    risk = packet / "risk.md"
+    if not risk.exists():
+        print(f"missing risk.md: {risk}", file=sys.stderr)
+        return 2
+
+    text = risk.read_text(encoding="utf-8")
+    if "## Selected mode" in text:
+        print(f"already declares mode: {risk}")
+        return 0
+
+    inferred = args.default or infer_mode_from_files(packet)
+    block = MODE_DEFAULT_BLOCK[inferred]
+
+    new_text = _insert_mode_block(text, block)
+    risk.write_text(new_text, encoding="utf-8")
+    print(f"migrated: {risk} (inferred Mode: {inferred.capitalize()})")
+    print("Edit risk.md to override if the inferred mode is wrong.")
+    return 0
+
+
+def infer_mode_from_files(packet: Path) -> str:
+    standard_signals = ("basis.md", "plan.md", "trace.md", "verification.md", "ship.md")
+    return "standard" if any((packet / name).exists() for name in standard_signals) else "quick"
+
+
+def _insert_mode_block(text: str, block: str) -> str:
+    """Insert the mode block after the first H1, or at top if no H1 is present."""
+
+    lines = text.splitlines(keepends=True)
+    insert_index = 0
+    for i, line in enumerate(lines):
+        if line.startswith("# "):
+            insert_index = i + 1
+            break
+
+    head = "".join(lines[:insert_index])
+    tail = "".join(lines[insert_index:])
+    separator = "\n" if head and not head.endswith("\n\n") else ""
+    return f"{head}{separator}\n{block}\n{tail}"
+
+
 def template_root_for(repo: Path, mode: str) -> Path:
     repo_templates = repo / "templates"
-    required = QUICK_FILES if mode == "quick" else STANDARD_FILES
+    required = MODE_FILES[mode]
     if all((repo_templates / mode / name).exists() for name in required):
         return repo_templates
-    return ROOT / "templates"
+    bundled_templates = BUNDLED_ROOT / "templates"
+    if all((bundled_templates / mode / name).exists() for name in required):
+        return bundled_templates
+    return REPO_ROOT / "templates"
 
 
 def handle_list(args: argparse.Namespace) -> int:
-    print("Modes: quick, standard")
+    print("Modes: quick, standard, cm, golden-path")
     print("Quick files: " + ", ".join(QUICK_FILES))
     print("Standard files: " + ", ".join(STANDARD_FILES))
     print("Activated CM files: " + ", ".join(CM_FILES))

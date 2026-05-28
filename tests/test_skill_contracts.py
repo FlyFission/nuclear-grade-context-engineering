@@ -23,6 +23,8 @@ EXPECTED_SKILLS = {
     "checking-dependency-and-model-trust",
     "checking-source-lineage",
     "checking-license-and-assurance-boundaries",
+    "controlling-mission-drift",
+    "reviewing-code-quality",
 }
 
 REQUIRED_SECTIONS = (

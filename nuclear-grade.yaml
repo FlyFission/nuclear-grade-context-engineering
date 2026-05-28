@@ -46,6 +46,8 @@ skills:
   - checking-dependency-and-model-trust
   - checking-source-lineage
   - checking-license-and-assurance-boundaries
+  - controlling-mission-drift
+  - reviewing-code-quality
 commands:
   - ng-question.md
   - ng-classify.md
@@ -62,6 +64,8 @@ commands:
   - ng-trust-check.md
   - ng-source-check.md
   - ng-legal-check.md
+  - ng-drift-check.md
+  - ng-code-review.md
 boundaries:
   license: MIT
   assurance: evidence visibility only

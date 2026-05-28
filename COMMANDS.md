@@ -21,6 +21,8 @@ These are portable command prompts: plain Markdown prompt cards that can be past
 | [`ng-trust-check`](commands/ng-trust-check.md) | Checking dependency, model, API, SaaS, generated artifact, or vendor trust | Intended-use trust screen |
 | [`ng-source-check`](commands/ng-source-check.md) | Checking source lineage | Source-safe wording |
 | [`ng-legal-check`](commands/ng-legal-check.md) | Checking license and assurance boundaries | Boundary-safe wording |
+| [`ng-drift-check`](commands/ng-drift-check.md) | Testing work against its mission anchor and charter | Re-anchor / escalate / stop decision |
+| [`ng-code-review`](commands/ng-code-review.md) | Reviewing a diff or module for standards drift and complexity | Findings and a single verdict |
 
 ## Contract
 

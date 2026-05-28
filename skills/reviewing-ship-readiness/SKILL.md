@@ -29,7 +29,7 @@ Ship readiness is a decision record, not a mood. It ties baseline, evidence stat
 ## Process
 
 1. Confirm baseline and affected artifacts.
-2. Review each evidence status and unresolved gap.
+2. Review each evidence status and unresolved gap, and check for accumulated drift: does the shipped change still serve the mission anchor, with non-goals uncrossed? See `controlling-mission-drift`.
 3. Confirm rollback or restore path.
 4. Confirm monitoring and post-release checks.
 5. State why the decision is conservative enough for remaining uncertainty.

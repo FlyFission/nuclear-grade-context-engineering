@@ -19,6 +19,16 @@
 - Current lifecycle phase: Question / Specify / Plan / Execute / Verify / Review / Decide / Baseline / Operate / Learn
 - Summary:
 
+## Mission anchor
+
+State what this change is for, so a long session can be tested against it. See `controlling-mission-drift`.
+
+- Objective:
+- Success criteria:
+- Non-goals / forbidden directions:
+- Drift check: re-anchor / escalate / stop when an action stops serving the objective.
+- Traces to: workspace `.nuclear/mission.md`, charter article, or originating PR/issue.
+
 ## Questioning-attitude summary
 
 - Decision question:

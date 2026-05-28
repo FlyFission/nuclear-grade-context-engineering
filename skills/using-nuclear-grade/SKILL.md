@@ -7,7 +7,7 @@ description: Use when adopting Nuclear-grade for an AI-assisted change, repo wor
 
 ## Overview
 
-Use Nuclear-grade to turn AI-assisted software work into a focused evidence path: question assumptions, classify consequence inside the risk screen, create the smallest useful packet, specify intent, prove important claims, and make the release decision explicit.
+Use Nuclear-grade to turn AI-assisted software work into a focused evidence path: question assumptions, classify consequence inside the risk screen, create the smallest useful packet, specify intent, prove important claims, and make the release decision explicit. The repo charter (`.nuclear/charter.md`) states the durable principles all changes hold to; a per-change mission anchor states what a given change is for and guards against drift.
 
 ## When to Use
 

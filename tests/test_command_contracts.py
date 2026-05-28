@@ -21,6 +21,8 @@ EXPECTED_COMMANDS = {
     "ng-trust-check.md",
     "ng-source-check.md",
     "ng-legal-check.md",
+    "ng-drift-check.md",
+    "ng-code-review.md",
 }
 
 REQUIRED_SECTIONS = (

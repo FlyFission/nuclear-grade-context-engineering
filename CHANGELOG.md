@@ -6,6 +6,15 @@ This project uses changelog entries to record public-facing changes, not to impl
 
 ## [Unreleased]
 
+### Added
+
+- Mission-driven backbone. A durable repo charter (`.nuclear/charter.md`) of named process-integrity principles (ownership, facing facts, rising standards, formality, technical depth, integrity in reporting, questioning attitude, evidence over persuasion, graded rigor, baseline discipline; nuclear-culture and Rickover/Navy lineage), plus a per-change `## Mission anchor` (objective + success criteria + non-goals) in the Standard risk template. `nuclear-grade init` now writes a starter `.nuclear/charter.md` and `.nuclear/mission.md` (both advisory).
+- `controlling-mission-drift` skill: detect and correct intent drift (scope creep, goal substitution) with a re-anchor / escalate / stop decision and a counted escalation trigger (stop after 3 failed attempts or a loop).
+- `reviewing-code-quality` skill: standards-drift review (prefer deletion over rearrangement, countable complexity tripwires, abstractions must earn their keep, no feature logic in shared layers, single verdict).
+- `ng-drift-check` and `ng-code-review` portable command prompts for the two skills.
+- A re-evaluated drift gate (`## Charter and anchor check` with a justification table) in the Standard plan template.
+- Advisory validator checks: a mission anchor is checked for objective, success criterion, and non-goals only when a `## Mission anchor` section is present; unresolved NEEDS-CLARIFICATION markers fail before ship. Both are non-breaking (only fire when present).
+
 ## [0.2.0] - 2026-05-27
 
 ### Breaking

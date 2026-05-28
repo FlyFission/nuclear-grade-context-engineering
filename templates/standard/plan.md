@@ -19,6 +19,20 @@
 - Date:
 - Current lifecycle phase: Plan / Execute / Verify / Review / Decide
 
+## Charter and anchor check
+
+A re-evaluated gate, not a one-time note. Confirm before Plan and re-check before Verify. See `controlling-mission-drift`.
+
+- Mission anchor confirmed (objective, success criteria, non-goals) before Plan? yes/no:
+- Re-checked before Verify? yes/no/not yet:
+- Charter articles in play:
+
+If a non-goal or charter article must be crossed, record the justification here:
+
+| What is crossed | Why it is necessary | Why no simpler path | Owner decision |
+|---|---|---|---|
+| | | | |
+
 ## Build sequence
 
 Number the minimum steps needed to complete the change.

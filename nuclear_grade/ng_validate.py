@@ -141,6 +141,8 @@ def validate_packet(packet: str | Path) -> ValidationResult:
         _check_prohibited_claims(md_file, text, messages)
         _check_source_lineage(md_file, text, messages)
         _check_relative_links(packet_path, md_file, text, messages)
+        _check_mission_anchor(md_file, text, messages)
+        _check_unresolved_clarifications(md_file, text, messages)
 
     effective_mode = mode if mode != UNSPECIFIED_MODE else declared
     if effective_mode != UNSPECIFIED_MODE:
@@ -223,6 +225,62 @@ def _check_source_lineage(md_file: Path, text: str, messages: list[str]) -> None
         return
     if "source-map.md" not in text and "http://" not in text and "https://" not in text:
         messages.append(f"{md_file.name} source-lineage note must reference source-map.md or a public URL")
+
+
+MISSION_ANCHOR_CONCEPTS = (
+    ("objective", ("objective", "mission", "goal")),
+    ("success/done criterion", ("success", "done", "acceptance", "criteri")),
+    (
+        "non-goals / forbidden directions",
+        ("non-goal", "non goal", "out of scope", "out-of-scope", "forbidden", "do not", "not in scope"),
+    ),
+)
+
+
+def _check_mission_anchor(md_file: Path, text: str, messages: list[str]) -> None:
+    """Advisory: only runs when a `## Mission anchor` section is present.
+
+    A usable anchor names an objective, a success/done criterion, and explicit
+    non-goals (the anti-drift teeth). Matching is by keyword family so authors
+    are not forced into exact labels. Emptiness of individual prompts is already
+    caught by _check_unfilled_template_prompts.
+    """
+
+    lowered = text.lower()
+    if "## mission anchor" not in lowered:
+        return
+
+    section = _section_text(text, "## mission anchor")
+    scannable = _strip_code_blocks(section).lower()
+    for label, synonyms in MISSION_ANCHOR_CONCEPTS:
+        if not any(token in scannable for token in synonyms):
+            messages.append(f"{md_file.name} Mission anchor present but missing a {label}")
+
+
+def _check_unresolved_clarifications(md_file: Path, text: str, messages: list[str]) -> None:
+    if "[NEEDS CLARIFICATION]" in _strip_code_blocks(text):
+        messages.append(
+            f"{md_file.name} has an unresolved [NEEDS CLARIFICATION] marker; resolve it or record it as a labeled gap before ship"
+        )
+
+
+def _section_text(text: str, heading_lower: str) -> str:
+    """Return the body of a `## Heading` section (case-insensitive) up to the next H2 or end."""
+
+    lines = text.splitlines(keepends=True)
+    start = None
+    for i, line in enumerate(lines):
+        if line.strip().lower() == heading_lower:
+            start = i
+            break
+    if start is None:
+        return ""
+    end = len(lines)
+    for j in range(start + 1, len(lines)):
+        if lines[j].startswith("## "):
+            end = j
+            break
+    return "".join(lines[start:end])
 
 
 def _check_relative_links(packet_path: Path, md_file: Path, text: str, messages: list[str]) -> None:

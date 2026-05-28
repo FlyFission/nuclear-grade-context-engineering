@@ -1,6 +1,6 @@
 ---
 name: packing-agent-context
-description: Use when preparing focused context for an AI agent, human reviewer, verifier, or releaser with explicit authority, evidence, and stop conditions.
+description: Prepares focused context for an AI agent, reviewer, verifier, or releaser with explicit role, mission anchor, authority, evidence obligations, forbidden actions, and stop conditions. Use when delegating or resuming consequential work. Do not use for a trivial self-contained task that needs no handoff.
 ---
 
 # Packing Agent Context

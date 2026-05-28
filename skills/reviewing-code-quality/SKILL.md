@@ -1,6 +1,6 @@
 ---
 name: reviewing-code-quality
-description: Use when reviewing a diff or module for standards drift: oversized files, needless abstraction, leaked feature logic, or complexity that should be deleted.
+description: Reviews a diff or module for standards drift, preferring deletion over rearrangement and ending in one honest verdict. Use when a change risks oversized files, needless abstraction, feature logic leaking into shared layers, or clever indirection. Do not use for a trivial obvious edit, or for a purely functional-correctness check.
 ---
 
 # Reviewing Code Quality

@@ -39,4 +39,4 @@ def test_wheel_packages_only_namespaced_package():
 def test_version_is_stamped():
     config = _config()
 
-    assert config["project"]["version"] == "0.2.0"
+    assert config["project"]["version"] == "0.3.0"

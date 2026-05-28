@@ -1,6 +1,6 @@
 ---
 name: controlling-mission-drift
-description: Use when an agent keeps completing tasks but the work drifts from the stated objective, scope creeps, or rigor erodes one concession at a time.
+description: Tests current work against a durable mission anchor and forces a re-anchor, escalate, or stop decision. Use when an agent keeps completing tasks but the work drifts from the objective, scope creeps, the same action is retried in a loop, or rigor erodes one concession at a time. Do not use for a tiny edit with an obvious objective, or during incident containment.
 ---
 
 # Controlling Mission Drift

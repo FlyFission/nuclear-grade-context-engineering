@@ -1,6 +1,6 @@
 ---
 name: identifying-controlled-items
-description: Use when deciding which code, prompts, models, tools, dependencies, docs, tests, evals, releases, or claims need controlled-state tracking.
+description: Decides which code, prompts, models, tools, dependencies, docs, tests, evals, releases, or claims need controlled-state tracking. Use when scoping what a change puts at risk or what must stay reviewable. Do not use for ephemeral scratch work with no downstream dependents.
 ---
 
 # Identifying Controlled Items

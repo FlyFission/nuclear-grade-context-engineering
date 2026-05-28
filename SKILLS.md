@@ -29,11 +29,12 @@ Skills are self-contained agent instructions. Each skill has a `SKILL.md` contra
 
 Every skill must include:
 
-- YAML frontmatter with `name` and `description`.
-- A description that starts with `Use when`.
+- YAML frontmatter with `name` and `description` (required); `license` and `compatibility` are optional.
+- A `name` that is lowercase and hyphen-separated.
+- A `description` that says what the skill does, when to trigger it, and a "Do not use for ..." negative clause (80 to 500 characters, no colon-space).
 - Overview, use and non-use conditions, inputs, process, outputs, verification, escalation, common rationalizations, red flags, and source-lineage note.
 
-See `docs/05-reference/skill-authoring-contract.md`.
+Skills may add optional `references/`, `scripts/`, and `assets/` subfolders for progressive disclosure. See `docs/05-reference/skill-authoring-contract.md`.
 
 ## Boundary note
 

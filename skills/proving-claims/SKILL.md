@@ -1,6 +1,6 @@
 ---
 name: proving-claims
-description: Use when mapping claims to evidence, statuses, gaps, tests, evals, reviews, traces, release posture, or narrowed non-claims.
+description: Maps claims to evidence, statuses, gaps, tests, evals, reviews, and traces, and narrows anything unsupported into an explicit non-claim. Use when a packet asserts something a reviewer must trust. Do not use to invent evidence that does not exist, or to treat green CI as proof of unrelated claims.
 ---
 
 # Proving Claims

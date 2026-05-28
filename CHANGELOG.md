@@ -6,6 +6,13 @@ This project uses changelog entries to record public-facing changes, not to impl
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-05-28
+
+### Changed
+
+- Skill description contract modernized for higher triggering accuracy. Dropped the mandatory `Use when` prefix and the 90-180 character cap; descriptions now state what the skill does, when to trigger it, and an explicit negative clause ("Do not use for ..."), within an 80-500 character band, with no colon-space (so strict YAML loaders read them as one scalar). All 18 skill descriptions rewritten to this form. `name` must be lowercase and hyphen-separated (no length cap, since existing names exceed 32 characters). `license` and `compatibility` are now optional supported frontmatter fields. Documented progressive disclosure (optional `references/`, `scripts/`, `assets/` beside `SKILL.md`).
+- Synced `nuclear-grade.yaml` version with `pyproject.toml` and bumped both to 0.3.0.
+
 ### Added
 
 - Mission-driven backbone. A durable repo charter (`.nuclear/charter.md`) of named process-integrity principles (ownership, facing facts, rising standards, formality, technical depth, integrity in reporting, questioning attitude, evidence over persuasion, graded rigor, baseline discipline; nuclear-culture and Rickover/Navy lineage), plus a per-change `## Mission anchor` (objective + success criteria + non-goals) in the Standard risk template. `nuclear-grade init` now writes a starter `.nuclear/charter.md` and `.nuclear/mission.md` (both advisory).

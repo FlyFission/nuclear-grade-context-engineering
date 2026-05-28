@@ -1,6 +1,6 @@
 ---
 name: using-nuclear-grade
-description: Use when adopting Nuclear-grade for an AI-assisted change, repo workflow, packet path, evidence plan, mode choice, or release decision.
+description: Turns an AI-assisted change into a focused evidence path by choosing a mode, packet, and evidence plan, and points to the charter and mission anchor. Use when adopting Nuclear-grade for a change, repo workflow, or release decision. Do not use for a throwaway experiment with no review value.
 ---
 
 # Using Nuclear-grade

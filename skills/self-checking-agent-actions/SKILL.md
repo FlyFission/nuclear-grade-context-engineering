@@ -1,6 +1,6 @@
 ---
 name: self-checking-agent-actions
-description: Use when an agent is about to take a critical edit, command, tool, credential, public-claim, migration, dependency, model, API, or release action.
+description: Checks a critical agent action against its exact target, expected result, and stop condition before and after execution. Use when an agent is about to make a critical edit, run a command or migration, use a credential or tool, change a dependency or model, make a public claim, or affect a release. Do not use for low-stakes reversible edits.
 ---
 
 # Self-Checking Agent Actions

@@ -1,9 +1,11 @@
 # Results Summary
 
+> *Author-judged qualitative 1-5 scores. See `methodology.md` for limits. No independent reviewer panel. No timing, defect-rate, or A/B measurement. The "overhead" column is judgment, not minutes.*
+
 ## Aggregate Score Table
 
 | Use case | Path | Decision clarity | Hidden risk discovery | Evidence quality | Ship/defer usefulness | Overhead |
-|---|---|---:|---:|---:|---:|---:|
+|---|---|:---:|:---:|:---:|:---:|:---:|
 | U01 Tiny README fix | Simple prompt | 4 | 2 | 3 | 3 | 1 |
 | U01 Tiny README fix | Nuclear-grade | 4 | 3 | 4 | 3 | 2 |
 | U02 Agent workspace boundary | Simple prompt | 3 | 2 | 2 | 2 | 1 |

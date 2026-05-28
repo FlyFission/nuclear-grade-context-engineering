@@ -1,7 +1,5 @@
-from pathlib import Path
 
 import pytest
-
 from reference.workspace_guard import WorkspaceGuard, WorkspaceViolation
 
 

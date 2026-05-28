@@ -49,6 +49,8 @@
 | `checking-dependency-and-model-trust` | U03, U05, U07, U11 |
 | `checking-source-lineage` | U04, U05, U12 |
 | `checking-license-and-assurance-boundaries` | U04, U05, U12 |
+| `red-teaming-agent-changes` | (new skill; applies conceptually to U02, U11; formal trial records pending) |
+| `tracing-agent-execution` | (new skill; applies conceptually to U02, U06, U11; formal trial records pending) |
 
 ## Workflow Coverage
 

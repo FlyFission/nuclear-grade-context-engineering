@@ -144,6 +144,22 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should not trigger: List changed files in the PR.
 - Should not trigger: Run the worked-example tests.
 
+### `red-teaming-agent-changes`
+
+- Should trigger: Before releasing an agent that can write files and call APIs, enumerate the adversarial classes, state probe intents, and record outcomes.
+- Should trigger: A dependency update changes how the agent processes user input; adversarially review for prompt injection and retrieval poisoning before shipping.
+- Should trigger: This change expands the agent's network access; run a red-team review and link the posture note to ship.md.
+- Should not trigger: Fix a README typo with no agent authority component.
+- Should not trigger: Run a formal penetration test or produce a certified security report.
+
+### `tracing-agent-execution`
+
+- Should trigger: The packet claims the agent only edited auth.py but the release reviewer cannot see the step-level execution evidence; trace the run and link each step to a verification claim.
+- Should trigger: Capture execution evidence from this agent run — tool calls, decision points, token use, and approval gates — and structure it for trace.md.
+- Should trigger: A post-incident review needs to reconstruct what the agent did without reading a raw chat log; produce a structured execution trace.
+- Should not trigger: The agent read a config file and printed a summary with no side effects.
+- Should not trigger: Produce a formal audit trail or certified compliance record of agent behavior.
+
 ## Source-lineage note
 
 This evaluation prompt bank is an original Nuclear-grade artifact informed by public skill-authoring practice: concise skills, realistic trigger prompts, baseline-vs-skill comparison, and iterative trigger-description improvement. It does not create formal assurance, compliance, certification, safety, security, or regulatory adequacy.

@@ -24,6 +24,8 @@ EXPECTED_SKILLS = {
     "checking-dependency-and-model-trust",
     "checking-source-lineage",
     "checking-license-and-assurance-boundaries",
+    "red-teaming-agent-changes",
+    "tracing-agent-execution",
 }
 
 REQUIRED_SECTIONS = (

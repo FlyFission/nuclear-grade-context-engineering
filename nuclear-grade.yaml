@@ -29,6 +29,8 @@ templates:
     - decision.md
   optional:
     - standard/supplier-trust.md
+    - standard/red-team.md
+    - standard/execution-trace.md
 skills:
   - questioning-attitude
   - using-nuclear-grade
@@ -46,6 +48,8 @@ skills:
   - checking-dependency-and-model-trust
   - checking-source-lineage
   - checking-license-and-assurance-boundaries
+  - red-teaming-agent-changes
+  - tracing-agent-execution
 commands:
   - ng-question.md
   - ng-classify.md
@@ -62,6 +66,8 @@ commands:
   - ng-trust-check.md
   - ng-source-check.md
   - ng-legal-check.md
+  - ng-red-team.md
+  - ng-trace.md
 boundaries:
   license: MIT
   assurance: evidence visibility only

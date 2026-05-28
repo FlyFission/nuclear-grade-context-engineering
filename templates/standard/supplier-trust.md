@@ -1,5 +1,7 @@
 # Supplier Trust Record
 
+<!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
+
 **Purpose:** Record intended use, evidence, gaps, compensating controls, and revalidation triggers for dependencies, models, APIs, SaaS tools, generated artifacts, or vendor claims.
 
 **Activation threshold:** Use when an external item affects evidence, permissions, data, credentials, release posture, or public trust.

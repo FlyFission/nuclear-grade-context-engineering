@@ -11,6 +11,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
+PLACEHOLDER_MARKER = "NUCLEAR-GRADE-PLACEHOLDER"
 QUICK_MODE = "quick"
 STANDARD_MODE = "standard"
 UNSPECIFIED_MODE = "unspecified"
@@ -136,6 +137,10 @@ def validate_packet(packet: str | Path) -> ValidationResult:
 
     for md_file in sorted(packet_path.glob("*.md")):
         text = md_file.read_text(encoding="utf-8")
+        if PLACEHOLDER_MARKER in text:
+            messages.append(
+                f"{md_file.name} still contains the placeholder marker; fill the packet and remove the marker line before validation can pass."
+            )
         _check_required_sections(md_file, text, messages)
         _check_unfilled_template_prompts(md_file, text, messages)
         _check_prohibited_claims(md_file, text, messages)

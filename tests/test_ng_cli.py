@@ -1,3 +1,4 @@
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -266,6 +267,19 @@ def test_doctor_checks_additional_public_docs(tmp_path):
 
     assert result.returncode == 1
     assert "missing public file: ROADMAP.md" in result.stdout
+
+
+def test_new_packet_from_real_templates_fails_validation_until_marker_removed(tmp_path):
+    shutil.copytree(ROOT / "templates", tmp_path / "templates")
+    (tmp_path / "nuclear-grade.yaml").write_text("name: test-catalog\n", encoding="utf-8")
+
+    assert run_ng("new", "demo", "--mode", "quick", "--repo", str(tmp_path)).returncode == 0
+
+    packet = tmp_path / ".nuclear" / "changes" / "demo"
+    result = run_ng("validate", str(packet))
+
+    assert result.returncode != 0, result.stdout
+    assert "still contains the placeholder marker" in result.stdout
 
 
 def test_status_detects_active_packets(tmp_path):

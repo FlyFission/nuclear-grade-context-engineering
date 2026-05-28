@@ -1,5 +1,7 @@
 # Standard Basis Template
 
+<!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
+
 **Purpose:** State what must remain true for the change to be safe, reliable, secure, useful, and reviewable.
 
 **Activation threshold:** Use for Standard changes where requirements, architecture, interfaces, dependencies, AI authority, protected outcomes, or unacceptable outcomes need an explicit basis.

@@ -1,5 +1,7 @@
 # Quick Proof Template
 
+<!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
+
 **Purpose:** Capture the smallest credible evidence record for a Quick change.
 
 **Activation threshold:** Use with `risk.md` when a change is low-consequence, reversible, easy to verify, and does not trigger Standard mode.

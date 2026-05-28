@@ -1,5 +1,7 @@
 # Standard Plan Template
 
+<!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
+
 **Purpose:** Bound the work so implementation, review, verification, and rollback are planned before the change expands.
 
 **Activation threshold:** Use for Standard changes where the implementation has multiple steps, affected configuration items, dependency/model/tool decisions, rollback concerns, or review sequencing needs.

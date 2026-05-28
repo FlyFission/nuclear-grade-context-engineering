@@ -1,5 +1,7 @@
 # Standard Ship Template
 
+<!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
+
 **Purpose:** Make the release decision explicit: ship, block, defer, or ship with named residual risk.
 
 **Activation threshold:** Use when a Standard change is merged/released, when release posture changes, or when users/operations/dependencies/security/data/AI authority are affected.

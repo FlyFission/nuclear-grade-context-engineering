@@ -14,6 +14,12 @@ This project uses changelog entries to record public-facing changes, not to impl
 - `ng-drift-check` and `ng-code-review` portable command prompts for the two skills.
 - A re-evaluated drift gate (`## Charter and anchor check` with a justification table) in the Standard plan template.
 - Advisory validator checks: a mission anchor is checked for objective, success criterion, and non-goals only when a `## Mission anchor` section is present; unresolved NEEDS-CLARIFICATION markers fail before ship. Both are non-breaking (only fire when present).
+- Placeholder marker on every Quick, Standard, CM, and golden-path template; the validator now rejects any packet that still carries it, so an untouched scaffold no longer validates green.
+- Doctor now requires `DISCLAIMER.md`, `SECURITY.md`, `CONTRIBUTING.md`, and `CODE_OF_CONDUCT.md` as public files.
+
+### Removed
+
+- Moved `docs/04-adoption/report-swot-gap-remediation.md` out of the public docs tree into the gitignored `.research/` scratch space; the only reference in `docs/04-adoption/README.md` is removed.
 
 ## [0.2.0] - 2026-05-27
 

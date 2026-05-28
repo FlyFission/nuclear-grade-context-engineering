@@ -146,13 +146,20 @@ python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.n
 python tools/ng.py validate .nuclear/changes/<slug>
 ```
 
+The first run on an untouched packet is **expected to fail**. Each template ships with a `NUCLEAR-GRADE-PLACEHOLDER` marker line, and the validator refuses to accept a packet that still carries it. That is the evidence gate working. Fill the fields you actually need, set at least one real status, delete every marker line, and validate again:
+
+```bash
+python tools/ng.py validate .nuclear/changes/<slug>
+# OK: .nuclear/changes/<slug>
+```
+
 For a packet in another repo:
 
 ```bash
 python tools/ng.py validate /path/to/your/repo/.nuclear/changes/<slug>
 ```
 
-The v0 validator checks Quick and Standard packet structure, required sections, evidence status, source-lineage notes, local packet links, and prohibited overclaiming phrases. It does not decide whether your system is safe, secure, compliant, or suitable for a regulated use case.
+The v0 validator checks Quick and Standard packet structure, required sections, evidence status, source-lineage notes, local packet links, the placeholder marker, and prohibited overclaiming phrases. It does not decide whether your system is safe, secure, compliant, or suitable for a regulated use case.
 
 ## 8. Decide or stop
 

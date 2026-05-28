@@ -265,3 +265,63 @@ def test_boundary_paraphrases_all_pass(tmp_path):
         assert result.ok, (
             f"Expected pass for boundary phrase: {phrase}; got messages: {result.messages}"
         )
+
+
+FILLED_MISSION_ANCHOR = (
+    "## Mission anchor\n\n"
+    "- Objective: ship the drift control feature.\n"
+    "- Success criteria: validator and tests pass; packet validates.\n"
+    "- Non-goals: no contract rewrite; out of scope is changing the description rule.\n\n"
+)
+
+
+def _insert_before_tail(text: str, block: str) -> str:
+    marker = "## Required links"
+    idx = text.find(marker)
+    return text[:idx] + block + text[idx:]
+
+
+def test_filled_mission_anchor_passes(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    risk = packet / "risk.md"
+    risk.write_text(_insert_before_tail(risk.read_text(encoding="utf-8"), FILLED_MISSION_ANCHOR), encoding="utf-8")
+
+    result = validate_packet(packet)
+
+    assert result.ok, result.messages
+
+
+def test_mission_anchor_missing_non_goals_fails(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    anchor = (
+        "## Mission anchor\n\n"
+        "- Objective: ship the feature.\n"
+        "- Success criteria: tests pass.\n\n"
+    )
+    risk = packet / "risk.md"
+    risk.write_text(_insert_before_tail(risk.read_text(encoding="utf-8"), anchor), encoding="utf-8")
+
+    result = validate_packet(packet)
+
+    assert not result.ok
+    assert any("Mission anchor present but missing a non-goals" in m for m in result.messages)
+
+
+def test_mission_anchor_absent_is_not_checked(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+
+    result = validate_packet(packet)
+
+    assert result.ok, result.messages
+    assert not any("Mission anchor" in m for m in result.messages)
+
+
+def test_unresolved_clarification_marker_fails(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    with (packet / "basis.md").open("a", encoding="utf-8") as handle:
+        handle.write("\nOpen question: [NEEDS CLARIFICATION] which API version applies.\n")
+
+    result = validate_packet(packet)
+
+    assert not result.ok
+    assert any("[NEEDS CLARIFICATION]" in m for m in result.messages)

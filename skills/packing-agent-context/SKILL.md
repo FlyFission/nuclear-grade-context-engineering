@@ -30,7 +30,7 @@ Context packs give agents and reviewers the right focused information: role, mod
 
 ## Process
 
-1. Name the role and objective.
+1. Name the role and objective, and carry the mission anchor (objective, success criteria, non-goals) so it survives context resets. See `controlling-mission-drift`.
 2. Include only the packet files, affected files, source rows, and evidence commands needed for the next decision.
 3. State last completed action, changed conditions, critical next action, likely error, and control.
 4. State file, command, network, credential, approval, and release authority.

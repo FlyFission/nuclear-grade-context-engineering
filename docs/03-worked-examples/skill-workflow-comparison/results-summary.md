@@ -33,6 +33,8 @@
 
 ## Skill Coverage
 
+*This table maps each skill to the use cases it applies to. Skills added after the original U01-U12 trials (for example `controlling-mission-drift` and `reviewing-code-quality`) are mapped retroactively to the use cases where they apply; they were not run as separate trials.*
+
 | Skill | Trial records |
 |---|---|
 | `questioning-attitude` | U02, U03, U04, U05, U06, U07, U08, U09, U10, U11, U12 |
@@ -51,6 +53,8 @@
 | `checking-dependency-and-model-trust` | U03, U05, U07, U11 |
 | `checking-source-lineage` | U04, U05, U12 |
 | `checking-license-and-assurance-boundaries` | U04, U05, U12 |
+| `controlling-mission-drift` | U05, U08, U09, U11 |
+| `reviewing-code-quality` | U02, U07, U08 |
 
 ## Workflow Coverage
 

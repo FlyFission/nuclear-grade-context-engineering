@@ -99,6 +99,18 @@ def test_init_creates_nuclear_workspace(tmp_path):
     assert (tmp_path / ".nuclear" / "changes").is_dir()
 
 
+def test_init_creates_charter_and_mission_anchor(tmp_path):
+    result = run_ng("init", str(tmp_path))
+
+    assert result.returncode == 0, result.stderr
+    charter = tmp_path / ".nuclear" / "charter.md"
+    mission = tmp_path / ".nuclear" / "mission.md"
+    assert charter.exists()
+    assert mission.exists()
+    assert "Ownership" in charter.read_text(encoding="utf-8")
+    assert "Non-goals" in mission.read_text(encoding="utf-8")
+
+
 def test_new_quick_packet_copies_templates(tmp_path):
     scaffold_repo(tmp_path)
     result = run_ng("new", "demo", "--mode", "quick", "--repo", str(tmp_path))

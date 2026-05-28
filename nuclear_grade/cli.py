@@ -102,6 +102,43 @@ MODE_DEFAULT_BLOCK = {
     "standard": "## Selected mode\n\n- **Mode:** Standard\n",
 }
 
+CHARTER_TEMPLATE = (
+    "# Charter\n\n"
+    "**Version:** 1.0.0\n"
+    "**Ratified:** <date>\n"
+    "**Last amended:** <date>\n\n"
+    "Durable, non-negotiable principles of how work is done here, independent of any single change. "
+    "A mission anchor states what a change is for; the charter states how all changes must be carried out. "
+    "Advisory in tooling; the standard a reviewer and an agent are expected to hold. Scaled by mode.\n\n"
+    "## Articles\n\n"
+    "1. Ownership: a named person owns each change and its evidence.\n"
+    "2. Face facts: report actual state, not hoped-for state.\n"
+    "3. Rising standards: never normalize a deviation; a small erosion is a finding.\n"
+    "4. Formality: follow the procedure; document and decide deviations, never silent.\n"
+    "5. Technical depth: the owner understands the details, not just the summary.\n"
+    "6. Integrity in reporting: bad news travels up immediately and intact.\n"
+    "7. Questioning attitude: challenge assumptions before acting.\n"
+    "8. Evidence over persuasion: claims carry reproducible evidence or a labeled gap.\n"
+    "9. Graded rigor: match controls to consequence.\n"
+    "10. Baseline discipline: the accepted configuration is recorded and changes are controlled.\n\n"
+    "## Amendment log\n\n"
+    "- 1.0.0 (<date>): Initial charter.\n\n"
+    "This charter records principles for engineering review. It does not create compliance, formal "
+    "V&V, safety, security, certification, or regulatory adequacy.\n"
+)
+
+MISSION_TEMPLATE = (
+    "# Workspace mission anchor\n\n"
+    "The durable objective this workspace serves. Individual change packets declare their own "
+    "`## Mission anchor`; this file is the anchor those changes trace up to. Re-state it after any "
+    "context reset so the mission survives context loss.\n\n"
+    "- Objective: <the durable goal this workspace serves>\n"
+    "- Success criteria: <observable conditions that mean the objective is met>\n"
+    "- Non-goals / forbidden directions: <explicit out-of-scope and prohibited directions>\n\n"
+    "This anchor records intent for engineering review. It does not create compliance, formal V&V, "
+    "safety, security, certification, or regulatory adequacy.\n"
+)
+
 
 @dataclass(frozen=True)
 class PlannedWrite:
@@ -188,6 +225,8 @@ def handle_init(args: argparse.Namespace) -> int:
                 "create compliance, formal V&V, safety, security, or regulatory adequacy.\n"
             ),
         ),
+        PlannedWrite(repo / ".nuclear" / "charter.md", content=CHARTER_TEMPLATE),
+        PlannedWrite(repo / ".nuclear" / "mission.md", content=MISSION_TEMPLATE),
     ]
     return apply_writes(writes, dry_run=args.dry_run, overwrite=args.yes)
 

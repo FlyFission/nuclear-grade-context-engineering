@@ -39,7 +39,7 @@ Questioning attitude is the Nuclear-grade front door: challenge assumptions befo
 5. Ask what evidence would change the decision.
 6. Validate facts before relying on memory, confidence, or agent-generated claims.
 7. Name pause conditions, hold conditions, and escalation triggers.
-8. Route the next artifact: Quick proof, Standard spec, context pack, turnover, self-check, CM record, or release decision.
+8. Route the next artifact: Quick proof, Standard spec, context pack, turnover, self-check, CM record, mission anchor or drift check, or release decision.
 
 ## Outputs
 

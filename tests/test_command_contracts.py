@@ -23,6 +23,8 @@ EXPECTED_COMMANDS = {
     "ng-legal-check.md",
     "ng-drift-check.md",
     "ng-code-review.md",
+    "ng-red-team.md",
+    "ng-trace.md",
 }
 
 REQUIRED_SECTIONS = (

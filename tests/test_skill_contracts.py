@@ -33,6 +33,8 @@ EXPECTED_SKILLS = {
     "checking-license-and-assurance-boundaries",
     "controlling-mission-drift",
     "reviewing-code-quality",
+    "red-teaming-agent-changes",
+    "tracing-agent-execution",
 }
 
 REQUIRED_SECTIONS = (

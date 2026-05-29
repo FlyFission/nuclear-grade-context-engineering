@@ -125,6 +125,21 @@ Confidence fields are about source-family fit for this repo, not compliance adeq
 
 ---
 
+## Tier 6 — Agentic-AI Operations Sources
+
+These sources inform the adversarial review, execution tracing, and agent profiling disciplines. They are supporting context only: the resulting workflows are original and tool-agnostic. No NIM, GPU, W&B, or NeMo dependency is required to use the resulting skills and templates.
+
+| Source | Public link | Classification | Status | Role in Nuclear-grade | Confidence | Direct repo use |
+|---|---|---:|---|---|---:|---|
+| NVIDIA Safety for Agentic AI blueprint | https://github.com/NVIDIA-AI-Blueprints/safety-for-agentic-ai | Supporting | supporting-context | Adversarial risk taxonomy (prompt injection, jailbreak, authority escalation, tool misuse, unsafe output, retrieval poisoning, data exfiltration); evaluate → harden → re-evaluate lifecycle; before/after posture records. | High | Conceptual influence for `red-teaming-agent-changes` skill and adversarial class vocabulary; no compliance, penetration-test, or safety certification claim. |
+| Garak LLM vulnerability scanner | https://github.com/leondz/garak | Supporting | supporting-context | Open-source probe-based adversarial testing of LLMs; risk categories; reproducible vulnerability scan reports. | High | Adversarial class taxonomy; no compliance claim. |
+| NVIDIA NeMo Guardrails | https://github.com/NVIDIA-NeMo/Guardrails | Supporting | supporting-context | Runtime guardrail orchestration: input, output, retrieval, dialog, and topic rails; jailbreak detection; content safety; configuration as code. | High | Rail-type vocabulary for adversarial class selection and agent authority model; no compliance claim. |
+| W&B Weave traceability | https://wandb.ai/site/weave | Supporting | supporting-context | Trace-tree observability: span-per-call, auto-logging of inputs/outputs/metadata/latency/cost, audit lineage, reproducibility, evaluation loops. | High | Conceptual influence for `tracing-agent-execution` skill and trace-as-evidence vocabulary; no compliance or audit-certification claim. |
+| NVIDIA NeMo Agent Toolkit (AIQ) | https://github.com/NVIDIA/NeMo-Agent-Toolkit | Supporting | supporting-context | Framework-agnostic agent profiling (token/latency/cost per step to workflow level), offline evaluation harness, OpenTelemetry-compatible observability exporters (Phoenix, Weave, Langfuse, LangSmith). | High | Reference model for evidence-spine detail and skill-evaluation rubric; influence for future runnable `evals/` suite; no compliance claim. |
+| OpenTelemetry distributed tracing | https://opentelemetry.io/ | Supporting | supporting-context | Vendor-neutral structured spans, parent-child trace relationships, context propagation, semantic conventions for LLM/agent instrumentation. | High | Structured span vocabulary for `tracing-agent-execution` and `execution-trace.md`; no compliance claim. |
+
+---
+
 ## Context-Only / Do-Not-Overweight Sources
 
 | Source family | Classification | Status | Why |

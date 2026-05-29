@@ -55,6 +55,8 @@
 | `checking-license-and-assurance-boundaries` | U04, U05, U12 |
 | `controlling-mission-drift` | U05, U08, U09, U11 |
 | `reviewing-code-quality` | U02, U07, U08 |
+| `red-teaming-agent-changes` | (new skill; applies conceptually to U02, U11; formal trial records pending) |
+| `tracing-agent-execution` | (new skill; applies conceptually to U02, U06, U11; formal trial records pending) |
 
 ## Workflow Coverage
 

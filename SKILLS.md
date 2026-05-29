@@ -24,6 +24,8 @@ Skills are self-contained agent instructions. Each skill has a `SKILL.md` contra
 | [`checking-license-and-assurance-boundaries`](skills/checking-license-and-assurance-boundaries/SKILL.md) | Reviewing license and assurance language | Boundary-safe wording |
 | [`controlling-mission-drift`](skills/controlling-mission-drift/SKILL.md) | Work drifts from the objective, scope creeps, or rigor erodes one concession at a time | Re-anchor / escalate / stop decision and updated mission anchor |
 | [`reviewing-code-quality`](skills/reviewing-code-quality/SKILL.md) | Reviewing a diff or module for standards drift and needless complexity | Prioritized findings and a single verdict |
+| [`red-teaming-agent-changes`](skills/red-teaming-agent-changes/SKILL.md) | Adversarially probing agent tool grants, dependencies, models, or releases for injection, escalation, unsafe output, or tool misuse | Red-team findings record |
+| [`tracing-agent-execution`](skills/tracing-agent-execution/SKILL.md) | Capturing agent tool calls, decisions, inputs, outputs, token use, and approval gates as structured execution evidence | Execution trace record |
 
 ## Contract
 

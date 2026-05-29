@@ -1,6 +1,6 @@
 ---
 name: tracing-agent-execution
-description: Use when an agent's tool calls, decisions, inputs, outputs, token use, or latency need to be captured as execution evidence and linked into a packet trace or verification record.
+description: Captures an agent run's tool calls, decision points, inputs, outputs, token use, and approval gates as structured, reproducible execution evidence linked into the packet trace and verification record. Use when the execution path matters for debugging, auditing, cost review, or defending a release decision. Do not use for a read-only run with no side effects, or to produce a certified compliance audit trail.
 ---
 
 # Tracing Agent Execution

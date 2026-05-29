@@ -144,6 +144,21 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should not trigger: List changed files in the PR.
 - Should not trigger: Run the worked-example tests.
 
+### `controlling-mission-drift`
+
+- Should trigger: We are twenty steps into this task and I cannot tell if the current edit still serves the original goal.
+- Should trigger: The agent keeps adding features no one asked for; check whether we have drifted from the objective.
+- Should trigger: We have retried this fix three times without progress; should we re-anchor, escalate, or stop?
+- Should not trigger: Fix a README typo and show the diff.
+- Should not trigger: Explain what this small helper function does.
+
+### `reviewing-code-quality`
+
+- Should trigger: Review this 1500-line module for needless complexity and tell me what to delete.
+- Should trigger: Does this new wrapper earn its keep, or is it just indirection?
+- Should trigger: Check whether feature-specific logic is leaking into the shared layer in this diff.
+- Should not trigger: Confirm the unit test passes and paste the output.
+- Should not trigger: Cite a public DOE handbook as source lineage for a docs paragraph.
 ### `red-teaming-agent-changes`
 
 - Should trigger: Before releasing an agent that can write files and call APIs, enumerate the adversarial classes, state probe intents, and record outcomes.

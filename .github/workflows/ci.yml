@@ -9,20 +9,27 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: ${{ matrix.python-version }}
 
-      - name: Install test dependency
-        run: python -m pip install --upgrade pip pytest
+      - name: Install test dependencies
+        run: python -m pip install --upgrade pip pytest ruff
 
       - name: Run tests
         run: python -m pytest -q
+
+      - name: Run ruff lint
+        run: python -m ruff check .
 
       - name: Compile Python files
         run: python -m py_compile tools/ng.py tools/ng_validate.py docs/03-worked-examples/ai-agent-tool-permissions/reference/workspace_guard.py
@@ -41,3 +48,53 @@ jobs:
           while IFS= read -r packet; do
             python tools/ng.py validate "$packet"
           done < <(find docs/03-worked-examples -path '*/.nuclear/changes/*' -type d -prune -print)
+
+  wheel-smoke:
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build tooling
+        run: python -m pip install --upgrade pip build
+
+      - name: Build wheel
+        run: python -m build --wheel --outdir dist
+
+      - name: Install wheel into clean venv
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m venv /tmp/wheel-smoke-venv
+          /tmp/wheel-smoke-venv/bin/pip install --upgrade pip
+          /tmp/wheel-smoke-venv/bin/pip install dist/*.whl
+
+      - name: Smoke-test installed CLI outside source tree
+        shell: bash
+        run: |
+          set -euo pipefail
+          NG=/tmp/wheel-smoke-venv/bin/nuclear-grade
+          WORK=$(mktemp -d)
+          cd "$WORK"
+          "$NG" init .
+          "$NG" new my-quick --mode quick
+          "$NG" new my-std --mode standard
+          "$NG" new my-cm --mode cm
+          "$NG" new my-gp --mode golden-path
+          LIST_OUTPUT=$("$NG" list)
+          echo "$LIST_OUTPUT"
+          echo "$LIST_OUTPUT" | grep -q "Skills:"
+          echo "$LIST_OUTPUT" | grep -q "questioning-attitude"
+          echo "$LIST_OUTPUT" | grep -q "ng-question.md"
+          set +e
+          "$NG" validate .nuclear/changes/my-quick
+          rc=$?
+          set -e
+          [ "$rc" -eq 1 ]
+          echo "wheel-smoke OK"

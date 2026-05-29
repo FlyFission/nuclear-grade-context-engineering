@@ -16,7 +16,7 @@ Nuclear-grade:
 question -> specify -> execute -> verify -> decide -> baseline -> operation
 ```
 
-Public v0 is a usable skill and workflow product: agent-operable skills, portable command prompts, Quick/Standard change packages, activated configuration-management records, a local CLI, a validator, a public source foundation, and one validated worked example.
+Public v0 is a usable skill and workflow product: agent-operable skills, portable command prompts, Quick / Standard / activated CM / golden-path templates, a local CLI, a validator, a public source foundation, one tested worked example, and one author-judged comparison study.
 
 ## Try it in 60 seconds
 
@@ -25,6 +25,15 @@ python tools/ng.py doctor .
 python tools/ng.py list
 python tools/ng.py new demo-change --mode quick
 python tools/ng.py validate .nuclear/changes/demo-change
+```
+
+The fourth command is expected to print `FAILED: ...` with `still contains the placeholder marker`. That is the evidence gate working: every Nuclear-grade template ships with a `NUCLEAR-GRADE-PLACEHOLDER` marker line that the validator refuses to accept until you remove it. Fill in the prompts that matter, delete the marker line, then re-run `validate`:
+
+```bash
+# In .nuclear/changes/demo-change/risk.md and proof.md, fill the fields with
+# real content, then delete the line that starts with "<!-- NUCLEAR-GRADE-PLACEHOLDER".
+python tools/ng.py validate .nuclear/changes/demo-change
+# OK: .nuclear/changes/demo-change
 ```
 
 Inspect the included evidence path:
@@ -44,7 +53,7 @@ If your shell only has `python3`, use `python3`.
 | Skills | Agent-operable instructions with inputs, outputs, verification, escalation, and red flags | [`SKILLS.md`](SKILLS.md) |
 | Portable command prompts | Pasteable prompt cards for questioning, classification, CM impact, baselining, evidence review, release review, source checks, and legal boundaries | [`COMMANDS.md`](COMMANDS.md) |
 | Templates | Quick, Standard, activated CM, and golden-path records | [`templates/`](templates/) |
-| CLI | `init`, `new`, `validate`, `doctor`, `list`, and `status` | [`docs/05-reference/cli-reference.md`](docs/05-reference/cli-reference.md) |
+| CLI | `init`, `new --mode {quick,standard,cm,golden-path}`, `validate`, `doctor`, `list`, `status`, `migrate` | [`docs/05-reference/cli-reference.md`](docs/05-reference/cli-reference.md) |
 | Validator | Dependency-free Quick and Standard packet checks | [`tools/ng_validate.py`](tools/ng_validate.py) |
 | Worked example | Standard packet proving an AI-agent workspace boundary | [`EXAMPLES.md`](EXAMPLES.md) |
 | Source foundation | Public source map and citation boundaries | [`docs/00-standards-foundation/source-map.md`](docs/00-standards-foundation/source-map.md) |
@@ -148,7 +157,8 @@ Included now:
 - local CLI and dependency-free validator;
 - agent-operable skills and portable command prompts;
 - public source foundation and source status labels;
-- validated worked example for an AI-agent workspace boundary;
+- tested worked example for an AI-agent workspace boundary (workspace-only file writes; pytest-checked);
+- author-judged adoption comparison covering twelve use cases (see `docs/03-worked-examples/skill-workflow-comparison/`);
 - tests for validator, CLI, skill contracts, command contracts, public docs, and worked example code.
 
 Not included yet:

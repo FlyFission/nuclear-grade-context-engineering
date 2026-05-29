@@ -1,6 +1,5 @@
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 COMMANDS_DIR = ROOT / "commands"
 COMMANDS_INDEX = ROOT / "COMMANDS.md"
@@ -22,6 +21,8 @@ EXPECTED_COMMANDS = {
     "ng-trust-check.md",
     "ng-source-check.md",
     "ng-legal-check.md",
+    "ng-drift-check.md",
+    "ng-code-review.md",
     "ng-red-team.md",
     "ng-trace.md",
 }

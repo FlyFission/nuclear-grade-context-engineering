@@ -27,6 +27,8 @@ HPI for AI agents adds the micro-controls under that path: brief the work, self-
 | OPEX learning | event -> weak control -> durable update -> verification -> re-baseline trigger | Near misses, bad handoffs, escaped defects, or review surprises should change future work | `opex.md` |
 | Trust check | intended use -> external claims -> local evidence -> controls -> release impact | Dependencies, models, APIs, SaaS, generated artifacts, or vendor claims affect trust | `supplier-trust.md` or packet section |
 | Source/legal check | claim -> source map -> boundary wording -> validator | Public docs or examples cite assurance concepts | Source-lineage notes |
+| Mission drift control | anchor -> zoom out -> test action -> loop/standards check -> re-anchor/escalate/stop | A long session drifts from its objective, scope creeps, or rigor erodes | `## Mission anchor`, `.nuclear/mission.md` |
+| Code-quality review | objective -> delete-first -> tripwires -> abstraction check -> layering -> verdict | A diff or module risks standards drift or needless complexity | Review findings plus verdict |
 
 ## Quick change
 

@@ -1,5 +1,7 @@
 # Baseline Record
 
+<!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
+
 **Purpose:** Record the accepted controlled configuration state after review.
 
 **Activation threshold:** Use when a Standard change ships, release posture changes, or trust-bearing docs, prompts, models, dependencies, skills, commands, templates, validators, or source-lineage records are accepted.

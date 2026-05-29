@@ -1,6 +1,6 @@
 ---
 name: questioning-attitude
-description: Use when a request, plan, diff, dependency, agent action, public claim, or release decision needs skeptical fact-finding before work continues.
+description: Challenges assumptions with skeptical fact-finding before an agent builds, merges, or releases, surfacing what would change the decision. Use when a request, plan, diff, dependency, agent action, public claim, or release decision is vague, consequential, or easy to rationalize. Do not use for a tiny Quick edit with obvious proof, or when the user wants formal assurance.
 ---
 
 # Questioning Attitude
@@ -39,7 +39,7 @@ Questioning attitude is the Nuclear-grade front door: challenge assumptions befo
 5. Ask what evidence would change the decision.
 6. Validate facts before relying on memory, confidence, or agent-generated claims.
 7. Name pause conditions, hold conditions, and escalation triggers.
-8. Route the next artifact: Quick proof, Standard spec, context pack, turnover, self-check, CM record, or release decision.
+8. Route the next artifact: Quick proof, Standard spec, context pack, turnover, self-check, CM record, mission anchor or drift check, or release decision.
 
 ## Outputs
 

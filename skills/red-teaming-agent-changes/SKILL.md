@@ -1,6 +1,6 @@
 ---
 name: red-teaming-agent-changes
-description: Use when an agent change, tool action, dependency, model, or release needs adversarial review for prompt injection, authority escalation, unsafe output, or tool misuse.
+description: Adversarially probes an agent change, tool grant, dependency, model, or release across risk classes such as prompt injection, authority escalation, unsafe output, and tool misuse, recording probe intent, outcome, and residual risk. Use when a change expands agent authority, data access, or network scope before release. Do not use for a typo fix with no agent-authority component, or to produce a certified penetration test or formal security audit.
 ---
 
 # Red-Teaming Agent Changes

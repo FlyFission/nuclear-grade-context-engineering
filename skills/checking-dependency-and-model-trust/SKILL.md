@@ -1,6 +1,6 @@
 ---
 name: checking-dependency-and-model-trust
-description: Use when dependencies, models, APIs, SaaS tools, generated artifacts, or vendor claims affect evidence, permissions, data, release posture, or public trust.
+description: Screens dependencies, models, APIs, SaaS tools, generated artifacts, and vendor claims for intended use, local evidence, gaps, and release impact. Use when any of these affect evidence, permissions, data, release posture, or public trust. Do not use for a purely internal refactor with no external dependency, or for a functional-correctness question.
 ---
 
 # Checking Dependency And Model Trust

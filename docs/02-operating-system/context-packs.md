@@ -45,6 +45,8 @@ Mode: Quick / Standard / Nuclear / Incident / Research Board / Release
 Role: builder / reviewer / verifier / releaser / incident lead / researcher
 Packet: .nuclear/changes/<slug>/
 Objective: <one paragraph>
+Mission anchor: <objective, success criteria, non-goals; survives context resets>
+Charter: <.nuclear/charter.md articles in play>
 Affected files: <paths>
 Current phase: Question / Specify / Plan / Execute / Verify / Review / Decide / Baseline / Operate / Learn
 Last completed action: <resume point>

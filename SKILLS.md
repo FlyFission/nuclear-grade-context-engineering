@@ -22,6 +22,8 @@ Skills are self-contained agent instructions. Each skill has a `SKILL.md` contra
 | [`checking-dependency-and-model-trust`](skills/checking-dependency-and-model-trust/SKILL.md) | Reviewing dependency, model, API, SaaS, generated artifact, or vendor trust | Intended-use trust screen |
 | [`checking-source-lineage`](skills/checking-source-lineage/SKILL.md) | Reviewing citation and source-family claims | Source-safe wording |
 | [`checking-license-and-assurance-boundaries`](skills/checking-license-and-assurance-boundaries/SKILL.md) | Reviewing license and assurance language | Boundary-safe wording |
+| [`controlling-mission-drift`](skills/controlling-mission-drift/SKILL.md) | Work drifts from the objective, scope creeps, or rigor erodes one concession at a time | Re-anchor / escalate / stop decision and updated mission anchor |
+| [`reviewing-code-quality`](skills/reviewing-code-quality/SKILL.md) | Reviewing a diff or module for standards drift and needless complexity | Prioritized findings and a single verdict |
 | [`red-teaming-agent-changes`](skills/red-teaming-agent-changes/SKILL.md) | Adversarially probing agent tool grants, dependencies, models, or releases for injection, escalation, unsafe output, or tool misuse | Red-team findings record |
 | [`tracing-agent-execution`](skills/tracing-agent-execution/SKILL.md) | Capturing agent tool calls, decisions, inputs, outputs, token use, and approval gates as structured execution evidence | Execution trace record |
 
@@ -29,11 +31,12 @@ Skills are self-contained agent instructions. Each skill has a `SKILL.md` contra
 
 Every skill must include:
 
-- YAML frontmatter with `name` and `description`.
-- A description that starts with `Use when`.
+- YAML frontmatter with `name` and `description` (required); `license` and `compatibility` are optional.
+- A `name` that is lowercase and hyphen-separated.
+- A `description` that says what the skill does, when to trigger it, and a "Do not use for ..." negative clause (80 to 500 characters, no colon-space).
 - Overview, use and non-use conditions, inputs, process, outputs, verification, escalation, common rationalizations, red flags, and source-lineage note.
 
-See `docs/05-reference/skill-authoring-contract.md`.
+Skills may add optional `references/`, `scripts/`, and `assets/` subfolders for progressive disclosure. See `docs/05-reference/skill-authoring-contract.md`.
 
 ## Boundary note
 

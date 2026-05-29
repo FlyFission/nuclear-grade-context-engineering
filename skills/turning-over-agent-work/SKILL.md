@@ -1,6 +1,6 @@
 ---
 name: turning-over-agent-work
-description: Use when handing off AI-agent, reviewer, verifier, releaser, or resumed-thread work with unfinished scope, changed conditions, authority limits, or open evidence.
+description: Hands off unfinished work with a closed-loop briefing of state, changed conditions, remaining scope, authority limits, and open evidence. Use when AI-agent, reviewer, verifier, releaser, or resumed-thread work transfers to a new owner. Do not use when the same owner continues uninterrupted with full context.
 ---
 
 # Turning Over Agent Work

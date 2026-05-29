@@ -1,5 +1,7 @@
 # Turnover Record
 
+<!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
+
 **Purpose:** Transfer unfinished work, authority, evidence, and stop conditions to the next human or agent.
 
 **Activation threshold:** Use when a subagent, reviewer, verifier, releaser, support owner, or resumed thread must continue work from a prior state.

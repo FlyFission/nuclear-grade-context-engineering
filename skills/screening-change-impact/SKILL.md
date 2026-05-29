@@ -1,6 +1,6 @@
 ---
 name: screening-change-impact
-description: Use when a controlled change may stale docs, tests, skills, commands, templates, validators, prompts, releases, baselines, or evidence.
+description: Screens what a controlled change may stale across docs, tests, skills, commands, templates, validators, prompts, releases, baselines, and evidence, and names revalidation triggers. Use when a change touches controlled configuration. Do not use for an isolated edit with no downstream dependents.
 ---
 
 # Screening Change Impact

@@ -1,5 +1,7 @@
 # Standard Risk Template
 
+<!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
+
 **Purpose:** Classify a meaningful change after questioning assumptions, justify Standard mode, and name any extra activated records.
 
 **Activation threshold:** Use for user-visible behavior, durable design decisions, important dependency/model/API/prompt/tool changes, security/privacy/data handling, operational posture, or anything with non-trivial consequence, uncertainty, or review value.
@@ -18,6 +20,16 @@
 - Date:
 - Current lifecycle phase: Question / Specify / Plan / Execute / Verify / Review / Decide / Baseline / Operate / Learn
 - Summary:
+
+## Mission anchor
+
+State what this change is for, so a long session can be tested against it. See `controlling-mission-drift`.
+
+- Objective:
+- Success criteria:
+- Non-goals / forbidden directions:
+- Drift check: re-anchor / escalate / stop when an action stops serving the objective.
+- Traces to: workspace `.nuclear/mission.md`, charter article, or originating PR/issue.
 
 ## Questioning-attitude summary
 

@@ -1,5 +1,7 @@
 # Self-Check Record
 
+<!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
+
 **Purpose:** Make a critical agent action deliberate and reviewable before and after it happens.
 
 **Activation threshold:** Use before destructive commands, broad edits, public claims, dependency/model/API changes, credential/network/tool actions, migrations, releases, or irreversible operations.

@@ -1,5 +1,7 @@
 # Questioning Attitude Screen
 
+<!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
+
 **Purpose:** Challenge assumptions before an agent builds, merges, or releases.
 
 **Activation threshold:** Use when a request, diff, dependency, tool permission, prompt/model change, release decision, or public claim has uncertainty or consequence.

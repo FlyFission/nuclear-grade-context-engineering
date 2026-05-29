@@ -1,5 +1,7 @@
 # Change Impact Record
 
+<!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
+
 **Purpose:** Screen downstream artifacts that may become stale when controlled configuration changes.
 
 **Activation threshold:** Use when a change affects more than one artifact family or could invalidate docs, tests, skills, command prompts, validators, release posture, source lineage, or operational assumptions.

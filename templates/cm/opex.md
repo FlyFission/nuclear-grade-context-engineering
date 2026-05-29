@@ -1,5 +1,7 @@
 # OPEX Record
 
+<!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
+
 **Purpose:** Convert operating experience, user feedback, near misses, incidents, or review surprises into durable updates.
 
 **Activation threshold:** Use when operation teaches something that should affect basis, tests, controls, thresholds, docs, or baseline.

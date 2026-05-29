@@ -2,6 +2,8 @@
 
 **Goal:** question a real AI-assisted change, create a useful controlled-change record in about 15 minutes, and prove one important claim.
 
+> **Note on the demo:** the first time you run `validate` on a freshly scaffolded packet you should expect `FAILED: ... has unfilled template prompts`. Templates ship with empty prompts on purpose. Fill the prompts that matter, then re-run `validate`. The point of the validator is to refuse silent gaps.
+
 ## 1. Check the repo
 
 ```bash
@@ -72,6 +74,22 @@ Standard:
 python tools/ng.py new <slug> --mode standard
 ```
 
+Activated CM (controlled configuration):
+
+```bash
+python tools/ng.py new <slug> --mode cm
+```
+
+This scaffolds `controlled-items.md`, `change-impact.md`, `baseline.md`, `variance.md`, and `opex.md`. Delete what your change does not need.
+
+Golden path (public questioning-attitude path):
+
+```bash
+python tools/ng.py new <slug> --mode golden-path
+```
+
+This scaffolds `questioning-attitude.md`, `spec.md`, `turnover.md`, `self-check.md`, and `decision.md`.
+
 Manual fallback:
 
 ```bash
@@ -79,25 +97,15 @@ mkdir -p .nuclear/changes/<slug>/
 cp templates/quick/*.md .nuclear/changes/<slug>/
 ```
 
-For Standard, use `templates/standard/*.md` instead. Use either Quick or Standard templates, not both.
+Use either Quick or Standard templates, not both. Pick CM or golden-path additions only when the change actually needs them.
 
-If the change affects controlled configuration, copy the activated CM record you need:
-
-```bash
-cp templates/cm/controlled-items.md .nuclear/changes/<slug>/
-cp templates/cm/change-impact.md .nuclear/changes/<slug>/
-cp templates/cm/baseline.md .nuclear/changes/<slug>/
-```
-
-If the change needs the public golden path, copy the activated records:
+Upgrading an older packet (0.1.x) that does not declare a mode:
 
 ```bash
-cp templates/golden-path/questioning-attitude.md .nuclear/changes/<slug>/
-cp templates/golden-path/spec.md .nuclear/changes/<slug>/
-cp templates/golden-path/turnover.md .nuclear/changes/<slug>/
-cp templates/golden-path/self-check.md .nuclear/changes/<slug>/
-cp templates/golden-path/decision.md .nuclear/changes/<slug>/
+python tools/ng.py migrate .nuclear/changes/<slug>
 ```
+
+This inserts a `## Selected mode` block into `risk.md` with an inferred default. Edit the result if the inferred mode is wrong.
 
 ## 5. Fill the minimum useful version
 
@@ -138,13 +146,20 @@ python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.n
 python tools/ng.py validate .nuclear/changes/<slug>
 ```
 
+The first run on an untouched packet is **expected to fail**. Each template ships with a `NUCLEAR-GRADE-PLACEHOLDER` marker line, and the validator refuses to accept a packet that still carries it. That is the evidence gate working. Fill the fields you actually need, set at least one real status, delete every marker line, and validate again:
+
+```bash
+python tools/ng.py validate .nuclear/changes/<slug>
+# OK: .nuclear/changes/<slug>
+```
+
 For a packet in another repo:
 
 ```bash
 python tools/ng.py validate /path/to/your/repo/.nuclear/changes/<slug>
 ```
 
-The v0 validator checks Quick and Standard packet structure, required sections, evidence status, source-lineage notes, local packet links, and prohibited overclaiming phrases. It does not decide whether your system is safe, secure, compliant, or suitable for a regulated use case.
+The v0 validator checks Quick and Standard packet structure, required sections, evidence status, source-lineage notes, local packet links, the placeholder marker, and prohibited overclaiming phrases. It does not decide whether your system is safe, secure, compliant, or suitable for a regulated use case.
 
 ## 8. Decide or stop
 

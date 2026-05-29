@@ -1,5 +1,5 @@
 name: nuclear-grade
-version: 0.1.0
+version: 0.3.0
 description: Configuration-management workflow surface for AI-assisted software changes.
 validator_modes:
   - quick
@@ -48,6 +48,8 @@ skills:
   - checking-dependency-and-model-trust
   - checking-source-lineage
   - checking-license-and-assurance-boundaries
+  - controlling-mission-drift
+  - reviewing-code-quality
   - red-teaming-agent-changes
   - tracing-agent-execution
 commands:
@@ -66,6 +68,8 @@ commands:
   - ng-trust-check.md
   - ng-source-check.md
   - ng-legal-check.md
+  - ng-drift-check.md
+  - ng-code-review.md
   - ng-red-team.md
   - ng-trace.md
 boundaries:

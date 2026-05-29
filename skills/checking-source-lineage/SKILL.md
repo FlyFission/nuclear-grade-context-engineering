@@ -1,6 +1,6 @@
 ---
 name: checking-source-lineage
-description: Use when public docs, templates, skills, packets, or adoption copy cite source families, agencies, standards, or borrowed concepts.
+description: Checks that citations of source families, agencies, standards, or borrowed concepts are source-safe and non-overclaiming. Use when public docs, templates, skills, packets, or adoption copy reference outside sources. Do not use for private notes, or for verifying the functional correctness of code.
 ---
 
 # Checking Source Lineage

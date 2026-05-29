@@ -1,6 +1,6 @@
 ---
 name: questioning-attitude
-description: Use when a request, plan, diff, dependency, agent action, public claim, or release decision needs skeptical fact-finding before work continues.
+description: Challenges assumptions with skeptical fact-finding before an agent builds, merges, or releases, surfacing what would change the decision. Use when a request, plan, diff, dependency, agent action, public claim, or release decision is vague, consequential, or easy to rationalize. Do not use for a tiny Quick edit with obvious proof, or when the user wants formal assurance.
 ---
 
 # Questioning Attitude

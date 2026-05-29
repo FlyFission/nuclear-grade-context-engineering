@@ -1,6 +1,6 @@
 ---
 name: baselining-configuration
-description: Use when recording accepted controlled state after review, merge, release, prompt/model/tool changes, dependency updates, or public-doc changes.
+description: Records the accepted controlled state of items and the evidence behind it, and names what would make the baseline stale. Use when a Standard packet ships, when prompts, models, tools, dependencies, docs, or release artifacts are accepted, or when OPEX requires re-baselining. Do not use for a Quick local edit with no release or trust-bearing state, or while work is still under review.
 ---
 
 # Baselining Configuration

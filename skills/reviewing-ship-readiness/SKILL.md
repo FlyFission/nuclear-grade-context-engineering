@@ -1,6 +1,6 @@
 ---
 name: reviewing-ship-readiness
-description: Use when deciding ship, block, defer, or ship-with-risk for packets, PRs, releases, dependency changes, or agent-authority changes.
+description: Records a ship, block, defer, or ship-with-risk decision that ties baseline, evidence status, residual risk, rollback, monitoring, and handoff together. Use when a packet, PR, release, dependency change, or agent-authority change approaches merge. Do not use early in development before evidence exists.
 ---
 
 # Reviewing Ship Readiness

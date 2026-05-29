@@ -1,6 +1,6 @@
 ---
 name: creating-change-packets
-description: Use when creating or updating Quick or Standard packets, adding required files, refreshing evidence obligations, or preparing an evidence-backed PR.
+description: Creates or updates Quick or Standard packets, adds the required files, and refreshes evidence obligations for an evidence-backed PR. Use when starting or revising a change record. Do not use for a one-off throwaway script, or for work that belongs in an existing packet rather than a new one.
 ---
 
 # Creating Change Packets

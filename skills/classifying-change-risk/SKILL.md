@@ -1,6 +1,6 @@
 ---
 name: classifying-change-risk
-description: Use when selecting Quick, Standard, or stronger human-reviewed mode for code, docs, dependency, AI-authority, release, or public-claim changes.
+description: Selects Quick, Standard, or a stronger human-reviewed mode from consequence, reversibility, and uncertainty. Use when starting a change to code, docs, dependencies, AI authority, releases, or public claims and the right rigor level is unclear. Do not use for a trivial reversible edit with obvious proof, which is Quick by default.
 ---
 
 # Classifying Change Risk

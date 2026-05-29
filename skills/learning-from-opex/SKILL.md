@@ -1,6 +1,6 @@
 ---
 name: learning-from-opex
-description: Use when incidents, near misses, bad handoffs, review surprises, escaped defects, user feedback, or operating signals should update durable controls.
+description: Turns incidents, near misses, bad handoffs, review surprises, escaped defects, and operating signals into durable control updates. Use after something went wrong or nearly did and a future safeguard should change. Do not use during active incident containment, which comes first, or to assign blame.
 ---
 
 # Learning From OPEX

@@ -1,6 +1,6 @@
 ---
 name: checking-license-and-assurance-boundaries
-description: Use when reviewing public text for license, warranty, compliance, assurance, safety, security, certification, or adequacy overclaims.
+description: Reviews public text for license, warranty, compliance, assurance, safety, security, certification, and adequacy overclaims and rewrites them to safe boundaries. Use when shipping or editing public docs, READMEs, or adoption copy. Do not use for internal code comments, or for deciding actual legal adequacy, which needs qualified counsel.
 ---
 
 # Checking License and Assurance Boundaries

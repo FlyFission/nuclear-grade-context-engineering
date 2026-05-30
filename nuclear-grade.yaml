@@ -31,6 +31,7 @@ templates:
     - standard/supplier-trust.md
     - standard/red-team.md
     - standard/execution-trace.md
+    - standard/wbs.md
 skills:
   - questioning-attitude
   - using-nuclear-grade
@@ -52,6 +53,8 @@ skills:
   - reviewing-code-quality
   - red-teaming-agent-changes
   - tracing-agent-execution
+  - decomposing-work-breakdown
+  - structuring-agentic-folders
 commands:
   - ng-question.md
   - ng-classify.md
@@ -72,6 +75,8 @@ commands:
   - ng-code-review.md
   - ng-red-team.md
   - ng-trace.md
+  - ng-wbs.md
+  - ng-folders.md
 boundaries:
   license: MIT
   assurance: evidence visibility only

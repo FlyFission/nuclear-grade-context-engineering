@@ -175,6 +175,22 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should not trigger: The agent read a config file and printed a summary with no side effects.
 - Should not trigger: Produce a formal audit trail or certified compliance record of agent behavior.
 
+### `decomposing-work-breakdown`
+
+- Should trigger: Break this billing-revamp epic into a clean deliverable breakdown that covers all the scope with no overlaps before we plan.
+- Should trigger: We keep discovering work mid-sprint; give me a product WBS with a dictionary for this new ingestion subsystem.
+- Should trigger: Decompose this feature into work packages and check that the children actually sum to the whole.
+- Should not trigger: Fix this typo in the README and show the diff.
+- Should not trigger: This backlog item is already broken down and owned; just start coding it.
+
+### `structuring-agentic-folders`
+
+- Should trigger: Lay out the folder and file structure for this new service derived from our WBS, with safe sortable names.
+- Should trigger: Our shared utils folder has become a junk drawer; restructure it by what changes together.
+- Should trigger: Design this sequential agent workflow as numbered stage folders with a context contract per stage.
+- Should not trigger: Rename this one file from helper to parser in an already-clean tree.
+- Should not trigger: Run the unit tests and paste the failing assertion.
+
 ## Source-lineage note
 
 This evaluation prompt bank is an original Nuclear-grade artifact informed by public skill-authoring practice: concise skills, realistic trigger prompts, baseline-vs-skill comparison, and iterative trigger-description improvement. It does not create formal assurance, compliance, certification, safety, security, or regulatory adequacy.

@@ -292,6 +292,28 @@ def test_status_detects_active_packets(tmp_path):
     assert "demo: standard" in result.stdout
 
 
+def test_status_flags_unfilled_scaffold_packet(tmp_path):
+    shutil.copytree(ROOT / "templates", tmp_path / "templates")
+    (tmp_path / "nuclear-grade.yaml").write_text("name: test-catalog\n", encoding="utf-8")
+    assert run_ng("new", "draft", "--mode", "quick", "--repo", str(tmp_path)).returncode == 0
+
+    result = run_ng("status", str(tmp_path))
+
+    assert result.returncode == 0, result.stderr
+    assert "draft: quick  [scaffold]" in result.stdout
+    assert "need attention" in result.stdout
+
+
+def test_status_marks_filled_packet_ok(tmp_path):
+    minimal_quick_packet(tmp_path)
+
+    result = run_ng("status", str(tmp_path))
+
+    assert result.returncode == 0, result.stderr
+    assert "quick-demo: quick  [ok]" in result.stdout
+    assert "need attention" not in result.stdout
+
+
 def test_new_cm_packet_scaffolds_all_cm_files(tmp_path):
     scaffold_repo(tmp_path)
 

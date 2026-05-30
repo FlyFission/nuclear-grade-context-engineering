@@ -20,7 +20,7 @@ python tools/ng.py status [repo]
 - `validate` delegates to `tools/ng_validate.py`.
 - `doctor` checks a Nuclear-grade distribution repo for public files, contracts, and templates. In an initialized target repo, it checks `.nuclear/README.md` and `.nuclear/changes/`.
 - `list` shows available modes, skills, commands, packet files, CM files, golden-path files, and optional templates, including turnover, self-check, and supplier-trust records.
-- `status` lists active packets and detected modes.
+- `status` lists active packets, their detected modes, and a health tag: `ok` (validates), `scaffold` (an untouched draft still carrying the placeholder marker), or `invalid` (fails validation for another reason). It prints a closing reminder when any packet needs attention, so abandoned half-filled drafts are visible rather than silent.
 
 ## Boundary note
 

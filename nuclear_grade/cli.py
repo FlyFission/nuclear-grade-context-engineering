@@ -358,9 +358,35 @@ def handle_status(args: argparse.Namespace) -> int:
         print("No active packets found.")
         return 0
 
+    needs_attention = 0
     for packet in packets:
-        print(f"{packet.name}: {detect_packet_mode(packet)}")
+        health = packet_health(packet)
+        if health != "ok":
+            needs_attention += 1
+        print(f"{packet.name}: {detect_packet_mode(packet)}  [{health}]")
+
+    if needs_attention:
+        print(
+            f"\n{needs_attention} packet(s) need attention. "
+            "A scaffold packet is an unfilled draft; an invalid packet fails validation. "
+            "Fill it, or close it with a rationale, or delete it -- do not leave it half-done."
+        )
     return 0
+
+
+def packet_health(packet: Path) -> str:
+    """Classify a packet for `status`: ok, scaffold (untouched draft), or invalid.
+
+    A scaffold still carries the placeholder marker, so it is an unfilled draft
+    rather than a wrong one. Anything else that fails validation is invalid.
+    """
+
+    result = validate_packet(packet)
+    if result.ok:
+        return "ok"
+    if any("placeholder marker" in message for message in result.messages):
+        return "scaffold"
+    return "invalid"
 
 
 def apply_writes(writes: list[PlannedWrite], dry_run: bool, overwrite: bool) -> int:

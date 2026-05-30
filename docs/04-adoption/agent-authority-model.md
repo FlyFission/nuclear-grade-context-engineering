@@ -19,6 +19,7 @@
 For material agent authority, create a context pack that states:
 
 - objective;
+- decision question;
 - packet path;
 - allowed and forbidden actions;
 - approval gates;
@@ -28,6 +29,8 @@ For material agent authority, create a context pack that states:
 ## Denial rule
 
 If the requested action exceeds authority, the agent must stop and record the needed approval or escalation path.
+
+If the exact target, expected result, forbidden claim, or stop condition is ambiguous at a cut point, the agent must pause before acting. A cut point includes file writes, broad commands, public claims, dependency/model/API trust changes, release actions, and other hard-to-reverse steps.
 
 ## Exit criteria
 

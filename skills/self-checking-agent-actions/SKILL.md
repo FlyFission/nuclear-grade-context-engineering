@@ -7,13 +7,14 @@ description: Checks a critical agent action against its exact target, expected r
 
 ## Overview
 
-Self-checking makes a critical action deliberate: identify the target, expected result, stop condition, action, and after-action check before claiming success.
+Self-checking makes a cut-point action deliberate: identify the target, expected result, stop condition, action, and after-action check before claiming success.
 
 ## When to Use
 
 - A command can delete, move, publish, release, migrate, or affect external state.
 - An edit touches public claims, source lineage, permissions, credentials, dependencies, models, APIs, or release posture.
 - An agent is about to make a broad or repetitive change where wrong-target work is plausible.
+- A fast candidate is about to become a public claim, accepted baseline, or release action.
 
 ## When Not to Use
 
@@ -29,7 +30,7 @@ Self-checking makes a critical action deliberate: identify the target, expected 
 
 ## Process
 
-1. Stop and name the exact action and target.
+1. Stop at the cut point and name the exact action and target.
 2. Think through expected result, likely error, and what would make the action invalid.
 3. Act only inside the named authority boundary.
 4. Review actual result against expected result before making claims.

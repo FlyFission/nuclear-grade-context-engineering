@@ -8,6 +8,8 @@ AI agents no longer just suggest code. They edit files, change prompts, call too
 
 It also adds HPI for AI agents: small control behaviors that make fast agent work reviewable. Brief the work, self-check critical actions, turn over cleanly, verify independently when consequence demands it, decide conservatively, and learn from near misses.
 
+The operating spine is deliberately two-speed. Agents can explore and build reversible candidates quickly, but acceptance slows down when work becomes a claim, controlled item, public statement, baseline, release decision, or authority change. The first control is the decision question: what must this evidence prove, and what fact would change the decision?
+
 ```text
 Normal AI coding:
 prompt -> diff -> persuasion -> merge risk
@@ -76,6 +78,8 @@ prompt memory -> controlled change record
 agent authority -> focused context and evidence obligation
 green CI -> explicit release decision and baseline trigger
 ```
+
+That shift is practical, not decorative: instructions should be hard to misuse, small actions should serve the mission anchor, and confidence should be separated from fact, assumption, source claim, local proof, and decision authority.
 
 ## Core workflow
 

@@ -14,21 +14,23 @@ This is an operating model, not a compliance program. `Classify` remains inside 
 
 HPI overlays add consequence-scaled control behaviors beneath the spine: task preview, repo-site review, pause when unsure, self-checking, turnover, verification selection, conservative decision making, and OPEX learning. Use `hpi-overlays.md` for the micro-controls; keep this lifecycle stable.
 
+The lifecycle is two-speed. Exploration and candidate building should stay fast and reversible; acceptance should slow down when a claim, controlled item, baseline, public statement, release decision, or authority boundary becomes trust-bearing. The early phases prevent wasted speed by finding the right decision question, and the later phases prevent fast candidates from becoming accepted configuration without evidence.
+
 ---
 
 ## Phase map
 
 | Phase | Decision being made | Minimum useful output | Exit criteria |
 |---|---|---|---|
-| Question | What assumptions, doubts, and stop conditions must be surfaced before work continues? | Decision question, assumptions, warning signs, evidence gaps. | Confidence is grounded in facts, not vibes. |
+| Question | What decision must the evidence support, and what assumptions, doubts, and stop conditions must be surfaced before work continues? | Decision question, assumptions, warning signs, evidence gaps, evidence that would change the decision. | Confidence is grounded in facts, not vibes. |
 | Discover | What sources and repo facts matter? | Public sources, prior packets, constraints, known gaps. | Specification is grounded, not invented. |
 | Specify | What state or behavior is required? | Requirements, claims, protected outcomes, assumptions, acceptance criteria. | Claims are testable or gap-labeled. |
 | Plan | How will controlled configuration change? | Steps, affected items, rollback, proof commands. | Work can proceed without rediscovering scope. |
-| Execute | Did implementation stay inside authority? | Diffs, commits, generated artifacts, self-checks, AI-assist notes. | Deviations are recorded, not hidden drift. |
-| Verify | What evidence supports the claims? | Tests/evals/reviews/results with status, verification type, and gaps. | Evidence matches the claim. |
-| Review | Can a skeptical reviewer accept this? | Claim-to-evidence review, work-product review, and residual risk disposition. | Accept/defer/block is reviewable. |
-| Decide | Should the change proceed, ship, block, defer, or continue with residual risk? | Decision, conditions, owner, baseline trigger. | Release decision is explicit. |
-| Baseline | What accepted state is now controlled? | Commit/release/artifact plus controlled item state and triggers. | Future drift can be detected. |
+| Execute | Did implementation stay inside authority while producing a candidate, not an accepted state? | Diffs, commits, generated artifacts, self-checks, AI-assist notes. | Deviations are recorded, not hidden drift. |
+| Verify | What objective evidence supports the claims, and what remains fact, assumption, unknown, source claim, or local proof? | Tests/evals/reviews/results with status, verification type, and gaps. | Evidence matches the claim. |
+| Review | Can a skeptical reviewer accept the artifact without relying on confidence or ambiguous instructions? | Claim-to-evidence review, work-product review, boundary wording review, and residual risk disposition. | Accept/defer/block is reviewable. |
+| Decide | Should the candidate become accepted configuration, ship, block, defer, or continue with residual risk? | Decision, conditions, owner, baseline trigger. | Release decision is explicit. |
+| Baseline | What accepted state is now controlled after slow-audit acceptance? | Commit/release/artifact plus controlled item state and triggers. | Future drift can be detected. |
 | Operate | What signals show drift or failure? | Monitors, support signals, incident triggers. | Operators know what to watch. |
 | Learn | What updates next time? | OPEX note linked to basis/test/control/template/baseline update. | Lesson changes something or is closed. |
 
@@ -54,7 +56,7 @@ Escalate beyond Quick when the change affects:
 For a small Standard change, the lifecycle is useful when the packet answers:
 
 ```text
-What should we question? What facts did we discover? What are we specifying? What changed? What proves it? What decision was made? What baseline now controls it?
+What decision are we answering? What facts did we discover? What are we specifying? What changed as a candidate? What objective evidence supports the claim? What decision accepted, blocked, deferred, or bounded it? What baseline now controls it?
 ```
 
 If the answer takes more than one screen before implementation starts, summarize it and link deeper evidence only where needed.

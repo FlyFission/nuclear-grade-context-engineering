@@ -7,7 +7,7 @@ description: Prepares focused context for an AI agent, reviewer, verifier, or re
 
 ## Overview
 
-Context packs give agents and reviewers the right focused information: role, mode, objective, affected files, evidence obligations, approvals, forbidden actions, source lineage, critical next action, and turnover state.
+Context packs give agents and reviewers the right focused information: role, mode, decision question, objective, affected files, evidence obligations, approvals, forbidden actions, source lineage, critical next action, and turnover state.
 
 ## When to Use
 
@@ -30,13 +30,14 @@ Context packs give agents and reviewers the right focused information: role, mod
 
 ## Process
 
-1. Name the role and objective, and carry the mission anchor (objective, success criteria, non-goals) so it survives context resets. See `controlling-mission-drift`.
+1. Name the role, decision question, and objective, and carry the mission anchor (objective, success criteria, non-goals) so it survives context resets. See `controlling-mission-drift`.
 2. Include only the packet files, affected files, source rows, and evidence commands needed for the next decision.
 3. State last completed action, changed conditions, critical next action, likely error, and control.
-4. State file, command, network, credential, approval, and release authority.
-5. State forbidden claims, do-not-touch targets, stop conditions, and turnover need.
-6. Link the context pack back to the packet and relevant mode rules.
-7. Require incoming confirmation when responsibility transfers.
+4. State current work phase: explore, candidate, audit, or accept.
+5. State file, command, network, credential, approval, and release authority.
+6. State forbidden claims, do-not-touch targets, stop conditions, and turnover need.
+7. Link the context pack back to the packet and relevant mode rules.
+8. Require incoming confirmation when responsibility transfers.
 
 ## Outputs
 

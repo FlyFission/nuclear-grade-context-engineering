@@ -2,6 +2,8 @@
 
 **Goal:** question a real AI-assisted change, create a useful controlled-change record in about 15 minutes, and prove one important claim.
 
+Nuclear-grade should make decisions faster, not paperwork heavier. Move quickly while exploring and building reversible candidates; slow down when you are accepting a claim, baseline, public statement, release decision, or authority change.
+
 > **Note on the demo:** the first time you run `validate` on a freshly scaffolded packet you should expect `FAILED: ... has unfilled template prompts`. Templates ship with empty prompts on purpose. Fill the prompts that matter, then re-run `validate`. The point of the validator is to refuse silent gaps.
 
 ## 1. Check the repo
@@ -38,6 +40,8 @@ Facts to verify: What would change the decision?
 Stop conditions: What would make us pause or escalate?
 Next artifact: Quick proof, Standard spec, context pack, CM record, or release decision.
 ```
+
+If the decision question is vague, stop there and sharpen it. The rest of the packet exists to answer that question with evidence.
 
 Add HPI controls only when they change the work:
 
@@ -111,7 +115,7 @@ This inserts a `## Selected mode` block into `risk.md` with an inferred default.
 
 Answer only what helps a reviewer decide:
 
-1. What are we questioning?
+1. What decision are we answering?
 2. What facts did we discover?
 3. What are we specifying?
 4. What evidence will prove the important claim?
@@ -120,6 +124,8 @@ Answer only what helps a reviewer decide:
 7. What decision is needed before release or merge?
 8. What baseline or revalidation trigger changes after the decision?
 9. What HPI control, if any, changes the next action or evidence obligation?
+
+Keep facts, assumptions, unknowns, source claims, local proof, and decision authority separate. Do not let confident prose do the work of evidence.
 
 ## 6. Prove one claim
 

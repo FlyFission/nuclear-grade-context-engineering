@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Apply a questioning attitude to a change before work, review, or release continues. This is a portable command prompt.
+Apply a questioning attitude to a change before work, review, or release continues by naming the decision question first. This is a portable command prompt.
 
 ## Use when
 
@@ -37,6 +37,7 @@ Inputs:
 
 Return:
 - decision question in one sentence
+- evidence that would change the decision
 - assumptions that must be true
 - known facts, unknowns, danger words, and source-quality concerns
 - facts to verify before work continues
@@ -56,6 +57,7 @@ Prefer facts over confidence. Do not imply formal assurance, compliance, certifi
 ## Expected outputs
 
 - Validated and unresolved assumptions.
+- Evidence that would change the decision.
 - Evidence gaps.
 - Stop/escalation conditions.
 - Next artifact recommendation.
@@ -70,6 +72,7 @@ python tools/ng.py validate .nuclear/changes/<slug>
 ## Failure modes
 
 - Turning questioning attitude into generic brainstorming.
+- Asking questions that do not change a decision.
 - Asking many questions without naming which facts change the decision.
 - Treating agent confidence or green CI as evidence for unrelated claims.
 - Hiding escalation triggers because the change seems small.

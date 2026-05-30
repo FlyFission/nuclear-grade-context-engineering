@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Classify a proposed change into the smallest honest Nuclear-grade mode after questioning assumptions, and name the proof needed before work continues. This is a portable command prompt.
+Classify a proposed change into the smallest honest Nuclear-grade mode after identifying the decision question, and name the proof needed before work continues. This is a portable command prompt.
 
 ## Use when
 
@@ -34,6 +34,7 @@ Inputs:
 - User/security/dependency/data/AI/release impact: <known facts>
 
 Return:
+- decision question and evidence gate
 - selected mode: Quick, Standard, or human-reviewed stronger mode
 - consequence, reversibility, exposure, detectability, uncertainty
 - work mode and HPI control recommendation: none, context pack, turnover, self-check, independent verification, OPEX, or trust check
@@ -51,6 +52,7 @@ Return:
 ## Expected outputs
 
 - Selected mode.
+- Decision question and evidence gate.
 - Mode rationale.
 - Proof obligation.
 - HPI control recommendation when activated.
@@ -65,6 +67,7 @@ python tools/ng.py status .
 ## Failure modes
 
 - Classifying by effort instead of consequence.
+- Selecting mode before the decision question is clear.
 - Ignoring AI authority, dependency trust, data exposure, or release impact.
 - Selecting Quick while unresolved Standard triggers remain.
 

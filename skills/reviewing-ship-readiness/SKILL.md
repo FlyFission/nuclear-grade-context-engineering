@@ -7,13 +7,14 @@ description: Records a ship, block, defer, or ship-with-risk decision that ties 
 
 ## Overview
 
-Ship readiness is a decision record, not a mood. It ties baseline, evidence status, residual risk, rollback, monitoring, handoff, and release decision together.
+Ship readiness is a slow-audit decision record, not a mood. It ties baseline, evidence status, residual risk, rollback, monitoring, handoff, and release decision together before a candidate becomes accepted configuration.
 
 ## When to Use
 
 - A Standard packet is approaching merge or release.
 - A PR changes user behavior, security posture, dependencies, agent authority, or operational state.
 - Evidence gaps must be accepted or made blocking.
+- A fast candidate is being promoted into a baseline, public claim, release, or other trust-bearing state.
 - Turnover, support handoff, OPEX trigger, or conservative decision posture needs to be explicit.
 
 ## When Not to Use
@@ -29,12 +30,13 @@ Ship readiness is a decision record, not a mood. It ties baseline, evidence stat
 ## Process
 
 1. Confirm baseline and affected artifacts.
-2. Review each evidence status and unresolved gap, and check for accumulated drift: does the shipped change still serve the mission anchor, with non-goals uncrossed? See `controlling-mission-drift`.
-3. Confirm rollback or restore path.
-4. Confirm monitoring and post-release checks.
-5. State why the decision is conservative enough for remaining uncertainty.
-6. Record one decision: ship, block, defer, or ship with named residual risk.
-7. Name owner, abort trigger, turnover need, OPEX trigger, and baseline trigger.
+2. Confirm the decision question has been answered by evidence, not confidence.
+3. Review each evidence status and unresolved gap, and check for accumulated drift: does the shipped change still serve the mission anchor, with non-goals uncrossed? See `controlling-mission-drift`.
+4. Confirm rollback or restore path.
+5. Confirm monitoring and post-release checks.
+6. State why the decision is conservative enough for remaining uncertainty.
+7. Record one decision: ship, block, defer, or ship with named residual risk.
+8. Name owner, abort trigger, turnover need, OPEX trigger, and baseline trigger.
 
 ## Outputs
 

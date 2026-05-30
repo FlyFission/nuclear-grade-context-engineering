@@ -7,7 +7,7 @@ description: Tests current work against a durable mission anchor and forces a re
 
 ## Overview
 
-Mission drift is when an agent keeps shipping work that no longer serves the original objective. It has two faces: intent drift (scope creep, goal substitution, local optimization that wins the task and loses the mission) and standards drift (rigor erodes one accepted concession at a time, the normalization of deviance). This skill keeps a durable mission anchor in front of the work and forces a decision when an action stops serving it: re-anchor, escalate, or stop. The anchor is the objective, the success criteria, and the explicit non-goals. Ownership of the anchor stays with a named person, in the spirit of nuclear-culture accountability: someone is responsible for whether this change still serves its mission.
+Mission drift is when an agent keeps shipping work that no longer serves the original objective. It has two faces: intent drift (scope creep, goal substitution, local optimization that wins the task and loses the mission) and standards drift (rigor erodes one accepted concession at a time, the normalization of deviance). This skill keeps a durable mission anchor in front of the work and forces a decision when an action stops serving it: re-anchor, escalate, or stop. The anchor is the objective, the success criteria, and the explicit non-goals. Ownership of the anchor stays with a named person, in the spirit of nuclear-culture accountability: someone is responsible for whether this change still serves its mission. Small actions must still trace to that larger mission.
 
 ## When to Use
 
@@ -35,7 +35,7 @@ Mission drift is when an agent keeps shipping work that no longer serves the ori
 ## Process
 
 1. Restate the mission anchor from the written record, not from memory: objective, success criteria, and non-goals.
-2. Test the current action against the anchor. Ask plainly: does this action move a success criterion, or does it serve a goal that was substituted along the way?
+2. Test the current action against the anchor. Ask plainly: does this action move a success criterion, or does it serve a substituted local goal?
 3. Zoom out one layer before deciding. Look at the objective and the architecture, not the line in front of you, so the decision is made at the right altitude.
 4. Check the loop and attempt count. If the same objective has failed 3 times, or the same action or fix variant is being retried, stop attempting the next variant.
 5. Check standards drift against the charter and any countable tripwires (for example, a file or function crossing a size limit, a skipped verification, a weaker-than-agreed evidence standard). A single normalized concession is a finding, not a rounding error.

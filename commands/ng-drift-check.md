@@ -40,6 +40,7 @@ Do this:
 - Restate the anchor from the written record, not from memory.
 - Zoom out one layer; judge at the objective/architecture altitude.
 - Test the current action against the success criteria and non-goals.
+- Decide whether the action serves the mission or a substituted local goal.
 - Check the loop: if the same objective has failed 3 times, stop attempting the next variant.
 - Check standards drift against the charter and any countable tripwires.
 
@@ -75,6 +76,7 @@ python tools/ng.py validate .nuclear/changes/<slug>
 - Attempting the next variant after three failures instead of escalating.
 - Crossing a non-goal by editing rather than by a recorded decision.
 - Measuring progress in activity rather than in success criteria met.
+- Winning a local task while losing the mission.
 
 ## Legal/assurance boundary note
 

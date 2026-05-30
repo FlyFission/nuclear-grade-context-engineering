@@ -4,6 +4,8 @@
 
 **Rule:** Rigor must earn its keep. Activate artifacts by decision value and consequence, not by aesthetic desire for a complete binder.
 
+Exploration and candidate building may stay lightweight when the work is reversible. Escalate the acceptance gate, not every keystroke, when a candidate becomes a claim, controlled item, public statement, release decision, baseline, or authority boundary.
+
 ---
 
 ## Primary threshold dimensions
@@ -26,15 +28,15 @@ Score informally; do not over-math the decision.
 
 | Trigger | Minimum artifact | Minimum useful version | Exit criteria | Overhead trap |
 |---|---|---|---|---|
-| Any non-trivial change | `risk.md` | scope, consequence, mode, proof needed | Mode is justified. | Writing a risk essay for a tiny diff. |
+| Any non-trivial change | `risk.md` | decision question, scope, consequence, mode, proof needed | Mode is justified. | Writing a risk essay for a tiny diff. |
 | Low-risk reversible change | `proof.md` | command/check/eval and result | Evidence matches declared risk. | Treating test output as proof for unrelated claims. |
-| User-visible or durable behavior | Standard packet | basis, plan, trace, verification, ship | Important claims have evidence or explicit gaps. | Backfilling trace after release. |
+| User-visible or durable behavior | Standard packet | basis, plan, trace, verification, ship | Important claims have evidence or explicit gaps before acceptance. | Backfilling trace after release. |
 | New protected outcome or unacceptable outcome | `basis.md` / `design-basis.md` | what must remain true; assumptions; evidence required | Requirements/design features follow from basis. | Grand narrative without decisions. |
 | Important external dependency/model/API/SaaS | dependency trust basis section or record | intended use, consequence, source/version, evidence, revalidation trigger | Trust decision is scoped and revisit-able. | Package-name/version-only review. |
 | AI/agent tool authority changes | AI-control fields in packet | authority, permissions, approvals, independent checks | Agent cannot exceed intended envelope without detection/approval. | Letting AI document its own unchecked proof. |
 | Security/privacy/auth/data handling change | verification + ship security fields | threat/failure prompt, tests/reviews, rollback/monitoring | Security claim is evidence-backed. | Final scan treated as full assurance. |
 | Hard-to-detect or hard-to-reverse failure | Nuclear subset | change-impact, independent review, release readiness | Fresh reviewer can challenge basis and proof. | Creating every Nuclear artifact automatically. |
-| Release changes trust/ops/customer posture | `ship.md` / release readiness | baseline, evidence status, risks, rollback, monitoring, handoff | Ship/no-ship is explicit. | Shipping because CI passed once. |
+| Release changes trust/ops/customer posture | `ship.md` / release readiness | baseline, evidence status, risks, rollback, monitoring, handoff | Ship/no-ship is explicit after slow-audit review. | Shipping because CI passed once. |
 | Incident/near miss/eval failure | OPEX/corrective action | event, cause, action, verification, basis/test/control update | Lesson changes future behavior or is closed. | Postmortem theater. |
 
 ---

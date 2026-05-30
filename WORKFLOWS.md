@@ -12,6 +12,8 @@ question -> specify -> execute -> verify -> decide -> baseline -> operation
 
 HPI for AI agents adds the micro-controls under that path: brief the work, self-check critical actions, turn over cleanly, verify independently when needed, decide conservatively, and learn from near misses.
 
+The workflow is two-speed. Exploration and reversible candidate work should stay fast; acceptance slows down when a candidate becomes evidence, a claim, a controlled item, public wording, a baseline, a release decision, or an agent-authority boundary.
+
 ## Workflow catalog
 
 | Workflow | Loop | Use when | Main artifact |
@@ -50,6 +52,8 @@ cp templates/golden-path/questioning-attitude.md .nuclear/changes/<slug>/
 ```
 
 The output should name assumptions, facts to verify, warning signs, evidence gaps, stop conditions, and the next artifact.
+
+The decision question is the first output, not an afterthought. If the question is wrong, the proof can be clean and still support the wrong decision.
 
 ## Standard change
 
@@ -98,6 +102,8 @@ cp templates/golden-path/self-check.md .nuclear/changes/<slug>/
 ```
 
 These records should stay short. They exist to stop bad action, not to explain HPI theory.
+
+Use self-checking at cut points: wrong target, wrong command, wrong public claim, wrong dependency/model/API trust change, irreversible state, or release action. Do not slow every reversible edit.
 
 ## Release readiness
 

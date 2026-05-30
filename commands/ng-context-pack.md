@@ -19,7 +19,7 @@ Prepare focused context for a human or AI agent working from a packet. This is a
 ## Inputs
 
 - Packet path.
-- Role, objective, affected files, allowed commands, forbidden actions, approvals, and required evidence.
+- Role, decision question, objective, work phase, affected files, allowed commands, forbidden actions, approvals, and required evidence.
 - `docs/02-operating-system/context-packs.md`.
 
 ## Prompt text
@@ -30,7 +30,9 @@ Build a Nuclear-grade context pack for this work.
 Inputs:
 - packet: .nuclear/changes/<slug>/
 - role: <builder|reviewer|verifier|releaser|researcher>
+- decision question: <one sentence>
 - objective: <one paragraph>
+- work phase: <explore|candidate|audit|accept>
 - affected files: <list>
 - last completed action:
 - changed conditions:
@@ -41,7 +43,7 @@ Inputs:
 - approval gates: <list>
 - required evidence: <commands/links/reviews>
 
-Return a concise context pack with mode, objective, risk summary, basis summary, required evidence, authority boundaries, forbidden claims, open gaps, last completed action, changed conditions, critical next action, and next action. If responsibility transfers, add incoming-owner confirmation.
+Return a concise context pack with mode, decision question, objective, work phase, risk summary, basis summary, required evidence, authority boundaries, forbidden claims, open gaps, last completed action, changed conditions, critical next action, and next action. If responsibility transfers, add incoming-owner confirmation.
 ```
 
 ## Files created or modified
@@ -53,6 +55,7 @@ Return a concise context pack with mode, objective, risk summary, basis summary,
 
 - Focused context pack.
 - Clear authority boundaries.
+- Decision question and work phase.
 - Next action.
 - Resume point and incoming-owner confirmation when activated.
 
@@ -65,6 +68,7 @@ python tools/ng.py status .
 ## Failure modes
 
 - Loading the whole repo without an activated reason.
+- Omitting the decision question and forcing the agent to infer what evidence must support.
 - Leaving file, command, network, credential, or release authority unstated.
 - Omitting forbidden claims.
 - Omitting last completed action for resumed or delegated work.

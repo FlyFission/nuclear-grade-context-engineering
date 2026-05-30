@@ -7,7 +7,7 @@ description: Turns an AI-assisted change into a focused evidence path by choosin
 
 ## Overview
 
-Use Nuclear-grade to turn AI-assisted software work into a focused evidence path: question assumptions, classify consequence inside the risk screen, create the smallest useful packet, specify intent, prove important claims, and make the release decision explicit. The repo charter (`.nuclear/charter.md`) states the durable principles all changes hold to; a per-change mission anchor states what a given change is for and guards against drift.
+Use Nuclear-grade to turn AI-assisted software work into a focused evidence path: frame the decision question, classify consequence inside the risk screen, create the smallest useful packet, specify intent, prove important claims, and make the release decision explicit. The repo charter (`.nuclear/charter.md`) states the durable principles all changes hold to; a per-change mission anchor states what a given change is for and guards against drift.
 
 ## When to Use
 
@@ -31,14 +31,15 @@ Use Nuclear-grade to turn AI-assisted software work into a focused evidence path
 
 ## Process
 
-1. Apply questioning attitude: decision question, assumptions, evidence gaps, stop conditions.
+1. Apply questioning attitude: decision question, assumptions, evidence that would change the decision, evidence gaps, stop conditions.
 2. Classify the change as Quick, Standard, or a human-reviewed stronger mode.
 3. Create or locate the packet under `.nuclear/changes/<slug>/`.
 4. Record the minimum specification/design basis, evidence obligation, affected files, and forbidden claims.
 5. Record deviations when the selected workflow or template no longer fits actual conditions.
 6. Keep implementation work linked to claims and evidence.
-7. Run the validator for Quick or Standard packets.
-8. Stop before release if evidence status, rollback, monitoring, decision, baseline trigger, or legal boundary wording is unclear.
+7. Move quickly on reversible candidates, but slow down before accepting claims, public wording, baselines, releases, or authority changes.
+8. Run the validator for Quick or Standard packets.
+9. Stop before release if evidence status, rollback, monitoring, decision, baseline trigger, or legal boundary wording is unclear.
 
 ## Outputs
 

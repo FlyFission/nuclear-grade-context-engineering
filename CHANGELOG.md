@@ -6,6 +6,12 @@ This project uses changelog entries to record public-facing changes, not to impl
 
 ## [Unreleased]
 
+### Added
+
+- Reproducible efficacy harness. `nuclear-grade eval` (and `python tools/ng.py eval`) mechanically checks that each worked-example artifact still surfaces the decision signals the methodology claims it teaches, exiting non-zero if a worked example drops a required signal. Eval cases live as plain JSON in `evals/cases/`; the harness is stdlib-only (no new runtime dependency). It measures presence of named decision elements, not engineering correctness, safety, or compliance; see `docs/03-worked-examples/skill-workflow-comparison/efficacy-harness.md`. The simple-prompt-versus-Nuclear-grade comparison stays qualitative and is deliberately not mechanized.
+- `nuclear-grade status` now tags each packet `ok`, `scaffold` (an untouched draft still carrying the placeholder marker), or `invalid`, and prints a reminder when any packet needs attention, so abandoned half-filled drafts are visible rather than silent.
+- Workflow diagrams (`docs/diagrams.md`), a plain-language glossary (`docs/glossary.md`), and an agent threat model (`docs/02-operating-system/agent-threat-model.md`).
+
 ## [0.3.0] - 2026-05-28
 
 ### Changed

@@ -1,0 +1,28 @@
+{
+  "id": "U02",
+  "title": "Agent workspace boundary",
+  "artifact": "docs/03-worked-examples/skill-workflow-comparison/trial-records/agent-workspace-boundary.md",
+  "section": "## Nuclear-Grade Trial",
+  "signals": [
+    {
+      "name": "Bounds agent file-write authority (allowed and forbidden)",
+      "any": ["may edit guard and tests only", "may not broaden", "write authority"]
+    },
+    {
+      "name": "Names the controlled items at stake",
+      "any": ["controlled items:"]
+    },
+    {
+      "name": "Classifies mode with a stated rationale",
+      "any": ["mode: standard because", "changes a trust boundary"]
+    },
+    {
+      "name": "States adversarial proof claims, not just a happy path",
+      "any": ["symlink escape denied", "traversal denied", "absolute external path denied"]
+    },
+    {
+      "name": "Makes a bounded release decision with a public non-claim",
+      "any": ["not as production sandbox", "residual risk"]
+    }
+  ]
+}

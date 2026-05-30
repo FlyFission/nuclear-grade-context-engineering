@@ -15,6 +15,7 @@ from pathlib import Path
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from nuclear_grade.efficacy import run_all as run_efficacy
 from nuclear_grade.ng_validate import detect_packet_mode, validate_packet
 
 PACKAGE_DIR = Path(__file__).resolve().parent
@@ -211,6 +212,13 @@ def build_parser() -> argparse.ArgumentParser:
     )
     migrate_parser.set_defaults(handler=handle_migrate)
 
+    eval_parser = subcommands.add_parser(
+        "eval",
+        help="Score worked-example artifacts for the decision signals they claim to teach.",
+    )
+    eval_parser.add_argument("repo", nargs="?", default=".", type=Path)
+    eval_parser.set_defaults(handler=handle_eval)
+
     return parser
 
 
@@ -387,6 +395,41 @@ def packet_health(packet: Path) -> str:
     if any("placeholder marker" in message for message in result.messages):
         return "scaffold"
     return "invalid"
+
+
+def handle_eval(args: argparse.Namespace) -> int:
+    repo = args.repo.resolve()
+    results = run_efficacy(repo)
+    if not results:
+        print(f"No eval cases found under {repo / 'evals' / 'cases'}.")
+        return 0
+
+    failures = 0
+    for result in results:
+        if not result.ok:
+            failures += 1
+        print(
+            f"{result.case.id} {result.case.title}: "
+            f"{result.present_count}/{result.total} signals [{result.status}]"
+        )
+        for signal in result.signals:
+            if not signal.present:
+                print(f"    - missing: {signal.name}")
+
+    total = sum(result.total for result in results)
+    present = sum(result.present_count for result in results)
+    print(
+        f"\nDecision-signal coverage: {present}/{total} across "
+        f"{len(results)} worked example(s)."
+    )
+    print(
+        "Coverage means the artifact names the decision element; it is not proof "
+        "the element is adequately handled, safe, secure, or compliant."
+    )
+    if failures:
+        print(f"{failures} case(s) missing required signals.")
+        return 1
+    return 0
 
 
 def apply_writes(writes: list[PlannedWrite], dry_run: bool, overwrite: bool) -> int:

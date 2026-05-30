@@ -13,6 +13,7 @@ The earlier version of this comparison was intentionally replaced because it was
 | [`methodology.md`](methodology.md) | Evaluation rules, scoring rubric, limits, and bias controls. |
 | [`results-summary.md`](results-summary.md) | Aggregate findings, score table, and recommendations. |
 | [`trial-records/`](trial-records/) | Per-use-case records with simple prompt output, Nuclear-grade output, scoring rationale, and residual concerns. |
+| [`efficacy-harness.md`](efficacy-harness.md) | A reproducible `python tools/ng.py eval .` check that each worked example still surfaces the decision signals it claims. Mechanical and runnable, unlike the author-judged scores. |
 
 ## Trial Set
 

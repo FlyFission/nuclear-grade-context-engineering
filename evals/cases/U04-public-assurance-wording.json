@@ -1,0 +1,28 @@
+{
+  "id": "U04",
+  "title": "Public assurance wording",
+  "artifact": "docs/03-worked-examples/skill-workflow-comparison/trial-records/public-assurance-wording.md",
+  "section": "## Nuclear-Grade Trial",
+  "signals": [
+    {
+      "name": "Separates source inspiration from satisfied requirements",
+      "any": ["public inspiration and concept lineage", "not satisfied requirements"]
+    },
+    {
+      "name": "Separates license permission from assurance",
+      "any": ["mit permission remains separate", "separate from fitness"]
+    },
+    {
+      "name": "Runs a self-check with a stop condition before the public claim",
+      "any": ["self-check:", "stop condition are named"]
+    },
+    {
+      "name": "Screens cross-document impact of the wording change",
+      "any": ["impact screen:", "readme, disclaimer, source-map"]
+    },
+    {
+      "name": "Conditions release on a prohibited-claim scan",
+      "any": ["prohibited-claim scan", "boundary-safe wording"]
+    }
+  ]
+}

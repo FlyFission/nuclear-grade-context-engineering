@@ -2,27 +2,27 @@
 
 ## Purpose
 
-Review a diff or module for standards drift (oversized files, needless abstraction, leaked feature logic, clever indirection) and issue one honest verdict. This is a portable command prompt.
+Review a diff or a module for slipping standards — oversized files, needless layers of abstraction, feature logic leaking where it should not, and clever indirection — and give one honest verdict. This is a portable command prompt.
 
 ## Use when
 
-- A diff or module is up for review and you want a standards check, not just a correctness check.
-- A file or function has grown large, or an abstraction layer is being added.
-- A refactor is proposed and you need to judge whether it removes complexity or just moves it.
-- An agent produced code quickly and the question is whether it stays maintainable.
+- A diff or a module is up for review and you want a standards check, not just a correctness check.
+- A file or function has grown large, or someone is adding a new layer of abstraction.
+- A refactor is proposed and you must judge whether it removes complexity or just moves it.
+- An agent wrote code fast and the question is whether it stays maintainable.
 
 ## Do not use when
 
-- The change is a trivial, obvious edit with no structural impact.
-- The task is only about functional correctness (use ng-prove instead).
-- A hotfix must ship for incident containment before a quality pass is reasonable.
+- The change is a trivial, obvious edit with no effect on structure.
+- The task is only about whether the code works (use ng-prove instead).
+- A hotfix must ship to contain an incident before a quality pass makes sense.
 
 ## Inputs
 
-- The diff or module under review and its surrounding files.
-- The change's mission anchor or objective.
-- Project conventions and any agreed countable limits.
-- The layering map: what is shared/canonical versus feature-specific.
+- The diff or module under review, and the files around it.
+- The change's stated goal (its mission anchor).
+- The project's conventions, and any countable limits you agreed on.
+- The layering map: what is shared and canonical versus what is feature-specific.
 
 ## Prompt text
 
@@ -36,17 +36,17 @@ Inputs:
 - shared vs feature-specific layers:
 
 Do this:
-- Read the change against its objective; flag scope drift first.
-- Look for deletion before rearrangement; ask what can be removed entirely.
-- Apply countable tripwires as prompts, not laws (file ~1000 lines, function ~50 lines, deep nesting, duplicated branches).
+- Read the change against its goal; flag scope drift first.
+- Look to delete before you rearrange; ask what can be removed entirely.
+- Use the countable tripwires as prompts, not laws (file around 1000 lines, function around 50 lines, deep nesting, duplicated branches).
 - Test each abstraction: it must remove more complexity than it adds; flag thin pass-throughs.
-- Check layering: flag feature logic leaking into shared/canonical/framework code.
-- Prefer boring direct code over clever indirection.
+- Check the layering: flag feature logic leaking into shared, canonical, or framework code.
+- Prefer plain, direct code over clever indirection.
 
 Return:
-- a prioritized findings list (location, standard at risk, concrete fix, often a deletion)
+- a ranked list of findings (location, the standard at risk, a concrete fix, often a deletion)
 - one verdict: VERIFIED, NOT VERIFIED, or INCONCLUSIVE
-- a short rationale tying the verdict to the findings
+- a short reason tying the verdict to the findings
 
 Do not soften every finding into "looks good." Do not imply formal assurance, compliance, certification, safety, security, or regulatory adequacy.
 ```
@@ -57,9 +57,9 @@ Do not soften every finding into "looks good." Do not imply formal assurance, co
 
 ## Expected outputs
 
-- A prioritized findings list with concrete fixes.
+- A ranked list of findings, each with a concrete fix.
 - A single verdict: VERIFIED, NOT VERIFIED, or INCONCLUSIVE.
-- A rationale that matches the verdict.
+- A reason that matches the verdict.
 
 ## Verification command
 
@@ -69,11 +69,11 @@ python tools/ng.py validate .nuclear/changes/<slug>
 
 ## Failure modes
 
-- Rearranging complexity instead of asking what deletes the need for it.
-- Treating countable tripwires as hard laws rather than investigation prompts.
-- Passing speculative abstraction because it "might be useful later."
+- Rearranging complexity instead of asking what removes the need for it.
+- Treating the countable tripwires as hard laws rather than prompts to investigate.
+- Passing a speculative abstraction because it "might be useful later."
 - Ending with no verdict, or a verdict that does not match the findings.
 
 ## Legal/assurance boundary note
 
-This command supports maintainability review and evidence visibility. It does not create formal V&V, compliance, certification, safety, security, procurement adequacy, or regulatory approval.
+This command supports a maintainability review and makes the evidence visible. It does not create formal V&V, compliance, certification, safety, security, procurement adequacy, or regulatory approval.

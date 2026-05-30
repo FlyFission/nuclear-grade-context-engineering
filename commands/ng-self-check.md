@@ -2,22 +2,22 @@
 
 ## Purpose
 
-Run a compact self-check before and after a critical cut-point agent action. This is a portable command prompt.
+Run a short self-check just before and just after a risky agent action — the kind that is hard to take back. This is a portable command prompt.
 
 ## Use when
 
-- An edit, command, tool call, credential use, public claim, dependency/model/API change, migration, or release action could affect controlled state.
-- Wrong target, wrong scope, or mismatched evidence is plausible.
-- A fast candidate is about to become a public claim, accepted baseline, or release action.
+- An edit, command, tool call, credential use, public claim, change to a dependency/model/API, migration, or release action could affect a version you keep under control.
+- It is plausible the agent could hit the wrong target, the wrong scope, or mismatch the evidence.
+- A fast draft is about to become a public claim, an accepted baseline, or a release action.
 
 ## Do not use when
 
-- The task is read-only or a tiny local Quick edit with obvious proof.
-- A stronger human approval gate must occur before the action.
+- The task is read-only, or a tiny local Quick edit with obvious proof.
+- A stronger human approval gate must happen before the action.
 
 ## Inputs
 
-- Intended action, exact target, authority source, expected result, likely error, stop condition, and proof check.
+- The action you intend, the exact target, where the authority comes from, the result you expect, the likely error, the stop condition, and the proof check.
 
 ## Prompt text
 
@@ -36,23 +36,23 @@ Inputs:
 - proof or after-action check:
 
 Return:
-- cut point being checked;
-- action and target;
-- expected result;
-- stop condition;
-- after-action evidence to collect;
-- whether to proceed, pause, or escalate.
+- the risky point being checked;
+- the action and the target;
+- the expected result;
+- the stop condition;
+- the evidence to collect after the action;
+- whether to go ahead, pause, or ask for help.
 ```
 
 ## Files created or modified
 
-- `self-check.md` if activated.
-- `verification.md`, `ship.md`, or `decision.md` if the self-check changes evidence or release posture.
+- `self-check.md` if started.
+- `verification.md`, `ship.md`, or `decision.md` if the self-check changes the evidence or the release.
 
 ## Expected outputs
 
-- Proceed / pause / escalate decision.
-- Cut point, action, target, expected result, stop condition, and evidence requirement.
+- A go-ahead / pause / ask-for-help decision.
+- The risky point, the action, the target, the expected result, the stop condition, and the evidence required.
 
 ## Verification command
 
@@ -62,10 +62,10 @@ python tools/ng.py validate .nuclear/changes/<slug>
 
 ## Failure modes
 
-- Action begins before target and expected result are named.
-- Mismatch leads to blind retry instead of pause.
-- Public claim is treated as proven without scoped evidence.
+- The action starts before the target and the expected result are named.
+- A mismatch leads to a blind retry instead of a pause.
+- A public claim is treated as proven with no scoped evidence behind it.
 
 ## Legal/assurance boundary note
 
-Self-check records support engineering review discipline. They do not create formal V&V, compliance, certification, safety, security, procurement, or regulatory approval.
+Self-check records support careful engineering review. They do not create formal V&V, compliance, certification, safety, security, procurement, or regulatory approval.

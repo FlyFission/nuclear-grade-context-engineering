@@ -2,26 +2,26 @@
 
 ## Purpose
 
-Record accepted controlled configuration state after review, merge, release, or public-doc changes. This is a portable command prompt.
+Record the version everyone agreed is correct — the baseline — after a review, merge, release, or change to public docs. This is a portable command prompt.
 
 ## Use when
 
-- A Standard packet ships.
-- Public docs, prompts, models, dependencies, tools, skills, commands, templates, validators, or release artifacts are accepted.
-- Operation or review feedback requires a re-baseline.
-- OPEX changed accepted state or revalidation triggers.
+- A Standard change record (the packet) ships.
+- Public docs, prompts, models, dependencies, tools, skills, commands, templates, validators, or release files are accepted.
+- Feedback from operation or review means you must save a new baseline.
+- Lessons from real operation (OPEX) changed the accepted version or the re-check triggers.
 
 ## Do not use when
 
-- Evidence is not ready and the work is still under review.
-- The change is a local Quick edit with no release or trust-bearing configuration state.
+- The evidence is not ready and the work is still under review.
+- The change is a local Quick edit with no release and no state anyone needs to trust.
 
 ## Inputs
 
-- Packet path.
-- Controlled items and impact screen.
-- PR/commit/release/artifact identity.
-- Verification and ship records.
+- The path to the change record (the packet).
+- The list of items under control and the ripple-effect screen.
+- The PR, commit, release, or file that identifies this version.
+- The verification and ship records.
 
 ## Prompt text
 
@@ -36,19 +36,19 @@ Inputs:
 - OPEX / near-miss links:
 - accepted gaps:
 
-Return a baseline record with included state, excluded state, evidence links, residual gaps, and revalidation or re-baseline triggers. Do not imply formal assurance or compliance.
+Return a baseline record. Include the version that is saved, the items it covers, the items it leaves out, links to the evidence, the gaps you have accepted, and what should trigger a re-check or a new baseline. Do not imply formal assurance or compliance.
 
 ## Files created or modified
 
-- `.nuclear/changes/<slug>/baseline.md` when activated.
-- `ship.md` if a compact baseline section is enough.
+- `.nuclear/changes/<slug>/baseline.md` when this is started.
+- `ship.md` if a short baseline section is enough.
 
 ## Expected outputs
 
-- Baseline identity.
-- Included/excluded controlled items.
-- Revalidation and re-baseline triggers.
-- OPEX links when learning changed the baseline.
+- The version that is saved.
+- The items under control that are included, and those left out.
+- What should trigger a re-check or a new baseline.
+- Links to lessons from operation (OPEX) when learning changed the baseline.
 
 ## Verification command
 
@@ -59,9 +59,9 @@ python tools/ng.py validate .nuclear/changes/<slug>
 ## Failure modes
 
 - Treating a commit SHA alone as the baseline record.
-- Omitting exclusions and accepted gaps.
-- Forgetting revalidation triggers for dependencies, prompts, models, tools, or public claims.
+- Leaving out the items you excluded and the gaps you accepted.
+- Forgetting the re-check triggers for dependencies, prompts, models, tools, or public claims.
 
 ## Legal/assurance boundary note
 
-Baseline records are workflow evidence. They are not formal V&V, compliance, certification, safety, security, procurement, or regulatory records unless separately adopted under a qualified external program.
+Baseline records are workflow evidence. They are not formal V&V, compliance, certification, safety, security, procurement, or regulatory records, unless you separately adopt them under a qualified external program.

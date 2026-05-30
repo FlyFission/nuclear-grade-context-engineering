@@ -2,22 +2,22 @@
 
 ## Purpose
 
-Check dependency, model, API, SaaS, generated-artifact, or vendor trust before it supports evidence, permissions, data, release posture, or public claims. This is a portable command prompt.
+Check a dependency, model, API, SaaS service, generated file, or vendor before it backs your evidence, permissions, data, release, or public claims. This is a portable command prompt.
 
 ## Use when
 
-- A change adds or updates an external package, model, API, SaaS tool, build service, generated artifact, or data source.
-- Vendor/source claims are being used as evidence.
-- Credentials, network access, data handling, release posture, or public trust may change.
+- A change adds or updates an outside package, model, API, SaaS tool, build service, generated file, or data source.
+- You are leaning on a vendor's or a source's claims as evidence.
+- Credentials, network access, data handling, the release, or public trust may change.
 
 ## Do not use when
 
-- The dependency is dev-only, reversible, and already covered by Quick proof.
-- A qualified security, legal, procurement, or regulated-use review is required outside this repo.
+- The dependency is for development only, is easy to undo, and a Quick proof already covers it.
+- A qualified security, legal, procurement, or regulated-use review must happen outside this repo.
 
 ## Inputs
 
-- External item identity, version/model/API surface, provider, intended use, claims relied on, local evidence, gaps, controls, and revalidation trigger.
+- The outside item's name, its version/model/API surface, the provider, how you intend to use it, the claims you are relying on, the local evidence, the gaps, the controls, and the re-check trigger.
 
 ## Prompt text
 
@@ -37,17 +37,17 @@ Inputs:
 - compensating controls:
 - revalidation trigger:
 
-Separate external claims from local evidence. Return intended-use decision, gaps, compensating controls, release impact, and whether to ship, defer, block, or require qualified review.
+Keep the outside claims separate from your local evidence. Return a decision for how you intend to use it, the gaps, the controls that make up for them, the effect on the release, and whether to ship, defer, block, or require a qualified review.
 ```
 
 ## Files created or modified
 
-- `supplier-trust.md` or a trust section in `basis.md`, `verification.md`, `ship.md`, or `decision.md`.
+- `supplier-trust.md`, or a trust section in `basis.md`, `verification.md`, `ship.md`, or `decision.md`.
 
 ## Expected outputs
 
-- Intended-use decision, evidence/gap table, compensating controls, owner, and revalidation trigger.
-- Release posture impact.
+- A decision for how you intend to use it, a table of evidence and gaps, the controls that make up for the gaps, the owner, and the re-check trigger.
+- The effect on the release.
 
 ## Verification command
 
@@ -57,10 +57,10 @@ python tools/ng.py validate .nuclear/changes/<slug>
 
 ## Failure modes
 
-- Vendor language is treated as local proof.
-- Version, model, provider, or API surface is unnamed.
-- Tests pass while advisory, license, permission, or behavior evidence is missing.
+- Treating vendor wording as local proof.
+- Leaving the version, model, provider, or API surface unnamed.
+- Tests pass while the evidence on advisories, license, permissions, or behavior is missing.
 
 ## Legal/assurance boundary note
 
-Trust checks support intended-use review. They do not create formal supplier qualification, security assurance, procurement adequacy, compliance, certification, safety, security, or regulatory approval.
+Trust checks support a review of how you intend to use something. They do not create formal supplier qualification, security assurance, procurement adequacy, compliance, certification, safety, security, or regulatory approval.

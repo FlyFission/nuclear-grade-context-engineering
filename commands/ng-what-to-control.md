@@ -2,44 +2,44 @@
 
 ## Purpose
 
-Identify controlled configuration items for a Nuclear-grade change. This is a portable command prompt.
+Name the items a Nuclear-grade change must keep under control (CM) — the approved versions you protect and watch for drift. This is a portable command prompt.
 
 ## Use when
 
 - A change touches prompts, models, dependencies, tools, docs, templates, skills, commands, validators, releases, runbooks, or public claims.
-- Reviewers need to know which state is approved and what drift matters.
+- Reviewers need to know which version is approved, and what drift would matter.
 
 ## Do not use when
 
-- The work is a tiny Quick change with no trust-bearing state.
+- The work is a tiny Quick change that holds no state anyone needs to trust.
 
 ## Inputs
 
-- Change objective and diff or planned affected files.
-- Existing packet path.
+- The change goal, and the diff or the files it plans to touch.
+- The path to the existing change record (the packet).
 - `docs/02-operating-system/controlled-items.md`.
 
 ## Prompt text
 
-Identify the controlled configuration items for this change.
+List the items this change must keep under control (CM).
 
 Inputs:
 - change:
 - packet:
 - affected files/items:
 
-Return a compact table with item, type, current state, intended state, why controlled, evidence link or gap, owner, and revalidation trigger. Do not list unrelated repo files. Do not imply formal assurance or compliance.
+Return a short table. For each item, give: the item, its type, its current state, its intended state, why it is controlled, a link to its evidence (or the gap), its owner, and what should trigger a re-check. Do not list unrelated repo files. Do not imply formal assurance or compliance.
 
 ## Files created or modified
 
-- `.nuclear/changes/<slug>/controlled-items.md` when activated.
-- `risk.md`, `basis.md`, or `plan.md` if a compact list is enough.
+- `.nuclear/changes/<slug>/controlled-items.md` when this is started.
+- `risk.md`, `basis.md`, or `plan.md` if a short list is enough.
 
 ## Expected outputs
 
-- Controlled item list.
-- Revalidation triggers.
-- Explicit exclusions or gaps.
+- The list of items under control.
+- What should trigger a re-check.
+- The items or claims you are leaving out on purpose, and any gaps.
 
 ## Verification command
 
@@ -49,10 +49,10 @@ python tools/ng.py validate .nuclear/changes/<slug>
 
 ## Failure modes
 
-- Treating Git history as sufficient configuration control.
-- Listing the whole repo instead of change-specific controlled items.
-- Omitting prompts, docs, source-map rows, or agent permissions because they are not code.
+- Treating Git history as enough to keep the approved version under control.
+- Listing the whole repo instead of the items this change controls.
+- Leaving out prompts, docs, source-map rows, or agent permissions because they are not code.
 
 ## Legal/assurance boundary note
 
-Controlled-item records support reviewable engineering decisions. They do not create formal QA records, certification, compliance, safety, security, procurement adequacy, or regulatory approval.
+A controlled-items record backs up reviewable engineering decisions. It does not create formal QA records, certification, compliance, safety, security, procurement adequacy, or regulatory approval.

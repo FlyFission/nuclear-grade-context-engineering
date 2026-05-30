@@ -2,32 +2,32 @@
 
 ## Purpose
 
-Build a product-oriented work breakdown structure (WBS) for a deliverable that obeys the 100% rule, stays mutually exclusive, carries outline numbering, and defines every element in a dictionary, so scope is auditable before folders or work begin. This is a portable command prompt.
+Build a work breakdown for a deliverable — a tree that splits the thing you are building into its parts. The tree must add up to the whole and nothing more (the 100% rule), have no overlap between parts, use outline numbering, and define every part in a short dictionary. Do this so the scope can be checked before any folders or work begin. This is a portable command prompt.
 
 ## Use when
 
-- An epic, feature, or new subsystem needs decomposition before planning or layout.
+- An epic, feature, or new subsystem needs to be broken down before you plan or lay out folders.
 - Scope keeps growing and no one can say whether the plan is complete or overlapping.
-- A folder tree or repo layout needs a defensible scope basis.
-- Multiple agents or people need one shared, non-overlapping map of the work.
+- A folder tree or repo layout needs a scope you can defend.
+- Several agents or people need one shared map of the work, with no overlaps.
 
 ## Do not use when
 
 - The change is a single-file or Quick edit with an obvious target.
-- The backlog item is already decomposed, owned, and dictionary-backed.
-- The user needs a schedule, cost estimate, or project-management certification.
+- The backlog item is already broken down, owned, and backed by a dictionary.
+- The user needs a schedule, a cost estimate, or a project-management certification.
 
 ## Inputs
 
-- The end deliverable or objective in one line.
-- Mode (Quick or Standard) and the mission anchor or charter when present.
-- Known deliverables, constraints, and declared non-goals or deferred scope.
+- The end deliverable or goal in one line.
+- The mode (Quick or Standard) and the stated goal (mission anchor) or charter, when there is one.
+- The known deliverables, the constraints, and any non-goals or deferred scope you declared.
 - `templates/standard/wbs.md` when used.
 
 ## Prompt text
 
 ```text
-Build a product-oriented work breakdown structure (WBS).
+Build a product-oriented work breakdown (a work breakdown structure, or WBS).
 
 Inputs:
 - end deliverable (one line): <the single product or outcome>
@@ -36,37 +36,42 @@ Inputs:
 - existing tree to respect: <paths or none>
 
 Do this in order:
-1. State the single top deliverable as WBS level 1. If you cannot name one
+1. State the single top deliverable as level 1. If you cannot name one
    product, stop and say so: it is a goal, not a deliverable.
-2. Decompose product-first: break each parent into the nouns it is made of,
-   not the verbs done to it. Keep verbs in a labeled activity layer only.
-3. Enforce the 100% rule at every parent: children cover exactly the parent,
-   no more and no less. Write any deferred scope as an explicit gap line.
-4. Enforce mutual exclusivity and the one-home rule: every element under
-   exactly one parent; no sibling overlap. Lift shared work into one common
-   element rather than duplicating.
-5. Stop decomposing at the work-package line: one ownable, estimable,
-   verifiable unit (8/80 sense check, ~2-3 levels). Grade depth by mode.
+2. Break down by product first: split each parent into the parts (nouns) it is
+   made of, not the actions (verbs) done to it. Keep verbs in a labeled
+   activity layer only.
+3. Apply the 100% rule at every parent: the children must cover exactly the
+   parent, no more and no less. Write any deferred scope as an explicit gap line.
+4. Keep parts separate, with one home each: every part sits under exactly one
+   parent, and no two siblings overlap. Lift shared work into one common part
+   rather than duplicating it.
+5. Stop splitting at the work-package line: one part that someone can own,
+   estimate, and verify. A good test is that it takes between about 8 and 80
+   hours of work (the 8/80 rule), which is usually about 2 to 3 levels deep.
+   Grade the depth by mode.
 6. Number with outline traceability (1, 1.2, 1.2.3).
-7. Write the WBS dictionary: for each element give scope, in/out-of-scope,
-   deliverable, interfaces, acceptance, rough size, owner, dependencies.
+7. Write the dictionary: for each part give its scope, what is in and out of
+   scope, the deliverable, the interfaces, how it is accepted, a rough size,
+   the owner, and its dependencies.
 
-Return: the outline-numbered WBS table, the dictionary, named common elements,
-the deferred-scope/gap line, and a 100%/MECE self-check result. Do not produce a
-schedule, cost estimate, or compliance claim. Then hand off to ng-folders.
+Return: the outline-numbered breakdown table, the dictionary, the named common
+parts, the deferred-scope/gap line, and a self-check that it adds up to 100% with
+no overlap. Do not produce a schedule, a cost estimate, or a compliance claim.
+Then hand off to ng-folders.
 ```
 
 ## Files created or modified
 
-- `.nuclear/changes/<slug>/wbs.md` (the WBS table and dictionary, when `templates/standard/wbs.md` is used).
-- No files unless separately authorized; otherwise the command proposes the WBS for review.
+- `.nuclear/changes/<slug>/wbs.md` (the breakdown table and dictionary, when `templates/standard/wbs.md` is used).
+- No files unless that is separately authorized; otherwise the command proposes the breakdown for review.
 
 ## Expected outputs
 
-- An outline-numbered, product-oriented WBS table.
-- A dictionary row per element with scope, deliverable, acceptance, owner, and dependencies.
-- Named common elements and an explicit deferred-scope or gap line.
-- A 100% rule and mutual-exclusivity self-check result.
+- An outline-numbered, product-first breakdown table.
+- A dictionary row per part, with its scope, deliverable, how it is accepted, owner, and dependencies.
+- Named common parts and an explicit deferred-scope or gap line.
+- A self-check that the parts add up to the whole (the 100% rule) and do not overlap.
 
 ## Verification command
 
@@ -76,12 +81,12 @@ python tools/ng.py validate .nuclear/changes/<slug>
 
 ## Failure modes
 
-- Listing tasks (verbs) instead of decomposing products (nouns).
-- Children that do not sum to the parent, with the gap left implied.
-- The same work placed under two elements (overlap), or a "miscellaneous" bucket.
-- Elements with no dictionary entry or no owner.
-- Decomposing past the work-package line as if depth were rigor.
+- Listing actions (verbs) instead of breaking down products (nouns).
+- Children that do not add up to the parent, with the gap left implied.
+- The same work placed under two parts (an overlap), or a "miscellaneous" bucket.
+- Parts with no dictionary entry or no owner.
+- Splitting past the work-package line as if more depth meant more rigor.
 
 ## Legal/assurance boundary note
 
-A WBS built with this portable command prompt structures work and scope as engineering evidence. It is not a schedule, an authoritative cost estimate, a project-management certification, formal assurance, or regulatory confirmation.
+A work breakdown built with this portable command prompt structures the work and scope as engineering evidence. It is not a schedule, an authoritative cost estimate, a project-management certification, formal assurance, or regulatory confirmation.

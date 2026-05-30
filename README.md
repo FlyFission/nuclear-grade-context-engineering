@@ -93,6 +93,18 @@ Short launch version:
 Question -> Specify -> Execute -> Verify -> Decide
 ```
 
+```mermaid
+flowchart LR
+    Q[Question] --> D[Discover] --> S[Specify] --> P[Plan]
+    P --> E[Execute] --> V[Verify] --> R[Review]
+    R --> Dec{Decide}
+    Dec -->|ship / defer| B[Baseline] --> O[Operate] --> L[Learn]
+    Dec -->|block| P
+    L -.feeds future basis.-> Q
+```
+
+More diagrams (mode decision tree, skill graph, packet artifact graph) are in [`docs/diagrams.md`](docs/diagrams.md).
+
 Quick and Standard packets are the Git-native way to record that lifecycle. `Classify` stays inside the risk/mode screen so the public path stays teachable. Activated CM records add controlled items, change impact, baseline, variance, and OPEX detail only when consequence justifies it.
 
 HPI overlays sit underneath that path. Use them when they change the work: task preview before consequential execution, self-check before critical actions, turnover before another agent or human continues, independent verification before high-trust decisions, and OPEX after near misses or review surprises.
@@ -148,6 +160,8 @@ docs/02-operating-system/       lifecycle, HPI overlays, modes, packets, thresho
 docs/03-worked-examples/        flagship worked example
 docs/04-adoption/               rollout, agent authority, reviewer playbook
 docs/05-reference/              skill, command, and CLI contracts
+docs/diagrams.md                visual maps of lifecycle, modes, skills, packets
+docs/glossary.md                plain-language decoding of terms and idioms
 ```
 
 ## Public v0 status

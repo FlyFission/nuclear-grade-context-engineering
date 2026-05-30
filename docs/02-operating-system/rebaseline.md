@@ -1,21 +1,21 @@
 # Re-baseline
 
-**Purpose:** Define when accepted controlled configuration must be updated.
+**Purpose:** This file says when you must update the version everyone agreed is correct (the baseline).
 
 ## Re-baseline triggers
 
 Re-baseline when:
 
 - a shipped Standard change updates controlled items;
-- verification evidence changes release posture;
-- public claims or source-lineage status changes;
-- a dependency, model, API, prompt, or tool authority changes;
-- OPEX shows the existing baseline is stale or misleading.
+- verification evidence changes the release posture;
+- public claims, or the status of where an idea came from, change;
+- a dependency, model, API, prompt, or what a tool is allowed to do changes;
+- lessons from real operation (OPEX) show the current baseline is stale or misleading.
 
 ## Minimum useful version
 
-Link the old baseline, change packet, impact screen, verification, accepted gaps, and new baseline state.
+Link the old baseline, the change packet, the impact screen, the verification, the accepted gaps, and the new baseline state.
 
 ## Source-lineage note
 
-This re-baseline workflow is an original software-native translation of public configuration-management and lifecycle concepts mapped in `../00-standards-foundation/source-map.md`.
+This re-baseline workflow is an original software translation of public ideas about keeping the approved version of everything under control and the lifecycle, mapped in `../00-standards-foundation/source-map.md`.

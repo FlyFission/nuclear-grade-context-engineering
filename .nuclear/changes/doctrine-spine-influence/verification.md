@@ -49,8 +49,14 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`.
 | Packet validation | `python3 tools/ng.py validate .nuclear/changes/doctrine-spine-influence` | local | pass | `OK: .nuclear/changes/doctrine-spine-influence` |
 | Contract/public tests | `env UV_CACHE_DIR=/tmp/uv-cache uv run --with pytest pytest tests/test_public_docs.py tests/test_skill_contracts.py tests/test_command_contracts.py tests/test_ng_validate.py -q` | local | pass | `42 passed` |
 | Doctor | `python3 tools/ng.py doctor .` | local | pass | `OK: Nuclear-grade doctor` |
-| Boundary scan | `rg -n "quote\|quotation\|formal\|certified\|approval\|compliant\|regulatory adequacy\|safe\|secure" README.md QUICKSTART.md WORKFLOWS.md docs skills commands templates .nuclear/changes/doctrine-spine-influence` | local | pass | expected boundary-language and packet non-goal hits; no named attribution insertion |
+| Boundary scan | pasteable command below | local | pass | expected boundary-language and packet non-goal hits; no named attribution insertion |
 | PR review | Copilot review and actionable feedback pass | GitHub | planned | PR |
+
+Boundary scan command:
+
+```bash
+rg -n "quote|quotation|formal|certified|approval|compliant|regulatory adequacy|safe|secure" README.md QUICKSTART.md WORKFLOWS.md docs skills commands templates .nuclear/changes/doctrine-spine-influence
+```
 
 ## Negative / failure-mode checks
 

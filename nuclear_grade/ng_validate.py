@@ -20,8 +20,11 @@ CLOSURE_MARKER = "NUCLEAR-GRADE-CLOSED"
 # on the same line, matching the shape the skill and CLI docs require. A bare
 # marker, or the marker merely mentioned in prose, does not count -- otherwise a
 # packet could be suppressed from `ng status` without recording why it was dropped.
+# Horizontal whitespace only (`[^\S\n]`): the rationale must be on the SAME line as
+# the marker. A plain `\s*` would let the match cross a newline and grab the next
+# line's text, so a bare marker followed by normal content would falsely qualify.
 CLOSURE_NOTE_PATTERN = re.compile(
-    rf"^\s*{re.escape(CLOSURE_MARKER)}:\s*\S.*$", re.MULTILINE
+    rf"^[^\S\n]*{re.escape(CLOSURE_MARKER)}:[^\S\n]*\S.*$", re.MULTILINE
 )
 
 

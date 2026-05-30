@@ -1,10 +1,10 @@
 # Artifact Dependency Graph
 
-**Purpose:** Define the canonical dependency order among Nuclear-grade artifacts so templates do not become isolated forms.
+**Purpose:** Show the order in which the Nuclear-grade records depend on each other. This keeps each template from becoming a lone form with no link to the rest.
 
-**Thesis:** Nuclear-grade is the control system for frontier AI software engineering. It channels AI/LLM horsepower through design basis, configuration discipline, traceability, verification, and release readiness without token/process waste.
+**Main idea:** Nuclear-grade is the steering system for serious AI software work. It puts the power of AI and large language models (LLMs) to good use through a few steps. State the design reasons. Keep the approved version under control. Trace each claim to its proof. Run verification and validation (V&V). Check that the work is ready to ship. It does all this without wasting tokens or adding busywork.
 
-**Boundary:** This is an educational operating model inspired by public, linkable sources. It is not a DOE, NRC, ASME, EPRI, IEEE, IEC, ISO, ANSI/ANS, NEI, NASA, NIST, CISA, OpenSSF, OWASP, or SLSA compliance framework.
+**Limits:** This is a teaching model. It draws on public sources you can link to. It is not a compliance framework for DOE, NRC, ASME, EPRI, IEEE, IEC, ISO, ANSI/ANS, NEI, NASA, NIST, CISA, OpenSSF, OWASP, or SLSA.
 
 ---
 
@@ -30,7 +30,8 @@ Mission need / change intent
 -> basis update, re-baseline, or closure
 ```
 
-The chain is directional: later records should point backward to the basis they depend on, and operating lessons should feed forward into future changes.
+The chain runs one way. Later records should point back to the reasons they rest on. And lessons from real operation (OPEX) should feed forward into future changes.
+
 
 ---
 
@@ -43,7 +44,7 @@ risk.md
 └── proof.md
 ```
 
-Use Quick mode when a change is low consequence, reversible, easy to verify, and does not alter external trust, data handling, permissions, or operational behavior.
+Use Quick mode when a change is low stakes and easy to undo. It must be easy to check. And it must not change outside trust, how data is handled, permissions, or how the system runs.
 
 | Artifact | Depends on | Feeds | Minimum useful version | Exit criteria |
 |---|---|---|---|---|
@@ -61,7 +62,7 @@ risk.md
 └── ship.md
 ```
 
-Use Standard mode when the change affects user-visible behavior, important dependencies, operational posture, data handling, tool permissions, model/prompt behavior, or durable architecture.
+Use Standard mode when the change touches any of these: what users see, important dependencies, how the system runs, how data is handled, tool permissions, model or prompt behavior, or long-lived design.
 
 | Artifact | Depends on | Feeds | Minimum useful version | Exit criteria |
 |---|---|---|---|---|
@@ -91,7 +92,7 @@ risk.md
 └── opex.md
 ```
 
-Use Nuclear mode only when activated by high consequence, high uncertainty, external trust, irreversible impact, regulated-adjacent use, important autonomy, sensitive data, safety/security significance, or enterprise diligence needs.
+Use Nuclear mode only when one of these is true: high stakes, high uncertainty, outside trust, an effect you cannot undo, use near regulated work, an agent that acts on its own in important ways, sensitive data, weight for safety or security, or a need to meet enterprise due diligence.
 
 ### Activated CM records
 
@@ -103,7 +104,7 @@ controlled-items.md
 └── opex.md
 ```
 
-Use CM records when the important question is not only "what evidence proves this change?" but "what controlled state is accepted, what did it affect, and when must it be revalidated?"
+Use these records for keeping the approved version under control (configuration management, or CM). Reach for them when the key question is not only "what evidence proves this change?" but also "which approved version did we accept, what did it touch, and when must we check it again?"
 
 ---
 
@@ -140,24 +141,24 @@ Use CM records when the important question is not only "what evidence proves thi
 ## 5. Overhead traps
 
 - Starting in Nuclear mode by default.
-- Writing design descriptions before a risk classification explains why they are needed.
-- Building trace matrices for trivial changes instead of linking the few important claims.
-- Treating a passing test suite as release readiness without rollback, monitoring, or assumptions.
-- Asking an AI agent to read every source document instead of the relevant packet and source-map excerpt.
-- Backfilling evidence after release rather than collecting it as the work proceeds.
+- Writing design descriptions before the risk rating shows why they are needed.
+- Building big trace tables for tiny changes instead of linking the few claims that matter.
+- Treating a passing test suite as proof you are ready to ship, with no rollback plan, no monitoring, and no listed assumptions.
+- Asking an AI agent to read every source document instead of the packet and the short source-map excerpt that apply.
+- Filling in evidence after the release instead of gathering it as the work goes.
 
 ---
 
 ## 6. Source-lineage note
 
-This graph is an original software-native operating model. Its public lineage comes from:
+This graph is an original operating model built for software. Its ideas come from these public sources.
 
-- DOE configuration management and design-control logic: [DOE-STD-1073-2016](https://www.energy.gov/ehss/articles/doe-std-1073-2016).
-- DOE safety-in-design lifecycle/gate logic: [DOE-STD-1189-2016](https://www.energy.gov/ehss/articles/doe-std-1189-2016).
-- DOE SDD/FDD design-description logic: [DOE-STD-3024-2011](https://www.energy.gov/ehss/articles/doe-std-3024-2011).
-- Public nuclear safety-basis/QA concepts: [10 CFR 830 Subpart A](https://www.ecfr.gov/current/title-10/chapter-III/part-830/subpart-A), [10 CFR 830 Subpart B](https://www.ecfr.gov/current/title-10/chapter-III/part-830/subpart-B), and [10 CFR 50 Appendix B](https://www.ecfr.gov/current/title-10/chapter-I/part-50/appendix-Appendix%20B%20to%20Part%2050).
-- Public nuclear software lifecycle/V&V/CM source family: NRC RG 1.168–1.173 and RG 1.187 landing pages listed in `source-map.md`.
-- Modern software/cyber/supply-chain anchors: [NIST SP 800-218](https://csrc.nist.gov/publications/detail/sp/800-218/final), [NIST SP 800-161](https://csrc.nist.gov/publications/detail/sp/800-161/rev-1/final), [CISA Secure by Design](https://www.cisa.gov/securebydesign), [CISA SBOM](https://www.cisa.gov/sbom), [SLSA](https://slsa.dev/), and [OpenSSF Scorecard](https://github.com/ossf/scorecard).
-- High-reliability software/systems anchors: [NASA Software Engineering Handbook](https://swehb.nasa.gov/), [NASA-STD-8739.8](https://standards.nasa.gov/standard/nasa/nasa-std-87398), and [NASA Systems Engineering Handbook](https://www.nasa.gov/reference/nasa-systems-engineering-handbook/).
+- Keeping the approved version under control and controlling design changes: [DOE-STD-1073-2016](https://www.energy.gov/ehss/articles/doe-std-1073-2016).
+- Building safety into the design as the work moves through stages: [DOE-STD-1189-2016](https://www.energy.gov/ehss/articles/doe-std-1189-2016).
+- Writing design descriptions: [DOE-STD-3024-2011](https://www.energy.gov/ehss/articles/doe-std-3024-2011).
+- Public ideas about a safety basis and quality assurance (QA): [10 CFR 830 Subpart A](https://www.ecfr.gov/current/title-10/chapter-III/part-830/subpart-A), [10 CFR 830 Subpart B](https://www.ecfr.gov/current/title-10/chapter-III/part-830/subpart-B), and [10 CFR 50 Appendix B](https://www.ecfr.gov/current/title-10/chapter-I/part-50/appendix-Appendix%20B%20to%20Part%2050).
+- Public nuclear software ideas about the software lifecycle, verification and validation, and keeping the approved version under control: NRC RG 1.168–1.173 and RG 1.187 landing pages listed in `source-map.md`.
+- Modern software, cyber, and supply-chain sources: [NIST SP 800-218](https://csrc.nist.gov/publications/detail/sp/800-218/final), [NIST SP 800-161](https://csrc.nist.gov/publications/detail/sp/800-161/rev-1/final), [CISA Secure by Design](https://www.cisa.gov/securebydesign), [CISA SBOM](https://www.cisa.gov/sbom), [SLSA](https://slsa.dev/), and [OpenSSF Scorecard](https://github.com/ossf/scorecard).
+- High-reliability software and systems sources: [NASA Software Engineering Handbook](https://swehb.nasa.gov/), [NASA-STD-8739.8](https://standards.nasa.gov/standard/nasa/nasa-std-87398), and [NASA Systems Engineering Handbook](https://www.nasa.gov/reference/nasa-systems-engineering-handbook/).
 
-Do not cite or derive this graph from paywalled/proprietary standards families listed in `do-not-cite-directly.md`.
+Do not cite this graph from the paid or proprietary standards listed in `do-not-cite-directly.md`, and do not build it on them.

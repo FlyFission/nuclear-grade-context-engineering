@@ -1,6 +1,6 @@
 # CLI Reference
 
-**Purpose:** Document the dependency-free `tools/ng.py` helper.
+**Purpose:** Document the `tools/ng.py` helper, which needs no extra dependencies.
 
 ## Commands
 
@@ -16,16 +16,16 @@ python tools/ng.py status [repo]
 ## Behavior
 
 - `init` creates `.nuclear/README.md` and `.nuclear/changes/`.
-- `new` copies Quick or Standard templates from the target repo when present, otherwise from this Nuclear-grade checkout.
-- `validate` delegates to `tools/ng_validate.py`.
-- `doctor` checks a Nuclear-grade distribution repo for public files, contracts, and templates. In an initialized target repo, it checks `.nuclear/README.md` and `.nuclear/changes/`.
-- `list` shows available modes, skills, commands, packet files, CM files, golden-path files, and optional templates, including turnover, self-check, and supplier-trust records.
-- `status` lists active packets and detected modes.
+- `new` copies Quick or Standard templates from the target repo when they are there. If not, it copies them from this Nuclear-grade checkout.
+- `validate` hands off to `tools/ng_validate.py`.
+- `doctor` checks a Nuclear-grade distribution repo for public files, contracts, and templates. In a target repo that has been set up, it checks `.nuclear/README.md` and `.nuclear/changes/`.
+- `list` shows what is available: modes, skills, commands, packet files, CM files (records for keeping the approved version under control), golden-path files, and optional templates. That includes turnover, self-check, and supplier-trust records.
+- `status` lists active packets and the modes it detects.
 
 ## Boundary note
 
-The CLI checks structure and evidence visibility. It does not decide engineering adequacy, safety, security, compliance, regulatory adequacy, or formal verification.
+The command-line tool checks structure and whether evidence is visible. It does not decide engineering adequacy, safety, security, compliance, regulatory adequacy, or formal verification.
 
 ## Source-lineage note
 
-This CLI reference documents local tooling for an original public-source-inspired workflow. It does not create formal assurance.
+This reference documents the local tooling for an original workflow built from public sources. It does not create formal assurance.

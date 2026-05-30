@@ -1,6 +1,6 @@
 # Command Authoring Contract
 
-**Purpose:** Keep portable command prompts clear, pasteable, and honest about integration status.
+**Purpose:** Keep portable command prompts clear, easy to paste, and honest about how far they are wired in.
 
 ## Required structure
 
@@ -25,16 +25,16 @@ The file must include:
 
 ## Writing rules
 
-- Call them portable command prompts in Public v0.
-- Provide exact prompt text.
-- Name expected files and outputs.
+- In Public v0, call them portable command prompts.
+- Give the exact prompt text.
+- Name the files and outputs you expect.
 - Include a verification command.
-- Include failure modes and boundary language.
+- Include the ways it can fail and the boundary language.
 
 ## Tests
 
-`tests/test_command_contracts.py` enforces the public contract.
+`tests/test_command_contracts.py` checks that the public contract is met.
 
 ## Source-lineage note
 
-This contract is an original authoring standard for Nuclear-grade command prompts. It does not create formal assurance or compliance.
+This contract is an original writing standard for Nuclear-grade command prompts. It does not create formal assurance or compliance.

@@ -1,6 +1,6 @@
 # Documentation
 
-Nuclear-grade docs have two maps: use the workflow first, then inspect the source foundation when claims or citations matter.
+These docs have two parts. First, learn how to use the workflow. Second, look up the sources behind it when you need to back up a claim or a citation.
 
 ## Use the repo
 
@@ -38,4 +38,4 @@ Nuclear-grade docs have two maps: use the workflow first, then inspect the sourc
 4. [`02-operating-system/change-control-packets.md`](02-operating-system/change-control-packets.md)
 5. [`03-worked-examples/ai-agent-tool-permissions/README.md`](03-worked-examples/ai-agent-tool-permissions/README.md)
 
-Boundary reminder: this repo is public-source-inspired and non-compliance-claiming. See [`../DISCLAIMER.md`](../DISCLAIMER.md).
+One reminder about limits. This repo borrows ideas from public sources. It does not claim to meet any standard. See [`../DISCLAIMER.md`](../DISCLAIMER.md).

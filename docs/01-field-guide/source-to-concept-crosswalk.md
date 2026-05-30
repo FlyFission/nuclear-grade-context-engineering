@@ -1,14 +1,14 @@
 # Source-to-Concept Crosswalk
 
-**Purpose:** Translate the public source foundation into Nuclear-grade concepts, artifacts, and activation triggers without copying proprietary standards or implying compliance.
+**Purpose:** Turn the public source foundation into Nuclear-grade concepts, artifacts, and activation triggers. Do this without copying proprietary standards or implying compliance.
 
-**Use:** Field-guide and template authors should use this as the canonical bridge:
+**Use:** Field-guide and template authors should treat this as the main bridge:
 
 ```text
 public source → extracted concept → software translation → artifact/workflow → activation trigger
 ```
 
-**Boundary:** This crosswalk is source-grounded but not a compliance matrix. It does not assert that any Nuclear-grade artifact satisfies DOE, NRC, NASA, NIST, CISA, OpenSSF, OWASP, SLSA, or other requirements.
+**Boundary:** This crosswalk is grounded in its sources, but it is not a compliance matrix. It does not claim that any Nuclear-grade artifact meets DOE, NRC, NASA, NIST, CISA, OpenSSF, OWASP, SLSA, or any other requirements.
 
 ---
 
@@ -66,7 +66,7 @@ public source → extracted concept → software translation → artifact/workfl
 
 ## 3. Required links for future field-guide pages
 
-Every field-guide page derived from this crosswalk should include:
+Every field-guide page built from this crosswalk should include:
 
 ```text
 Source lineage
@@ -79,7 +79,7 @@ Example evidence
 What not to claim
 ```
 
-This keeps doctrine source-grounded and prevents vibe drift.
+This keeps the doctrine tied to its sources and stops it from drifting on feel alone.
 
 ---
 
@@ -90,9 +90,9 @@ Do not claim that Nuclear-grade artifacts are:
 - compliant with DOE, NRC, NASA, NIST, CISA, OpenSSF, OWASP, SLSA, ASME, EPRI, IEEE, IEC, ISO, ANSI/ANS, NEI, or other standards;
 - substitutes for project-specific QA, regulatory, safety, security, legal, or certification work;
 - derived from paywalled/proprietary standards;
-- sufficient for actual regulated nuclear, medical, aviation, critical infrastructure, or safety-significant use without qualified project-specific controls.
+- enough for real regulated nuclear, medical, aviation, critical infrastructure, or safety-significant use without qualified, project-specific controls.
 
-Use language like:
+Use wording like:
 
 > original software workflow inspired by public high-consequence engineering and public software assurance sources.
 
@@ -102,6 +102,6 @@ Use language like:
 
 - Use `docs/00-standards-foundation/source-map.md` as the source of truth for `verified-public`, `supporting-context`, and `public-url-needed` status.
 - Do not use `public-url-needed` entries as direct template lineage.
-- NNSA SD 413.3-4 and direct NUREG/CR-6263 page references remain context only until official public source records are added.
-- Decide whether to add separate field-guide pages for each concept or keep the initial public surface thinner until the worked example proves the artifact spine.
-- Add examples only after Block 4/5 operating-system docs make packet modes stable.
+- NNSA SD 413.3-4 and direct NUREG/CR-6263 page references stay context only until official public source records are added.
+- Decide whether to add a separate field-guide page for each concept, or keep the first public surface thinner until the worked example proves the artifact spine.
+- Add examples only after the Block 4 and Block 5 operating-system docs make packet modes stable.

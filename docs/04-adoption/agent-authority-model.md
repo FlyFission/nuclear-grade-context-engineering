@@ -1,6 +1,6 @@
 # Agent Authority Model
 
-**Purpose:** Make AI-agent permissions explicit before side effects occur.
+**Purpose:** Spell out what an AI agent is allowed to do before it can cause any side effects.
 
 ## Authority dimensions
 
@@ -16,7 +16,7 @@
 
 ## Context pack requirement
 
-For material agent authority, create a context pack that states:
+When an agent gets real authority, write a context pack that states:
 
 - objective;
 - decision question;
@@ -28,14 +28,14 @@ For material agent authority, create a context pack that states:
 
 ## Denial rule
 
-If the requested action exceeds authority, the agent must stop and record the needed approval or escalation path.
+If an action goes beyond what the agent is allowed to do, the agent must stop. It must record the approval it needs, or the path to escalate.
 
-If the exact target, expected result, forbidden claim, or stop condition is ambiguous at a cut point, the agent must pause before acting. A cut point includes file writes, broad commands, public claims, dependency/model/API trust changes, release actions, and other hard-to-reverse steps.
+At a cut point, the agent must pause before acting if any of these is unclear: the exact target, the expected result, the forbidden claim, or the stop condition. A cut point includes file writes, broad commands, public claims, changes to trust in a dependency, model, or API, release actions, and other steps that are hard to undo.
 
 ## Exit criteria
 
-Agent authority is acceptable when a reviewer can see what the agent was allowed to do, what it actually changed, what evidence it produced, and what it was forbidden to claim.
+Agent authority is acceptable when a reviewer can see four things: what the agent was allowed to do, what it actually changed, what evidence it produced, and what it was forbidden to claim.
 
 ## Source-lineage note
 
-This model is an original workflow pattern influenced by public AI risk, secure development, configuration, and software assurance sources mapped in `../00-standards-foundation/source-map.md`. It does not create formal assurance.
+This model is an original workflow pattern. Public sources on AI risk, secure development, configuration, and software assurance shaped it. Those sources are mapped in `../00-standards-foundation/source-map.md`. It does not create formal assurance.

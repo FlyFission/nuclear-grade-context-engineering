@@ -1,6 +1,6 @@
 # Reviewer Playbook
 
-**Purpose:** Review Nuclear-grade packets quickly without rereading the whole repo.
+**Purpose:** Review Nuclear-grade packets fast, without rereading the whole repo.
 
 ## Review sequence
 
@@ -15,23 +15,23 @@
 ## What to challenge
 
 - Wrong or missing decision question.
-- Instructions that are understandable only if read charitably, but still easy for a tired agent to misuse.
+- Instructions that make sense only if you read them kindly, but are still easy for a tired agent to misuse.
 - Claims broader than evidence.
-- Unvalidated assumptions hidden behind confident prose.
-- Subjective confidence, source claims, or vendor language treated as local proof.
-- Quick mode hiding Standard triggers.
-- Fast candidate work treated as accepted configuration before audit gates.
-- Premature baseline or release decision before evidence, rollback, monitoring, and residual risk are visible.
+- Unchecked assumptions hidden behind confident writing.
+- A feeling of confidence, a source claim, or vendor language treated as local proof.
+- Quick mode that hides Standard triggers.
+- Fast trial work treated as the accepted version before the audit gates.
+- A baseline or release decision made too early, before evidence, rollback, monitoring, and leftover risk are visible.
 - Missing rollback or monitoring for release-facing work.
 - AI authority broader than recorded.
 - Public wording that implies compliance, certification, approval, safety, security, or formal verification.
-- Missing turnover state when another agent, reviewer, verifier, releaser, support owner, or resumed thread continues work.
-- A critical action with no target, expected result, stop condition, or after-action evidence.
+- A missing turnover state when work passes to another agent, reviewer, verifier, releaser, support owner, or a resumed thread.
+- A critical action with no target, no expected result, no stop condition, or no after-action evidence.
 - Vendor, model, API, or dependency claims treated as local proof.
 
 ## Verification challenge
 
-Ask what kind of checking is being claimed:
+Ask which kind of checking is being claimed:
 
 | Claim | Reviewer challenge |
 |---|---|
@@ -46,12 +46,12 @@ Ask what kind of checking is being claimed:
 - Full source-family essays in every packet.
 - Nuclear-mode artifacts when consequence does not activate them.
 - Perfect prose before evidence is clear.
-- Slow procedure for reversible exploration when only acceptance needs stronger evidence.
+- A slow procedure for reversible exploration, when only acceptance needs stronger evidence.
 
 ## Exit criteria
 
-Approve the packet only when the decision is reviewable: what changed, why it matters, what proves it, what remains uncertain, and what happens if it fails.
+Approve the packet only when you can review the decision. That means you can see what changed, why it matters, what proves it, what is still uncertain, and what happens if it fails.
 
 ## Source-lineage note
 
-This playbook is an original review workflow influenced by public software assurance, configuration management, secure development, and release-readiness sources mapped in `../00-standards-foundation/source-map.md`. It does not create formal assurance.
+This playbook is an original review workflow. Public sources on software assurance, configuration management, secure development, and release readiness shaped it. Those sources are mapped in `../00-standards-foundation/source-map.md`. It does not create formal assurance.

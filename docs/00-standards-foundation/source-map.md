@@ -1,10 +1,10 @@
 # Source Map
 
-**Purpose:** Identify the public, open, linkable sources that Nuclear-grade may cite directly or use as source lineage for original software workflows.
+**Purpose:** List the public, open, linkable sources that Nuclear-grade may cite directly. These are also the sources whose ideas can shape its original software workflows.
 
-**Repo posture:** Nuclear-grade is an educational, public-source-inspired software engineering methodology. It does not claim compliance with DOE, NRC, ASME, EPRI, IEEE, IEC, ISO, ANSI/ANS, NEI, NASA, NIST, CISA, OpenSSF, OWASP, or any other framework.
+**Repo posture:** Nuclear-grade is a teaching method for software engineering. It is built on public sources. It does not claim to meet DOE, NRC, ASME, EPRI, IEEE, IEC, ISO, ANSI/ANS, NEI, NASA, NIST, CISA, OpenSSF, OWASP, or any other framework.
 
-**Use rule:** A source can shape public templates only when it is public/open/linkable and the resulting workflow is original, software-native, and non-compliance-claiming.
+**Use rule:** A source can shape public templates only when two things are true. First, it is public, open, and linkable. Second, the workflow we build from it is original, made for software, and claims no compliance.
 
 ---
 
@@ -24,7 +24,7 @@
 | supporting-context | Publicly reachable or useful as context, but not a core direct lineage source for v0 templates. |
 | excluded-direct | Do not use as direct source lineage. |
 
-Confidence fields are about source-family fit for this repo, not compliance adequacy.
+The confidence fields say how well a source family fits this repo. They do not say anything about meeting a standard.
 
 ---
 
@@ -76,7 +76,7 @@ Confidence fields are about source-family fit for this repo, not compliance adeq
 | NUREG/CR-6263 | https://www.nrc.gov/about-nrc/regulatory/research/digital | Supporting | supporting-context | High-integrity software for nuclear power plants. | Medium | Public NRC research table context for v0; record direct NUREG page when verified. |
 | NUREG/CR-6734 | https://www.nrc.gov/reading-rm/doc-collections/nuregs/contract/cr6734/index | Core | verified-public | Software requirements guidelines. | Medium-high | Requirements/specification concepts. |
 
-**Important:** NRC software sources are the most direct public nuclear-to-software bridge. They should be prominent in source lineage, but templates must remain original and non-compliance-claiming.
+**Important:** NRC software sources are the clearest public link from nuclear work to software work. Give them a strong place in source lineage. But keep the templates original, and never claim they meet a standard.
 
 ---
 
@@ -128,7 +128,7 @@ Confidence fields are about source-family fit for this repo, not compliance adeq
 
 ## Tier 6 — Agentic-AI Operations Sources
 
-These sources inform the adversarial review, execution tracing, and agent profiling disciplines. They are supporting context only: the resulting workflows are original and tool-agnostic. No NIM, GPU, W&B, or NeMo dependency is required to use the resulting skills and templates.
+These sources shape how we attack-test agents, trace what they do, and profile them. They are supporting context only. The workflows we build from them are original and work with any tool. You do not need NIM, a GPU, W&B, or NeMo to use the skills and templates.
 
 | Source | Public link | Classification | Status | Role in Nuclear-grade | Confidence | Direct repo use |
 |---|---|---:|---|---|---:|---|
@@ -143,7 +143,7 @@ These sources inform the adversarial review, execution tracing, and agent profil
 
 ## Tier 7 — Project Structuring, Decomposition & Agentic-Folder Architecture Sources
 
-These sources inform work-breakdown decomposition and folder/file structuring. They are supporting context only: the resulting workflows are original, software-native, and tool-agnostic. The primary DOE Work Breakdown Structure Handbook is recorded in Tier 1. No DOE, DoD, NASA, PMI, GAO, NARA, NIST, INCOSE, or ISO compliance is claimed.
+These sources shape how we break work into pieces and how we lay out folders and files. They are supporting context only. The workflows we build from them are original, made for software, and work with any tool. The main DOE Work Breakdown Structure Handbook is listed in Tier 1. We claim no compliance with DOE, DoD, NASA, PMI, GAO, NARA, NIST, INCOSE, or ISO.
 
 | Source | Public link | Classification | Status | Role in Nuclear-grade | Confidence | Direct repo use |
 |---|---|---:|---|---|---:|---|
@@ -156,7 +156,7 @@ These sources inform work-breakdown decomposition and folder/file structuring. T
 | DoDAF (DoD Architecture Framework) | https://dodcio.defense.gov/library/dod-architecture-framework/ | Context-only | supporting-context | Functional vs product decomposition; architecture viewpoints. | Medium | High-level decomposition-perspective awareness only; no compliance claim. |
 | PMI Practice Standard for WBS; INCOSE SE Handbook; ISO 21500/21502/15489 | membership or paywalled; ISO on the do-not-cite-directly list | Excluded as direct input | excluded-direct | 100% rule, MECE, 8/80, work package, cohesion/coupling, records-management framing. | Medium | Transferable principles encoded as original workflow only; do not cite as template lineage or derive structure from these texts. |
 
-These sources shape decomposition and folder discipline only. They do not add governance, CI, supply-chain, or compliance machinery; that surface belongs to existing tiers and skills.
+These sources shape how we break work down and keep folders in order. Nothing more. They do not add governance, CI, supply-chain, or compliance machinery. That work belongs to the other tiers and skills.
 
 ---
 
@@ -186,4 +186,4 @@ NEI documents
 proprietary QA/procurement/utility manuals
 ```
 
-These may be mentioned only as high-level industry context when public and necessary. They must not shape template structure or language.
+You may mention these only as broad industry background, and only when they are public and you need to. They must not shape the structure or the wording of any template.

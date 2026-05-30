@@ -22,12 +22,12 @@
 
 Use status labels: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 
-| ID | Claim | Basis link | Control / design feature | Verification evidence | Ship posture | Status |
-|---|---|---|---|---|---|---|
-| C-001 | Public docs express the control stack without quotes or new attributions | `basis.md` | Existing-doc updates and boundary wording | `verification.md` | Boundary scan reviewed; no named attribution inserted | pass |
-| C-002 | Downstream-agent surfaces are harder to misuse | `basis.md` | Skill, command, template, and evaluation updates | `verification.md` | Contract tests pass | pass |
-| C-003 | The workflow preserves fast exploration and slow acceptance | `basis.md` | Quickstart, thresholds, lifecycle, ship/baseline edits | `verification.md` | Public docs and manual review support acceptance | pass |
-| C-004 | The review surprise becomes a durable control update | `basis.md` | `opex.md` plus affected artifact changes | `verification.md` | OPEX links to durable updates | pass |
+| ID | Claim | Basis link | Control / design feature | Support type | Verification evidence | Ship posture | Status |
+|---|---|---|---|---|---|---|---|
+| C-001 | Public docs express the control stack without quotes or new attributions | `basis.md` | Existing-doc updates and boundary wording | local proof | `verification.md` | Boundary scan reviewed; no named attribution inserted | pass |
+| C-002 | Downstream-agent surfaces are harder to misuse | `basis.md` | Skill, command, template, and evaluation updates | local proof / peer review | `verification.md` | Contract tests pass | pass |
+| C-003 | The workflow preserves fast exploration and slow acceptance | `basis.md` | Quickstart, thresholds, lifecycle, ship/baseline edits | peer review | `verification.md` | Public docs and manual review support acceptance | pass |
+| C-004 | The review surprise becomes a durable control update | `basis.md` | `opex.md` plus affected artifact changes | local proof | `verification.md` | OPEX links to durable updates | pass |
 
 ## Evidence chain
 

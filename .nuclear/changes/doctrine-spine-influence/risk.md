@@ -17,6 +17,7 @@
 - Owner: FlyFission
 - Date: 2026-05-30
 - Current lifecycle phase: Execute
+- Current work phase: audit
 - Summary: Convert owner-supplied operating influences into existing Nuclear-grade control surfaces without adding quotes, attribution, or a new doctrine page.
 
 ## Mission anchor
@@ -30,6 +31,7 @@
 ## Questioning-attitude summary
 
 - Decision question: How should these influences change Nuclear-grade's controls so users and downstream agents make better decisions without adding ceremony?
+- Evidence that would change the decision: tests fail, public wording inserts quotes or named attributions, agent-facing contracts break, reviewers find that fast exploration is slowed without acceptance value, or Copilot/human review finds unaddressed template drift.
 - Assumptions that changed the mode: Public workflow wording, skill triggers, command prompts, and templates are controlled items; a shallow doctrine update would be misleading; the prior review surprise warrants OPEX.
 - Facts still needing validation: Contract tests continue to pass after description and prompt changes; public boundary scans find no quote insertion or unsafe claims.
 - Stop or hold conditions: Stop if a change requires quote attribution, new public source lineage, validator behavior, dependency/model trust review, or a new public doctrine page.

@@ -72,6 +72,7 @@
 - Decision: defer until PR review and requested Copilot review pass
 - Decision maker: FlyFission
 - Rationale: Controlled public workflow artifacts require slow acceptance after fast candidate edits.
+- Decision question answered by evidence? yes
 - Conditions attached: PR/Copilot review and any remote CI checks.
 - Decision posture: conservative enough
 - Abort or rollback trigger: quote insertion, unsafe assurance wording, contract test failure, or actionable review that is not addressed.

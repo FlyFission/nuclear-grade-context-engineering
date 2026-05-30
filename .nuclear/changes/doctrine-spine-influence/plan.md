@@ -31,10 +31,12 @@
 
 ## Two-speed work plan
 
-| Phase | Allowed speed | Gate |
+| Work phase | Allowed actions | Acceptance gate |
 |---|---|---|
-| Explore / candidate | Fast edits to controlled docs and prompts | Keep scope tied to control stack and non-goals |
-| Audit / accept | Slow review of claims, tests, scans, packet, and baseline | Do not ship until evidence links match claims |
+| explore | Read current docs, skills, commands, templates, and tests | No file acceptance; use findings to shape the packet |
+| candidate | Edit controlled docs, skills, commands, templates, and packet records | Keep scope tied to control stack and non-goals |
+| audit | Run validation, tests, doctor, boundary scans, and PR review | Address actionable findings before acceptance |
+| accept | Commit, push, and request PR/Copilot review | Do not merge until CI and actionable review feedback are clean |
 
 ## Build sequence
 

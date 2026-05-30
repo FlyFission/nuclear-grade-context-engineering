@@ -50,6 +50,18 @@ Nuclear-grade needs a tighter control spine: question the decision first, make i
 | Existing test contracts should remain enough | assumption | Current plan excludes validator changes | Tests cannot detect an unsafe required behavior | FlyFission |
 | This is a public workflow-control update | fact | Risk screen | Scope expands to code, dependency, model, API, or release automation | FlyFission |
 
+## Grounding status
+
+Separate confidence from evidence before derived claims are accepted.
+
+| Statement | Fact / assumption / unknown / source claim / local proof / decision authority | Evidence or source | Decision impact |
+|---|---|---|---|
+| Existing docs are the chosen surface | fact | User selected existing-docs approach | Controls are added to existing artifacts, not a new page |
+| No quotes or named attributions should be added | fact | User direction and approved plan | Boundary scan and packet wording must preserve this |
+| Contract tests cover agent-facing structural regressions | local proof | `tests/test_skill_contracts.py` and `tests/test_command_contracts.py` | Passing tests support PR acceptance |
+| Semantic quality of doctrine wording is partly review-based | assumption | `ship.md` residual risk | PR/Copilot review and future OPEX remain acceptance controls |
+| PR review can block acceptance | decision authority | `ship.md` | Actionable review feedback must be addressed or explicitly dispositioned |
+
 ## Interfaces and trust boundaries
 
 - Internal interfaces affected: skill contracts, command card contracts, Standard template fields, public docs, adoption docs, evaluation prompts.

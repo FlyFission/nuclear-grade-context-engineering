@@ -24,12 +24,12 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`.
 
 ## Claim-to-evidence table
 
-| Claim / requirement ID | Verification type | Verification method | Acceptance criteria | Result status | Evidence link | Gap / follow-up |
-|---|---|---|---|---|---|---|
-| C-001 | deterministic test / peer review | public-doc tests, doctor, boundary scan | No quotes/attributions added; unsafe claims only in boundary-safe context | pass | commands below | Boundary scan reviewed expected boundary-language hits and no named attribution insertion |
-| C-002 | deterministic test / peer review | skill and command contract tests plus manual diff review | Agent-facing contracts pass and changed text is operational | pass | commands below | none |
-| C-003 | peer review | Quickstart, thresholds, lifecycle, ship/baseline review | Fast exploration and slow acceptance are both visible | pass | changed docs | none |
-| C-004 | deterministic test / peer review | packet validation and OPEX review | OPEX links to durable changes | pass | `opex.md` | none |
+| Claim / requirement ID | Support type | Verification type | Verification method | Acceptance criteria | Result status | Evidence link | Gap / follow-up |
+|---|---|---|---|---|---|---|---|
+| C-001 | local proof | deterministic test / peer review | public-doc tests, doctor, boundary scan | No quotes/attributions added; unsafe claims only in boundary-safe context | pass | commands below | Boundary scan reviewed expected boundary-language hits and no named attribution insertion |
+| C-002 | local proof / peer review | deterministic test / peer review | skill and command contract tests plus manual diff review | Agent-facing contracts pass and changed text is operational | pass | commands below | none |
+| C-003 | peer review | peer review | Quickstart, thresholds, lifecycle, ship/baseline review | Fast exploration and slow acceptance are both visible | pass | changed docs | none |
+| C-004 | local proof | deterministic test / peer review | packet validation and OPEX review | OPEX links to durable changes | pass | `opex.md` | none |
 
 ## Verification type guide
 

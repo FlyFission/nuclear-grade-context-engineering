@@ -2,13 +2,13 @@
 
 <!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
 
-**Purpose:** Record the accepted controlled configuration state after review.
+**Purpose:** Record the controlled state everyone agreed is correct after review.
 
-**Activation threshold:** Use when a Standard change ships, release posture changes, or trust-bearing docs, prompts, models, dependencies, skills, commands, templates, validators, or source-lineage records are accepted.
+**Activation threshold:** Use when a Standard change ships, the release stance changes, or trust-bearing docs, prompts, models, dependencies, skills, commands, templates, validators, or source-lineage records are accepted.
 
-**Minimum useful version:** Baseline identity, included controlled items, evidence links, accepted gaps, and re-baseline triggers.
+**Minimum useful version:** the baseline name and identity, the controlled items included, the evidence links, the accepted gaps, and the triggers for a new baseline.
 
-**Overhead trap:** A baseline is not a changelog. It records accepted controlled state and what would make it stale.
+**Overhead trap:** A baseline is not a changelog. It records the accepted controlled state and what would make it out of date.
 
 ---
 
@@ -44,11 +44,11 @@
 
 ## Exit criteria
 
-- Baseline identity is reproducible.
-- Included and excluded items are explicit.
+- The baseline can be rebuilt exactly from its identity.
+- The items included and the items left out are stated plainly.
 - Accepted gaps have owners or triggers.
-- Future revalidation/re-baseline triggers are named.
+- The triggers for a re-check or a new baseline are named.
 
 ## Source-lineage note
 
-Original Nuclear-grade baseline template inspired by public configuration-management, lifecycle, release-readiness, and operating-learning sources mapped in `docs/00-standards-foundation/source-map.md`. No compliance claim is made.
+Original Nuclear-grade baseline template inspired by public sources on configuration management, software lifecycle, release readiness, and learning from real operation, mapped in `docs/00-standards-foundation/source-map.md`. No compliance claim is made.

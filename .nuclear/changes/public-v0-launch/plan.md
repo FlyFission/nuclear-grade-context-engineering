@@ -1,6 +1,6 @@
 # Plan — Public v0 Launch
 
-**Purpose:** Bound launch-readiness implementation so public v0 ships cleanly without methodology expansion.
+**Purpose:** Bound the launch-readiness work so public v0 ships cleanly, without growing the method.
 
 ---
 

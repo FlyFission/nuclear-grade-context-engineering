@@ -1,8 +1,8 @@
 # Enterprise Rollout
 
-**Purpose:** Adopt Nuclear-grade without turning every change into a process exercise.
+**Purpose:** Adopt Nuclear-grade without turning every change into a paperwork drill.
 
-Adoption should preserve two speeds: teams move quickly while exploring reversible candidates, then slow down at acceptance gates for claims, controlled items, public wording, baselines, releases, and agent authority.
+Adoption should keep two speeds. Teams move fast while they try out reversible ideas. They slow down at the acceptance gates: claims, controlled items, public wording, the version everyone agreed is correct, releases, and agent authority.
 
 ## Pilot path
 
@@ -18,7 +18,7 @@ Adoption should preserve two speeds: teams move quickly while exploring reversib
 - Standard packets are required for user, data, dependency, permission, AI-authority, operational, or release consequence.
 - Stronger modes require human review and project-specific controls.
 - AI-assisted changes must record agent scope, evidence, and independent checks when material.
-- Teams should not add Standard records to reversible Quick work only to look rigorous; the control should change a decision.
+- Teams should not add Standard records to reversible Quick work just to look careful. The control should change a decision.
 
 ## PR adoption
 
@@ -39,12 +39,12 @@ python tools/ng.py doctor .
 python tools/ng.py validate .nuclear/changes/<slug>
 ```
 
-Project teams can add custom checks after the Quick and Standard path is stable.
+Project teams can add their own checks once the Quick and Standard path is stable.
 
 ## Exit criteria
 
-Adoption is working when reviewers can make faster, more consistent decisions from packet evidence rather than chat history or persuasion.
+Adoption is working when reviewers decide faster and more consistently from packet evidence, not from chat history or a sales pitch.
 
 ## Source-lineage note
 
-This rollout guide is an original adoption pattern influenced by public lifecycle, configuration, secure development, and software assurance sources mapped in `../00-standards-foundation/source-map.md`. It does not create formal assurance.
+This rollout guide is an original adoption pattern. Public sources on lifecycle, configuration, secure development, and software assurance shaped it. Those sources are mapped in `../00-standards-foundation/source-map.md`. It does not create formal assurance.

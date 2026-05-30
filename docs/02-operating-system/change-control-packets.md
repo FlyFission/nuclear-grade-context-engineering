@@ -1,22 +1,22 @@
 # Change Control Packets
 
-**Purpose:** Define the core Git-native object of Nuclear-grade:
+**Purpose:** This file defines the core Git-based object of Nuclear-grade:
 
 ```text
 .nuclear/changes/<slug>/
 ```
 
-A packet is the focused evidence bundle for one change. It lets humans and agents work from design basis, configuration discipline, traceability, verification, and release readiness without reading the whole repo or every source.
+A packet is the focused bundle of evidence for one change. It lets people and agents work from the design basis, the controlled versions, the trace from claim to proof, the verification, and the release readiness. They do this without reading the whole repo or every source.
 
 ---
 
 ## Packet principles
 
-1. **One change, one packet.** Keep intent, basis, plan, evidence, and release decision together.
-2. **Packets scale by mode.** Quick packets are tiny; Nuclear packets are activated only by consequence.
-3. **Links beat duplication.** The packet points to source files, tests, PRs, issues, docs, dashboards, and releases.
-4. **Evidence status is explicit.** `pass`, `fail`, `gap`, `deferred`, and `not applicable` are better than silent assumptions.
-5. **AI assistance is scoped.** If AI changed code/docs/configs or exercised tools, record scope, authority, and independent checks.
+1. **One change, one packet.** Keep the intent, the basis, the plan, the evidence, and the release decision together.
+2. **Packets scale by mode.** Quick packets are tiny. Nuclear packets turn on only when the stakes call for them.
+3. **Links beat copies.** The packet points to source files, tests, pull requests (PRs), issues, docs, dashboards, and releases.
+4. **Say the evidence status out loud.** `pass`, `fail`, `gap`, `deferred`, and `not applicable` beat silent assumptions.
+5. **Scope the AI's part.** If AI changed code, docs, or configs, or used tools, record what it touched, what it was allowed to do, and the independent checks.
 
 ---
 
@@ -28,16 +28,16 @@ A packet is the focused evidence bundle for one change. It lets humans and agent
   proof.md
 ```
 
-Use for low-consequence, reversible, easy-to-verify changes with no new trust boundary.
+Use this for low-stakes changes that you can undo and check easily, with no new trust boundary.
 
 ### Minimum useful version
 
 - `risk.md`: scope, risk, why Quick is enough, proof to run.
-- `proof.md`: command/check/eval, result, evidence link, reviewer note.
+- `proof.md`: command, check, or eval, plus the result, an evidence link, and a reviewer note.
 
 ### Exit criteria
 
-The proof matches the risk; no activated Standard trigger is hidden.
+The proof matches the risk. No hidden trigger forces this up to Standard.
 
 ---
 
@@ -53,20 +53,20 @@ The proof matches the risk; no activated Standard trigger is hidden.
   ship.md
 ```
 
-Use for meaningful feature/product/configuration changes, user-visible behavior, important dependencies, data handling, permissions, model/prompt/tool behavior, or durable architecture.
+Use this for changes that matter: real feature, product, or setup changes, behavior users can see, important dependencies, data handling, permissions, model, prompt, or tool behavior, or long-lived architecture.
 
 ### Minimum useful version
 
-- `risk.md`: mode, consequence, reversibility, exposure, uncertainty, activated artifacts.
-- `basis.md`: mission, protected outcomes, unacceptable outcomes, assumptions, constraints, evidence required.
-- `plan.md`: implementation steps, affected files/assets, dependency decisions, rollback path.
-- `trace.md`: important claim → design feature → implementation/evidence link.
-- `verification.md`: tests/evals/reviews, acceptance criteria, results, gaps.
-- `ship.md`: baseline, residual risk, release decision, rollback, monitoring, handoff.
+- `risk.md`: mode, how bad failure would be (consequence), whether you can undo it (reversibility), exposure, uncertainty, and which records are turned on.
+- `basis.md`: mission, outcomes to protect, outcomes you cannot accept, assumptions, limits, evidence required.
+- `plan.md`: build steps, affected files and assets, dependency decisions, rollback path.
+- `trace.md`: important claim, then the design feature, then the link to the build or the evidence.
+- `verification.md`: tests, evals, and reviews, plus acceptance criteria, results, and gaps.
+- `ship.md`: baseline, leftover risk, release decision, rollback, monitoring, handoff.
 
 ### Exit criteria
 
-A reviewer can navigate from change intent to evidence and release decision in under a few minutes.
+A reviewer can move from the change's intent to its evidence and release decision in a few minutes.
 
 ---
 
@@ -90,31 +90,31 @@ A reviewer can navigate from change intent to evidence and release decision in u
   opex.md
 ```
 
-Do not create this whole folder by default. Activate only the records required by consequence, uncertainty, external trust, irreversible impact, sensitive data, agent authority, or enterprise diligence.
+Do not create this whole folder by default. Turn on only the records the work needs: high stakes, high uncertainty, outside trust, damage you cannot undo, sensitive data, agent authority, or the careful checks a big organization expects.
 
 ---
 
 ## Activation threshold
 
-Create a packet for any non-trivial work where future review needs more than a commit message. Escalate to Standard/Nuclear when the change affects:
+Create a packet for any work that matters, where a future review needs more than a commit message. Move up to Standard or Nuclear when the change affects:
 
 - requirements, design basis, architecture, interfaces, or operating assumptions;
-- AI tool permissions, prompts, models, context packs, evals, or autonomous authority;
-- dependency trust, build provenance, SBOM, supply chain, or vendor/API reliance;
-- security, privacy, availability, data integrity, or release posture;
-- customer-visible behavior or operational handoff.
+- AI tool permissions, prompts, models, context packs, evals, or self-directed authority;
+- dependency trust, where a build came from (build provenance), the list of parts in your software (SBOM, software bill of materials), the supply chain, or reliance on a vendor or API;
+- security, privacy, uptime (availability), data integrity, or release posture;
+- behavior customers can see, or a handoff in real use.
 
 ---
 
 ## Overhead trap
 
-A packet is not a dumping ground. If an artifact is activated, it must answer a decision question. If it only repeats text from another file, replace it with a link and a one-line status.
+A packet is not a junk drawer. If a record is turned on, it must answer a decision question. If it only repeats text from another file, replace it with a link and a one-line status.
 
 ---
 
 ## Required links
 
-Every packet should maintain a top-level summary or equivalent fields in `risk.md`:
+Every packet should keep a top-level summary, or the same fields, in `risk.md`:
 
 ```text
 change slug
@@ -128,10 +128,10 @@ unresolved gaps
 next action
 ```
 
-Source-lineage links go to `../00-standards-foundation/source-map.md` and `../01-field-guide/source-to-concept-crosswalk.md`, not to paywalled/proprietary sources.
+Source-lineage links go to `../00-standards-foundation/source-map.md` and `../01-field-guide/source-to-concept-crosswalk.md`, not to paid or private sources.
 
 ---
 
 ## Source-lineage note
 
-This packet model is an original Git-native translation of public configuration management, lifecycle, software assurance, secure development, and evidence-record concepts. It is not a substitute for project-specific regulated QA or certification work and makes no compliance claim.
+This packet model is an original Git-based translation of public ideas: keeping the approved version of everything under control, the lifecycle, software assurance, secure development, and evidence records. It does not replace the regulated quality work or certification a specific project may need, and it makes no compliance claim.

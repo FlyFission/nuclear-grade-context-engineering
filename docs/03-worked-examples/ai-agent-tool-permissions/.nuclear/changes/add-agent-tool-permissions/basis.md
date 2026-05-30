@@ -1,6 +1,6 @@
 # Basis — Add Agent Tool Permissions
 
-**Purpose:** State what must remain true for the example permission boundary to be safe, reliable, useful, and reviewable.
+**Purpose:** State what must stay true for the example's permission limit to be safe, reliable, useful, and easy to review.
 
 **Change slug:** `add-agent-tool-permissions`
 **Related risk record:** `risk.md`
@@ -15,65 +15,65 @@
 - **Related risk record:** `risk.md`
 - **Owner:** Nuclear-grade example maintainer
 - **Date:** 2026-05-17
-- **Decision this basis supports:** Whether the Standard-mode worked example can demonstrate one complete, honest claim-to-evidence chain for AI agent file-write authority.
+- **Decision this basis supports:** Whether the Standard-mode worked example can show one complete, honest claim-to-evidence chain for letting an AI agent write files.
 
 ## Mission / need
 
-AI agents increasingly receive tool authority: file writes, API calls, shell commands, database changes, and workflow approvals. Nuclear-grade needs a compact worked example that shows how to convert one authority-changing feature into explicit basis, controls, verification, and release readiness without pretending to solve every security problem.
+AI agents are given more and more power over tools: writing files, calling APIs, running shell commands, changing databases, and approving steps in a workflow. Nuclear-grade needs a small worked example. It should show how to turn one power-changing feature into a clear basis, controls, proof, and a release check, without pretending to solve every security problem.
 
-The v0 mission is deliberately narrow: prove that an agent file-write helper writes only inside an approved workspace and makes denied writes visible.
+The v0 mission is kept narrow on purpose: prove that an agent's file-write helper writes only inside an approved workspace, and makes denied writes visible.
 
 ## Protected outcomes
 
 | Protected outcome | Why it matters | Evidence needed |
 |---|---|---|
-| File writes remain inside the configured workspace root. | Prevents destructive or unauthorized writes outside approved scope. | Tests for allowed relative write and denied traversal/absolute/symlink escape. |
-| Denied writes leave an inspectable audit event. | Silent denials hide bypass attempts and make operations weaker. | Test assertions against `audit_events` for denied writes. |
-| The example does not imply broad sandbox/security guarantees. | Avoids teaching false confidence. | README, verification, and ship records explicitly scope proof to C-001. |
-| Remaining claims are labeled as planned/gap/deferred. | Prevents fictional matrices from looking complete. | `trace.md`, `verification.md`, and `ship.md` status labels. |
+| File writes stay inside the set workspace root. | Stops harmful or unallowed writes outside the approved area. | Tests for an allowed relative write and a denied `../`, absolute, or symlink escape. |
+| Denied writes leave an audit event you can read. | Silent denials hide bypass attempts and weaken operations. | Test checks against `audit_events` for denied writes. |
+| The example does not imply broad sandbox or security guarantees. | Keeps people from trusting it too much. | README, verification, and ship records clearly limit proof to C-001. |
+| The other claims are labeled planned, gap, or deferred. | Stops a made-up table from looking complete. | Status labels in `trace.md`, `verification.md`, and `ship.md`. |
 
 ## Unacceptable outcomes
 
 | Unacceptable outcome | Consequence | Prevent / detect / mitigate |
 |---|---|---|
-| A `../` path writes outside the workspace. | Agent can corrupt or disclose files outside intended scope. | Canonical resolution plus workspace containment check; traversal test. |
-| An absolute path writes outside the workspace. | Caller bypasses relative-path policy. | Absolute paths resolved and denied when outside root; absolute-path test. |
-| A symlink inside the workspace redirects writes outside the workspace. | Workspace allowlist is bypassed through filesystem indirection. | Resolve final path and deny outside root; symlink escape test. |
-| A denied write disappears without evidence. | Operators cannot detect misuse, prompts gone wrong, or attempted bypasses. | Append structured `write_denied` audit event; test assertions. |
-| The example is treated as a production sandbox. | Users may overtrust a teaching artifact. | Source-lineage and ship notes state educational scope and gaps. |
+| A `../` path writes outside the workspace. | The agent could harm or leak files outside the allowed area. | Resolve the real path, then check it stays in the workspace; `../` test. |
+| An absolute path writes outside the workspace. | The caller gets around the relative-path rule. | Resolve absolute paths and deny them when they fall outside the root; absolute-path test. |
+| A symlink inside the workspace points writes outside it. | The workspace allowlist is dodged through a filesystem link. | Resolve the final path and deny it if it lands outside the root; symlink escape test. |
+| A denied write vanishes with no record. | Operators cannot spot misuse, bad prompts, or bypass attempts. | Add a structured `write_denied` audit event; test checks. |
+| The example is treated as a production sandbox. | Users may trust a teaching sample too much. | Source-lineage and ship notes state the teaching scope and the gaps. |
 
 ## Assumptions and constraints
 
 | Assumption / constraint | Basis or source | Invalidation trigger | Owner |
 |---|---|---|---|
-| The workspace root is the only approved write target for C-001. | Worked-example mission and `risk.md`. | Need to write shared caches, temp dirs, credentials, or production paths. | Maintainer |
-| Standard library path resolution is sufficient for this educational example. | Minimal reference implementation; no external dependency. | Porting to non-POSIX semantics, remote FS, containers, ACL-heavy environments, or production sandboxing. | Maintainer |
-| Audit events can be in-memory for v0 evidence. | Example scope; no production runtime. | Persistent service, multi-process workers, incident review, or external operations. | Maintainer |
-| No formal compliance/certification claim is made. | Repo boundary docs and disclaimer. | Any public claim that this satisfies a regulator, standard, QA program, or certification. | Maintainer |
+| The workspace root is the only approved place to write for C-001. | The worked-example mission and `risk.md`. | A need to write shared caches, temp folders, credentials, or production paths. | Maintainer |
+| Standard-library path resolution is enough for this teaching example. | A minimal sample build with no outside dependency. | Moving to non-POSIX rules, a remote filesystem, containers, ACL-heavy setups, or production sandboxing. | Maintainer |
+| Audit events can live in memory for v0 evidence. | The example scope; no production runtime. | A lasting service, multi-process workers, incident review, or outside operations. | Maintainer |
+| No formal compliance or certification claim is made. | Repo boundary docs and the disclaimer. | Any public claim that this meets a regulator, a standard, a QA program, or certification. | Maintainer |
 
 ## Interfaces and trust boundaries
 
-- **Internal interfaces affected:** `WorkspaceGuard.write_text(requested_path, content)` reference API.
-- **External services/APIs affected:** None for C-001.
-- **Data classes affected:** Example text file content only; no sensitive data in v0.
-- **Human approval boundaries:** Not implemented for C-001; high-impact writes would activate C-003 in a later packet.
-- **AI/model/tool authority boundaries:** Agent/tool caller may request file writes; guard enforces workspace containment before filesystem mutation.
+- **Internal interfaces affected:** the `WorkspaceGuard.write_text(requested_path, content)` sample API.
+- **External services/APIs affected:** none for C-001.
+- **Data classes affected:** example text file content only; no sensitive data in v0.
+- **Human approval boundaries:** not built for C-001. High-impact writes would turn on C-003 in a later packet.
+- **AI/model/tool authority boundaries:** the agent or tool caller may ask to write files; the guard keeps writes inside the workspace before it touches the filesystem.
 
 ## Dependency / model / supplier intended use
 
 | Dependency/model/service | Intended use | Consequence if wrong/unavailable/compromised | Evidence or compensating control | Revalidation trigger |
 |---|---|---|---|---|
-| Python `pathlib` | Canonical path composition/resolution in teaching implementation. | Incorrect path handling could weaken C-001. | Negative tests for traversal, absolute path, symlink escape. | Python/platform path semantics change, production hardening, Windows-specific release. |
-| `pytest` | Execute example evidence tests. | Test evidence unavailable or misleading. | Test command and output captured in `verification.md`. | Test framework/runtime changes. |
+| Python `pathlib` | Build and resolve the real path in the teaching code. | Wrong path handling could weaken C-001. | Tests that bad paths fail: `../`, absolute path, symlink escape. | Python or platform path rules change, production hardening, a Windows-only release. |
+| `pytest` | Run the example's evidence tests. | The test evidence is missing or misleading. | Test command and output saved in `verification.md`. | The test framework or runtime changes. |
 
 ## Derived requirements or claims
 
 | ID | Requirement / claim | Basis | Design feature or control | Evidence planned |
 |---|---|---|---|---|
-| C-001 | Agent writes only under the configured workspace root. | Protect filesystem integrity and scope AI tool authority. | Resolve requested path, require it to remain under workspace root, deny otherwise, log denial. | `pytest` tests: allowed write, traversal denial, absolute denial, symlink denial. |
-| C-004a | Denied C-001 writes emit visible audit events. | Denied actions are operational signals. | In-memory structured audit event with event, requested path, resolved path, root, and reason. | Test assertions on `audit_events`. |
-| C-002 | External API calls require approved tool IDs and scoped credentials. | Prevent arbitrary network side effects and credential misuse. | Future tool registry and credential binding. | Deferred/gap for v0. |
-| C-003 | Human approval is required for high-impact actions. | Escalate consequence-changing authority to human review. | Future approval policy and approval record. | Deferred/gap for v0. |
+| C-001 | The agent writes only under the set workspace root. | Protect the filesystem and limit the agent's power over tools. | Resolve the requested path, require it to stay under the workspace root, deny it otherwise, log the denial. | `pytest` tests: allowed write, denied `../`, denied absolute path, denied symlink. |
+| C-004a | Denied C-001 writes produce visible audit events. | Denied actions are operational signals. | An in-memory structured audit event with the event, requested path, resolved path, root, and reason. | Test checks on `audit_events`. |
+| C-002 | External API calls need approved tool IDs and scoped credentials. | Stop random network side effects and credential misuse. | A future tool list and credential binding. | Deferred or gap for v0. |
+| C-003 | Human approval is required for high-impact actions. | Send consequence-changing power up to a person for review. | A future approval policy and approval record. | Deferred or gap for v0. |
 
 ## Required links
 
@@ -88,11 +88,11 @@ The v0 mission is deliberately narrow: prove that an agent file-write helper wri
 
 ## Exit criteria
 
-- Builder and reviewer can answer “what must remain true?”
-- Protected and unacceptable outcomes are explicit.
-- Important assumptions have invalidation triggers.
-- Evidence needs flow into `verification.md`.
+- The builder and reviewer can answer "what must stay true?"
+- The protected outcomes and the outcomes to prevent are stated plainly.
+- Important assumptions each have a trigger that would prove them wrong.
+- The evidence needs flow into `verification.md`.
 
 ## Source-lineage note
 
-Original Nuclear-grade worked-example basis inspired by public design-basis, safety-in-design, design-description, hazard/failure-analysis, AI-risk, and supply-chain-risk concepts mapped in `docs/00-standards-foundation/source-map.md` and `docs/01-field-guide/source-to-concept-crosswalk.md`. No compliance claim is made.
+Original Nuclear-grade worked-example basis inspired by public ideas on design basis, safety built into design, design description, hazard and failure analysis, AI risk, and supply-chain risk, mapped in `docs/00-standards-foundation/source-map.md` and `docs/01-field-guide/source-to-concept-crosswalk.md`. No compliance claim is made.

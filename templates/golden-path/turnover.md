@@ -2,11 +2,11 @@
 
 <!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
 
-**Purpose:** Transfer unfinished work, authority, evidence, and stop conditions to the next human or agent.
+**Purpose:** Hand off the unfinished work, the authority, the evidence, and the stop conditions to the next person or agent.
 
-**Activation threshold:** Use when a subagent, reviewer, verifier, releaser, support owner, or resumed thread must continue work from a prior state.
+**Activation threshold:** Use when a subagent, reviewer, verifier, releaser, support owner, or resumed thread must pick up the work from where it stands.
 
-**Minimum useful version:** Current state, last completed action, changed conditions, remaining work, authority, stop conditions, and incoming-owner confirmation.
+**Minimum useful version:** the current state, the last completed action, the changed conditions, the work left, the authority, the stop conditions, and the incoming owner's confirmation.
 
 ---
 
@@ -63,10 +63,10 @@
 
 ## Exit criteria
 
-- The next owner can continue without rereading the full chat history.
-- Work completed, work remaining, changed conditions, authority, and stop conditions are explicit.
-- The incoming owner confirms scope and constraints before acting when consequence warrants it.
+- The next owner can keep going without rereading the whole chat history.
+- The work done, the work left, the changed conditions, the authority, and the stop conditions are stated plainly.
+- When the stakes call for it, the incoming owner confirms the scope and limits before acting.
 
 ## Source-lineage note
 
-Original Nuclear-grade template inspired by DOE-HDBK-1028-2009 turnover, effective communication, place-keeping, flagging, task briefing, and review practices as public source lineage. No compliance claim is made.
+Original Nuclear-grade template inspired by the turnover, clear communication, place-keeping, flagging, task-briefing, and review habits in DOE-HDBK-1028-2009, used as public source lineage. No compliance claim is made.

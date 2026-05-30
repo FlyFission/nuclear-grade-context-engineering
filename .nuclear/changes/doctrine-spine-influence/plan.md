@@ -1,6 +1,6 @@
 # Standard Plan Record
 
-**Purpose:** Bound the doctrine-spine update so implementation, review, verification, and rollback remain linked.
+**Purpose:** Bound the doctrine-spine update so the build, review, verification, and rollback stay linked.
 
 **Activation threshold:** Use because this change touches multiple controlled artifact families and public agent-facing behavior.
 

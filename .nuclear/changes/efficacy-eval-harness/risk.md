@@ -11,7 +11,7 @@
 
 ## Mission anchor
 
-State what this change is for, so a long session can be tested against it. See `controlling-mission-drift`.
+State what this change is for, so a long session can be tested against it. See `staying-on-mission`.
 
 - Objective: Convert one part of the existing qualitative efficacy comparison into a runnable, falsifiable check, without overclaiming that it proves engineering quality, safety, or compliance.
 - Success criteria: `ng eval .` scores the three real trial-record artifacts, exits non-zero if a worked example drops a required signal, ships with a boundary doc that states what it does and does not measure, and is covered by tests including a teeth test that proves it can fail.

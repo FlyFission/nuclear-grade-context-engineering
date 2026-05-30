@@ -6,7 +6,7 @@
   "signals": [
     {
       "name": "Separates source inspiration from satisfied requirements",
-      "all": ["public inspiration and concept lineage", "not satisfied requirements"]
+      "all": ["public inspiration and idea lineage", "not as requirements that were met"]
     },
     {
       "name": "Separates license permission from assurance",
@@ -14,7 +14,7 @@
     },
     {
       "name": "Runs a self-check with a stop condition before the public claim",
-      "all": ["self-check:", "stop condition are named"]
+      "all": ["self-check:", "stop condition before"]
     },
     {
       "name": "Screens cross-document impact of the wording change",

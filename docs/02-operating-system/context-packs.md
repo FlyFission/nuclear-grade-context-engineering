@@ -1,20 +1,20 @@
 # Context Packs
 
-**Purpose:** Define the focused context bundles that let humans and AI agents work from the right evidence without rereading the whole repo or every source document.
+**Purpose:** This file defines the focused context bundles that let people and AI agents work from the right evidence, without rereading the whole repo or every source document.
 
-**Status:** Design spec. Context packs are operating aids, not compliance records.
+**Status:** Design spec. Context packs are aids for getting work done, not compliance records.
 
 ---
 
 ## 1. Core idea
 
-A context pack is a small, task-specific bundle:
+A context pack is a small bundle built for one task:
 
 ```text
 role + mode + packet state + affected files + required evidence + approval gates + HPI controls + relevant source lineage
 ```
 
-It exists because Nuclear-grade is a control system for AI/LLM horsepower. Powerful agents should not receive unlimited context and ambiguous authority. They should receive a focused packet, clear constraints, and evidence obligations.
+It exists because Nuclear-grade is a way to control the raw power of an AI or LLM. Powerful agents should not get endless context and vague authority. They should get a focused packet, clear limits, and a duty to prove their work.
 
 ---
 
@@ -22,15 +22,15 @@ It exists because Nuclear-grade is a control system for AI/LLM horsepower. Power
 
 Create or refresh a context pack when:
 
-- an AI agent will modify code, docs, tests, prompts, dependencies, infrastructure, release records, or examples;
-- a human reviewer needs a one-screen summary of a Standard+ packet;
-- work changes mode, scope, risk, dependency trust, or release readiness;
-- an incident/handoff needs to prevent repeated unsafe retries;
-- a token-heavy research thread must be distilled into an operational decision record.
+- an AI agent will change code, docs, tests, prompts, dependencies, infrastructure, release records, or examples;
+- a human reviewer needs a one-screen summary of a Standard or larger packet;
+- the work changes mode, scope, risk, dependency trust, or release readiness;
+- an incident or handoff needs to stop the same unsafe retry from happening again;
+- a long, token-heavy research thread has to be boiled down into a single decision record.
 
-**Minimum useful version:** a short Markdown section or file with mode, objective, affected files, open risks, acceptance evidence, approval gates, and forbidden actions.
+**Minimum useful version:** a short Markdown section or file with the mode, the objective, the affected files, the open risks, the acceptance evidence, the approval gates, and the forbidden actions.
 
-**Overhead trap:** pasting the entire source map, all brainstorming docs, every template, and every standard excerpt into every agent prompt.
+**Overhead trap:** pasting the whole source map, all the brainstorming docs, every template, and every standard excerpt into every agent prompt.
 
 ---
 
@@ -86,19 +86,19 @@ Every AI-facing context pack should state:
 - what files the agent may read;
 - what files the agent may edit;
 - what commands it may run;
-- whether network/source lookup is allowed;
-- what approvals are required before side effects;
+- whether it may use the network or look things up online;
+- what approvals it needs before it changes anything;
 - what claims it must not make;
-- what evidence it must produce before declaring completion;
-- whether a self-check or turnover record is required before continuing.
+- what evidence it must produce before it says it is done;
+- whether a self-check or a turnover record is required before it goes on.
 
-For tool-bearing agents, include a denial rule:
+For agents that hold tools, include a stop rule:
 
-> If the requested action exceeds the context pack’s authority, stop and record the needed approval or escalation path instead of improvising.
+> If the requested action goes past the context pack's authority, stop. Record the approval you need, or the path to escalate, instead of making something up.
 
 For handoffs, include a closed-loop rule:
 
-> The incoming owner restates objective, authority, required evidence, and stop criteria before acting when consequence warrants turnover.
+> When the stakes call for a turnover, the incoming owner restates the objective, the authority, the required evidence, and the stop criteria before acting.
 
 ---
 
@@ -128,12 +128,12 @@ A context pack is ready when a competent human or AI agent can answer:
 7. What changed since the prior owner or context?
 8. What critical action needs self-checking or turnover?
 
-A context pack should be archived or refreshed when it becomes stale, when mode changes, or when the packet’s risk/evidence state changes.
+Archive or refresh a context pack when it goes stale, when the mode changes, or when the packet's risk or evidence state changes.
 
 ---
 
 ## 8. Source-lineage note
 
-This context-pack discipline is an original software operating pattern inspired by public configuration-management, software assurance, secure development, systems engineering, and lessons-learned sources mapped in `source-map.md` and `source-to-concept-crosswalk.md`.
+This context-pack practice is an original way of working. It draws on public sources about keeping the approved version of everything under control, software assurance, secure development, systems engineering, and lessons learned, mapped in `source-map.md` and `source-to-concept-crosswalk.md`.
 
-It is not a formal compliance record and does not claim implementation of any external standard or framework.
+It is not a formal compliance record and does not claim to implement any outside standard or framework.

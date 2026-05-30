@@ -10,7 +10,7 @@
     },
     {
       "name": "Identifies money-side controlled items",
-      "any": ["idempotency store", "ledger/credit side effects"]
+      "any": ["store of already-seen events", "ledger and credit side effects"]
     },
     {
       "name": "Bounds agent payment authority and credentials",
@@ -22,7 +22,7 @@
     },
     {
       "name": "Conditions release on rollback, monitoring, and a risk owner",
-      "all": ["rollback path", "monitoring query", "residual risk owner"]
+      "all": ["rollback path", "monitoring query", "owner for the leftover risk"]
     }
   ]
 }

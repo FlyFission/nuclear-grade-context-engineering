@@ -1,10 +1,10 @@
 # Configuration Management
 
-**Purpose:** Define the Nuclear-grade configuration-management spine for AI-assisted software work.
+**Purpose:** This file defines the Nuclear-grade backbone for keeping the approved version of everything under control (configuration management) in AI-assisted software work.
 
-**Thesis:** AI agents change more than code. They change configuration: prompts, models, tool permissions, dependencies, evals, docs, release records, and operational assumptions. Nuclear-grade starts with questioning attitude, then keeps controlled items consistent with their specification/design basis, verification evidence, release decision, baseline, and operating lessons.
+**Thesis:** AI agents change more than code. They change the setup around it: prompts, models, tool permissions, dependencies, evals, docs, release records, and assumptions about how things run. Nuclear-grade starts with a questioning attitude. Then it keeps each controlled item in line with its spec or design basis, its verification evidence, its release decision, its baseline, and its operating lessons.
 
-This is an educational operating model, not a regulated quality program or compliance claim.
+This is a teaching model for how to work, not a regulated quality program or a compliance claim.
 
 ---
 
@@ -32,49 +32,49 @@ Question -> Discover -> Specify -> Plan -> Execute -> Verify -> Review -> Decide
 
 ## Controlled items
 
-Treat an item as controlled when a future reviewer needs to know its approved state or when drift could weaken trust.
+Treat an item as controlled when a future reviewer needs to know its approved state, or when drift could weaken trust.
 
 Common controlled items:
 
 - code, tests, docs, templates, skills, command prompts;
-- system prompts, model selections, evals, context packs, tool registries;
-- dependencies, build services, external APIs, data sources, credentials policy;
-- release artifacts, changelog entries, runbooks, dashboards, monitoring thresholds;
-- source-map rows, public claims, license and assurance boundary wording.
+- system prompts, chosen models, evals, context packs, the list of tools an agent can use;
+- dependencies, build services, outside APIs, data sources, the rules for credentials;
+- release files, changelog entries, runbooks, dashboards, monitoring limits;
+- source-map rows, public claims, and the wording for the license and the limits of what you claim.
 
-Use `templates/cm/controlled-items.md` when the affected list cannot fit cleanly in `risk.md` or `plan.md`.
+Use `templates/cm/controlled-items.md` when the affected list does not fit cleanly in `risk.md` or `plan.md`.
 
 ---
 
 ## Baselines
 
-A baseline is an accepted configuration state at a decision point after review and decision. It is not just a Git commit. A useful baseline records:
+A baseline is the version everyone agreed is correct: an accepted state at a decision point, after review and a decision. It is not just a Git commit. A useful baseline records:
 
-- commit, PR, release, or artifact identity;
-- controlled items included;
-- specification/design-basis and verification links;
-- known gaps and accepted residual risks;
-- revalidation and re-baseline triggers.
+- the commit, PR, release, or artifact it points to;
+- which controlled items are included;
+- links to the spec or design basis and to the verification;
+- known gaps and the leftover risks you accepted;
+- the triggers that force a re-check or a new baseline.
 
-Use `templates/cm/baseline.md` when a change updates public docs, skills, prompts, tools, dependencies, release posture, or other trust-bearing state.
+Use `templates/cm/baseline.md` when a change updates public docs, skills, prompts, tools, dependencies, release posture, or any other state people trust.
 
 ---
 
 ## Change impact
 
-Every controlled change should ask what downstream state may become stale:
+Every controlled change should ask what else might go out of date as a result:
 
 - docs and examples;
-- tests, evals, validators, CI;
+- tests, evals, checkers, CI;
 - skills and command prompts;
-- source lineage and boundary language;
+- the wording about where ideas came from and the wording that marks your limits;
 - rollout, support, security, and release records.
 
-Use `templates/cm/change-impact.md` when more than one artifact family can be affected.
+Use `templates/cm/change-impact.md` when more than one group of files can be affected.
 
 ## HPI control stack
 
-For material agent work, ask which controls exist:
+For agent work that matters, ask which controls are in place:
 
 | Control family | Examples |
 |---|---|
@@ -83,23 +83,23 @@ For material agent work, ask which controls exist:
 | review / oversight | peer review, independent verification, release review |
 | learning | OPEX record, near-miss issue, updated baseline, updated test/template/skill |
 
-Do not blame a model or human as the sole cause of drift. Ask which control was missing, weak, stale, or bypassed.
+Do not blame a model or a person as the only cause of drift. Ask which control was missing, weak, stale, or skipped.
 
 ---
 
 ## Variance, drift, and OPEX
 
-Variance is known deviation from the approved baseline. Drift is uncontrolled or unnoticed divergence. OPEX is operating experience that should change future work.
+Variance is a known, recorded gap from the approved baseline. Drift is a gap that nobody controlled or noticed. OPEX is lessons from real operation that should change future work.
 
 Record them when:
 
-- runtime behavior contradicts the baseline;
-- users misunderstand public claims;
-- an agent exceeds or nearly exceeds authority;
+- the way the software runs contradicts the baseline;
+- users misread public claims;
+- an agent goes past, or nearly goes past, what it is allowed to do;
 - dependencies, models, APIs, or source pages change;
-- verification evidence becomes stale.
+- verification evidence goes stale.
 
-An OPEX lesson is closed only when it updates a durable control or records why no durable update is warranted.
+An OPEX lesson is closed only when it updates a lasting control, or records why no lasting update is needed.
 
 ---
 
@@ -117,4 +117,4 @@ Configuration management is working when a reviewer can answer:
 
 ## Source-lineage note
 
-This configuration-management model is an original software-native workflow inspired by public configuration-management, software assurance, secure-development, systems-engineering, HPI questioning-attitude, and operating-learning sources mapped in `../00-standards-foundation/source-map.md`. It does not claim compliance with those sources.
+This model for keeping the approved version of everything under control is an original software workflow. It draws on public sources about configuration management, software assurance, secure development, systems engineering, the HPI questioning attitude, and learning from operation, mapped in `../00-standards-foundation/source-map.md`. It does not claim compliance with those sources.

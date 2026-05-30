@@ -1,6 +1,6 @@
 # Ship — Public v0 Launch
 
-**Purpose:** Make the public visibility decision explicit.
+**Purpose:** State the decision to go public plainly.
 
 ---
 

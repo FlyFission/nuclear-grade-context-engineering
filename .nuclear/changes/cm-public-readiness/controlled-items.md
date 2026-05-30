@@ -1,6 +1,6 @@
 # Controlled Items - CM Public Readiness
 
-**Purpose:** Name the controlled configuration items affected by the public-readiness pass.
+**Purpose:** Name the controlled items the public-readiness pass affects.
 
 ## Change context
 

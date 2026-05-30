@@ -1,42 +1,42 @@
 # Nuclear-grade Roadmap
 
-Nuclear-grade Public v0 is a usable workflow product, not a finished platform.
+Nuclear-grade Public v0 is a workflow you can use today, not a finished platform.
 
 ## Public v0
 
-- Action-first onboarding and WBS.
+- Get-started-fast onboarding and a work breakdown (WBS).
 - Quick and Standard templates.
-- Activated configuration-management templates.
-- Quick and Standard validator.
-- Local `tools/ng.py` CLI.
-- Skills and portable command prompts.
-- One validated worked example.
-- Public source foundation and boundary docs.
-- HPI overlays for AI-agent questioning, task briefing, self-checking, turnover, verification choice, conservative decisions, trust checks, and OPEX learning.
+- Templates for keeping the approved version under control (CM).
+- A checker for Quick and Standard records.
+- The local `tools/ng.py` command-line tool.
+- Skills and paste-ready command prompts.
+- One worked example, checked by tests.
+- A public source foundation and boundary docs.
+- HPI add-ons (small habits from Human Performance Improvement) for AI agents: questioning, briefing the work, self-checking, handing off, choosing how to verify, deciding on the careful side, trust checks, and learning from real operation (OPEX).
 
 ## v0.1
 
-- More complete context-pack examples.
-- Better controlled-item and baseline examples.
-- Additional packet validation for trace completeness.
-- Better link checks across public docs.
-- Starter policies for teams adopting packet review in PRs.
-- Sandbox-backed examples for turnover, self-check, OPEX, and dependency/model/API trust.
+- Fuller briefing-pack examples.
+- Better examples for controlled items and baselines.
+- More record checks for a complete trace.
+- Better link checks across the public docs.
+- Starter policies for teams adopting packet review in pull requests.
+- Sandbox-backed examples for handoff, self-check, OPEX, and trust in dependencies, models, and APIs.
 
 ## v0.2
 
-- Additional worked examples for API controls and human approval gates.
-- Optional packaging for specific agent harnesses.
-- Richer status reporting for active packets.
-- Release-mode and incident-mode validation once patterns stabilize.
-- Optional deterministic validation for activated HPI records after field use proves the templates.
+- More worked examples for API controls and human approval steps.
+- Optional packaging for specific agent platforms.
+- Richer status reports for active packets.
+- Checks for release mode and incident mode once those patterns settle.
+- Optional repeatable checking for HPI records, once real use proves the templates.
 
 ## Not on the current roadmap
 
 - We do not claim formal V&V, compliance, certification, safety, security, or regulatory adequacy.
 - Replacing qualified legal, compliance, security, safety, or engineering review.
-- Creating a regulated quality assurance program from this public repo alone.
+- Building a regulated quality assurance program from this public repo alone.
 
 ## Source-lineage note
 
-This roadmap describes product direction for an original public-source-inspired workflow. It is not a commitment to satisfy any external standard.
+This roadmap shows where an original, public-source-inspired workflow is headed. It is not a promise to meet any external standard.

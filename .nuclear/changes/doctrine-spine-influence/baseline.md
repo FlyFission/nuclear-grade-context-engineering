@@ -1,6 +1,6 @@
 # Baseline Record
 
-**Purpose:** Record the accepted controlled configuration state after review.
+**Purpose:** Record the controlled state everyone agreed is correct after review.
 
 **Activation threshold:** Use because trust-bearing public docs, skills, command prompts, templates, evaluation prompts, and source-boundary posture change.
 

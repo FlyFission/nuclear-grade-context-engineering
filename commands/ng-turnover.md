@@ -2,22 +2,22 @@
 
 ## Purpose
 
-Create a turnover record for AI-agent, reviewer, verifier, releaser, support, or resumed-thread work. This is a portable command prompt.
+Create a handoff record when work passes from one AI agent, reviewer, verifier, releaser, support person, or thread to the next. This is a portable command prompt.
 
 ## Use when
 
-- Work is moving from one agent, human, role, or thread to another.
-- A subagent or reviewer needs current state, authority, open evidence, and stop conditions.
-- Release, incident, or OPEX work has unfinished handoff obligations.
+- Work is moving from one agent, person, role, or thread to another.
+- A subagent or reviewer needs the current state, the authority, the open evidence, and the stop conditions.
+- Release, incident, or lessons-from-operation (OPEX) work has an unfinished handoff.
 
 ## Do not use when
 
-- The packet already records completed work, evidence, and decision.
+- The change record already holds the finished work, the evidence, and the decision.
 - A tiny Quick change only needs a proof note.
 
 ## Inputs
 
-- Packet path, current phase, completed work, remaining work, changed conditions, authority limits, and next owner.
+- The path to the change record (the packet), the current phase, the work done, the work left, what has changed, the limits on authority, and the next owner.
 
 ## Prompt text
 
@@ -38,18 +38,18 @@ Inputs:
 - proof still needed:
 - stop or hold conditions:
 
-Produce a concise turnover record. Include the critical next action, likely error, control, evidence, and closed-loop acceptance prompt for the incoming owner.
+Produce a short turnover record. Include the critical next action, the likely error, the control, the evidence, and a prompt for the incoming owner to confirm they have it and understand it before they act.
 ```
 
 ## Files created or modified
 
-- `turnover.md` or a turnover section inside a context pack.
-- Related packet records if changed conditions affect risk, verification, decision, or baseline.
+- `turnover.md`, or a turnover section inside a context pack.
+- Related packet records, if what has changed affects the risk, the verification, the decision, or the baseline.
 
 ## Expected outputs
 
-- Current state, resume point, changed conditions, remaining work, authority, and stop conditions.
-- Incoming-owner confirmation prompt.
+- The current state, the point to resume from, what has changed, the work left, the authority, and the stop conditions.
+- A prompt for the incoming owner to confirm.
 
 ## Verification command
 
@@ -59,10 +59,10 @@ python tools/ng.py validate .nuclear/changes/<slug>
 
 ## Failure modes
 
-- Handoff omits changed conditions or last completed action.
-- Incoming owner acts before restating scope and stop criteria.
-- Turnover summary mixes new implementation work into the handoff.
+- The handoff leaves out what has changed or the last action completed.
+- The incoming owner acts before restating the scope and the stop rules.
+- The turnover mixes new build work into the handoff.
 
 ## Legal/assurance boundary note
 
-Turnover records support workflow continuity. They do not create formal V&V, compliance, certification, safety, security, procurement, or regulatory records unless separately adopted under an external program.
+Turnover records keep the work continuous. They do not create formal V&V, compliance, certification, safety, security, procurement, or regulatory records, unless you separately adopt them under an external program.

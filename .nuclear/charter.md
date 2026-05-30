@@ -4,9 +4,9 @@
 **Ratified:** 2026-05-27
 **Last amended:** 2026-05-30
 
-The charter is the durable backbone: non-negotiable principles of how work is done here, independent of any single change. A mission anchor states what a given change is for; the charter states how all changes must be carried out. The charter is advisory in tooling today (the validator does not block on it) but it is the standard a reviewer and an agent are expected to hold.
+The charter is the lasting backbone: the principles for how work is done here that do not bend for any single change. A mission anchor says what a given change is for; the charter says how all changes must be carried out. The tools treat the charter as advice for now (the validator does not block on it), but it is the standard a reviewer and an agent are expected to hold to.
 
-Principles are scaled by mode. Quick changes honor the spirit; Standard and activated records are where the charter earns its keep. Amend the charter by raising the version (major for a removed or redefined principle, minor for an added one, patch for wording) and noting the change below.
+The principles scale with the mode. Quick changes honor the spirit; Standard and activated records are where the charter earns its keep. To amend the charter, raise the version (major for a removed or redefined principle, minor for an added one, patch for wording) and note the change below.
 
 ## Articles
 

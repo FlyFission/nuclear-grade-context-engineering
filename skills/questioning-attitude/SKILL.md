@@ -1,84 +1,84 @@
 ---
 name: questioning-attitude
-description: Challenges assumptions with skeptical fact-finding before an agent builds, merges, or releases, surfacing what would change the decision. Use when a request, plan, diff, dependency, agent action, public claim, or release decision is vague, consequential, or easy to rationalize. Do not use for a tiny Quick edit with obvious proof, or when the user wants formal assurance.
+description: Challenges the assumptions behind a change before an agent builds, merges, or releases, and names the one fact that would change the decision. Use when a request, plan, diff, dependency, agent action, public claim, or release is vague, high-stakes, or easy to talk yourself into. Do not use for a tiny, obvious, easy-to-undo edit, or when someone wants a formal guarantee.
 ---
 
 # Questioning Attitude
 
 ## Overview
 
-Questioning attitude is the Nuclear-grade front door: find the decision question before an agent builds, merges, or releases. Prefer facts over confidence, surface uncertainty, and stop when a doubt changes the decision.
+This is the front door. Before an agent builds, merges, or releases, find the real question the work has to answer. Trust facts over confidence. Say out loud what you are not sure about. And stop the moment a doubt would change what you decide.
 
 ## When to Use
 
-- A request is vague, consequential, or easy to rationalize.
-- A diff, plan, dependency, prompt, model, tool, or release claim needs skeptical review.
+- A request is vague, high-stakes, or easy to talk yourself into.
+- A diff, plan, dependency, prompt, model, tool, or release claim needs a skeptical second look.
 - A reviewer asks "what are we assuming?" or "what would make this wrong?"
-- An agent is about to receive file, command, network, credential, approval, or release authority.
-- The work shows error precursors: many files, stale memory, hidden coupling, dirty workspace, first-answer bias, or completion pressure.
+- An agent is about to get power over files, commands, the network, credentials, approvals, or releases.
+- You see the warning signs of mistakes: too many files, stale memory, hidden links between parts, a messy workspace, grabbing the first answer, or pressure to be done.
 
 ## When Not to Use
 
-- The task is a tiny Quick edit with obvious proof and no new trust boundary.
-- Incident containment must happen before analysis.
-- The user is asking for formal assurance, certification, safety analysis, or regulatory approval.
+- The task is a tiny edit with obvious proof and no new trust boundary.
+- An incident is live and you must contain it before you analyze it.
+- Someone is asking for a formal guarantee, a certification, a safety analysis, or regulatory approval.
 
 ## Inputs
 
-- User request, issue, PR, diff, or packet path.
-- Affected files, dependencies, prompts, models, tools, data, and release artifacts.
-- Known assumptions, constraints, evidence, and gaps.
-- Relevant prior packets, OPEX notes, or source-map rows when invoked.
+- The request, issue, pull request, diff, or path to the change record.
+- The files, dependencies, prompts, models, tools, data, and release items the change touches.
+- What you already know, what you are assuming, the evidence you have, and the gaps.
+- Any related past records, lessons from operation, or source notes.
 
 ## Process
 
-1. Restate the change as a falsifiable decision question.
-2. List assumptions that must be true for the change to work.
-3. Separate known facts, assumptions, unknowns, and source quality.
-4. Identify uncertainty, danger words, warning signs, error-likely steps, and hidden Standard-mode triggers.
-5. Ask what evidence would change the decision; if no evidence could change it, the question is not decision-useful yet.
-6. Validate facts before relying on memory, confidence, or agent-generated claims.
-7. Name pause conditions, hold conditions, and escalation triggers.
-8. Route the next artifact: Quick proof, Standard spec, context pack, turnover, self-check, CM record, mission anchor or drift check, or release decision.
+1. Restate the change as one clear question that evidence could prove right or wrong.
+2. List the assumptions that have to be true for the change to work.
+3. Sort what you know into facts, assumptions, unknowns, and "how good is this source?"
+4. Spot the uncertainty, the danger words, the warning signs, the steps where mistakes are likely, and any hidden reasons this should be treated as a standard change.
+5. Ask what evidence would change the decision. If nothing could change it, the question is not useful yet.
+6. Check the facts before you trust memory, confidence, or anything an agent generated.
+7. Name the conditions that should make you pause, hold, or escalate.
+8. Pick the next step: quick proof, a standard spec, a briefing pack, a handoff, a self-check, a control record, a goal or drift check, or a release decision.
 
 ## Outputs
 
-- Questioning-attitude screen or `questioning-attitude.md`.
-- Validated assumptions and unresolved uncertainties.
-- Knowns, unknowns, danger words, and source-quality concerns.
-- Mode/escalation triggers.
-- Evidence needed before execute, verify, review, decide, or baseline.
-- Evidence that would change the decision.
+- A short questioning-attitude write-up, or a `questioning-attitude.md` file.
+- Assumptions that are now checked, and the ones still open.
+- What you know, what you don't, and any shaky sources.
+- The triggers for choosing a mode or escalating.
+- The evidence you need before you execute, verify, review, decide, or save the version.
+- The one fact that would change the decision.
 
 ## Verification
 
-- Assumptions are explicit and either validated, gap-labeled, or assigned.
-- The selected mode follows the evidence, not preference or effort.
-- Stop conditions are concrete enough for an agent or reviewer to obey.
-- The next packet artifact is named.
+- Every assumption is written down and is either checked, marked as a gap, or assigned to someone.
+- The chosen mode follows the evidence, not what is easiest or fastest.
+- The stop conditions are concrete enough that an agent or a reviewer can actually obey them.
+- The next step is named.
 
 ## Escalation
 
-- Escalate when facts are missing for user, data, security, dependency, AI-authority, operational, or release consequence.
-- Stop when a claim cannot be supported by available evidence.
-- Require independent review when confidence depends on one agent's interpretation.
+- Escalate when facts are missing and the change affects users, data, security, dependencies, agent power, operations, or a release.
+- Stop when a claim has no evidence behind it.
+- Get a second, independent reviewer when the only thing holding the decision up is one agent's read of the situation.
 
 ## Common Rationalizations
 
-- "It worked last time." Past success is not evidence that this state is still controlled.
+- "It worked last time." Past success does not prove the setup is still under control.
 - "The agent seems confident." Confidence is not a source.
-- "The first answer was plausible." Plausible is not verified.
-- "We can classify later." Mode selection depends on assumptions and uncertainty now.
-- "It is just docs." Public wording can change trust and adoption behavior.
+- "The first answer sounded right." Sounding right is not the same as checked.
+- "We can sort the risk later." The mode depends on the assumptions and unknowns you have right now.
+- "It's just docs." Public wording can change who trusts you and how they use the work.
 
 ## Red Flags
 
-- Unverified assumptions drive implementation.
-- The packet names proof after the work is already done.
-- Standard triggers are dismissed because the diff is small.
-- Words like "probably", "should", "safe", "secure", "approved", or "compliant" appear without evidence.
-- Release language says "safe", "secure", "approved", or "compliant" without qualified external authority.
+- Unchecked assumptions are driving the build.
+- The record names the proof only after the work is already done.
+- Standard-change triggers get waved off because the diff is small.
+- Words like "probably", "should", "safe", "secure", "approved", or "compliant" show up with no evidence.
+- Release text says "safe", "secure", "approved", or "compliant" without a qualified outside authority behind it.
 
 ## Source-lineage note
 
-This skill is an original software-workflow translation of questioning attitude, validate-assumptions, pause-when-unsure, and review practices from DOE-HDBK-1028-2009, Human Performance Improvement Handbook, Volumes 1 and 2, as public source lineage. It does not create DOE compliance, formal assurance, safety, security, certification, or regulatory adequacy.
+This skill is an original software-workflow translation of the questioning-attitude, validate-your-assumptions, pause-when-unsure, and review habits from DOE-HDBK-1028-2009, the Human Performance Improvement Handbook, Volumes 1 and 2, used as public idea lineage. It does not create DOE compliance, formal assurance, safety, security, certification, or regulatory adequacy.

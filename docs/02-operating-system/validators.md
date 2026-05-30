@@ -1,14 +1,14 @@
 # Validators
 
-**Purpose:** Define the first deterministic checks that keep Nuclear-grade usable, source-safe, and low-token without asking an LLM to re-audit everything on every change.
+**Purpose:** This file defines the first deterministic checks that keep Nuclear-grade usable, safe about sources, and low on tokens, without asking an LLM to re-audit everything on every change.
 
-**Status:** A minimal validator is implemented at `../../tools/ng_validate.py`; richer checks described below remain a design spec. This is not a compliance audit or certification workflow.
+**Status:** A basic checker is built at `../../tools/ng_validate.py`. The richer checks below are still a design spec. This is not a compliance audit or a certification workflow.
 
 ---
 
 ## 1. Validator principle
 
-Nuclear-grade validators should check structure, links, evidence status, and prohibited language. They should not pretend to decide whether a system is safe, secure, compliant, or ready for regulated use.
+Nuclear-grade checkers should check structure, links, evidence status, and language that is not allowed. They should not pretend to decide whether a system is safe, secure, compliant, or ready for regulated use.
 
 The useful split is:
 
@@ -21,17 +21,17 @@ validator checks whether the packet exposes the evidence needed for that judgmen
 
 ## 2. Activation threshold
 
-Run validation when any of these are true:
+Run the checker when any of these are true:
 
 - a `.nuclear/changes/<slug>/` packet is opened or updated;
-- a PR claims a change is ready for review or release;
+- a PR says a change is ready for review or release;
 - a template, source-foundation doc, or worked example changes;
 - an AI-assisted change produced docs, code, tests, or release evidence;
-- the repo is preparing a public release or README/quickstart update.
+- the repo is getting ready for a public release or a README or quickstart update.
 
-**Minimum useful version:** a local script or checklist that fails on missing required files/sections, prohibited compliance claims, broken internal links, missing evidence status, and source-lineage notes that do not point to public URLs.
+**Minimum useful version:** a local script or checklist that fails on missing required files or sections, on compliance claims that are not allowed, on broken internal links, on missing evidence status, and on source-lineage notes that do not point to public URLs.
 
-**Overhead trap:** building a heavyweight audit engine before the thin evidence spine has been proven in the worked example.
+**Overhead trap:** building a heavy audit engine before the thin evidence spine has proven itself in the worked example.
 
 ---
 
@@ -39,16 +39,16 @@ Run validation when any of these are true:
 
 | Check | What it verifies | Applies to | Failure condition |
 |---|---|---|---|
-| Public citation check | Direct citation/source-lineage links are public/open/linkable or explicitly marked TODO. | Source docs, templates, examples | Paywalled/proprietary lineage, missing URL, or unverified source presented as verified. |
-| Prohibited compliance language | Public docs do not claim formal compliance/certification. | All public docs/templates | Phrases like “NQA-1 compliant,” “NRC compliant,” “ISO compliant,” or similar outside disclaimers/do-not-cite contexts. |
-| Activated artifact check | Required packet files exist for the selected mode. | Change packets | Quick/Standard/Nuclear/Incident/Release mode selected but required files missing. |
-| Required section check | Templates retain purpose, activation threshold, minimum useful version, overhead trap, required links, exit criteria, and source-lineage note. | Templates and examples | Required section absent or renamed beyond recognition. |
-| Trace-link check | Important claims link to basis, implementation, verification, release, or explicit gap. | Standard+ packets | Claim has no evidence link and no declared gap. |
-| Evidence status check | Evidence is labeled planned / run / passed / failed / blocked / not applicable. | `proof.md`, `verification.md`, `ship.md` | Evidence exists as prose but has no status or reproducible command/artifact link. |
-| AI-assisted change control | AI scope, permissions, approvals, and independent checks are declared when AI materially contributes. | AI-assisted packets | AI/tool actions altered code/docs/tests/release evidence without scope and verification record. |
-| Source-map reference check | Source-lineage notes reference `source-map.md` or approved public URLs. | Field guide/templates/examples | New source appears without source-map entry or public URL. |
-| Token/context discipline | Agent context packs are focused on mode, packet, affected files, and relevant source excerpts. | Context packs | Prompt/context asks for whole repo or all standards without an activated reason. |
-| CM record visibility | Activated CM records name controlled items, impact, baseline, variance, OPEX, and triggers. | CM records | Controlled state changes without owner, evidence link, or revalidation trigger. |
+| Public citation check | Direct citation and source-lineage links are public, open, and linkable, or clearly marked TODO. | Source docs, templates, examples | Paid or private lineage, a missing URL, or an unchecked source shown as checked. |
+| Prohibited compliance language | Public docs do not claim formal compliance or certification. | All public docs/templates | Phrases like “NQA-1 compliant,” “NRC compliant,” “ISO compliant,” or similar outside disclaimers/do-not-cite contexts. |
+| Activated artifact check | The required packet files exist for the chosen mode. | Change packets | Quick/Standard/Nuclear/Incident/Release mode selected but required files missing. |
+| Required section check | Templates keep their purpose, activation threshold, minimum useful version, overhead trap, required links, exit criteria, and source-lineage note. | Templates and examples | A required section is gone or renamed past recognition. |
+| Trace-link check | Important claims link to a basis, an implementation, a verification, a release, or a clearly marked gap. | Standard+ packets | A claim has no evidence link and no stated gap. |
+| Evidence status check | Evidence is labeled planned / run / passed / failed / blocked / not applicable. | `proof.md`, `verification.md`, `ship.md` | Evidence is written as prose but has no status and no reproducible command or artifact link. |
+| AI-assisted change control | The AI's scope, permissions, approvals, and independent checks are stated when the AI did real work. | AI-assisted packets | AI or tool actions changed code, docs, tests, or release evidence with no scope and no verification record. |
+| Source-map reference check | Source-lineage notes point to `source-map.md` or approved public URLs. | Field guide/templates/examples | A new source shows up with no source-map entry and no public URL. |
+| Token/context discipline | Agent context packs stay focused on the mode, the packet, the affected files, and the relevant source excerpts. | Context packs | The prompt or context asks for the whole repo or all standards with no reason to turn that on. |
+| CM record visibility | Turned-on CM records name the controlled items, the impact, the baseline, the variance, the OPEX, and the triggers. | CM records | Controlled state changes with no owner, no evidence link, and no re-check trigger. |
 
 ---
 
@@ -60,62 +60,62 @@ Required checks:
 
 - `risk.md` exists;
 - `proof.md` exists;
-- risk declares reversibility, consequence, detectability, and escalation decision;
-- proof contains at least one concrete verification step or explicit reason why manual inspection is enough.
+- the risk states how easy it is to undo, how bad failure is, how easy it is to spot, and the escalation decision;
+- the proof has at least one concrete verification step, or a clear reason why looking it over by hand is enough.
 
 Exit criteria:
 
 - all Quick required files exist;
-- proof status is not blank;
-- no escalation trigger remains unresolved.
+- the proof status is not blank;
+- no escalation trigger is left open.
 
 ### Standard mode
 
 Required checks:
 
 - `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, and `ship.md` exist;
-- important claims have evidence status or named gaps;
-- dependency/model/API trust decisions are scoped by intended use;
-- release record names baseline, rollback, monitoring, and unresolved risks.
+- important claims have an evidence status or a named gap;
+- trust decisions about a dependency, model, or API are scoped to how you will actually use it;
+- the release record names the baseline, the rollback, the monitoring, and the open risks.
 
 Exit criteria:
 
-- evidence needed to accept/reject the change is navigable from the packet;
-- unresolved gaps are either closed, accepted by an explicit reviewer, or block ship.
+- the evidence needed to accept or reject the change can be reached from the packet;
+- open gaps are closed, accepted by a named reviewer, or they block the ship.
 
 ### Nuclear / Incident / Research Board / Release modes
 
-Required checks are stricter but still risk-scaled:
+The required checks are stricter, but still scaled to the risk:
 
-- triggered extensions are present only when activated;
-- independent review is recorded when consequence demands it;
-- OPEX or decision records link back to basis, tests, monitors, or thresholds;
-- release readiness does not rely on vague “looks good” statements.
+- the extra records show up only when they are turned on;
+- an independent review is recorded when the stakes call for it;
+- OPEX or decision records link back to the basis, tests, monitors, or limits;
+- release readiness does not lean on vague “looks good” statements.
 
 Exit criteria:
 
 - the packet makes the decision reviewable without rereading the whole repo;
-- future maintainers can see what changed, why, what proved it, and what remains uncertain.
+- future maintainers can see what changed, why, what proved it, and what is still uncertain.
 
 ### Activated CM records
 
-Required checks remain lightweight in Public v0:
+The required checks stay light in Public v0:
 
-- controlled items have a reason for control;
-- impact screens name update/no-op/defer/block disposition;
-- baseline records name accepted state and revalidation triggers;
-- variance/OPEX records link back to baseline or packet evidence.
+- each controlled item has a reason for being under control;
+- impact screens say whether each item is updated, left alone, deferred, or blocked;
+- baseline records name the accepted state and the re-check triggers;
+- variance and OPEX records link back to the baseline or to packet evidence.
 
 Exit criteria:
 
-- controlled state is navigable without rereading the whole repo;
-- the validator does not claim to decide CM adequacy.
+- the controlled state can be reached without rereading the whole repo;
+- the checker does not claim to decide whether the configuration management is adequate.
 
 ---
 
 ## 5. Prohibited-language validator seed list
 
-Flag these when used as claims rather than boundaries/disclaimers:
+Flag these when they are used as claims, not as limits or disclaimers:
 
 ```text
 NQA-1 compliant
@@ -143,14 +143,14 @@ safety-basis evidence
 procurement evidence
 ```
 
-Allowed contexts:
+Allowed places:
 
 - `DISCLAIMER.md`;
 - `do-not-cite-directly.md`;
 - `compliance-boundaries.md`;
-- examples that explicitly say “do not claim this.”
+- examples that plainly say “do not claim this.”
 
-Prefer phrases like:
+Prefer wording like:
 
 > public-source-inspired, original software workflow, evidence-oriented, non-compliance-claiming.
 
@@ -173,6 +173,6 @@ Validator implementation should reference:
 
 ## 7. Source-lineage note
 
-This validator design is an original software workflow inspired by public source families mapped in `source-map.md`: public nuclear/federal configuration and QA concepts, NRC public software assurance guidance, NIST SSDF and supply-chain risk guidance, CISA secure-by-design/SBOM materials, NASA software/systems engineering guidance, and open software assurance sources such as SLSA, OpenSSF, OWASP, SPDX, and CycloneDX.
+This checker design is an original software workflow. It draws on public source families mapped in `source-map.md`: public nuclear and federal configuration and quality-assurance ideas, NRC public software assurance guidance, NIST SSDF and supply-chain risk guidance, CISA secure-by-design and SBOM materials, NASA software and systems engineering guidance, and open software assurance sources such as SLSA, OpenSSF, OWASP, SPDX, and CycloneDX.
 
 It does not implement, certify, or claim compliance with those sources.

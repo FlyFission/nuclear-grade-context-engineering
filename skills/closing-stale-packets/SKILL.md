@@ -60,7 +60,7 @@ A change packet that is started and then abandoned is a quiet integrity problem.
 ## Escalation
 
 - Escalate to the packet's owner before deleting any packet whose change you cannot confirm is dead, since deletion is the one irreversible option.
-- Escalate when stale packets accumulate faster than they are closed; that is a process signal for `learning-from-opex`, not a cleanup task.
+- Escalate when stale packets accumulate faster than they are closed; that is a process signal for `learning-from-experience`, not a cleanup task.
 - Stop and ask when a packet's underlying change may have shipped without proof; closing the record does not close the risk.
 
 ## Common Rationalizations

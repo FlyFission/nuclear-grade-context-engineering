@@ -1,6 +1,6 @@
 # Basis - CM Public Readiness
 
-**Purpose:** State what must remain true while repositioning Nuclear-grade around configuration management.
+**Purpose:** State what must stay true while we reframe Nuclear-grade around keeping the approved version under control (configuration management, CM).
 
 ## Change context
 

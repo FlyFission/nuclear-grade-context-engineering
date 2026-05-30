@@ -2,9 +2,9 @@
 
 ## Scenario Facts
 
-- A coding agent is asked to fix a validator false positive.
-- The likely files are `nuclear_grade/ng_validate.py` and validator tests.
-- The agent should not rewrite docs, alter public claims, or loosen validation semantics broadly.
+- A coding agent is asked to fix a validator false positive (a check that wrongly fails).
+- The likely files are `nuclear_grade/ng_validate.py` and the validator tests.
+- The agent should not rewrite docs, change public claims, or loosen how the validator checks things across the board.
 
 ## Simple Prompt Trial
 
@@ -28,10 +28,10 @@ Simple path strengths:
 
 Simple path gaps:
 
-- Authority is implicit.
-- Agent may change docs or templates to make tests pass.
-- Stop condition is unclear if semantics affect public validation.
-- Proof obligation may be only "tests pass," not "the original false positive is gone and blank templates still fail."
+- What the agent is allowed to do is never spelled out.
+- The agent may change docs or templates just to make tests pass.
+- The stop condition is unclear if the change affects how public packets are validated.
+- The proof asked for may be only "tests pass," not "the original false positive is gone and blank templates still fail."
 
 ## Nuclear-Grade Trial
 
@@ -39,10 +39,10 @@ Skills exercised:
 
 - `questioning-attitude`
 - `using-nuclear-grade`
-- `classifying-change-risk`
-- `creating-change-packets`
-- `packing-agent-context`
-- `turning-over-agent-work`
+- `rating-change-risk`
+- `creating-change-records`
+- `briefing-an-agent`
+- `handing-off-work`
 - `proving-claims`
 
 Workflows exercised:
@@ -56,12 +56,12 @@ Workflows exercised:
 Nuclear-grade output:
 
 - Role: builder/verifier.
-- Allowed files: validator and targeted tests.
-- Allowed commands: focused pytest and full pytest before completion.
-- Forbidden actions: weakening public boundary checks, editing unrelated docs, deleting tests, broad refactors.
-- Turnover: last completed repro, files touched, remaining proof, and stop criteria are recorded before another agent continues.
-- Mode: Quick if local false positive only; Standard if validation semantics change public packet behavior.
-- Proof: failing fixture before fix, passing fixture after fix, blank template still rejected.
+- Allowed files: the validator and targeted tests.
+- Allowed commands: focused pytest, then full pytest before finishing.
+- Forbidden actions: weakening the public boundary checks, editing unrelated docs, deleting tests, or doing broad rewrites.
+- Turnover: record the last reproduced result, the files touched, the proof still owed, and the stop rules before another agent picks it up.
+- Mode: Quick if it is only a local false positive; Standard if the change alters how public packets are validated.
+- Proof: the fixture fails before the fix, the fixture passes after the fix, and a blank template is still rejected.
 
 ## Scoring Rationale
 
@@ -70,11 +70,11 @@ Nuclear-grade output:
 | Simple prompt | 3 | 2 | 3 | 3 | 1 |
 | Nuclear-grade | 4 | 4 | 4 | 4 | 3 |
 
-Nuclear-grade is better when handing off to an agent because it narrows authority and protects validator semantics.
+Nuclear-grade is better when you hand off to an agent, because it narrows what the agent may do and protects how the validator works.
 
 ## Decision
 
-Use a compact context pack for coding-agent handoffs that affect validators, commands, skills, or public docs.
+Use a compact context pack for coding-agent handoffs that touch validators, commands, skills, or public docs.
 
 ## Boundary Note
 

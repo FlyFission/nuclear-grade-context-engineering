@@ -1,6 +1,6 @@
 # CLI Reference
 
-**Purpose:** Document the dependency-free `tools/ng.py` helper.
+**Purpose:** Document the `tools/ng.py` helper, which needs no extra dependencies.
 
 ## Commands
 
@@ -17,17 +17,17 @@ python tools/ng.py eval [repo]
 ## Behavior
 
 - `init` creates `.nuclear/README.md` and `.nuclear/changes/`.
-- `new` copies Quick or Standard templates from the target repo when present, otherwise from this Nuclear-grade checkout.
-- `validate` delegates to `tools/ng_validate.py`.
-- `doctor` checks a Nuclear-grade distribution repo for public files, contracts, and templates. In an initialized target repo, it checks `.nuclear/README.md` and `.nuclear/changes/`.
-- `list` shows available modes, skills, commands, packet files, CM files, golden-path files, and optional templates, including turnover, self-check, and supplier-trust records.
-- `status` lists active packets, their detected modes, and a health tag: `ok` (validates), `closed` (deliberately abandoned with a recorded rationale, carrying a `NUCLEAR-GRADE-CLOSED:` marker line), `scaffold` (an untouched draft still carrying the placeholder marker), or `invalid` (fails validation for another reason). `ok` and `closed` are terminal states; only `scaffold` and `invalid` count toward the closing "needs attention" reminder, so abandoned half-filled drafts are visible rather than silent while honestly closed packets are not nagged. See the `closing-stale-packets` skill.
-- `eval` scores the worked-example artifacts in `evals/cases/` for the decision signals they claim to teach, exiting non-zero if any worked example dropped a required signal. It measures presence of named decision elements, not engineering correctness, safety, or compliance. See `docs/03-worked-examples/skill-workflow-comparison/efficacy-harness.md`.
+- `new` copies Quick or Standard templates from the target repo when they are there. If not, it copies them from this Nuclear-grade checkout.
+- `validate` hands off to `tools/ng_validate.py`.
+- `doctor` checks a Nuclear-grade distribution repo for public files, contracts, and templates. In a target repo that has been set up, it checks `.nuclear/README.md` and `.nuclear/changes/`.
+- `list` shows what is available: modes, skills, commands, packet files, CM files (records for keeping the approved version under control), golden-path files, and optional templates. That includes turnover, self-check, and supplier-trust records.
+- `status` lists active packets, the mode it detects for each, and a health tag: `ok` (it validates), `closed` (deliberately retired with a written reason, carrying a `NUCLEAR-GRADE-CLOSED:` marker line), `scaffold` (an untouched draft that still has the placeholder marker), or `invalid` (fails validation for some other reason). `ok` and `closed` are finished states; only `scaffold` and `invalid` count toward the "needs attention" reminder, so abandoned half-filled drafts stay visible while honestly closed packets are left alone. See the `closing-stale-packets` skill.
+- `eval` scores the worked-example artifacts in `evals/cases/` for the decision signals they claim to teach, and exits non-zero if any worked example dropped a required signal. It checks that the named decision elements are present, not that the work is engineering-correct, safe, or compliant. See `docs/03-worked-examples/skill-workflow-comparison/efficacy-harness.md`.
 
 ## Boundary note
 
-The CLI checks structure and evidence visibility. It does not decide engineering adequacy, safety, security, compliance, regulatory adequacy, or formal verification.
+The command-line tool checks structure and whether evidence is visible. It does not decide engineering adequacy, safety, security, compliance, regulatory adequacy, or formal verification.
 
 ## Source-lineage note
 
-This CLI reference documents local tooling for an original public-source-inspired workflow. It does not create formal assurance.
+This reference documents the local tooling for an original workflow built from public sources. It does not create formal assurance.

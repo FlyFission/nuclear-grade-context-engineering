@@ -1,10 +1,10 @@
 # Red-Team Findings Record
 
-**Purpose:** Record adversarial probe results, residual risks, and compensating controls for agent authority, tool grants, or release scope that requires adversarial evidence.
+**Purpose:** Record what your attack probes found, the leftover risks, and the controls that make up for them, for agent power, tool grants, or a release scope that needs attack evidence.
 
-**Activation threshold:** Use when a release packet has agent tool authority, model inputs, or data access that warrants adversarial review beyond functional testing.
+**Activation threshold:** Use when a release packet has agent tool power, model inputs, or data access that calls for an attack review beyond normal testing.
 
-**Minimum useful version:** Agent role, selected adversarial classes, per-class probe intent, expected safe behavior, outcome, residual risk, and posture note.
+**Minimum useful version:** the agent role, the attack types you chose, the goal of each probe, the expected safe behavior, the outcome, the leftover risk, and a stance note.
 
 ---
 
@@ -20,7 +20,7 @@
 
 ## Adversarial class selection
 
-Select the classes relevant to this configuration. Mark inapplicable classes `N/A` with a brief reason.
+Pick the attack types that fit this setup. Mark the ones that do not fit `N/A` with a short reason.
 
 | Class | Applicable? | Reason if N/A |
 |---|---|---|
@@ -41,7 +41,7 @@ Select the classes relevant to this configuration. Mark inapplicable classes `N/
 
 ## Residual risk and compensating controls
 
-For each `uncertain` or `exposed` finding:
+For each finding marked `uncertain` or `exposed`:
 
 | Class | Residual risk | Compensating control | Control evidence | Ship impact |
 |---|---|---|---|---|
@@ -64,11 +64,11 @@ For each `uncertain` or `exposed` finding:
 
 ## Exit criteria
 
-- Every selected class has a recorded probe intent, expected behavior, and outcome status.
-- All `uncertain` or `exposed` findings have named residual risk and compensating controls.
-- Posture note is referenced in `ship.md`.
-- No public wording claims "secure," "safe," or "hardened" beyond the scope of these probes.
+- Every chosen attack type has a recorded probe goal, expected behavior, and outcome status.
+- Every `uncertain` or `exposed` finding has a named leftover risk and controls that make up for it.
+- The stance note is linked from `ship.md`.
+- No public wording claims "secure," "safe," or "hardened" beyond what these probes actually covered.
 
 ## Source-lineage note
 
-Original Nuclear-grade template influenced by public adversarial probe taxonomy (Garak LLM vulnerability scanner, NVIDIA Safety for Agentic AI blueprint), NeMo Guardrails rail-type vocabulary, and NIST AI RMF framing, all mapped as supporting context in `docs/00-standards-foundation/source-map.md`. No compliance, penetration-test, or security certification claim is made.
+Original Nuclear-grade template influenced by a public list of attack types (the Garak LLM vulnerability scanner, the NVIDIA Safety for Agentic AI blueprint), the NeMo Guardrails rail-type vocabulary, and NIST AI RMF framing, all mapped as supporting context in `docs/00-standards-foundation/source-map.md`. No compliance, penetration-test, or security certification claim is made.

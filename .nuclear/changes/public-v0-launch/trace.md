@@ -1,6 +1,6 @@
 # Trace — Public v0 Launch
 
-**Purpose:** Link launch claims to controls, evidence, and release posture.
+**Purpose:** Tie each launch claim to its controls, evidence, and release stance.
 
 ---
 

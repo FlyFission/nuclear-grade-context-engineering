@@ -1,7 +1,7 @@
 # Workspace: short-article pipeline
 
-A two-stage sequential workflow run by a single agent. Run the numbered stages in order; review each
-stage's `output/` before starting the next.
+A two-stage workflow run by a single agent, one stage after the other. Run the numbered stages in order.
+Check each stage's `output/` before you start the next one.
 
 ## Stages
 
@@ -10,8 +10,8 @@ stage's `output/` before starting the next.
 
 ## Routing
 
-- Persistent constraints live in `references/` (for example `references/voice.md`). Treat them as
-  constraints to internalize, not input to process.
+- Lasting rules live in `references/` (for example `references/voice.md`). Treat them as rules to follow,
+  not as input to work on.
 - Each stage's working output lands in its own `output/` folder and becomes the next stage's input.
-- A human review gate sits between stages: inspect and, if needed, edit a stage's `output/` before the
-  next stage runs.
+- A person checks the work between stages. Read a stage's `output/`, edit it if needed, then run the
+  next stage.

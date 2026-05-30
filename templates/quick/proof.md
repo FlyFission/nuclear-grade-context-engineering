@@ -2,11 +2,11 @@
 
 <!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
 
-**Purpose:** Capture the smallest credible evidence record for a Quick change.
+**Purpose:** Capture the smallest believable evidence record for a Quick change.
 
-**Activation threshold:** Use with `risk.md` when a change is low-consequence, reversible, easy to verify, and does not trigger Standard mode.
+**Activation threshold:** Use with `risk.md` when a change is low-stakes, easy to undo, easy to check, and does not trip Standard mode.
 
-**Minimum useful version:** One proof command/check/eval, result, evidence link, and reviewer note.
+**Minimum useful version:** one proof command, check, or eval; the result; an evidence link; and a reviewer note.
 
 **Overhead trap:** Do not paste long logs. Link to the evidence and quote only the result that matters.
 
@@ -55,12 +55,12 @@ Claim:
 
 ## Exit criteria
 
-- Evidence directly matches the claim in `risk.md`.
-- Actual result is compared to the expected result named before proof.
-- Result status is explicit.
-- Any failure or gap has a next action or escalation.
-- Reviewer can decide whether the Quick change is acceptable without reading unrelated docs.
+- The evidence matches the claim in `risk.md` directly.
+- The actual result is compared to the expected result you named before the proof.
+- The result status is stated plainly.
+- Any failure or gap has a next action or an escalation.
+- The reviewer can decide whether the Quick change is acceptable without reading unrelated docs.
 
 ## Source-lineage note
 
-Original Nuclear-grade template inspired by public software test documentation, verification, work-record, and configuration-discipline concepts mapped in `docs/00-standards-foundation/source-map.md` and `docs/01-field-guide/source-to-concept-crosswalk.md`. No compliance claim is made.
+Original Nuclear-grade template inspired by public ideas on software test documentation, verification, work records, and keeping the approved version under control, mapped in `docs/00-standards-foundation/source-map.md` and `docs/01-field-guide/source-to-concept-crosswalk.md`. No compliance claim is made.

@@ -1,6 +1,6 @@
 # Controlled Items Record
 
-**Purpose:** Name the configuration items affected by this doctrine-spine change and why their state matters.
+**Purpose:** Name the controlled items this doctrine-spine change affects, and why their state matters.
 
 **Activation threshold:** Use because this change affects public docs, skills, command prompts, templates, evaluation prompts, and baseline records.
 

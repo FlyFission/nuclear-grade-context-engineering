@@ -2,11 +2,11 @@
 
 <!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
 
-**Purpose:** Record the decision to ship, block, defer, or continue with named residual risk.
+**Purpose:** Record the decision to ship, block, defer, or continue with named leftover risk.
 
-**Activation threshold:** Use when evidence has been reviewed and the change needs an explicit decision before baseline, release, or operation.
+**Activation threshold:** Use when the evidence has been reviewed and the change needs a plain decision before baseline, release, or operation.
 
-**Minimum useful version:** Decision, evidence status, unresolved gaps, owner, conditions, and baseline trigger.
+**Minimum useful version:** the decision, the evidence status, the open gaps, the owner, the conditions, and the baseline trigger.
 
 ---
 
@@ -58,11 +58,11 @@
 
 ## Exit criteria
 
-- Decision is explicit.
+- The decision is stated plainly.
 - Gaps are not used as evidence.
-- Residual uncertainty is bounded, owned, or blocks/defer the decision.
-- Baseline or revalidation action is named when controlled state changes.
+- The leftover uncertainty is bounded and owned, or it blocks or defers the decision.
+- A baseline or re-check action is named when the controlled state changes.
 
 ## Source-lineage note
 
-Original Nuclear-grade template inspired by public review, decision, release-readiness, and configuration-management concepts mapped in `docs/00-standards-foundation/source-map.md`. No compliance claim is made.
+Original Nuclear-grade template inspired by public ideas on review, decision-making, release readiness, and keeping the approved version under control, mapped in `docs/00-standards-foundation/source-map.md`. No compliance claim is made.

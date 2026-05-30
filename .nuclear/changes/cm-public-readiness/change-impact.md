@@ -1,6 +1,6 @@
 # Change Impact - CM Public Readiness
 
-**Purpose:** Screen downstream artifacts affected by the CM public-readiness pass.
+**Purpose:** Check which downstream files the CM (keeping the approved version under control) public-readiness pass affects.
 
 ## Change context
 

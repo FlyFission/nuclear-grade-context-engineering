@@ -1,6 +1,6 @@
 # Standard Risk Record
 
-**Purpose:** Classify the doctrine-spine influence update and name the controls needed before public workflow artifacts are accepted.
+**Purpose:** Sort the doctrine-spine influence update by risk, and name the controls needed before the public workflow artifacts are accepted.
 
 **Activation threshold:** Standard mode is required because the change affects public docs, skills, command prompts, templates, and baseline expectations for downstream agents.
 

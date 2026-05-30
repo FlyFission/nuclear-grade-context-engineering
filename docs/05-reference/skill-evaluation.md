@@ -33,7 +33,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should not trigger: Summarize the README in five bullets.
 - Should not trigger: What license does this repository use?
 
-### `identifying-controlled-items`
+### `choosing-what-to-control`
 
 - Should trigger: Which prompts, dependencies, docs, and CI files become controlled items for this release?
 - Should trigger: Identify the controlled items for an agent tool-permission change.
@@ -41,7 +41,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should not trigger: Run the unit tests and paste the failing assertion.
 - Should not trigger: Convert these notes into cleaner prose.
 
-### `screening-change-impact`
+### `checking-what-a-change-affects`
 
 - Should trigger: This lifecycle rename may stale docs, skills, commands, validators, and examples; screen the impact.
 - Should trigger: If we change the packet template, what downstream artifacts need revalidation?
@@ -49,7 +49,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should not trigger: Create an empty Standard packet folder.
 - Should not trigger: What does the changelog say changed last week?
 
-### `baselining-configuration`
+### `recording-a-known-good-version`
 
 - Should trigger: Record the accepted prompt, model, tool, doc, and validator state after this release.
 - Should trigger: Baseline this dependency update after review and verification pass.
@@ -57,7 +57,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should not trigger: Brainstorm better names for the workflow phases.
 - Should not trigger: Classify whether this typo fix is Quick or Standard.
 
-### `classifying-change-risk`
+### `rating-change-risk`
 
 - Should trigger: Classify whether this API permission plus docs change is Quick, Standard, or stronger.
 - Should trigger: Pick the right mode for a dependency bump that changes authentication behavior.
@@ -66,7 +66,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should not trigger: Fill out the verification table for already-selected Standard mode.
 - Should not trigger: Write the source-lineage note for a citation change.
 
-### `creating-change-packets`
+### `creating-change-records`
 
 - Should trigger: Create the packet files for a Standard change that updates skills and tests.
 - Should trigger: Update this Quick packet now that the proof command changed.
@@ -74,7 +74,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should not trigger: Decide whether this packet should ship.
 - Should not trigger: Only identify which files are controlled items.
 
-### `packing-agent-context`
+### `briefing-an-agent`
 
 - Should trigger: Build a focused context pack for an agent that can edit tests and run commands.
 - Should trigger: Prepare one-screen reviewer context with authority, proof, and stop conditions.
@@ -83,7 +83,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should not trigger: Run the packet validator.
 - Should not trigger: Classify the change mode only.
 
-### `turning-over-agent-work`
+### `handing-off-work`
 
 - Should trigger: Hand this half-finished validator change to a new agent with last completed action, changed conditions, proof gaps, and stop criteria.
 - Should trigger: Prepare a release handoff for support after this Standard packet ships with residual risk and monitoring.
@@ -91,7 +91,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should not trigger: Summarize this README section without assigning follow-up work.
 - Should not trigger: Run a Quick proof command for a completed typo fix.
 
-### `self-checking-agent-actions`
+### `double-checking-before-acting`
 
 - Should trigger: Before running this broad file move command, self-check the exact target, expected result, stop condition, and after-action proof.
 - Should trigger: Self-check this public README claim before release because it says the workflow is secure.
@@ -109,7 +109,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should not trigger: Create the packet directory structure.
 - Should not trigger: Make the README more concise.
 
-### `reviewing-ship-readiness`
+### `checking-release-readiness`
 
 - Should trigger: Review this Standard packet and decide ship, defer, block, or ship-with-risk.
 - Should trigger: CI is green; decide whether the dependency update is release-ready and name residual risk.
@@ -118,7 +118,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should not trigger: Identify controlled items before implementation starts.
 - Should not trigger: Draft the risk.md threshold screen.
 
-### `learning-from-opex`
+### `learning-from-experience`
 
 - Should trigger: An agent edited outside its context pack but tests caught it; create an OPEX record and durable control update.
 - Should trigger: A reviewer found a hallucinated source claim after merge; turn the near miss into a template or validator update.
@@ -127,7 +127,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should not trigger: Fix the failing unit test immediately during incident containment.
 - Should not trigger: Assign blame for who approved the PR.
 
-### `checking-dependency-and-model-trust`
+### `vetting-outside-code-and-models`
 
 - Should trigger: A dependency bump changes authentication behavior; separate vendor claims from local evidence and release impact.
 - Should trigger: We are switching models for an agent workflow; check intended use, eval evidence, gaps, and revalidation triggers.
@@ -135,7 +135,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should not trigger: Cite a public DOE handbook as source lineage for a docs paragraph.
 - Should not trigger: Fix a local typo in package comments with no dependency behavior change.
 
-### `checking-source-lineage`
+### `checking-source-claims`
 
 - Should trigger: This doc cites DOE and NIST concepts; check whether the wording is source-safe.
 - Should trigger: Review these source-lineage claims before public launch.
@@ -143,7 +143,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should not trigger: Fix the Python test failure.
 - Should not trigger: Create a context pack for the next coding agent.
 
-### `checking-license-and-assurance-boundaries`
+### `checking-legal-and-safety-wording`
 
 - Should trigger: Review the README for license, warranty, compliance, and assurance boundary problems.
 - Should trigger: This public copy may overpromise safety, security, certification, or adequacy; clean it up.
@@ -151,7 +151,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should not trigger: List changed files in the PR.
 - Should not trigger: Run the worked-example tests.
 
-### `controlling-mission-drift`
+### `staying-on-mission`
 
 - Should trigger: We are twenty steps into this task and I cannot tell if the current edit still serves the original goal.
 - Should trigger: The agent keeps adding features no one asked for; check whether we have drifted from the objective.
@@ -167,7 +167,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should trigger: Check whether feature-specific logic is leaking into the shared layer in this diff.
 - Should not trigger: Confirm the unit test passes and paste the output.
 - Should not trigger: Cite a public DOE handbook as source lineage for a docs paragraph.
-### `red-teaming-agent-changes`
+### `stress-testing-agent-changes`
 
 - Should trigger: Before releasing an agent that can write files and call APIs, enumerate the adversarial classes, state probe intents, and record outcomes.
 - Should trigger: A dependency update changes how the agent processes user input; adversarially review for prompt injection and retrieval poisoning before shipping.
@@ -175,7 +175,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should not trigger: Fix a README typo with no agent authority component.
 - Should not trigger: Run a formal penetration test or produce a certified security report.
 
-### `tracing-agent-execution`
+### `recording-what-an-agent-did`
 
 - Should trigger: The packet claims the agent only edited auth.py but the release reviewer cannot see the step-level execution evidence; trace the run and link each step to a verification claim.
 - Should trigger: Capture execution evidence from this agent run — tool calls, decision points, token use, and approval gates — and structure it for trace.md.
@@ -183,7 +183,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should not trigger: The agent read a config file and printed a summary with no side effects.
 - Should not trigger: Produce a formal audit trail or certified compliance record of agent behavior.
 
-### `decomposing-work-breakdown`
+### `breaking-down-the-work`
 
 - Should trigger: Break this billing-revamp epic into a clean deliverable breakdown that covers all the scope with no overlaps before we plan.
 - Should trigger: We keep discovering work mid-sprint; give me a product WBS with a dictionary for this new ingestion subsystem.
@@ -191,7 +191,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should not trigger: Fix this typo in the README and show the diff.
 - Should not trigger: This backlog item is already broken down and owned; just start coding it.
 
-### `structuring-agentic-folders`
+### `organizing-project-folders`
 
 - Should trigger: Lay out the folder and file structure for this new service derived from our WBS, with safe sortable names.
 - Should trigger: Our shared utils folder has become a junk drawer; restructure it by what changes together.

@@ -1,6 +1,6 @@
 name: nuclear-grade
 version: 0.3.0
-description: Configuration-management workflow surface for AI-assisted software changes.
+description: An evidence-first workflow for running AI on software changes that matter.
 validator_modes:
   - quick
   - standard

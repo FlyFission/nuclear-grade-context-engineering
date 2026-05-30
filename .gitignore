@@ -32,3 +32,6 @@ Thumbs.db
 
 # Nuclear-grade private research scratch space
 .research/
+
+# Claude Code working directory (local settings, agent worktrees)
+.claude/

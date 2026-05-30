@@ -1,90 +1,92 @@
 ---
 name: breaking-down-the-work
-description: Decomposes scope into a product-oriented work breakdown structure that obeys the 100% rule and stays mutually exclusive, with outline numbering and a dictionary entry per element. Use when an epic, feature, or new subsystem needs clean deliverable decomposition or a single source of truth before folders or work begin. Do not use for a one-file edit or an already-decomposed backlog item.
+description: Splits scope into a product-first work breakdown that follows the 100% rule, keeps pieces from overlapping, uses outline numbers, and gives every piece a dictionary entry. Use when an epic, feature, or new subsystem needs a clean split into deliverables, or one source of truth before folders or work begin. Do not use for a one-file edit or a backlog item already broken down.
 ---
 
 # Decomposing Work Breakdown
 
 ## Overview
 
-A work breakdown structure (WBS) is a product-oriented, exhaustive, non-overlapping decomposition of one deliverable into ownable work packages, plus a dictionary that defines every element. It is the spine that estimates, folders, ownership, and traceability hang from. Two failure modes destroy it: under-coverage (orphaned scope no one owns) and over-coverage (invented or gold-plated scope), with a third drift where verbs masquerade as the backbone and hide missing products. This skill holds the 100% rule and mutual exclusivity, and forces a dictionary entry per element, so the breakdown is auditable before any folder or line of code exists.
+A work breakdown (WBS) splits one deliverable into smaller pieces someone can own, with no gaps and no overlaps, plus a dictionary that defines every piece. "Product-first" means the pieces are the things you build (nouns), not the actions you take (verbs). The work breakdown is the spine that estimates, folders, ownership, and traceability hang from.
+
+Three things can wreck it. Under-coverage: some scope is orphaned and no one owns it. Over-coverage: invented or gold-plated scope that no one asked for. And a third drift where verbs pose as the backbone and hide products that are actually missing. This skill holds two rules: the 100% rule (the pieces add up to exactly the whole, no more and no less) and no overlaps. It also forces a dictionary entry for every piece. That way the breakdown can be reviewed before any folder or line of code exists.
 
 ## When to Use
 
 - An epic, feature, or new subsystem needs breaking down before planning or layout.
-- A folder tree or repo structure is about to be designed and needs a defensible scope basis.
-- Scope keeps growing and no one can say whether the plan is complete or overlapping.
-- Multiple agents or people need one shared, non-overlapping map of the work.
-- A `.nuclear/changes/<slug>/` packet needs its internal structure decided on principle.
+- A folder tree or repo structure is about to be designed and needs a scope basis you can defend.
+- Scope keeps growing and no one can say whether the plan is complete or has overlaps.
+- Several agents or people need one shared map of the work with no overlaps.
+- A `.nuclear/changes/<slug>/` packet needs its inside structure decided on principle.
 
 ## When Not to Use
 
-- A single-file or Quick edit with an obvious target and no sub-deliverables.
-- A backlog item that is already decomposed, owned, and dictionary-backed.
-- Incident containment that must happen before reflection.
-- The user wants a schedule, Gantt, cost estimate, or project-management certification (a WBS feeds those but is not them).
+- A single-file or quick edit with an obvious target and no smaller deliverables under it.
+- A backlog item that is already broken down, owned, and backed by a dictionary.
+- A live incident you have to contain before you stop to reflect.
+- The user wants a schedule, a Gantt chart, a cost estimate, or a project-management certification. A work breakdown feeds those, but it is not them.
 
 ## Inputs
 
-- The end deliverable or objective, stated in one line.
-- The mission anchor (`.nuclear/mission.md` or the `## Mission anchor` in `risk.md`) and charter when present.
-- Known deliverables, constraints, and declared non-goals or deferred scope.
-- The existing repo tree and naming conventions, when the WBS will be materialized.
-- `templates/standard/wbs.md` when used.
+- The end deliverable or goal, stated in one line.
+- The mission anchor (`.nuclear/mission.md` or the `## Mission anchor` in `risk.md`) and the charter, when there is one.
+- Known deliverables, constraints, and any stated non-goals or scope put off for later.
+- The existing repo tree and naming conventions, when the work breakdown will be turned into real folders.
+- `templates/standard/wbs.md` when you use it.
 
 ## Process
 
-1. Name the single top deliverable as WBS level 1. If you cannot name one product, stop: you have a goal, not a deliverable, and decomposition will not be exhaustive.
-2. Decompose product-first. Break each parent into the nouns it is made of (components, subsystems, documents, data), not the verbs done to it. Verbs live only in a clearly labeled activity layer below a work package.
-3. Enforce the 100% rule at every parent. The children must cover exactly the parent scope, no more and no less. Write any deferred scope as an explicit gap line rather than leaving it implied.
-4. Enforce mutual exclusivity and the one-home rule. Every element belongs to exactly one parent, and no two siblings claim the same work. Resolve overlap by re-cutting the boundary or lifting shared work into a single common element, never by duplicating.
-5. Level to actionability. Decompose until a leaf is a single ownable, estimable, verifiable work package (the 8/80 sense check, roughly two to three levels), then stop. Decomposition past the work-package line is overhead, not rigor. Grade depth by mode.
-6. Number with outline traceability (`1`, `1.2`, `1.2.3`). The number is the durable identity the folder map, the dictionary, and cross-references all key on.
-7. Write the WBS dictionary. For each element record scope, in-scope and out-of-scope, deliverable, interfaces, acceptance criteria, rough size, owner, and dependencies. An element with no dictionary entry is unestimable and unownable.
-8. Apply same-taxonomy-everywhere. The WBS is the one taxonomy reused for ownership, folder grouping, CI grouping, and risk labels, so the project keeps a single source of truth.
-9. Self-verify (see Verification) and emit the WBS table plus dictionary, then hand off to `organizing-project-folders` to derive the folder structure.
+1. Name the single top deliverable as level 1. If you cannot name one product, stop. You have a goal, not a deliverable, and the breakdown will leave gaps.
+2. Break it down product-first. Split each parent into the nouns it is made of (components, subsystems, documents, data), not the verbs done to it. Verbs live only in a clearly labeled activity layer below a work package.
+3. Apply the 100% rule at every parent. The children must cover exactly the parent's scope, no more and no less. Write any put-off scope as a clear gap line instead of leaving it unsaid.
+4. Apply no overlaps and the one-home rule. Every piece belongs to exactly one parent, and no two siblings claim the same work. Fix overlap by re-cutting the boundary or by pulling shared work up into one common piece. Never fix it by copying.
+5. Break down only until each leaf is doable. Stop when a leaf is one piece of work someone can own, estimate, and verify (the 8/80 sense check, roughly two to three levels). Going deeper than the work-package line is overhead, not rigor. Match the depth to the mode.
+6. Number with outline traceability (`1`, `1.2`, `1.2.3`). The number is the lasting ID that the folder map, the dictionary, and cross-references all key on.
+7. Write the dictionary. For each piece, record the scope, what is in and out of scope, the deliverable, the interfaces, the acceptance criteria, a rough size, the owner, and the dependencies. A piece with no dictionary entry cannot be estimated or owned.
+8. Use the same taxonomy everywhere. The work breakdown is the one taxonomy you reuse for ownership, folder grouping, CI grouping, and risk labels. That keeps one source of truth.
+9. Self-check (see Verification), then output the work-breakdown table plus the dictionary. Hand off to `organizing-project-folders` to turn it into a folder structure.
 
 ## Outputs
 
-- A WBS as an outline-numbered table, product-oriented.
-- A dictionary row per element: scope, in/out-of-scope, deliverable, interfaces, acceptance, size, owner, dependencies.
-- Named common elements held once, not copied across siblings.
-- An explicit deferred-scope or gap line wherever the 100% rule was bounded.
+- A work breakdown as an outline-numbered table, product-first.
+- A dictionary row per piece: scope, in and out of scope, deliverable, interfaces, acceptance, size, owner, dependencies.
+- Named common pieces held once, not copied across siblings.
+- A clear put-off-scope or gap line wherever the 100% rule was bounded.
 - A handoff note to folder structuring.
 
 ## Verification
 
-- 100% rule: for each parent, the children's scope statements cover it with nothing missing and nothing invented; any gap is written, not implied.
-- Mutual exclusivity and one-home: no element appears under two parents; no sibling scopes overlap.
-- Product orientation: level 2 and 3 names are nouns; verbs appear only under a labeled activity layer.
-- Dictionary completeness: every outline number has a non-empty dictionary entry.
-- Leveling: every leaf is an ownable, estimable, verifiable work package; none decomposed below actionable value.
-- Reviewer litmus test: for any element a reviewer can answer what product it is, who owns it, what interfaces it serves, and what would prove it acceptable.
+- 100% rule: for each parent, the children's scope statements cover it with nothing missing and nothing invented. Any gap is written, not left unsaid.
+- No overlaps and one home: no piece appears under two parents; no two siblings overlap.
+- Product-first: level 2 and 3 names are nouns. Verbs appear only under a labeled activity layer.
+- Dictionary complete: every outline number has a filled-in dictionary entry.
+- Leveling: every leaf is a piece someone can own, estimate, and verify. None is broken down below the point where that adds value.
+- Reviewer test: for any piece, a reviewer can answer what product it is, who owns it, what interfaces it serves, and what would prove it done.
 
 ## Escalation
 
-- Stop when no single top deliverable can be named: the objective is a goal, not a product.
-- Escalate to the owner when children cannot sum to the parent without overlap, or when decomposition reveals unestimable or unknown work.
-- Escalate when the user needs an authoritative cost or schedule artifact, which is outside this skill.
-- Escalate before forcing a boundary that conflicts with a baselined structure; see `recording-a-known-good-version`.
+- Stop when you cannot name one top deliverable. The goal is a goal, not a product.
+- Escalate to the owner when the children cannot add up to the parent without overlap, or when the breakdown reveals work you cannot estimate or do not understand.
+- Escalate when the user needs an official cost or schedule document, which is outside this skill.
+- Escalate before forcing a boundary that conflicts with a saved known-good structure. See `recording-a-known-good-version`.
 
 ## Common Rationalizations
 
-- "I'll just list the tasks." Tasks are verbs; a WBS is product nouns. A task list hides gaps and overlaps.
-- "Close enough to 100%." Close enough is exactly where orphaned scope hides; name the gap.
-- "Two siblings can both own this." Overlap is double-counted work and ambiguous ownership, not convenience.
-- "The dictionary is obvious from the names." A name is not scope; an undefined element is unownable.
-- "Deeper is more rigorous." Decomposition past the work package is tracking overhead.
-- "The breakdown grew, so the mission grew." Scope growth past the anchor is drift; see `staying-on-mission`.
+- "I'll just list the tasks." Tasks are verbs; a work breakdown is product nouns. A task list hides gaps and overlaps.
+- "Close enough to 100%." Close enough is exactly where orphaned scope hides. Name the gap.
+- "Two siblings can both own this." Overlap means double-counted work and unclear ownership, not convenience.
+- "The dictionary is obvious from the names." A name is not scope. A piece with no definition cannot be owned.
+- "Deeper is more rigorous." Breaking down past the work package is just tracking overhead.
+- "The breakdown grew, so the mission grew." Scope growth past the anchor is drift. See `staying-on-mission`.
 
 ## Red Flags
 
 - Children that plainly do not cover the parent, with no stated gap.
 - The same work reachable through two branches of the tree.
-- Verbs ("update", "refactor") used as level 2 or 3 element names.
-- An element with no dictionary entry or no owner.
-- A "miscellaneous" or "other" bucket absorbing unrelated scope.
-- Outline numbers with gaps or duplicates; a leaf no one can estimate.
+- Verbs ("update", "refactor") used as level 2 or 3 piece names.
+- A piece with no dictionary entry or no owner.
+- A "miscellaneous" or "other" bucket soaking up unrelated scope.
+- Outline numbers with gaps or duplicates, or a leaf no one can estimate.
 
 ## Source-lineage note
 

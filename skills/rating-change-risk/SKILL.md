@@ -1,76 +1,76 @@
 ---
 name: rating-change-risk
-description: Selects Quick, Standard, or a stronger human-reviewed mode from consequence, reversibility, and uncertainty. Use when starting a change to code, docs, dependencies, AI authority, releases, or public claims and the right rigor level is unclear. Do not use for a trivial reversible edit with obvious proof, which is Quick by default.
+description: Picks Quick, Standard, or a stronger human-reviewed mode based on consequence, how easy it is to undo, and how much is unknown. Use when you start a change to code, docs, dependencies, AI power, releases, or public claims and the right level of care is unclear. Do not use for a tiny easy-to-undo edit with obvious proof, which is Quick by default.
 ---
 
 # Classifying Change Risk
 
 ## Overview
 
-Classify the change before building so rigor scales by consequence and evidence need. The output is a mode decision tied to the decision question, proof obligations, and escalation triggers.
+Sort the change before you build it. That way the care you take matches the stakes and the evidence the change needs. The result is a mode choice, tied to the decision question, what the change must prove, and the triggers to escalate.
 
 ## When to Use
 
-- A change request is new, vague, or expanded.
-- The decision question is known but the evidence gate is unclear.
-- A PR has AI-generated code, tests, docs, prompts, or release artifacts.
-- Reviewers disagree about whether Quick evidence is enough.
-- Work is routine, procedural, novel, interrupted, resumed, delegated, or high consequence and needs the right HPI control.
+- A change request is new, vague, or has grown.
+- You know the decision question, but the evidence bar is unclear.
+- A pull request has AI-generated code, tests, docs, prompts, or release files.
+- Reviewers disagree on whether Quick evidence is enough.
+- The work is routine, by-the-book, new, interrupted, resumed, handed off, or high stakes, and you need the right habit to control it.
 
 ## When Not to Use
 
-- A packet already has a fresh mode decision and no scope changed.
-- The system is actively failing and needs incident handling first.
+- A change record already has a fresh mode choice and the scope has not changed.
+- The system is failing right now and needs incident handling first.
 
 ## Inputs
 
-- User request, issue, PR, or diff.
-- Affected files, dependencies, prompts, data, credentials, APIs, release artifacts, and users.
+- The user request, issue, pull request, or diff.
+- The files, dependencies, prompts, data, credentials, APIs, release files, and users the change affects.
 - `docs/02-operating-system/activation-thresholds.md`.
-- Existing packet `risk.md` if present.
+- The change record's `risk.md`, if one exists.
 
 ## Process
 
-1. Restate the decision question and the evidence gate it needs.
-2. Identify consequence, reversibility, exposure, detectability, uncertainty, and agent authority.
-3. Screen work mode: routine, known procedure, novel/uncertain, interrupted/resumed, or critical action.
-4. Choose Quick only for local, reversible, easy-to-prove work with no new trust boundary.
-5. Choose Standard for user-visible, durable, dependency, permission, data, AI, operational, or release consequence.
-6. Mark Nuclear, Incident, Research Board, or Release as human-reviewed patterns when activated.
-7. Record escalation triggers and the minimum proof required.
+1. Restate the decision question and the evidence bar it needs.
+2. Judge the consequence, how easy it is to undo, who is exposed, how easily a failure would be caught, how much is unknown, and how much power the agent has.
+3. Name the work mode: routine, known procedure, new or uncertain, interrupted or resumed, or a critical action.
+4. Choose Quick only for local, easy-to-undo, easy-to-prove work that adds no new trust boundary.
+5. Choose Standard when the change is user-visible or lasting, or touches dependencies, permissions, data, AI, operations, or a release.
+6. Mark Nuclear, Incident, Research Board, or Release as human-reviewed patterns when they apply.
+7. Record the triggers to escalate and the least proof required.
 
 ## Outputs
 
-- Selected mode.
-- Decision question and evidence gate.
-- Mode rationale.
-- Required packet files.
-- Proof command or evidence gap.
-- HPI control recommendation: self-check, turnover, context pack, independent verification, OPEX, or trust check.
-- Escalation triggers.
+- The chosen mode.
+- The decision question and the evidence bar.
+- The reason for the mode.
+- The change-record files required.
+- The proof command, or the evidence gap.
+- A suggested habit to control the work: self-check, handoff, briefing pack, a second independent check, lessons from operation (OPEX), or a trust check.
+- The triggers to escalate.
 
 ## Verification
 
-- `risk.md` names mode, scope, consequence, reversibility, exposure, uncertainty, and proof required.
-- Quick and Standard packets pass `python tools/ng.py validate <packet>` after required files are filled.
+- `risk.md` names the mode, scope, consequence, how easy it is to undo, who is exposed, what is unknown, and the proof required.
+- Quick and Standard records pass `python tools/ng.py validate <packet>` after the required files are filled.
 
 ## Escalation
 
-- Escalate when the change affects money, sensitive data, security, external trust, irreversible operations, autonomous tools, or release readiness.
-- Stop when the requested mode understates evident consequence.
+- Escalate when the change affects money, sensitive data, security, outside trust, actions that cannot be undone, autonomous tools, or release readiness.
+- Stop when the requested mode is weaker than the obvious stakes.
 
 ## Common Rationalizations
 
 - "It is small." Small code can change a large trust boundary.
 - "The agent only changed docs." Docs can make public claims.
-- "We can fix it later." Hard-to-detect or hard-to-reverse failures need stronger mode now.
+- "We can fix it later." Failures that are hard to catch or hard to undo need a stronger mode now.
 
 ## Red Flags
 
-- Mode selected from effort tolerance instead of consequence.
+- The mode was picked from how much effort it takes, not from the stakes.
 - No rollback or restore path is named for release-facing work.
-- AI tool authority is broader than the packet records.
+- The agent's tool power is broader than the change record shows.
 
 ## Source-lineage note
 
-This skill is an original risk-scaling workflow influenced by public source families mapped in `docs/00-standards-foundation/source-map.md`. It does not determine regulatory classification or compliance.
+This skill is an original risk-scaling workflow. It draws on public sources mapped in `docs/00-standards-foundation/source-map.md`. It does not set any regulatory class and does not create compliance.

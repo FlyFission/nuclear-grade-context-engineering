@@ -7,64 +7,64 @@ description: Checks a critical agent action against its exact target, expected r
 
 ## Overview
 
-Self-checking makes a cut-point action deliberate: identify the target, expected result, stop condition, action, and after-action check before claiming success.
+A self-check turns a high-stakes action into a careful one. Before you claim success, name the target, the result you expect, when to stop, the action itself, and the check you will run afterward.
 
 ## When to Use
 
-- A command can delete, move, publish, release, migrate, or affect external state.
-- An edit touches public claims, source lineage, permissions, credentials, dependencies, models, APIs, or release posture.
-- An agent is about to make a broad or repetitive change where wrong-target work is plausible.
-- A fast candidate is about to become a public claim, accepted baseline, or release action.
+- A command can delete, move, publish, release, migrate, or change something outside the repo.
+- An edit touches public claims, where ideas came from, permissions, credentials, dependencies, models, APIs, or the release.
+- An agent is about to make a wide or repeated change, where hitting the wrong target is easy.
+- A quick candidate is about to become a public claim, an accepted version, or a release action.
 
 ## When Not to Use
 
 - The task is a tiny local edit with obvious proof.
-- The action is read-only and has no downstream decision impact.
-- The packet already requires a stronger human gate before action.
+- The action only reads data and has no effect on any later decision.
+- The change record already requires a stronger human check before the action.
 
 ## Inputs
 
-- Intended action, exact target, current phase, and authority source.
-- Expected result, likely wrong-target failure, and stop condition.
-- Proof command, review check, or evidence link needed after action.
+- The action you mean to take, the exact target, the current phase, and where your authority comes from.
+- The result you expect, the most likely wrong-target mistake, and when to stop.
+- The proof command, review check, or evidence link you will need after the action.
 
 ## Process
 
-1. Stop at the cut point and name the exact action and target.
-2. Think through expected result, likely error, and what would make the action invalid.
-3. Act only inside the named authority boundary.
-4. Review actual result against expected result before making claims.
-5. Record mismatch, gap, or escalation instead of retrying blindly.
+1. Stop at the key moment and name the exact action and target.
+2. Think through the result you expect, the likely error, and what would make the action wrong.
+3. Act only inside the authority you were given.
+4. Compare the real result against the result you expected, before you make any claim.
+5. Record any mismatch, gap, or escalation. Do not just retry blindly.
 
 ## Outputs
 
-- Compact self-check note or `self-check.md`.
-- Action, target, expected result, stop condition, actual result, and evidence.
-- Escalation note when the result does not match.
+- A short self-check note, or a `self-check.md` file.
+- The action, target, expected result, stop condition, real result, and evidence.
+- An escalation note when the result does not match.
 
 ## Verification
 
-- The action target is exact enough to prevent wrong-file or wrong-environment work.
+- The target is exact enough to rule out work on the wrong file or the wrong environment.
 - The expected result is named before the action.
-- The after-action check compares evidence with expectation.
+- The after-action check compares the evidence against what you expected.
 
 ## Escalation
 
-- Pause if authority, target, expected result, or evidence is unclear.
-- Escalate when the action affects credentials, network effects, data, releases, public trust, or irreversible state.
+- Pause if the authority, the target, the expected result, or the evidence is unclear.
+- Escalate when the action affects credentials, network effects, data, releases, public trust, or anything that cannot be undone.
 
 ## Common Rationalizations
 
-- "It is only one command." Single commands can do broad damage.
-- "The target is obvious." Wrong-target errors come from assumed targets.
-- "I can inspect after." Inspection only helps if expected result was named first.
+- "It is only one command." A single command can do wide damage.
+- "The target is obvious." Wrong-target mistakes come from assumed targets.
+- "I can check after." Checking after only helps if you named the expected result first.
 
 ## Red Flags
 
-- Action starts before target is named.
-- Expected result is missing or vague.
-- A mismatch is treated as a reason to retry instead of pause.
-- Public wording claims safe, secure, approved, or compliant without scoped evidence.
+- The action starts before the target is named.
+- The expected result is missing or vague.
+- A mismatch is treated as a reason to retry instead of a reason to pause.
+- Public wording claims safe, secure, approved, or compliant with no scoped evidence behind it.
 
 ## Source-lineage note
 

@@ -1,69 +1,69 @@
 ---
 name: vetting-outside-code-and-models
-description: Screens dependencies, models, APIs, SaaS tools, generated artifacts, and vendor claims for intended use, local evidence, gaps, and release impact. Use when any of these affect evidence, permissions, data, release posture, or public trust. Do not use for a purely internal refactor with no external dependency, or for a functional-correctness question.
+description: Checks dependencies, models, APIs, SaaS tools, generated files, and vendor claims against how you will actually use them, the proof you have, the gaps, and the release impact. Use when any of these affect evidence, permissions, data, releases, or public trust. Do not use for an internal cleanup with no outside dependency, or for a does-it-work question.
 ---
 
 # Checking Dependency And Model Trust
 
 ## Overview
 
-External trust is an intended-use decision. A dependency, model, API, SaaS tool, or vendor claim should be accepted only for the scope its evidence and controls support.
+Trusting outside code is really a decision about how you will use it. A dependency, model, API, SaaS tool (software you rent online), or vendor claim should be accepted only for the job its evidence and controls actually support. Trust it for that job. Do not trust it past that.
 
 ## When to Use
 
-- A change adds or updates a package, model, API, SaaS service, generated artifact, build service, or data source.
-- External claims are used as evidence for behavior, security, privacy, reliability, licensing, or release posture.
-- A tool gains credentials, network access, data access, or release influence.
+- A change adds or updates a package, a model, an API, an online service, a generated file, a build service, or a data source.
+- You are leaning on an outside claim as proof of behavior, security, privacy, reliability, licensing, or release readiness.
+- A tool gets credentials, network access, data access, or a say in releases.
 
 ## When Not to Use
 
-- The dependency is dev-only, reversible, and already covered by Quick proof.
-- The request is only to cite a public source without adopting the source as trust evidence.
-- A qualified security or procurement review is required outside this repo.
+- The dependency is for development only, easy to undo, and already covered by a quick proof.
+- The request is only to cite a public source, not to lean on it as trust evidence.
+- A qualified security or purchasing review is needed, which happens outside this repo.
 
 ## Inputs
 
-- Dependency/model/API/tool identity, version, provider, intended use, and affected controlled items.
-- Vendor/source claims, observed evidence, compensating controls, and revalidation triggers.
-- Data, credential, permission, build, release, and public-claim impacts.
+- The dependency, model, API, or tool: its name, version, provider, intended use, and which controlled items it touches.
+- The vendor or source claims, the evidence you saw yourself, the backup controls, and what would force a re-check.
+- The effects on data, credentials, permissions, the build, the release, and public claims.
 
 ## Process
 
-1. State the intended use and consequence if the external item is wrong, unavailable, compromised, or changed.
-2. Separate vendor/source claims from repo-observed evidence.
-3. Identify data, credential, permission, license, release, and public-trust impacts.
-4. Name compensating controls, verification evidence, owner, and revalidation trigger.
-5. Route unresolved trust gaps to defer, block, or ship-with-residual-risk decisions.
+1. State how you will use it, and what happens if it is wrong, missing, hacked, or changed.
+2. Keep vendor and source claims separate from evidence you saw in your own repo.
+3. Find the effects on data, credentials, permissions, license, release, and public trust.
+4. Name the backup controls, the proof, the owner, and what would force a re-check.
+5. Send any unresolved trust gap to a decision: defer, block, or ship with known risk.
 
 ## Outputs
 
-- Supplier-trust section, `supplier-trust.md`, or packet trust table.
-- Intended-use decision, evidence, gaps, compensating controls, and revalidation trigger.
-- Release impact for `ship.md` or `decision.md`.
+- A supplier-trust section, a `supplier-trust.md` file, or a trust table in the change record.
+- The use decision, the evidence, the gaps, the backup controls, and the re-check trigger.
+- The release impact for `ship.md` or `decision.md`.
 
 ## Verification
 
-- The repo does not treat external marketing or docs as proof of local behavior.
-- Intended use is narrower than or equal to available evidence.
-- Gaps flow into verification and release decision records.
+- The repo never treats outside marketing or docs as proof of how the code behaves here.
+- The intended use is no broader than the evidence you have.
+- Gaps flow into the verification and release records.
 
 ## Escalation
 
-- Escalate for credentials, production data, security/privacy claims, material dependency risk, model behavior drift, or public trust claims.
-- Require qualified review when legal, security, safety, procurement, or regulated-use adequacy is being decided.
+- Escalate for credentials, production data, security or privacy claims, real dependency risk, model behavior drifting, or public trust claims.
+- Require a qualified review when legal, security, safety, purchasing, or regulated-use fitness is being decided.
 
 ## Common Rationalizations
 
-- "The vendor says it is secure." Vendor language is input, not local proof.
-- "It is a minor version bump." Small changes can alter trust posture.
-- "The model is better." Better is not evidence for this intended use.
+- "The vendor says it is secure." Vendor wording is input, not proof from your own repo.
+- "It is just a minor version bump." Small changes can still shift trust.
+- "The model is better." Better is not proof it fits this use.
 
 ## Red Flags
 
-- Version, model, provider, or API surface is unnamed.
-- No revalidation trigger.
-- Public claims exceed observed evidence.
-- Tests pass but dependency advisory, license, permission, or model-behavior evidence is missing.
+- The version, model, provider, or API surface is not named.
+- There is no re-check trigger.
+- Public claims go past the evidence you actually saw.
+- Tests pass, but the dependency advisory, license, permission, or model-behavior evidence is missing.
 
 ## Source-lineage note
 

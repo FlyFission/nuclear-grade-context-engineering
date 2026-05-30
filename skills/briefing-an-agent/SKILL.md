@@ -1,76 +1,76 @@
 ---
 name: briefing-an-agent
-description: Prepares focused context for an AI agent, reviewer, verifier, or releaser with explicit role, mission anchor, authority, evidence obligations, forbidden actions, and stop conditions. Use when delegating or resuming consequential work. Do not use for a trivial self-contained task that needs no handoff.
+description: Prepares focused context for an AI agent, reviewer, verifier, or releaser, with a clear role, goal anchor, authority, evidence to produce, forbidden actions, and stop conditions. Use when handing off or resuming work that matters. Do not use for a tiny self-contained task that needs no handoff.
 ---
 
 # Packing Agent Context
 
 ## Overview
 
-Context packs give agents and reviewers the right focused information: role, mode, decision question, objective, affected files, evidence obligations, approvals, forbidden actions, source lineage, critical next action, and turnover state.
+A context pack gives an agent or a reviewer the right focused information, and nothing extra. It states the role, the mode, the question to decide, the goal, the files affected, the evidence to produce, the approvals, the actions that are off limits, where the ideas came from, the most important next action, and the handoff state.
 
 ## When to Use
 
 - An AI agent will edit files, run commands, call tools, or prepare release evidence.
-- A reviewer needs a one-screen summary of a Standard packet.
-- A long research or implementation thread must be distilled into operational context.
-- Work is resumed, delegated, or transferred and the next owner needs a closed-loop briefing.
+- A reviewer needs a one-screen summary of a Standard change record.
+- A long research or build thread has to be boiled down into the context needed to act.
+- Work is resumed, handed off, or transferred, and the next owner needs a clean briefing.
 
 ## When Not to Use
 
-- The task is a small Quick change with all context already in `risk.md` and `proof.md`.
-- The agent has no authority to act and only needs a file explanation.
+- The task is a small Quick change, and all the context is already in `risk.md` and `proof.md`.
+- The agent has no power to act and only needs a file explained.
 
 ## Inputs
 
-- Packet path and selected mode.
-- Role: builder, reviewer, verifier, releaser, incident lead, or researcher.
-- Affected files, allowed commands, forbidden actions, approval gates, and required evidence.
+- The path to the change record and the chosen mode.
+- The role: builder, reviewer, verifier, releaser, incident lead, or researcher.
+- The files affected, the allowed commands, the forbidden actions, the approval gates, and the evidence required.
 - `docs/02-operating-system/context-packs.md`.
 
 ## Process
 
-1. Name the role, decision question, and objective, and carry the mission anchor (objective, success criteria, non-goals) so it survives context resets. See `staying-on-mission`.
-2. Include only the packet files, affected files, source rows, and evidence commands needed for the next decision.
-3. State last completed action, changed conditions, critical next action, likely error, and control.
-4. State current work phase: explore, candidate, audit, or accept.
-5. State file, command, network, credential, approval, and release authority.
-6. State forbidden claims, do-not-touch targets, stop conditions, and turnover need.
-7. Link the context pack back to the packet and relevant mode rules.
-8. Require incoming confirmation when responsibility transfers.
+1. Name the role, the question to decide, and the goal. Carry the goal anchor (the goal, the signs of success, and the non-goals, meaning what is out of scope) so it survives a context reset. See `staying-on-mission`.
+2. Include only the record files, affected files, source rows, and evidence commands needed for the next decision.
+3. State the last action that finished, what conditions changed, the most important next action, the likely mistake, and how to guard against it.
+4. State the current phase: explore, candidate, audit, or accept.
+5. State the agent's power over files, commands, the network, credentials, approvals, and the release.
+6. State the claims that are off limits, the targets not to touch, when to stop, and whether a handoff is needed.
+7. Link the context pack back to the record and the mode rules that apply.
+8. Make the incoming owner confirm the handoff when responsibility transfers.
 
 ## Outputs
 
-- A context pack section or file.
-- Clear authority boundaries.
-- Next action and evidence requirement.
-- Last completed action, changed conditions, and closed-loop handoff prompt when activated.
+- A context-pack section or file.
+- Clear limits on the agent's power.
+- The next action and the evidence required.
+- The last action that finished, the conditions that changed, and a handoff prompt that asks for confirmation back, when one is needed.
 
 ## Verification
 
-- A reader can answer what they may do, what must remain true, what evidence is required, and when to stop.
-- A resumed or delegated agent can identify where to continue and what changed.
-- The context pack does not ask for whole-repo or full-standards loading without an activated reason.
+- A reader can answer what they may do, what must stay true, what evidence is required, and when to stop.
+- An agent that resumes or takes over can tell where to pick up and what changed.
+- The context pack does not ask anyone to load the whole repo or all the standards without a reason.
 
 ## Escalation
 
-- Stop if requested actions exceed the context pack authority.
-- Escalate when credentials, network effects, production data, release authority, or external trust claims appear.
-- Escalate to `handing-off-work` when responsibility transfers with open work or changed conditions.
+- Stop if the requested actions go past the power set in the context pack.
+- Escalate when credentials, network effects, production data, release power, or claims about outside trust appear.
+- Move to `handing-off-work` when responsibility transfers with work still open or conditions changed.
 
 ## Common Rationalizations
 
-- "More context is safer." Excess context hides the actual decision and increases token burn.
-- "The agent can infer permissions." Tool authority must be explicit.
-- "Approval can happen later." Approval gates belong before the side effect.
+- "More context is safer." Extra context hides the real decision and burns tokens.
+- "The agent can work out its permissions." Tool power has to be stated.
+- "Approval can happen later." Approval comes before the action that has side effects, not after.
 
 ## Red Flags
 
-- No forbidden actions.
-- No allowed file or command scope.
-- No last completed action for resumed or delegated work.
-- Source lineage is pasted wholesale instead of linked.
+- No list of actions that are off limits.
+- No list of allowed files or commands.
+- No record of the last action that finished, for work that is resumed or handed off.
+- The source lineage is pasted in whole instead of linked.
 
 ## Source-lineage note
 
-This skill is an original context-discipline pattern influenced by public configuration management, secure development, AI risk, and systems engineering sources mapped in `docs/00-standards-foundation/source-map.md`. It does not create formal assurance.
+This skill is an original context-discipline pattern. It draws on public configuration-management, secure-development, AI-risk, and systems-engineering sources mapped in `docs/00-standards-foundation/source-map.md`. It does not create formal assurance.

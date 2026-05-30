@@ -7,67 +7,67 @@ description: Records a ship, block, defer, or ship-with-risk decision that ties 
 
 ## Overview
 
-Ship readiness is a slow-audit decision record, not a mood. It ties baseline, evidence status, residual risk, rollback, monitoring, handoff, and release decision together before a candidate becomes accepted configuration.
+Release readiness is a careful, audited decision you write down. It is not a mood. It ties seven things together before a candidate becomes the accepted version: the baseline (the version everyone agreed is correct), the evidence status, the leftover risk, the rollback plan, the monitoring plan, the handoff, and the release decision itself.
 
 ## When to Use
 
-- A Standard packet is approaching merge or release.
-- A PR changes user behavior, security posture, dependencies, agent authority, or operational state.
-- Evidence gaps must be accepted or made blocking.
-- A fast candidate is being promoted into a baseline, public claim, release, or other trust-bearing state.
-- Turnover, support handoff, OPEX trigger, or conservative decision posture needs to be explicit.
+- A Standard change record is getting close to merge or release.
+- A pull request changes how users see the system, its security, its dependencies, what an agent may do, or how it runs in production.
+- Evidence gaps have to be accepted or made into blockers.
+- A quick candidate is being promoted into a baseline, a public claim, a release, or any other state that carries trust.
+- A handoff, a support handoff, a lesson from real operation (OPEX), or a cautious decision stance needs to be stated plainly.
 
 ## When Not to Use
 
-- The work is a local Quick packet with no release effect.
-- Incident containment or rollback is still in progress.
+- The work is a local Quick change record with no effect on a release.
+- An incident is still being contained or rolled back.
 
 ## Inputs
 
-- `ship.md`, `verification.md`, `trace.md`, PR status, CI status, rollback plan, monitoring plan, and open risks.
+- `ship.md`, `verification.md`, `trace.md`, the pull request status, the CI status, the rollback plan, the monitoring plan, and the open risks.
 - `docs/02-operating-system/change-control-packets.md`.
 
 ## Process
 
-1. Confirm baseline and affected artifacts.
-2. Confirm the decision question has been answered by evidence, not confidence.
-3. Review each evidence status and unresolved gap, and check for accumulated drift: does the shipped change still serve the mission anchor, with non-goals uncrossed? See `staying-on-mission`.
-4. Confirm rollback or restore path.
-5. Confirm monitoring and post-release checks.
-6. State why the decision is conservative enough for remaining uncertainty.
-7. Record one decision: ship, block, defer, or ship with named residual risk.
-8. Name owner, abort trigger, turnover need, OPEX trigger, and baseline trigger.
+1. Confirm the baseline and the artifacts the change affects.
+2. Confirm the question to decide has been answered by evidence, not by confidence.
+3. Review each evidence status and each open gap. Check for drift building up: does the shipped change still serve the goal anchor, with the non-goals (the things ruled out of scope) still uncrossed? See `staying-on-mission`.
+4. Confirm a rollback or restore path.
+5. Confirm the monitoring and the checks you will run after release.
+6. State why the decision is cautious enough given what is still uncertain.
+7. Record one decision: ship, block, defer, or ship with named leftover risk.
+8. Name the owner, the trigger to abort, whether a handoff is needed, the trigger for an operating lesson (OPEX), and the trigger to record a new baseline.
 
 ## Outputs
 
-- Updated `ship.md`.
-- Release decision and rationale.
-- Residual risks, owner, monitoring, and rollback notes.
-- Conservative decision posture, turnover, and OPEX trigger.
+- An updated `ship.md`.
+- The release decision and the reason for it.
+- The leftover risks, the owner, the monitoring, and the rollback notes.
+- The cautious decision stance, the handoff, and the OPEX trigger.
 
 ## Verification
 
-- `ship.md` mentions release decision, rollback, and monitoring.
-- CI and packet validation results are linked or explicitly unavailable.
-- A reviewer can see why release is accepted or blocked.
+- `ship.md` states the release decision, the rollback, and the monitoring.
+- The CI and change-record validation results are linked, or it says plainly that they are not available.
+- A reviewer can see why the release is accepted or blocked.
 
 ## Escalation
 
-- Stop if release readiness depends on unreviewed compliance, safety, security, or approval claims.
-- Escalate if rollback is impossible, monitoring is missing, or external trust impact is unclear.
+- Stop if release readiness rests on unreviewed compliance, safety, security, or approval claims.
+- Escalate if rollback is impossible, monitoring is missing, or the effect on outside trust is unclear.
 
 ## Common Rationalizations
 
-- "Green CI means ship." Release readiness includes residual risk and rollback.
-- "The gap is probably fine." Accepted residual risk must be named.
-- "Monitoring is overkill." Monitoring should scale by consequence, not habit.
-- "Support will figure it out." Operational handoff is part of release readiness.
+- "Green CI means ship." Release readiness also covers leftover risk and rollback.
+- "The gap is probably fine." Any leftover risk you accept must be named.
+- "Monitoring is overkill." Monitoring should scale with the stakes, not with habit.
+- "Support will figure it out." The handoff to operations is part of release readiness.
 
 ## Red Flags
 
 - No release decision.
-- Rollback is vague or missing.
-- Deferred evidence has no owner or consequence.
+- A rollback plan that is vague or missing.
+- Deferred evidence with no owner and no stated consequence.
 
 ## Source-lineage note
 

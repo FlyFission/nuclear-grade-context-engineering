@@ -1,89 +1,91 @@
 ---
 name: organizing-project-folders
-description: Designs a clean folder and file structure as agentic architecture, deriving it from a work breakdown structure or an existing tree, grouping by cohesion and disposition with platform-safe sortable names and a dictionary note per folder. Use when laying out a repo or agent workspace, deciding where a file belongs, or fixing a junk-drawer directory. Do not use for a single obvious file path or renaming inside an already-clean tree.
+description: Designs a clean folder and file layout as real architecture, building it from a work breakdown or an existing tree, grouping by what changes together and what happens to it, with platform-safe sortable names and a short note per folder. Use when laying out a repo or agent workspace, deciding where a file belongs, or fixing a junk-drawer folder. Do not use for a single obvious file path or renaming inside an already-clean tree.
 ---
 
 # Structuring Agentic Folders
 
 ## Overview
 
-Folders are a first-class engineering decision, not an afterthought. Each one is a grouping commitment that should map to a work-breakdown element or a disposition rule, hold things that change together (high cohesion, low coupling), and carry a name that is platform-safe, sortable, and machine-friendly. This skill puts a folder-decision checklist in front of the agent so directories are reasoned about rather than defaulted, and it applies the Model Workspace Protocol (numbered stage folders, per-stage context contracts, layered context, review gates) when the structure is a sequential agent workflow.
+Folders are a real engineering decision, not an afterthought. Each folder is a choice about what to group. A good folder maps to one piece of the work breakdown or one disposition rule (what eventually happens to its contents: kept, temporary, archived, or generated). It holds things that change together. In other words, it has high cohesion (its contents share one reason to change) and low coupling (it does not depend tightly on other folders). Its name is safe on any platform, sorts cleanly, and is easy for tools to read.
+
+This skill puts a folder-decision checklist in front of the agent, so folders get reasoned about instead of created by default. When the structure is a step-by-step agent workflow, it also applies the Model Workspace Protocol: numbered stage folders, a context file per stage, layered context, and review gates between stages.
 
 ## When to Use
 
 - Laying out a new repo, service, feature, or agent workspace tree.
 - Deciding where a new file or module belongs.
-- A directory has become a junk drawer and no longer maps to the work.
-- Materializing a WBS into folders, or reorganizing an existing tree.
-- Designing a sequential agent workflow as filesystem structure rather than framework code.
+- A folder has become a junk drawer and no longer maps to the work.
+- Turning a work breakdown into real folders, or reorganizing an existing tree.
+- Designing a step-by-step agent workflow as folders on disk instead of framework code.
 
 ## When Not to Use
 
 - A single file with an obvious home, or a rename inside an already-clean, conventional tree.
-- Incident containment.
-- A layout fully dictated by an external framework's mandatory structure (follow that instead).
-- Enforcement of ownership, CI gates, or supply-chain trust, which belong to `choosing-what-to-control`, `checking-release-readiness`, and `vetting-outside-code-and-models`.
+- A live incident you have to contain first.
+- A layout fully fixed by an outside framework's required structure. Follow that instead.
+- Enforcing ownership, CI gates, or supply-chain trust. Those belong to `choosing-what-to-control`, `checking-release-readiness`, and `vetting-outside-code-and-models`.
 
 ## Inputs
 
-- The WBS and dictionary (`templates/standard/wbs.md` or a `wbs.md`) when present; otherwise the scope to be reverse-decomposed.
+- The work breakdown and its dictionary (`templates/standard/wbs.md` or a `wbs.md`) when there is one. Otherwise the scope, which you will break down in reverse.
 - The current repo layout and any conventions doc.
-- The mission anchor and platform or tooling constraints.
-- Disposition or retention intent per element (keep, transient, archive, generated).
+- The mission anchor and any platform or tooling limits.
+- For each piece, what eventually happens to it (keep, temporary, archive, generated).
 
 ## Process
 
-1. Branch on paradigm. Decide whether you are structuring a production codebase (product-oriented tree: deliverable roots plus a small approved set of common elements, where the folder tree is the WBS projected to disk) or an agent workflow workspace (Model Workspace Protocol). Apply the matching pattern.
-2. Establish the source of truth. If a WBS exists, derive folders from its outline numbers and turn dictionary entries into per-folder notes. If not, reverse-engineer the implicit breakdown first, or escalate to `breaking-down-the-work`.
-3. Run the folder-decision checklist for every proposed directory. Is it earned (does grouping reduce load, or is one file enough)? Is it cohesive (one reason to change)? Is coupling out of it low? Does it map to exactly one WBS element or one disposition rule? Is it the single home for this concept? Is it named safely and shallow enough? Is it documented?
-4. For the workflow paradigm, apply the Model Workspace Protocol. Numbered stage folders encode order (`01_...`, `02_...`); each stage carries a context file with Inputs, Process, and Outputs; persistent reference material and per-run working output are separated; scripts do the mechanical work; every output is an inspectable edit surface with a human review gate at each boundary.
-5. Name for platform safety and sort. Lowercase, alphanumeric, ISO-8601 dates, one dot used only for the extension, no spaces or special characters, and zero-padded sequence numbers. Pick one word-separator (hyphen or underscore) and hold it; the one accepted exception is the Model Workspace Protocol stage prefix `NN_` (a zero-padded number then an underscore, as in `01_research`), where the underscore marks the sequence boundary. Conventionally capitalized marker files (`README.md`, `LICENSE`, and Model Workspace Protocol context files such as `CONTEXT.md` and `CLAUDE.md`) are an accepted exception to the lowercase rule. Ban junk-drawer names (`misc`, `stuff`, `tmp`, `new`, `old`, `backup`, `final`, bare `utils`).
-6. Bound depth and path. Prefer flatter trees, cap nesting near eight levels and total path near 255 characters, and do not nest one folder per WBS level mechanically.
-7. Give each non-trivial folder a short README or dictionary note (purpose, what belongs, what does not, owner) and a disposition note.
-8. Reconcile with the existing tree before proposing changes. Respect current conventions, propose the minimum new structure, and flag conflicts as findings rather than overwriting a baselined layout.
-9. Emit the folder map (outline number to path, with a disposition column) and the naming, depth, and single-source audit result.
+1. Pick the pattern first. Decide whether you are structuring a production codebase (a product-first tree: deliverable roots plus a small approved set of common pieces, where the folder tree is the work breakdown laid onto disk) or an agent workflow workspace (the Model Workspace Protocol). Use the matching pattern.
+2. Set the source of truth. If a work breakdown exists, build folders from its outline numbers and turn dictionary entries into per-folder notes. If not, work out the implied breakdown first, or hand off to `breaking-down-the-work`.
+3. Run the folder-decision checklist for every proposed folder. Is it earned (does grouping cut the mental load, or would one file do)? Does its content share one reason to change? Are its ties to other folders loose? Does it map to exactly one work-breakdown piece or one disposition rule? Is it the single home for this idea? Is it named safely and kept shallow? Is it documented?
+4. For the workflow pattern, apply the Model Workspace Protocol. Numbered stage folders set the order (`01_...`, `02_...`). Each stage has a context file with Inputs, Process, and Outputs. Keep lasting reference material separate from each run's working output. Scripts do the mechanical work. Every output is something you can open and edit, with a human review gate at each boundary.
+5. Name for platform safety and clean sorting. Use lowercase letters and numbers, ISO-8601 dates (like 2026-05-30), one dot used only for the file extension, no spaces or special characters, and zero-padded sequence numbers. Pick one word separator (hyphen or underscore) and stick with it. The one accepted exception is the Model Workspace Protocol stage prefix `NN_` (a zero-padded number then an underscore, as in `01_research`), where the underscore marks the sequence boundary. Files that are normally capitalized by convention (`README.md`, `LICENSE`, and Model Workspace Protocol context files such as `CONTEXT.md` and `CLAUDE.md`) are an accepted exception to the lowercase rule. Ban junk-drawer names (`misc`, `stuff`, `tmp`, `new`, `old`, `backup`, `final`, bare `utils`).
+6. Limit depth and path length. Prefer flatter trees. Cap nesting near eight levels and total path length near 255 characters. Do not blindly nest one folder per work-breakdown level.
+7. Give each non-trivial folder a short README or dictionary note (purpose, what belongs, what does not, owner) and a note on what happens to its contents.
+8. Compare with the existing tree before proposing changes. Respect current conventions, propose the least new structure you can, and flag conflicts as findings instead of overwriting a saved known-good layout.
+9. Output the folder map (outline number to path, with a disposition column) and the result of the naming, depth, and single-source check.
 
 ## Outputs
 
-- A folder map: each element mapped to one folder or file, ordered by outline number, with a disposition column.
+- A folder map: each piece mapped to one folder or file, ordered by outline number, with a disposition column.
 - Per-folder README or dictionary stubs and disposition notes.
-- For workflow workspaces, the numbered stage layout with per-stage context contracts.
-- A naming, depth, and single-source-of-truth audit (pass or fail per rule).
+- For workflow workspaces, the numbered stage layout with a context file per stage.
+- A naming, depth, and single-source-of-truth check (pass or fail per rule).
 - Conflicts with existing conventions, flagged for an owner decision.
 
 ## Verification
 
-- Naming: every path is lowercase (apart from conventional marker files such as `README.md` and `CONTEXT.md`), uses the chosen word-separator (with the MWP `NN_` stage prefix excepted), ISO-8601 dates, one dot, and no spaces or special characters.
-- Depth and path: no path exceeds roughly eight levels or 255 characters.
-- Mapping and one-home: every folder maps to one WBS element or one disposition rule; no orphan folders; no concept has two homes.
-- Cohesion and coupling: each folder's contents share a reason to change; cross-folder references are minimized and noted.
+- Naming: every path is lowercase (apart from normally capitalized files like `README.md` and `CONTEXT.md`), uses the chosen word separator (with the Model Workspace Protocol `NN_` stage prefix excepted), uses ISO-8601 dates, has one dot, and has no spaces or special characters.
+- Depth and path: no path goes past roughly eight levels or 255 characters.
+- Mapping and one home: every folder maps to one work-breakdown piece or one disposition rule. No orphan folders. No idea has two homes.
+- Cohesion and coupling: each folder's contents share one reason to change. References across folders are kept few and noted.
 - Documentation: each non-trivial folder has a README or dictionary note and a disposition note.
-- For workflows: each numbered stage has a context contract with Inputs, Process, and Outputs, and a review gate.
+- For workflows: each numbered stage has a context file with Inputs, Process, and Outputs, and a review gate.
 
 ## Escalation
 
-- Escalate when the proposed tree conflicts with an established or baselined convention; the owner decides, not a silent override (see `recording-a-known-good-version`).
-- Escalate when single source of truth cannot be reached without an architectural decision.
-- Escalate to `breaking-down-the-work` when there is no breakdown to project from.
-- For ownership, CI, or supply-chain enforcement, route to the dedicated skills rather than encoding it here.
+- Escalate when the proposed tree conflicts with an established or saved known-good convention. The owner decides; do not override it quietly (see `recording-a-known-good-version`).
+- Escalate when you cannot reach one source of truth without an architecture decision.
+- Escalate to `breaking-down-the-work` when there is no breakdown to build from.
+- For ownership, CI, or supply-chain enforcement, route to the dedicated skills instead of building it in here.
 
 ## Common Rationalizations
 
-- "I'll make a utils or misc folder for now." For now junk drawers never get cleaned; name the real concept or do not group.
-- "Deeper nesting is more organized." Depth is a cost; flatter is usually clearer and within path limits.
-- "Spaces and capitals are fine on my machine." They break sort, scripts, and other platforms.
-- "This file fits in two places, so I'll copy it." Two homes destroys single source of truth; pick canonical and link.
-- "The folder name explains itself." Without a note and disposition the next agent guesses.
-- "One folder per WBS level keeps it tidy." Mechanical one-to-one nesting over-deepens the tree; map levels deliberately.
+- "I'll make a utils or misc folder for now." "For now" junk drawers never get cleaned. Name the real idea or do not group at all.
+- "Deeper nesting is more organized." Depth has a cost. Flatter is usually clearer and stays within path limits.
+- "Spaces and capitals are fine on my machine." They break sorting, scripts, and other platforms.
+- "This file fits in two places, so I'll copy it." Two homes destroys the single source of truth. Pick the main one and link to it.
+- "The folder name explains itself." Without a note and a disposition, the next agent has to guess.
+- "One folder per work-breakdown level keeps it tidy." Blind one-to-one nesting makes the tree too deep. Map levels on purpose.
 
 ## Red Flags
 
-- `misc`, `utils`, `temp`, or `stuff` directories, or folders holding one unrelated file each.
-- Spaces, special characters, or non-ISO dates in names, or capitals outside conventional marker files (`README.md`, `CONTEXT.md`).
-- Nesting beyond roughly eight levels, or a concept living in two trees.
-- High cross-folder coupling, or a folder that maps to no WBS element and no disposition rule.
-- A workflow stage with no context contract or no review gate.
-- Undocumented top-level directories.
+- `misc`, `utils`, `temp`, or `stuff` folders, or folders holding one unrelated file each.
+- Spaces, special characters, or non-ISO dates in names, or capitals outside normally capitalized files (`README.md`, `CONTEXT.md`).
+- Nesting past roughly eight levels, or one idea living in two trees.
+- Tight coupling across folders, or a folder that maps to no work-breakdown piece and no disposition rule.
+- A workflow stage with no context file or no review gate.
+- Undocumented top-level folders.
 
 ## Source-lineage note
 

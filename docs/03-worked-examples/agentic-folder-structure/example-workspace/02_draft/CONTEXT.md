@@ -2,13 +2,13 @@
 
 ## Inputs
 
-- Working: `../01_research/output/research-notes.md` (the previous stage's output).
-- Reference: `../references/voice.md` (constraints to internalize).
+- Working: `../01_research/output/research-notes.md` (the stage before this one).
+- Reference: `../references/voice.md` (rules to follow).
 
 ## Process
 
 Write a short article from the research notes. Follow the workspace voice. Cover the key claims, cite
-the supporting facts, and note any open question that the notes left unresolved.
+the facts that back them, and note any open question the notes left unanswered.
 
 ## Outputs
 
@@ -16,4 +16,4 @@ the supporting facts, and note any open question that the notes left unresolved.
 
 ## Review gate
 
-A human inspects `output/article-draft.md` before it is published or handed off.
+A person reads `output/article-draft.md` before it is published or handed off.

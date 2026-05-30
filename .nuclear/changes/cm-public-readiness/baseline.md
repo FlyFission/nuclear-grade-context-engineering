@@ -1,6 +1,6 @@
 # Baseline - CM Public Readiness
 
-**Purpose:** Record the intended accepted public-ready controlled configuration state for this pass.
+**Purpose:** Record the public-ready controlled state we plan to accept for this pass.
 
 ## Baseline identity
 

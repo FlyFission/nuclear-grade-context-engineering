@@ -27,10 +27,10 @@ Simple path strengths:
 
 Simple path gaps:
 
-- "Latest" may be ambiguous or unverified.
-- Runtime compatibility and advisory posture are collapsed into one "tests pass" statement.
-- Lockfile, rollback, and revalidation triggers may be omitted.
-- No decision distinction between ship, defer, and block.
+- "Latest" may be unclear or unchecked.
+- It folds "does it still work?" and "is the version free of known security advisories?" into one "tests pass" line.
+- The lockfile, the rollback plan, and re-check triggers may be left out.
+- It does not tell ship, defer, and block apart.
 
 ## Nuclear-Grade Trial
 
@@ -58,19 +58,19 @@ Workflows exercised:
 
 Nuclear-grade output:
 
-- Mode: Standard because dependency trust and release posture may change.
-- Controlled items: dependency declaration, lockfile, advisory review, smoke tests, release note.
-- Trust check: package/version identity, source claims, advisory evidence, local smoke proof, rollback, and revalidation trigger stay separate.
-- Claims separated:
-  - D-001: runtime behavior still works.
-  - D-002: selected version has acceptable advisory posture.
-  - D-003: rollback path is known.
+- Mode: Standard, because trust in the dependency and the release stance may change.
+- Controlled items: the dependency declaration, the lockfile, the advisory review, the smoke tests, and the release note.
+- Trust check: keep these apart — the package and version identity, the source claims, the security-advisory evidence, the local smoke-test proof, the rollback plan, and the re-check trigger.
+- Claims kept apart:
+  - D-001: the runtime behavior still works.
+  - D-002: the chosen version has no known security advisories of concern.
+  - D-003: the rollback path is known.
 - Evidence statuses:
-  - Runtime smoke: pass if tests run.
-  - Advisory review: gap until checked.
-  - Lockfile: deferred if project has no lockfile.
-- Release decision: block or defer if advisory evidence is missing, even if tests pass.
-- Baseline trigger: re-baseline dependency state after accepted update.
+  - Runtime smoke test: pass if the tests run.
+  - Advisory review: gap until it is checked.
+  - Lockfile: deferred if the project has no lockfile.
+- Release decision: block or defer if the advisory evidence is missing, even if the tests pass.
+- Baseline trigger: save a new known-good dependency state after the update is accepted.
 
 ## Scoring Rationale
 
@@ -79,11 +79,11 @@ Nuclear-grade output:
 | Simple prompt | 3 | 2 | 2 | 2 | 1 |
 | Nuclear-grade | 5 | 4 | 4 | 5 | 4 |
 
-Nuclear-grade is better because a missing advisory check becomes a visible blocker instead of disappearing behind green tests.
+Nuclear-grade is better because a missing advisory check turns into a visible blocker instead of disappearing behind green tests.
 
 ## Decision
 
-Use Standard mode for dependency changes with security or release relevance. Use Quick only for dev-only tooling where rollback and proof are trivial.
+Use Standard mode for dependency changes that touch security or a release. Use Quick only for dev-only tooling where rollback and proof are trivial.
 
 ## Boundary Note
 

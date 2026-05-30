@@ -1,6 +1,6 @@
 # Verification - CM Public Readiness
 
-**Purpose:** Record evidence for the CM public-readiness pass.
+**Purpose:** Record the evidence for the CM (keeping the approved version under control) public-readiness pass.
 
 ## Verification context
 

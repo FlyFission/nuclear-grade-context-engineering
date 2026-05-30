@@ -71,4 +71,4 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`.
 
 ## Source-lineage note
 
-Original Nuclear-grade verification inspired by public software V&V, test-documentation, secure-development, software assurance, AI-risk, and application-security verification sources mapped in `docs/00-standards-foundation/source-map.md` and `docs/01-field-guide/source-to-concept-crosswalk.md`. No compliance claim is made.
+Original Nuclear-grade verification inspired by public sources on software verification and validation (V&V), test documentation, secure development, software assurance, AI risk, and application-security checks, mapped in `docs/00-standards-foundation/source-map.md` and `docs/01-field-guide/source-to-concept-crosswalk.md`. No compliance claim is made.

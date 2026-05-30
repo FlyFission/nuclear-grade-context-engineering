@@ -27,11 +27,11 @@ Simple path strengths:
 
 Simple path gaps:
 
-- May over-broaden credentials.
-- May not distinguish read, write, delete, assignment, and label authority.
-- May not require dry-run or mock proof before live API use.
-- May omit audit logging and stop conditions.
-- May not baseline permission state.
+- May give the credentials too much reach.
+- May not tell read, write, delete, assign, and label powers apart.
+- May not require a dry run or a mock proof before using the live API.
+- May skip audit logging and stop conditions.
+- May not save the permission state as the known-good version.
 
 ## Nuclear-Grade Trial
 
@@ -64,15 +64,15 @@ Workflows exercised:
 
 Nuclear-grade output:
 
-- Mode: Standard because network, credentials, and write authority are involved.
-- Controlled items: API token scope, tool manifest, allowlist, audit log, prompt authority, dry-run behavior.
-- Context pack: allowed read endpoints, allowed comment endpoint, forbidden delete/close/assign/label actions, no production credentials in tests.
-- Self-check: exact token scope, API endpoint, expected denial/allow behavior, and stop condition are named before live calls.
-- Turnover: reviewer/releaser receives current permission state, remaining proof, approval gates, and forbidden actions.
-- Trust check: API/provider claims are separated from local dry-run, audit, permission, and approval evidence.
-- Proof claims: denied forbidden actions; dry-run records intended comment; live mode requires explicit approval; audit records tool call.
-- Release decision: block if token scope cannot be least-privilege or audit evidence is missing.
-- Baseline: accepted permission state and revalidation trigger when token, tool, prompt, or API surface changes.
+- Mode: Standard, because the network, credentials, and write power are involved.
+- Controlled items: the API token scope, the tool manifest, the allowlist, the audit log, the prompt power, and the dry-run behavior.
+- Context pack: the allowed read endpoints, the allowed comment endpoint, the forbidden delete/close/assign/label actions, and no production credentials in tests.
+- Self-check: name the exact token scope, the API endpoint, the expected allow-or-deny behavior, and the stop condition before any live call.
+- Turnover: the reviewer or releaser gets the current permission state, the proof still owed, the approval gates, and the forbidden actions.
+- Trust check: keep the API and provider claims apart from the local evidence on dry runs, audits, permissions, and approvals.
+- Proof claims: forbidden actions are denied; a dry run records the intended comment; live mode needs explicit approval; the audit log records the tool call.
+- Release decision: block if the token cannot be held to least privilege, or if the audit evidence is missing.
+- Baseline: the accepted permission state, plus a re-check trigger for when the token, tool, prompt, or API surface changes.
 
 ## Scoring Rationale
 
@@ -81,11 +81,11 @@ Nuclear-grade output:
 | Simple prompt | 2 | 2 | 2 | 1 | 1 |
 | Nuclear-grade | 5 | 5 | 5 | 5 | 4 |
 
-Nuclear-grade is strongly justified because credentials, network, and write authority create real blast radius.
+Nuclear-grade is well worth it here because credentials, network access, and write power can do real damage if they go wrong.
 
 ## Decision
 
-Use Standard mode with Agent authority and Controlled configuration workflows.
+Use Standard mode with the Agent authority and Controlled configuration workflows.
 
 ## Boundary Note
 

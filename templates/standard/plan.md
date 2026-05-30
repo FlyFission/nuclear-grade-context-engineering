@@ -2,13 +2,13 @@
 
 <!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
 
-**Purpose:** Bound the work so implementation, review, verification, and rollback are planned before the change expands.
+**Purpose:** Bound the work so the build, the review, the verification, and the rollback are planned before the change grows.
 
-**Activation threshold:** Use for Standard changes where the implementation has multiple steps, affected configuration items, dependency/model/tool decisions, rollback concerns, or review sequencing needs.
+**Activation threshold:** Use for Standard changes where the build has several steps, affected controlled items, dependency/model/tool decisions, rollback concerns, or a review order to plan.
 
-**Minimum useful version:** Build sequence, affected files/assets, non-goals, review checkpoints, rollback approach, and proof commands.
+**Minimum useful version:** the build sequence, the affected files and assets, the non-goals, the review checkpoints, the rollback approach, and the proof commands.
 
-**Overhead trap:** Do not write a project plan for a small change. Capture only the decisions needed to build and review the change without losing intent.
+**Overhead trap:** Do not write a project plan for a small change. Capture only the decisions you need to build and review the change without losing the intent.
 
 ---
 
@@ -23,13 +23,13 @@
 
 ## Charter and anchor check
 
-A re-evaluated gate, not a one-time note. Confirm before Plan and re-check before Verify. See `staying-on-mission`.
+A gate you check more than once, not a one-time note. Confirm it before Plan, and check it again before Verify. See `staying-on-mission`.
 
 - Mission anchor confirmed (objective, success criteria, non-goals) before Plan? yes/no:
 - Re-checked before Verify? yes/no/not yet:
 - Charter articles in play:
 
-If a non-goal or charter article must be crossed, record the justification here:
+If you must cross a non-goal or a charter article, record why here:
 
 | What is crossed | Why it is necessary | Why no simpler path | Owner decision |
 |---|---|---|---|
@@ -37,7 +37,7 @@ If a non-goal or charter article must be crossed, record the justification here:
 
 ## Build sequence
 
-Number the minimum steps needed to complete the change.
+Number the fewest steps needed to finish the change.
 
 1.
 2.
@@ -45,7 +45,7 @@ Number the minimum steps needed to complete the change.
 
 ## Two-speed work plan
 
-Separate fast candidate work from slower acceptance gates.
+Keep fast trial work apart from the slower gates where work is accepted.
 
 | Work phase | Allowed actions | Acceptance gate |
 |---|---|---|
@@ -77,7 +77,7 @@ Separate fast candidate work from slower acceptance gates.
 
 ## Non-goals
 
-List what this change intentionally does not do.
+List what this change does not do, on purpose.
 
 -
 -
@@ -94,12 +94,12 @@ Use only if activated.
 
 | Checkpoint | Required before moving on | Status |
 |---|---|---|
-| Specification reviewed | Protected/unacceptable outcomes and assumptions are explicit. | planned / pass / gap |
-| Tests/evals defined | Evidence maps to claims. | planned / pass / gap |
-| Build complete | Affected files match plan. | planned / pass / gap |
-| Verification complete | Evidence is linked in `verification.md`. | planned / pass / gap |
-| Release decision ready | Residual risks and rollback are recorded. | planned / pass / gap |
-| Turnover complete if activated | Next owner has state, authority, stop criteria, and remaining work. | planned / pass / gap |
+| Specification reviewed | The protected outcomes, the outcomes to prevent, and the assumptions are stated plainly. | planned / pass / gap |
+| Tests/evals defined | Each piece of evidence maps to a claim. | planned / pass / gap |
+| Build complete | The affected files match the plan. | planned / pass / gap |
+| Verification complete | The evidence is linked in `verification.md`. | planned / pass / gap |
+| Release decision ready | The leftover risks and the rollback are recorded. | planned / pass / gap |
+| Turnover complete if activated | The next owner has the state, the authority, the stop rules, and the work left to do. | planned / pass / gap |
 
 ## Rollback approach
 
@@ -126,11 +126,11 @@ Use only if activated.
 
 ## Exit criteria
 
-- Work is bounded enough to prevent scope creep.
-- Review checkpoints are explicit.
-- Rollback/restore thinking exists before release.
-- Proof commands or checks are ready for `verification.md`.
+- The work is bounded enough to keep scope from creeping.
+- The review checkpoints are named.
+- Rollback and restore are thought through before release.
+- The proof commands or checks are ready for `verification.md`.
 
 ## Source-lineage note
 
-Original Nuclear-grade template inspired by public lifecycle, configuration-management, software assurance, secure-development, release-readiness, and operating-learning sources mapped in `docs/00-standards-foundation/source-map.md` and `docs/01-field-guide/source-to-concept-crosswalk.md`. No compliance claim is made.
+Original Nuclear-grade template inspired by public sources on software lifecycle, keeping the approved version under control (CM), software assurance, secure development, release readiness, and learning from real operation, mapped in `docs/00-standards-foundation/source-map.md` and `docs/01-field-guide/source-to-concept-crosswalk.md`. No compliance claim is made.

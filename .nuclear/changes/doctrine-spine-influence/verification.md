@@ -1,6 +1,6 @@
 # Standard Verification Record
 
-**Purpose:** Show that the doctrine-spine update has evidence proportionate to its public workflow impact.
+**Purpose:** Show that the doctrine-spine update has evidence that fits its impact on the public workflow.
 
 **Activation threshold:** Use because this Standard change affects public docs, skills, commands, templates, and downstream agent behavior.
 

@@ -27,11 +27,11 @@ Simple path strengths:
 
 Simple path gaps:
 
-- May compare strings instead of canonical paths.
-- May omit symlink escape, absolute path escape, or denied-action audit visibility.
+- May compare text strings instead of resolving the real path.
+- May skip symlink escape, absolute-path escape, or making denied actions visible in the audit log.
 - May imply the guard is a complete sandbox.
-- Does not name the agent's allowed and forbidden authority.
-- Does not create a release decision or non-claims.
+- Does not name what the agent is allowed and not allowed to do.
+- Does not produce a release decision or a list of things it does not claim.
 
 ## Nuclear-Grade Trial
 
@@ -57,12 +57,12 @@ Workflows exercised:
 
 Nuclear-grade output:
 
-- Decision question: can agent file-write authority be bounded to the approved workspace root?
-- Controlled items: workspace guard, write authority, audit event behavior, worked-example claim.
-- Mode: Standard because agent write authority changes a trust boundary.
-- Proof claims: allowed in-root write; parent traversal denied; absolute external path denied; symlink escape denied; denial emits audit event.
-- Context pack: agent may edit guard and tests only; may run targeted tests; may not broaden filesystem authority or claim production sandbox adequacy.
-- Release decision: ship as scoped worked example with residual risk, not as production sandbox.
+- Decision question: can the agent's power to write files be held to the approved workspace root?
+- Controlled items: the workspace guard, the write power, how audit events behave, and the worked-example claim.
+- Mode: Standard, because changing the agent's write power changes a line of trust.
+- Proof claims: an in-root write is allowed; a parent `../` path is denied; an absolute outside path is denied; a symlink escape is denied; a denial produces an audit event.
+- Context pack: the agent may edit the guard and tests only; may run targeted tests; may not widen filesystem power or claim the production sandbox is good enough.
+- Release decision: ship as a scoped worked example with leftover risk, not as a production sandbox.
 
 ## Scoring Rationale
 
@@ -71,11 +71,11 @@ Nuclear-grade output:
 | Simple prompt | 3 | 2 | 2 | 2 | 1 |
 | Nuclear-grade | 5 | 5 | 5 | 4 | 4 |
 
-Nuclear-grade is materially better because the risk is not just code correctness. The real issue is authority, evidence, and public non-claims.
+Nuclear-grade is clearly better here, because the risk is not just whether the code is correct. The real issue is the agent's power, the evidence, and being clear about what the public claim does not cover.
 
 ## Decision
 
-Use Nuclear-grade Standard mode. The overhead is justified by agent authority and public trust implications.
+Use Nuclear-grade Standard mode. The extra work is worth it because of the agent's power and what it means for public trust.
 
 ## Boundary Note
 

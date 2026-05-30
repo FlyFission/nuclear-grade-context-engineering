@@ -2,11 +2,11 @@
 
 <!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
 
-**Purpose:** Make a critical agent action deliberate and reviewable before and after it happens.
+**Purpose:** Make a critical agent action careful and easy to review, both before and after it happens.
 
-**Activation threshold:** Use before destructive commands, broad edits, public claims, dependency/model/API changes, credential/network/tool actions, migrations, releases, or irreversible operations.
+**Activation threshold:** Use before destructive commands, broad edits, public claims, dependency/model/API changes, credential/network/tool actions, migrations, releases, or anything you cannot undo.
 
-**Minimum useful version:** Action, target, authority, expected result, stop condition, actual result, and evidence.
+**Minimum useful version:** the action, the target, the authority, the expected result, the stop condition, the actual result, and the evidence.
 
 ---
 
@@ -44,10 +44,10 @@
 
 ## Exit criteria
 
-- Target and expected result were named before action.
-- Actual result was compared to expected result.
-- Mismatch, gap, or exceeded authority caused a pause rather than blind retry.
+- The target and the expected result were named before the action.
+- The actual result was compared to the expected result.
+- A mismatch, a gap, or going past your authority caused a pause, not a blind retry.
 
 ## Source-lineage note
 
-Original Nuclear-grade template inspired by DOE-HDBK-1028-2009 self-checking, pause when unsure, flagging, procedure use, and verification practices as public source lineage. No compliance claim is made.
+Original Nuclear-grade template inspired by the self-checking, pause-when-unsure, flagging, procedure-use, and verification habits in DOE-HDBK-1028-2009, used as public source lineage. No compliance claim is made.

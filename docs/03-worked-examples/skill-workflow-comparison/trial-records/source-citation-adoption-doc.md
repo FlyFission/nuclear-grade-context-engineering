@@ -3,7 +3,7 @@
 ## Scenario Facts
 
 - A new adoption doc explains why Nuclear-grade borrows ideas from DOE-HDBK-1028, configuration management, secure development, and software assurance sources.
-- The doc should be credible without implying those sources are requirements the repo satisfies.
+- The doc should be believable without implying those sources are requirements the repo meets.
 
 ## Simple Prompt Trial
 
@@ -26,10 +26,10 @@ Simple path strengths:
 
 Simple path gaps:
 
-- May cite sources too directly.
+- May cite the sources too directly.
 - May imply compliance or formal assurance.
-- May omit public URL/source-map status.
-- May confuse "influenced by" with "satisfies."
+- May leave out the public URL and source-map status.
+- May confuse "influenced by" with "meets."
 
 ## Nuclear-Grade Trial
 
@@ -53,13 +53,13 @@ Workflows exercised:
 
 Nuclear-grade output:
 
-- Mode: Standard because public source-lineage wording affects trust.
+- Mode: Standard, because public source-lineage wording affects trust.
 - Source-lineage check: every source family must be public, linkable, and mapped.
-- Boundary wording: "inspired by" and "translated from public concepts," not "satisfies" or "implements" requirements.
-- Impact screen: source-map, crosswalk, README, skill notes, command notes, and disclaimer alignment.
-- OPEX: if readers misinterpret source lineage as compliance, update source-map wording, templates, skills, commands, or disclaimer placement.
-- Proof: scan for prohibited overclaiming phrases; verify source-map links.
-- Decision: ship only if unresolved sources are downgraded or removed.
+- Boundary wording: "inspired by" and "translated from public concepts," not "meets" or "implements" requirements.
+- Impact screen: bring the source map, crosswalk, README, skill notes, command notes, and disclaimer in line.
+- OPEX (lessons from real operation): if readers read the source lineage as compliance, update the source-map wording, templates, skills, commands, or where the disclaimer sits.
+- Proof: scan for banned overclaiming phrases; check the source-map links.
+- Decision: ship only if unsettled sources are downgraded or removed.
 
 ## Scoring Rationale
 
@@ -68,11 +68,11 @@ Nuclear-grade output:
 | Simple prompt | 3 | 1 | 2 | 2 | 1 |
 | Nuclear-grade | 5 | 5 | 4 | 4 | 3 |
 
-Nuclear-grade is better because public citation language must survive hostile reading.
+Nuclear-grade is better because public citation wording must hold up to a hostile reading.
 
 ## Decision
 
-Use Source/legal check workflow for adoption docs that cite assurance, agency, or high-consequence engineering sources.
+Use the Source/legal check workflow for adoption docs that cite assurance, agency, or high-consequence engineering sources.
 
 ## Boundary Note
 

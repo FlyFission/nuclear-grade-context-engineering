@@ -2,11 +2,11 @@
 
 <!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
 
-**Purpose:** Record intended use, evidence, gaps, compensating controls, and revalidation triggers for dependencies, models, APIs, SaaS tools, generated artifacts, or vendor claims.
+**Purpose:** Record the intended use, the evidence, the gaps, the controls that make up for them, and the re-check triggers for dependencies, models, APIs, SaaS tools, generated files, or vendor claims.
 
-**Activation threshold:** Use when an external item affects evidence, permissions, data, credentials, release posture, or public trust.
+**Activation threshold:** Use when an outside item affects the evidence, permissions, data, credentials, release stance, or public trust.
 
-**Minimum useful version:** Identity, intended use, consequence if wrong, source claims, repo-observed evidence, controls, gaps, and revalidation trigger.
+**Minimum useful version:** the identity, the intended use, the consequence if it is wrong, the source claims, the evidence you saw in the repo, the controls, the gaps, and the re-check trigger.
 
 ---
 
@@ -52,10 +52,10 @@
 
 ## Exit criteria
 
-- Intended use is explicit and narrower than or equal to available evidence.
-- Vendor/source claims are separated from local proof.
-- Gaps flow into verification and release decision records.
+- The intended use is stated plainly and stays within what the evidence supports.
+- The vendor and source claims are kept apart from local proof.
+- The gaps flow into the verification and release-decision records.
 
 ## Source-lineage note
 
-Original Nuclear-grade template inspired by public vendor-oversight, software supply-chain, AI-risk, change-management, and verification source families mapped in the repo. No compliance claim is made.
+Original Nuclear-grade template inspired by public source families on vendor oversight, software supply chain, AI risk, change management, and verification, mapped in the repo. No compliance claim is made.

@@ -1,6 +1,6 @@
 # Risk - CM Public Readiness
 
-**Purpose:** Classify the repo-wide shift from evidence-workflow positioning to configuration management for AI-assisted software work.
+**Purpose:** Sort by risk the repo-wide shift from an evidence-workflow framing to keeping the approved version under control (configuration management, CM) for AI-assisted software work.
 
 ## Change identity
 

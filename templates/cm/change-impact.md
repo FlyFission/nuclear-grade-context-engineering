@@ -2,13 +2,13 @@
 
 <!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
 
-**Purpose:** Screen downstream artifacts that may become stale when controlled configuration changes.
+**Purpose:** Check which downstream files may go out of date when a controlled item changes.
 
-**Activation threshold:** Use when a change affects more than one artifact family or could invalidate docs, tests, skills, command prompts, validators, release posture, source lineage, or operational assumptions.
+**Activation threshold:** Use when a change affects more than one family of files, or could make docs, tests, skills, command prompts, validators, the release stance, source lineage, or operating assumptions out of date.
 
-**Minimum useful version:** Impacted artifact family, required update, evidence, owner, and disposition.
+**Minimum useful version:** the family of files affected, the update needed, the evidence, the owner, and the disposition.
 
-**Overhead trap:** Do not turn impact screening into a generic checklist. Only record impacts that could change review or release decisions.
+**Overhead trap:** Do not turn the impact check into a generic checklist. Record only the effects that could change a review or release decision.
 
 ---
 
@@ -45,10 +45,10 @@
 
 ## Exit criteria
 
-- Impacted artifact families are updated, deferred with owner, or explicitly not applicable.
-- Revalidation triggers are visible.
-- No stale public claim or validator behavior is silently accepted.
+- The affected families of files are updated, deferred with an owner, or clearly marked not applicable.
+- The re-check triggers are visible.
+- No out-of-date public claim or validator behavior is quietly accepted.
 
 ## Source-lineage note
 
-Original Nuclear-grade CM template inspired by public configuration-management, secure-development, lifecycle, and release-readiness sources mapped in `docs/00-standards-foundation/source-map.md`. No compliance claim is made.
+Original Nuclear-grade CM template (for keeping the approved version under control) inspired by public sources on configuration management, secure development, software lifecycle, and release readiness, mapped in `docs/00-standards-foundation/source-map.md`. No compliance claim is made.

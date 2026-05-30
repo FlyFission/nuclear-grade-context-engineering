@@ -1,6 +1,6 @@
 # Verification — Public v0 Launch
 
-**Purpose:** Record the evidence for public v0 launch readiness.
+**Purpose:** Record the evidence that public v0 is ready to launch.
 
 ---
 

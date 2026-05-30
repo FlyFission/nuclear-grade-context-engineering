@@ -2,13 +2,13 @@
 
 <!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
 
-**Purpose:** Decompose one deliverable into a product-oriented, 100%-rule, non-overlapping work breakdown, then derive the folder structure from it, so scope and layout are auditable before build.
+**Purpose:** Split one deliverable into a work breakdown (WBS) — organized by product, covering 100% of the work, with no overlaps — then build the folder structure from it, so the scope and layout can be checked before you build.
 
-**Activation threshold:** Use for Standard changes whose deliverable has multiple components, or whose file/folder layout is not yet decided and needs a defensible scope basis.
+**Activation threshold:** Use for Standard changes whose deliverable has several parts, or whose file and folder layout is not decided yet and needs a scope you can defend.
 
-**Minimum useful version:** A numbered WBS table, a dictionary row per element, and a folder map with a naming and depth audit.
+**Minimum useful version:** a numbered WBS table, one dictionary row per element, and a folder map with a naming and depth check.
 
-**Overhead trap:** Do not build a WBS for a single-file change. Stop decomposing at the work-package line; do not nest one folder per WBS level mechanically.
+**Overhead trap:** Do not build a WBS for a single-file change. Stop splitting at the work-package line, and do not blindly nest one folder per WBS level.
 
 ---
 
@@ -52,7 +52,7 @@
 
 ## Folder map (derived from WBS outline numbers)
 
-Each element maps to exactly one folder or file. Names: lowercase, one held word-separator (hyphen or underscore), ISO-8601 dates, one dot for the extension, bounded depth. The Model Workspace Protocol stage prefix `NN_` (number then underscore) is the one accepted naming exception. Every folder traces to a WBS outline number or a disposition rule.
+Each element maps to exactly one folder or file. Names: lowercase, one word-separator (a hyphen or an underscore), dates in YYYY-MM-DD form (the ISO-8601 standard), one dot for the extension, and a limited depth. The Model Workspace Protocol stage prefix `NN_` (a number, then an underscore) is the one allowed naming exception. Every folder traces back to a WBS outline number or a disposition rule.
 
 | WBS outline no. | Path | File or folder | Disposition (keep / transient / archive / generated) | Note |
 |---|---|---|---|---|
@@ -75,8 +75,8 @@ Each element maps to exactly one folder or file. Names: lowercase, one held word
 
 | Rule | Pass / fail | Evidence (grep or count) |
 |---|---|---|
-| Names lowercase with one held word-separator (MWP `NN_` stage prefix excepted) | | |
-| ISO-8601 dates only | | |
+| Names lowercase with one word-separator (the MWP `NN_` stage prefix is the exception) | | |
+| Dates only in YYYY-MM-DD form (ISO-8601) | | |
 | Max depth within ~8 levels | | |
 | Max path within 255 characters | | |
 | Single source of truth (no dual homes) | | |
@@ -96,10 +96,10 @@ Each element maps to exactly one folder or file. Names: lowercase, one held word
 
 ## Exit criteria
 
-- WBS sums to 100% and is mutually exclusive; every element has a dictionary entry.
-- Folder map traces every folder to a WBS element or disposition rule and passes the naming and depth audit.
-- Conflicts with existing conventions are flagged for an owner decision, not silently overwritten.
+- The WBS covers 100% of the work with no overlaps, and every element has a dictionary entry.
+- The folder map traces every folder to a WBS element or a disposition rule, and passes the naming and depth check.
+- Conflicts with existing conventions are flagged for an owner to decide, not quietly overwritten.
 
 ## Source-lineage note
 
-Original Nuclear-grade template inspired by public product-oriented decomposition and records-management sources: the DOE Work Breakdown Structure Handbook, MIL-STD-881F, the NASA WBS Handbook, GAO-20-195G, the Model Workspace Protocol (arXiv:2603.16021), NARA Bulletin 2015-04, and NIST file-naming guidance, mapped in `docs/00-standards-foundation/source-map.md` and `docs/01-field-guide/source-to-concept-crosswalk.md`. No compliance claim is made.
+Original Nuclear-grade template inspired by public sources on splitting work by product and on records management: the DOE Work Breakdown Structure Handbook, MIL-STD-881F, the NASA WBS Handbook, GAO-20-195G, the Model Workspace Protocol (arXiv:2603.16021), NARA Bulletin 2015-04, and NIST file-naming guidance, mapped in `docs/00-standards-foundation/source-map.md` and `docs/01-field-guide/source-to-concept-crosswalk.md`. No compliance claim is made.

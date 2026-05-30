@@ -2,13 +2,13 @@
 
 <!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
 
-**Purpose:** Name the configuration items affected by this change and why their state matters.
+**Purpose:** Name the controlled items this change affects, and why their state matters.
 
-**Activation threshold:** Use when the affected items include prompts, models, tools, dependencies, source-lineage claims, release artifacts, public docs, validators, runbooks, or other trust-bearing state.
+**Activation threshold:** Use when the affected items include prompts, models, tools, dependencies, source-lineage claims, release artifacts, public docs, validators, runbooks, or other state that carries trust.
 
-**Minimum useful version:** Controlled item, current state, intended state, owner, evidence link, and revalidation trigger.
+**Minimum useful version:** the controlled item, its current state, its intended state, the owner, an evidence link, and a re-check trigger.
 
-**Overhead trap:** Do not inventory the whole repo. List only items whose state matters to this change.
+**Overhead trap:** Do not list the whole repo. List only the items whose state matters to this change.
 
 ---
 
@@ -34,10 +34,10 @@
 
 ## Exit criteria
 
-- Each item has a reason for control.
-- Each item has an evidence link or explicit gap.
-- Revalidation triggers are named for trust-bearing items.
+- Each item has a reason it is kept under control.
+- Each item has an evidence link or a clearly marked gap.
+- Re-check triggers are named for items that carry trust.
 
 ## Source-lineage note
 
-Original Nuclear-grade CM template inspired by public configuration-management and software assurance sources mapped in `docs/00-standards-foundation/source-map.md`. No compliance claim is made.
+Original Nuclear-grade CM template (for keeping the approved version under control) inspired by public sources on configuration management and software assurance, mapped in `docs/00-standards-foundation/source-map.md`. No compliance claim is made.

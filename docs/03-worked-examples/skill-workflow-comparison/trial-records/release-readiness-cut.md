@@ -27,10 +27,10 @@ Simple path strengths:
 
 Simple path gaps:
 
-- Equates green CI with readiness.
-- May omit rollback, monitoring, package smoke test, changelog accuracy, and support handoff.
-- Does not baseline accepted release artifacts.
-- Does not expose residual risks or deferred docs/examples.
+- Treats green CI as the same thing as being ready.
+- May skip rollback, monitoring, a package smoke test, a correct changelog, and the support handoff.
+- Does not save the accepted release files as the known-good version.
+- Does not surface leftover risks or docs and examples that were put off.
 
 ## Nuclear-Grade Trial
 
@@ -59,14 +59,14 @@ Workflows exercised:
 
 Nuclear-grade output:
 
-- Controlled items: version, changelog, package metadata, docs, examples, CI result, release notes.
-- Impact screen: README, install docs, examples, package metadata, workflows, support docs.
-- Proof claims: install command works; examples validate; changelog matches changes; CI passes; no forbidden assurance claims.
-- Release decision: ship, defer, block, or ship with residual risk.
-- Turnover: releaser/support owner gets accepted artifact state, residual risk, monitoring, and rollback notes.
-- Baseline: release tag and accepted artifact state.
-- Monitoring: issue/discussion watch, package install smoke, post-release docs check.
-- OPEX: post-release surprises feed docs, tests, templates, monitors, or baseline changes.
+- Controlled items: the version, the changelog, the package metadata, the docs, the examples, the CI result, and the release notes.
+- Impact screen: the README, the install docs, the examples, the package metadata, the workflows, and the support docs.
+- Proof claims: the install command works; the examples pass the validator; the changelog matches the changes; CI passes; there are no banned assurance claims.
+- Release decision: ship, defer, block, or ship with leftover risk.
+- Turnover: the release owner and support owner get the accepted file state, the leftover risk, the monitoring, and the rollback notes.
+- Baseline: the release tag and the accepted file state.
+- Monitoring: watch issues and discussions, smoke-test the package install, and check the docs after release.
+- OPEX (lessons from real operation): surprises after release feed back into docs, tests, templates, monitors, or a new known-good version.
 
 ## Scoring Rationale
 
@@ -75,11 +75,11 @@ Nuclear-grade output:
 | Simple prompt | 3 | 2 | 3 | 2 | 1 |
 | Nuclear-grade | 5 | 4 | 4 | 5 | 3 |
 
-Nuclear-grade is better because release readiness is a decision record, not a CI status.
+Nuclear-grade is better because release readiness is a decision record, not just a CI status.
 
 ## Decision
 
-Use Release readiness workflow for public releases.
+Use the Release readiness workflow for public releases.
 
 ## Boundary Note
 

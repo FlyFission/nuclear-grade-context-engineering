@@ -1,6 +1,6 @@
 # Trace - CM Public Readiness
 
-**Purpose:** Link CM public-readiness claims to controls, evidence, and release posture.
+**Purpose:** Tie the CM (keeping the approved version under control) public-readiness claims to their controls, evidence, and release stance.
 
 ## Change context
 

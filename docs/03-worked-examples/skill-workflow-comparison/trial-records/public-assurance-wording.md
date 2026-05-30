@@ -28,9 +28,9 @@ Simple path strengths:
 Simple path gaps:
 
 - High risk of overclaiming.
-- Source influence may be phrased as satisfaction of requirements.
+- A source that merely inspired the work may be written up as if its requirements were met.
 - License permission may be confused with assurance.
-- No source-map or boundary review.
+- No review of the source map or the boundaries.
 
 ## Nuclear-Grade Trial
 
@@ -54,13 +54,13 @@ Workflows exercised:
 
 Nuclear-grade output:
 
-- Decision question: can public copy be stronger without implying assurance the repo does not provide?
-- Mode: Standard because public trust and source-lineage claims change.
-- Source-lineage result: cite sources as public inspiration and concept lineage, not satisfied requirements.
-- Self-check: exact public claim, evidence basis, qualified authority gap, and stop condition are named before release wording is accepted.
-- Legal/assurance boundary result: MIT permission remains separate from fitness, compliance, safety, security, and production suitability.
-- Impact screen: README, DISCLAIMER, source-map, templates, skills, commands, and validator wording may need alignment.
-- Release decision: ship only with boundary-safe wording and prohibited-claim scan.
+- Decision question: can the public copy be stronger without implying assurance the repo does not provide?
+- Mode: Standard, because public trust and source-lineage claims change.
+- Source-lineage result: cite sources as public inspiration and idea lineage, not as requirements that were met.
+- Self-check: name the exact public claim, the evidence behind it, the lack of a qualified outside authority, and the stop condition before the release wording is accepted.
+- Legal/assurance boundary result: MIT permission stays separate from fitness, compliance, safety, security, and production suitability.
+- Impact screen: the README, DISCLAIMER, source map, templates, skills, commands, and validator wording may need to be brought in line.
+- Release decision: ship only with boundary-safe wording and a scan for banned claims.
 
 ## Scoring Rationale
 
@@ -69,11 +69,11 @@ Nuclear-grade output:
 | Simple prompt | 3 | 1 | 2 | 2 | 1 |
 | Nuclear-grade | 5 | 5 | 4 | 4 | 3 |
 
-Nuclear-grade is substantially better for public methodology copy because hostile reading matters.
+Nuclear-grade is clearly better for public method copy, because how a hostile reader reads it matters.
 
 ## Decision
 
-Use Nuclear-grade source/legal checks for public assurance wording. Do not rely on generic marketing prompts.
+Use the Nuclear-grade source and legal checks for public assurance wording. Do not rely on generic marketing prompts.
 
 ## Boundary Note
 

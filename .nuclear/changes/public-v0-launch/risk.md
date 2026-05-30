@@ -1,6 +1,6 @@
 # Risk — Public v0 Launch
 
-**Purpose:** Classify the public v0 launch hardening work and name the evidence needed before changing repository visibility.
+**Purpose:** Sort the public v0 launch hardening work by risk, and name the evidence needed before the repository is made public.
 
 ---
 

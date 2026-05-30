@@ -1,6 +1,6 @@
 # Ship - CM Public Readiness
 
-**Purpose:** Make the public-readiness decision explicit.
+**Purpose:** State the public-readiness decision plainly.
 
 ## Release identity
 

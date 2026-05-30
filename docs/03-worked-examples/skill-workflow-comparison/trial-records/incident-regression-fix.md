@@ -2,9 +2,9 @@
 
 ## Scenario Facts
 
-- A recent change broke CLI validation for initialized external workspaces.
+- A recent change broke CLI validation for set-up external workspaces (a regression: something that used to work now fails).
 - The immediate fix is small.
-- The team also needs to learn why tests missed the external-workspace path.
+- The team also needs to learn why the tests missed the external-workspace path.
 
 ## Simple Prompt Trial
 
@@ -27,10 +27,10 @@ Simple path strengths:
 
 Simple path gaps:
 
-- May stop after the fix without recording the missed scenario.
-- May not update docs if onboarding behavior changed.
-- May not identify future revalidation triggers.
-- May not bound agent authority if the fix is delegated.
+- May stop after the fix without recording the case the tests missed.
+- May not update docs if the onboarding behavior changed.
+- May not name the triggers for re-checking later.
+- May not limit the agent's power if the fix is handed off.
 
 ## Nuclear-Grade Trial
 
@@ -57,13 +57,13 @@ Workflows exercised:
 
 Nuclear-grade output:
 
-- Mode: Quick for the code fix if local and reversible; Standard if docs/validator semantics changed.
-- Questioning attitude: why did previous validation miss external workspaces?
-- Context pack: agent may edit CLI, validator tests, and docs directly tied to external workspace behavior.
-- Turnover: fix state, changed conditions, proof run, remaining docs impact, and stop criteria are preserved for the next reviewer.
-- Proof claims: initialized external workspace passes doctor; blank template still fails; distribution repo doctor still checks contracts.
-- Impact screen: INSTALL and CLI reference may need updates.
-- OPEX: record why earlier tests missed external workspaces and add a future test trigger whenever onboarding docs mention external repo behavior.
+- Mode: Quick for the code fix if it is local and reversible; Standard if docs or validator behavior changed.
+- Questioning attitude: why did the earlier validation miss external workspaces?
+- Context pack: the agent may edit the CLI, the validator tests, and docs tied directly to external-workspace behavior.
+- Turnover: keep the fix state, the changed conditions, the proof run, the remaining docs impact, and the stop rules for the next reviewer.
+- Proof claims: a set-up external workspace passes doctor; a blank template still fails; the distribution repo's doctor still checks the contracts.
+- Impact screen: INSTALL and the CLI reference may need updates.
+- OPEX (lessons from real operation): record why the earlier tests missed external workspaces, and add a trigger for a future test whenever the onboarding docs mention external-repo behavior.
 
 ## Scoring Rationale
 
@@ -72,11 +72,11 @@ Nuclear-grade output:
 | Simple prompt | 3 | 2 | 3 | 2 | 1 |
 | Nuclear-grade | 4 | 4 | 4 | 4 | 3 |
 
-Nuclear-grade adds value by preserving the learning path, not by making the small code fix harder.
+Nuclear-grade helps by keeping the lesson, not by making the small code fix harder.
 
 ## Decision
 
-Use Quick for containment and Standard when the fix changes public onboarding behavior.
+Use Quick to contain the problem, and Standard when the fix changes public onboarding behavior.
 
 ## Boundary Note
 

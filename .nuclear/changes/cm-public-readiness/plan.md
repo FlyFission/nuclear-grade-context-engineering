@@ -1,6 +1,6 @@
 # Plan - CM Public Readiness
 
-**Purpose:** Bound the public-readiness pass so repo-wide CM changes remain reviewable.
+**Purpose:** Bound the public-readiness pass so repo-wide CM (keeping the approved version under control) changes stay easy to review.
 
 ## Change context
 

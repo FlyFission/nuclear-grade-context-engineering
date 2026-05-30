@@ -29,7 +29,7 @@
 ## Monitoring and post-release checks
 
 - Watch for false positives from the mission-anchor advisory check and the unresolved-clarification-marker check on real packets; widen the keyword families or the disclaimer markers if legitimate prose is flagged.
-- Watch adoption of `ng-drift-check` and `ng-code-review`; capture an OPEX note if either skill consistently misfires its trigger.
+- Watch how `ng-drift-check` and `ng-code-review` get used; write an OPEX note (a lesson from real operation) if either skill keeps firing at the wrong time.
 - Revisit whether the charter should become a hard gate once the advisory version has proven out.
 
 ## Maintainer follow-ups

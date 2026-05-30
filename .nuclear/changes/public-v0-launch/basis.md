@@ -1,6 +1,6 @@
 # Basis — Public v0 Launch
 
-**Purpose:** State what must remain true before Nuclear-grade is made public.
+**Purpose:** State what must stay true before Nuclear-grade is made public.
 
 ---
 

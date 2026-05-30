@@ -2,9 +2,9 @@
 
 ## Scenario Facts
 
-- A SaaS app processes payment webhooks.
-- Duplicate webhook delivery can create duplicate credits or invoices.
-- The change adds idempotency handling and release notes.
+- A SaaS app processes payment webhooks (callbacks the payment provider sends to the app).
+- The same webhook can arrive twice, which can create duplicate credits or invoices.
+- The change makes the handler idempotent (safe to run twice with the same result) and adds release notes.
 
 ## Simple Prompt Trial
 
@@ -27,10 +27,10 @@ Simple path strengths:
 
 Simple path gaps:
 
-- May not identify money-moving side effects as controlled items.
-- May omit concurrency, replay, partial failure, and rollback questions.
-- May not name monitoring or customer-support handoff.
-- May not bind agent authority around payment APIs or credentials.
+- May not treat side effects that move money as controlled items.
+- May skip questions about events arriving at once, replays, partial failures, and rollback.
+- May not name monitoring or the handoff to customer support.
+- May not limit the agent's power over payment APIs or credentials.
 
 ## Nuclear-Grade Trial
 
@@ -60,13 +60,13 @@ Workflows exercised:
 
 Nuclear-grade output:
 
-- Mode: Standard, possibly stronger human review, because money-moving behavior is affected.
-- Controlled items: webhook handler, event idempotency store, payment-provider event schema, ledger/credit side effects, monitoring alerts.
-- Context pack: agent may edit handler/tests; may not use live credentials, call production APIs, or alter billing data.
-- Self-check: exact payment-provider target, expected duplicate-event behavior, and stop condition are named before touching payment paths.
-- Trust check: provider event-schema claims are separated from local replay, invalid-signature, and partial-failure evidence.
-- Proof claims: duplicate event does not double-credit; partial failure can retry safely; invalid signature is denied; event replay is logged.
-- Release decision: release only with rollback path, monitoring query, support note, and residual risk owner.
+- Mode: Standard, and maybe stronger human review, because money-moving behavior is affected.
+- Controlled items: the webhook handler, the store of already-seen events, the payment provider's event format, the ledger and credit side effects, and the monitoring alerts.
+- Context pack: the agent may edit the handler and tests; may not use live credentials, call production APIs, or change billing data.
+- Self-check: name the exact payment provider, the expected behavior for a duplicate event, and the stop condition before touching any payment path.
+- Trust check: keep the provider's event-format claims apart from the local evidence on replays, invalid signatures, and partial failures.
+- Proof claims: a duplicate event does not credit twice; a partial failure can retry safely; an invalid signature is denied; an event replay is logged.
+- Release decision: release only with a rollback path, a monitoring query, a support note, and an owner for the leftover risk.
 
 ## Scoring Rationale
 
@@ -75,11 +75,11 @@ Nuclear-grade output:
 | Simple prompt | 3 | 2 | 3 | 2 | 1 |
 | Nuclear-grade | 5 | 5 | 5 | 5 | 4 |
 
-Nuclear-grade is strongly justified because duplicate billing or credits are high-consequence, user-visible, and operationally sensitive.
+Nuclear-grade is well worth it here because duplicate billing or credits are high-stakes, visible to users, and tricky in operation.
 
 ## Decision
 
-Use Standard mode with release readiness and agent authority boundaries.
+Use Standard mode with a release-readiness check and clear limits on the agent's power.
 
 ## Boundary Note
 

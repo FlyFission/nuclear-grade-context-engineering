@@ -69,15 +69,18 @@ Create `evals/cases/<id>-<slug>.json`:
   "artifact": "docs/03-worked-examples/.../trial-records/<file>.md",
   "section": "## Nuclear-Grade Trial",
   "signals": [
-    { "name": "Human-readable decision element", "any": ["phrase one", "phrase two"] }
+    { "name": "Alternatives: any phrasing counts", "any": ["phrase one", "phrase two"] },
+    { "name": "Conjunctive gates: all must appear", "all": ["rollback path", "monitoring query", "residual risk owner"] }
   ]
 }
 ```
 
-Author the signals from the scenario's stated risks, not by copying the prose
-back out of the artifact. Each signal should be a decision a reviewer would want
-surfaced, with several accepted phrasings so the check is robust to small wording
-changes.
+Use `any` for genuine alternatives (several ways to name the same element) and
+`all` for distinct gates that must each be present (so a multi-part release
+decision cannot score as satisfied when only one gate is named). Author the
+signals from the scenario's stated risks, not by copying the prose back out of
+the artifact. Each signal should be a decision a reviewer would want surfaced,
+with phrasings robust to small wording changes.
 
 ## Boundary Note
 

@@ -22,7 +22,7 @@
     },
     {
       "name": "Conditions release on rollback, monitoring, and a risk owner",
-      "any": ["rollback path", "monitoring query", "residual risk owner"]
+      "all": ["rollback path", "monitoring query", "residual risk owner"]
     }
   ]
 }

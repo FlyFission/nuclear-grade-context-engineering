@@ -29,7 +29,9 @@ def test_cases_are_loadable_and_well_formed():
         assert case.section.startswith("## ")
         assert len(case.signals) >= 3
         for signal in case.signals:
-            assert signal.any_of, f"{case.id} signal {signal.name!r} has no phrasings"
+            assert signal.any_of or signal.all_of, (
+                f"{case.id} signal {signal.name!r} has no phrasings"
+            )
 
 
 def test_extract_section_returns_body_until_next_heading():
@@ -43,7 +45,7 @@ def test_extract_section_returns_body_until_next_heading():
 def test_harness_has_teeth_when_a_signal_is_dropped(tmp_path):
     """A tampered artifact that drops a signal must fail the case (exit 1)."""
 
-    case = efficacy.load_cases(CASES_DIR)[0]
+    case = next(c for c in efficacy.load_cases(CASES_DIR) if c.id == "U02")
     artifact = ROOT / case.artifact
     section = efficacy.extract_section(artifact.read_text(encoding="utf-8"), case.section)
     assert section is not None
@@ -67,8 +69,44 @@ def test_harness_has_teeth_when_a_signal_is_dropped(tmp_path):
     assert result.present_count == 0
 
 
+def test_all_of_requires_every_phrase_unlike_any_of():
+    text = "names a rollback path and a monitoring query"
+    conjunctive = efficacy.Signal(
+        name="release gates",
+        all_of=("rollback path", "monitoring query", "residual risk owner"),
+    )
+    alternative = efficacy.Signal(
+        name="release gates",
+        any_of=("rollback path", "monitoring query", "residual risk owner"),
+    )
+
+    # all_of fails because "residual risk owner" is missing; any_of still passes.
+    assert not conjunctive.present_in(text)
+    assert alternative.present_in(text)
+    assert conjunctive.present_in(text + " with a residual risk owner")
+
+
+def test_u07_release_gates_are_conjunctive():
+    case = next(c for c in efficacy.load_cases(CASES_DIR) if c.id == "U07")
+    gate_signal = next(s for s in case.signals if "rollback" in s.name.lower())
+
+    assert gate_signal.all_of, "U07 release-gate signal should require all gates, not any"
+
+
 def test_run_all_is_empty_outside_a_repo_with_cases(tmp_path):
     assert efficacy.run_all(tmp_path) == []
+
+
+def test_eval_command_reports_malformed_case_clearly(tmp_path):
+    cases_dir = tmp_path / "evals" / "cases"
+    cases_dir.mkdir(parents=True)
+    (cases_dir / "broken.json").write_text("{ not valid json", encoding="utf-8")
+
+    result = run_ng("eval", str(tmp_path))
+
+    assert result.returncode == 1
+    assert "could not load eval cases" in result.stdout
+    assert "Traceback" not in (result.stdout + result.stderr)
 
 
 def test_eval_command_reports_full_coverage():

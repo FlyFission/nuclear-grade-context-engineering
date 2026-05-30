@@ -16,7 +16,7 @@ if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from nuclear_grade.efficacy import run_all as run_efficacy
-from nuclear_grade.ng_validate import detect_packet_mode, validate_packet
+from nuclear_grade.ng_validate import PLACEHOLDER_MARKER, detect_packet_mode, validate_packet
 
 PACKAGE_DIR = Path(__file__).resolve().parent
 REPO_ROOT = PACKAGE_DIR.parent
@@ -386,20 +386,28 @@ def packet_health(packet: Path) -> str:
     """Classify a packet for `status`: ok, scaffold (untouched draft), or invalid.
 
     A scaffold still carries the placeholder marker, so it is an unfilled draft
-    rather than a wrong one. Anything else that fails validation is invalid.
+    rather than a wrong one. Anything else that fails validation is invalid. The
+    scaffold test reads the actual marker from the packet files (not the
+    validator's message text) so it tracks behavior rather than wording.
     """
 
-    result = validate_packet(packet)
-    if result.ok:
+    if validate_packet(packet).ok:
         return "ok"
-    if any("placeholder marker" in message for message in result.messages):
-        return "scaffold"
+    for md_file in packet.glob("*.md"):
+        if PLACEHOLDER_MARKER in md_file.read_text(encoding="utf-8"):
+            return "scaffold"
     return "invalid"
 
 
 def handle_eval(args: argparse.Namespace) -> int:
     repo = args.repo.resolve()
-    results = run_efficacy(repo)
+    try:
+        results = run_efficacy(repo)
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        # ValueError covers json.JSONDecodeError; KeyError/TypeError cover a
+        # malformed case (missing "name", non-list "signals", and so on).
+        print(f"eval: could not load eval cases under {repo / 'evals' / 'cases'}: {error}")
+        return 1
     if not results:
         print(f"No eval cases found under {repo / 'evals' / 'cases'}.")
         return 0

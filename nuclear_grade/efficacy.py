@@ -31,14 +31,25 @@ from pathlib import Path
 
 @dataclass(frozen=True)
 class Signal:
-    """A decision element, present when any of its phrasings appears in a section."""
+    """A decision element, scored by phrase presence in a section.
+
+    ``any_of`` passes when at least one phrasing appears: use it for genuine
+    alternatives (several ways to name the same element). ``all_of`` passes only
+    when every phrasing appears: use it for distinct conjunctive gates that must
+    all be present, for example a release decision that requires a rollback path
+    *and* a monitoring query *and* a named risk owner. When both are given, both
+    must hold.
+    """
 
     name: str
-    any_of: tuple[str, ...]
+    any_of: tuple[str, ...] = ()
+    all_of: tuple[str, ...] = ()
 
     def present_in(self, text: str) -> bool:
         lowered = text.lower()
-        return any(needle.lower() in lowered for needle in self.any_of)
+        any_ok = (not self.any_of) or any(needle.lower() in lowered for needle in self.any_of)
+        all_ok = all(needle.lower() in lowered for needle in self.all_of)
+        return any_ok and all_ok
 
 
 @dataclass(frozen=True)
@@ -91,7 +102,11 @@ def load_cases(cases_dir: Path) -> list[EvalCase]:
     for path in sorted(cases_dir.glob("*.json")):
         data = json.loads(path.read_text(encoding="utf-8"))
         signals = tuple(
-            Signal(name=signal["name"], any_of=tuple(signal["any"]))
+            Signal(
+                name=signal["name"],
+                any_of=tuple(signal.get("any", ())),
+                all_of=tuple(signal.get("all", ())),
+            )
             for signal in data["signals"]
         )
         cases.append(

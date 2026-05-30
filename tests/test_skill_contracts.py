@@ -37,6 +37,7 @@ EXPECTED_SKILLS = {
     "tracing-agent-execution",
     "decomposing-work-breakdown",
     "structuring-agentic-folders",
+    "closing-stale-packets",
 }
 
 REQUIRED_SECTIONS = (

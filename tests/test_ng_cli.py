@@ -3,6 +3,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+from nuclear_grade.ng_validate import CLOSURE_MARKER
 from tests.test_ng_validate import minimal_quick_packet
 from tools import ng as ng_cli
 
@@ -301,6 +302,48 @@ def test_status_flags_unfilled_scaffold_packet(tmp_path):
 
     assert result.returncode == 0, result.stderr
     assert "draft: quick  [scaffold]" in result.stdout
+    assert "need attention" in result.stdout
+
+
+def _closing_quick_packet(tmp_path, slug):
+    shutil.copytree(ROOT / "templates", tmp_path / "templates")
+    (tmp_path / "nuclear-grade.yaml").write_text("name: test-catalog\n", encoding="utf-8")
+    assert run_ng("new", slug, "--mode", "quick", "--repo", str(tmp_path)).returncode == 0
+    return tmp_path / ".nuclear" / "changes" / slug / "risk.md"
+
+
+def test_status_marks_closed_packet_as_terminal(tmp_path):
+    # An abandoned packet kept as a record still carries the placeholder marker,
+    # but a NUCLEAR-GRADE-CLOSED: line with a rationale makes it a terminal state.
+    risk = _closing_quick_packet(tmp_path, "dropped")
+    risk.write_text(
+        f"{CLOSURE_MARKER}: feature cut in planning; superseded by demo. Closed by maintainer.\n"
+        + risk.read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+
+    result = run_ng("status", str(tmp_path))
+
+    assert result.returncode == 0, result.stderr
+    assert "dropped: quick  [closed]" in result.stdout
+    assert "need attention" not in result.stdout
+
+
+def test_status_does_not_treat_bare_or_prose_marker_as_closed(tmp_path):
+    # A bare marker with no rationale, or the marker merely mentioned in prose,
+    # must NOT suppress an otherwise-scaffold packet from needing attention.
+    risk = _closing_quick_packet(tmp_path, "fake")
+    risk.write_text(
+        f"We should document the {CLOSURE_MARKER} marker someday.\n"
+        f"{CLOSURE_MARKER}:\n"
+        + risk.read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+
+    result = run_ng("status", str(tmp_path))
+
+    assert result.returncode == 0, result.stderr
+    assert "fake: quick  [scaffold]" in result.stdout
     assert "need attention" in result.stdout
 
 

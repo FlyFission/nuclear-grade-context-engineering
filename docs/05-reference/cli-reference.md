@@ -21,7 +21,7 @@ python tools/ng.py eval [repo]
 - `validate` delegates to `tools/ng_validate.py`.
 - `doctor` checks a Nuclear-grade distribution repo for public files, contracts, and templates. In an initialized target repo, it checks `.nuclear/README.md` and `.nuclear/changes/`.
 - `list` shows available modes, skills, commands, packet files, CM files, golden-path files, and optional templates, including turnover, self-check, and supplier-trust records.
-- `status` lists active packets, their detected modes, and a health tag: `ok` (validates), `scaffold` (an untouched draft still carrying the placeholder marker), or `invalid` (fails validation for another reason). It prints a closing reminder when any packet needs attention, so abandoned half-filled drafts are visible rather than silent.
+- `status` lists active packets, their detected modes, and a health tag: `ok` (validates), `closed` (deliberately abandoned with a recorded rationale, carrying a `NUCLEAR-GRADE-CLOSED:` marker line), `scaffold` (an untouched draft still carrying the placeholder marker), or `invalid` (fails validation for another reason). `ok` and `closed` are terminal states; only `scaffold` and `invalid` count toward the closing "needs attention" reminder, so abandoned half-filled drafts are visible rather than silent while honestly closed packets are not nagged. See the `closing-stale-packets` skill.
 - `eval` scores the worked-example artifacts in `evals/cases/` for the decision signals they claim to teach, exiting non-zero if any worked example dropped a required signal. It measures presence of named decision elements, not engineering correctness, safety, or compliance. See `docs/03-worked-examples/skill-workflow-comparison/efficacy-harness.md`.
 
 ## Boundary note

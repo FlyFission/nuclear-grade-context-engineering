@@ -12,6 +12,26 @@ from dataclasses import dataclass
 from pathlib import Path
 
 PLACEHOLDER_MARKER = "NUCLEAR-GRADE-PLACEHOLDER"
+# A packet deliberately abandoned with a recorded rationale carries this marker.
+# `ng status` reports such a packet as `closed` (a terminal state), not as needing
+# attention. See the closing-stale-packets skill.
+CLOSURE_MARKER = "NUCLEAR-GRADE-CLOSED"
+# A genuine closure is the marker followed by a colon and a substantive rationale
+# on the same line, matching the shape the skill and CLI docs require. A bare
+# marker, or the marker merely mentioned in prose, does not count -- otherwise a
+# packet could be suppressed from `ng status` without recording why it was dropped.
+# Horizontal whitespace only (`[^\S\n]`): the rationale must be on the SAME line as
+# the marker. A plain `\s*` would let the match cross a newline and grab the next
+# line's text, so a bare marker followed by normal content would falsely qualify.
+CLOSURE_NOTE_PATTERN = re.compile(
+    rf"^[^\S\n]*{re.escape(CLOSURE_MARKER)}:[^\S\n]*\S.*$", re.MULTILINE
+)
+
+
+def has_closure_note(text: str) -> bool:
+    """True when text carries a `NUCLEAR-GRADE-CLOSED:` line with a real rationale."""
+
+    return CLOSURE_NOTE_PATTERN.search(text) is not None
 QUICK_MODE = "quick"
 STANDARD_MODE = "standard"
 UNSPECIFIED_MODE = "unspecified"

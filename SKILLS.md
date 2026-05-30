@@ -28,6 +28,7 @@ Skills are self-contained agent instructions. Each skill has a `SKILL.md` contra
 | [`tracing-agent-execution`](skills/tracing-agent-execution/SKILL.md) | Capturing agent tool calls, decisions, inputs, outputs, token use, and approval gates as structured execution evidence | Execution trace record |
 | [`decomposing-work-breakdown`](skills/decomposing-work-breakdown/SKILL.md) | Decomposing an epic, feature, or subsystem into a product-oriented, 100%-rule, non-overlapping work breakdown | WBS table and dictionary |
 | [`structuring-agentic-folders`](skills/structuring-agentic-folders/SKILL.md) | Laying out a repo or agent workspace, placing a file, or fixing a junk-drawer directory | Folder map and naming/depth audit |
+| [`closing-stale-packets`](skills/closing-stale-packets/SKILL.md) | Bringing an abandoned or half-filled packet to a terminal state when `ng status` flags it | Completed, closed-with-rationale, or deleted packet |
 
 ## How the skills compose
 
@@ -55,6 +56,7 @@ flowchart TD
       RTA[red-teaming-agent-changes]
       CMD[controlling-mission-drift]
       RCQ[reviewing-code-quality]
+      CSP[closing-stale-packets]
     end
 
     CCP -.delegate / resume.-> PAC
@@ -64,6 +66,7 @@ flowchart TD
     RSR -.execution path matters.-> TAE
     QA -.long drifting session.-> CMD
     PC -.standards drift in diff.-> RCQ
+    LFO -.stale packet sweep.-> CSP
 ```
 
 See [`docs/diagrams.md`](docs/diagrams.md) for the lifecycle, mode, and packet diagrams.

@@ -59,6 +59,7 @@
 | `tracing-agent-execution` | (new skill; applies conceptually to U02, U06, U11; formal trial records pending) |
 | `decomposing-work-breakdown` | (new skill; applies conceptually to U02, U08; formal trial records pending) |
 | `structuring-agentic-folders` | (new skill; applies conceptually to U02, U06; formal trial records pending) |
+| `closing-stale-packets` | (new skill; applies conceptually to U09, U10; formal trial records pending) |
 
 ## Workflow Coverage
 

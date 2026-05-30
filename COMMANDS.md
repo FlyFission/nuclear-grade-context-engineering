@@ -27,6 +27,7 @@ These are portable command prompts: plain Markdown prompt cards that can be past
 | [`ng-trace`](commands/ng-trace.md) | Capturing agent execution evidence for verification and release review | Execution trace record |
 | [`ng-wbs`](commands/ng-wbs.md) | Building a product-oriented work breakdown structure for a deliverable | WBS table and dictionary |
 | [`ng-folders`](commands/ng-folders.md) | Deriving and auditing a folder/file structure from a WBS or existing tree | Folder map and naming/depth audit |
+| [`ng-close-packet`](commands/ng-close-packet.md) | Bringing a stale packet flagged by `ng status` to a terminal state | Completed, closed-with-rationale, or deleted packet |
 
 ## Contract
 

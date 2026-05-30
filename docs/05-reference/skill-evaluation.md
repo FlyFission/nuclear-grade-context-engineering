@@ -199,6 +199,15 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should not trigger: Rename this one file from helper to parser in an already-clean tree.
 - Should not trigger: Run the unit tests and paste the failing assertion.
 
+### `closing-stale-packets`
+
+- Should trigger: `ng status` shows three scaffold packets nobody can explain; decide what to do with each.
+- Should trigger: This long session left a half-filled packet behind and the change was dropped; close it properly.
+- Should trigger: Our `.nuclear/changes` directory is full of abandoned drafts; bring each to a terminal state.
+- Should trigger: That packet's feature was cut last sprint but its packet is still sitting there as invalid.
+- Should not trigger: I am actively filling this packet right now and about to validate it.
+- Should not trigger: Delete the placeholder marker so this packet I am shipping passes validation.
+
 ## Source-lineage note
 
 This evaluation prompt bank is an original Nuclear-grade artifact informed by public skill-authoring practice: concise skills, realistic trigger prompts, baseline-vs-skill comparison, and iterative trigger-description improvement. It does not create formal assurance, compliance, certification, safety, security, or regulatory adequacy.

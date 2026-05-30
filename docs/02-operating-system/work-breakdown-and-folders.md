@@ -20,7 +20,7 @@ Quick changes skip this; one or two lines in `plan.md` are enough.
 ## How it fits in the lifecycle
 
 ```text
-Question -> Discover -> Specify -> Plan -> Execute -> Verify -> Review -> Decide -> Baseline
+Question -> Discover -> Specify -> Plan -> Execute -> Verify -> Review -> Decide -> Baseline -> Operate -> Learn
                             ↑          ↑
               work-breakdown      folder structuring
               decomposition       (tree from outline numbers)

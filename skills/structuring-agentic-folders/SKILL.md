@@ -37,7 +37,7 @@ Folders are a first-class engineering decision, not an afterthought. Each one is
 2. Establish the source of truth. If a WBS exists, derive folders from its outline numbers and turn dictionary entries into per-folder notes. If not, reverse-engineer the implicit breakdown first, or escalate to `decomposing-work-breakdown`.
 3. Run the folder-decision checklist for every proposed directory. Is it earned (does grouping reduce load, or is one file enough)? Is it cohesive (one reason to change)? Is coupling out of it low? Does it map to exactly one WBS element or one disposition rule? Is it the single home for this concept? Is it named safely and shallow enough? Is it documented?
 4. For the workflow paradigm, apply the Model Workspace Protocol. Numbered stage folders encode order (`01_...`, `02_...`); each stage carries a context file with Inputs, Process, and Outputs; persistent reference material and per-run working output are separated; scripts do the mechanical work; every output is an inspectable edit surface with a human review gate at each boundary.
-5. Name for platform safety and sort. Lowercase, alphanumeric with one separator convention (hyphen or underscore), ISO-8601 dates, one dot used only for the extension, no spaces or special characters, zero-padded sequence numbers. Ban junk-drawer names (`misc`, `stuff`, `tmp`, `new`, `old`, `backup`, `final`, bare `utils`).
+5. Name for platform safety and sort. Lowercase, alphanumeric, ISO-8601 dates, one dot used only for the extension, no spaces or special characters, and zero-padded sequence numbers. Pick one word-separator (hyphen or underscore) and hold it; the one accepted exception is the Model Workspace Protocol stage prefix `NN_` (a zero-padded number then an underscore, as in `01_research`), where the underscore marks the sequence boundary. Ban junk-drawer names (`misc`, `stuff`, `tmp`, `new`, `old`, `backup`, `final`, bare `utils`).
 6. Bound depth and path. Prefer flatter trees, cap nesting near eight levels and total path near 255 characters, and do not nest one folder per WBS level mechanically.
 7. Give each non-trivial folder a short README or dictionary note (purpose, what belongs, what does not, owner) and a disposition note.
 8. Reconcile with the existing tree before proposing changes. Respect current conventions, propose the minimum new structure, and flag conflicts as findings rather than overwriting a baselined layout.
@@ -53,7 +53,7 @@ Folders are a first-class engineering decision, not an afterthought. Each one is
 
 ## Verification
 
-- Naming: every path is lowercase, uses the chosen separator, ISO-8601 dates, one dot, and no spaces or special characters.
+- Naming: every path is lowercase, uses the chosen word-separator (with the MWP `NN_` stage prefix as the only exception), ISO-8601 dates, one dot, and no spaces or special characters.
 - Depth and path: no path exceeds roughly eight levels or 255 characters.
 - Mapping and one-home: every folder maps to one WBS element or one disposition rule; no orphan folders; no concept has two homes.
 - Cohesion and coupling: each folder's contents share a reason to change; cross-folder references are minimized and noted.

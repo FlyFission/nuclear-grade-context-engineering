@@ -52,7 +52,7 @@
 
 ## Folder map (derived from WBS outline numbers)
 
-Each element maps to exactly one folder or file. Names: lowercase, hyphen or underscore, ISO-8601 dates, one dot for the extension, bounded depth. Every folder traces to a WBS outline number or a disposition rule.
+Each element maps to exactly one folder or file. Names: lowercase, one held word-separator (hyphen or underscore), ISO-8601 dates, one dot for the extension, bounded depth. The Model Workspace Protocol stage prefix `NN_` (number then underscore) is the one accepted naming exception. Every folder traces to a WBS outline number or a disposition rule.
 
 | WBS outline no. | Path | File or folder | Disposition (keep / transient / archive / generated) | Note |
 |---|---|---|---|---|
@@ -75,7 +75,7 @@ Each element maps to exactly one folder or file. Names: lowercase, hyphen or und
 
 | Rule | Pass / fail | Evidence (grep or count) |
 |---|---|---|
-| Names lowercase with safe separators | | |
+| Names lowercase with one held word-separator (MWP `NN_` stage prefix excepted) | | |
 | ISO-8601 dates only | | |
 | Max depth within ~8 levels | | |
 | Max path within 255 characters | | |

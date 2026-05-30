@@ -2,7 +2,7 @@
 
 ## Inputs
 
-- Working: none (this is the first stage).
+- Working (per-run artifacts from a prior stage): none (this is the first stage).
 - Reference: `../references/voice.md` (constraints to internalize).
 - The topic, provided when the stage is run.
 

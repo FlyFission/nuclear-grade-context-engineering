@@ -29,7 +29,7 @@ example-workspace/
   per-run artifacts that feed the next stage's input.
 - **Every output is an edit surface with a review gate.** A human can inspect and edit `01_research/output/`
   before `02_draft` runs.
-- **Names are platform-safe and sortable.** Lowercase, underscores, zero-padded stage numbers.
+- **Names are platform-safe and sortable.** Lowercase and zero-padded. The numbered stage prefix `NN_` (number then underscore, as in `01_research`) marks the sequence — the one accepted exception to the hyphen word-separator convention used elsewhere. `references/` sits at the workspace root, and each stage reaches it via `../references/`.
 
 This is one paradigm `structuring-agentic-folders` supports (the *agent-workflow-workspace* branch);
 the other is product-oriented codebase decomposition, where the folder tree is the WBS projected to disk.

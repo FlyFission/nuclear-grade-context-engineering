@@ -34,13 +34,13 @@ Red-team evidence feeds `verification.md` exactly like functional test evidence.
 - Outcome recorded: `contained`, `uncertain`, or `exposed`.
 - Residual risks linked to `ship.md`.
 
-Use `skills/red-teaming-agent-changes/SKILL.md` for the full process.
+Use `skills/stress-testing-agent-changes/SKILL.md` for the full process.
 Use `commands/ng-red-team.md` as a portable agent prompt.
 Use `templates/standard/red-team.md` when findings warrant a separate record.
 
 ## Relationship to self-check and agent authority model
 
-Red-team review complements, not replaces, `self-checking-agent-actions` and the agent authority model in `docs/04-adoption/agent-authority-model.md`. The authority model defines what the agent is permitted to do; self-check applies before each critical action; red-team review probes whether the permission boundary can be violated from the outside. All three are needed for a complete picture.
+Red-team review complements, not replaces, `double-checking-before-acting` and the agent authority model in `docs/04-adoption/agent-authority-model.md`. The authority model defines what the agent is permitted to do; self-check applies before each critical action; red-team review probes whether the permission boundary can be violated from the outside. All three are needed for a complete picture.
 
 ## Boundaries
 

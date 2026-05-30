@@ -23,7 +23,7 @@
 
 ## Charter and anchor check
 
-A re-evaluated gate, not a one-time note. Confirm before Plan and re-check before Verify. See `controlling-mission-drift`.
+A re-evaluated gate, not a one-time note. Confirm before Plan and re-check before Verify. See `staying-on-mission`.
 
 - Mission anchor confirmed (objective, success criteria, non-goals) before Plan? yes/no:
 - Re-checked before Verify? yes/no/not yet:

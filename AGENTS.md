@@ -28,18 +28,18 @@ Agents must not assume authority to:
 ## Recommended skills
 
 - `skills/questioning-attitude/SKILL.md`
-- `skills/classifying-change-risk/SKILL.md`
-- `skills/identifying-controlled-items/SKILL.md`
-- `skills/screening-change-impact/SKILL.md`
-- `skills/creating-change-packets/SKILL.md`
-- `skills/turning-over-agent-work/SKILL.md`
-- `skills/self-checking-agent-actions/SKILL.md`
-- `skills/baselining-configuration/SKILL.md`
+- `skills/rating-change-risk/SKILL.md`
+- `skills/choosing-what-to-control/SKILL.md`
+- `skills/checking-what-a-change-affects/SKILL.md`
+- `skills/creating-change-records/SKILL.md`
+- `skills/handing-off-work/SKILL.md`
+- `skills/double-checking-before-acting/SKILL.md`
+- `skills/recording-a-known-good-version/SKILL.md`
 - `skills/proving-claims/SKILL.md`
-- `skills/reviewing-ship-readiness/SKILL.md`
-- `skills/learning-from-opex/SKILL.md`
-- `skills/checking-dependency-and-model-trust/SKILL.md`
-- `skills/checking-license-and-assurance-boundaries/SKILL.md`
+- `skills/checking-release-readiness/SKILL.md`
+- `skills/learning-from-experience/SKILL.md`
+- `skills/vetting-outside-code-and-models/SKILL.md`
+- `skills/checking-legal-and-safety-wording/SKILL.md`
 
 ## Completion standard
 

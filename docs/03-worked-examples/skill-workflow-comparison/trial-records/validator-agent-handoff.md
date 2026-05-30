@@ -39,10 +39,10 @@ Skills exercised:
 
 - `questioning-attitude`
 - `using-nuclear-grade`
-- `classifying-change-risk`
-- `creating-change-packets`
-- `packing-agent-context`
-- `turning-over-agent-work`
+- `rating-change-risk`
+- `creating-change-records`
+- `briefing-an-agent`
+- `handing-off-work`
 - `proving-claims`
 
 Workflows exercised:

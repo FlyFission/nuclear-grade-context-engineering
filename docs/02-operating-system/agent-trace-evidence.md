@@ -55,7 +55,7 @@ If a dedicated observability platform (OpenTelemetry, W&B Weave, Phoenix) is alr
 - Approval gate records with reviewer, date, and decision.
 - Execution posture summary linked to `ship.md`.
 
-Use `skills/tracing-agent-execution/SKILL.md` for the full process.
+Use `skills/recording-what-an-agent-did/SKILL.md` for the full process.
 Use `commands/ng-trace.md` as a portable agent prompt.
 Use `templates/standard/execution-trace.md` when trace volume warrants a separate record.
 

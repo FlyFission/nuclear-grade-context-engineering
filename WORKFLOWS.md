@@ -72,7 +72,7 @@ Activate CM records when the change affects a controlled item: code, docs, promp
 controlled-items.md -> change-impact.md -> baseline.md -> variance.md -> opex.md
 ```
 
-Start with `skills/identifying-controlled-items/SKILL.md` and `docs/02-operating-system/configuration-management.md`.
+Start with `skills/choosing-what-to-control/SKILL.md` and `docs/02-operating-system/configuration-management.md`.
 
 ## Agent authority change
 
@@ -84,7 +84,7 @@ Agent authority changes need explicit scope:
 - forbidden actions;
 - evidence required before completion.
 
-Start with `skills/packing-agent-context/SKILL.md` and `docs/02-operating-system/context-packs.md`.
+Start with `skills/briefing-an-agent/SKILL.md` and `docs/02-operating-system/context-packs.md`.
 
 ## Agent turnover and self-checking
 
@@ -109,7 +109,7 @@ Use self-checking at cut points: wrong target, wrong command, wrong public claim
 
 A release decision is not "tests passed." It records evidence status, residual risk, rollback, monitoring, handoff, decision, and baseline trigger.
 
-Use `skills/reviewing-ship-readiness/SKILL.md`.
+Use `skills/checking-release-readiness/SKILL.md`.
 
 ## OPEX and trust checks
 

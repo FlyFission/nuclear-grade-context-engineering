@@ -16,12 +16,12 @@ AI agents drift across long sessions: they keep completing tasks while the work 
 |---|---|---|
 | C-001 | A durable charter of named process-integrity principles exists at `.nuclear/charter.md` and `init` writes a starter charter. | File exists; `tests/test_ng_cli.py::test_init_creates_charter_and_mission_anchor`. |
 | C-002 | A per-change mission anchor (objective + success + non-goals) is a section in the Standard risk template, and a workspace anchor is written by `init`. | Diff of `templates/standard/risk.md`; init test. |
-| C-003 | `controlling-mission-drift` is a valid skill: 11-section contract, drift symptoms as triggers, the re-anchor/escalate/stop triad, a counted (3-attempt/loop) escalation trigger, and Rickover/Navy principles woven in. | `tests/test_skill_contracts.py`; live `doctor`. |
+| C-003 | `staying-on-mission` is a valid skill: 11-section contract, drift symptoms as triggers, the re-anchor/escalate/stop triad, a counted (3-attempt/loop) escalation trigger, and Rickover/Navy principles woven in. | `tests/test_skill_contracts.py`; live `doctor`. |
 | C-004 | `reviewing-code-quality` is a valid skill capturing standards-drift review (delete-first, countable tripwires, abstraction-earns-keep, layering, single verdict). | `tests/test_skill_contracts.py`; live `doctor`. |
 | C-005 | `ng-drift-check.md` and `ng-code-review.md` are valid command prompts (10-section contract). | `tests/test_command_contracts.py`; live `doctor`. |
 | C-006 | The validator advisory-checks a mission anchor only when present (objective + success + non-goals) and flags unresolved clarification markers (the spec-kit style NEEDS-CLARIFICATION token), without breaking existing packets. | New `tests/test_ng_validate.py` cases; all existing packets still validate. |
 | C-007 | A drift gate (charter and anchor check, re-checked before Verify, with a justification table) is present in the Standard plan template. | Diff of `templates/standard/plan.md`. |
-| C-008 | Retrofits and registration land together: questioning-attitude, packing-agent-context, reviewing-ship-readiness, using-nuclear-grade, context-packs, WORKFLOWS, SKILLS.md, COMMANDS.md, nuclear-grade.yaml, skill-evaluation.md, results-summary.md. | Diffs; contract + public-doc tests. |
+| C-008 | Retrofits and registration land together: questioning-attitude, briefing-an-agent, checking-release-readiness, using-nuclear-grade, context-packs, WORKFLOWS, SKILLS.md, COMMANDS.md, nuclear-grade.yaml, skill-evaluation.md, results-summary.md. | Diffs; contract + public-doc tests. |
 
 ## Assumptions, constraints, and invalidation triggers
 

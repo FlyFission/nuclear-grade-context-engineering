@@ -38,14 +38,14 @@ Skills exercised:
 
 - `questioning-attitude`
 - `using-nuclear-grade`
-- `identifying-controlled-items`
-- `screening-change-impact`
-- `baselining-configuration`
-- `classifying-change-risk`
-- `creating-change-packets`
-- `self-checking-agent-actions`
+- `choosing-what-to-control`
+- `checking-what-a-change-affects`
+- `recording-a-known-good-version`
+- `rating-change-risk`
+- `creating-change-records`
+- `double-checking-before-acting`
 - `proving-claims`
-- `reviewing-ship-readiness`
+- `checking-release-readiness`
 
 Workflows exercised:
 

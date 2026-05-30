@@ -35,31 +35,31 @@ templates:
 skills:
   - questioning-attitude
   - using-nuclear-grade
-  - identifying-controlled-items
-  - screening-change-impact
-  - baselining-configuration
-  - classifying-change-risk
-  - creating-change-packets
-  - packing-agent-context
-  - turning-over-agent-work
-  - self-checking-agent-actions
+  - choosing-what-to-control
+  - checking-what-a-change-affects
+  - recording-a-known-good-version
+  - rating-change-risk
+  - creating-change-records
+  - briefing-an-agent
+  - handing-off-work
+  - double-checking-before-acting
   - proving-claims
-  - reviewing-ship-readiness
-  - learning-from-opex
-  - checking-dependency-and-model-trust
-  - checking-source-lineage
-  - checking-license-and-assurance-boundaries
-  - controlling-mission-drift
+  - checking-release-readiness
+  - learning-from-experience
+  - vetting-outside-code-and-models
+  - checking-source-claims
+  - checking-legal-and-safety-wording
+  - staying-on-mission
   - reviewing-code-quality
-  - red-teaming-agent-changes
-  - tracing-agent-execution
-  - decomposing-work-breakdown
-  - structuring-agentic-folders
+  - stress-testing-agent-changes
+  - recording-what-an-agent-did
+  - breaking-down-the-work
+  - organizing-project-folders
 commands:
   - ng-question.md
   - ng-classify.md
   - ng-new.md
-  - ng-cm-items.md
+  - ng-what-to-control.md
   - ng-impact.md
   - ng-baseline.md
   - ng-context-pack.md
@@ -67,7 +67,7 @@ commands:
   - ng-self-check.md
   - ng-prove.md
   - ng-ship-review.md
-  - ng-opex.md
+  - ng-learn.md
   - ng-trust-check.md
   - ng-source-check.md
   - ng-legal-check.md
@@ -75,7 +75,7 @@ commands:
   - ng-code-review.md
   - ng-red-team.md
   - ng-trace.md
-  - ng-wbs.md
+  - ng-breakdown.md
   - ng-folders.md
 boundaries:
   license: MIT

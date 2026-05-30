@@ -24,7 +24,7 @@
 
 ## Mission anchor
 
-State what this change is for, so a long session can be tested against it. See `controlling-mission-drift`.
+State what this change is for, so a long session can be tested against it. See `staying-on-mission`.
 
 - Objective:
 - Success criteria:

@@ -38,15 +38,15 @@ Skills exercised:
 
 - `questioning-attitude`
 - `using-nuclear-grade`
-- `identifying-controlled-items`
-- `screening-change-impact`
-- `baselining-configuration`
-- `classifying-change-risk`
-- `creating-change-packets`
-- `turning-over-agent-work`
-- `learning-from-opex`
+- `choosing-what-to-control`
+- `checking-what-a-change-affects`
+- `recording-a-known-good-version`
+- `rating-change-risk`
+- `creating-change-records`
+- `handing-off-work`
+- `learning-from-experience`
 - `proving-claims`
-- `reviewing-ship-readiness`
+- `checking-release-readiness`
 
 Workflows exercised:
 

@@ -8,26 +8,26 @@ Skills are self-contained agent instructions. Each skill has a `SKILL.md` contra
 |---|---|---|
 | [`questioning-attitude`](skills/questioning-attitude/SKILL.md) | Challenging assumptions before work, review, or release continues | Assumptions, evidence gaps, stop conditions |
 | [`using-nuclear-grade`](skills/using-nuclear-grade/SKILL.md) | Adopting the workflow for a change or repo | Mode, packet path, evidence path |
-| [`identifying-controlled-items`](skills/identifying-controlled-items/SKILL.md) | Deciding what configuration must be controlled | Controlled item list |
-| [`screening-change-impact`](skills/screening-change-impact/SKILL.md) | Checking downstream impact and revalidation triggers | Impact screen |
-| [`baselining-configuration`](skills/baselining-configuration/SKILL.md) | Recording accepted controlled configuration state | Baseline record |
-| [`classifying-change-risk`](skills/classifying-change-risk/SKILL.md) | Selecting Quick, Standard, or stronger human-reviewed mode | Mode decision and evidence obligation |
-| [`creating-change-packets`](skills/creating-change-packets/SKILL.md) | Creating or updating packet files | Quick or Standard packet |
-| [`packing-agent-context`](skills/packing-agent-context/SKILL.md) | Preparing focused agent or reviewer context | Context pack |
-| [`turning-over-agent-work`](skills/turning-over-agent-work/SKILL.md) | Handing off unfinished agent, review, verification, release, or resumed-thread work | Turnover record |
-| [`self-checking-agent-actions`](skills/self-checking-agent-actions/SKILL.md) | Checking critical agent edits, commands, public claims, trust changes, or releases before action | Self-check record |
+| [`choosing-what-to-control`](skills/choosing-what-to-control/SKILL.md) | Deciding what configuration must be controlled | Controlled item list |
+| [`checking-what-a-change-affects`](skills/checking-what-a-change-affects/SKILL.md) | Checking downstream impact and revalidation triggers | Impact screen |
+| [`recording-a-known-good-version`](skills/recording-a-known-good-version/SKILL.md) | Recording accepted controlled configuration state | Baseline record |
+| [`rating-change-risk`](skills/rating-change-risk/SKILL.md) | Selecting Quick, Standard, or stronger human-reviewed mode | Mode decision and evidence obligation |
+| [`creating-change-records`](skills/creating-change-records/SKILL.md) | Creating or updating packet files | Quick or Standard packet |
+| [`briefing-an-agent`](skills/briefing-an-agent/SKILL.md) | Preparing focused agent or reviewer context | Context pack |
+| [`handing-off-work`](skills/handing-off-work/SKILL.md) | Handing off unfinished agent, review, verification, release, or resumed-thread work | Turnover record |
+| [`double-checking-before-acting`](skills/double-checking-before-acting/SKILL.md) | Checking critical agent edits, commands, public claims, trust changes, or releases before action | Self-check record |
 | [`proving-claims`](skills/proving-claims/SKILL.md) | Mapping claims to evidence and gaps | Claim-to-evidence rows |
-| [`reviewing-ship-readiness`](skills/reviewing-ship-readiness/SKILL.md) | Deciding ship, block, defer, or ship-with-risk | Release decision record |
-| [`learning-from-opex`](skills/learning-from-opex/SKILL.md) | Turning near misses, bad handoffs, review surprises, or operating signals into durable updates | OPEX action |
-| [`checking-dependency-and-model-trust`](skills/checking-dependency-and-model-trust/SKILL.md) | Reviewing dependency, model, API, SaaS, generated artifact, or vendor trust | Intended-use trust screen |
-| [`checking-source-lineage`](skills/checking-source-lineage/SKILL.md) | Reviewing citation and source-family claims | Source-safe wording |
-| [`checking-license-and-assurance-boundaries`](skills/checking-license-and-assurance-boundaries/SKILL.md) | Reviewing license and assurance language | Boundary-safe wording |
-| [`controlling-mission-drift`](skills/controlling-mission-drift/SKILL.md) | Work drifts from the objective, scope creeps, or rigor erodes one concession at a time | Re-anchor / escalate / stop decision and updated mission anchor |
+| [`checking-release-readiness`](skills/checking-release-readiness/SKILL.md) | Deciding ship, block, defer, or ship-with-risk | Release decision record |
+| [`learning-from-experience`](skills/learning-from-experience/SKILL.md) | Turning near misses, bad handoffs, review surprises, or operating signals into durable updates | OPEX action |
+| [`vetting-outside-code-and-models`](skills/vetting-outside-code-and-models/SKILL.md) | Reviewing dependency, model, API, SaaS, generated artifact, or vendor trust | Intended-use trust screen |
+| [`checking-source-claims`](skills/checking-source-claims/SKILL.md) | Reviewing citation and source-family claims | Source-safe wording |
+| [`checking-legal-and-safety-wording`](skills/checking-legal-and-safety-wording/SKILL.md) | Reviewing license and assurance language | Boundary-safe wording |
+| [`staying-on-mission`](skills/staying-on-mission/SKILL.md) | Work drifts from the objective, scope creeps, or rigor erodes one concession at a time | Re-anchor / escalate / stop decision and updated mission anchor |
 | [`reviewing-code-quality`](skills/reviewing-code-quality/SKILL.md) | Reviewing a diff or module for standards drift and needless complexity | Prioritized findings and a single verdict |
-| [`red-teaming-agent-changes`](skills/red-teaming-agent-changes/SKILL.md) | Adversarially probing agent tool grants, dependencies, models, or releases for injection, escalation, unsafe output, or tool misuse | Red-team findings record |
-| [`tracing-agent-execution`](skills/tracing-agent-execution/SKILL.md) | Capturing agent tool calls, decisions, inputs, outputs, token use, and approval gates as structured execution evidence | Execution trace record |
-| [`decomposing-work-breakdown`](skills/decomposing-work-breakdown/SKILL.md) | Decomposing an epic, feature, or subsystem into a product-oriented, 100%-rule, non-overlapping work breakdown | WBS table and dictionary |
-| [`structuring-agentic-folders`](skills/structuring-agentic-folders/SKILL.md) | Laying out a repo or agent workspace, placing a file, or fixing a junk-drawer directory | Folder map and naming/depth audit |
+| [`stress-testing-agent-changes`](skills/stress-testing-agent-changes/SKILL.md) | Adversarially probing agent tool grants, dependencies, models, or releases for injection, escalation, unsafe output, or tool misuse | Red-team findings record |
+| [`recording-what-an-agent-did`](skills/recording-what-an-agent-did/SKILL.md) | Capturing agent tool calls, decisions, inputs, outputs, token use, and approval gates as structured execution evidence | Execution trace record |
+| [`breaking-down-the-work`](skills/breaking-down-the-work/SKILL.md) | Decomposing an epic, feature, or subsystem into a product-oriented, 100%-rule, non-overlapping work breakdown | WBS table and dictionary |
+| [`organizing-project-folders`](skills/organizing-project-folders/SKILL.md) | Laying out a repo or agent workspace, placing a file, or fixing a junk-drawer directory | Folder map and naming/depth audit |
 
 ## Contract
 

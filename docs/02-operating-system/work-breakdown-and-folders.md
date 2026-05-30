@@ -34,13 +34,13 @@ Work-breakdown decomposition runs at Specify/Plan and feeds `plan.md` (the work 
 - A dictionary entry per element (scope, deliverable, acceptance, owner).
 - A folder map that traces every folder to a WBS element or a disposition rule, passing a naming and depth audit.
 
-Use `skills/decomposing-work-breakdown/SKILL.md` and `skills/structuring-agentic-folders/SKILL.md` for the full process.
-Use `commands/ng-wbs.md` and `commands/ng-folders.md` as portable agent prompts.
+Use `skills/breaking-down-the-work/SKILL.md` and `skills/organizing-project-folders/SKILL.md` for the full process.
+Use `commands/ng-breakdown.md` and `commands/ng-folders.md` as portable agent prompts.
 Use `templates/standard/wbs.md` when the WBS and folder map warrant a recorded artifact.
 
 ## Relationship to mission drift, baselines, and enforcement
 
-The WBS bounds scope, so `controlling-mission-drift` has a concrete anchor to test growth against. Folder structuring respects, and does not silently overwrite, a baselined layout; conflicts route to `baselining-configuration`. Ownership, CI gates, and supply-chain trust are deliberately out of scope here: they belong to `identifying-controlled-items`, `reviewing-ship-readiness`, and `checking-dependency-and-model-trust`. This doc structures work and layout; it does not enforce them.
+The WBS bounds scope, so `staying-on-mission` has a concrete anchor to test growth against. Folder structuring respects, and does not silently overwrite, a baselined layout; conflicts route to `recording-a-known-good-version`. Ownership, CI gates, and supply-chain trust are deliberately out of scope here: they belong to `choosing-what-to-control`, `checking-release-readiness`, and `vetting-outside-code-and-models`. This doc structures work and layout; it does not enforce them.
 
 ## Boundaries
 

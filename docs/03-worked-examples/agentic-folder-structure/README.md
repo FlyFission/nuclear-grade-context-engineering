@@ -1,7 +1,7 @@
 # Worked Example: Agentic Folder Structure (Model Workspace Protocol)
 
 This example shows a sequential agent workflow expressed as **folder structure** instead of framework
-code, following the Model Workspace Protocol (MWP) pattern that `structuring-agentic-folders` teaches.
+code, following the Model Workspace Protocol (MWP) pattern that `organizing-project-folders` teaches.
 A single agent reads the right context file at each stage; numbered folders encode order; persistent
 reference material is separated from per-run output; a human reviews each stage's output before the
 next runs.
@@ -31,7 +31,7 @@ example-workspace/
   before `02_draft` runs.
 - **Names are platform-safe and sortable.** Lowercase and zero-padded. The numbered stage prefix `NN_` (number then underscore, as in `01_research`) marks the sequence — the one accepted exception to the hyphen word-separator convention used elsewhere. `references/` sits at the workspace root, and each stage reaches it via `../references/`. The `CONTEXT.md` marker files are capitalized by Model Workspace Protocol convention (like `README.md`) — an accepted exception to the lowercase rule.
 
-This is one paradigm `structuring-agentic-folders` supports (the *agent-workflow-workspace* branch);
+This is one paradigm `organizing-project-folders` supports (the *agent-workflow-workspace* branch);
 the other is product-oriented codebase decomposition, where the folder tree is the WBS projected to disk.
 
 ## Boundary note

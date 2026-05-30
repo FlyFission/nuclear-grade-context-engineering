@@ -38,12 +38,12 @@ Skills exercised:
 
 - `questioning-attitude`
 - `using-nuclear-grade`
-- `screening-change-impact`
-- `classifying-change-risk`
-- `creating-change-packets`
-- `self-checking-agent-actions`
-- `checking-source-lineage`
-- `checking-license-and-assurance-boundaries`
+- `checking-what-a-change-affects`
+- `rating-change-risk`
+- `creating-change-records`
+- `double-checking-before-acting`
+- `checking-source-claims`
+- `checking-legal-and-safety-wording`
 
 Workflows exercised:
 

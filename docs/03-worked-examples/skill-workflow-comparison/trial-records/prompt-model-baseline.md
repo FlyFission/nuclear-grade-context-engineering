@@ -39,15 +39,15 @@ Skills exercised:
 
 - `questioning-attitude`
 - `using-nuclear-grade`
-- `identifying-controlled-items`
-- `screening-change-impact`
-- `baselining-configuration`
-- `classifying-change-risk`
-- `checking-dependency-and-model-trust`
+- `choosing-what-to-control`
+- `checking-what-a-change-affects`
+- `recording-a-known-good-version`
+- `rating-change-risk`
+- `vetting-outside-code-and-models`
 - `proving-claims`
-- `reviewing-ship-readiness`
-- `checking-source-lineage`
-- `checking-license-and-assurance-boundaries`
+- `checking-release-readiness`
+- `checking-source-claims`
+- `checking-legal-and-safety-wording`
 
 Workflows exercised:
 

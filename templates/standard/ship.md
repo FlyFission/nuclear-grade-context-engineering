@@ -72,6 +72,7 @@
 - Decision: ship / do not ship / defer / ship with residual risk
 - Decision maker:
 - Rationale:
+- Decision question answered by evidence? yes/no:
 - Conditions attached:
 - Decision posture: conservative enough / not conservative enough:
 - Abort or rollback trigger:
@@ -95,6 +96,7 @@
 ## Exit criteria
 
 - Release decision is explicit.
+- Slow-audit acceptance is complete before baseline or public claims are accepted.
 - Baseline trigger is explicit when controlled state changes.
 - Evidence status and gaps are visible.
 - Residual uncertainty is bounded, owned, or blocks/defer the decision.

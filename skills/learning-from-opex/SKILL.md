@@ -7,13 +7,14 @@ description: Turns incidents, near misses, bad handoffs, review surprises, escap
 
 ## Overview
 
-Operating experience is only useful when it changes future work. Treat agent mistakes, near misses, review surprises, and support signals as control-system feedback.
+Operating experience is only useful when it changes future work. Treat agent mistakes, near misses, review surprises, shallow analysis, and support signals as control-system feedback.
 
 ## When to Use
 
 - A bad handoff, wrong-file edit, hallucinated claim, tool-scope overrun, escaped defect, or review surprise occurred.
 - Users or operators misunderstood a release, public claim, runbook, template, or baseline.
 - A prior packet, skill, command, test, validator, monitor, or template failed to guide behavior.
+- A doctrine, source, or influence update produced prose without a durable control change.
 
 ## When Not to Use
 
@@ -32,8 +33,9 @@ Operating experience is only useful when it changes future work. Treat agent mis
 1. State what happened without blame language.
 2. Identify the active error, weak or missing control, and affected baseline or artifact.
 3. Choose a durable update: basis, test, validator, template, skill, command, doc, monitor, threshold, or baseline.
-4. Verify the update or explicitly close the lesson with rationale.
-5. Feed the lesson into future questioning, planning, verification, or turnover.
+4. Reject closure that only records regret or explanation when a durable control can change.
+5. Verify the update or explicitly close the lesson with rationale.
+6. Feed the lesson into future questioning, planning, verification, or turnover.
 
 ## Outputs
 

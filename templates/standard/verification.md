@@ -26,9 +26,9 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`.
 
 ## Claim-to-evidence table
 
-| Claim / requirement ID | Verification type | Verification method | Acceptance criteria | Result status | Evidence link | Gap / follow-up |
-|---|---|---|---|---|---|---|
-| REQ-001 | deterministic test / eval / self-check / peer-check / concurrent verification / independent verification / peer review | | | | | |
+| Claim / requirement ID | Support type | Verification type | Verification method | Acceptance criteria | Result status | Evidence link | Gap / follow-up |
+|---|---|---|---|---|---|---|---|
+| REQ-001 | fact / assumption / unknown / source claim / local proof / decision authority | deterministic test / eval / self-check / peer-check / concurrent verification / independent verification / peer review | | | | | |
 
 ## Verification type guide
 
@@ -87,6 +87,7 @@ Use if activated.
 ## Exit criteria
 
 - Each important claim has `pass`, `fail`, `gap`, `deferred`, or `not applicable` status.
+- Each important claim separates support type from verification type.
 - Evidence is linked rather than pasted in full.
 - Gaps are explicit and reflected in `ship.md`.
 - Reviewer can tell whether the evidence supports the release decision.

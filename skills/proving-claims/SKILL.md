@@ -7,7 +7,7 @@ description: Maps claims to evidence, statuses, gaps, tests, evals, reviews, and
 
 ## Overview
 
-Evidence should answer named claims, not create a general feeling that the change is fine. This skill turns claims into traceable proof status.
+Evidence should answer named claims, not create a general feeling that the change is fine. This skill turns claims into traceable proof status and separates fact, assumption, unknown, source claim, local proof, and decision authority.
 
 ## When to Use
 
@@ -31,14 +31,16 @@ Evidence should answer named claims, not create a general feeling that the chang
 
 1. Extract each important claim.
 2. Select the verification type needed for each claim.
-3. Link each claim to basis, control/design feature, implementation, evidence, and ship posture.
-4. Assign evidence status: `pass`, `fail`, `gap`, `deferred`, `not applicable`, or `planned`.
-5. Narrow overbroad claims until the evidence genuinely supports them.
-6. Record gaps and release impact.
+3. Classify the support behind each claim as fact, assumption, unknown, source claim, local proof, or decision authority.
+4. Link each claim to basis, control/design feature, implementation, evidence, and ship posture.
+5. Assign evidence status: `pass`, `fail`, `gap`, `deferred`, `not applicable`, or `planned`.
+6. Narrow overbroad claims until the evidence genuinely supports them.
+7. Record gaps and release impact.
 
 ## Outputs
 
 - Claim-to-evidence rows in `trace.md` or `verification.md`.
+- Fact/source/proof distinction for each important claim.
 - Reproducible evidence commands or artifact links.
 - Verification type for each important claim.
 - Updated ship posture when evidence changes.

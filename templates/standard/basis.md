@@ -46,6 +46,14 @@ What must not happen?
 |---|---|---|---|---|
 | | | | | |
 
+## Grounding status
+
+Separate confidence from evidence before derived claims are accepted.
+
+| Statement | Fact / assumption / unknown / source claim / local proof / decision authority | Evidence or source | Decision impact |
+|---|---|---|---|
+| | | | |
+
 ## Interfaces and trust boundaries
 
 - Internal interfaces affected:

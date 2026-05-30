@@ -2,13 +2,14 @@
 
 ## Purpose
 
-Review release readiness and record ship, block, defer, or ship-with-risk decisions. This is a portable command prompt.
+Review release readiness as a slow-audit acceptance gate and record ship, block, defer, or ship-with-risk decisions. This is a portable command prompt.
 
 ## Use when
 
 - A Standard packet is approaching merge or release.
 - Evidence gaps, rollback, monitoring, or residual risks need a decision.
 - A PR changes trust posture.
+- A fast candidate is being promoted into a baseline, public claim, release, or accepted controlled state.
 - Turnover, support handoff, OPEX trigger, or conservative decision posture is unclear.
 
 ## Do not use when
@@ -37,6 +38,7 @@ Inputs:
 
 Return:
 - release decision: ship, block, defer, or ship with named residual risk
+- whether the decision question is answered by evidence
 - evidence summary
 - residual risks and owner
 - rollback and monitoring notes
@@ -52,6 +54,7 @@ Return:
 ## Expected outputs
 
 - Explicit release decision.
+- Evidence-backed answer to the decision question.
 - Residual risk statement.
 - Rollback and monitoring record.
 - Conservative posture, turnover, and learning trigger.
@@ -65,6 +68,7 @@ python tools/ng.py validate .nuclear/changes/<slug>
 ## Failure modes
 
 - Equating green CI with ship readiness.
+- Promoting a candidate to accepted configuration before audit gates.
 - Deferring evidence without owner or impact.
 - Missing rollback or monitoring.
 - Missing operational handoff or OPEX trigger.

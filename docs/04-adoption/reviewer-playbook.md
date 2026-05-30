@@ -14,9 +14,14 @@
 
 ## What to challenge
 
+- Wrong or missing decision question.
+- Instructions that are understandable only if read charitably, but still easy for a tired agent to misuse.
 - Claims broader than evidence.
 - Unvalidated assumptions hidden behind confident prose.
+- Subjective confidence, source claims, or vendor language treated as local proof.
 - Quick mode hiding Standard triggers.
+- Fast candidate work treated as accepted configuration before audit gates.
+- Premature baseline or release decision before evidence, rollback, monitoring, and residual risk are visible.
 - Missing rollback or monitoring for release-facing work.
 - AI authority broader than recorded.
 - Public wording that implies compliance, certification, approval, safety, security, or formal verification.
@@ -41,6 +46,7 @@ Ask what kind of checking is being claimed:
 - Full source-family essays in every packet.
 - Nuclear-mode artifacts when consequence does not activate them.
 - Perfect prose before evidence is clear.
+- Slow procedure for reversible exploration when only acceptance needs stronger evidence.
 
 ## Exit criteria
 

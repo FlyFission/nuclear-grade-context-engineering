@@ -7,7 +7,7 @@ description: Challenges assumptions with skeptical fact-finding before an agent 
 
 ## Overview
 
-Questioning attitude is the Nuclear-grade front door: challenge assumptions before an agent builds, merges, or releases. Prefer facts over confidence, surface uncertainty, and stop when a doubt changes the decision.
+Questioning attitude is the Nuclear-grade front door: find the decision question before an agent builds, merges, or releases. Prefer facts over confidence, surface uncertainty, and stop when a doubt changes the decision.
 
 ## When to Use
 
@@ -36,7 +36,7 @@ Questioning attitude is the Nuclear-grade front door: challenge assumptions befo
 2. List assumptions that must be true for the change to work.
 3. Separate known facts, assumptions, unknowns, and source quality.
 4. Identify uncertainty, danger words, warning signs, error-likely steps, and hidden Standard-mode triggers.
-5. Ask what evidence would change the decision.
+5. Ask what evidence would change the decision; if no evidence could change it, the question is not decision-useful yet.
 6. Validate facts before relying on memory, confidence, or agent-generated claims.
 7. Name pause conditions, hold conditions, and escalation triggers.
 8. Route the next artifact: Quick proof, Standard spec, context pack, turnover, self-check, CM record, mission anchor or drift check, or release decision.
@@ -48,6 +48,7 @@ Questioning attitude is the Nuclear-grade front door: challenge assumptions befo
 - Knowns, unknowns, danger words, and source-quality concerns.
 - Mode/escalation triggers.
 - Evidence needed before execute, verify, review, decide, or baseline.
+- Evidence that would change the decision.
 
 ## Verification
 

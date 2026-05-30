@@ -2,12 +2,13 @@
 
 ## Purpose
 
-Convert operating experience, near misses, incidents, bad handoffs, review surprises, or user feedback into durable workflow updates. This is a portable command prompt.
+Convert operating experience, near misses, incidents, bad handoffs, shallow analysis, review surprises, or user feedback into durable workflow updates. This is a portable command prompt.
 
 ## Use when
 
 - An agent exceeded or nearly exceeded authority.
 - A bad handoff, hallucinated claim, escaped defect, weak review, stale baseline, or user confusion appeared.
+- A doctrine, source, or influence update produced prose without a durable control change.
 - A lesson should update a basis, test, validator, template, skill, command, doc, monitor, threshold, or baseline.
 
 ## Do not use when
@@ -48,6 +49,7 @@ Produce a no-blame OPEX record. Each finding must update a durable control or ex
 
 - Finding, impact, action or closure, verification, owner, and trigger.
 - Revalidation or re-baseline trigger if controlled state changed.
+- Durable control update when one is available.
 
 ## Verification command
 
@@ -58,6 +60,7 @@ python tools/ng.py validate .nuclear/changes/<slug>
 ## Failure modes
 
 - Lesson stays in chat history only.
+- Lesson records regret but changes no basis, test, validator, template, skill, command, doc, monitor, threshold, or baseline.
 - Record names a person or model as sole cause.
 - Finding has no durable update or closure rationale.
 

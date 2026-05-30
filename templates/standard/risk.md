@@ -19,6 +19,7 @@
 - Owner:
 - Date:
 - Current lifecycle phase: Question / Specify / Plan / Execute / Verify / Review / Decide / Baseline / Operate / Learn
+- Current work phase: explore / candidate / audit / accept
 - Summary:
 
 ## Mission anchor
@@ -34,6 +35,7 @@ State what this change is for, so a long session can be tested against it. See `
 ## Questioning-attitude summary
 
 - Decision question:
+- Evidence that would change the decision:
 - Assumptions that changed the mode:
 - Facts still needing validation:
 - Stop or hold conditions:

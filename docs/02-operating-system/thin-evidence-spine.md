@@ -30,6 +30,8 @@ The spine is intentionally incomplete compared with a full quality system. It ca
 4. What evidence proves the important claims?
 5. Is the change ready to ship, defer, or block?
 
+The spine is not meant to slow every candidate edit. It slows acceptance: the point where a candidate becomes a claim, controlled item, baseline, release decision, or public statement.
+
 ---
 
 ## 2. Activation threshold
@@ -85,6 +87,7 @@ Avoid:
 - claiming test coverage proves unrelated safety/security/reliability claims;
 - letting AI-generated documentation outrun independent evidence;
 - letting the same agent's confident claim substitute for independent verification when consequence demands separation.
+- slowing reversible exploration when only acceptance gates need stronger evidence.
 
 Use links, status labels, and explicit gaps instead.
 

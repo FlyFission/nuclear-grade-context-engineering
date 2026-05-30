@@ -43,6 +43,17 @@ Number the minimum steps needed to complete the change.
 2.
 3.
 
+## Two-speed work plan
+
+Separate fast candidate work from slower acceptance gates.
+
+| Work phase | Allowed actions | Acceptance gate |
+|---|---|---|
+| explore | | |
+| candidate | | |
+| audit | | |
+| accept | | |
+
 ## HPI task preview
 
 | Critical step | Likely error | Consequence | Control / contingency | Evidence |

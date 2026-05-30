@@ -7,11 +7,12 @@ description: Selects Quick, Standard, or a stronger human-reviewed mode from con
 
 ## Overview
 
-Classify the change before building so rigor scales by consequence. The output is a mode decision with evidence obligations and escalation triggers.
+Classify the change before building so rigor scales by consequence and evidence need. The output is a mode decision tied to the decision question, proof obligations, and escalation triggers.
 
 ## When to Use
 
 - A change request is new, vague, or expanded.
+- The decision question is known but the evidence gate is unclear.
 - A PR has AI-generated code, tests, docs, prompts, or release artifacts.
 - Reviewers disagree about whether Quick evidence is enough.
 - Work is routine, procedural, novel, interrupted, resumed, delegated, or high consequence and needs the right HPI control.
@@ -30,16 +31,18 @@ Classify the change before building so rigor scales by consequence. The output i
 
 ## Process
 
-1. Identify consequence, reversibility, exposure, detectability, uncertainty, and agent authority.
-2. Screen work mode: routine, known procedure, novel/uncertain, interrupted/resumed, or critical action.
-3. Choose Quick only for local, reversible, easy-to-prove work with no new trust boundary.
-4. Choose Standard for user-visible, durable, dependency, permission, data, AI, operational, or release consequence.
-5. Mark Nuclear, Incident, Research Board, or Release as human-reviewed patterns when activated.
-6. Record escalation triggers and the minimum proof required.
+1. Restate the decision question and the evidence gate it needs.
+2. Identify consequence, reversibility, exposure, detectability, uncertainty, and agent authority.
+3. Screen work mode: routine, known procedure, novel/uncertain, interrupted/resumed, or critical action.
+4. Choose Quick only for local, reversible, easy-to-prove work with no new trust boundary.
+5. Choose Standard for user-visible, durable, dependency, permission, data, AI, operational, or release consequence.
+6. Mark Nuclear, Incident, Research Board, or Release as human-reviewed patterns when activated.
+7. Record escalation triggers and the minimum proof required.
 
 ## Outputs
 
 - Selected mode.
+- Decision question and evidence gate.
 - Mode rationale.
 - Required packet files.
 - Proof command or evidence gap.

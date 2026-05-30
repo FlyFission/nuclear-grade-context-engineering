@@ -24,9 +24,9 @@
 
 Use status labels: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 
-| ID | Claim | Basis link | Control / design feature | Verification evidence | Ship posture | Status |
-|---|---|---|---|---|---|---|
-| C-001 | | `basis.md` | | `verification.md` | | planned |
+| ID | Claim | Basis link | Control / design feature | Support type | Verification evidence | Ship posture | Status |
+|---|---|---|---|---|---|---|---|
+| C-001 | | `basis.md` | | fact / assumption / unknown / source claim / local proof / decision authority | `verification.md` | | planned |
 
 ## Evidence chain
 
@@ -58,6 +58,7 @@ Risk / need
 ## Exit criteria
 
 - Each important claim has a status label.
+- Each important claim names its support type.
 - Every shipped claim has evidence or an accepted residual risk.
 - Deferred/gap claims are not used as release evidence.
 - Reviewer can navigate claim → specification/basis → evidence → release decision quickly.

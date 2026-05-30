@@ -2,12 +2,13 @@
 
 ## Purpose
 
-Run a compact self-check before and after a critical agent action. This is a portable command prompt.
+Run a compact self-check before and after a critical cut-point agent action. This is a portable command prompt.
 
 ## Use when
 
 - An edit, command, tool call, credential use, public claim, dependency/model/API change, migration, or release action could affect controlled state.
 - Wrong target, wrong scope, or mismatched evidence is plausible.
+- A fast candidate is about to become a public claim, accepted baseline, or release action.
 
 ## Do not use when
 
@@ -35,6 +36,7 @@ Inputs:
 - proof or after-action check:
 
 Return:
+- cut point being checked;
 - action and target;
 - expected result;
 - stop condition;
@@ -50,7 +52,7 @@ Return:
 ## Expected outputs
 
 - Proceed / pause / escalate decision.
-- Action, target, expected result, stop condition, and evidence requirement.
+- Cut point, action, target, expected result, stop condition, and evidence requirement.
 
 ## Verification command
 

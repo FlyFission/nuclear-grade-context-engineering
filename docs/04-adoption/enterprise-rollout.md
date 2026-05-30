@@ -2,6 +2,8 @@
 
 **Purpose:** Adopt Nuclear-grade without turning every change into a process exercise.
 
+Adoption should preserve two speeds: teams move quickly while exploring reversible candidates, then slow down at acceptance gates for claims, controlled items, public wording, baselines, releases, and agent authority.
+
 ## Pilot path
 
 1. Pick one team and one change type with real consequence.
@@ -16,6 +18,7 @@
 - Standard packets are required for user, data, dependency, permission, AI-authority, operational, or release consequence.
 - Stronger modes require human review and project-specific controls.
 - AI-assisted changes must record agent scope, evidence, and independent checks when material.
+- Teams should not add Standard records to reversible Quick work only to look rigorous; the control should change a decision.
 
 ## PR adoption
 

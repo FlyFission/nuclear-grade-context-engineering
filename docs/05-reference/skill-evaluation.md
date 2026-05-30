@@ -21,6 +21,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should trigger: Before this agent changes the billing webhook, grill the assumptions and stop conditions.
 - Should trigger: Review this plan for hidden risks before we let the coding agent edit files.
 - Should trigger: What facts would change the release decision for this dependency update?
+- Should trigger: The agent is asking many plausible questions but has not named the decision question the evidence must answer.
 - Should not trigger: Fix a README typo and show the diff.
 - Should not trigger: Explain what this small Python helper function does.
 
@@ -61,6 +62,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should trigger: Classify whether this API permission plus docs change is Quick, Standard, or stronger.
 - Should trigger: Pick the right mode for a dependency bump that changes authentication behavior.
 - Should trigger: This small diff touches agent authority; classify the risk and evidence obligation.
+- Should trigger: The decision question is clear, but we do not know whether Quick proof is enough to answer it.
 - Should not trigger: Fill out the verification table for already-selected Standard mode.
 - Should not trigger: Write the source-lineage note for a citation change.
 
@@ -77,6 +79,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should trigger: Build a focused context pack for an agent that can edit tests and run commands.
 - Should trigger: Prepare one-screen reviewer context with authority, proof, and stop conditions.
 - Should trigger: Distill this long implementation thread into what the next agent may do and must prove.
+- Should trigger: Package this work for a downstream agent with the decision question, work phase, forbidden claims, and stop conditions.
 - Should not trigger: Run the packet validator.
 - Should not trigger: Classify the change mode only.
 
@@ -93,6 +96,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should trigger: Before running this broad file move command, self-check the exact target, expected result, stop condition, and after-action proof.
 - Should trigger: Self-check this public README claim before release because it says the workflow is secure.
 - Should trigger: The agent is about to update dependency and API permission files; check the intended action and evidence first.
+- Should trigger: This candidate doc wording is about to become accepted public baseline wording; check the target, expected result, and stop condition.
 - Should not trigger: Explain what this shell command would do without running it.
 - Should not trigger: Create a whole Standard packet for a normal feature change.
 
@@ -101,6 +105,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should trigger: Map these release claims to evidence, gaps, and narrowed non-claims.
 - Should trigger: Tests passed, but which claims do they actually prove?
 - Should trigger: Turn this basis and trace into a verification table with pass, gap, and deferred statuses.
+- Should trigger: Separate these claims into fact, assumption, unknown, source claim, local proof, and decision authority before ship review.
 - Should not trigger: Create the packet directory structure.
 - Should not trigger: Make the README more concise.
 
@@ -109,6 +114,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should trigger: Review this Standard packet and decide ship, defer, block, or ship-with-risk.
 - Should trigger: CI is green; decide whether the dependency update is release-ready and name residual risk.
 - Should trigger: Is this agent-authority change ready to release with the evidence we have?
+- Should trigger: This fast candidate is being promoted to an accepted baseline; slow-audit the evidence, rollback, monitoring, and residual risk.
 - Should not trigger: Identify controlled items before implementation starts.
 - Should not trigger: Draft the risk.md threshold screen.
 
@@ -117,6 +123,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should trigger: An agent edited outside its context pack but tests caught it; create an OPEX record and durable control update.
 - Should trigger: A reviewer found a hallucinated source claim after merge; turn the near miss into a template or validator update.
 - Should trigger: Users misunderstood the release note and support needed a workaround; capture operating experience and rebaseline triggers.
+- Should trigger: A doctrine update produced nice prose but no durable control change; turn the review surprise into OPEX.
 - Should not trigger: Fix the failing unit test immediately during incident containment.
 - Should not trigger: Assign blame for who approved the PR.
 
@@ -149,6 +156,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should trigger: We are twenty steps into this task and I cannot tell if the current edit still serves the original goal.
 - Should trigger: The agent keeps adding features no one asked for; check whether we have drifted from the objective.
 - Should trigger: We have retried this fix three times without progress; should we re-anchor, escalate, or stop?
+- Should trigger: This small edit looks useful locally, but I cannot trace it to a mission success criterion.
 - Should not trigger: Fix a README typo and show the diff.
 - Should not trigger: Explain what this small helper function does.
 

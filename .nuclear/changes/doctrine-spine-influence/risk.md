@@ -80,6 +80,8 @@
 |---|---|---|---|
 | `questioning-attitude.md` | no | Compact summary in this risk record is enough. | FlyFission |
 | `basis.md` | yes | Needs protected outcomes and grounded influence mapping. | FlyFission |
+| `plan.md` | yes | Multi-surface public and agent-facing changes need sequenced work, checkpoints, and rollback. | FlyFission |
+| `trace.md` | yes | Doctrine-spine claims need links from basis to controls, verification, and ship posture. | FlyFission |
 | `verification.md` | yes | Public/contract tests and boundary scans must be recorded. | FlyFission |
 | `ship.md` | yes | Acceptance and baseline posture must be explicit. | FlyFission |
 | `turnover.md` | no | Same owner/agent continues in-thread. | FlyFission |

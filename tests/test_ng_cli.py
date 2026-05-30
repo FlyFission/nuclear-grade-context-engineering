@@ -3,6 +3,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+from nuclear_grade.ng_validate import CLOSURE_MARKER
 from tests.test_ng_validate import minimal_quick_packet
 from tools import ng as ng_cli
 
@@ -316,7 +317,7 @@ def test_status_marks_closed_packet_as_terminal(tmp_path):
     # but a NUCLEAR-GRADE-CLOSED: line with a rationale makes it a terminal state.
     risk = _closing_quick_packet(tmp_path, "dropped")
     risk.write_text(
-        f"{ng_cli.CLOSURE_MARKER}: feature cut in planning; superseded by demo. Closed by maintainer.\n"
+        f"{CLOSURE_MARKER}: feature cut in planning; superseded by demo. Closed by maintainer.\n"
         + risk.read_text(encoding="utf-8"),
         encoding="utf-8",
     )
@@ -333,8 +334,8 @@ def test_status_does_not_treat_bare_or_prose_marker_as_closed(tmp_path):
     # must NOT suppress an otherwise-scaffold packet from needing attention.
     risk = _closing_quick_packet(tmp_path, "fake")
     risk.write_text(
-        f"We should document the {ng_cli.CLOSURE_MARKER} marker someday.\n"
-        f"{ng_cli.CLOSURE_MARKER}:\n"
+        f"We should document the {CLOSURE_MARKER} marker someday.\n"
+        f"{CLOSURE_MARKER}:\n"
         + risk.read_text(encoding="utf-8"),
         encoding="utf-8",
     )

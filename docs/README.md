@@ -18,6 +18,8 @@ Nuclear-grade docs have two maps: use the workflow first, then inspect the sourc
 | Manage controlled configuration | [`02-operating-system/configuration-management.md`](02-operating-system/configuration-management.md) |
 | Add HPI controls for agent work | [`02-operating-system/hpi-overlays.md`](02-operating-system/hpi-overlays.md) |
 | Understand CLI behavior | [`05-reference/cli-reference.md`](05-reference/cli-reference.md) |
+| See the workflow as diagrams | [`diagrams.md`](diagrams.md) |
+| Decode a term or idiom | [`glossary.md`](glossary.md) |
 
 ## Reference foundation
 

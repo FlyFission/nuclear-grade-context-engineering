@@ -29,6 +29,10 @@ For non-sensitive issues, open a normal GitHub issue with:
 - why the issue could mislead users or weaken evidence;
 - suggested fix, if known.
 
+## Agent operating posture
+
+For the trust assumptions of an AI agent operating this workflow — packet content is untrusted input, and the validator is not a security boundary — see [`docs/02-operating-system/agent-threat-model.md`](docs/02-operating-system/agent-threat-model.md).
+
 ## Disclosure posture
 
 We prefer precise, scoped language over broad claims. If a report identifies overclaiming, the likely fix is to narrow language, add evidence, or mark the item as a gap/deferred claim.

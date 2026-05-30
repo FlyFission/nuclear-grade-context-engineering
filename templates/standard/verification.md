@@ -22,7 +22,7 @@
 
 ## Evidence status legend
 
-Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`.
+Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 
 ## Claim-to-evidence table
 
@@ -86,7 +86,7 @@ Use if activated.
 
 ## Exit criteria
 
-- Each important claim has `pass`, `fail`, `gap`, `deferred`, or `not applicable` status.
+- Each important claim has `pass`, `fail`, `gap`, `deferred`, `not applicable`, or `planned` status.
 - Each important claim separates support type from verification type.
 - Evidence is linked rather than pasted in full.
 - Gaps are explicit and reflected in `ship.md`.

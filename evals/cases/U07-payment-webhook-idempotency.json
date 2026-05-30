@@ -1,0 +1,28 @@
+{
+  "id": "U07",
+  "title": "Payment webhook idempotency",
+  "artifact": "docs/03-worked-examples/skill-workflow-comparison/trial-records/payment-webhook-idempotency.md",
+  "section": "## Nuclear-Grade Trial",
+  "signals": [
+    {
+      "name": "Escalates mode for money-moving consequence",
+      "any": ["mode: standard", "money-moving behavior is affected"]
+    },
+    {
+      "name": "Identifies money-side controlled items",
+      "any": ["idempotency store", "ledger/credit side effects"]
+    },
+    {
+      "name": "Bounds agent payment authority and credentials",
+      "any": ["may not use live credentials", "call production apis", "alter billing data"]
+    },
+    {
+      "name": "States adversarial proof claims (duplicate, partial failure, replay)",
+      "any": ["does not double-credit", "partial failure can retry", "invalid signature is denied"]
+    },
+    {
+      "name": "Conditions release on rollback, monitoring, and a risk owner",
+      "all": ["rollback path", "monitoring query", "residual risk owner"]
+    }
+  ]
+}

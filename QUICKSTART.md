@@ -4,7 +4,7 @@
 
 Nuclear-grade should make decisions faster, not paperwork heavier. Move quickly while exploring and building reversible candidates; slow down when you are accepting a claim, baseline, public statement, release decision, or authority change.
 
-> **Note on the demo:** the first time you run `validate` on a freshly scaffolded packet you should expect `FAILED: ... has unfilled template prompts`. Templates ship with empty prompts on purpose. Fill the prompts that matter, then re-run `validate`. The point of the validator is to refuse silent gaps.
+> **Note on the demo:** the first time you run `validate` on a freshly scaffolded packet you should expect it to **fail**. Each template ships with a `NUCLEAR-GRADE-PLACEHOLDER` marker line and empty prompts on purpose, so the validator reports `still contains the placeholder marker` and `has unfilled template prompts`. Fill the prompts that matter, delete the marker line, then re-run `validate`. The point of the validator is to refuse silent gaps.
 
 ## 1. Check the repo
 
@@ -61,6 +61,16 @@ Trust check: What dependency, model, API, SaaS, or vendor claim affects the deci
 | A failure, defect, incident, or near miss | Incident pattern |
 | Mostly an architecture or research decision | Research Board pattern |
 | A release-readiness decision | Release pattern |
+
+```mermaid
+flowchart TD
+    Start([Change request]) --> Q1{Local, reversible,<br/>obvious proof,<br/>no new trust boundary?}
+    Q1 -->|yes| Quick[Quick packet<br/>risk.md + proof.md]
+    Q1 -->|no| Q2{User / data / dep /<br/>permission / AI authority /<br/>release consequence?}
+    Q2 -->|yes| Standard[Standard packet<br/>6 files]
+    Q2 -->|severe, silent,<br/>irreversible, external trust| Strong[Human-reviewed<br/>stronger mode]
+    Q2 -->|already went wrong| Incident[Incident pattern]
+```
 
 When unsure, start with Standard and keep the packet thin.
 

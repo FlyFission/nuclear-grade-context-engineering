@@ -29,6 +29,45 @@ Skills are self-contained agent instructions. Each skill has a `SKILL.md` contra
 | [`decomposing-work-breakdown`](skills/decomposing-work-breakdown/SKILL.md) | Decomposing an epic, feature, or subsystem into a product-oriented, 100%-rule, non-overlapping work breakdown | WBS table and dictionary |
 | [`structuring-agentic-folders`](skills/structuring-agentic-folders/SKILL.md) | Laying out a repo or agent workspace, placing a file, or fixing a junk-drawer directory | Folder map and naming/depth audit |
 
+## How the skills compose
+
+`using-nuclear-grade` is the entry point and router. From there the spine runs question -> classify -> create -> prove -> ship -> baseline -> learn, and the HPI overlays activate only when consequence warrants them. Reach for an overlay when its trigger fires, not by default.
+
+```mermaid
+flowchart TD
+    UNG([using-nuclear-grade<br/>router / entry point])
+    UNG --> QA[questioning-attitude]
+    QA --> CCR[classifying-change-risk]
+    CCR -->|controlled config touched| ICI[identifying-controlled-items]
+    CCR --> CCP[creating-change-packets]
+    ICI --> SCI[screening-change-impact]
+    CCP --> PC[proving-claims]
+    PC --> RSR[reviewing-ship-readiness]
+    RSR --> BC[baselining-configuration]
+    BC --> LFO[learning-from-opex]
+    LFO -.durable control update.-> QA
+
+    subgraph overlays[HPI overlays - activate by consequence]
+      PAC[packing-agent-context]
+      TOW[turning-over-agent-work]
+      SCA[self-checking-agent-actions]
+      TAE[tracing-agent-execution]
+      RTA[red-teaming-agent-changes]
+      CMD[controlling-mission-drift]
+      RCQ[reviewing-code-quality]
+    end
+
+    CCP -.delegate / resume.-> PAC
+    PAC --> TOW
+    CCP -.critical action.-> SCA
+    RSR -.new agent authority.-> RTA
+    RSR -.execution path matters.-> TAE
+    QA -.long drifting session.-> CMD
+    PC -.standards drift in diff.-> RCQ
+```
+
+See [`docs/diagrams.md`](docs/diagrams.md) for the lifecycle, mode, and packet diagrams.
+
 ## Contract
 
 Every skill must include:

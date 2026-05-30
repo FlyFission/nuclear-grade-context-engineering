@@ -16,7 +16,12 @@ if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from nuclear_grade.efficacy import run_all as run_efficacy
-from nuclear_grade.ng_validate import PLACEHOLDER_MARKER, detect_packet_mode, validate_packet
+from nuclear_grade.ng_validate import (
+    CLOSURE_MARKER,
+    PLACEHOLDER_MARKER,
+    detect_packet_mode,
+    validate_packet,
+)
 
 PACKAGE_DIR = Path(__file__).resolve().parent
 REPO_ROOT = PACKAGE_DIR.parent
@@ -366,10 +371,11 @@ def handle_status(args: argparse.Namespace) -> int:
         print("No active packets found.")
         return 0
 
+    # ok and closed are terminal states; only scaffold and invalid need attention.
     needs_attention = 0
     for packet in packets:
         health = packet_health(packet)
-        if health != "ok":
+        if health not in ("ok", "closed"):
             needs_attention += 1
         print(f"{packet.name}: {detect_packet_mode(packet)}  [{health}]")
 
@@ -383,19 +389,25 @@ def handle_status(args: argparse.Namespace) -> int:
 
 
 def packet_health(packet: Path) -> str:
-    """Classify a packet for `status`: ok, scaffold (untouched draft), or invalid.
+    """Classify a packet for `status`: ok, closed, scaffold (untouched draft), or invalid.
 
-    A scaffold still carries the placeholder marker, so it is an unfilled draft
-    rather than a wrong one. Anything else that fails validation is invalid. The
-    scaffold test reads the actual marker from the packet files (not the
-    validator's message text) so it tracks behavior rather than wording.
+    A packet that validates is ok. A packet deliberately abandoned with a recorded
+    rationale carries the closure marker and is a terminal state, so it is reported
+    as closed and not counted as needing attention -- the closure check comes first
+    because an abandoned packet may still hold the placeholder marker. A scaffold
+    still carries the placeholder marker, so it is an unfilled draft rather than a
+    wrong one. Anything else that fails validation is invalid. The marker tests read
+    the actual markers from the packet files (not the validator's message text) so
+    health tracks behavior rather than wording.
     """
 
     if validate_packet(packet).ok:
         return "ok"
-    for md_file in packet.glob("*.md"):
-        if PLACEHOLDER_MARKER in md_file.read_text(encoding="utf-8"):
-            return "scaffold"
+    files = list(packet.glob("*.md"))
+    if any(CLOSURE_MARKER in md_file.read_text(encoding="utf-8") for md_file in files):
+        return "closed"
+    if any(PLACEHOLDER_MARKER in md_file.read_text(encoding="utf-8") for md_file in files):
+        return "scaffold"
     return "invalid"
 
 

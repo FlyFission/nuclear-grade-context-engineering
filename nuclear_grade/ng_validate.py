@@ -12,6 +12,10 @@ from dataclasses import dataclass
 from pathlib import Path
 
 PLACEHOLDER_MARKER = "NUCLEAR-GRADE-PLACEHOLDER"
+# A packet deliberately abandoned with a recorded rationale carries this marker.
+# `ng status` reports such a packet as `closed` (a terminal state), not as needing
+# attention. See the closing-stale-packets skill.
+CLOSURE_MARKER = "NUCLEAR-GRADE-CLOSED"
 QUICK_MODE = "quick"
 STANDARD_MODE = "standard"
 UNSPECIFIED_MODE = "unspecified"

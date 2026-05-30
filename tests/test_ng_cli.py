@@ -304,6 +304,26 @@ def test_status_flags_unfilled_scaffold_packet(tmp_path):
     assert "need attention" in result.stdout
 
 
+def test_status_marks_closed_packet_as_terminal(tmp_path):
+    shutil.copytree(ROOT / "templates", tmp_path / "templates")
+    (tmp_path / "nuclear-grade.yaml").write_text("name: test-catalog\n", encoding="utf-8")
+    assert run_ng("new", "dropped", "--mode", "quick", "--repo", str(tmp_path)).returncode == 0
+    # An abandoned packet kept as a record: still carries the placeholder marker,
+    # but a closure marker with a rationale makes it a terminal `closed` state.
+    risk = tmp_path / ".nuclear" / "changes" / "dropped" / "risk.md"
+    risk.write_text(
+        f"{ng_cli.CLOSURE_MARKER}: feature cut in planning; superseded by demo. Closed by maintainer.\n"
+        + risk.read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+
+    result = run_ng("status", str(tmp_path))
+
+    assert result.returncode == 0, result.stderr
+    assert "dropped: quick  [closed]" in result.stdout
+    assert "need attention" not in result.stdout
+
+
 def test_status_marks_filled_packet_ok(tmp_path):
     minimal_quick_packet(tmp_path)
 

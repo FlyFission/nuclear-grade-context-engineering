@@ -41,8 +41,9 @@ Do this:
 - Choose exactly one terminal state:
   - COMPLETE: change is still wanted; fill the prompts that matter, remove the
     placeholder marker because the packet is filled, and make validate pass.
-  - CLOSE: change was deliberately abandoned; write a closure note (why dropped,
-    what replaced it if anything, who decided) and keep the packet as a record.
+  - CLOSE: change was deliberately abandoned; add a `NUCLEAR-GRADE-CLOSED:` marker
+    line with the rationale (why dropped, what replaced it if anything, who decided)
+    and keep the packet as a record. `ng status` then reports it as `closed`.
   - DELETE: it was never a real change (empty scaffold, nothing to learn); remove
     the directory so it stops looking like work.
 - Prefer CLOSE over DELETE when any rationale is worth preserving.
@@ -61,8 +62,8 @@ Do not imply formal assurance, compliance, certification, safety, security, or r
 ## Expected outputs
 
 - The packet moved to exactly one terminal state: completed, closed, or deleted.
-- A closure note for every closed packet, naming why it was dropped and who decided.
-- An `ng status .` listing with no unexplained `scaffold` or `invalid` packet.
+- A `NUCLEAR-GRADE-CLOSED:` marker line with the rationale for every closed packet, naming why it was dropped and who decided.
+- An `ng status .` listing where every packet is `ok` or `closed`; no `scaffold` or `invalid` packet remains in the "needs attention" count.
 
 ## Verification command
 

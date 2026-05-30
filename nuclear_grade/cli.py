@@ -17,9 +17,9 @@ if __package__ in (None, ""):
 
 from nuclear_grade.efficacy import run_all as run_efficacy
 from nuclear_grade.ng_validate import (
-    CLOSURE_MARKER,
     PLACEHOLDER_MARKER,
     detect_packet_mode,
+    has_closure_note,
     validate_packet,
 )
 
@@ -392,9 +392,11 @@ def packet_health(packet: Path) -> str:
     """Classify a packet for `status`: ok, closed, scaffold (untouched draft), or invalid.
 
     A packet that validates is ok. A packet deliberately abandoned with a recorded
-    rationale carries the closure marker and is a terminal state, so it is reported
-    as closed and not counted as needing attention -- the closure check comes first
-    because an abandoned packet may still hold the placeholder marker. A scaffold
+    rationale carries a `NUCLEAR-GRADE-CLOSED:` closure note and is a terminal
+    state, so it is reported as closed and not counted as needing attention -- the
+    closure check comes first because an abandoned packet may still hold the
+    placeholder marker. A bare marker or a prose mention does not count, so a packet
+    cannot be suppressed without recording why it was dropped. A scaffold
     still carries the placeholder marker, so it is an unfilled draft rather than a
     wrong one. Anything else that fails validation is invalid. The marker tests read
     the actual markers from the packet files (not the validator's message text) so
@@ -403,10 +405,10 @@ def packet_health(packet: Path) -> str:
 
     if validate_packet(packet).ok:
         return "ok"
-    files = list(packet.glob("*.md"))
-    if any(CLOSURE_MARKER in md_file.read_text(encoding="utf-8") for md_file in files):
+    texts = [md_file.read_text(encoding="utf-8") for md_file in packet.glob("*.md")]
+    if any(has_closure_note(text) for text in texts):
         return "closed"
-    if any(PLACEHOLDER_MARKER in md_file.read_text(encoding="utf-8") for md_file in files):
+    if any(PLACEHOLDER_MARKER in text for text in texts):
         return "scaffold"
     return "invalid"
 

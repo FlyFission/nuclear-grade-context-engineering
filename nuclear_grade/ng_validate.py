@@ -16,6 +16,19 @@ PLACEHOLDER_MARKER = "NUCLEAR-GRADE-PLACEHOLDER"
 # `ng status` reports such a packet as `closed` (a terminal state), not as needing
 # attention. See the closing-stale-packets skill.
 CLOSURE_MARKER = "NUCLEAR-GRADE-CLOSED"
+# A genuine closure is the marker followed by a colon and a substantive rationale
+# on the same line, matching the shape the skill and CLI docs require. A bare
+# marker, or the marker merely mentioned in prose, does not count -- otherwise a
+# packet could be suppressed from `ng status` without recording why it was dropped.
+CLOSURE_NOTE_PATTERN = re.compile(
+    rf"^\s*{re.escape(CLOSURE_MARKER)}:\s*\S.*$", re.MULTILINE
+)
+
+
+def has_closure_note(text: str) -> bool:
+    """True when text carries a `NUCLEAR-GRADE-CLOSED:` line with a real rationale."""
+
+    return CLOSURE_NOTE_PATTERN.search(text) is not None
 QUICK_MODE = "quick"
 STANDARD_MODE = "standard"
 UNSPECIFIED_MODE = "unspecified"

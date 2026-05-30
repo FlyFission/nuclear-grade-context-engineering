@@ -93,6 +93,19 @@ def test_u07_release_gates_are_conjunctive():
     assert gate_signal.all_of, "U07 release-gate signal should require all gates, not any"
 
 
+def test_u02_authority_boundary_requires_both_sides():
+    """A signal naming distinct elements ("allowed and forbidden") must be conjunctive,
+    so dropping the forbidden side cannot still score as covered."""
+
+    case = next(c for c in efficacy.load_cases(CASES_DIR) if c.id == "U02")
+    authority = next(s for s in case.signals if "authority" in s.name.lower())
+
+    assert authority.all_of, "U02 authority signal should require allowed AND forbidden"
+    assert "write authority" not in authority.all_of + authority.any_of, (
+        "generic 'write authority' fallback leaks: it also appears in the controlled-items line"
+    )
+
+
 def test_run_all_is_empty_outside_a_repo_with_cases(tmp_path):
     assert efficacy.run_all(tmp_path) == []
 

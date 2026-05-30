@@ -6,7 +6,7 @@
   "signals": [
     {
       "name": "Bounds agent file-write authority (allowed and forbidden)",
-      "any": ["may edit guard and tests only", "may not broaden", "write authority"]
+      "all": ["may edit guard and tests only", "may not broaden"]
     },
     {
       "name": "Names the controlled items at stake",

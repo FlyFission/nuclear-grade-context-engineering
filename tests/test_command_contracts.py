@@ -25,6 +25,8 @@ EXPECTED_COMMANDS = {
     "ng-code-review.md",
     "ng-red-team.md",
     "ng-trace.md",
+    "ng-wbs.md",
+    "ng-folders.md",
 }
 
 REQUIRED_SECTIONS = (

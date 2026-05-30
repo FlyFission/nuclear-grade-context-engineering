@@ -35,6 +35,8 @@ EXPECTED_SKILLS = {
     "reviewing-code-quality",
     "red-teaming-agent-changes",
     "tracing-agent-execution",
+    "decomposing-work-breakdown",
+    "structuring-agentic-folders",
 }
 
 REQUIRED_SECTIONS = (

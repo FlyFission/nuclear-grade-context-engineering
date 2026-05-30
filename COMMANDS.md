@@ -25,6 +25,8 @@ These are portable command prompts: plain Markdown prompt cards that can be past
 | [`ng-code-review`](commands/ng-code-review.md) | Reviewing a diff or module for standards drift and complexity | Findings and a single verdict |
 | [`ng-red-team`](commands/ng-red-team.md) | Adversarially reviewing an agent change for prompt injection, escalation, unsafe output, or tool misuse | Red-team findings record |
 | [`ng-trace`](commands/ng-trace.md) | Capturing agent execution evidence for verification and release review | Execution trace record |
+| [`ng-wbs`](commands/ng-wbs.md) | Building a product-oriented work breakdown structure for a deliverable | WBS table and dictionary |
+| [`ng-folders`](commands/ng-folders.md) | Deriving and auditing a folder/file structure from a WBS or existing tree | Folder map and naming/depth audit |
 
 ## Contract
 

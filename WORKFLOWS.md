@@ -29,6 +29,7 @@ HPI for AI agents adds the micro-controls under that path: brief the work, self-
 | Source/legal check | claim -> source map -> boundary wording -> validator | Public docs or examples cite assurance concepts | Source-lineage notes |
 | Mission drift control | anchor -> zoom out -> test action -> loop/standards check -> re-anchor/escalate/stop | A long session drifts from its objective, scope creeps, or rigor erodes | `## Mission anchor`, `.nuclear/mission.md` |
 | Code-quality review | objective -> delete-first -> tripwires -> abstraction check -> layering -> verdict | A diff or module risks standards drift or needless complexity | Review findings plus verdict |
+| Work breakdown and folders | deliverable -> 100%/MECE decomposition -> dictionary -> folder map -> naming/depth audit | An epic, subsystem, repo, or agent workspace needs a clean scope breakdown and folder layout | `wbs.md` |
 
 ## Quick change
 

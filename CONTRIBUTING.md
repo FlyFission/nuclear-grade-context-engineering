@@ -1,19 +1,19 @@
 # Contributing
 
-Thank you for considering a contribution to Nuclear-grade.
+Thank you for thinking about helping with Nuclear-grade.
 
-Nuclear-grade is an original, public-source-inspired software engineering methodology. Contributions should make evidence easier to produce, review, and maintain without creating fake compliance theater.
+Nuclear-grade is an original way to do software engineering, drawn from public sources. Your changes should make evidence easier to produce, review, and keep current, without faking compliance.
 
-By participating, you agree to uphold the [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
+By taking part, you agree to follow the [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
 
 ## Ground rules
 
-- Do not claim this repo satisfies DOE, NRC, NASA, NIST, CISA, ASME, EPRI, IEEE, IEC, ISO, ANSI/ANS, NEI, or any other external standard.
-- Use only public, open, linkable sources for direct source lineage.
-- Do not derive templates from paywalled, proprietary, or controlled standards/manuals.
-- Prefer bounded evidence packets over large generic templates.
-- Use explicit evidence statuses: `pass`, `fail`, `gap`, `deferred`, `not applicable`, or `planned`.
-- Keep AI-assisted work scoped and independently checked.
+- Do not claim this repo meets DOE, NRC, NASA, NIST, CISA, ASME, EPRI, IEEE, IEC, ISO, ANSI/ANS, NEI, or any other outside standard.
+- For direct source lineage, use only public, open sources you can link to.
+- Do not build templates from paywalled, proprietary, or controlled standards or manuals.
+- Prefer small, focused evidence packets over large generic templates.
+- Use clear evidence statuses: `pass`, `fail`, `gap`, `deferred`, `not applicable`, or `planned`.
+- Keep AI-assisted work tightly scoped and checked by someone else.
 
 ## Before opening a PR
 
@@ -25,7 +25,7 @@ python tools/ng.py doctor .
 python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions
 ```
 
-Also scan new public docs for overclaiming. Prefer phrases like:
+Also scan new public docs for overclaiming. Lean on phrases like:
 
 - public-source-inspired;
 - evidence-oriented;
@@ -43,7 +43,7 @@ Avoid phrases like:
 
 ## Change packets
 
-For non-trivial contributions, create or update a packet under:
+For anything more than a trivial change, create or update a packet under:
 
 ```text
 .nuclear/changes/<slug>/
@@ -60,6 +60,6 @@ verification.md
 ship.md
 ```
 
-Keep each file to the minimum useful version needed for review.
+Keep each file to the smallest useful version a reviewer needs.
 
-If the contribution changes controlled configuration such as prompts, models, tools, dependencies, public claims, templates, skills, commands, validators, or release artifacts, also add the activated CM record from `templates/cm/`.
+If your change touches something that must stay under control, such as prompts, models, tools, dependencies, public claims, templates, skills, commands, checkers, or release artifacts, also add the CM record (keeping the approved version under control) from `templates/cm/`.

@@ -1,34 +1,34 @@
 # Security Policy
 
-Nuclear-grade includes security-adjacent examples and validator tooling, but it is not a production security product, compliance framework, certification package, or formal QA program.
+Nuclear-grade includes security-related examples and a checker tool. It is not a production security product, a compliance framework, a certification package, or a formal QA program.
 
 ## Supported scope
 
-Security reports are useful when they concern:
+Security reports help when they are about:
 
-- validator behavior that misses obvious prohibited overclaiming or unsafe packet structure;
-- example code that contradicts its stated boundaries;
-- documentation that could cause users to overtrust an educational artifact;
-- accidental inclusion of secrets, credentials, private data, or proprietary source material.
+- a checker that misses obvious banned overclaiming or an unsafe packet structure;
+- example code that breaks its own stated limits;
+- docs that could make users trust an educational tool more than they should;
+- secrets, credentials, private data, or proprietary source material left in by accident.
 
 ## Out of scope
 
-The `ai-agent-tool-permissions` reference implementation is educational. It does not claim to be a production sandbox and does not currently cover TOCTOU, ACLs, hard links, mount boundaries, containers, hostile multi-user filesystems, Windows-specific semantics, or durable audit logging.
+The `ai-agent-tool-permissions` example is educational. It does not claim to be a production sandbox. It does not yet cover time-of-check/time-of-use races (TOCTOU), access-control lists (ACLs), hard links, mount boundaries, containers, hostile multi-user filesystems, Windows-specific behavior, or lasting audit logs.
 
-Reports that assume production security guarantees beyond the documented scope may be closed as documentation clarifications rather than vulnerabilities.
+If a report assumes production-grade security beyond the documented scope, we may close it as a docs clarification rather than a vulnerability.
 
 ## Reporting
 
-To report a sensitive issue, use GitHub's private vulnerability reporting for this repository when available. If that is not available, open a minimal issue that avoids exploit details and asks for a private contact path.
+To report a sensitive issue, use GitHub's private vulnerability reporting for this repository when it is available. If it is not, open a short issue that leaves out exploit details and asks for a private way to make contact.
 
-For non-sensitive issues, open a normal GitHub issue with:
+For issues that are not sensitive, open a normal GitHub issue with:
 
-- affected file/path;
-- expected behavior;
-- observed behavior;
-- why the issue could mislead users or weaken evidence;
-- suggested fix, if known.
+- the affected file or path;
+- the expected behavior;
+- the observed behavior;
+- why it could mislead users or weaken the evidence;
+- a suggested fix, if you have one.
 
 ## Disclosure posture
 
-We prefer precise, scoped language over broad claims. If a report identifies overclaiming, the likely fix is to narrow language, add evidence, or mark the item as a gap/deferred claim.
+We prefer precise, narrow wording over broad claims. If a report finds overclaiming, the likely fix is to tighten the wording, add evidence, or mark the item as a gap or a deferred claim.

@@ -1,29 +1,29 @@
 # Agent Guidance
 
-AI agents working in this repo should treat Nuclear-grade as an evidence workflow, not a branding exercise.
-The public thesis is now questioning attitude, HPI micro-controls, and configuration management for AI-assisted software work: question assumptions, specify intent, brief the work, self-check critical actions, turn over cleanly, keep controlled items, evidence, decisions, baseline, and release posture linked.
+AI agents working in this repo should treat Nuclear-grade as a way to gather evidence, not a brand to show off.
+The idea is simple. Keep a questioning attitude. Use small habits from Human Performance Improvement (HPI). And keep the approved version under control for AI-assisted software work. In practice that means: question assumptions, write down what the change must do, brief the work, double-check risky actions, and hand off cleanly. Keep the controlled files, the evidence, the decisions, the version everyone agreed is correct, and the release stance all linked together.
 
 ## Default behavior
 
-- Read `README.md`, `WORKFLOWS.md`, and the relevant packet before changing files.
-- Use the smallest honest mode.
-- Keep claims linked to evidence.
-- Name controlled items when prompts, models, tools, dependencies, docs, skills, commands, templates, validators, or releases change.
-- Use turnover when work is delegated, resumed, or handed to a reviewer/verifier/releaser with open work.
-- Use self-checking before critical edits, commands, public claims, dependency/model/API trust changes, or release actions.
-- Use OPEX when a near miss, bad handoff, review surprise, or operating signal should update a durable control.
-- Prefer links and status labels over long repeated prose.
-- Run relevant tests and validator commands before claiming completion.
+- Read `README.md`, `WORKFLOWS.md`, and the right change record before you edit files.
+- Use the lightest mode that is still honest.
+- Tie every claim to evidence.
+- Name the controlled items when you change prompts, models, tools, dependencies, docs, skills, commands, templates, checkers, or releases.
+- Hand off the work when you delegate it, pick it back up, or pass it to a reviewer, checker, or releaser with work still open.
+- Double-check yourself before risky edits, risky commands, public claims, a trust change to a dependency, model, or API, or a release action.
+- Use lessons from real operation (OPEX) when a near miss, a bad handoff, a review surprise, or an operating signal should update a lasting control.
+- Prefer links and short status labels over long, repeated text.
+- Run the right tests and checker commands before you say the work is done.
 
 ## Authority boundaries
 
-Agents must not assume authority to:
+Agents must not assume they may:
 
-- change release posture without a ship-readiness record;
-- broaden source-lineage claims;
+- change the release stance without a ship-readiness record;
+- make bigger claims about where the ideas come from;
 - add compliance or assurance claims;
-- edit security-sensitive, credential, network, or production-facing material without explicit scope;
-- overwrite packets or templates silently.
+- edit security-sensitive, credential, network, or production-facing material without clear permission;
+- overwrite change records or templates without saying so.
 
 ## Recommended skills
 
@@ -45,13 +45,13 @@ Agents must not assume authority to:
 
 An agent is not done until it can name:
 
-- files changed;
-- packet or rationale used;
-- evidence run;
-- turnover/self-check/OPEX/trust record used or why not activated;
-- unresolved gaps;
-- boundary language checked.
+- the files it changed;
+- the change record or reasoning it used;
+- the evidence it ran;
+- the handoff, self-check, OPEX, or trust record it used, or why it did not need one;
+- the gaps still open;
+- the boundary wording it checked.
 
 ## Boundary note
 
-Agent work in this repo does not create formal V&V, compliance, certification, safety, security, regulatory adequacy, or legal advice.
+Agent work in this repo does not create formal verification and validation, compliance, certification, safety, security, regulatory adequacy, or legal advice. None of those.

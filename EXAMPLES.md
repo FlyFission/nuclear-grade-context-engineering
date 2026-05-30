@@ -1,18 +1,18 @@
 # Nuclear-grade Examples
 
-Public v0 includes one validated implementation worked example and one qualitative adoption comparison. Additional implementation examples are roadmap items, not launch claims.
+Public v0 ships one fully worked example that is checked by tests, plus one hands-on comparison study. More worked examples are on the roadmap, not launch claims.
 
 ## Included and validated
 
 | Example | What it proves | Start here |
 |---|---|---|
-| AI agent tool permissions | Agent file-write authority is treated as controlled configuration and proven inside an approved workspace root | `docs/03-worked-examples/ai-agent-tool-permissions/README.md` |
+| AI agent tool permissions | The agent's file-write power is kept under control and proven to stay inside an approved workspace root | `docs/03-worked-examples/ai-agent-tool-permissions/README.md` |
 
 ## Included comparison
 
-| Example | What it evaluates | Start here |
+| Example | What it checks | Start here |
 |---|---|---|
-| Skill and workflow comparison | How each published skill and workflow performs against simple prompting across six realistic use cases | `docs/03-worked-examples/skill-workflow-comparison/README.md` |
+| Skill and workflow comparison | How each published skill and workflow does against plain prompting across six real use cases | `docs/03-worked-examples/skill-workflow-comparison/README.md` |
 
 Run it:
 
@@ -23,14 +23,14 @@ python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.n
 
 ## Roadmap examples
 
-| Example | Planned proof chain |
+| Example | Planned chain from claim to proof |
 |---|---|
-| External API controls | tool allowlist, credentials boundary, denial evidence, audit events |
-| Human approval gates | approval-required action, denial before approval, recorded approval, post-action evidence |
-| Dependency upgrade | impact screen, version rationale, tests, rollback, supply-chain notes |
-| Prompt/model baseline | controlled prompt/model state, eval evidence, revalidation trigger |
-| Release readiness | evidence status, residual risk, rollback, monitoring, handoff |
+| External API controls | allowed-tool list, credential boundary, proof that denied calls are blocked, audit events |
+| Human approval gates | an action that needs approval, denial before approval, the recorded approval, evidence after the action |
+| Dependency upgrade | impact check, why this version, tests, rollback, supply-chain notes |
+| Prompt/model baseline | the controlled prompt and model state, eval evidence, what triggers a re-check |
+| Release readiness | evidence status, leftover risk, rollback, monitoring, handoff |
 
 ## Boundary note
 
-Examples demonstrate scoped evidence paths. They do not create formal V&V, compliance, certification, safety, security, or regulatory adequacy.
+Examples show focused paths from claim to evidence. They do not create formal V&V, compliance, certification, safety, security, or regulatory adequacy.

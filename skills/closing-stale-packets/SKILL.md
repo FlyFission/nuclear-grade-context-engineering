@@ -37,23 +37,23 @@ A change packet that is started and then abandoned is a quiet integrity problem.
 2. For each stale packet, establish ownership and intent: find the originating issue, PR, or anchor, and decide whether the change is still wanted.
 3. Choose one terminal state, honestly:
    - Complete it: if the change is still wanted, fill the prompts that matter, remove the placeholder marker, and make `validate` pass.
-   - Close it: if the change was deliberately abandoned, write a short closure note (why it was dropped, what replaced it if anything, who decided) and keep the packet as a recorded decision.
+   - Close it: if the change was deliberately abandoned, add a `NUCLEAR-GRADE-CLOSED:` line carrying the rationale (why it was dropped, what replaced it if anything, who decided) on that same line, and keep the packet as a recorded decision. `ng status` recognizes that marker line and reports the packet as `closed`, a terminal state.
    - Delete it: if it was never a real change (an empty scaffold from an aborted experiment with nothing to learn), remove the directory so it stops masquerading as work.
 4. Prefer close over delete when there is any decision or rationale worth preserving; prefer delete only for genuinely empty scaffolds.
-5. Record the closure where it will be seen: a `closure` note in the packet (for close) or an OPEX note when the abandonment is a near miss worth learning from.
-6. Re-run `ng status .` and confirm no packet is left in the half-done-and-silent state.
+5. Record the closure where it will be seen: the `NUCLEAR-GRADE-CLOSED:` line in the packet (for close), plus an OPEX note when the abandonment is a near miss worth learning from.
+6. Re-run `ng status .` and confirm every packet is now `ok` or `closed`, with none left in the half-done-and-silent `scaffold`/`invalid` state.
 
 ## Outputs
 
-- Each stale packet moved to exactly one terminal state: completed, closed, or deleted.
-- A closure note recording why a packet was abandoned, for every closed packet.
-- An updated `ng status .` with no unexplained `scaffold` or `invalid` packets.
+- Each stale packet moved to exactly one terminal state: completed (`ok`), closed, or deleted.
+- A `NUCLEAR-GRADE-CLOSED:` rationale line recording why a packet was abandoned and who decided, for every closed packet.
+- An updated `ng status .` in which every packet is `ok` or `closed`, with no `scaffold` or `invalid` packet left needing attention.
 - An OPEX note when a recurring pattern of abandoned packets points to a process gap.
 
 ## Verification
 
-- `ng status .` shows every remaining packet as `ok`, or as `scaffold`/`invalid` with a closure note that explains why it is being kept open.
-- Every closed packet names why it was dropped and who decided, not just that it was dropped.
+- `ng status .` shows every remaining packet as `ok` or `closed`; none is left in the `scaffold`/`invalid` needs-attention state.
+- Every closed packet's `NUCLEAR-GRADE-CLOSED:` line names why it was dropped and who decided, not just that it was dropped.
 - A completed packet actually passes `python tools/ng.py validate`; the placeholder marker is gone because the packet is filled, not because the marker was deleted to fake a pass.
 - Deleted packets were genuinely empty scaffolds, confirmed before removal.
 

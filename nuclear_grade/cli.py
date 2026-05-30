@@ -17,6 +17,7 @@ if __package__ in (None, ""):
 
 from nuclear_grade.efficacy import run_all as run_efficacy
 from nuclear_grade.ng_validate import (
+    CLOSURE_MARKER,
     PLACEHOLDER_MARKER,
     detect_packet_mode,
     has_closure_note,

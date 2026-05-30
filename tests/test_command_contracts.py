@@ -27,6 +27,7 @@ EXPECTED_COMMANDS = {
     "ng-trace.md",
     "ng-wbs.md",
     "ng-folders.md",
+    "ng-close-packet.md",
 }
 
 REQUIRED_SECTIONS = (

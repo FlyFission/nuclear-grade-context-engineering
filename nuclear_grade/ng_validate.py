@@ -1,7 +1,7 @@
-"""Minimal Nuclear-grade packet validator.
+"""Small Nuclear-grade change-record checker.
 
-Checks structure and evidence visibility. It does not decide engineering adequacy,
-safety, security, or compliance.
+Checks structure and whether evidence is visible. It does not decide engineering
+adequacy, safety, security, or compliance.
 """
 
 from __future__ import annotations

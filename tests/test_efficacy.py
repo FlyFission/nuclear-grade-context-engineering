@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import pytest
+
 from nuclear_grade import efficacy
 from tests.test_ng_cli import run_ng
 
@@ -86,21 +88,45 @@ def test_all_of_requires_every_phrase_unlike_any_of():
     assert conjunctive.present_in(text + " with a residual risk owner")
 
 
-def test_u07_release_gates_are_conjunctive():
-    case = next(c for c in efficacy.load_cases(CASES_DIR) if c.id == "U07")
-    gate_signal = next(s for s in case.signals if "rollback" in s.name.lower())
+# Signals whose phrases name complementary halves the methodology requires
+# together: dropping either half loses a distinct decision element, so these
+# must be conjunctive (`all`). A signal is identified by (case id, substring of
+# its name). When a new case adds a complementary signal, list it here so the
+# regression guard catches drift instead of leaving it to an external reviewer.
+# Signals whose phrases are redundant indicators of one element -- including the
+# by-design adversarial-claim signals where one denial proves "not just a happy
+# path" -- correctly stay `any` and are not listed.
+COMPLEMENTARY_SIGNALS = (
+    ("U07", "rollback"),  # rollback path AND monitoring query AND risk owner
+    ("U02", "authority"),  # allowed (may edit ... only) AND forbidden (may not broaden)
+    ("U02", "bounded release decision"),  # internal residual risk AND public non-claim
+    ("U04", "source inspiration"),  # what sources are for AND what they do not satisfy
+    ("U04", "self-check"),  # the self-check ran AND it named a stop condition
+)
 
-    assert gate_signal.all_of, "U07 release-gate signal should require all gates, not any"
+
+@pytest.mark.parametrize("case_id, name_substring", COMPLEMENTARY_SIGNALS)
+def test_complementary_signals_are_conjunctive(case_id, name_substring):
+    """Each complementary signal must require all its halves, so dropping one
+    half cannot still score as covered (the teeth-weakness Codex flagged)."""
+
+    case = next(c for c in efficacy.load_cases(CASES_DIR) if c.id == case_id)
+    signal = next(s for s in case.signals if name_substring in s.name.lower())
+
+    assert signal.all_of, (
+        f"{case_id} signal {signal.name!r} names complementary halves and must use "
+        f"`all`, not `any`, or dropping one half still reports full coverage"
+    )
+    assert not signal.any_of, (
+        f"{case_id} signal {signal.name!r} mixes `any` with `all`; a loose `any` "
+        f"alternative would let the signal pass without every required half"
+    )
 
 
-def test_u02_authority_boundary_requires_both_sides():
-    """A signal naming distinct elements ("allowed and forbidden") must be conjunctive,
-    so dropping the forbidden side cannot still score as covered."""
-
+def test_u02_authority_signal_has_no_leaky_generic_fallback():
     case = next(c for c in efficacy.load_cases(CASES_DIR) if c.id == "U02")
     authority = next(s for s in case.signals if "authority" in s.name.lower())
 
-    assert authority.all_of, "U02 authority signal should require allowed AND forbidden"
     assert "write authority" not in authority.all_of + authority.any_of, (
         "generic 'write authority' fallback leaks: it also appears in the controlled-items line"
     )

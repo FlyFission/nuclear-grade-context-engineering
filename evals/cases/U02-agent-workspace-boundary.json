@@ -22,7 +22,7 @@
     },
     {
       "name": "Makes a bounded release decision with a public non-claim",
-      "any": ["not as production sandbox", "residual risk"]
+      "all": ["not as production sandbox", "residual risk"]
     }
   ]
 }

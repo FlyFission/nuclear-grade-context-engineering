@@ -1,7 +1,7 @@
 """Nuclear-grade command-line helper.
 
-This CLI scaffolds and checks evidence packets. It does not decide engineering
-adequacy, safety, security, compliance, or formal verification and validation.
+This tool sets up and checks evidence records for a change. It does not decide
+engineering adequacy, safety, security, compliance, or verification and validation.
 """
 
 from __future__ import annotations
@@ -116,20 +116,20 @@ CHARTER_TEMPLATE = (
     "**Version:** 1.0.0\n"
     "**Ratified:** <date>\n"
     "**Last amended:** <date>\n\n"
-    "Durable, non-negotiable principles of how work is done here, independent of any single change. "
-    "A mission anchor states what a change is for; the charter states how all changes must be carried out. "
-    "Advisory in tooling; the standard a reviewer and an agent are expected to hold. Scaled by mode.\n\n"
+    "The lasting, non-negotiable rules for how work is done here, no matter the change. "
+    "A mission anchor says what one change is for; the charter says how every change must be carried out. "
+    "It is advisory in the tooling, but it is the standard a reviewer and an agent are expected to hold. Apply it in proportion to the stakes.\n\n"
     "## Articles\n\n"
-    "1. Ownership: a named person owns each change and its evidence.\n"
-    "2. Face facts: report actual state, not hoped-for state.\n"
-    "3. Rising standards: never normalize a deviation; a small erosion is a finding.\n"
-    "4. Formality: follow the procedure; document and decide deviations, never silent.\n"
+    "1. Ownership: one named person owns each change and its evidence.\n"
+    "2. Face facts: report what is actually true, not what you hoped would be true.\n"
+    "3. Rising standards: never let a slip become the new normal; a small erosion is a finding.\n"
+    "4. Formality: follow the procedure; if you must deviate, write it down and decide it out loud, never in silence.\n"
     "5. Technical depth: the owner understands the details, not just the summary.\n"
-    "6. Integrity in reporting: bad news travels up immediately and intact.\n"
-    "7. Questioning attitude: challenge assumptions before acting.\n"
-    "8. Evidence over persuasion: claims carry reproducible evidence or a labeled gap.\n"
-    "9. Graded rigor: match controls to consequence.\n"
-    "10. Baseline discipline: the accepted configuration is recorded and changes are controlled.\n\n"
+    "6. Honest reporting: bad news travels up fast and unchanged.\n"
+    "7. Questioning attitude: challenge the assumptions before you act.\n"
+    "8. Evidence over persuasion: every claim carries reproducible evidence or a labeled gap.\n"
+    "9. Graded rigor: match the controls to the stakes.\n"
+    "10. Baseline discipline: the approved version is written down, and changes to it are controlled.\n\n"
     "## Amendment log\n\n"
     "- 1.0.0 (<date>): Initial charter.\n\n"
     "This charter records principles for engineering review. It does not create compliance, formal "
@@ -138,12 +138,12 @@ CHARTER_TEMPLATE = (
 
 MISSION_TEMPLATE = (
     "# Workspace mission anchor\n\n"
-    "The durable objective this workspace serves. Individual change packets declare their own "
-    "`## Mission anchor`; this file is the anchor those changes trace up to. Re-state it after any "
-    "context reset so the mission survives context loss.\n\n"
-    "- Objective: <the durable goal this workspace serves>\n"
-    "- Success criteria: <observable conditions that mean the objective is met>\n"
-    "- Non-goals / forbidden directions: <explicit out-of-scope and prohibited directions>\n\n"
+    "The lasting goal this workspace serves. Each change record names its own "
+    "`## Mission anchor`; this file is the goal those changes trace back up to. Restate it after any "
+    "context reset so the goal survives even when the context is lost.\n\n"
+    "- Objective: <the lasting goal this workspace serves>\n"
+    "- Success criteria: <what you can observe that proves the goal is met>\n"
+    "- Non-goals / forbidden directions: <what is clearly out of scope and off-limits>\n\n"
     "This anchor records intent for engineering review. It does not create compliance, formal V&V, "
     "safety, security, certification, or regulatory adequacy.\n"
 )
@@ -166,7 +166,7 @@ def main(argv: list[str] | None = None) -> int:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description=(
-            "Nuclear-grade helper. Checks evidence visibility; does not decide "
+            "Nuclear-grade helper. Checks whether evidence is visible. It does not decide "
             "engineering adequacy, safety, compliance, or formal V&V."
         )
     )
@@ -236,8 +236,8 @@ def handle_init(args: argparse.Namespace) -> int:
             repo / ".nuclear" / "README.md",
             content=(
                 "# Nuclear-grade workspace\n\n"
-                "Change packets live in `changes/<slug>/`.\n\n"
-                "This workspace records evidence for engineering review. It does not "
+                "Change records live in `changes/<slug>/`.\n\n"
+                "This workspace stores evidence for engineering review. It does not "
                 "create compliance, formal V&V, safety, security, or regulatory adequacy.\n"
             ),
         ),

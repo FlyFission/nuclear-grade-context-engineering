@@ -2,13 +2,13 @@
 
 <!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
 
-**Purpose:** Link important claims to basis, design/control features, verification evidence, release posture, and gaps.
+**Purpose:** Tie each important claim to its basis, its design and control features, its verification evidence, its release stance, and its gaps.
 
-**Activation threshold:** Use for Standard changes where reviewers need to see how requirements, claims, controls, tests/evals, and release decisions connect.
+**Activation threshold:** Use for Standard changes where reviewers need to see how the requirements, claims, controls, tests/evals, and release decisions connect.
 
-**Minimum useful version:** Claim IDs, basis links, control/design features, evidence links, ship posture, and status labels.
+**Minimum useful version:** the claim IDs, the basis links, the control and design features, the evidence links, the ship stance, and the status labels.
 
-**Overhead trap:** Do not build a giant trace matrix. Trace only the claims that matter for consequence, trust, security, release, or user-visible behavior.
+**Overhead trap:** Do not build a giant trace table. Trace only the claims that matter for the stakes, trust, security, release, or behavior users can see.
 
 ---
 
@@ -30,7 +30,7 @@ Use status labels: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned
 
 ## Evidence chain
 
-Summarize the most important chain in one compact flow.
+Sum up the most important chain in one compact flow.
 
 ```text
 Risk / need
@@ -59,10 +59,10 @@ Risk / need
 
 - Each important claim has a status label.
 - Each important claim names its support type.
-- Every shipped claim has evidence or an accepted residual risk.
-- Deferred/gap claims are not used as release evidence.
-- Reviewer can navigate claim → specification/basis → evidence → release decision quickly.
+- Every shipped claim has evidence or an accepted leftover risk.
+- Deferred or gap claims are not used as release evidence.
+- A reviewer can move quickly from claim → specification/basis → evidence → release decision.
 
 ## Source-lineage note
 
-Original Nuclear-grade template inspired by public requirements traceability, verification, configuration-management, software assurance, secure-development, and release-readiness sources mapped in `docs/00-standards-foundation/source-map.md` and `docs/01-field-guide/source-to-concept-crosswalk.md`. No compliance claim is made.
+Original Nuclear-grade template inspired by public sources on requirements tracing, verification, keeping the approved version under control (CM), software assurance, secure development, and release readiness, mapped in `docs/00-standards-foundation/source-map.md` and `docs/01-field-guide/source-to-concept-crosswalk.md`. No compliance claim is made.

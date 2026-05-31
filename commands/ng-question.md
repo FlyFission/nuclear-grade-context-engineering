@@ -2,66 +2,66 @@
 
 ## Purpose
 
-Apply a questioning attitude to a change before work, review, or release continues by naming the decision question first. This is a portable command prompt.
+Question a change before you build it, review it, or release it. Name the one decision the work has to settle, and settle that first. This is a portable command prompt.
 
 ## Use when
 
-- A request, plan, diff, dependency, agent action, or release decision needs skeptical fact-finding.
-- Assumptions, evidence gaps, or escalation triggers are unclear.
-- You want the agent to "grill my change" before it builds.
+- A request, plan, code change (the diff), dependency, agent action, or release call needs a hard, fact-based second look.
+- The assumptions, the gaps in the evidence, or the reasons to stop and ask for help are unclear.
+- You want the agent to grill your change before it builds.
 
 ## Do not use when
 
-- Incident containment must happen immediately.
-- The change is a tiny Quick edit with obvious proof and no trust boundary.
-- The user needs formal assurance, certification, legal advice, or regulatory approval.
+- An incident is live and you must contain it right now.
+- The change is a tiny, low-stakes edit. The proof is obvious and it adds no new trust boundary.
+- The user wants a formal guarantee, a certification, or legal advice. This prompt does not give regulatory approval.
 
 ## Inputs
 
-- Change request, issue, PR, diff, or packet path.
-- Affected files, dependencies, prompts, models, tools, permissions, data, and release artifacts.
-- Known assumptions, constraints, evidence, and open questions.
-- Relevant source-map or prior packet links if invoked.
+- The change request, issue, pull request (PR), code change, or path to the change record.
+- The files, dependencies, prompts, models, tools, permissions, data, and release items the change touches.
+- What you already assume, the limits you face, the evidence you have, and the questions still open.
+- Links to the source map or earlier change records, if they apply.
 
 ## Prompt text
 
 ```text
-Apply a Nuclear-grade questioning attitude to this change.
+Question this change the Nuclear-grade way.
 
 Inputs:
-- request/diff/packet:
+- request/diff/change record:
 - affected items:
 - known assumptions:
 - evidence available:
-- constraints or deadlines:
+- limits or deadlines:
 
 Return:
-- decision question in one sentence
-- evidence that would change the decision
-- assumptions that must be true
-- known facts, unknowns, danger words, and source-quality concerns
-- facts to verify before work continues
-- warning signs, agent error precursors, error-likely steps, and hidden Standard-mode triggers
-- evidence needed before execute, verify, review, decide, or baseline
-- pause conditions and escalation triggers
-- recommended next artifact: Quick proof, Standard spec, context pack, turnover, self-check, CM record, or release decision
+- the decision question in one sentence
+- the evidence that would change the decision
+- the assumptions that must be true
+- known facts, unknowns, danger words, and worries about how good the sources are
+- facts to check before work continues
+- warning signs, signs an agent is about to slip, steps where mistakes are likely, and hidden reasons to treat this as a Standard change
+- evidence needed before you execute, verify, review, decide, or save the approved version (the baseline)
+- conditions that should make you pause or ask for help
+- the next thing to produce: Quick proof, Standard spec, context pack, handoff, self-check, a record of what stays under control (the controlled items), or a release decision
 
-Prefer facts over confidence. Do not imply formal assurance, compliance, certification, safety, security, or regulatory adequacy.
+Trust facts over confidence. Do not imply formal verification and validation, compliance, certification, safety, security, or regulatory adequacy.
 ```
 
 ## Files created or modified
 
-- `.nuclear/changes/<slug>/questioning-attitude.md` when activated.
-- `risk.md`, `basis.md`, `plan.md`, or `ship.md` when a compact section is enough.
+- `.nuclear/changes/<slug>/questioning-attitude.md` when you use this prompt.
+- `risk.md`, `basis.md`, `plan.md`, or `ship.md` when a short section is enough.
 
 ## Expected outputs
 
-- Validated and unresolved assumptions.
-- Evidence that would change the decision.
-- Evidence gaps.
-- Stop/escalation conditions.
-- Next artifact recommendation.
-- Danger words or source-quality concerns that change the decision.
+- Which assumptions are now checked and which are still open.
+- The evidence that would change the decision.
+- The gaps in the evidence.
+- The conditions that should make you stop or ask for help.
+- A recommendation for what to produce next.
+- Any danger words or source-quality worries that change the decision.
 
 ## Verification command
 
@@ -71,12 +71,12 @@ python tools/ng.py validate .nuclear/changes/<slug>
 
 ## Failure modes
 
-- Turning questioning attitude into generic brainstorming.
-- Asking questions that do not change a decision.
-- Asking many questions without naming which facts change the decision.
-- Treating agent confidence or green CI as evidence for unrelated claims.
-- Hiding escalation triggers because the change seems small.
+- Turning the questions into open-ended brainstorming.
+- Asking questions that change no decision.
+- Asking many questions but never naming which facts change the decision.
+- Treating an agent's confidence, or a green test run (CI), as evidence for some other claim.
+- Hiding the reasons to stop and ask for help because the change seems small.
 
 ## Legal/assurance boundary note
 
-Questioning attitude supports fact-finding and evidence visibility. It does not create formal V&V, compliance, certification, safety, security, procurement adequacy, or regulatory approval.
+Questioning a change helps you find facts and see the evidence. It does not create formal verification and validation, compliance, certification, safety, security, procurement adequacy, or regulatory approval.

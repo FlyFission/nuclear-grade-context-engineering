@@ -7,13 +7,13 @@
 - **Mode:** Quick
 - **Why this mode:** (one line; escalate to Standard if any answer below feels uncertain)
 
-**Purpose:** Decide whether a small change can safely stay in Quick mode and name the proof required.
+**Purpose:** Decide whether a small change can safely stay in Quick mode, and name the proof it needs.
 
-**Activation threshold:** Use for low-consequence, reversible, easy-to-detect changes with no new user trust boundary, dependency trust decision, security/privacy effect, release posture change, or AI authority change.
+**Activation threshold:** Use for low-stakes changes you can undo and check easily, with no new line of user trust, no dependency trust decision, no effect on security or privacy, no change in release stance, and no change in AI power.
 
-**Minimum useful version:** Fill the short fields below. If any answer feels uncertain, escalate to Standard.
+**Minimum useful version:** Fill the short fields below. If any answer feels uncertain, move up to Standard.
 
-**Overhead trap:** Do not write a risk essay for a tiny diff. The goal is to catch hidden escalation triggers, not to perform a full design review.
+**Overhead trap:** Do not write a risk essay for a tiny diff. The goal is to catch hidden reasons to escalate, not to run a full design review.
 
 ---
 
@@ -51,7 +51,7 @@
 
 ## Critical-action self-check
 
-Use only if the Quick change has a wrong-target risk.
+Use only if the Quick change could hit the wrong target.
 
 - Exact target:
 - Expected result:
@@ -59,13 +59,13 @@ Use only if the Quick change has a wrong-target risk.
 
 ## Escalation check
 
-Escalate to Standard if any are true:
+Move up to Standard if any of these are true:
 
-- users, data, security, permissions, operations, or architecture care;
-- a dependency/model/API trust decision changed;
-- failure could be silent, delayed, costly, or hard to reverse;
-- AI had write/execute/network/approval authority beyond drafting;
-- proof cannot be captured in one small `proof.md`.
+- users, data, security, permissions, operations, or architecture are affected;
+- a trust decision about a dependency, model, or API changed;
+- a failure could be silent, delayed, costly, or hard to undo;
+- the AI had the power to write, run commands, use the network, or approve actions, beyond just drafting;
+- the proof will not fit in one small `proof.md`.
 
 ## Required links
 
@@ -76,10 +76,10 @@ Escalate to Standard if any are true:
 
 ## Exit criteria
 
-- Mode is justified as Quick.
-- Required proof is named before or during the change.
-- No Standard/Nuclear activation trigger is hidden.
+- The mode is justified as Quick.
+- The required proof is named before or during the change.
+- No trigger for Standard or Nuclear mode is hidden.
 
 ## Source-lineage note
 
-Original Nuclear-grade template inspired by public graded-rigor, configuration-management, software-assurance, and secure-development concepts mapped in `docs/00-standards-foundation/source-map.md` and `docs/01-field-guide/source-to-concept-crosswalk.md`. No compliance claim is made.
+Original Nuclear-grade template inspired by public ideas on matching rigor to stakes, keeping the approved version under control (CM), software assurance, and secure development, mapped in `docs/00-standards-foundation/source-map.md` and `docs/01-field-guide/source-to-concept-crosswalk.md`. No compliance claim is made.

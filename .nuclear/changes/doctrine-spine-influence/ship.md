@@ -1,6 +1,6 @@
 # Standard Ship Record
 
-**Purpose:** Make the acceptance decision explicit for the doctrine-spine influence update.
+**Purpose:** State the acceptance decision plainly for the doctrine-spine influence update.
 
 **Activation threshold:** Use because this Standard change affects public docs, skills, command prompts, templates, and baseline posture.
 

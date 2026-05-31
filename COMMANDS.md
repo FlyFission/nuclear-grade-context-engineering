@@ -1,40 +1,40 @@
-# Nuclear-grade Portable Command Prompts
+# Nuclear-grade Command Prompts
 
-These are portable command prompts: plain Markdown prompt cards that can be pasted into an AI coding agent or adapted for a local harness. Public v0 does not claim packaged marketplace integration.
+These are portable command prompts: plain Markdown prompt cards you can paste into an AI coding agent or wire into your own setup. This first release (v0) does not ship a packaged plug-in for any one platform.
 
-## Catalog
+## The prompts
 
-| Prompt | Use when | Output |
+| Prompt | Use it when | What you get |
 |---|---|---|
-| [`ng-question`](commands/ng-question.md) | Applying questioning attitude before build, review, or release | Assumptions, gaps, stop conditions |
-| [`ng-classify`](commands/ng-classify.md) | Selecting a mode | Mode decision and evidence obligation |
-| [`ng-new`](commands/ng-new.md) | Creating a packet | Packet files |
-| [`ng-cm-items`](commands/ng-cm-items.md) | Identifying controlled configuration items | Controlled item list |
-| [`ng-impact`](commands/ng-impact.md) | Screening change impact and revalidation | Impact screen |
-| [`ng-baseline`](commands/ng-baseline.md) | Recording accepted baseline state | Baseline record |
-| [`ng-context-pack`](commands/ng-context-pack.md) | Bounding agent context | Context pack |
-| [`ng-turnover`](commands/ng-turnover.md) | Handing off unfinished work to another agent, human, verifier, releaser, or resumed thread | Turnover record |
-| [`ng-self-check`](commands/ng-self-check.md) | Checking critical agent actions before and after execution | Self-check record |
-| [`ng-prove`](commands/ng-prove.md) | Mapping claims to evidence | Claim-to-evidence table |
-| [`ng-ship-review`](commands/ng-ship-review.md) | Making a release decision | Ship/readiness record |
-| [`ng-opex`](commands/ng-opex.md) | Learning from near misses, bad handoffs, review surprises, incidents, or operating signals | OPEX record |
-| [`ng-trust-check`](commands/ng-trust-check.md) | Checking dependency, model, API, SaaS, generated artifact, or vendor trust | Intended-use trust screen |
-| [`ng-source-check`](commands/ng-source-check.md) | Checking source lineage | Source-safe wording |
-| [`ng-legal-check`](commands/ng-legal-check.md) | Checking license and assurance boundaries | Boundary-safe wording |
-| [`ng-drift-check`](commands/ng-drift-check.md) | Testing work against its mission anchor and charter | Re-anchor / escalate / stop decision |
-| [`ng-code-review`](commands/ng-code-review.md) | Reviewing a diff or module for standards drift and complexity | Findings and a single verdict |
-| [`ng-red-team`](commands/ng-red-team.md) | Adversarially reviewing an agent change for prompt injection, escalation, unsafe output, or tool misuse | Red-team findings record |
-| [`ng-trace`](commands/ng-trace.md) | Capturing agent execution evidence for verification and release review | Execution trace record |
-| [`ng-wbs`](commands/ng-wbs.md) | Building a product-oriented work breakdown structure for a deliverable | WBS table and dictionary |
-| [`ng-folders`](commands/ng-folders.md) | Deriving and auditing a folder/file structure from a WBS or existing tree | Folder map and naming/depth audit |
-| [`ng-close-packet`](commands/ng-close-packet.md) | Bringing a stale packet flagged by `ng status` to a terminal state | Completed, closed-with-rationale, or deleted packet |
+| [`ng-question`](commands/ng-question.md) | You want to challenge assumptions before you build, review, or release | Assumptions, gaps, and stop conditions |
+| [`ng-classify`](commands/ng-classify.md) | You need to pick how careful to be | The chosen mode and what it must prove |
+| [`ng-new`](commands/ng-new.md) | You are starting a change record | The record files |
+| [`ng-what-to-control`](commands/ng-what-to-control.md) | You need to decide what to keep under control | A short list of what to control |
+| [`ng-impact`](commands/ng-impact.md) | You want to know what else a change touches | A list of ripple effects and re-checks |
+| [`ng-baseline`](commands/ng-baseline.md) | You want to record the version everyone agreed is correct | A saved known-good record |
+| [`ng-context-pack`](commands/ng-context-pack.md) | You are about to hand an agent a focused task | A tight briefing pack |
+| [`ng-turnover`](commands/ng-turnover.md) | You are passing unfinished work to another agent, person, reviewer, releaser, or your future self | A clean handoff record |
+| [`ng-self-check`](commands/ng-self-check.md) | An agent is about to do something risky and should check itself first | A short self-check record |
+| [`ng-prove`](commands/ng-prove.md) | You need to tie claims to evidence | A claim-to-evidence table |
+| [`ng-ship-review`](commands/ng-ship-review.md) | You have to make a release call | A ship-or-hold record |
+| [`ng-learn`](commands/ng-learn.md) | A near miss, bad handoff, surprise, or incident should turn into a lasting fix | A lessons-learned record |
+| [`ng-trust-check`](commands/ng-trust-check.md) | You are bringing in a dependency, model, API, SaaS, or generated artifact you did not write | A trust check tied to how you will use it |
+| [`ng-source-check`](commands/ng-source-check.md) | You are about to cite a source | Wording that is honest about the source |
+| [`ng-legal-check`](commands/ng-legal-check.md) | You are reviewing license and safety wording | Wording that stays inside the real limits |
+| [`ng-drift-check`](commands/ng-drift-check.md) | You suspect the work has drifted from its goal | A re-anchor, escalate, or stop decision |
+| [`ng-code-review`](commands/ng-code-review.md) | You are reviewing a diff or module for sloppy standards and needless complexity | Findings and one clear verdict |
+| [`ng-red-team`](commands/ng-red-team.md) | You want to attack your own agent change before someone else does | A record of what you tried and found |
+| [`ng-trace`](commands/ng-trace.md) | You need a clear record of what an agent actually did | A structured run record |
+| [`ng-breakdown`](commands/ng-breakdown.md) | You need to split a deliverable into clean pieces | A work-breakdown table and a short dictionary |
+| [`ng-folders`](commands/ng-folders.md) | You need a folder layout from a work breakdown or an existing tree | A folder map and a naming and depth check |
+| [`ng-close-packet`](commands/ng-close-packet.md) | A change record has gone stale and `ng status` flagged it | A finished, closed-with-reason, or deleted record |
 
-## Contract
+## What every prompt card must include
 
-Every command card must include purpose, use and non-use conditions, inputs, prompt text, files created or modified, expected outputs, verification command, failure modes, and legal/assurance boundary note.
+Every prompt card must have: its purpose, when to use it, when not to use it, the inputs, the prompt text itself, the files it creates or changes, the expected outputs, a command to verify the result, the common failure modes, and a short note on legal and safety limits.
 
 See `docs/05-reference/command-authoring-contract.md`.
 
-## Boundary note
+## A note on limits
 
-Portable command prompts support reviewable evidence. They do not create formal V&V, compliance, certification, safety, security, or regulatory adequacy.
+These command prompts help you keep your evidence and boundaries intact. They do not create formal verification and validation, compliance, certification, or any safety, security, or regulatory guarantee.

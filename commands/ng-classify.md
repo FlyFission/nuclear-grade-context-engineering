@@ -2,47 +2,47 @@
 
 ## Purpose
 
-Classify a proposed change into the smallest honest Nuclear-grade mode after identifying the decision question, and name the proof needed before work continues. This is a portable command prompt.
+Sort a change into the lightest mode that is still honest. First name the decision the change must settle. Then pick the mode. Then name the proof needed before work goes on. This is a portable command prompt.
 
 ## Use when
 
 - A new change request arrives.
-- A PR scope changed.
-- Reviewers are unsure whether Quick evidence is enough.
-- Work is routine, procedural, novel, interrupted, resumed, delegated, or critical enough to require an HPI control.
+- A pull request (PR) has grown or shrunk in scope.
+- Reviewers are unsure whether Quick proof is enough.
+- The work is routine, by-the-book, new, interrupted, resumed, handed off, or important enough to need a safety habit. We call these safety habits HPI (Human Performance Improvement) — the habits borrowed from high-reliability work.
 
 ## Do not use when
 
-- Incident containment is active.
-- The mode decision is already current and scope has not changed.
+- An incident is live and you must contain it first.
+- The mode is already set and the scope has not changed.
 
 ## Inputs
 
-- User request, issue, PR, or diff.
-- Affected files, dependencies, prompts, data, tools, credentials, and release artifacts.
-- Questioning-attitude screen or known assumptions, if available.
+- The user request, issue, PR, or code change (the diff).
+- The files, dependencies, prompts, data, tools, credentials, and release items the change touches.
+- The questioning-attitude screen or known assumptions, if you have them.
 - `docs/02-operating-system/activation-thresholds.md`.
 
 ## Prompt text
 
 ```text
-Classify this change using Nuclear-grade.
+Sort this change into a Nuclear-grade mode.
 
 Inputs:
 - Request or diff: <paste/link>
 - Affected files/assets: <list>
-- User/security/dependency/data/AI/release impact: <known facts>
+- Impact on users, security, dependencies, data, AI behavior, or release: <known facts>
 
 Return:
-- decision question and evidence gate
-- selected mode: Quick, Standard, or human-reviewed stronger mode
-- consequence, reversibility, exposure, detectability, uncertainty
-- work mode and HPI control recommendation: none, context pack, turnover, self-check, independent verification, OPEX, or trust check
-- assumptions or facts that changed the mode
-- required packet files
-- minimum proof required
-- escalation triggers
-- boundary note: do not claim formal assurance, compliance, certification, safety, security, or regulatory adequacy
+- the decision question and the proof that must clear before work goes on
+- the chosen mode: Quick, Standard, or a stronger mode that a human reviews
+- how bad it is if wrong, how easy to undo, how exposed, how easy to catch, how uncertain
+- the work mode and which safety habit (HPI) to use: none, context pack, handoff, self-check, an independent check, a record of lessons from real operation (OPEX), or a trust check
+- the assumptions or facts that drove the mode choice
+- the record files this mode needs
+- the least proof required
+- the conditions that should make you ask for help
+- a limits note: do not claim formal verification and validation, compliance, certification, safety, security, or regulatory adequacy
 ```
 
 ## Files created or modified
@@ -51,12 +51,12 @@ Return:
 
 ## Expected outputs
 
-- Selected mode.
-- Decision question and evidence gate.
-- Mode rationale.
-- Proof obligation.
-- HPI control recommendation when activated.
-- Escalation triggers.
+- The chosen mode.
+- The decision question and the proof gate.
+- Why that mode was chosen.
+- What the change must prove.
+- Which safety habit (HPI) to use, when one applies.
+- The conditions that should make you ask for help.
 
 ## Verification command
 
@@ -66,11 +66,11 @@ python tools/ng.py status .
 
 ## Failure modes
 
-- Classifying by effort instead of consequence.
-- Selecting mode before the decision question is clear.
-- Ignoring AI authority, dependency trust, data exposure, or release impact.
-- Selecting Quick while unresolved Standard triggers remain.
+- Picking a mode by how much work it is, instead of how bad a mistake would be.
+- Picking a mode before the decision question is clear.
+- Ignoring how much power the AI has, whether a dependency can be trusted, how exposed the data is, or what the release touches.
+- Picking Quick while reasons to go Standard are still unresolved.
 
 ## Legal/assurance boundary note
 
-This prompt supports evidence visibility only. It does not create compliance, formal V&V, certification, safety, security, or regulatory adequacy.
+This prompt only helps you see the evidence. It does not create compliance, formal verification and validation, certification, safety, security, or regulatory adequacy.

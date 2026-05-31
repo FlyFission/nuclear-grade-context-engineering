@@ -1,6 +1,6 @@
 # Standard Trace Record
 
-**Purpose:** Link doctrine-spine claims to basis, controls, verification evidence, release posture, and gaps.
+**Purpose:** Tie each doctrine-spine claim to its basis, controls, verification evidence, release stance, and gaps.
 
 **Activation threshold:** Use because reviewers need to see how influence mapping becomes public artifact behavior.
 

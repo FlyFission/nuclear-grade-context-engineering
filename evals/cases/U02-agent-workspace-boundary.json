@@ -6,7 +6,7 @@
   "signals": [
     {
       "name": "Bounds agent file-write authority (allowed and forbidden)",
-      "all": ["may edit guard and tests only", "may not broaden"]
+      "all": ["may edit the guard and tests only", "may not widen"]
     },
     {
       "name": "Names the controlled items at stake",
@@ -14,15 +14,15 @@
     },
     {
       "name": "Classifies mode with a stated rationale",
-      "any": ["mode: standard because", "changes a trust boundary"]
+      "any": ["mode: standard, because", "changes a line of trust"]
     },
     {
       "name": "States adversarial proof claims, not just a happy path",
-      "any": ["symlink escape denied", "traversal denied", "absolute external path denied"]
+      "any": ["a symlink escape is denied", "absolute outside path is denied"]
     },
     {
       "name": "Makes a bounded release decision with a public non-claim",
-      "all": ["not as production sandbox", "residual risk"]
+      "all": ["not as a production sandbox", "leftover risk"]
     }
   ]
 }

@@ -1,10 +1,10 @@
 # Execution Trace Record
 
-**Purpose:** Capture structured execution evidence from an agent run — tool calls, decisions, inputs, outputs, token use, latency, and approval gates — for verification and release review.
+**Purpose:** Capture clear evidence from an agent run — tool calls, decisions, inputs, outputs, token use, latency, and approval gates — for verification and release review.
 
-**Activation threshold:** Use when an agent executed consequential tool calls and the packet needs step-level evidence to support the release decision.
+**Activation threshold:** Use when an agent ran tool calls that matter, and the packet needs step-by-step evidence to back the release decision.
 
-**Minimum useful version:** Consequential steps with action, inputs, outputs, and evidence status; decision-point records; posture summary.
+**Minimum useful version:** the steps that matter, each with its action, inputs, outputs, and evidence status; the decision-point records; and the stance summary.
 
 ---
 
@@ -33,7 +33,7 @@ Evidence status legend: `pass`, `fail`, `gap`, `deferred`, `not applicable`.
 
 ## Token use and latency summary
 
-Use when token cost or latency is a verification criterion.
+Use when token cost or latency is one of the things you check.
 
 | Phase | Prompt tokens | Completion tokens | Latency (s) | Notes |
 |---|---|---|---|---|
@@ -67,11 +67,11 @@ Use when token cost or latency is a verification criterion.
 
 ## Exit criteria
 
-- Every consequential step has an evidence status.
-- Decision points reference the authority boundary.
-- Approval gates have reviewer, date, and decision.
-- Execution posture summary is legible to a reviewer who was not present for the run.
+- Every step that matters has an evidence status.
+- The decision points point back to the limits on the agent's power.
+- The approval gates have a reviewer, a date, and a decision.
+- The stance summary makes sense to a reviewer who was not there for the run.
 
 ## Source-lineage note
 
-Original Nuclear-grade template influenced by W&B Weave trace-tree observability, NVIDIA NeMo Agent Toolkit profiling model, and OpenTelemetry distributed tracing concepts, all mapped as supporting context in `docs/00-standards-foundation/source-map.md`. Execution trace evidence is scoped engineering record. No formal audit assurance, security certification, compliance, or regulatory adequacy claim is made.
+Original Nuclear-grade template influenced by public ideas from W&B Weave trace-tree observability, the NVIDIA NeMo Agent Toolkit profiling model, and OpenTelemetry distributed tracing, all mapped as supporting context in `docs/00-standards-foundation/source-map.md`. An execution trace is a scoped engineering record. No formal audit assurance, security certification, compliance, or regulatory adequacy claim is made.

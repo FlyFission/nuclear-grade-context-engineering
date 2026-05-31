@@ -7,11 +7,11 @@
 - Owner: maintainer
 - Date: 2026-05-27
 - Current lifecycle phase: Execute
-- Summary: Add a mission-driven backbone to the repo: a durable charter of process-integrity principles, a per-change mission anchor, two new skills (`controlling-mission-drift`, `reviewing-code-quality`), two paired command prompts, an advisory drift gate in the Standard templates, and minimal only-when-present validator checks.
+- Summary: Add a mission-driven backbone to the repo: a durable charter of process-integrity principles, a per-change mission anchor, two new skills (`staying-on-mission`, `reviewing-code-quality`), two paired command prompts, an advisory drift gate in the Standard templates, and minimal only-when-present validator checks.
 
 ## Mission anchor
 
-State what this change is for, so a long session can be tested against it. See `controlling-mission-drift`.
+State what this change is for, so a long session can be tested against it. See `staying-on-mission`.
 
 - Objective: Give the repo a backbone that resists engineering drift, both intent drift (scope creep, goal substitution) and standards drift (normalization of deviance).
 - Success criteria: The charter and mission anchor exist and are reachable; the two skills and two commands pass the contract checks; the validator advisory-checks a mission anchor only when present; the full test suite, ruff, doctor, and this packet's validation all pass.
@@ -30,7 +30,7 @@ State what this change is for, so a long session can be tested against it. See `
 
 | Item | Type | Why it matters | Link |
 |---|---|---|---|
-| `skills/controlling-mission-drift/SKILL.md` | Skill | New intent-drift skill | `../../../skills/controlling-mission-drift/SKILL.md` |
+| `skills/staying-on-mission/SKILL.md` | Skill | New intent-drift skill | `../../../skills/staying-on-mission/SKILL.md` |
 | `skills/reviewing-code-quality/SKILL.md` | Skill | New standards-drift skill | `../../../skills/reviewing-code-quality/SKILL.md` |
 | `commands/ng-drift-check.md`, `commands/ng-code-review.md` | Commands | Portable prompts for the two skills | `../../../commands/ng-drift-check.md` |
 | `nuclear_grade/ng_validate.py` | Code | Advisory mission-anchor and clarification-marker checks | `../../../nuclear_grade/ng_validate.py` |

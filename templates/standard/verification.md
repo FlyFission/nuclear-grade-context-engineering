@@ -2,13 +2,13 @@
 
 <!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
 
-**Purpose:** Show that important claims, controls, and assumptions have evidence proportionate to the change.
+**Purpose:** Show that the important claims, controls, and assumptions have evidence that fits the size of the change.
 
-**Activation threshold:** Use for Standard changes and any Quick change whose proof needs more than one simple check.
+**Activation threshold:** Use for Standard changes, and any Quick change whose proof needs more than one simple check.
 
-**Minimum useful version:** Claims, methods, acceptance criteria, commands/evals/reviews, results, evidence links, and gaps.
+**Minimum useful version:** the claims, the methods, the acceptance criteria, the commands/evals/reviews, the results, the evidence links, and the gaps.
 
-**Overhead trap:** Do not equate “tests passed” with proof. Evidence must match the claim, be reproducible enough for review, and be status-labeled.
+**Overhead trap:** Do not treat "tests passed" as proof. The evidence must match the claim, be repeatable enough to review, and carry a status label.
 
 ---
 
@@ -34,12 +34,12 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 
 | Type | Use when |
 |---|---|
-| self-check | critical action target and expected result matter |
-| peer-check | another reviewer should prevent wrong action before it happens |
-| concurrent verification | high-consequence action must be observed as it happens |
-| independent verification | final state must be checked separately from the performer claim |
+| self-check | the target of a critical action and the expected result matter |
+| peer-check | another reviewer should stop a wrong action before it happens |
+| concurrent verification | a high-stakes action must be watched as it happens |
+| independent verification | the final state must be checked apart from the doer's claim |
 | peer review | artifact quality, maintainability, usability, or boundary wording matters |
-| deterministic test / eval | reproducible behavior evidence exists |
+| deterministic test / eval | there is repeatable evidence of the behavior |
 
 ## Commands, evals, and reviews
 
@@ -57,7 +57,7 @@ What did you try to break?
 
 ## AI-assisted work checks
 
-Use if AI materially contributed or had tool authority.
+Use if AI did real work here or had power over tools.
 
 - AI scope:
 - Model/tool used:
@@ -86,12 +86,12 @@ Use if activated.
 
 ## Exit criteria
 
-- Each important claim has `pass`, `fail`, `gap`, `deferred`, `not applicable`, or `planned` status.
-- Each important claim separates support type from verification type.
-- Evidence is linked rather than pasted in full.
-- Gaps are explicit and reflected in `ship.md`.
-- Reviewer can tell whether the evidence supports the release decision.
+- Each important claim has a status: `pass`, `fail`, `gap`, `deferred`, `not applicable`, or `planned`.
+- Each important claim keeps the support type apart from the verification type.
+- Evidence is linked, not pasted in full.
+- Gaps are stated plainly and carried into `ship.md`.
+- The reviewer can tell whether the evidence backs the release decision.
 
 ## Source-lineage note
 
-Original Nuclear-grade template inspired by public software V&V, test-documentation, secure-development, software assurance, AI-risk, and application-security verification sources mapped in `docs/00-standards-foundation/source-map.md` and `docs/01-field-guide/source-to-concept-crosswalk.md`. No compliance claim is made.
+Original Nuclear-grade template inspired by public sources on software verification and validation (V&V), test documentation, secure development, software assurance, AI risk, and application-security checks, mapped in `docs/00-standards-foundation/source-map.md` and `docs/01-field-guide/source-to-concept-crosswalk.md`. No compliance claim is made.

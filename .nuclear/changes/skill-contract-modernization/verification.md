@@ -10,7 +10,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`.
 |---|---|---|---|
 | C-001 contract test relaxed | pass | `../../../tests/test_skill_contracts.py` | Drops the `Use when` prefix and 90-180 cap; enforces 80-500 chars, a negative-clause marker, no colon-space. |
 | C-002 all 18 descriptions rewritten | pass | `../../../skills` | A script applied the rewrites and verified each is colon-free and within 80-500 characters; the contract test iterates every skill. |
-| C-003 name-format rule | pass | `../../../tests/test_skill_contracts.py` | Lowercase, hyphen-separated, no length cap; all 18 names pass, including the 41-character `checking-license-and-assurance-boundaries`. |
+| C-003 name-format rule | pass | `../../../tests/test_skill_contracts.py` | Lowercase, hyphen-separated, no length cap; all 18 names pass, including the 41-character `checking-legal-and-safety-wording`. |
 | C-004 optional license/compatibility | pass | `../../../tests/test_skill_contracts.py` | Frontmatter key set is a subset of name, description, license, compatibility. |
 | C-005 progressive disclosure documented | pass | `../../../docs/05-reference/skill-authoring-contract.md`; `../../../SKILLS.md` | Optional `references/`, `scripts/`, `assets/` layout described; wheels bundle whole skill dirs. |
 | C-006 version synced to 0.3.0 | pass | `../../../pyproject.toml`; `../../../nuclear-grade.yaml`; `../../../CITATION.cff` | `test_packaging.py` asserts 0.3.0; the stale 0.1.0 in the catalog is fixed. |

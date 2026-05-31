@@ -8,7 +8,7 @@
 
 ## Charter and anchor check
 
-A re-evaluated gate, not a one-time note. Confirm before Plan and re-check before Verify. See `controlling-mission-drift`.
+A re-evaluated gate, not a one-time note. Confirm before Plan and re-check before Verify. See `staying-on-mission`.
 
 - Mission anchor confirmed (objective, success criteria, non-goals) before Plan? yes.
 - Re-checked before Verify? yes; scope held to the anchor, deferred items stayed deferred.
@@ -22,12 +22,12 @@ If a non-goal or charter article must be crossed, record the justification here:
 
 ## Build sequence
 
-1. Author the two skills (`controlling-mission-drift`, `reviewing-code-quality`).
+1. Author the two skills (`staying-on-mission`, `reviewing-code-quality`).
 2. Author the two command prompts.
 3. Add charter primitive (`.nuclear/charter.md`) and `init` writes for charter and mission anchor.
 4. Add the Mission anchor section to `templates/standard/risk.md` and the drift gate to `templates/standard/plan.md`.
 5. Add advisory validator checks (`_check_mission_anchor`, `_check_unresolved_clarifications`).
-6. Retrofit cross-references (questioning-attitude, packing-agent-context, reviewing-ship-readiness, using-nuclear-grade, context-packs, WORKFLOWS).
+6. Retrofit cross-references (questioning-attitude, briefing-an-agent, checking-release-readiness, using-nuclear-grade, context-packs, WORKFLOWS).
 7. Register both skills and commands (SKILLS.md, COMMANDS.md, nuclear-grade.yaml, skill-evaluation.md, results-summary.md, contract test sets).
 8. Add validator and init tests.
 9. Fill this dogfood packet; validate.

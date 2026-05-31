@@ -2,23 +2,31 @@
 
 [![CI](https://github.com/FlyFission/nuclear-grade-context-engineering/actions/workflows/ci.yml/badge.svg)](https://github.com/FlyFission/nuclear-grade-context-engineering/actions/workflows/ci.yml)
 
-> Questioning attitude and configuration management for AI-assisted software work.
+> A careful, evidence-first way to run AI on software work that matters.
 
-AI agents no longer just suggest code. They edit files, change prompts, call tools, update dependencies, produce evidence, and prepare releases. Nuclear-grade gives that work a controlled path: question assumptions, discover facts, specify required behavior, execute inside authority, verify claims, review evidence, decide, baseline the accepted configuration, and learn from operation.
+AI agents no longer just suggest code. They edit files, change prompts, call tools, swap dependencies, write the evidence, and help ship releases. That is a lot of power with very little ceremony.
 
-It also adds HPI for AI agents: small control behaviors that make fast agent work reviewable. Brief the work, self-check critical actions, turn over cleanly, verify independently when consequence demands it, decide conservatively, and learn from near misses.
+Nuclear-grade gives that work a clear path. Before an agent builds, you ask hard questions. You find the facts. You write down what the change must do. The agent works only inside the limits you set. Then you check the claims against real evidence, decide on purpose, save the approved version, and learn from what happens next.
 
-The operating spine is deliberately two-speed. Agents can explore and build reversible candidates quickly, but acceptance slows down when work becomes a claim, controlled item, public statement, baseline, release decision, or authority change. The first control is the decision question: what must this evidence prove, and what fact would change the decision?
+The discipline is borrowed from how high-consequence engineering is run: question your assumptions, prove your claims, and never let standards slip one small step at a time. The name is the standard, not the vocabulary.
+
+## The one idea
+
+Go fast while you are exploring. Slow down the moment the work becomes a promise.
+
+An agent can try ideas and throw them away cheaply, so let it. But the rules tighten as soon as the work turns into a claim, a file you have to keep under control, a public statement, an approved version, a release call, or a change to what the agent is allowed to do.
+
+The very first question is the most important one: **what does this evidence have to prove, and what fact would change my decision?**
 
 ```text
 Normal AI coding:
 prompt -> diff -> persuasion -> merge risk
 
 Nuclear-grade:
-question -> specify -> execute -> verify -> decide -> baseline -> operation
+question -> specify -> execute -> verify -> decide -> save approved version -> operation
 ```
 
-Public v0 is a usable skill and workflow product: agent-operable skills, portable command prompts, Quick / Standard / activated CM / golden-path templates, a local CLI, a validator, a public source foundation, one tested worked example, and one author-judged comparison study.
+This first release (v0) is a working toolkit you can use today: skills an agent can follow, command prompts you can paste, templates for small and large changes, a small command-line tool, a checker, a public list of sources, one fully worked example, and one hands-on comparison study.
 
 ## Try it in 60 seconds
 
@@ -29,16 +37,16 @@ python tools/ng.py new demo-change --mode quick
 python tools/ng.py validate .nuclear/changes/demo-change
 ```
 
-The fourth command is expected to print `FAILED: ...` with `still contains the placeholder marker`. That is the evidence gate working: every Nuclear-grade template ships with a `NUCLEAR-GRADE-PLACEHOLDER` marker line that the validator refuses to accept until you remove it. Fill in the prompts that matter, delete the marker line, then re-run `validate`:
+The fourth command is *supposed* to print `FAILED: ...` with `still contains the placeholder marker`. That is the safety check doing its job. Every template ships with a `NUCLEAR-GRADE-PLACEHOLDER` line, and the checker refuses to pass until you delete it. So fill in the parts that matter, delete the marker line, and run `validate` again:
 
 ```bash
-# In .nuclear/changes/demo-change/risk.md and proof.md, fill the fields with
+# In .nuclear/changes/demo-change/risk.md and proof.md, replace the prompts with
 # real content, then delete the line that starts with "<!-- NUCLEAR-GRADE-PLACEHOLDER".
 python tools/ng.py validate .nuclear/changes/demo-change
 # OK: .nuclear/changes/demo-change
 ```
 
-Inspect the included evidence path:
+Look at the included real example:
 
 ```bash
 python -m pytest docs/03-worked-examples/ai-agent-tool-permissions/tests/test_workspace_guard.py -q
@@ -49,45 +57,45 @@ If your shell only has `python3`, use `python3`.
 
 ## What you get
 
-| Surface | What it does | Start |
+| Part | What it does | Start here |
 |---|---|---|
-| Workflows | Questioning-attitude, HPI overlays, and controlled-change loops for Quick, Standard, CM, agent authority, release review, and source/legal checks | [`WORKFLOWS.md`](WORKFLOWS.md) |
-| Skills | Agent-operable instructions with inputs, outputs, verification, escalation, and red flags | [`SKILLS.md`](SKILLS.md) |
-| Portable command prompts | Pasteable prompt cards for questioning, classification, CM impact, baselining, evidence review, release review, source checks, and legal boundaries | [`COMMANDS.md`](COMMANDS.md) |
-| Templates | Quick, Standard, activated CM, and golden-path records | [`templates/`](templates/) |
-| CLI | `init`, `new --mode {quick,standard,cm,golden-path}`, `validate`, `doctor`, `list`, `status`, `migrate` | [`docs/05-reference/cli-reference.md`](docs/05-reference/cli-reference.md) |
-| Validator | Dependency-free Quick and Standard packet checks | [`tools/ng_validate.py`](tools/ng_validate.py) |
-| Worked example | Standard packet proving an AI-agent workspace boundary | [`EXAMPLES.md`](EXAMPLES.md) |
-| Source foundation | Public source map and citation boundaries | [`docs/00-standards-foundation/source-map.md`](docs/00-standards-foundation/source-map.md) |
+| Workflows | Step-by-step paths for small changes, big changes, and the careful checks in between | [`WORKFLOWS.md`](WORKFLOWS.md) |
+| Skills | Instructions an agent can follow, each with inputs, outputs, how to verify, when to stop, and warning signs | [`SKILLS.md`](SKILLS.md) |
+| Command prompts | Ready-to-paste prompt cards for questioning, sorting risk, checking impact, saving an approved version, reviewing evidence, release checks, and more | [`COMMANDS.md`](COMMANDS.md) |
+| Templates | Fill-in records for small changes, standard changes, and high-consequence ones | [`templates/`](templates/) |
+| Command-line tool | `init`, `new`, `validate`, `doctor`, `list`, `status`, `migrate` | [`docs/05-reference/cli-reference.md`](docs/05-reference/cli-reference.md) |
+| Checker | A no-dependencies check for small and standard change records | [`tools/ng_validate.py`](tools/ng_validate.py) |
+| Worked example | A real change record proving an AI agent stayed inside its workspace | [`EXAMPLES.md`](EXAMPLES.md) |
+| Sources | The public ideas this borrows from, and how to talk about them safely | [`docs/00-standards-foundation/source-map.md`](docs/00-standards-foundation/source-map.md) |
 
-## How it differs
+## How it is different
 
-| Common pattern | Nuclear-grade pattern |
+| The common way | The nuclear-grade way |
 |---|---|
-| Ask an agent, inspect the diff, run tests. | Question assumptions, identify controlled items, specify intent, verify evidence, decide, and baseline. |
-| PR prose tries to persuade reviewers. | A change package links intent, protected outcomes, controlled items, evidence, gaps, and decision. |
-| Agents receive broad context and fuzzy authority. | Agents receive role, allowed actions, forbidden actions, evidence obligations, turnover state, and stop conditions. |
-| Green CI becomes a release argument. | Release readiness records evidence status, residual risk, rollback, monitoring, decision, and baseline trigger. |
-| Lessons vanish into chat history. | OPEX records feed future basis, tests, monitors, controls, or re-baselines. |
+| Ask an agent, look at the diff, run the tests. | Question the assumptions, name what must stay under control, write down the intent, check the evidence, decide, and save the approved version. |
+| The pull request text tries to talk reviewers into a yes. | A change record links intent, what must not break, what is under control, the evidence, the gaps, and the decision. |
+| Agents get broad access and vague instructions. | Agents get a role, a list of what they may do, what they may not do, what they must prove, where the work stands, and when to stop. |
+| Green tests become the reason to ship. | The release record states the evidence, the leftover risk, the rollback plan, what to watch, the decision, and what to save. |
+| Lessons disappear into the chat history. | Lessons from real operation feed back into future plans, tests, monitors, and controls. |
 
-The central shift is:
+The shift, in one view:
 
 ```text
-diff review -> configuration review
-prompt memory -> controlled change record
-agent authority -> focused context and evidence obligation
-green CI -> explicit release decision and baseline trigger
+review the diff           -> review the whole approved setup
+trust the prompt history  -> keep a controlled record of the change
+hand the agent free rein  -> hand it focused context and a duty to prove
+treat green tests as a yes -> make an explicit release decision and save the result
 ```
 
-That shift is practical, not decorative: instructions should be hard to misuse, small actions should serve the mission anchor, and confidence should be separated from fact, assumption, source claim, local proof, and decision authority.
+This is practical, not decorative. Instructions should be hard to misuse. Small actions should still serve the goal. And "I'm confident" should never be confused with "here is the proof."
 
-## Core workflow
+## The full path
 
 ```text
 Question -> Discover -> Specify -> Plan -> Execute -> Verify -> Review -> Decide -> Baseline -> Operate -> Learn
 ```
 
-Short launch version:
+Short version for everyday use:
 
 ```text
 Question -> Specify -> Execute -> Verify -> Decide
@@ -105,95 +113,95 @@ flowchart LR
 
 More diagrams (mode decision tree, skill graph, packet artifact graph) are in [`docs/diagrams.md`](docs/diagrams.md).
 
-Quick and Standard packets are the Git-native way to record that lifecycle. `Classify` stays inside the risk/mode screen so the public path stays teachable. Activated CM records add controlled items, change impact, baseline, variance, and OPEX detail only when consequence justifies it.
+A "baseline" is just the version you have agreed is correct and want to protect. Small and standard change records are the Git-native way to walk a change through this path. You sort the risk early so the simple path stays easy to teach. You only add the heavier records — what is under control, ripple effects, the saved baseline, drift, and operating lessons — when the stakes are high enough to earn them.
 
-HPI overlays sit underneath that path. Use them when they change the work: task preview before consequential execution, self-check before critical actions, turnover before another agent or human continues, independent verification before high-trust decisions, and OPEX after near misses or review surprises.
+Underneath the path sit a few habits borrowed from high-reliability work, what we call HPI for AI agents (Human Performance Improvement). Use them when they change the outcome: brief the work before a risky step, double-check critical actions, hand off cleanly, get a second set of eyes when trust is on the line, and capture the lesson after a near miss.
 
-## Packet modes
+## Change records: small vs. standard
 
-Public v0 validates Quick and Standard packets.
+This first release checks two kinds of change records.
 
 ```text
-.nuclear/changes/<slug>/
+.nuclear/changes/<name>/
 ```
 
-| Mode | Use when | Files |
+| Kind | Use it when | Files |
 |---|---|---|
-| Quick | Low consequence, reversible, obvious proof, no new trust boundary | `risk.md`, `proof.md` |
-| Standard | User, dependency, permission, data, AI, operational, or release consequence | `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, `ship.md` |
+| Quick | Low stakes, easy to undo, obvious proof, no new trust boundary | `risk.md`, `proof.md` |
+| Standard | It touches users, dependencies, permissions, data, AI behavior, operations, or a release | `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, `ship.md` |
 
-Nuclear, Incident, Research Board, and Release are documented operating patterns in Public v0. Treat them as human-reviewed until project-specific validation exists.
+The heavier patterns (high-consequence, incident, research-board, and release) are written down here, but for now treat them as human-reviewed until your own project has tested them.
 
 ## Who this is for
 
 Use Nuclear-grade if you are:
 
 - building AI agents that write files, call APIs, use credentials, approve actions, or affect releases;
-- using coding agents on changes that matter more than a disposable script;
-- reviewing AI-assisted PRs and need evidence instead of persuasion;
-- leading a team that wants speed without losing control of risk and release posture;
-- creating internal workflows where humans and agents need focused context and evidence obligations.
+- using coding agents on work that matters more than a throwaway script;
+- reviewing AI-assisted pull requests and want evidence instead of a sales pitch;
+- leading a team that wants speed without losing the plot on risk and releases;
+- building internal workflows where people and agents both need focused context and a duty to prove their claims.
 
 ## What this is not
 
-Nuclear-grade is not a compliance framework, certification product, regulated quality assurance program, safety analysis method, production sandbox, regulatory submittal package, legal advice, or substitute for qualified engineering, legal, security, safety, or compliance review.
+Nuclear-grade is not a compliance program, a certification, a regulated quality-assurance system, a safety analysis, a production sandbox, a regulatory submission, legal advice, or a substitute for qualified engineering, legal, security, safety, or compliance review.
 
-It does not claim that a system is safe, secure, compliant, approved, certified, or suitable for regulated use.
+It does not claim that any system is safe, secure, compliant, approved, certified, or fit for regulated use.
 
-Read before using:
+Read these before you use it:
 
 - [`DISCLAIMER.md`](DISCLAIMER.md)
 - [`docs/00-standards-foundation/compliance-boundaries.md`](docs/00-standards-foundation/compliance-boundaries.md)
 - [`docs/00-standards-foundation/do-not-cite-directly.md`](docs/00-standards-foundation/do-not-cite-directly.md)
 
-## Repo map
+## Map of the repo
 
 ```text
-skills/                         agent-operable workflow skills
-commands/                       portable command prompts
-templates/                      Quick, Standard, golden-path, and activated CM templates
-tools/                          local CLI and validator
-tests/                          validator, CLI, contract, and public-doc tests
-docs/00-standards-foundation/   source map, citation safety, compliance boundaries
-docs/01-field-guide/            source-to-concept translation
-docs/02-operating-system/       lifecycle, HPI overlays, modes, packets, thresholds, validators, context packs
-docs/03-worked-examples/        flagship worked example
-docs/04-adoption/               rollout, agent authority, reviewer playbook
-docs/05-reference/              skill, command, and CLI contracts
-docs/diagrams.md                visual maps of lifecycle, modes, skills, packets
+skills/                         skills an agent can follow
+commands/                       paste-ready command prompts
+templates/                      fill-in records for small, standard, and high-consequence changes
+tools/                          the command-line tool and the checker
+tests/                          tests for the checker, the tool, the contracts, and the public docs
+docs/00-standards-foundation/   sources, safe citation, compliance boundaries
+docs/01-field-guide/            how each source idea maps to a plain concept
+docs/02-operating-system/       the path, the habits, the modes, the records, the checks
+docs/03-worked-examples/        the flagship worked example
+docs/04-adoption/               rollout, agent permissions, reviewer playbook
+docs/05-reference/              the skill, command, and tool contracts
+docs/diagrams.md                visual maps of the path, modes, skills, and records
 docs/glossary.md                plain-language decoding of terms and idioms
 ```
 
-## Public v0 status
+## What is in v0
 
 Included now:
 
-- action-first onboarding and repo WBS;
-- Quick and Standard templates;
-- activated CM templates for controlled items, change impact, baseline, variance, and OPEX;
-- golden-path templates for questioning attitude, specification, turnover, self-check, and decision records;
-- local CLI and dependency-free validator;
-- agent-operable skills and portable command prompts;
-- public source foundation and source status labels;
-- tested worked example for an AI-agent workspace boundary (workspace-only file writes; pytest-checked);
-- author-judged adoption comparison covering twelve use cases (see `docs/03-worked-examples/skill-workflow-comparison/`);
-- tests for validator, CLI, skill contracts, command contracts, public docs, and worked example code.
+- a get-started-fast onboarding and a map of the repo;
+- templates for small and standard changes;
+- heavier templates for what is under control, ripple effects, saved baselines, drift, and operating lessons;
+- "golden path" templates for questioning, writing a spec, handing off, self-checking, and recording a decision;
+- a local command-line tool and a no-dependencies checker;
+- skills an agent can follow and command prompts you can paste;
+- a public list of sources and honest labels for how settled each one is;
+- a worked example proving an AI agent only wrote inside its workspace (checked by tests);
+- a hands-on comparison across twelve real use cases (see `docs/03-worked-examples/skill-workflow-comparison/`);
+- tests for the checker, the tool, the skill and command contracts, the public docs, and the example code.
 
 Not included yet:
 
-- packaged marketplace integration for a specific agent harness;
-- full worked examples for external API controls and human approval gates;
-- rich deterministic validation for Nuclear, Incident, Research Board, and Release patterns;
-- a production sandbox, compliance package, or regulated-use assurance workflow.
+- a packaged plug-in for one specific agent platform;
+- full worked examples for external API controls and human approval steps;
+- deep automated checking for the heavier change patterns;
+- a production sandbox, a compliance package, or any regulated-use assurance workflow.
 
-## License and boundaries
+## License and limits
 
-Nuclear-grade is released under the [`MIT License`](LICENSE). You may use, copy, modify, publish, distribute, sublicense, and sell copies subject to the license terms.
+Nuclear-grade is released under the [`MIT License`](LICENSE). You may use, copy, change, publish, distribute, sublicense, and sell copies under the license terms.
 
-That permission is not an assurance claim. Use of this repo does not create formal V&V, formal verification and validation, NQA-1 evidence, NQA-1 record, compliance, certification, regulatory approval, safety, security, procurement adequacy, production suitability, warranty, or support obligation.
+That permission is not a promise about quality. Using this repo does not create formal verification and validation, NQA-1 evidence, NQA-1 record, compliance, certification, regulatory approval, or any safety, security, procurement, production, warranty, or support guarantee.
 
-The public sources named here are influences and concept lineage, not requirements this repo satisfies.
+The public sources named here are influences and idea lineage. They are not standards this repo claims to meet.
 
-## Source-lineage note
+## Where the ideas come from
 
-Nuclear-grade is an original, public-source-inspired software workflow. Source families are mapped in [`docs/00-standards-foundation/source-map.md`](docs/00-standards-foundation/source-map.md) and translated in [`docs/01-field-guide/source-to-concept-crosswalk.md`](docs/01-field-guide/source-to-concept-crosswalk.md).
+Nuclear-grade is an original software workflow inspired by public sources. The source families are mapped in [`docs/00-standards-foundation/source-map.md`](docs/00-standards-foundation/source-map.md) and translated into plain concepts in [`docs/01-field-guide/source-to-concept-crosswalk.md`](docs/01-field-guide/source-to-concept-crosswalk.md).

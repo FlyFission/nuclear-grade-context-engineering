@@ -1,14 +1,14 @@
 # Source-to-Concept Crosswalk
 
-**Purpose:** Translate the public source foundation into Nuclear-grade concepts, artifacts, and activation triggers without copying proprietary standards or implying compliance.
+**Purpose:** Turn the public source foundation into Nuclear-grade concepts, artifacts, and activation triggers. Do this without copying proprietary standards or implying compliance.
 
-**Use:** Field-guide and template authors should use this as the canonical bridge:
+**Use:** Field-guide and template authors should treat this as the main bridge:
 
 ```text
 public source → extracted concept → software translation → artifact/workflow → activation trigger
 ```
 
-**Boundary:** This crosswalk is source-grounded but not a compliance matrix. It does not assert that any Nuclear-grade artifact satisfies DOE, NRC, NASA, NIST, CISA, OpenSSF, OWASP, SLSA, or other requirements.
+**Boundary:** This crosswalk is grounded in its sources, but it is not a compliance matrix. It does not claim that any Nuclear-grade artifact meets DOE, NRC, NASA, NIST, CISA, OpenSSF, OWASP, SLSA, or any other requirements.
 
 ---
 
@@ -35,11 +35,11 @@ public source → extracted concept → software translation → artifact/workfl
 | [NASA Software Engineering Handbook](https://swehb.nasa.gov/) and [NPR 7150.2](https://nodis3.gsfc.nasa.gov/displayDir.cfm?t=NPR&c=7150&s=2) | Practical software lifecycle and engineering requirements. | Use lifecycle discipline, requirements clarity, reviews, and evidence proportional to software class/consequence. | lifecycle, modes, verification | Meaningful product/system change or high-reliability feature. |
 | [NASA-STD-8739.8](https://standards.nasa.gov/standard/nasa/nasa-std-87398) | Software assurance and software safety. | Make assurance evidence explicit for software whose failure can cause serious harm or mission loss. | verification ledger, independent review, release readiness | High-assurance or safety/security-significant software. |
 | [NASA Lessons Learned](https://llis.nasa.gov/) | Operating experience feeds future design and controls. | Incidents, near misses, eval failures, and release surprises update basis, tests, monitors, and templates. | Learn/OPEX workflow | Incident, escaped defect, near miss, significant post-release finding. |
-| NVIDIA Safety for Agentic AI blueprint + Garak LLM vulnerability scanner (supporting context) | Systematic adversarial probing: enumerate risk classes (prompt injection, jailbreak, authority escalation, tool misuse, unsafe output, retrieval poisoning, data exfiltration); state expected safe behavior; probe or simulate; record outcome; produce before/after posture. | Adversarially probe agent authority before release; enumerate attack surface created by tool grants and model inputs; link findings to verification evidence; record residual risk in the release decision. | `verification.md` (adversarial findings), optional `red-team.md`, `docs/02-operating-system/red-team-review.md`, `red-teaming-agent-changes` skill | Release includes new agent tool grants, expanded authority scope, or a model/dependency update that changes untrusted-input handling. |
-| W&B Weave traceability blueprint (supporting context) | Trace-tree observability: every tool call and LLM invocation recorded as a structured span; inputs, outputs, metadata, latency, and cost captured per node; hierarchical relationship from user intent to final output; audit lineage and reproducibility. | Capture agent execution evidence at each consequential step; record tool calls, decisions, inputs, outputs, and evidence status; link each trace row to a verification claim; enable post-incident reconstruction without raw chat log dependency. | `trace.md`, optional `execution-trace.md`, `docs/02-operating-system/agent-trace-evidence.md`, `tracing-agent-execution` skill | Agent executes consequential tool calls; release decision requires confirming execution within authority scope; post-incident or OPEX review needs reproducible execution records. |
+| NVIDIA Safety for Agentic AI blueprint + Garak LLM vulnerability scanner (supporting context) | Systematic adversarial probing: enumerate risk classes (prompt injection, jailbreak, authority escalation, tool misuse, unsafe output, retrieval poisoning, data exfiltration); state expected safe behavior; probe or simulate; record outcome; produce before/after posture. | Adversarially probe agent authority before release; enumerate attack surface created by tool grants and model inputs; link findings to verification evidence; record residual risk in the release decision. | `verification.md` (adversarial findings), optional `red-team.md`, `docs/02-operating-system/red-team-review.md`, `stress-testing-agent-changes` skill | Release includes new agent tool grants, expanded authority scope, or a model/dependency update that changes untrusted-input handling. |
+| W&B Weave traceability blueprint (supporting context) | Trace-tree observability: every tool call and LLM invocation recorded as a structured span; inputs, outputs, metadata, latency, and cost captured per node; hierarchical relationship from user intent to final output; audit lineage and reproducibility. | Capture agent execution evidence at each consequential step; record tool calls, decisions, inputs, outputs, and evidence status; link each trace row to a verification claim; enable post-incident reconstruction without raw chat log dependency. | `trace.md`, optional `execution-trace.md`, `docs/02-operating-system/agent-trace-evidence.md`, `recording-what-an-agent-did` skill | Agent executes consequential tool calls; release decision requires confirming execution within authority scope; post-incident or OPEX review needs reproducible execution records. |
 | NVIDIA NeMo Agent Toolkit (AIQ) profiler + evaluation harness (supporting context) | Framework-agnostic agent profiling from workflow level to individual token: latency/cost/bottleneck identification per step; offline evaluation harness for agentic workflows; OpenTelemetry-compatible observability exporters (Phoenix, Weave, Langfuse, LangSmith). | When evaluating agent skill quality or diagnosing agent performance, capture token use, latency, and cost per decision step; link to evidence obligations in the packet; use as reference model for what the skill-evaluation rubric should measure and what a future runnable `evals/` suite should verify. | `docs/02-operating-system/token-burn-control.md`, skill-evaluation rubric in `docs/05-reference/skill-evaluation.md`, future runnable `evals/` suite | Agent workflow optimization review; skill quality evaluation; evidence of efficient verified execution within cost/latency constraints. |
-| DOE Work Breakdown Structure Handbook (Tier 1) + MIL-STD-881F, NASA WBS Handbook, GAO-20-195G (Tier 7) | Product-oriented decomposition, the 100% rule, mutual exclusivity, the WBS dictionary, common elements, level-of-detail. | Decompose software scope into a noun-based, exhaustive, non-overlapping WBS with an outline-numbered dictionary entry per element before planning or layout. | `wbs.md`, `decomposing-work-breakdown` skill, `ng-wbs` command, `docs/02-operating-system/work-breakdown-and-folders.md` | An epic, new subsystem, or significant feature needs decomposition or a single source of truth. |
-| Model Workspace Protocol (Van Clief and McDermott, arXiv:2603.16021) + NARA Bulletin 2015-04, NIST file-naming (Tier 7) | Folder structure as agentic architecture (numbered stages, context contracts, layered context, review gates); records discipline (folder-to-disposition mapping, platform-safe ISO-8601 naming, depth/path limits). | Derive a folder/file tree where each folder maps to a WBS node or disposition rule, names are platform-safe and sortable, and sequential agent workflows use numbered stage folders with a context contract each. | folder-map section of `wbs.md`, `structuring-agentic-folders` skill, `ng-folders` command, `docs/03-worked-examples/agentic-folder-structure/` | Laying out a repo or agent workspace, placing a file, or fixing a junk-drawer directory. |
+| DOE Work Breakdown Structure Handbook (Tier 1) + MIL-STD-881F, NASA WBS Handbook, GAO-20-195G (Tier 7) | Product-oriented decomposition, the 100% rule, mutual exclusivity, the WBS dictionary, common elements, level-of-detail. | Decompose software scope into a noun-based, exhaustive, non-overlapping WBS with an outline-numbered dictionary entry per element before planning or layout. | `wbs.md`, `breaking-down-the-work` skill, `ng-breakdown` command, `docs/02-operating-system/work-breakdown-and-folders.md` | An epic, new subsystem, or significant feature needs decomposition or a single source of truth. |
+| Model Workspace Protocol (Van Clief and McDermott, arXiv:2603.16021) + NARA Bulletin 2015-04, NIST file-naming (Tier 7) | Folder structure as agentic architecture (numbered stages, context contracts, layered context, review gates); records discipline (folder-to-disposition mapping, platform-safe ISO-8601 naming, depth/path limits). | Derive a folder/file tree where each folder maps to a WBS node or disposition rule, names are platform-safe and sortable, and sequential agent workflows use numbered stage folders with a context contract each. | folder-map section of `wbs.md`, `organizing-project-folders` skill, `ng-folders` command, `docs/03-worked-examples/agentic-folder-structure/` | Laying out a repo or agent workspace, placing a file, or fixing a junk-drawer directory. |
 
 ---
 
@@ -66,7 +66,7 @@ public source → extracted concept → software translation → artifact/workfl
 
 ## 3. Required links for future field-guide pages
 
-Every field-guide page derived from this crosswalk should include:
+Every field-guide page built from this crosswalk should include:
 
 ```text
 Source lineage
@@ -79,7 +79,7 @@ Example evidence
 What not to claim
 ```
 
-This keeps doctrine source-grounded and prevents vibe drift.
+This keeps the doctrine tied to its sources and stops it from drifting on feel alone.
 
 ---
 
@@ -90,9 +90,9 @@ Do not claim that Nuclear-grade artifacts are:
 - compliant with DOE, NRC, NASA, NIST, CISA, OpenSSF, OWASP, SLSA, ASME, EPRI, IEEE, IEC, ISO, ANSI/ANS, NEI, or other standards;
 - substitutes for project-specific QA, regulatory, safety, security, legal, or certification work;
 - derived from paywalled/proprietary standards;
-- sufficient for actual regulated nuclear, medical, aviation, critical infrastructure, or safety-significant use without qualified project-specific controls.
+- enough for real regulated nuclear, medical, aviation, critical infrastructure, or safety-significant use without qualified, project-specific controls.
 
-Use language like:
+Use wording like:
 
 > original software workflow inspired by public high-consequence engineering and public software assurance sources.
 
@@ -102,6 +102,6 @@ Use language like:
 
 - Use `docs/00-standards-foundation/source-map.md` as the source of truth for `verified-public`, `supporting-context`, and `public-url-needed` status.
 - Do not use `public-url-needed` entries as direct template lineage.
-- NNSA SD 413.3-4 and direct NUREG/CR-6263 page references remain context only until official public source records are added.
-- Decide whether to add separate field-guide pages for each concept or keep the initial public surface thinner until the worked example proves the artifact spine.
-- Add examples only after Block 4/5 operating-system docs make packet modes stable.
+- NNSA SD 413.3-4 and direct NUREG/CR-6263 page references stay context only until official public source records are added.
+- Decide whether to add a separate field-guide page for each concept, or keep the first public surface thinner until the worked example proves the artifact spine.
+- Add examples only after the Block 4 and Block 5 operating-system docs make packet modes stable.

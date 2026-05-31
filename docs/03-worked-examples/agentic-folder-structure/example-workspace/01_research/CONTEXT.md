@@ -2,19 +2,19 @@
 
 ## Inputs
 
-- Working (per-run artifacts from a prior stage): none (this is the first stage).
-- Reference: `../references/voice.md` (constraints to internalize).
-- The topic, provided when the stage is run.
+- Working (per-run files from an earlier stage): none. This is the first stage.
+- Reference: `../references/voice.md` (rules to follow).
+- The topic, given when the stage is run.
 
 ## Process
 
-Gather source material on the topic, then summarize it into structured research notes: key claims,
-supporting facts, and open questions. Do not write the article yet — that is stage 02.
+Gather source material on the topic. Then sum it up in clear research notes: the key claims, the facts
+that back them, and the open questions. Do not write the article yet. That is stage 02.
 
 ## Outputs
 
-- `output/research-notes.md` — the structured notes that stage 02 will consume.
+- `output/research-notes.md` — the notes that stage 02 will use.
 
 ## Review gate
 
-A human inspects `output/research-notes.md` and may edit it before `02_draft` runs.
+A person reads `output/research-notes.md` and may edit it before `02_draft` runs.

@@ -2,13 +2,13 @@
 
 <!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
 
-**Purpose:** Make the release decision explicit: ship, block, defer, or ship with named residual risk.
+**Purpose:** State the release decision plainly: ship, block, defer, or ship with named leftover risk.
 
-**Activation threshold:** Use when a Standard change is merged/released, when release posture changes, or when users/operations/dependencies/security/data/AI authority are affected.
+**Activation threshold:** Use when a Standard change is merged or released, when the release stance changes, or when users, operations, dependencies, security, data, or AI power are affected.
 
-**Minimum useful version:** Evidence status, residual risks, rollback/restore, monitoring, handoff, release decision, and baseline trigger.
+**Minimum useful version:** the evidence status, the leftover risks, the rollback/restore plan, the monitoring, the handoff, the release decision, and the baseline trigger.
 
-**Overhead trap:** Do not treat a green CI run as release readiness. Ship when the evidence matches the claims and operational controls are ready.
+**Overhead trap:** Do not treat a green CI run as release readiness. Ship when the evidence matches the claims and the operational controls are ready.
 
 ---
 
@@ -95,15 +95,15 @@
 
 ## Exit criteria
 
-- Release decision is explicit.
-- Slow-audit acceptance is complete before baseline or public claims are accepted.
-- Baseline trigger is explicit when controlled state changes.
-- Evidence status and gaps are visible.
-- Residual uncertainty is bounded, owned, or blocks/defer the decision.
-- Rollback/restore path exists or the lack is consciously accepted.
-- Monitoring/handoff covers the claims most likely to fail in operation.
-- Any accepted residual risk has an owner and recheck trigger.
+- The release decision is stated plainly.
+- The slow audit step is done before any baseline or public claim is accepted.
+- The baseline trigger is named when the controlled state changes.
+- The evidence status and the gaps are visible.
+- The leftover uncertainty is bounded and owned, or it blocks or defers the decision.
+- A rollback/restore path exists, or its absence is accepted on purpose.
+- Monitoring and handoff cover the claims most likely to fail in operation.
+- Any accepted leftover risk has an owner and a recheck trigger.
 
 ## Source-lineage note
 
-Original Nuclear-grade template inspired by public configuration-management, release-readiness, secure-development, software-assurance, supply-chain, lifecycle, and operating-learning concepts mapped in `docs/00-standards-foundation/source-map.md` and `docs/01-field-guide/source-to-concept-crosswalk.md`. No compliance claim is made.
+Original Nuclear-grade template inspired by public ideas on keeping the approved version under control (CM), release readiness, secure development, software assurance, supply-chain risk, software lifecycle, and learning from real operation, mapped in `docs/00-standards-foundation/source-map.md` and `docs/01-field-guide/source-to-concept-crosswalk.md`. No compliance claim is made.

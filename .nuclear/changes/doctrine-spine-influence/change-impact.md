@@ -1,6 +1,6 @@
 # Change Impact Record
 
-**Purpose:** Screen downstream artifacts that may become stale when the doctrine-spine controls change.
+**Purpose:** Check which downstream files may go out of date when the doctrine-spine controls change.
 
 **Activation threshold:** Use because this change affects multiple artifact families and could stale public docs, skills, commands, templates, evaluation prompts, and release posture.
 

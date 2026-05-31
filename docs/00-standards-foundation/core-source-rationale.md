@@ -1,14 +1,14 @@
 # Core Source Rationale
 
-**Purpose:** Explain why Nuclear-grade starts from this public-source foundation and how each source family contributes to a software-native operating model.
+**Purpose:** Explain why Nuclear-grade starts from this public-source foundation, and how each source family helps build a software-native operating model.
 
-Nuclear-grade is not trying to recreate nuclear compliance. It is extracting the durable engineering habits that make high-consequence work reliable, then translating those habits into lightweight, Git-native software workflows.
+Nuclear-grade is not trying to recreate nuclear compliance. It takes the lasting engineering habits that make high-stakes work reliable. Then it turns those habits into light, Git-native software workflows.
 
 ---
 
 ## The foundation thesis
 
-The right foundation is not one standard. It is a layered public-source spine:
+The right foundation is not one standard. It is a stack of public sources, each layered on the last:
 
 ```text
 DOE/CFR → design basis, QA, configuration, safety-basis, project gates
@@ -18,23 +18,23 @@ NASA → high-reliability software/systems engineering and lessons learned
 OpenSSF/OWASP/SLSA → practical open software security and supply-chain evidence
 ```
 
-This combination is strong because each family covers a different failure mode.
+This mix is strong because each family covers a different way things go wrong.
 
 ---
 
 ## Why DOE/CFR sources are core
 
-DOE and CFR sources give Nuclear-grade the high-consequence engineering backbone:
+DOE and CFR sources give Nuclear-grade its backbone for high-stakes engineering:
 
-- **10 CFR 830 Subpart A** anchors public QA concepts: management responsibility, work processes, records, assessment, and correction.
-- **10 CFR 830 Subpart B** anchors safety-basis logic: identify hazards, define controls, and maintain authorization/evidence discipline.
-- **10 CFR 50 Appendix B** provides public nuclear QA criteria that readers can verify without paywalled standards.
-- **DOE public quality-assurance pages and 10 CFR 830 Subpart A** add DOE quality-program context, including graded quality and software quality concepts, without turning Nuclear-grade into a DOE compliance workflow.
-- **DOE-STD-1073** gives the configuration management spine: approved configuration, design requirements, configuration drift, and change impact.
-- **DOE-STD-1189** gives the design lifecycle: integrate safety early, mature design basis over time, and coordinate project/design/safety work.
-- **DOE-STD-3024** gives FDD/SDD design-description logic: requirements, basis, design features, interfaces, evidence, and graded depth.
-- **DOE-STD-3009** gives hazard analysis and control-selection logic: what can go wrong, how bad, what controls matter, and what evidence supports them.
-- **DOE O 413.3B public project-management materials** give project gate logic: mission need, requirements, baselines, maturity, and independent review. NNSA PRD materials remain discovery/context until an official public source is recorded.
+- **10 CFR 830 Subpart A** anchors public QA ideas: management responsibility, work processes, records, assessment, and correction.
+- **10 CFR 830 Subpart B** anchors safety-basis logic: find the hazards, set the controls, and keep the authorization and evidence in order.
+- **10 CFR 50 Appendix B** gives public nuclear QA criteria that readers can check without paying for a standard.
+- **DOE public quality-assurance pages and 10 CFR 830 Subpart A** add DOE quality-program background, including graded quality and software quality ideas. They do this without turning Nuclear-grade into a DOE compliance workflow.
+- **DOE-STD-1073** gives the spine for keeping the approved version under control: the approved configuration, the design requirements, configuration drift, and change impact.
+- **DOE-STD-1189** gives the design lifecycle: build safety in early, mature the design basis over time, and line up project, design, and safety work.
+- **DOE-STD-3024** gives the logic for design descriptions (FDD and SDD): requirements, basis, design features, interfaces, evidence, and depth that scales with risk.
+- **DOE-STD-3009** gives the logic for hazard analysis and picking controls: what can go wrong, how bad it is, which controls matter, and what evidence backs them.
+- **DOE O 413.3B public project-management materials** give the logic for project gates: mission need, requirements, baselines, maturity, and independent review. NNSA PRD materials stay discovery and context only until an official public source is on record.
 
 Software translation:
 
@@ -52,7 +52,7 @@ OPEX learning loops
 
 ## Why NRC software sources are core
 
-The NRC software RG/NUREG cluster is the most direct public bridge between nuclear expectations and actual software work.
+The NRC software RG and NUREG group is the clearest public bridge between nuclear expectations and real software work.
 
 It covers:
 
@@ -67,7 +67,7 @@ It covers:
 - software QA;
 - software reliability and safety.
 
-This prevents Nuclear-grade from being merely “nuclear-flavored process.” It grounds the software pieces in public nuclear software assurance references.
+This keeps Nuclear-grade from being just "nuclear-flavored process." It ties the software pieces to public nuclear software assurance references.
 
 Software translation:
 
@@ -83,9 +83,9 @@ configuration-controlled evidence
 
 ## Why NIST/CISA sources are core
 
-Nuclear-grade must work for modern enterprise software, not just nuclear analogies.
+Nuclear-grade must work for modern enterprise software, not just nuclear comparisons.
 
-NIST/CISA sources add:
+NIST and CISA sources add:
 
 - secure software development;
 - systems security engineering;
@@ -105,13 +105,13 @@ supply-chain evidence
 vulnerability revalidation triggers
 ```
 
-NIST SP 800-161 is especially important because dependency trust is one of the repo's most viral and useful concepts.
+NIST SP 800-161 matters most here. Dependency trust is one of the repo's most useful and most widely shared ideas.
 
 ---
 
 ## Why NASA sources are core
 
-NASA sources add public, high-reliability software and systems engineering practice without requiring nuclear-specific compliance framing.
+NASA sources add public, high-reliability software and systems engineering practice. They do this without needing a nuclear-specific compliance frame.
 
 They support:
 
@@ -132,15 +132,15 @@ handoff and OPEX records
 system-level thinking
 ```
 
-NASA is also more approachable for broad GitHub readers than nuclear-only sources.
+NASA is also easier for most GitHub readers to approach than nuclear-only sources.
 
 ---
 
 ## Why OpenSSF/OWASP/SLSA sources are supporting-core
 
-These sources make Nuclear-grade immediately relevant to GitHub-native development.
+These sources make Nuclear-grade useful right away for GitHub-native development.
 
-They contribute:
+They add:
 
 - build provenance;
 - dependency scoring;
@@ -159,7 +159,7 @@ security verification
 provenance-aware shipping
 ```
 
-They should support practical templates and validators, while DOE/NRC/NASA/NIST provide the deeper doctrine.
+They should back the practical templates and validators. DOE, NRC, NASA, and NIST supply the deeper doctrine.
 
 ---
 
@@ -167,7 +167,7 @@ They should support practical templates and validators, while DOE/NRC/NASA/NIST 
 
 Nuclear-grade must be public, linkable, and safe for GitHub readers.
 
-Therefore, it must not derive public templates from:
+So it must not build public templates from:
 
 ```text
 ASME NQA-1
@@ -180,13 +180,13 @@ NEI documents
 proprietary utility manuals
 ```
 
-This is not because those sources are unimportant in industry. It is because a public educational repo needs verifiable public lineage and must not reproduce or closely paraphrase proprietary structures.
+This is not because those sources do not matter in industry. They do. It is because a public teaching repo needs source lineage that anyone can check, and it must not copy or closely reword proprietary structures.
 
 ---
 
 ## Why this foundation is sufficient to build outward
 
-The foundation covers the major dimensions of enterprise-grade software rigor:
+The foundation covers the main parts of enterprise-grade software rigor:
 
 | Dimension | Source family |
 |---|---|
@@ -199,18 +199,18 @@ The foundation covers the major dimensions of enterprise-grade software rigor:
 | Cyber/AI/supply chain | NIST/CISA, OpenSSF, OWASP, SLSA |
 | OPEX learning | NASA Lessons Learned, DOE operating feedback concepts |
 
-No single source family covers all of this. The stack does.
+No single source family covers all of this. The full stack does.
 
 ---
 
 ## Guardrail for future expansion
 
-Before adding a source to the core foundation, ask:
+Before you add a source to the core foundation, ask:
 
-1. Is it public/open/linkable?
-2. Does it cover a foundational dimension not already covered?
-3. Does it materially change the operating model?
-4. Can the repo translate it without making compliance claims?
-5. Does it reduce risk or improve decisions for software teams?
+1. Is it public, open, and linkable?
+2. Does it cover a foundational part that nothing else covers yet?
+3. Does it change the operating model in a real way?
+4. Can the repo translate it without claiming compliance?
+5. Does it cut risk or improve decisions for software teams?
 
-If not, keep it as supporting/context or exclude it.
+If the answer is no, keep it as supporting or context, or leave it out.

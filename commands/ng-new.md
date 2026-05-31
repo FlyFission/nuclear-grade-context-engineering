@@ -2,30 +2,30 @@
 
 ## Purpose
 
-Create the packet files for a Quick or Standard Nuclear-grade change. This is a portable command prompt.
+Create the record files for a Quick or Standard Nuclear-grade change. This is a portable command prompt.
 
 ## Use when
 
-- A mode decision exists.
-- A questioning-attitude screen is complete when uncertainty or consequence is material.
-- A new change needs durable evidence in Git.
-- A turnover, self-check, OPEX, or supplier-trust record has been activated.
+- The mode is already chosen.
+- You have finished a questioning-attitude screen. You do this whenever the stakes or the uncertainty are real.
+- A new change needs lasting evidence saved in Git.
+- You have started a handoff, a self-check, a lessons-from-operation record (OPEX), or a supplier-trust record.
 
 ## Do not use when
 
-- The work is disposable and has no review need.
-- A packet already exists unless you are intentionally updating it.
+- The work is throwaway and no one needs to review it.
+- A record already exists, unless you mean to update it.
 
 ## Inputs
 
-- Change slug.
-- Selected mode.
-- Initial scope, affected files, questioned assumptions, and evidence obligation.
+- The change slug (its short, lowercase, hyphen-joined name).
+- The chosen mode.
+- The first cut of scope, the files it touches, the assumptions you questioned, and what the change must prove.
 
 ## Prompt text
 
 ```text
-Create or update a Nuclear-grade packet.
+Create or update a Nuclear-grade change record.
 
 Inputs:
 - slug: <slug>
@@ -33,10 +33,10 @@ Inputs:
 - scope: <summary>
 - affected files/assets: <list>
 - questioned assumptions: <list>
-- evidence obligation: <command/review/evidence>
-- activated HPI records: <turnover/self-check/opex/supplier-trust/none>
+- what the change must prove: <command/review/evidence>
+- safety-habit (HPI) records started: <turnover/self-check/opex/supplier-trust/none>
 
-Use the repo templates. Keep the packet short, link-heavy, and evidence-oriented. Include required links, exit criteria, and source-lineage notes. Do not imply formal assurance or compliance.
+Use the repo templates. Keep the record short. Lean on links, and point at evidence. Include the required links, the conditions for being done, and a note on where the ideas come from. Do not imply formal assurance or compliance.
 ```
 
 ## Files created or modified
@@ -48,14 +48,14 @@ Use the repo templates. Keep the packet short, link-heavy, and evidence-oriented
 - `.nuclear/changes/<slug>/trace.md`
 - `.nuclear/changes/<slug>/verification.md`
 - `.nuclear/changes/<slug>/ship.md`
-- `.nuclear/changes/<slug>/turnover.md` if activated
-- `.nuclear/changes/<slug>/self-check.md` if activated
-- `.nuclear/changes/<slug>/supplier-trust.md` if activated
+- `.nuclear/changes/<slug>/turnover.md` if started
+- `.nuclear/changes/<slug>/self-check.md` if started
+- `.nuclear/changes/<slug>/supplier-trust.md` if started
 
 ## Expected outputs
 
-- Packet files for the selected mode.
-- Initial evidence status and proof commands.
+- The record files for the chosen mode.
+- The starting state of the evidence, and the commands that prove it.
 
 ## Verification command
 
@@ -67,11 +67,11 @@ python tools/ng.py validate .nuclear/changes/<slug>
 
 ## Failure modes
 
-- Creating a Standard packet for a clearly Quick change.
-- Omitting source-lineage notes.
-- Adding HPI records by default instead of by consequence.
-- Copying long source excerpts instead of linking.
+- Creating a Standard record for a change that is clearly Quick.
+- Leaving out the note on where the ideas come from.
+- Adding safety-habit (HPI) records by default, instead of by how much is at stake.
+- Pasting long quotes from a source instead of linking to it.
 
 ## Legal/assurance boundary note
 
-Packet creation records review evidence. It does not create a regulated quality program, formal V&V, certification, approval, or compliance.
+This record holds review evidence. It does not create a certified quality assurance program, formal verification and validation, certification, approval, or compliance.

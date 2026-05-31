@@ -11,7 +11,7 @@
 
 ## Mission anchor
 
-State what this change is for, so a long session can be tested against it. See `controlling-mission-drift`.
+State what this change is for, so a long session can be tested against it. See `staying-on-mission`.
 
 - Objective: Make skill descriptions trigger reliably, aligned with Anthropic skill-authoring guidance, without breaking existing skills or downstream authors.
 - Success criteria: All 18 descriptions rewritten to what-plus-when-plus-negative form, 80-500 chars, colon-free; the contract test enforces the new rule; name-format and optional-license fields supported; progressive disclosure documented; version synced to 0.3.0; tests, ruff, doctor, and this packet all green.

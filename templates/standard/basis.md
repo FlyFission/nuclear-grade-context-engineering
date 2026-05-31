@@ -2,13 +2,13 @@
 
 <!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
 
-**Purpose:** State what must remain true for the change to be safe, reliable, secure, useful, and reviewable.
+**Purpose:** State what must stay true for the change to be safe, reliable, secure, useful, and easy to review.
 
-**Activation threshold:** Use for Standard changes where requirements, architecture, interfaces, dependencies, AI authority, protected outcomes, or unacceptable outcomes need an explicit basis.
+**Activation threshold:** Use for Standard changes where the requirements, architecture, interfaces, dependencies, AI power, protected outcomes, or outcomes to prevent need a clear basis.
 
-**Minimum useful version:** Mission, protected outcomes, unacceptable outcomes, assumptions, constraints, intended-use trust decisions, and evidence needs.
+**Minimum useful version:** the mission, the protected outcomes, the outcomes to prevent, the assumptions, the constraints, the trust decisions about intended use, and the evidence needs.
 
-**Overhead trap:** Do not invent requirements by writing a long design essay. Link to authoritative needs and capture only the basis needed for this change.
+**Overhead trap:** Do not invent requirements by writing a long design essay. Link to the real needs and capture only the basis this change needs.
 
 ---
 
@@ -22,11 +22,11 @@
 
 ## Mission / need
 
-What capability or problem is this change addressing?
+What capability or problem does this change address?
 
 ## Protected outcomes
 
-What must the system preserve?
+What must the system keep safe?
 
 | Protected outcome | Why it matters | Evidence needed |
 |---|---|---|
@@ -48,7 +48,7 @@ What must not happen?
 
 ## Grounding status
 
-Separate confidence from evidence before derived claims are accepted.
+Keep confidence apart from evidence before any derived claim is accepted.
 
 | Statement | Fact / assumption / unknown / source claim / local proof / decision authority | Evidence or source | Decision impact |
 |---|---|---|---|
@@ -72,7 +72,7 @@ Use this section only when activated.
 
 ## Derived requirements or claims
 
-Only include important claims that need evidence.
+Include only the important claims that need evidence.
 
 | ID | Requirement / claim | Basis | Design feature or control | Evidence planned |
 |---|---|---|---|---|
@@ -88,11 +88,11 @@ Only include important claims that need evidence.
 
 ## Exit criteria
 
-- Builder and reviewer can answer “what must remain true?”
-- Protected and unacceptable outcomes are explicit.
-- Important assumptions have invalidation triggers.
-- Evidence needs flow into `verification.md`.
+- The builder and reviewer can answer "what must stay true?"
+- The protected outcomes and the outcomes to prevent are stated plainly.
+- Important assumptions each have a trigger that would prove them wrong.
+- The evidence needs flow into `verification.md`.
 
 ## Source-lineage note
 
-Original Nuclear-grade template inspired by public design-basis, safety-in-design, design-description, hazard/failure-analysis, AI-risk, and supply-chain-risk concepts mapped in `docs/00-standards-foundation/source-map.md` and `docs/01-field-guide/source-to-concept-crosswalk.md`. No compliance claim is made.
+Original Nuclear-grade template inspired by public ideas on design basis, safety built into design, design description, hazard and failure analysis, AI risk, and supply-chain risk, mapped in `docs/00-standards-foundation/source-map.md` and `docs/01-field-guide/source-to-concept-crosswalk.md`. No compliance claim is made.

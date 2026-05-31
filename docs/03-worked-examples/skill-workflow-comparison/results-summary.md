@@ -33,32 +33,32 @@
 
 ## Skill Coverage
 
-*This table maps each skill to the use cases it applies to. Skills added after the original U01-U12 trials (for example `controlling-mission-drift` and `reviewing-code-quality`) are mapped retroactively to the use cases where they apply; they were not run as separate trials.*
+*This table maps each skill to the use cases it applies to. Skills added after the original U01-U12 trials (for example `staying-on-mission` and `reviewing-code-quality`) are mapped retroactively to the use cases where they apply; they were not run as separate trials.*
 
 | Skill | Trial records |
 |---|---|
 | `questioning-attitude` | U02, U03, U04, U05, U06, U07, U08, U09, U10, U11, U12 |
 | `using-nuclear-grade` | U01, U02, U03, U04, U05, U06, U07, U08, U09, U10, U11, U12 |
-| `identifying-controlled-items` | U02, U03, U05, U07, U08, U09, U11 |
-| `screening-change-impact` | U02, U03, U04, U05, U07, U08, U09, U10, U12 |
-| `baselining-configuration` | U03, U05, U08, U09, U11 |
-| `classifying-change-risk` | U01, U02, U03, U04, U05, U06, U07, U08, U09, U10, U11, U12 |
-| `creating-change-packets` | U01, U02, U03, U04, U06, U07, U08, U09, U10, U11, U12 |
-| `packing-agent-context` | U02, U06, U07, U10, U11 |
-| `turning-over-agent-work` | U06, U09, U10, U11 |
-| `self-checking-agent-actions` | U04, U07, U08, U11 |
+| `choosing-what-to-control` | U02, U03, U05, U07, U08, U09, U11 |
+| `checking-what-a-change-affects` | U02, U03, U04, U05, U07, U08, U09, U10, U12 |
+| `recording-a-known-good-version` | U03, U05, U08, U09, U11 |
+| `rating-change-risk` | U01, U02, U03, U04, U05, U06, U07, U08, U09, U10, U11, U12 |
+| `creating-change-records` | U01, U02, U03, U04, U06, U07, U08, U09, U10, U11, U12 |
+| `briefing-an-agent` | U02, U06, U07, U10, U11 |
+| `handing-off-work` | U06, U09, U10, U11 |
+| `double-checking-before-acting` | U04, U07, U08, U11 |
 | `proving-claims` | U01, U02, U03, U05, U06, U07, U08, U09, U10, U11 |
-| `reviewing-ship-readiness` | U02, U03, U05, U07, U08, U09, U11 |
-| `learning-from-opex` | U06, U09, U10, U12 |
-| `checking-dependency-and-model-trust` | U03, U05, U07, U11 |
-| `checking-source-lineage` | U04, U05, U12 |
-| `checking-license-and-assurance-boundaries` | U04, U05, U12 |
-| `controlling-mission-drift` | U05, U08, U09, U11 |
+| `checking-release-readiness` | U02, U03, U05, U07, U08, U09, U11 |
+| `learning-from-experience` | U06, U09, U10, U12 |
+| `vetting-outside-code-and-models` | U03, U05, U07, U11 |
+| `checking-source-claims` | U04, U05, U12 |
+| `checking-legal-and-safety-wording` | U04, U05, U12 |
+| `staying-on-mission` | U05, U08, U09, U11 |
 | `reviewing-code-quality` | U02, U07, U08 |
-| `red-teaming-agent-changes` | (new skill; applies conceptually to U02, U11; formal trial records pending) |
-| `tracing-agent-execution` | (new skill; applies conceptually to U02, U06, U11; formal trial records pending) |
-| `decomposing-work-breakdown` | (new skill; applies conceptually to U02, U08; formal trial records pending) |
-| `structuring-agentic-folders` | (new skill; applies conceptually to U02, U06; formal trial records pending) |
+| `stress-testing-agent-changes` | (new skill; applies conceptually to U02, U11; formal trial records pending) |
+| `recording-what-an-agent-did` | (new skill; applies conceptually to U02, U06, U11; formal trial records pending) |
+| `breaking-down-the-work` | (new skill; applies conceptually to U02, U08; formal trial records pending) |
+| `organizing-project-folders` | (new skill; applies conceptually to U02, U06; formal trial records pending) |
 | `closing-stale-packets` | (new skill; applies conceptually to U09, U10; formal trial records pending) |
 
 ## Workflow Coverage

@@ -1,10 +1,10 @@
 # Governance
 
-Nuclear-grade governance is lightweight: preserve source-safe public language, keep tests passing, keep workflows usable, and refuse overclaiming.
+Governance here is light. Keep the public language safe about its sources, keep tests passing, keep the workflows usable, and refuse to overclaim.
 
 ## Release gates
 
-Before a public release or major public-facing change:
+Before a public release or a big public-facing change, run:
 
 ```bash
 python -m pytest -q
@@ -13,15 +13,15 @@ python tools/ng.py doctor .
 python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions
 ```
 
-Run source and boundary scans when docs, templates, skills, commands, or examples change.
+Run the source and boundary scans when docs, templates, skills, commands, or examples change.
 
-For HPI-activated changes, also confirm turnover, self-check, OPEX, and dependency/model/API trust records are used only when consequence warrants them.
+For changes that turn on the HPI habits (small habits from Human Performance Improvement), also confirm the handoff, self-check, OPEX (lessons from real operation), and trust records for a dependency, model, or API are used only when the stakes call for them.
 
 ## Versioning
 
-Public v0 uses semantic-ish public milestones:
+Public v0 uses rough semantic milestones:
 
-- patch-level changes for docs, templates, and validator fixes;
+- patch-level changes for docs, templates, and checker fixes;
 - minor milestones for new workflow surfaces or examples;
 - no compatibility promise for pre-1.0 internals.
 
@@ -29,19 +29,19 @@ Public v0 uses semantic-ish public milestones:
 
 Contributions should:
 
-- keep claims evidence-scoped;
-- add or update tests for behavior changes;
-- avoid new dependencies unless clearly justified;
-- update indexes when adding skills, commands, templates, or examples;
-- preserve MIT license and boundary language.
-- keep HPI language software-native and non-compliance-claiming.
+- keep every claim tied to its evidence;
+- add or update tests when behavior changes;
+- avoid new dependencies unless there is a clear reason;
+- update the indexes when adding skills, commands, templates, or examples;
+- keep the MIT license and boundary wording;
+- keep the HPI wording software-native and free of compliance claims.
 
 ## AI-assisted contributions
 
-If AI agents materially change code, docs, tests, templates, release evidence, or source-lineage wording, record the scope, evidence, and independent check in the relevant packet or PR.
+If AI agents make real changes to code, docs, tests, templates, release evidence, or source-lineage wording, record the scope, the evidence, and the independent check in the right packet or pull request.
 
-If work transfers to another agent or thread, record the turnover state. If a critical action is performed, record the target, expected result, stop condition, and after-action evidence.
+If work moves to another agent or thread, record the handoff state. If a critical action happens, record the target, the expected result, the stop condition, and the evidence afterward.
 
 ## Boundary note
 
-Governance keeps the public workflow coherent. It does not create formal V&V, compliance, certification, safety, security, or regulatory adequacy.
+Governance keeps the public workflow consistent. It does not create formal V&V, compliance, certification, safety, security, or regulatory adequacy.

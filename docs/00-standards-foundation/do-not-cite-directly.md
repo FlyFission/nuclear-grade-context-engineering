@@ -1,12 +1,12 @@
 # Do Not Cite Directly / Do Not Derive Templates From
 
-**Purpose:** Protect the public repo from paywalled, proprietary, copyrighted, or compliance-sensitive source misuse.
+**Purpose:** Keep the public repo from misusing paywalled, proprietary, copyrighted, or compliance-sensitive sources.
 
 ---
 
 ## Rule
 
-Do not use the following as direct template lineage, do not reproduce or closely paraphrase their language, and do not structure Nuclear-grade artifacts to mirror them unless the specific source is publicly available and we are making only a high-level conceptual mention.
+Do not use the sources below as direct template lineage. Do not copy or closely reword their language. Do not shape Nuclear-grade artifacts to mirror them. The one exception is when a specific source is public and we are making only a brief, high-level mention of the idea.
 
 ---
 
@@ -31,11 +31,11 @@ customer confidential procedures
 
 ## Allowed high-level context
 
-It is acceptable to say, when necessary:
+When you need to, it is fine to say:
 
 > Regulated industries often use formal consensus standards and proprietary guidance for quality assurance, procurement, dedication, software qualification, and safety analysis. Nuclear-grade does not reproduce those materials or claim compliance with them.
 
-It is not acceptable to say:
+It is not OK to say:
 
 > This template is based on NQA-1.
 
@@ -58,7 +58,7 @@ Nuclear-grade should be:
 - useful outside regulated settings;
 - free from fake compliance claims.
 
-Using paywalled/proprietary standards as hidden template lineage would undermine that mission.
+Using paywalled or proprietary standards as hidden template lineage would break that mission.
 
 ---
 
@@ -66,10 +66,10 @@ Using paywalled/proprietary standards as hidden template lineage would undermine
 
 Ask:
 
-1. Is the source public/open/linkable?
-2. Can every reader verify it without a login or purchase?
-3. Are we using it only for concept lineage, not compliance?
-4. Are we creating an original software-native workflow?
-5. Would a reader think we are claiming formal compliance?
+1. Is the source public, open, and linkable?
+2. Can every reader check it without a login or a purchase?
+3. Are we using it only for the idea, not for compliance?
+4. Are we building an original, software-native workflow?
+5. Could a reader think we are claiming formal compliance?
 
-If any answer is unsafe, classify the source as context-only or excluded.
+If any answer is unsafe, mark the source as context-only or excluded.

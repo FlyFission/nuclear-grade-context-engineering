@@ -1,16 +1,16 @@
 # Activation Thresholds
 
-**Purpose:** State exactly when Nuclear-grade artifacts turn on, what the minimum useful version is, and when to skip them.
+**Purpose:** This file says exactly when Nuclear-grade records turn on, what the smallest useful version is, and when to skip them.
 
-**Rule:** Rigor must earn its keep. Activate artifacts by decision value and consequence, not by aesthetic desire for a complete binder.
+**Rule:** Rigor must earn its place. Turn on records by their decision value and the stakes, not by a wish for a tidy, complete binder.
 
-Exploration and candidate building may stay lightweight when the work is reversible. Escalate the acceptance gate, not every keystroke, when a candidate becomes a claim, controlled item, public statement, release decision, baseline, or authority boundary.
+While you explore and build drafts, stay light when you can undo the work. Raise the bar at the acceptance gate, not at every keystroke. That gate is where a draft becomes a claim, a controlled item, a public statement, a release decision, the version everyone agreed is correct (a baseline), or a change to what the agent may do.
 
 ---
 
 ## Primary threshold dimensions
 
-Score informally; do not over-math the decision.
+Score this by feel. Do not turn it into a math problem.
 
 | Dimension | Low | Escalating | High |
 |---|---|---|---|
@@ -56,17 +56,17 @@ If the release itself changes trust posture → Release.
 
 ## Required links
 
-When an artifact activates, it must link to:
+When a record turns on, it must link to:
 
-- the triggering condition;
-- the selected mode;
-- the source/basis if relevant;
-- the implementation or affected configuration item;
-- the verification evidence or named gap;
-- the release/rollback/monitoring decision when applicable.
+- the condition that triggered it;
+- the mode you chose;
+- the source or basis, if it matters;
+- the build work or the configuration item it affects;
+- the verification evidence, or the named gap;
+- the release, rollback, and monitoring decision, when that applies.
 
 ---
 
 ## Source-lineage note
 
-This threshold system is an original software-native graded-rigor model inspired by public QA, configuration management, safety-in-design, software assurance, secure development, AI risk, and supply-chain sources listed in `../00-standards-foundation/source-map.md`. It does not claim compliance with those sources.
+This threshold system is an original, software-first model for scaling rigor by stakes. It is inspired by public sources on quality assurance, keeping the approved version of everything under control (configuration management), safety in design, software assurance, secure development, AI risk, and supply chain, all listed in `../00-standards-foundation/source-map.md`. It does not claim compliance with those sources.

@@ -10,7 +10,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`.
 |---|---|---|---|
 | C-001 charter + init write | pass | `../../charter.md`; `../../../nuclear_grade/cli.py` | `init` writes charter and mission; covered by `test_init_creates_charter_and_mission_anchor`. |
 | C-002 mission anchor section | pass | `../../../templates/standard/risk.md` | Section present after Change identity; workspace template in `MISSION_TEMPLATE`. |
-| C-003 controlling-mission-drift skill | pass | `../../../skills/controlling-mission-drift/SKILL.md` | 11 sections; description 143 chars; counted 3-attempt trigger and Rickover principles present. |
+| C-003 staying-on-mission skill | pass | `../../../skills/staying-on-mission/SKILL.md` | 11 sections; description 143 chars; counted 3-attempt trigger and Rickover principles present. |
 | C-004 reviewing-code-quality skill | pass | `../../../skills/reviewing-code-quality/SKILL.md` | 11 sections; description 155 chars; delete-first, tripwires, single verdict present. |
 | C-005 two commands | pass | `../../../commands/ng-drift-check.md`; `../../../commands/ng-code-review.md` | 10 sections each; contain "portable command prompt"; no "slash command". |
 | C-006 advisory validator checks | pass | `../../../nuclear_grade/ng_validate.py` | Mission-anchor check only-when-present; clarification-marker check; new tests pass; all existing packets still validate. |

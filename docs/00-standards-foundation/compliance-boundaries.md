@@ -1,20 +1,20 @@
 # Compliance Boundaries
 
-**Purpose:** Define what Nuclear-grade is, what it is not, and how it avoids false compliance claims.
+**Purpose:** Say clearly what Nuclear-grade is, what it is not, and how it stays away from false claims about meeting a standard.
 
 ---
 
 ## One-sentence boundary
 
-Nuclear-grade is a public, educational software-engineering methodology inspired by public high-consequence engineering practices; it is **not** a compliance program, QA program, safety basis, licensing basis, procurement basis, or substitute for qualified professional judgment.
+Nuclear-grade is a public, educational way to do software engineering. It borrows ideas from public high-stakes engineering work. It is **not** a compliance program, a quality assurance (QA) program, a safety basis, a licensing basis, a buying basis, or a stand-in for the judgment of a qualified professional.
 
 ---
 
 ## License boundary
 
-The repo is MIT-licensed for reuse, modification, publication, distribution, sublicensing, and sale subject to the license terms. The license grant does not create any warranty, support obligation, engineering adequacy finding, regulated-work approval, formal V&V record, NQA-1 record, safety basis, procurement basis, quality assurance program, or fitness determination.
+The repo uses the MIT license. Under that license you may reuse, change, publish, distribute, sublicense, and sell it, within the license terms. The license does not create any warranty, support duty, engineering adequacy finding, regulated-work approval, formal V&V record, NQA-1 record, safety basis, procurement basis, quality assurance program, or fitness finding.
 
-Use this distinction consistently:
+Keep this line clear and use it the same way every time:
 
 | Allowed meaning | Not allowed meaning |
 |---|---|
@@ -60,7 +60,7 @@ Do not claim or imply:
 
 ## Required disclaimer pattern
 
-Use this pattern in README, templates, examples, and docs that cite nuclear/federal sources:
+Use this pattern in the README, in templates, in examples, and in any doc that cites nuclear or federal sources:
 
 > Nuclear-grade is an educational, public-source-inspired software engineering methodology. It does not claim compliance with DOE, NRC, ASME, EPRI, IEEE, IEC, ISO, ANSI/ANS, NEI, NASA, NIST, CISA, OpenSSF, OWASP, SLSA, or any other standard, regulation, or guidance. Use qualified professionals and applicable governing requirements for regulated work.
 
@@ -114,7 +114,7 @@ Templates must not include:
 
 ## Source boundary
 
-Public sources can be used to explain concepts and lineage. They cannot be used to imply that following Nuclear-grade satisfies those sources.
+You may use public sources to explain ideas and where they came from. You may not use them to suggest that following Nuclear-grade meets those sources.
 
 Correct:
 
@@ -128,4 +128,4 @@ Incorrect:
 
 ## Regulated-work warning
 
-If a user is performing regulated nuclear, safety-critical, defense, medical, aviation, or other high-consequence work, Nuclear-grade may be used only as educational inspiration unless their governing organization has reviewed and approved it under applicable requirements.
+Are you doing regulated nuclear, safety-critical, defense, medical, aviation, or other high-stakes work? Then use Nuclear-grade only as a teaching aid. The one exception is when your governing organization has reviewed it and approved it under the rules that apply to you.

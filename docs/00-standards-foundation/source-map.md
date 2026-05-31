@@ -1,10 +1,10 @@
 # Source Map
 
-**Purpose:** Identify the public, open, linkable sources that Nuclear-grade may cite directly or use as source lineage for original software workflows.
+**Purpose:** List the public, open, linkable sources that Nuclear-grade may cite directly. These are also the sources whose ideas can shape its original software workflows.
 
-**Repo posture:** Nuclear-grade is an educational, public-source-inspired software engineering methodology. It does not claim compliance with DOE, NRC, ASME, EPRI, IEEE, IEC, ISO, ANSI/ANS, NEI, NASA, NIST, CISA, OpenSSF, OWASP, or any other framework.
+**Repo posture:** Nuclear-grade is a teaching method for software engineering. It is built on public sources. It does not claim to meet DOE, NRC, ASME, EPRI, IEEE, IEC, ISO, ANSI/ANS, NEI, NASA, NIST, CISA, OpenSSF, OWASP, or any other framework.
 
-**Use rule:** A source can shape public templates only when it is public/open/linkable and the resulting workflow is original, software-native, and non-compliance-claiming.
+**Use rule:** A source can shape public templates only when two things are true. First, it is public, open, and linkable. Second, the workflow we build from it is original, made for software, and claims no compliance.
 
 ---
 
@@ -24,7 +24,7 @@
 | supporting-context | Publicly reachable or useful as context, but not a core direct lineage source for v0 templates. |
 | excluded-direct | Do not use as direct source lineage. |
 
-Confidence fields are about source-family fit for this repo, not compliance adequacy.
+The confidence fields say how well a source family fits this repo. They do not say anything about meeting a standard.
 
 ---
 
@@ -53,7 +53,7 @@ Confidence fields are about source-family fit for this repo, not compliance adeq
 | DOE-STD-3024-2011, Content of SDDs | https://www.energy.gov/ehss/articles/doe-std-3024-2011 | Core | verified-public | FDD/SDD logic: requirements, basis, interfaces, design features, graded rigor. | High | Source for design description analogies. |
 | DOE-STD-3009-2014, Nonreactor Nuclear Facility DSA | https://www.energy.gov/ehss/articles/doe-std-3009-2014 | Core | verified-public | Hazard analysis, accident/failure analysis, control selection, DSA/TSR style evidence logic. | High | Source for failure-mode and assurance-case concepts. |
 | DOE O 413.3B, Program and Project Management for Capital Assets | https://www.energy.gov/projectmanagement/directives | Core | verified-public | Critical decisions, project lifecycle, independent reviews, baseline maturity. | Medium-high | Use for stage-gate analogy without compliance claims. |
-| DOE Work Breakdown Structure Handbook | https://www.energy.gov/projectmanagement/articles/department-energy-work-breakdown-structure-handbook | Core | verified-public | Product-oriented WBS, the 100% rule, common element structures, the WBS dictionary. | High | Primary lineage for `decomposing-work-breakdown`; product-decomposition concepts only; no compliance claim. |
+| DOE Work Breakdown Structure Handbook | https://www.energy.gov/projectmanagement/articles/department-energy-work-breakdown-structure-handbook | Core | verified-public | Product-oriented WBS, the 100% rule, common element structures, the WBS dictionary. | High | Primary lineage for `breaking-down-the-work`; product-decomposition concepts only; no compliance claim. |
 | NNSA SD 413.3-4, Program Requirements Document | NNSA/DOE official public link not yet recorded in this repo | Supporting | public-url-needed | PRD development logic: mission, requirements, basis, project controls. | Medium | Discovery/context only for v0; not direct template lineage until official public URL is recorded. |
 | DOE-STD-3007-2017, Criticality Safety Evaluations | https://www.energy.gov/ehss/articles/doe-std-3007-2017 | Supporting | verified-public | Evaluation discipline, conservative assumptions, consequence-driven analysis. | Medium | Supporting only; too domain-specific for core UX. |
 
@@ -76,7 +76,7 @@ Confidence fields are about source-family fit for this repo, not compliance adeq
 | NUREG/CR-6263 | https://www.nrc.gov/about-nrc/regulatory/research/digital | Supporting | supporting-context | High-integrity software for nuclear power plants. | Medium | Public NRC research table context for v0; record direct NUREG page when verified. |
 | NUREG/CR-6734 | https://www.nrc.gov/reading-rm/doc-collections/nuregs/contract/cr6734/index | Core | verified-public | Software requirements guidelines. | Medium-high | Requirements/specification concepts. |
 
-**Important:** NRC software sources are the most direct public nuclear-to-software bridge. They should be prominent in source lineage, but templates must remain original and non-compliance-claiming.
+**Important:** NRC software sources are the clearest public link from nuclear work to software work. Give them a strong place in source lineage. But keep the templates original, and never claim they meet a standard.
 
 ---
 
@@ -128,35 +128,35 @@ Confidence fields are about source-family fit for this repo, not compliance adeq
 
 ## Tier 6 — Agentic-AI Operations Sources
 
-These sources inform the adversarial review, execution tracing, and agent profiling disciplines. They are supporting context only: the resulting workflows are original and tool-agnostic. No NIM, GPU, W&B, or NeMo dependency is required to use the resulting skills and templates.
+These sources shape how we attack-test agents, trace what they do, and profile them. They are supporting context only. The workflows we build from them are original and work with any tool. You do not need NIM, a GPU, W&B, or NeMo to use the skills and templates.
 
 | Source | Public link | Classification | Status | Role in Nuclear-grade | Confidence | Direct repo use |
 |---|---|---:|---|---|---:|---|
-| NVIDIA Safety for Agentic AI blueprint | https://github.com/NVIDIA-AI-Blueprints/safety-for-agentic-ai | Supporting | supporting-context | Adversarial risk taxonomy (prompt injection, jailbreak, authority escalation, tool misuse, unsafe output, retrieval poisoning, data exfiltration); evaluate → harden → re-evaluate lifecycle; before/after posture records. | High | Conceptual influence for `red-teaming-agent-changes` skill and adversarial class vocabulary; no compliance, penetration-test, or safety certification claim. |
+| NVIDIA Safety for Agentic AI blueprint | https://github.com/NVIDIA-AI-Blueprints/safety-for-agentic-ai | Supporting | supporting-context | Adversarial risk taxonomy (prompt injection, jailbreak, authority escalation, tool misuse, unsafe output, retrieval poisoning, data exfiltration); evaluate → harden → re-evaluate lifecycle; before/after posture records. | High | Conceptual influence for `stress-testing-agent-changes` skill and adversarial class vocabulary; no compliance, penetration-test, or safety certification claim. |
 | Garak LLM vulnerability scanner | https://github.com/leondz/garak | Supporting | supporting-context | Open-source probe-based adversarial testing of LLMs; risk categories; reproducible vulnerability scan reports. | High | Adversarial class taxonomy; no compliance claim. |
 | NVIDIA NeMo Guardrails | https://github.com/NVIDIA-NeMo/Guardrails | Supporting | supporting-context | Runtime guardrail orchestration: input, output, retrieval, dialog, and topic rails; jailbreak detection; content safety; configuration as code. | High | Rail-type vocabulary for adversarial class selection and agent authority model; no compliance claim. |
-| W&B Weave traceability | https://wandb.ai/site/weave | Supporting | supporting-context | Trace-tree observability: span-per-call, auto-logging of inputs/outputs/metadata/latency/cost, audit lineage, reproducibility, evaluation loops. | High | Conceptual influence for `tracing-agent-execution` skill and trace-as-evidence vocabulary; no compliance or audit-certification claim. |
+| W&B Weave traceability | https://wandb.ai/site/weave | Supporting | supporting-context | Trace-tree observability: span-per-call, auto-logging of inputs/outputs/metadata/latency/cost, audit lineage, reproducibility, evaluation loops. | High | Conceptual influence for `recording-what-an-agent-did` skill and trace-as-evidence vocabulary; no compliance or audit-certification claim. |
 | NVIDIA NeMo Agent Toolkit (AIQ) | https://github.com/NVIDIA/NeMo-Agent-Toolkit | Supporting | supporting-context | Framework-agnostic agent profiling (token/latency/cost per step to workflow level), offline evaluation harness, OpenTelemetry-compatible observability exporters (Phoenix, Weave, Langfuse, LangSmith). | High | Reference model for evidence-spine detail and skill-evaluation rubric; influence for future runnable `evals/` suite; no compliance claim. |
-| OpenTelemetry distributed tracing | https://opentelemetry.io/ | Supporting | supporting-context | Vendor-neutral structured spans, parent-child trace relationships, context propagation, semantic conventions for LLM/agent instrumentation. | High | Structured span vocabulary for `tracing-agent-execution` and `execution-trace.md`; no compliance claim. |
+| OpenTelemetry distributed tracing | https://opentelemetry.io/ | Supporting | supporting-context | Vendor-neutral structured spans, parent-child trace relationships, context propagation, semantic conventions for LLM/agent instrumentation. | High | Structured span vocabulary for `recording-what-an-agent-did` and `execution-trace.md`; no compliance claim. |
 
 ---
 
 ## Tier 7 — Project Structuring, Decomposition & Agentic-Folder Architecture Sources
 
-These sources inform work-breakdown decomposition and folder/file structuring. They are supporting context only: the resulting workflows are original, software-native, and tool-agnostic. The primary DOE Work Breakdown Structure Handbook is recorded in Tier 1. No DOE, DoD, NASA, PMI, GAO, NARA, NIST, INCOSE, or ISO compliance is claimed.
+These sources shape how we break work into pieces and how we lay out folders and files. They are supporting context only. The workflows we build from them are original, made for software, and work with any tool. The main DOE Work Breakdown Structure Handbook is listed in Tier 1. We claim no compliance with DOE, DoD, NASA, PMI, GAO, NARA, NIST, INCOSE, or ISO.
 
 | Source | Public link | Classification | Status | Role in Nuclear-grade | Confidence | Direct repo use |
 |---|---|---:|---|---|---:|---|
-| Model Workspace Protocol / Interpretable Context Methodology (Van Clief and McDermott) | https://arxiv.org/abs/2603.16021 | Supporting | verified-public | Folder structure as agentic architecture: numbered stage folders, layered context, per-stage Inputs/Process/Outputs contracts, scripts for mechanical work, a human review gate per stage. | High | Conceptual influence for `structuring-agentic-folders` and the agentic-folder worked example; MIT-licensed public paper; no compliance claim. |
-| MIL-STD-881F, Work Breakdown Structures for Defense Materiel Items | https://www.dau.edu/cop/mwt/documents/mil-std-881f-work-breakdown-structures-defense-material-items | Supporting | verified-public | Product-oriented decomposition, the 100% rule, WBS levels, the WBS dictionary, no-overlap, common elements. | High | Concept lineage for `decomposing-work-breakdown`; DoD standard hosted publicly by DAU; no compliance claim. |
+| Model Workspace Protocol / Interpretable Context Methodology (Van Clief and McDermott) | https://arxiv.org/abs/2603.16021 | Supporting | verified-public | Folder structure as agentic architecture: numbered stage folders, layered context, per-stage Inputs/Process/Outputs contracts, scripts for mechanical work, a human review gate per stage. | High | Conceptual influence for `organizing-project-folders` and the agentic-folder worked example; MIT-licensed public paper; no compliance claim. |
+| MIL-STD-881F, Work Breakdown Structures for Defense Materiel Items | https://www.dau.edu/cop/mwt/documents/mil-std-881f-work-breakdown-structures-defense-material-items | Supporting | verified-public | Product-oriented decomposition, the 100% rule, WBS levels, the WBS dictionary, no-overlap, common elements. | High | Concept lineage for `breaking-down-the-work`; DoD standard hosted publicly by DAU; no compliance claim. |
 | NASA WBS Handbook (NASA/SP-2016-3404) | https://ntrs.nasa.gov/citations/20180000844 | Supporting | verified-public | Product hierarchy, WBS dictionary, traceability, level-of-detail. | High | Decomposition and dictionary lineage; no compliance claim. |
 | GAO-20-195G, Cost Estimating and Assessment Guide | https://www.gao.gov/products/gao-20-195g | Supporting | verified-public | WBS as the foundation of a credible estimate; the WBS dictionary. | High | Estimate-basis lineage for the dictionary size field; no compliance claim. |
-| NARA Bulletin 2015-04, Appendix B, File Naming and Folder Structure Guidance | https://www.archives.gov/records-mgmt/bulletins/2015/2015-04-appendix-b.html | Supporting | verified-public | Folder-to-disposition mapping; records-management folder discipline; platform-safe naming. | Medium-high | Lineage for folder disposition notes and naming in `structuring-agentic-folders`; no compliance claim. |
-| NIST Electronic File Organization Tips | https://www.nist.gov/document/electronicfileorganizationtips-2016-03pdf | Supporting | verified-public | Lowercase alphanumeric plus hyphen/underscore, ISO-8601 dates, single-period extension, depth and path limits. | High | Naming-rule lineage for `structuring-agentic-folders`; no compliance claim. |
+| NARA Bulletin 2015-04, Appendix B, File Naming and Folder Structure Guidance | https://www.archives.gov/records-mgmt/bulletins/2015/2015-04-appendix-b.html | Supporting | verified-public | Folder-to-disposition mapping; records-management folder discipline; platform-safe naming. | Medium-high | Lineage for folder disposition notes and naming in `organizing-project-folders`; no compliance claim. |
+| NIST Electronic File Organization Tips | https://www.nist.gov/document/electronicfileorganizationtips-2016-03pdf | Supporting | verified-public | Lowercase alphanumeric plus hyphen/underscore, ISO-8601 dates, single-period extension, depth and path limits. | High | Naming-rule lineage for `organizing-project-folders`; no compliance claim. |
 | DoDAF (DoD Architecture Framework) | https://dodcio.defense.gov/library/dod-architecture-framework/ | Context-only | supporting-context | Functional vs product decomposition; architecture viewpoints. | Medium | High-level decomposition-perspective awareness only; no compliance claim. |
 | PMI Practice Standard for WBS; INCOSE SE Handbook; ISO 21500/21502/15489 | membership or paywalled; ISO on the do-not-cite-directly list | Excluded as direct input | excluded-direct | 100% rule, MECE, 8/80, work package, cohesion/coupling, records-management framing. | Medium | Transferable principles encoded as original workflow only; do not cite as template lineage or derive structure from these texts. |
 
-These sources shape decomposition and folder discipline only. They do not add governance, CI, supply-chain, or compliance machinery; that surface belongs to existing tiers and skills.
+These sources shape how we break work down and keep folders in order. Nothing more. They do not add governance, CI, supply-chain, or compliance machinery. That work belongs to the other tiers and skills.
 
 ---
 
@@ -186,4 +186,4 @@ NEI documents
 proprietary QA/procurement/utility manuals
 ```
 
-These may be mentioned only as high-level industry context when public and necessary. They must not shape template structure or language.
+You may mention these only as broad industry background, and only when they are public and you need to. They must not shape the structure or the wording of any template.

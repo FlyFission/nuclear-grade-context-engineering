@@ -1,10 +1,10 @@
 # Templates
 
-Templates are the minimum useful records for Nuclear-grade packets. Copy them into `.nuclear/changes/<slug>/` and keep them short enough to review.
+Templates are the smallest useful records for Nuclear-grade packets. Copy them into `.nuclear/changes/<slug>/` and keep them short enough to review.
 
 ## Quick mode
 
-Use for low-consequence, reversible changes:
+Use for low-stakes changes you can undo:
 
 ```text
 templates/quick/risk.md
@@ -13,7 +13,7 @@ templates/quick/proof.md
 
 ## Standard mode
 
-Use for meaningful product/software/configuration changes:
+Use for real product, software, or setting changes:
 
 ```text
 templates/standard/risk.md
@@ -24,13 +24,13 @@ templates/standard/verification.md
 templates/standard/ship.md
 ```
 
-Standard templates are intentionally lightweight. If an artifact does not need much detail, keep it short rather than deleting it.
+Standard templates are kept light on purpose. If a record does not need much detail, keep it short rather than delete it.
 
-Use `templates/standard/supplier-trust.md` only when a dependency, model, API, SaaS tool, generated artifact, or vendor claim affects evidence, permissions, data, release posture, or public trust. It is an activated extension, not part of every Standard packet.
+Use `templates/standard/supplier-trust.md` only when a dependency, model, API, SaaS tool, generated file, or vendor claim affects the evidence, permissions, data, release stance, or public trust. It is an add-on you turn on, not part of every Standard packet.
 
 ## Activated CM records
 
-Use `templates/cm/` when a change affects controlled configuration: prompts, models, tools, dependencies, docs, releases, runbooks, evals, or other items whose approved state matters.
+Use `templates/cm/` (records for keeping the approved version under control, CM) when a change affects controlled items: prompts, models, tools, dependencies, docs, releases, runbooks, evals, or anything else whose approved state matters.
 
 ```text
 templates/cm/controlled-items.md
@@ -40,11 +40,11 @@ templates/cm/variance.md
 templates/cm/opex.md
 ```
 
-Do not activate all CM records by default. Add only the record that answers a decision question.
+Do not turn on every CM record by default. Add only the record that answers a real decision question.
 
 ## Golden path
 
-Use `templates/golden-path/` when a change needs the public Questioning Attitude path in addition to the Standard packet.
+Use `templates/golden-path/` when a change needs the public Questioning Attitude path on top of the Standard packet.
 
 ```text
 templates/golden-path/questioning-attitude.md
@@ -60,9 +60,9 @@ The golden path is:
 Question -> Discover -> Specify -> Plan -> Execute -> Verify -> Review -> Decide -> Baseline -> Operate -> Learn
 ```
 
-Keep `Classify` inside the risk/mode screen. Keep `Baseline` late, after review and decision, as accepted configuration state.
+Keep `Classify` inside the risk and mode screen. Keep `Baseline` late, after review and the decision, as the accepted state everyone agreed is correct.
 
-Use `turnover.md` when responsibility transfers to another human or agent. Use `self-check.md` before a critical action where wrong target, exceeded authority, public overclaim, irreversible state, or release confusion is plausible.
+Use `turnover.md` when the work passes to another person or agent. Use `self-check.md` before a risky action where you could hit the wrong target, go past your authority, overclaim in public, reach a state you cannot undo, or get confused about the release.
 
 ## Validation
 

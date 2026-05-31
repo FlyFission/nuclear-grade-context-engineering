@@ -1,10 +1,10 @@
 # Baselines
 
-**Purpose:** Define how Nuclear-grade records accepted controlled configuration state.
+**Purpose:** This file says how Nuclear-grade writes down an accepted, controlled state.
 
 ## Baseline rule
 
-A baseline is the approved state of selected controlled items at a decision point. Git history helps identify the state, but the baseline record explains why it is acceptable and when it must be revisited.
+A baseline is the version everyone agreed is correct: the approved state of the controlled items at a decision point. Git history helps you find the state, but the baseline record explains why it is acceptable and when you must look at it again.
 
 ## Minimum useful baseline
 

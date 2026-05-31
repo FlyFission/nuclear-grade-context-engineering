@@ -1,6 +1,6 @@
 # Adoption Docs
 
-Start here when applying Nuclear-grade to a team or agent workflow.
+Start here when you bring Nuclear-grade to a team or an agent workflow.
 
 - `enterprise-rollout.md`
 - `agent-authority-model.md`
@@ -8,4 +8,4 @@ Start here when applying Nuclear-grade to a team or agent workflow.
 
 ## Source-lineage note
 
-These adoption docs describe original operating patterns influenced by public source families mapped in `../00-standards-foundation/source-map.md`.
+These adoption docs describe original operating patterns. Public source families shaped them. Those families are mapped in `../00-standards-foundation/source-map.md`.

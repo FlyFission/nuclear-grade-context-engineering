@@ -7,67 +7,67 @@ description: Maps claims to evidence, statuses, gaps, tests, evals, reviews, and
 
 ## Overview
 
-Evidence should answer named claims, not create a general feeling that the change is fine. This skill turns claims into traceable proof status and separates fact, assumption, unknown, source claim, local proof, and decision authority.
+Evidence should answer named claims. It should not just create a vague sense that the change is fine. This skill turns each claim into a proof you can trace. It keeps six things apart: a fact, an assumption, an unknown, a source claim (something a source says), local proof (something you checked yourself), and decision authority (who gets to decide).
 
 ## When to Use
 
-- A packet has implementation claims, safety/security wording, release readiness, or dependency trust assertions.
-- Tests pass but reviewers cannot see which claim each test supports.
-- Evidence gaps need to be accepted, deferred, or treated as blockers.
-- The proof needs the right verification type: self-check, peer-check, concurrent verification, independent verification, peer review, test, or eval.
+- A change record makes claims about the code, says something about safety or security, claims release readiness, or claims a dependency can be trusted.
+- Tests pass, but reviewers cannot see which claim each test backs up.
+- Evidence gaps have to be accepted, put off, or treated as blockers.
+- The proof needs the right kind of check. The kinds are self-check, peer-check, concurrent verification (a second person checks as you go), independent verification (a separate person checks afterward), peer review, a test, or an eval.
 
 ## When Not to Use
 
-- The claim is purely editorial and has no engineering or trust consequence.
-- The requested output is formal verification or certification.
+- The claim is purely about wording and carries no engineering or trust weight.
+- The request is for formal verification and validation or certification. This skill does not provide those.
 
 ## Inputs
 
 - `basis.md`, `trace.md`, `verification.md`, and `ship.md`.
 - Test commands, CI runs, reviews, logs, diffs, screenshots, and source links.
-- Known gaps and residual risks.
+- Known gaps and leftover risks.
 
 ## Process
 
-1. Extract each important claim.
-2. Select the verification type needed for each claim.
-3. Classify the support behind each claim as fact, assumption, unknown, source claim, local proof, or decision authority.
-4. Link each claim to basis, control/design feature, implementation, evidence, and ship posture.
-5. Assign evidence status: `pass`, `fail`, `gap`, `deferred`, `not applicable`, or `planned`.
-6. Narrow overbroad claims until the evidence genuinely supports them.
-7. Record gaps and release impact.
+1. Pull out each important claim.
+2. Pick the kind of check each claim needs.
+3. Sort the support behind each claim into one of these: fact, assumption, unknown, source claim, local proof, or decision authority.
+4. Link each claim to its basis, the control or design feature, the code, the evidence, and the release posture.
+5. Give each claim an evidence status: `pass`, `fail`, `gap`, `deferred`, `not applicable`, or `planned`.
+6. Trim any claim that reaches too far, until the evidence truly backs it.
+7. Record the gaps and how they affect the release.
 
 ## Outputs
 
 - Claim-to-evidence rows in `trace.md` or `verification.md`.
-- Fact/source/proof distinction for each important claim.
-- Reproducible evidence commands or artifact links.
-- Verification type for each important claim.
-- Updated ship posture when evidence changes.
+- A clear split between fact, source, and proof for each important claim.
+- Evidence commands anyone can rerun, or links to the artifacts.
+- The kind of check used for each important claim.
+- An updated release posture when the evidence changes.
 
 ## Verification
 
-- `python tools/ng.py validate <packet>` passes for Quick or Standard packets.
-- Every important claim has evidence, explicit gap, or deliberate deferral.
+- `python tools/ng.py validate .nuclear/changes/<slug>` passes for Quick or Standard records.
+- Every important claim has evidence, a stated gap, or a deliberate deferral.
 - No test result is used to imply unrelated safety, security, compliance, or approval.
 
 ## Escalation
 
-- Stop when evidence is absent but the packet wants to ship.
+- Stop when the evidence is missing but the record still wants to ship.
 - Escalate when claims affect public trust, regulated use, procurement, security, or safety.
 
 ## Common Rationalizations
 
 - "CI passed, so all claims pass." CI only proves what it checks.
-- "A reviewer can inspect the code." Review is evidence only when scope and result are recorded.
-- "The same agent checked itself." That may be a self-check, but not independent verification.
-- "We should not mention gaps." Hidden gaps create worse release decisions.
+- "A reviewer can read the code." Review counts as evidence only when its scope and result are written down.
+- "The same agent checked itself." That can be a self-check, but it is not an independent check.
+- "We should not mention gaps." Hidden gaps lead to worse release decisions.
 
 ## Red Flags
 
-- Evidence status is missing.
-- A claim says "safe", "secure", "compliant", or "approved" without qualified scope.
-- Release decision ignores failed or deferred evidence.
+- The evidence status is missing.
+- A claim says "safe", "secure", "compliant", or "approved" with no scope around it.
+- The release decision ignores failed or deferred evidence.
 
 ## Source-lineage note
 

@@ -1,14 +1,14 @@
 # Tools
 
-This directory contains lightweight local tooling for Nuclear-grade packets.
+This folder holds the small, local tools for working with Nuclear-grade change records.
 
 ## `nuclear-grade.yaml`
 
-`nuclear-grade.yaml` is a human-readable project manifest. The `ng doctor` command checks that this file exists. Keep it in sync with the `skills/`, `commands/`, and `templates/` directories to avoid silent drift.
+`nuclear-grade.yaml` is a plain, readable list of what the project ships. The `ng doctor` command checks that this file is present. Keep it in step with the `skills/`, `commands/`, and `templates/` folders so the list never quietly falls out of date.
 
 ## `ng.py`
 
-Primary helper:
+The main helper:
 
 ```bash
 python tools/ng.py init [repo] [--dry-run] [--yes]
@@ -19,24 +19,23 @@ python tools/ng.py list
 python tools/ng.py status [repo]
 ```
 
-`ng.py` is dependency-free and delegates packet validation to `ng_validate.py`.
-`doctor` also checks the activated CM templates and the golden-path templates used by the Questioning Attitude workflow.
+`ng.py` needs no extra packages. It hands the actual checking of a change record to `ng_validate.py`. The `doctor` command also checks the heavier change templates and the "golden path" templates used by the questioning-attitude workflow.
 
-The importable console-script implementation lives in `nuclear_grade/`; `tools/ng.py` remains as the repo-local wrapper used throughout the docs.
+The installable version of this tool lives in `nuclear_grade/`. `tools/ng.py` is the in-repo copy that the docs point to.
 
 ## `ng_validate.py`
 
-Checks Quick and Standard packets for:
+Checks small (Quick) and standard change records for:
 
-- required packet files for the detected mode;
-- required sections;
+- the files each mode requires;
+- the required sections;
 - evidence status labels;
-- rollback, monitoring, and release-decision posture;
-- source-lineage notes;
+- a rollback plan, what to monitor, and a clear release decision;
+- a note on where the ideas come from;
 - broken local Markdown links;
-- seed prohibited compliance-overclaim phrases.
+- a few wording patterns that would over-claim compliance.
 
-Run:
+Run it:
 
 ```bash
 python tools/ng_validate.py .nuclear/changes/<slug>/
@@ -48,8 +47,8 @@ Example:
 python tools/ng_validate.py docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions
 ```
 
-The validator checks whether evidence is visible and structured. It does not decide safety, security, adequacy, or compliance.
+The checker tells you whether the evidence is present and well-structured. It does not decide safety, security, adequacy, or compliance.
 
-## Boundary note
+## A note on limits
 
-The tools check structure and evidence visibility. They do not create formal V&V, compliance, certification, safety, security, regulatory adequacy, or production suitability.
+These tools check structure and whether evidence is visible. They do not create formal V&V, compliance, certification, or any safety, security, regulatory, or production guarantee.

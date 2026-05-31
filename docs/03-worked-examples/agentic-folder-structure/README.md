@@ -1,10 +1,10 @@
 # Worked Example: Agentic Folder Structure (Model Workspace Protocol)
 
-This example shows a sequential agent workflow expressed as **folder structure** instead of framework
-code, following the Model Workspace Protocol (MWP) pattern that `structuring-agentic-folders` teaches.
-A single agent reads the right context file at each stage; numbered folders encode order; persistent
-reference material is separated from per-run output; a human reviews each stage's output before the
-next runs.
+This example shows a step-by-step agent workflow built as a **folder structure** instead of framework
+code. It follows the Model Workspace Protocol (MWP), a folder pattern that `organizing-project-folders`
+teaches. One agent reads the right context file at each stage. Numbered folders set the order. Lasting
+reference material is kept apart from the output of each run. A person checks each stage's output before
+the next stage runs.
 
 ## The layout
 
@@ -23,16 +23,21 @@ example-workspace/
 
 ## Why it is structured this way
 
-- **Numbered folders encode execution order.** `01_` runs before `02_`; the number is the sequence.
-- **Each stage is a contract.** Its `CONTEXT.md` states Inputs, Process, and Outputs — nothing hidden.
-- **Reference vs working are separated.** `references/` holds durable constraints; `output/` holds the
-  per-run artifacts that feed the next stage's input.
-- **Every output is an edit surface with a review gate.** A human can inspect and edit `01_research/output/`
+- **Numbered folders set the order.** `01_` runs before `02_`. The number is the sequence.
+- **Each stage is a contract.** Its `CONTEXT.md` lists Inputs, Process, and Outputs. Nothing is hidden.
+- **Reference and working files are kept apart.** `references/` holds lasting rules. `output/` holds the
+  per-run files that feed the next stage's input.
+- **Every output can be edited, and a person checks it.** A person can read and edit `01_research/output/`
   before `02_draft` runs.
-- **Names are platform-safe and sortable.** Lowercase and zero-padded. The numbered stage prefix `NN_` (number then underscore, as in `01_research`) marks the sequence — the one accepted exception to the hyphen word-separator convention used elsewhere. `references/` sits at the workspace root, and each stage reaches it via `../references/`. The `CONTEXT.md` marker files are capitalized by Model Workspace Protocol convention (like `README.md`) — an accepted exception to the lowercase rule.
+- **Names are platform-safe and easy to sort.** Lowercase, with zeros padding the numbers. The numbered
+  stage prefix `NN_` (a number, then an underscore, as in `01_research`) marks the order. It is the one
+  allowed exception to the hyphen-between-words rule used elsewhere. `references/` sits at the workspace
+  root, and each stage reaches it through `../references/`. The `CONTEXT.md` marker files are capitalized
+  by Model Workspace Protocol custom (like `README.md`), which is an allowed exception to the lowercase rule.
 
-This is one paradigm `structuring-agentic-folders` supports (the *agent-workflow-workspace* branch);
-the other is product-oriented codebase decomposition, where the folder tree is the WBS projected to disk.
+This is one of two patterns `organizing-project-folders` supports (the *agent-workflow-workspace* branch).
+The other is splitting a product codebase into folders, where the folder tree is the work breakdown (WBS)
+laid out on disk.
 
 ## Boundary note
 

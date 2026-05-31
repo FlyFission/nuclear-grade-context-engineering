@@ -1,10 +1,10 @@
 # Knowledge Graph and Source Discovery
 
-**Purpose:** Define how source-discovery tools may be used during research without replacing public citations.
+**Purpose:** Set out how source-discovery tools may be used during research, without letting them replace public citations.
 
 ## Usage rule
 
-Internal source-discovery aids may be used during private research, but all public Nuclear-grade citations must point readers to original public sources.
+You may use internal source-discovery aids during private research. But every public Nuclear-grade citation must point readers to original public sources.
 
 ## Workflow
 
@@ -27,8 +27,8 @@ Not acceptable:
 
 > This template is based on obligations extracted by a discovery tool.
 
-**Reason:** Nuclear-grade must be independently verifiable by GitHub readers using public links only.
+**Reason:** GitHub readers must be able to check Nuclear-grade on their own, using public links only.
 
 ## Source-lineage note
 
-This document describes source-discovery hygiene for the Nuclear-grade project. It does not create compliance claims. See `source-map.md` for the full public source catalog.
+This document covers good source-discovery habits for the Nuclear-grade project. It does not create compliance claims. See `source-map.md` for the full public source catalog.

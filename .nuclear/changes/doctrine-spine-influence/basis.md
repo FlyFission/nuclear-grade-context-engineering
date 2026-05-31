@@ -1,6 +1,6 @@
 # Standard Basis Record
 
-**Purpose:** State what must remain true while translating owner-supplied influences into Nuclear-grade controls.
+**Purpose:** State what must stay true while we turn the owner's influences into Nuclear-grade controls.
 
 **Activation threshold:** Use because public docs, skills, commands, templates, and adoption surfaces need an explicit design basis.
 

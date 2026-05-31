@@ -2,13 +2,13 @@
 
 <!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
 
-**Purpose:** Classify a meaningful change after questioning assumptions, justify Standard mode, and name any extra activated records.
+**Purpose:** Sort a real change by risk after questioning the assumptions, justify Standard mode, and name any extra records you turn on.
 
-**Activation threshold:** Use for user-visible behavior, durable design decisions, important dependency/model/API/prompt/tool changes, security/privacy/data handling, operational posture, or anything with non-trivial consequence, uncertainty, or review value.
+**Activation threshold:** Use for behavior users can see, lasting design decisions, important dependency/model/API/prompt/tool changes, security/privacy/data handling, operational stance, or anything where the stakes, the uncertainty, or the review value are more than trivial.
 
-**Minimum useful version:** Scope, affected configuration items, threshold dimensions, selected mode, activated artifacts, and immediate evidence obligations.
+**Minimum useful version:** the scope, the affected controlled items, the threshold ratings, the chosen mode, the artifacts you turn on, and the evidence due right away.
 
-**Overhead trap:** Do not score risk with fake precision. Use the screen to reveal consequences and evidence needs.
+**Overhead trap:** Do not score risk with fake precision. Use the screen to surface the stakes and the evidence you need.
 
 ---
 
@@ -24,7 +24,7 @@
 
 ## Mission anchor
 
-State what this change is for, so a long session can be tested against it. See `controlling-mission-drift`.
+State what this change is for, so a long session can be checked against it. See `staying-on-mission`.
 
 - Objective:
 - Success criteria:
@@ -42,7 +42,7 @@ State what this change is for, so a long session can be tested against it. See `
 
 ## Affected configuration items
 
-List affected code, docs, infra, dependencies, prompts, models, data, evals, releases, dashboards, or runbooks.
+List the affected code, docs, infrastructure, dependencies, prompts, models, data, evals, releases, dashboards, or runbooks.
 
 | Item | Type | Why it matters | Link |
 |---|---|---|---|
@@ -64,11 +64,11 @@ List affected code, docs, infra, dependencies, prompts, models, data, evals, rel
 
 | Work mode / precursor | Present? | Control |
 |---|---|---|
-| Routine/repetitive action where inattention is plausible | yes/no | self-check / proof |
-| Known procedure where workflow adherence matters | yes/no | packet path / deviation note |
-| Novel or uncertain work where assumptions may be wrong | yes/no | questioning attitude / research / review |
-| Interrupted, resumed, or handed-off work | yes/no | turnover / context pack |
-| High-consequence critical action | yes/no | self-check / peer-check / independent verification |
+| Routine, repeated action where it is easy to stop paying attention | yes/no | self-check / proof |
+| Known procedure where following the steps matters | yes/no | packet path / deviation note |
+| New or uncertain work where the assumptions may be wrong | yes/no | questioning attitude / research / review |
+| Work that was interrupted, resumed, or handed off | yes/no | turnover / context pack |
+| A high-stakes critical action | yes/no | self-check / peer-check / independent verification |
 
 ## Selected mode
 
@@ -107,10 +107,10 @@ List affected code, docs, infra, dependencies, prompts, models, data, evals, rel
 
 ## Exit criteria
 
-- Mode is justified.
-- Activated artifacts are explicit.
-- Important risks, assumptions, and evidence obligations are not hidden in chat or commit messages.
+- The mode is justified.
+- The artifacts you turned on are named.
+- Important risks, assumptions, and evidence due are not hidden in chat or commit messages.
 
 ## Source-lineage note
 
-Original Nuclear-grade template inspired by public graded quality, configuration management, lifecycle, software assurance, secure development, AI risk, and supply-chain sources mapped in `docs/00-standards-foundation/source-map.md` and `docs/01-field-guide/source-to-concept-crosswalk.md`. No compliance claim is made.
+Original Nuclear-grade template inspired by public sources on graded quality, keeping the approved version under control (CM), software lifecycle, software assurance, secure development, AI risk, and supply-chain risk, mapped in `docs/00-standards-foundation/source-map.md` and `docs/01-field-guide/source-to-concept-crosswalk.md`. No compliance claim is made.

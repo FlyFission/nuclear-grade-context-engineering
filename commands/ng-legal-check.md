@@ -2,13 +2,13 @@
 
 ## Purpose
 
-Review license, warranty, public-use, and assurance boundary language before release. This is a portable command prompt.
+Review the license, warranty, public-use, and assurance-limit wording before a release. This is a portable command prompt.
 
 ## Use when
 
 - Public docs, templates, skills, commands, examples, or release notes change.
-- Enterprise adoption or source lineage language is added.
-- The repo is preparing for public visibility.
+- You add wording about enterprise adoption or where the ideas come from.
+- The repo is getting ready to go public.
 - A public trust claim needs a self-check before release.
 
 ## Do not use when
@@ -18,14 +18,14 @@ Review license, warranty, public-use, and assurance boundary language before rel
 
 ## Inputs
 
-- Changed public text.
-- `LICENSE`, `DISCLAIMER.md`, `SECURITY.md`, and compliance-boundary docs.
-- Prohibited phrase scan output.
+- The public text you changed.
+- `LICENSE`, `DISCLAIMER.md`, `SECURITY.md`, and the compliance-boundary docs.
+- The output of the banned-phrase scan.
 
 ## Prompt text
 
 ```text
-Run a Nuclear-grade license and assurance boundary check.
+Run a Nuclear-grade license and assurance-limit check.
 
 Inputs:
 - changed public text: <paste/link>
@@ -34,24 +34,24 @@ Inputs:
 - public trust claims to self-check: <list>
 
 Return:
-- whether MIT use permission remains clear
-- wording that separates use permission from assurance claims
+- whether the MIT license permission stays clear
+- wording that keeps the permission to use separate from any assurance claim
 - whether each public trust claim is supported, narrowed, or removed
-- unsafe phrases and replacements
-- scan commands to run
-- final boundary note
+- the unsafe phrases and what to replace them with
+- the scan commands to run
+- the final limits note
 ```
 
 ## Files created or modified
 
 - Public docs, templates, skills, commands, or packet files.
-- `DISCLAIMER.md`, `SECURITY.md`, or support docs only when necessary.
+- `DISCLAIMER.md`, `SECURITY.md`, or support docs, only when needed.
 
 ## Expected outputs
 
-- Boundary-safe wording.
-- Explicit no-assurance language where users form expectations.
-- Scan results.
+- Wording that stays inside the limits.
+- Plain "no assurance" wording wherever users could form expectations.
+- The scan results.
 
 ## Verification command
 
@@ -62,10 +62,10 @@ python tools/ng.py doctor .
 
 ## Failure modes
 
-- Treating MIT permission as fitness for use.
-- Hiding boundary language in only one file.
-- Making enterprise-grade sound certified.
+- Treating the MIT permission as fitness for use.
+- Hiding the limits wording in only one file.
+- Making "enterprise-grade" sound certified.
 
 ## Legal/assurance boundary note
 
-This check is not legal advice. It helps preserve public-use boundaries and avoid implying formal V&V, compliance, certification, safety, security, or regulatory adequacy.
+This check is not legal advice. It helps keep the public-use limits clear and avoids implying formal V&V, compliance, certification, safety, security, or regulatory adequacy.

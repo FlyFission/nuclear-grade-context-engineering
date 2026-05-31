@@ -1,28 +1,28 @@
 # Support
 
-Nuclear-grade is a public workflow repo. Public v0 support is best-effort through repository issues and pull requests.
+Nuclear-grade is a public workflow repo. In Public v0, support is best-effort through repository issues and pull requests.
 
 ## Ask for help
 
-Use issues for:
+Open an issue for:
 
-- unclear onboarding;
+- onboarding that is unclear;
 - broken links;
-- validator failures;
+- checker failures;
 - template defects;
-- skill or command prompt improvements;
-- source-lineage corrections.
+- ideas to improve a skill or command prompt;
+- fixes to how a source is cited.
 
 ## Security
 
-For vulnerability reporting and security-sensitive guidance, use `SECURITY.md`.
+To report a vulnerability or ask about a security-sensitive issue, use `SECURITY.md`.
 
 ## Not supported by this repo
 
-This repo does not provide project-specific legal, compliance, safety, security, procurement, regulated-use, or formal assurance advice.
+This repo does not give legal, compliance, safety, security, procurement, regulated-use, or formal assurance advice for your specific project.
 
-Using this repo does not create formal V&V, compliance, certification, safety, security, regulatory adequacy, or production suitability.
+Using this repo does not create formal V&V, compliance, certification, safety, security, regulatory adequacy, or fitness for production.
 
 ## Source-lineage note
 
-Support boundaries follow the MIT license, disclaimer, and public source-foundation docs in this repo.
+Support limits follow the MIT license, the disclaimer, and the public source-foundation docs in this repo.

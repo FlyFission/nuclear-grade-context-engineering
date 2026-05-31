@@ -1,7 +1,7 @@
 cff-version: 1.2.0
-message: "If you use Nuclear-grade in academic, industry, or public-facing work, please cite this repository."
+message: "If you use Nuclear-grade in academic, industry, or public work, please cite this repository."
 title: "Nuclear-grade Context Engineering"
-abstract: "Questioning attitude and configuration management for AI-assisted software work. Original software workflow inspired by public graded-rigor, configuration-management, software-assurance, and secure-development concepts. Source map: docs/00-standards-foundation/source-map.md. No compliance claim is made."
+abstract: "A questioning attitude and keeping the approved version under control, for AI-assisted software work. An original software workflow inspired by public ideas about matching rigor to stakes, configuration management, software assurance, and secure development. Source map in docs/00-standards-foundation/source-map.md. No compliance claim is made."
 authors:
   # MAINTAINER: replace the placeholder below with your preferred citation identity.
   - given-names: "Nuclear-grade"
@@ -9,8 +9,8 @@ authors:
 type: software
 license: MIT
 repository-code: "https://github.com/FlyFission/nuclear-grade-context-engineering"
-version: "0.3.0"
-date-released: "2026-05-28"
+version: "0.4.0"
+date-released: "2026-05-31"
 keywords:
   - configuration-management
   - software-assurance

@@ -1,6 +1,6 @@
 # Public Citation Strategy
 
-**Purpose:** Make Nuclear-grade credible and source-grounded without turning the README into citation soup or implying compliance.
+**Purpose:** Keep Nuclear-grade credible and tied to its sources. Do this without flooding the README with citations and without implying compliance.
 
 ---
 
@@ -12,13 +12,13 @@ Citations should answer three questions:
 2. Why does it matter for software?
 3. What is the safe boundary of the analogy?
 
-They should not create a compliance claim.
+They should never create a compliance claim.
 
 ---
 
 ## README citation strategy
 
-README should include only a small starter source pack:
+The README should include only a small starter set of sources:
 
 ```text
 DOE-STD-1073 — configuration management
@@ -42,19 +42,19 @@ docs/00-standards-foundation/source-map.md
 
 ## Template citation strategy
 
-Each template should have a short source-lineage note:
+Each template should carry a short source-lineage note:
 
 ```text
 Source lineage: Inspired by public configuration-management and software-assurance concepts from DOE-STD-1073 and NRC RG 1.169. This template is an original software workflow and does not claim compliance.
 ```
 
-Keep citations near the end of templates. The user should see the workflow first and the lineage second.
+Keep citations near the end of templates. The user should see the workflow first, the lineage second.
 
 ---
 
 ## Field-guide citation strategy
 
-Field-guide docs may include a richer section:
+Field-guide docs may include a fuller section:
 
 ```text
 Source lineage
@@ -70,7 +70,7 @@ What not to claim
 
 ## Examples citation strategy
 
-Worked examples should demonstrate practical use, not standards exposition.
+Worked examples should show practical use, not explain standards.
 
 Use citations sparingly:
 

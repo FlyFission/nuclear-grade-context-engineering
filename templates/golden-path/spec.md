@@ -2,11 +2,11 @@
 
 <!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->
 
-**Purpose:** State the required behavior, protected outcomes, assumptions, and acceptance criteria after questioning and discovery.
+**Purpose:** State the required behavior, the protected outcomes, the assumptions, and the acceptance criteria after questioning and discovery.
 
-**Activation threshold:** Use for Standard changes where requirements, design-basis facts, interfaces, dependencies, AI authority, or user-visible behavior need explicit agreement.
+**Activation threshold:** Use for Standard changes where the requirements, design-basis facts, interfaces, dependencies, AI power, or behavior users can see need to be agreed on plainly.
 
-**Minimum useful version:** Need, non-goals, requirements/claims, assumptions, acceptance scenarios, evidence planned.
+**Minimum useful version:** the need, the non-goals, the requirements and claims, the assumptions, the acceptance scenarios, and the evidence planned.
 
 ---
 
@@ -58,10 +58,10 @@
 
 ## Exit criteria
 
-- Important claims are testable or gap-labeled.
-- Assumptions have validation sources or owners.
-- Evidence needs flow into trace and verification records.
+- Important claims can be tested or are marked as a gap.
+- Assumptions have a source to check them, or an owner.
+- The evidence needs flow into the trace and verification records.
 
 ## Source-lineage note
 
-Original Nuclear-grade template inspired by public design-basis, work-planning, questioning-attitude, and software-assurance concepts mapped in `docs/00-standards-foundation/source-map.md`. No compliance claim is made.
+Original Nuclear-grade template inspired by public ideas on design basis, work planning, questioning attitude, and software assurance, mapped in `docs/00-standards-foundation/source-map.md`. No compliance claim is made.

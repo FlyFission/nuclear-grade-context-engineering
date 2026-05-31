@@ -1,8 +1,8 @@
 # Token-Burn Control
 
-**Purpose:** Keep Nuclear-grade usable for AI-assisted engineering by giving agents the smallest sufficient context to act safely and prove work.
+**Purpose:** This file keeps Nuclear-grade usable for AI-assisted engineering. It gives agents the smallest context they need to act safely and prove their work.
 
-**Thesis:** More rigor should reduce expensive iteration, not create prompt sludge. The packet is the context boundary.
+**Thesis:** More rigor should cut down on costly back-and-forth, not pile up prompt clutter. The packet is the line that bounds the context.
 
 ---
 
@@ -66,7 +66,7 @@ Known gaps:
 Links:
 ```
 
-If the context pack is long, the change is either too broad or needs a Research Board / Nuclear subset.
+If the context pack is long, the change is either too broad or needs a Research Board or Nuclear subset.
 
 ---
 
@@ -74,17 +74,17 @@ If the context pack is long, the change is either too broad or needs a Research 
 
 Use explicit context packs when:
 
-- an AI agent will write files, run commands, call external APIs, or modify configuration;
-- multiple agents/humans will hand off work;
-- the packet has more than three active artifacts;
+- an AI agent will write files, run commands, call outside APIs, or change configuration;
+- more than one agent or person will hand off work;
+- the packet has more than three active records;
 - evidence or approval gates are easy to miss;
-- a long-running task must preserve state across sessions.
+- a long-running task has to keep its state across sessions.
 
 ---
 
 ## Overhead trap
 
-Do not ask an LLM to repeatedly reason over source documents to compensate for missing packet discipline. Summarize the source concept once in the packet, link the public URL, and use deterministic validators where possible.
+Do not ask an LLM to reason over source documents again and again to make up for a sloppy packet. Sum up the source idea once in the packet, link the public URL, and use deterministic checks where you can.
 
 ---
 
@@ -105,17 +105,17 @@ A context pack must link to:
 
 Replace repeated LLM review with deterministic checks for:
 
-- required activated artifacts;
+- the records that should be turned on;
 - required sections;
 - missing evidence status;
-- broken relative links;
-- prohibited compliance phrases;
-- non-public citation patterns;
-- unresolved TODOs in release packets;
-- AI authority without independent proof.
+- broken local links;
+- compliance phrases that are not allowed;
+- citations that point to non-public sources;
+- leftover TODOs in release packets;
+- AI authority with no independent proof behind it.
 
 ---
 
 ## Source-lineage note
 
-This document is an original operating discipline for AI-assisted software work. It is informed by public configuration-management, lifecycle, evidence, secure-development, and AI-risk sources in the source map, plus practical agent-workflow lessons captured in brainstorming. It does not use paywalled/proprietary standards as direct template lineage and makes no compliance claim.
+This document is an original way of working for AI-assisted software work. It draws on public sources about keeping the approved version of everything under control, the lifecycle, evidence, secure development, and AI risk in the source map, plus practical agent-workflow lessons captured in brainstorming. It does not use paid or private standards as direct template lineage, and it makes no compliance claim.

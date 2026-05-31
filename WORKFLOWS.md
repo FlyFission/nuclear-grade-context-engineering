@@ -1,6 +1,6 @@
 # Nuclear-grade Workflows
 
-Nuclear-grade turns AI-assisted software work into questioned, controlled, reviewable configuration.
+Nuclear-grade turns AI-assisted software work into something you have questioned, kept under control, and can review.
 
 ```text
 Normal AI coding:
@@ -10,28 +10,30 @@ Nuclear-grade:
 question -> specify -> execute -> verify -> decide -> baseline -> operation
 ```
 
-HPI for AI agents adds the micro-controls under that path: brief the work, self-check critical actions, turn over cleanly, verify independently when needed, decide conservatively, and learn from near misses.
+A "baseline" is the version everyone agreed is correct.
 
-The workflow is two-speed. Exploration and reversible candidate work should stay fast; acceptance slows down when a candidate becomes evidence, a claim, a controlled item, public wording, a baseline, a release decision, or an agent-authority boundary.
+For AI agents, we add a few small habits from Human Performance Improvement (HPI). Brief the work first. Double-check risky actions. Hand off cleanly. Get a second set of eyes when needed. Decide on the careful side. Learn from near misses.
+
+The workflow has two speeds. While you explore and try ideas you can throw away, move fast. Slow down when the work turns into something real: a piece of evidence, a claim, a file you must keep under control, public wording, a baseline, a release call, or a change to what the agent is allowed to do.
 
 ## Workflow catalog
 
 | Workflow | Loop | Use when | Main artifact |
 |---|---|---|---|
-| Questioning attitude | question -> assumptions -> facts -> stop conditions -> next artifact | Vague, consequential, or easy-to-rationalize work | `questioning-attitude.md` or `risk.md` section |
-| Quick change | question -> classify -> prove -> validate | Local, reversible, easy-to-prove work | `risk.md`, `proof.md` |
-| Standard change | specify -> plan -> trace -> verify -> decide | User, dependency, security, AI, operational, or release consequence | Standard packet |
-| Controlled configuration | identify items -> impact screen -> baseline -> operate | Prompts, models, tools, deps, docs, releases, or agent authority become controlled | CM records |
+| Questioning attitude | question -> assumptions -> facts -> stop conditions -> next artifact | Work that is vague, high-stakes, or easy to talk yourself into | `questioning-attitude.md` or `risk.md` section |
+| Quick change | question -> classify -> prove -> validate | Local, easy-to-undo work that is easy to prove | `risk.md`, `proof.md` |
+| Standard change | specify -> plan -> trace -> verify -> decide | The change touches users, dependencies, security, AI behavior, operations, or a release | Standard packet |
+| Controlled configuration | identify items -> impact screen -> baseline -> operate | Prompts, models, tools, dependencies, docs, releases, or agent authority need to stay under control | CM records (keeping the approved version under control) |
 | Agent authority change | question -> context pack -> boundary proof -> release review | Agents can write files, call tools, use APIs, or affect releases | Packet plus context pack |
-| Agent turnover | state -> changed conditions -> remaining work -> authority -> closed-loop acceptance | Work transfers to another agent, reviewer, verifier, releaser, support owner, or resumed thread | `turnover.md` |
-| Critical action self-check | action -> target -> expected result -> stop condition -> after-action evidence | Wrong target, public overclaim, irreversible state, or exceeded authority is plausible | `self-check.md` |
-| Release readiness | evidence status -> residual risk -> rollback -> monitoring -> decision | A PR or release changes trust posture | `ship.md` |
-| OPEX learning | event -> weak control -> durable update -> verification -> re-baseline trigger | Near misses, bad handoffs, escaped defects, or review surprises should change future work | `opex.md` |
-| Trust check | intended use -> external claims -> local evidence -> controls -> release impact | Dependencies, models, APIs, SaaS, generated artifacts, or vendor claims affect trust | `supplier-trust.md` or packet section |
-| Source/legal check | claim -> source map -> boundary wording -> validator | Public docs or examples cite assurance concepts | Source-lineage notes |
-| Mission drift control | anchor -> zoom out -> test action -> loop/standards check -> re-anchor/escalate/stop | A long session drifts from its objective, scope creeps, or rigor erodes | `## Mission anchor`, `.nuclear/mission.md` |
-| Code-quality review | objective -> delete-first -> tripwires -> abstraction check -> layering -> verdict | A diff or module risks standards drift or needless complexity | Review findings plus verdict |
-| Work breakdown and folders | deliverable -> 100%/MECE decomposition -> dictionary -> folder map -> naming/depth audit | An epic, subsystem, repo, or agent workspace needs a clean scope breakdown and folder layout | `wbs.md` |
+| Agent turnover | state -> changed conditions -> remaining work -> authority -> closed-loop acceptance | Work moves to another agent, reviewer, checker, releaser, support owner, or a resumed thread | `turnover.md` |
+| Critical action self-check | action -> target -> expected result -> stop condition -> after-action evidence | You could hit the wrong target, overclaim in public, do something you cannot undo, or go past your authority | `self-check.md` |
+| Release readiness | evidence status -> residual risk -> rollback -> monitoring -> decision | A pull request or release changes who trusts the work | `ship.md` |
+| OPEX learning | event -> weak control -> durable update -> verification -> re-baseline trigger | A near miss, bad handoff, escaped defect, or review surprise should change future work. OPEX means lessons from real operation | `opex.md` |
+| Trust check | intended use -> external claims -> local evidence -> controls -> release impact | A dependency, model, API, SaaS tool, generated artifact, or vendor claim affects trust | `supplier-trust.md` or packet section |
+| Source/legal check | claim -> source map -> boundary wording -> validator | Public docs or examples mention assurance ideas | Source-lineage notes |
+| Mission drift control | anchor -> zoom out -> test action -> loop/standards check -> re-anchor/escalate/stop | A long session drifts from its goal, scope creeps, or standards slip | `## Mission anchor`, `.nuclear/mission.md` |
+| Code-quality review | objective -> delete-first -> tripwires -> abstraction check -> layering -> verdict | A diff or module risks slipping standards or needless complexity | Review findings plus verdict |
+| Work breakdown and folders | deliverable -> 100%/MECE decomposition -> dictionary -> folder map -> naming/depth audit | An epic, subsystem, repo, or agent workspace needs a clean work breakdown (WBS) and folder layout. "100%/MECE" means the pieces cover the whole job with no gaps and no overlaps | `wbs.md` |
 
 ## Quick change
 
@@ -40,7 +42,7 @@ python tools/ng.py new typo-fix --mode quick
 python tools/ng.py validate .nuclear/changes/typo-fix
 ```
 
-Use Quick only when the change is low consequence, reversible, and easy to prove without a new trust boundary.
+Use Quick only when the change is low-stakes, easy to undo, and easy to prove, with no new trust boundary.
 
 ## Questioning attitude
 
@@ -51,9 +53,9 @@ Use this before the agent builds:
 cp templates/golden-path/questioning-attitude.md .nuclear/changes/<slug>/
 ```
 
-The output should name assumptions, facts to verify, warning signs, evidence gaps, stop conditions, and the next artifact.
+The output should name the assumptions, the facts to check, the warning signs, the gaps in evidence, the stop conditions, and the next thing to produce.
 
-The decision question is the first output, not an afterthought. If the question is wrong, the proof can be clean and still support the wrong decision.
+The decision question comes first, not last. If the question is wrong, your proof can be clean and still back the wrong decision.
 
 ## Standard change
 
@@ -62,60 +64,60 @@ python tools/ng.py new add-agent-boundary --mode standard
 python tools/ng.py validate .nuclear/changes/add-agent-boundary
 ```
 
-Use Standard when reviewers need specification/design-basis, plan, trace, verification, and release decision in the repo.
+Use Standard when reviewers need the spec (what the change must do and why), the plan, the trace, the verification and validation (V&V), and the release decision saved in the repo.
 
 ## Controlled configuration
 
-Activate CM records when the change affects a controlled item: code, docs, prompts, models, dependencies, tools, credentials, context packs, evals, release artifacts, dashboards, or runbooks whose state matters to trust.
+Turn on CM records (keeping the approved version under control) when the change affects a controlled item: code, docs, prompts, models, dependencies, tools, credentials, context packs, evals, release artifacts, dashboards, or runbooks whose state matters to trust.
 
 ```text
 controlled-items.md -> change-impact.md -> baseline.md -> variance.md -> opex.md
 ```
 
-Start with `skills/identifying-controlled-items/SKILL.md` and `docs/02-operating-system/configuration-management.md`.
+Start with `skills/choosing-what-to-control/SKILL.md` and `docs/02-operating-system/configuration-management.md`.
 
 ## Agent authority change
 
-Agent authority changes need explicit scope:
+Agent authority changes need a clear scope:
 
-- files the agent may read or edit;
-- commands and tools it may run;
-- network, credential, approval, and release authority;
-- forbidden actions;
-- evidence required before completion.
+- the files the agent may read or edit;
+- the commands and tools it may run;
+- its network, credential, approval, and release authority;
+- the actions it must never take;
+- the evidence it must produce before it is done.
 
-Start with `skills/packing-agent-context/SKILL.md` and `docs/02-operating-system/context-packs.md`.
+Start with `skills/briefing-an-agent/SKILL.md` and `docs/02-operating-system/context-packs.md`.
 
 ## Agent turnover and self-checking
 
-Use turnover when work moves between agents, humans, verifiers, releasers, support owners, or resumed threads:
+Use turnover when work moves between agents, people, checkers, releasers, support owners, or a resumed thread:
 
 ```bash
 # Paste commands/ng-turnover.md into your agent, or copy the template:
 cp templates/golden-path/turnover.md .nuclear/changes/<slug>/
 ```
 
-Use self-checking before critical actions where the wrong file, wrong command, public overclaim, dependency/model/API trust gap, irreversible state, or release decision could matter:
+Use a self-check before a critical action, when the wrong file, wrong command, public overclaim, a trust gap in a dependency, model, or API, a step you cannot undo, or a release decision could matter:
 
 ```bash
 cp templates/golden-path/self-check.md .nuclear/changes/<slug>/
 ```
 
-These records should stay short. They exist to stop bad action, not to explain HPI theory.
+Keep these records short. They exist to stop a bad action, not to explain the theory behind the HPI habits.
 
-Use self-checking at cut points: wrong target, wrong command, wrong public claim, wrong dependency/model/API trust change, irreversible state, or release action. Do not slow every reversible edit.
+Use a self-check at the moments that count: the wrong target, the wrong command, the wrong public claim, the wrong trust change to a dependency, model, or API, a step you cannot undo, or a release action. Do not slow down every edit you can easily undo.
 
 ## Release readiness
 
-A release decision is not "tests passed." It records evidence status, residual risk, rollback, monitoring, handoff, decision, and baseline trigger.
+A release decision is more than "tests passed." It records the evidence status, the leftover risk, the rollback plan, what to monitor, the handoff, the decision, and what triggers a new baseline.
 
-Use `skills/reviewing-ship-readiness/SKILL.md`.
+Use `skills/checking-release-readiness/SKILL.md`.
 
 ## OPEX and trust checks
 
-Use OPEX when an incident, near miss, bad handoff, escaped defect, review surprise, or user confusion should update a durable control. A lesson is complete only when it updates a basis, test, validator, template, skill, command, doc, monitor, threshold, or baseline, or when closure explicitly explains why no durable update is warranted.
+Use OPEX (lessons from real operation) when an incident, near miss, bad handoff, escaped defect, review surprise, or user confusion should update a lasting control. A lesson is finished only when it updates a basis, test, checker, template, skill, command, doc, monitor, threshold, or baseline, or when you write down why no lasting update is needed.
 
-Use trust checks when dependencies, models, APIs, SaaS tools, generated artifacts, or vendor claims affect permissions, data, release posture, evidence, or public trust. Separate external claims from local proof.
+Use trust checks when a dependency, model, API, SaaS tool, generated artifact, or vendor claim affects permissions, data, the release, the evidence, or public trust. Keep what someone else claims separate from what you proved yourself.
 
 ## Source and legal boundary checks
 
@@ -129,8 +131,8 @@ rg -n "formal|certified|approval" README.md docs skills commands templates
 grep -E -rn "formal|certified|approval" README.md docs skills commands templates
 ```
 
-The phrase scan is a starting point. The correct fix is usually narrower wording and an explicit boundary note.
+The phrase scan is only a starting point. The right fix is usually tighter wording and a clear boundary note.
 
 ## Source-lineage note
 
-These workflows are original software operating patterns influenced by public sources mapped in `docs/00-standards-foundation/source-map.md`. They do not create formal assurance or compliance.
+These workflows are original software patterns. Public sources shaped them, and those sources are mapped in `docs/00-standards-foundation/source-map.md`. They do not create formal assurance or compliance.

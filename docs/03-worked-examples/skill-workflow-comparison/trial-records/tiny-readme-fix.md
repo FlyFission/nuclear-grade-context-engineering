@@ -36,8 +36,8 @@ Simple path gaps:
 Skills exercised:
 
 - `using-nuclear-grade`
-- `classifying-change-risk`
-- `creating-change-packets`
+- `rating-change-risk`
+- `creating-change-records`
 - `proving-claims`
 
 Workflows exercised:

@@ -1,6 +1,6 @@
 # OPEX Record
 
-**Purpose:** Convert the review surprise from this thread into durable workflow updates.
+**Purpose:** Turn the review surprise from this thread into lasting workflow updates (lessons from real operation, OPEX).
 
 **Activation threshold:** Use because the user identified a shallow influence-to-control mapping that should affect future docs, skills, commands, templates, and evaluation prompts.
 

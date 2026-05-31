@@ -2,9 +2,9 @@
 
 ## Scenario Facts
 
-- A product adds a 30-day retention policy for transient user logs.
-- The change includes a migration, scheduled deletion job, docs, and rollback question.
-- Deletion may be irreversible.
+- A product adds a 30-day keep-then-delete policy for short-lived user logs.
+- The change includes a migration, a scheduled deletion job, docs, and a rollback question.
+- The deletion may be impossible to undo.
 
 ## Simple Prompt Trial
 
@@ -27,10 +27,10 @@ Simple path strengths:
 
 Simple path gaps:
 
-- May not distinguish soft delete from irreversible delete.
-- May omit backup/restore and legal/product retention approval.
-- May not identify dashboards, runbooks, support docs, and customer communication impacts.
-- May ship before dry-run evidence exists.
+- May not tell a recoverable delete apart from one you cannot undo.
+- May skip backup and restore, and skip legal or product sign-off on the policy.
+- May miss the effects on dashboards, runbooks, support docs, and messages to customers.
+- May ship before there is any dry-run evidence.
 
 ## Nuclear-Grade Trial
 
@@ -38,14 +38,14 @@ Skills exercised:
 
 - `questioning-attitude`
 - `using-nuclear-grade`
-- `identifying-controlled-items`
-- `screening-change-impact`
-- `baselining-configuration`
-- `classifying-change-risk`
-- `creating-change-packets`
-- `self-checking-agent-actions`
+- `choosing-what-to-control`
+- `checking-what-a-change-affects`
+- `recording-a-known-good-version`
+- `rating-change-risk`
+- `creating-change-records`
+- `double-checking-before-acting`
 - `proving-claims`
-- `reviewing-ship-readiness`
+- `checking-release-readiness`
 
 Workflows exercised:
 
@@ -57,13 +57,13 @@ Workflows exercised:
 
 Nuclear-grade output:
 
-- Mode: Standard, with human review if policy/legal ownership is unclear.
-- Controlled items: retention policy, migration/job, backup/restore plan, dashboards, support docs, runbook.
-- Impact screen: data model, scheduler, retention docs, monitoring, customer promises, rollback path.
-- Self-check: exact migration/deletion target, expected dry-run result, and stop condition are named before irreversible action.
-- Proof claims: old eligible logs are selected; new logs retained; dry run count reviewed; restore path exists or irreversible deletion is consciously blocked.
-- Release decision: block if restore/dry-run evidence is missing.
-- Baseline trigger: accepted retention policy and job configuration.
+- Mode: Standard, with human review if it is unclear who owns the policy or the legal side.
+- Controlled items: the retention policy, the migration and job, the backup and restore plan, the dashboards, the support docs, and the runbook.
+- Impact screen: the data model, the scheduler, the retention docs, the monitoring, the promises to customers, and the rollback path.
+- Self-check: name the exact migration and deletion target, the expected dry-run result, and the stop condition before any action you cannot undo.
+- Proof claims: the old logs that qualify are selected; new logs are kept; the dry-run count is reviewed; a restore path exists, or an unrecoverable deletion is blocked on purpose.
+- Release decision: block if the restore or dry-run evidence is missing.
+- Baseline trigger: the accepted retention policy and job settings.
 
 ## Scoring Rationale
 
@@ -72,11 +72,11 @@ Nuclear-grade output:
 | Simple prompt | 2 | 2 | 2 | 1 | 1 |
 | Nuclear-grade | 5 | 5 | 4 | 5 | 5 |
 
-Nuclear-grade is heavy but appropriate because irreversible deletion is a release and operational decision, not just a code change.
+Nuclear-grade is heavy, but right here, because a deletion you cannot undo is a release and operations decision, not just a code change.
 
 ## Decision
 
-Use Standard mode or stronger human-reviewed mode. Do not ship without dry-run, restore, monitoring, and policy-owner evidence.
+Use Standard mode, or a stronger human-reviewed mode. Do not ship without dry-run, restore, monitoring, and policy-owner evidence.
 
 ## Boundary Note
 

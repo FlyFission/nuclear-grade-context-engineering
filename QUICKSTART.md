@@ -1,10 +1,10 @@
 # Nuclear-grade Quickstart
 
-**Goal:** question a real AI-assisted change, create a useful controlled-change record in about 15 minutes, and prove one important claim.
+**Goal:** question a real AI-assisted change, build a useful change record in about 15 minutes, and prove one important claim.
 
-Nuclear-grade should make decisions faster, not paperwork heavier. Move quickly while exploring and building reversible candidates; slow down when you are accepting a claim, baseline, public statement, release decision, or authority change.
+Nuclear-grade should make decisions faster, not pile on paperwork. Move fast while you explore and build versions you can throw away. Slow down when you accept a claim, set a baseline (the version everyone agreed is correct), make a public statement, decide on a release, or change what an agent is allowed to do.
 
-> **Note on the demo:** the first time you run `validate` on a freshly scaffolded packet you should expect it to **fail**. Each template ships with a `NUCLEAR-GRADE-PLACEHOLDER` marker line and empty prompts on purpose, so the validator reports `still contains the placeholder marker` and `has unfilled template prompts`. Fill the prompts that matter, delete the marker line, then re-run `validate`. The point of the validator is to refuse silent gaps.
+> **Note on the demo:** the first time you run `validate` on a fresh packet, expect `FAILED: ... has unfilled template prompts`. Templates ship with empty prompts on purpose. Fill in the prompts that matter, then run `validate` again. The checker is supposed to refuse silent gaps.
 
 ## 1. Check the repo
 
@@ -27,7 +27,7 @@ Good first changes:
 
 For the first pass, name the controlled item: the file, prompt, model, dependency, tool permission, release artifact, or doc claim whose state must stay reviewable.
 
-Avoid starting with a whole platform redesign. Prove one important claim before expanding the packet.
+Do not start with a whole platform redesign. Prove one important claim before you grow the packet.
 
 ## 3. Question, then classify the mode
 
@@ -43,7 +43,7 @@ Next artifact: Quick proof, Standard spec, context pack, CM record, or release d
 
 If the decision question is vague, stop there and sharpen it. The rest of the packet exists to answer that question with evidence.
 
-Add HPI controls only when they change the work:
+Add HPI controls (small habits from Human Performance Improvement) only when they change the work:
 
 ```text
 Task preview: What critical action could go wrong?
@@ -55,9 +55,9 @@ Trust check: What dependency, model, API, SaaS, or vendor claim affects the deci
 
 | If the change is... | Use |
 |---|---|
-| Low consequence, reversible, easy to prove | Quick |
-| User-facing, security-relevant, dependency-relevant, AI-authority-changing, durable, or release-facing | Standard |
-| High consequence, hard to reverse, external-trust-bearing, critical, or regulated-adjacent | Human-reviewed stronger mode |
+| Low-stakes, easy to undo, easy to prove | Quick |
+| User-facing, security-related, dependency-related, a change to AI authority, lasting, or release-facing | Standard |
+| High-stakes, hard to undo, carrying outside trust, critical, or close to regulated work | Human-reviewed stronger mode |
 | A failure, defect, incident, or near miss | Incident pattern |
 | Mostly an architecture or research decision | Research Board pattern |
 | A release-readiness decision | Release pattern |
@@ -72,7 +72,7 @@ flowchart TD
     Q2 -->|already went wrong| Incident[Incident pattern]
 ```
 
-When unsure, start with Standard and keep the packet thin.
+When in doubt, start with Standard and keep the packet thin.
 
 ## 4. Create the packet
 
@@ -88,13 +88,13 @@ Standard:
 python tools/ng.py new <slug> --mode standard
 ```
 
-Activated CM (controlled configuration):
+CM, which means keeping the approved version under control:
 
 ```bash
 python tools/ng.py new <slug> --mode cm
 ```
 
-This scaffolds `controlled-items.md`, `change-impact.md`, `baseline.md`, `variance.md`, and `opex.md`. Delete what your change does not need.
+This creates `controlled-items.md`, `change-impact.md`, `baseline.md`, `variance.md`, and `opex.md`. Delete what your change does not need.
 
 Golden path (public questioning-attitude path):
 
@@ -102,7 +102,7 @@ Golden path (public questioning-attitude path):
 python tools/ng.py new <slug> --mode golden-path
 ```
 
-This scaffolds `questioning-attitude.md`, `spec.md`, `turnover.md`, `self-check.md`, and `decision.md`.
+This creates `questioning-attitude.md`, `spec.md`, `turnover.md`, `self-check.md`, and `decision.md`.
 
 Manual fallback:
 
@@ -111,35 +111,35 @@ mkdir -p .nuclear/changes/<slug>/
 cp templates/quick/*.md .nuclear/changes/<slug>/
 ```
 
-Use either Quick or Standard templates, not both. Pick CM or golden-path additions only when the change actually needs them.
+Use either Quick or Standard templates, not both. Add CM or golden-path files only when the change actually needs them.
 
-Upgrading an older packet (0.1.x) that does not declare a mode:
+To upgrade an older packet (0.1.x) that does not declare a mode:
 
 ```bash
 python tools/ng.py migrate .nuclear/changes/<slug>
 ```
 
-This inserts a `## Selected mode` block into `risk.md` with an inferred default. Edit the result if the inferred mode is wrong.
+This adds a `## Selected mode` block to `risk.md` with a best-guess default. Edit it if the guess is wrong.
 
 ## 5. Fill the minimum useful version
 
 Answer only what helps a reviewer decide:
 
 1. What decision are we answering?
-2. What facts did we discover?
+2. What facts did we find?
 3. What are we specifying?
 4. What evidence will prove the important claim?
-5. What files, tests, dependencies, prompts, models, tools, or release artifacts are affected?
-6. What would escalate the mode?
+5. What files, tests, dependencies, prompts, models, tools, or release artifacts does it affect?
+6. What would push the mode up a level?
 7. What decision is needed before release or merge?
-8. What baseline or revalidation trigger changes after the decision?
-9. What HPI control, if any, changes the next action or evidence obligation?
+8. What baseline, or what trigger to re-check, changes after the decision?
+9. What HPI control, if any, changes the next action or what you must prove?
 
-Keep facts, assumptions, unknowns, source claims, local proof, and decision authority separate. Do not let confident prose do the work of evidence.
+Keep facts, assumptions, unknowns, source claims, local proof, and who decides all separate. Do not let confident writing stand in for evidence.
 
 ## 6. Prove one claim
 
-Example from the included worked example:
+Here is the example that ships with the repo:
 
 ```text
 Claim: agent writes are limited to the approved workspace root.
@@ -162,7 +162,7 @@ python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.n
 python tools/ng.py validate .nuclear/changes/<slug>
 ```
 
-The first run on an untouched packet is **expected to fail**. Each template ships with a `NUCLEAR-GRADE-PLACEHOLDER` marker line, and the validator refuses to accept a packet that still carries it. That is the evidence gate working. Fill the fields you actually need, set at least one real status, delete every marker line, and validate again:
+The first run on an untouched packet is **supposed to fail**. Each template ships with a `NUCLEAR-GRADE-PLACEHOLDER` marker line, and the checker refuses any packet that still has it. That is the evidence gate doing its job. Fill in the fields you need, set at least one real status, delete every marker line, and validate again:
 
 ```bash
 python tools/ng.py validate .nuclear/changes/<slug>
@@ -175,23 +175,23 @@ For a packet in another repo:
 python tools/ng.py validate /path/to/your/repo/.nuclear/changes/<slug>
 ```
 
-The v0 validator checks Quick and Standard packet structure, required sections, evidence status, source-lineage notes, local packet links, the placeholder marker, and prohibited overclaiming phrases. It does not decide whether your system is safe, secure, compliant, or suitable for a regulated use case.
+The v0 checker looks at the structure of Quick and Standard packets, the required sections, the evidence status, the source-lineage notes, the local packet links, the placeholder marker, and banned overclaiming phrases. It does not decide whether your system is safe, secure, compliant, or fit for a regulated use case.
 
 ## 8. Decide or stop
 
 Decide to ship or merge only when:
 
-- exit criteria are satisfied;
-- unresolved gaps are accepted or explicitly block release;
-- verification evidence is reproducible enough for the risk;
-- rollback, monitoring, and handoff are proportional to consequence.
+- the exit criteria are met;
+- open gaps are either accepted or clearly block the release;
+- the verification evidence is repeatable enough for the risk;
+- rollback, monitoring, and handoff match the stakes.
 
 Stop or escalate when:
 
-- the change affects sensitive data, money, safety, external trust, irreversible actions, critical operations, or AI authority;
-- proof is flaky, indirect, or missing;
-- dependency, model, API, or tool trust is not understood;
-- reviewers cannot determine what changed and why.
+- the change touches sensitive data, money, safety, outside trust, actions you cannot undo, critical operations, or AI authority;
+- the proof is flaky, indirect, or missing;
+- you do not understand the trust in a dependency, model, API, or tool;
+- reviewers cannot tell what changed and why.
 
 ## 9. Read next
 
@@ -204,4 +204,4 @@ Stop or escalate when:
 
 ## Source-lineage note
 
-This quickstart is an original software workflow based on Nuclear-grade's public source foundation and operating-system docs. It does not create formal V&V, compliance, certification, safety, security, or regulatory adequacy.
+This quickstart is an original software workflow built on Nuclear-grade's public source foundation and operating-system docs. It does not create formal V&V, compliance, certification, safety, security, or regulatory adequacy.

@@ -55,6 +55,18 @@ def _ceil_div(value: int, divisor: int) -> int:
     return -(-value // divisor)
 
 
+def _read_text(path: Path) -> str:
+    """Read a file and normalize line endings to ``\\n``.
+
+    A CRLF checkout (e.g. Windows with ``core.autocrlf``) would otherwise leave
+    ``\\r`` in the text, which both inflates symbol-token counts and breaks the
+    ``---\\n`` frontmatter check -- making counts differ by platform. Normalizing
+    on read keeps every count reproducible across the machines the gate supports.
+    """
+
+    return path.read_text(encoding="utf-8").replace("\r\n", "\n").replace("\r", "\n")
+
+
 def count_tokens(text: str) -> int:
     """Estimate token count deterministically, without any third-party tokenizer.
 
@@ -169,7 +181,7 @@ def _iter_doc_files(root: Path):
 
 
 def measure_file(path: Path, root: Path, kind: str) -> FileTokens:
-    text = path.read_text(encoding="utf-8")
+    text = _read_text(path)
     rel = path.relative_to(root).as_posix()
     if kind == "skill":
         description, body = split_frontmatter(text)
@@ -242,7 +254,7 @@ def find_repeated_blocks(
     sample: dict[str, str] = {}
     for path in files:
         rel = path.relative_to(root).as_posix()
-        prose = _strip_code_fences(path.read_text(encoding="utf-8"))
+        prose = _strip_code_fences(_read_text(path))
         for raw_block in re.split(r"\n\s*\n", prose):
             block = raw_block.strip()
             if count_tokens(block) < min_tokens:
@@ -277,7 +289,7 @@ def phrase_frequency(root: Path, fragment: str) -> tuple[int, int]:
     total = 0
     files = 0
     for path in sorted(root.rglob("*.md")):
-        text = path.read_text(encoding="utf-8").lower()
+        text = _read_text(path).lower()
         count = text.count(fragment_l)
         if count:
             total += count
@@ -350,7 +362,7 @@ def cost_per_signal(root: Path) -> dict[str, float]:
         artifact = root / result.case.artifact
         if not artifact.exists():
             continue
-        tokens = count_tokens(artifact.read_text(encoding="utf-8"))
+        tokens = count_tokens(_read_text(artifact))
         signals = result.total or 1
         out[result.case.id] = tokens / signals
     return out
@@ -384,7 +396,7 @@ def load_budgets(root: Path) -> dict[str, int]:
     if not catalog.exists():
         return budgets
     in_block = False
-    for line in catalog.read_text(encoding="utf-8").splitlines():
+    for line in _read_text(catalog).splitlines():
         if not line.strip() or line.lstrip().startswith("#"):
             continue
         if not line[0].isspace():

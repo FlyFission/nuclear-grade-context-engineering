@@ -9,6 +9,8 @@ description: Prepares focused context for an AI agent, reviewer, verifier, or re
 
 A context pack gives an agent or a reviewer the right focused information, and nothing extra. It states the role, the mode, the question to decide, the goal, the files affected, the evidence to produce, the approvals, the actions that are off limits, where the ideas came from, the most important next action, and the handoff state.
 
+A good brief is how you supply competence and clarity so the agent can decide well rather than be micromanaged: name what good looks like, and state the decision rights — what it may decide at the edge and what it must escalate. Authority that outruns the clarity in the brief is the setup for a confident, wrong action.
+
 ## When to Use
 
 - An AI agent will edit files, run commands, call tools, or prepare release evidence.

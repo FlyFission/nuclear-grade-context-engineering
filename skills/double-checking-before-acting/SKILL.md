@@ -34,7 +34,8 @@ A self-check turns a high-stakes action into a careful one. Before you claim suc
 2. Think through the result you expect, the likely error, and what would make the action wrong.
 3. Act only inside the authority you were given.
 4. Compare the real result against the result you expected, before you make any claim.
-5. Record any mismatch, gap, or escalation. Do not just retry blindly.
+5. For trust-bearing actions, get a forceful backup — an independent person, or a different model or context — to check the action. A second pass by the same agent in the same context inherits the same blind spots and is not independent.
+6. Record any mismatch, gap, or escalation. Do not just retry blindly.
 
 ## Outputs
 
@@ -51,6 +52,7 @@ A self-check turns a high-stakes action into a careful one. Before you claim suc
 ## Escalation
 
 - Pause if the authority, the target, the expected result, or the evidence is unclear.
+- Halt the action if it is unsafe or unclear, regardless of seniority; surfacing the concern is protected, not punished.
 - Escalate when the action affects credentials, network effects, data, releases, public trust, or anything that cannot be undone.
 
 ## Common Rationalizations

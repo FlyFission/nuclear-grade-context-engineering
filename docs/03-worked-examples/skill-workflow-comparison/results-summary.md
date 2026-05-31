@@ -60,6 +60,10 @@
 | `breaking-down-the-work` | (new skill; applies conceptually to U02, U08; formal trial records pending) |
 | `organizing-project-folders` | (new skill; applies conceptually to U02, U06; formal trial records pending) |
 | `closing-stale-packets` | (new skill; applies conceptually to U09, U10; formal trial records pending) |
+| `deciding-who-decides` | (new skill; applies conceptually to U02, U06, U11; formal trial records pending) |
+| `declaring-intent` | (new skill; applies conceptually to U07, U09, U11; formal trial records pending) |
+| `responding-to-incidents` | (new skill; applies conceptually to U07, U10; formal trial records pending) |
+| `tracking-deficiencies` | (new skill; applies conceptually to U03, U10; formal trial records pending) |
 
 ## Workflow Coverage
 

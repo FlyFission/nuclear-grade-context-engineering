@@ -34,7 +34,24 @@ cost" conclusion from #7 holds up under measurement. The body cuts that #7 weigh
 a *judgment* trade, not a measured win — which is why this PR ships measurement only and
 defers any body edits.
 
-## Measured baseline (2026-05, 23 skills)
+## Refresh — 2026-05-31 (leadership and high-reliability pass, 27 skills)
+
+The leadership and high-reliability pass added four skills (`deciding-who-decides`,
+`declaring-intent`, `responding-to-incidents`, `tracking-deficiencies`) and four command
+cards. Current reproducible aggregates (`python tools/ng.py tokens .`):
+
+| Surface | Count | Tokens | Notes |
+|---|---|---|---|
+| Skill descriptions | 27 | 2,812 | always-loaded; avg ~104, still bounded 80–500 chars |
+| Skill bodies | 27 | 35,366 | on-invocation; one body loads when a skill fires |
+| Command cards | 26 | 23,392 | largest 1,406 (`ng-folders.md`), within the 1,600 budget |
+| All measured prose | | 218,612 | onboarding / reference / worked examples / doctrine |
+
+The headline conclusion is unchanged: the always-loaded surface is the lean descriptions
+(~104 tokens each), not the bodies, and the budget gate stays green. The historical baseline
+below is the original 2026-05 23-skill snapshot, kept for provenance.
+
+## Measured baseline (2026-05 original snapshot, 23 skills)
 
 | Surface | Files | Tokens | Notes |
 |---|---|---|---|
@@ -57,17 +74,17 @@ to "is the prose worth its tokens," rather than an adjective:
 
 | Worked example | Tokens / decision signal |
 |---|---|
-| U02 Agent workspace boundary | 169 |
-| U04 Public assurance wording | 164 |
-| U07 Payment webhook idempotency | 178 |
+| U02 Agent workspace boundary | 182 |
+| U04 Public assurance wording | 170 |
+| U07 Payment webhook idempotency | 192 |
 
-These are tight and consistent — each worked-example artifact spends ~170 tokens per
+These are tight and consistent — each worked-example artifact spends ~180 tokens per
 distinct decision element it surfaces. No outlier artifact is paying for signals it
 doesn't deliver.
 
 ## Redundancy findings (counts, not estimates)
 
-- **Assurance disclaimer.** "does not create ..." appears **57 times across 54 files**;
+- **Assurance disclaimer.** "does not create ..." appears **78 times across 69 files** (2026-05-31 refresh; 57 across 54 at the original baseline);
   the fuller "It does not ..." lineage sentence appears in a similar spread. This
   is genuine cross-file repetition. It is *sub-paragraph* and varies in wording, so it does
   not trip the paragraph-level redundancy index — it is tracked by the `phrase_frequency`

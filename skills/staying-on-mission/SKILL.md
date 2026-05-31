@@ -11,6 +11,8 @@ Mission drift is when an agent keeps shipping work that no longer serves the ori
 
 This skill keeps a written mission anchor in front of the work. When an action stops serving that anchor, you make one of three choices: re-anchor, escalate, or stop. The anchor has three parts: the goal, the success criteria (how you know you are done), and the clear non-goals (what you are deliberately not doing). One named person owns the anchor. That person is responsible for whether this change still serves its mission. Every small action still has to trace back to that larger mission.
 
+The anchor is also the clarity that lets authority move to the edge: it is the commander's intent that keeps a decentralized decision aligned with the goal. Push decisions to where the information is, but only against a clear, shared anchor — otherwise local wins quietly drift from the mission.
+
 ## When to Use
 
 - A long work session has many steps, and the current action is hard to tie back to the original goal.

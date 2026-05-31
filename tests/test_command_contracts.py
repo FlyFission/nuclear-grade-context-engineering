@@ -28,6 +28,10 @@ EXPECTED_COMMANDS = {
     "ng-breakdown.md",
     "ng-folders.md",
     "ng-close-packet.md",
+    "ng-decide-authority.md",
+    "ng-intent.md",
+    "ng-incident.md",
+    "ng-deficiency.md",
 }
 
 REQUIRED_SECTIONS = (

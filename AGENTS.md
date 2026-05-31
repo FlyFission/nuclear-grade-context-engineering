@@ -12,6 +12,10 @@ The idea is simple. Keep a questioning attitude. Use small habits from Human Per
 - Hand off the work when you delegate it, pick it back up, or pass it to a reviewer, checker, or releaser with work still open.
 - Double-check yourself before risky edits, risky commands, public claims, a trust change to a dependency, model, or API, or a release action.
 - Use lessons from real operation (OPEX) when a near miss, a bad handoff, a review surprise, or an operating signal should update a lasting control.
+- Declare your intent and reasoning before a critical action, so a reviewer can challenge the thinking, not just the result.
+- Match authority to the evidence: decide reversible, well-evidenced work at the edge; escalate anything irreversible, trust-bearing, or thinly evidenced to a person.
+- Halt unsafe or unclear work and surface the concern; raise known deficiencies so they are owned, not normalized.
+- Hand off so the next owner is more capable, not more dependent.
 - Prefer links and short status labels over long, repeated text.
 - Run the right tests and checker commands before you say the work is done.
 
@@ -23,6 +27,8 @@ Agents must not assume they may:
 - make bigger claims about where the ideas come from;
 - add compliance or assurance claims;
 - edit security-sensitive, credential, network, or production-facing material without clear permission;
+- invoke "authority to information" to skip a required human gate on an irreversible or trust-bearing action;
+- treat their own confidence or a fluent intent statement as evidence, or rubber-stamp another agent's output as an independent check;
 - overwrite change records or templates without saying so.
 
 ## Recommended skills
@@ -40,6 +46,10 @@ Agents must not assume they may:
 - `skills/learning-from-experience/SKILL.md`
 - `skills/vetting-outside-code-and-models/SKILL.md`
 - `skills/checking-legal-and-safety-wording/SKILL.md`
+- `skills/deciding-who-decides/SKILL.md`
+- `skills/declaring-intent/SKILL.md`
+- `skills/responding-to-incidents/SKILL.md`
+- `skills/tracking-deficiencies/SKILL.md`
 
 ## Completion standard
 
@@ -49,6 +59,7 @@ An agent is not done until it can name:
 - the change record or reasoning it used;
 - the evidence it ran;
 - the handoff, self-check, OPEX, or trust record it used, or why it did not need one;
+- the intent it declared and the decision rights or escalation it used for any critical action;
 - the gaps still open;
 - the boundary wording it checked.
 

@@ -208,6 +208,38 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should not trigger: I am actively filling this packet right now and about to validate it.
 - Should not trigger: Delete the placeholder marker so this packet I am shipping passes validation.
 
+### `deciding-who-decides`
+
+- Should trigger: The agent wants to delete a production table; decide whether it may act or must escalate, and name the trigger.
+- Should trigger: Set this coding agent's standing authority so reversible edits proceed but releases and permission changes escalate.
+- Should trigger: Who should decide this dependency bump given the evidence is only the vendor's changelog?
+- Should not trigger: Fix a typo in a comment and show the diff.
+- Should not trigger: The director already approved this; just record that approval.
+
+### `declaring-intent`
+
+- Should trigger: Before the agent deploys the new pricing path to 5% of traffic, state intent, expected result, and abort criteria.
+- Should trigger: Write the release brief for this schema migration so a reviewer can challenge the plan before it runs.
+- Should trigger: The agent is about to rotate the signing key; declare the intent and the verified rollback first.
+- Should not trigger: Reformat this file with the linter and commit it.
+- Should not trigger: Summarize what this helper function returns.
+
+### `responding-to-incidents`
+
+- Should trigger: Checkout is failing for 30% of users right now; run this as an incident.
+- Should trigger: An agent deleted rows it should not have and customers are affected; stabilize and coordinate.
+- Should trigger: The canary tripped its abort threshold and the release is half-rolled-out; take it as a live incident.
+- Should not trigger: Plan next quarter's reliability roadmap.
+- Should not trigger: Write the postmortem for the outage that was fully resolved last week.
+
+### `tracking-deficiencies`
+
+- Should trigger: This test has been flaky for months and everyone ignores it; log it so it is owned and dispositioned.
+- Should trigger: We keep getting paged by the same noisy alert; put it on the deficiency register with an owner.
+- Should trigger: Review surfaced an unowned service we have all been avoiding; record it as fix-or-accept.
+- Should not trigger: I just fixed this bug and closed the packet; no standing tracking is needed.
+- Should not trigger: Start a brand-new feature that has no known deficiencies yet.
+
 ## Source-lineage note
 
 This evaluation prompt bank is an original Nuclear-grade artifact informed by public skill-authoring practice: concise skills, realistic trigger prompts, baseline-vs-skill comparison, and iterative trigger-description improvement. It does not create formal assurance, compliance, certification, safety, security, or regulatory adequacy.

@@ -61,8 +61,10 @@ GOLDEN_PATH_FILES = (
     "turnover.md",
     "self-check.md",
     "decision.md",
+    "intent.md",
+    "deficiency.md",
 )
-OPTIONAL_FILES = ("standard/supplier-trust.md",)
+OPTIONAL_FILES = ("standard/supplier-trust.md", "standard/incident.md")
 MODE_FILES = {
     "quick": QUICK_FILES,
     "standard": STANDARD_FILES,

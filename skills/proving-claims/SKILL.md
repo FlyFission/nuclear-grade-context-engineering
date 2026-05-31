@@ -47,7 +47,7 @@ Evidence should answer named claims. It should not just create a vague sense tha
 
 ## Verification
 
-- `python tools/ng.py validate <packet>` passes for Quick or Standard records.
+- `python tools/ng.py validate .nuclear/changes/<slug>` passes for Quick or Standard records.
 - Every important claim has evidence, a stated gap, or a deliberate deferral.
 - No test result is used to imply unrelated safety, security, compliance, or approval.
 

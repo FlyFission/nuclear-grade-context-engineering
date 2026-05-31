@@ -3,7 +3,7 @@ name: rating-change-risk
 description: Picks Quick, Standard, or a stronger human-reviewed mode based on consequence, how easy it is to undo, and how much is unknown. Use when you start a change to code, docs, dependencies, AI power, releases, or public claims and the right level of care is unclear. Do not use for a tiny easy-to-undo edit with obvious proof, which is Quick by default.
 ---
 
-# Classifying Change Risk
+# Rating Change Risk
 
 ## Overview
 
@@ -52,7 +52,7 @@ Sort the change before you build it. That way the care you take matches the stak
 ## Verification
 
 - `risk.md` names the mode, scope, consequence, how easy it is to undo, who is exposed, what is unknown, and the proof required.
-- Quick and Standard records pass `python tools/ng.py validate <packet>` after the required files are filled.
+- Quick and Standard records pass `python tools/ng.py validate .nuclear/changes/<slug>` after the required files are filled.
 
 ## Escalation
 

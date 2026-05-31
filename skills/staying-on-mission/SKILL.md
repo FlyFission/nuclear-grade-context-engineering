@@ -3,7 +3,7 @@ name: staying-on-mission
 description: Tests the current work against a written, lasting mission anchor and forces one choice, re-anchor, escalate, or stop. Use when an agent keeps finishing tasks but the work drifts from the goal, scope creeps, the same action repeats in a loop, or standards slip one small step at a time. Do not use for a tiny edit with an obvious goal, or while you are still containing a live incident.
 ---
 
-# Controlling Mission Drift
+# Staying on Mission
 
 ## Overview
 

@@ -13,13 +13,6 @@ These are portable command prompts: plain Markdown prompt cards you can paste in
 | [`ng-impact`](commands/ng-impact.md) | You want to know what else a change touches | A list of ripple effects and re-checks |
 | [`ng-baseline`](commands/ng-baseline.md) | You want to record the version everyone agreed is correct | A saved known-good record |
 | [`ng-context-pack`](commands/ng-context-pack.md) | You are about to hand an agent a focused task | A tight briefing pack |
-| [`ng-question`](commands/ng-question.md) | You want to challenge assumptions before you build, review, or release | Assumptions, gaps, and stop conditions |
-| [`ng-classify`](commands/ng-classify.md) | You need to pick how careful to be | The chosen mode and what it must prove |
-| [`ng-new`](commands/ng-new.md) | You are starting a change record | The record files |
-| [`ng-what-to-control`](commands/ng-what-to-control.md) | You need to decide what to keep under control | A short list of what to control |
-| [`ng-impact`](commands/ng-impact.md) | You want to know what else a change touches | A list of ripple effects and re-checks |
-| [`ng-baseline`](commands/ng-baseline.md) | You want to record the version everyone agreed is correct | A saved known-good record |
-| [`ng-context-pack`](commands/ng-context-pack.md) | You are about to hand an agent a focused task | A tight briefing pack |
 | [`ng-turnover`](commands/ng-turnover.md) | You are passing unfinished work to another agent, person, reviewer, releaser, or your future self | A clean handoff record |
 | [`ng-self-check`](commands/ng-self-check.md) | An agent is about to do something risky and should check itself first | A short self-check record |
 | [`ng-prove`](commands/ng-prove.md) | You need to tie claims to evidence | A claim-to-evidence table |

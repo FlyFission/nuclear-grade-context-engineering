@@ -3,7 +3,7 @@ name: checking-legal-and-safety-wording
 description: Reviews public text for license, warranty, compliance, safety, security, certification, and fitness claims that go too far, then rewrites them to stay inside the real limits. Use when shipping or editing public docs, READMEs, or rollout copy. Do not use for internal code comments, or for deciding actual legal fitness, which needs a qualified lawyer.
 ---
 
-# Checking License and Assurance Boundaries
+# Checking Legal and Safety Wording
 
 ## Overview
 

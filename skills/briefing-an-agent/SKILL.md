@@ -3,7 +3,7 @@ name: briefing-an-agent
 description: Prepares focused context for an AI agent, reviewer, verifier, or releaser, with a clear role, goal anchor, authority, evidence to produce, forbidden actions, and stop conditions. Use when handing off or resuming work that matters. Do not use for a tiny self-contained task that needs no handoff.
 ---
 
-# Packing Agent Context
+# Briefing an Agent
 
 ## Overview
 

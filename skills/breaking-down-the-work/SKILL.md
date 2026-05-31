@@ -3,7 +3,7 @@ name: breaking-down-the-work
 description: Splits scope into a product-first work breakdown that follows the 100% rule, keeps pieces from overlapping, uses outline numbers, and gives every piece a dictionary entry. Use when an epic, feature, or new subsystem needs a clean split into deliverables, or one source of truth before folders or work begin. Do not use for a one-file edit or a backlog item already broken down.
 ---
 
-# Decomposing Work Breakdown
+# Breaking Down the Work
 
 ## Overview
 

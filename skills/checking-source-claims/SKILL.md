@@ -3,7 +3,7 @@ name: checking-source-claims
 description: Checks that the way you cite source families, agencies, standards, or borrowed ideas is honest and does not claim too much. Use when public docs, templates, skills, change records, or rollout copy point to outside sources. Do not use for private notes, or for checking whether code actually works.
 ---
 
-# Checking Source Lineage
+# Checking Source Claims
 
 ## Overview
 

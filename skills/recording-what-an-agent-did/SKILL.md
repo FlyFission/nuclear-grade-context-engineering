@@ -3,7 +3,7 @@ name: recording-what-an-agent-did
 description: Captures an agent run's tool calls, decision points, inputs, outputs, token use, and approval steps as a clear, repeatable record linked into the packet trace and verification record. Use when how the agent got there matters for debugging, auditing, cost review, or defending a release decision. Do not use for a read-only run that changes nothing, or to produce a certified compliance audit trail.
 ---
 
-# Tracing Agent Execution
+# Recording What an Agent Did
 
 ## Overview
 
@@ -60,7 +60,7 @@ A "does it work" check proves what an agent produced, not how it got there. Some
 - Each trace row links to at least one claim in `verification.md`.
 - Decision points show which limit or power boundary applied.
 - The run summary is clear to a reviewer who was not there for the run.
-- `python tools/ng.py validate <packet>` passes.
+- `python tools/ng.py validate .nuclear/changes/<slug>` passes.
 
 ## Escalation
 

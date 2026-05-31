@@ -3,7 +3,7 @@ name: stress-testing-agent-changes
 description: Attacks your own agent change, tool grant, dependency, model, or release on purpose, across risk types such as prompt injection, gaining extra power, unsafe output, and tool misuse, and records what you tried, what happened, and the leftover risk. Use when a change widens an agent's power, data access, or network reach before release. Do not use for a typo fix with no agent power involved, or to produce a certified penetration test or formal security audit.
 ---
 
-# Red-Teaming Agent Changes
+# Stress-Testing Agent Changes
 
 ## Overview
 
@@ -60,7 +60,7 @@ When an agent can use tools, read data, or affect releases, it gives attackers s
 - Every attack type you picked has a recorded result: `contained`, `uncertain`, or `exposed`.
 - No finding is quietly dropped. Leftover risks are named in `ship.md`.
 - A reviewer can see what you tried, what behavior you expected, and what you saw.
-- `python tools/ng.py validate <packet>` passes.
+- `python tools/ng.py validate .nuclear/changes/<slug>` passes.
 
 ## Escalation
 

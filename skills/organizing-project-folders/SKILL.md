@@ -3,7 +3,7 @@ name: organizing-project-folders
 description: Designs a clean folder and file layout as real architecture, building it from a work breakdown or an existing tree, grouping by what changes together and what happens to it, with platform-safe sortable names and a short note per folder. Use when laying out a repo or agent workspace, deciding where a file belongs, or fixing a junk-drawer folder. Do not use for a single obvious file path or renaming inside an already-clean tree.
 ---
 
-# Structuring Agentic Folders
+# Organizing Project Folders
 
 ## Overview
 

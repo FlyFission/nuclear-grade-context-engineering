@@ -3,7 +3,7 @@ name: vetting-outside-code-and-models
 description: Checks dependencies, models, APIs, SaaS tools, generated files, and vendor claims against how you will actually use them, the proof you have, the gaps, and the release impact. Use when any of these affect evidence, permissions, data, releases, or public trust. Do not use for an internal cleanup with no outside dependency, or for a does-it-work question.
 ---
 
-# Checking Dependency And Model Trust
+# Vetting Outside Code and Models
 
 ## Overview
 

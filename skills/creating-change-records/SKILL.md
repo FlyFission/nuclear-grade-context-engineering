@@ -3,7 +3,7 @@ name: creating-change-records
 description: Creates or updates Quick or Standard change records, adds the required files, and refreshes what each claim must prove for an evidence-backed pull request. Use when starting or revising a change record. Do not use for a one-off throwaway script, or for work that belongs in an existing record rather than a new one.
 ---
 
-# Creating Change Packets
+# Creating Change Records
 
 ## Overview
 

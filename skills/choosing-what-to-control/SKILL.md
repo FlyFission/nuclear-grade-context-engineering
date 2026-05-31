@@ -3,7 +3,7 @@ name: choosing-what-to-control
 description: Decides which code, prompts, models, tools, dependencies, docs, tests, evals, releases, or claims need their approved state tracked. Use when scoping what a change puts at risk or what must stay reviewable. Do not use for scratch work that nothing else depends on.
 ---
 
-# Identifying Controlled Items
+# Choosing What to Control
 
 ## Overview
 

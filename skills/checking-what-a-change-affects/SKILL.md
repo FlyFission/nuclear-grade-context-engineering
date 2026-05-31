@@ -3,7 +3,7 @@ name: checking-what-a-change-affects
 description: Screens what a controlled change might leave out of date across docs, tests, skills, commands, templates, checkers, prompts, releases, saved versions, and evidence, and names the triggers to re-check. Use when a change touches a controlled item. Do not use for a single edit that nothing else depends on.
 ---
 
-# Screening Change Impact
+# Checking What a Change Affects
 
 ## Overview
 

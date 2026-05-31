@@ -3,7 +3,7 @@ name: learning-from-experience
 description: Turns incidents, near misses, bad handoffs, review surprises, escaped bugs, and signals from real use into lasting fixes to your safeguards. Use after something went wrong or nearly did and a future safeguard should change. Do not use during a live incident, which comes first, or to blame someone.
 ---
 
-# Learning From Real Operation (OPEX)
+# Learning From Experience
 
 ## Overview
 

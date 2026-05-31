@@ -42,8 +42,8 @@ defers any body edits.
 | Skill bodies | 23 | 27,902 | on-invocation; avg 1,213, max 2,489 |
 | Command cards | 22 | 18,079 | avg 822, max 1,295 (`ng-folders.md`) |
 | Templates | 23 | 18,404 | repetitive by design (form scaffolds) |
-| Top-level docs | 16 | 22,433 | onboarding / reference |
-| **All measured prose** | | **89,155** | |
+| Docs (top-level + `docs/` tree) | 87 | 117,931 | onboarding / reference / worked examples |
+| **All measured prose** | | **184,653** | |
 
 Heaviest skill bodies: `structuring-agentic-folders` (2,489), `decomposing-work-breakdown`
 (2,108), `closing-stale-packets` (1,960), `controlling-mission-drift` (1,890),
@@ -67,8 +67,8 @@ doesn't deliver.
 
 ## Redundancy findings (counts, not estimates)
 
-- **Assurance disclaimer.** "does not create ..." appears **55 times across 53 files**;
-  the fuller "It does not ..." lineage sentence appears **77 times across 72 files**. This
+- **Assurance disclaimer.** "does not create ..." appears **57 times across 54 files**;
+  the fuller "It does not ..." lineage sentence appears in a similar spread. This
   is genuine cross-file repetition. It is *sub-paragraph* and varies in wording, so it does
   not trip the paragraph-level redundancy index — it is tracked by the `phrase_frequency`
   count in `ng tokens` instead. It is defensible (each self-contained file keeps its own
@@ -82,8 +82,9 @@ doesn't deliver.
   verification sections; that is a legitimate shared reference and is excluded from the
   redundancy scan by design.
 - **`core-source-rationale.md`** is 2,165 tokens of design justification (why the source
-  foundation was chosen) sitting in the docs tree. Useful to repo designers, not to an
-  agent executing a change — a relocation candidate, not a runtime cost the gate should police.
+  foundation was chosen) — now measured as part of the `docs/` tree. Useful to repo
+  designers, not to an agent executing a change — a relocation candidate, not a runtime cost
+  the gate should police.
 
 ## Over-prescription observations (reported, not acted on)
 

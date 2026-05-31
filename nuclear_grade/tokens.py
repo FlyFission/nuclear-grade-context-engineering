@@ -152,8 +152,20 @@ def _iter_template_files(root: Path):
     yield from sorted((root / "templates").rglob("*.md"))
 
 
-def _iter_top_level_docs(root: Path):
-    yield from sorted(root.glob("*.md"))
+def _iter_doc_files(root: Path):
+    """Top-level docs plus the full ``docs/`` tree (deduplicated, sorted).
+
+    Recurses ``docs/`` so reference pages an agent or reader actually opens --
+    including ones this audit discusses by token count, e.g.
+    ``docs/00-standards-foundation/core-source-rationale.md`` -- are measured,
+    not silently excluded from "All measured prose".
+    """
+
+    seen = set()
+    for path in sorted([*root.glob("*.md"), *(root / "docs").rglob("*.md")]):
+        if path not in seen:
+            seen.add(path)
+            yield path
 
 
 def measure_file(path: Path, root: Path, kind: str) -> FileTokens:
@@ -307,15 +319,15 @@ def build_report(root: Path) -> Report:
         files.append(measure_file(path, root, "command"))
     for path in _iter_template_files(root):
         files.append(measure_file(path, root, "template"))
-    for path in _iter_top_level_docs(root):
+    for path in _iter_doc_files(root):
         files.append(measure_file(path, root, "doc"))
 
     # Redundancy is scanned across the self-contained prose corpus: skills,
-    # commands, and top-level docs (templates are intentionally repetitive forms).
+    # commands, and docs (templates are intentionally repetitive form scaffolds).
     corpus = (
         list(_iter_skill_files(root))
         + list(_iter_command_files(root))
-        + list(_iter_top_level_docs(root))
+        + list(_iter_doc_files(root))
     )
     repeated = find_repeated_blocks(corpus, root)
     return Report(files=files, repeated_blocks=repeated)

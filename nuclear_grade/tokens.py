@@ -157,7 +157,7 @@ def _iter_doc_files(root: Path):
 
     Recurses ``docs/`` so reference pages an agent or reader actually opens --
     including ones this audit discusses by token count, e.g.
-    ``docs/00-standards-foundation/core-source-rationale.md`` -- are measured,
+    ``docs/05-reference/core-source-rationale.md`` -- are measured,
     not silently excluded from "All measured prose".
     """
 

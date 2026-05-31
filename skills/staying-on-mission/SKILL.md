@@ -13,13 +13,11 @@ This skill keeps a written mission anchor in front of the work. When an action s
 
 ## When to Use
 
-- A long work session has many steps, and the current action is hard to tie back to the original goal.
-- Scope is growing. New files, features, or layers show up that no one asked for.
-- The same action, file, or fix keeps getting retried with no progress. That is a loop.
-- The agent is spending a lot (high token use) but you can see little real progress.
-- A reviewer or agent is working from memory of the goal instead of a written anchor.
-- A non-goal is about to be crossed, or a standard is about to be loosened "just this once."
-- Context was reset, shrunk, or handed off, so the goal must be set again before work goes on.
+- The current action is hard to tie back to the original goal after a long or multi-step session.
+- Scope is growing beyond what was asked for.
+- The same action or fix is being retried with no progress (loop).
+- A standard or non-goal is about to be loosened or crossed.
+- Context was reset, shrunk, or handed off and the goal must be re-established before work continues.
 
 ## When Not to Use
 
@@ -37,15 +35,14 @@ This skill keeps a written mission anchor in front of the work. When an action s
 ## Process
 
 1. Restate the mission anchor from the written record, not from memory: the goal, the success criteria, and the non-goals.
-2. Test the current action against the anchor. Ask plainly: does this action move a success criterion forward, or does it serve some smaller goal that got swapped in?
-3. Step back one level before you decide. Look at the goal and the overall design, not just the line in front of you, so you decide from the right height.
-4. Check for a loop and count the attempts. If the same goal has failed 3 times, or the same action or fix is being retried, stop trying the next version.
-5. Check for standards drift against the charter and any countable warning lines. Examples: a file or function passing a size limit, a skipped check, or accepting weaker evidence than you agreed to. One normalized exception is a finding, not a rounding error.
-6. Decide and record one of three outcomes:
-   - Re-anchor: the action serves the mission. Restate the anchor and keep going.
-   - Escalate: the action would cross a non-goal or loosen a standard for a good reason. Write a justification row (what is being crossed, why, and why there is no simpler path) and get the owner's decision.
-   - Stop: the action serves a swapped-in goal, or the justification does not hold. Halt and return to the anchor.
-7. Update the written anchor so the decision survives the next context reset.
+2. Test the current action against the anchor: does it move a success criterion forward, or did a smaller goal quietly get swapped in?
+3. Check for a loop: if the same goal has failed 3 times, or the same action is being retried, stop.
+4. Check for standards drift: a file or function past a size limit, a skipped check, weaker evidence than agreed. One normalized exception is a finding.
+5. Decide and record one outcome:
+   - **Re-anchor**: the action serves the mission. Restate the anchor and keep going.
+   - **Escalate**: the action would cross a non-goal or loosen a standard for a good reason. Write a justification row and get the owner's decision.
+   - **Stop**: the action serves a swapped-in goal, or the justification does not hold. Halt and return to the anchor.
+6. Update the written anchor so the decision survives the next context reset.
 
 ## Outputs
 

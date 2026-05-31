@@ -36,15 +36,14 @@ Three things can wreck it. Under-coverage: some scope is orphaned and no one own
 
 ## Process
 
-1. Name the single top deliverable as level 1. If you cannot name one product, stop. You have a goal, not a deliverable, and the breakdown will leave gaps.
+1. Name the single top deliverable as level 1. If you cannot name one product, stop — you have a goal, not a deliverable, and the breakdown will leave gaps.
 2. Break it down product-first. Split each parent into the nouns it is made of (components, subsystems, documents, data), not the verbs done to it. Verbs live only in a clearly labeled activity layer below a work package.
-3. Apply the 100% rule at every parent. The children must cover exactly the parent's scope, no more and no less. Write any put-off scope as a clear gap line instead of leaving it unsaid.
-4. Apply no overlaps and the one-home rule. Every piece belongs to exactly one parent, and no two siblings claim the same work. Fix overlap by re-cutting the boundary or by pulling shared work up into one common piece. Never fix it by copying.
-5. Break down only until each leaf is doable. Stop when a leaf is one piece of work someone can own, estimate, and verify (the 8/80 sense check, roughly two to three levels). Going deeper than the work-package line is overhead, not rigor. Match the depth to the mode.
-6. Number with outline traceability (`1`, `1.2`, `1.2.3`). The number is the lasting ID that the folder map, the dictionary, and cross-references all key on.
-7. Write the dictionary. For each piece, record the scope, what is in and out of scope, the deliverable, the interfaces, the acceptance criteria, a rough size, the owner, and the dependencies. A piece with no dictionary entry cannot be estimated or owned.
-8. Use the same taxonomy everywhere. The work breakdown is the one taxonomy you reuse for ownership, folder grouping, CI grouping, and risk labels. That keeps one source of truth.
-9. Self-check (see Verification), then output the work-breakdown table plus the dictionary. Hand off to `organizing-project-folders` to turn it into a folder structure.
+3. Apply the 100% rule at every parent. Children must cover exactly the parent's scope, no more and no less. Write any put-off scope as a clear gap line instead of leaving it unsaid.
+4. Apply no overlaps. Every piece belongs to exactly one parent; no two siblings claim the same work. Fix overlap by re-cutting the boundary or pulling shared work up into one common piece.
+5. Break down only until each leaf is doable. Stop when a leaf is one piece of work someone can own, estimate, and verify (the 8/80 sense check). Match depth to the mode.
+6. Number with outline traceability (`1`, `1.2`, `1.2.3`). The number is the lasting ID that the folder map, dictionary, and cross-references all key on.
+7. Write the dictionary. For each piece, record: scope, what is in and out, the deliverable, interfaces, acceptance criteria, rough size, owner, and dependencies.
+8. Self-check (see Verification), then output the work-breakdown table and the dictionary. Hand off to `organizing-project-folders` to turn it into a folder structure.
 
 ## Outputs
 

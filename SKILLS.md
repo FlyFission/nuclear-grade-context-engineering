@@ -70,6 +70,7 @@ flowchart TD
 ```
 
 See [`docs/diagrams.md`](docs/diagrams.md) for the lifecycle, mode, and packet diagrams.
+See [`docs/05-reference/skills-token-audit.md`](docs/05-reference/skills-token-audit.md) for the measured token cost of these skills and the `ng tokens` budget gate.
 
 ## Contract
 

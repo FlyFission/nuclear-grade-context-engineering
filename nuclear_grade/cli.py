@@ -22,6 +22,13 @@ from nuclear_grade.ng_validate import (
     has_closure_note,
     validate_packet,
 )
+from nuclear_grade.tokens import (
+    build_report,
+    check_budgets,
+    cost_per_signal,
+    load_budgets,
+    phrase_frequency,
+)
 
 PACKAGE_DIR = Path(__file__).resolve().parent
 REPO_ROOT = PACKAGE_DIR.parent
@@ -223,6 +230,13 @@ def build_parser() -> argparse.ArgumentParser:
     )
     eval_parser.add_argument("repo", nargs="?", default=".", type=Path)
     eval_parser.set_defaults(handler=handle_eval)
+
+    tokens_parser = subcommands.add_parser(
+        "tokens",
+        help="Audit prose token cost and enforce per-file token budgets.",
+    )
+    tokens_parser.add_argument("repo", nargs="?", default=".", type=Path)
+    tokens_parser.set_defaults(handler=handle_tokens)
 
     return parser
 
@@ -451,6 +465,58 @@ def handle_eval(args: argparse.Namespace) -> int:
     if failures:
         print(f"{failures} case(s) missing required signals.")
         return 1
+    return 0
+
+
+def handle_tokens(args: argparse.Namespace) -> int:
+    repo = args.repo.resolve()
+    report = build_report(repo)
+    budgets = load_budgets(repo)
+
+    skills = sorted(report.of_kind("skill"), key=lambda f: f.body_tokens, reverse=True)
+    print("Skill token cost (description = always-loaded, body = on-invocation):")
+    print(f"  {'description':>11}  {'body':>6}  skill")
+    for skill in skills:
+        print(f"  {skill.description_tokens:>11}  {skill.body_tokens:>6}  {skill.name}")
+    print(
+        f"\nSkill totals: descriptions {report.skill_description_total} tokens "
+        f"(always loaded), bodies {report.skill_body_total} tokens "
+        f"(loaded only when the skill fires)."
+    )
+
+    commands = report.of_kind("command")
+    if commands:
+        worst = max(commands, key=lambda f: f.body_tokens)
+        print(
+            f"Commands: {len(commands)} cards, "
+            f"{sum(c.body_tokens for c in commands)} tokens total, "
+            f"largest {worst.body_tokens} ({worst.name})."
+        )
+    print(f"All measured prose: {report.total} tokens.")
+
+    per_signal = cost_per_signal(repo)
+    if per_signal:
+        print("\nWorked-example cost per decision signal (tokens / signal):")
+        for case_id, cost in sorted(per_signal.items()):
+            print(f"  {case_id}: {cost:.0f}")
+
+    disclaimer_total, disclaimer_files = phrase_frequency(repo, "does not create")
+    print(
+        f"\nAssurance disclaimer 'does not create ...': {disclaimer_total} occurrences "
+        f"across {disclaimer_files} files."
+    )
+    if report.repeated_blocks:
+        print("Repeated prose blocks (>=3 files):")
+        for block in report.repeated_blocks:
+            print(f"  {block.file_count} files x {block.block_tokens} tokens: \"{block.excerpt[:60]}...\"")
+
+    violations = check_budgets(report, budgets)
+    if violations:
+        print("\nFAILED: token budget")
+        for violation in violations:
+            print(f"- {violation}")
+        return 1
+    print("\nOK: token budget")
     return 0
 
 

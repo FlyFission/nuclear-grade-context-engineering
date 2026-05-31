@@ -79,6 +79,14 @@ commands:
   - ng-wbs.md
   - ng-folders.md
   - ng-close-packet.md
+token_budgets:
+  # Per-file token ceilings enforced by `ng tokens` (see nuclear_grade/tokens.py).
+  # Seeded above the 2026-05 measured maxima (desc 138, skill body 2489, command
+  # 1295) with headroom, so the gate blocks regression, not the accepted corpus.
+  description_max: 200
+  skill_body_max: 3000
+  command_max: 1600
+  repeated_block_max_files: 8
 boundaries:
   license: MIT
   assurance: evidence visibility only

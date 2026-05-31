@@ -37,6 +37,9 @@ jobs:
       - name: Run repo doctor
         run: python tools/ng.py doctor .
 
+      - name: Enforce token budget
+        run: python tools/ng.py tokens .
+
       - name: Validate change packets
         shell: bash
         run: |

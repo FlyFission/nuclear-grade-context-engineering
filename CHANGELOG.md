@@ -6,6 +6,43 @@ These entries record public-facing changes. They do not claim the project is a m
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-05-31
+
+### Breaking
+
+- Plain-language rename of skill and command IDs. The skill folder names and the words you type to invoke them have changed, so any saved prompt, script, or note that calls a skill or command by its old name must be updated. Nothing inside the methodology changed -- same controls, same rigor, same detail -- only the names are now plainer and easier to read. There is no automatic migration; update old references by hand using the map below.
+
+  Skills renamed (18):
+
+  | Old name | New name |
+  | --- | --- |
+  | `identifying-controlled-items` | `choosing-what-to-control` |
+  | `screening-change-impact` | `checking-what-a-change-affects` |
+  | `baselining-configuration` | `recording-a-known-good-version` |
+  | `classifying-change-risk` | `rating-change-risk` |
+  | `creating-change-packets` | `creating-change-records` |
+  | `packing-agent-context` | `briefing-an-agent` |
+  | `turning-over-agent-work` | `handing-off-work` |
+  | `self-checking-agent-actions` | `double-checking-before-acting` |
+  | `reviewing-ship-readiness` | `checking-release-readiness` |
+  | `learning-from-opex` | `learning-from-experience` |
+  | `checking-dependency-and-model-trust` | `vetting-outside-code-and-models` |
+  | `checking-source-lineage` | `checking-source-claims` |
+  | `checking-license-and-assurance-boundaries` | `checking-legal-and-safety-wording` |
+  | `controlling-mission-drift` | `staying-on-mission` |
+  | `red-teaming-agent-changes` | `stress-testing-agent-changes` |
+  | `tracing-agent-execution` | `recording-what-an-agent-did` |
+  | `decomposing-work-breakdown` | `breaking-down-the-work` |
+  | `structuring-agentic-folders` | `organizing-project-folders` |
+
+  Commands renamed (3): `ng-cm-items` -> `ng-what-to-control`, `ng-opex` -> `ng-learn`, `ng-wbs` -> `ng-breakdown`.
+
+  Kept as-is because they were already plain: `questioning-attitude`, `using-nuclear-grade`, `proving-claims`, `reviewing-code-quality`. The `closing-stale-packets` skill and `ng-close-packet` command also keep their names, on purpose: the tool itself still calls a change record a "packet" (for example `ng status` prints `N packet(s) need attention`), so renaming only this skill would be the one piece out of step with the rest of the tool.
+
+### Changed
+
+- Lowered the reading level across the repo. Skill titles, descriptions, and supporting docs were rewritten in plainer prose without dropping any rigor or detail. Every test-frozen string was preserved.
+
 ### Added
 
 - `closing-stale-packets` skill and `ng-close-packet` command. Pairs with the `ng status` health tags: when a packet is flagged `scaffold` or `invalid`, this brings it to an honest terminal state -- completed (filled and validating), closed (deliberately abandoned with a recorded rationale), or deleted (never a real change). Closing with a written reason is a first-class successful outcome; the forbidden state is half-done and silent. Wired into the catalog, skill index, evaluation prompts, and contract tests.

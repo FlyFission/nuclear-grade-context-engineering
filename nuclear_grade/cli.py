@@ -64,7 +64,13 @@ GOLDEN_PATH_FILES = (
     "intent.md",
     "deficiency.md",
 )
-OPTIONAL_FILES = ("standard/supplier-trust.md", "standard/incident.md")
+OPTIONAL_FILES = (
+    "standard/supplier-trust.md",
+    "standard/red-team.md",
+    "standard/execution-trace.md",
+    "standard/wbs.md",
+    "standard/incident.md",
+)
 MODE_FILES = {
     "quick": QUICK_FILES,
     "standard": STANDARD_FILES,

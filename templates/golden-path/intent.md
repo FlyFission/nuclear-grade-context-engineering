@@ -63,4 +63,4 @@
 
 ## Source-lineage note
 
-Original Nuclear-grade template inspired by stating intent before acting (the "I intend to" construct, concept lineage from intent-based leadership) and the deliberate-action, self-checking, and three-way-communication habits in DOE-HDBK-1028-2009, used as public source lineage. No compliance claim is made.
+Original Nuclear-grade template inspired by stating intent before acting (the "I intend to" construct, concept lineage from intent-based leadership) and the deliberate-action, self-checking, and three-way-communication habits in DOE-HDBK-1028-2009, mapped in `docs/00-standards-foundation/source-map.md` and used as public source lineage. No compliance claim is made.

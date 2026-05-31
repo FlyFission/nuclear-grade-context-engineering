@@ -1,6 +1,6 @@
 # Risk Tiers and Modes
 
-**Purpose:** Give risk-tiered rigor a single taxonomy. The repo already grades work by **mode** (quick, standard, high-consequence); this doc maps the familiar Tier 0–3 language onto those modes so there is one axis, not two. This honors Charter Art. 9 (graded rigor) and Art. 12 (operational unambiguity).
+**Purpose:** Give risk-tiered rigor a single taxonomy. The repo already grades work by **mode** — `quick`, `standard`, and the activated high-stakes mode named **Nuclear** (see [`modes.md`](modes.md)); this doc maps the familiar Tier 0–3 language onto those modes so there is one axis, not two. This honors Charter Art. 9 (graded rigor) and Art. 12 (operational unambiguity).
 
 **Boundary:** Original software-workflow translation. It does not create formal assurance, compliance, certification, safety, or regulatory adequacy.
 
@@ -12,7 +12,7 @@ The mistake is to apply critical-systems ceremony to a button-color change. The 
 
 | Tier (consequence) | Examples | Repo mode | Required rigor |
 |---|---|---|---|
-| Tier 0 — existential | auth, payments, encryption, production data deletion, infra-wide networking, agent production authority | High-consequence (activated standard) | design review, two-person/independent review, rollback plan, observability, dry run, post-change verification, baseline |
+| Tier 0 — existential | auth, payments, encryption, production data deletion, infra-wide networking, agent production authority | Nuclear | design review, two-person/independent review, rollback plan, observability, dry run, post-change verification, baseline |
 | Tier 1 — high | major backend release, schema migration, model rollout, permission changes | Standard | basis + plan, test/eval evidence, canary, alerting, owner sign-off, intent release brief |
 | Tier 2 — normal | feature work, API extension, UI release | Standard or Quick | standard review, automated tests, feature flags where useful |
 | Tier 3 — experimental | prototype, internal tool, throwaway exploration | Quick | lightweight review, time-boxed, no production authority |

@@ -23,32 +23,32 @@ Skills load in two stages, and the two stages cost very differently:
 
 | Cost | What loads | When | Tokens | Share |
 |---|---|---|---|---|
-| **Always-loaded** | frontmatter `description` (×23 skills) | every routing decision | **2,337** | **7.7%** |
-| **On-invocation** | skill body | only when that one skill fires | 27,902 | 92.3% |
+| **Always-loaded** | frontmatter `description` (×23 skills) | every routing decision | **2,361** | **7.2%** |
+| **On-invocation** | skill body | only when that one skill fires | 30,222 | 92.8% |
 
-The always-loaded surface a routing agent pays on *every* turn is just **2,337 tokens —
-about 102 per skill** — and is bounded by the contract test at 80–500 characters per
-description. The 27,902 tokens of bodies are real, but an agent reads **one** body when a
+The always-loaded surface a routing agent pays on *every* turn is just **2,361 tokens —
+about 103 per skill** — and is bounded by the contract test at 80–500 characters per
+description. The 30,222 tokens of bodies are real, but an agent reads **one** body when a
 skill fires, not all 23. So the "always-loaded cost is lean; bodies aren't the always-on
 cost" conclusion from #7 holds up under measurement. The body cuts that #7 weighed remain
-a *judgment* trade, not a measured win — which is why this PR ships measurement only and
-defers any body edits.
+a *judgment* trade, not a measured win — which is why the audit shipped measurement + a
+gate first and treated body edits as a separate decision.
 
 ## Measured baseline (2026-05, 23 skills)
 
 | Surface | Files | Tokens | Notes |
 |---|---|---|---|
-| Skill descriptions | 23 | 2,337 | always-loaded; avg 102, max 138 |
-| Skill bodies | 23 | 27,902 | on-invocation; avg 1,213, max 2,489 |
-| Command cards | 22 | 18,079 | avg 822, max 1,295 (`ng-folders.md`) |
-| Templates | 23 | 18,404 | repetitive by design (form scaffolds) |
-| Docs (top-level + `docs/` tree) | 87 | 117,931 | onboarding / reference / worked examples |
-| **All measured prose** | | **184,653** | |
+| Skill descriptions | 23 | 2,361 | always-loaded; avg 103, max 140 |
+| Skill bodies | 23 | 30,222 | on-invocation; avg 1,314, max 2,641 |
+| Command cards | 22 | 19,923 | avg 906, max 1,406 (`ng-folders.md`) |
+| Templates | 23 | 18,969 | repetitive by design (form scaffolds) |
+| Docs (top-level + `docs/` tree) | 87 | 123,121 | onboarding / reference / worked examples |
+| **All measured prose** | | **194,596** | |
 
-Heaviest skill bodies: `structuring-agentic-folders` (2,489), `decomposing-work-breakdown`
-(2,108), `closing-stale-packets` (1,960), `controlling-mission-drift` (1,890),
-`red-teaming-agent-changes` (1,617). Leanest: `baselining-configuration` (738),
-`screening-change-impact` (754), `checking-source-lineage` (803).
+Heaviest skill bodies: `organizing-project-folders` (2,641), `breaking-down-the-work`
+(2,217), `closing-stale-packets` (1,962), `staying-on-mission` (1,953),
+`stress-testing-agent-changes` (1,742). Leanest: `checking-what-a-change-affects` (832),
+`checking-source-claims` (872), `checking-legal-and-safety-wording` (879).
 
 ## Cost per decision signal
 
@@ -57,9 +57,9 @@ to "is the prose worth its tokens," rather than an adjective:
 
 | Worked example | Tokens / decision signal |
 |---|---|
-| U02 Agent workspace boundary | 169 |
-| U04 Public assurance wording | 164 |
-| U07 Payment webhook idempotency | 178 |
+| U02 Agent workspace boundary | 182 |
+| U04 Public assurance wording | 170 |
+| U07 Payment webhook idempotency | 192 |
 
 These are tight and consistent — each worked-example artifact spends ~170 tokens per
 distinct decision element it surfaces. No outlier artifact is paying for signals it
@@ -67,7 +67,7 @@ doesn't deliver.
 
 ## Redundancy findings (counts, not estimates)
 
-- **Assurance disclaimer.** "does not create ..." appears **57 times across 54 files**;
+- **Assurance disclaimer.** "does not create ..." appears **59 times across 55 files**;
   the fuller "It does not ..." lineage sentence appears in a similar spread. This
   is genuine cross-file repetition. It is *sub-paragraph* and varies in wording, so it does
   not trip the paragraph-level redundancy index — it is tracked by the `phrase_frequency`
@@ -88,30 +88,33 @@ doesn't deliver.
 
 ## Over-prescription observations (reported, not acted on)
 
-These are flagged for a future, post-#12 prose pass; this PR does not edit any skill body.
+These are flagged for an optional future prose pass; this follow-up does not edit any
+skill body.
 
 - Some `## When to Use` / `## When Not to Use` lists prescribe *how to decide* applicability,
   which the model is already good at, rather than only naming the landmines.
 - A few `## Process` sections step through tasks the model handles well unaided, where a
   shorter "where the landmines are" framing would carry the same guidance for fewer tokens.
 
-## Overlap clusters flagged for a human decision (NOT merged)
+## Overlap clusters (decision recorded; NOT merged)
 
-The user asked to flag conceptual overlap rather than merge it. Four clusters of skills sit
-on adjacent surfaces and are worth a deliberate keep-or-merge decision **after** the #12
-rename sweep lands (merging now would collide with it):
+Four clusters of skills sit on adjacent surfaces. Consolidation would be a structural
+change with routing/contract implications, so it is an explicit doctrine decision rather
+than an automatic cleanup.
 
-1. **Trust-boundary trio** — `checking-source-lineage`, `checking-license-and-assurance-boundaries`,
-   `checking-dependency-and-model-trust`.
-2. **Agent-handoff trio** — `packing-agent-context`, `turning-over-agent-work`,
-   `self-checking-agent-actions`.
-3. **Evidence / decision trio** — `proving-claims`, `reviewing-ship-readiness`,
+1. **Trust-boundary trio** — `checking-source-claims`, `checking-legal-and-safety-wording`,
+   `vetting-outside-code-and-models`.
+2. **Agent-handoff trio** — `briefing-an-agent`, `handing-off-work`,
+   `double-checking-before-acting`.
+3. **Evidence / decision trio** — `proving-claims`, `checking-release-readiness`,
    `reviewing-code-quality`.
-4. **Framing / risk overlap** — `questioning-attitude`, `classifying-change-risk`,
-   `identifying-controlled-items`.
+4. **Framing / risk overlap** — `questioning-attitude`, `rating-change-risk`,
+   `choosing-what-to-control`.
 
-Flagged only. Each is independently routed today; consolidation is a structural change with
-test-contract and routing implications, to be decided separately.
+**Decision (2026-05-31): keep all four clusters as separate skills.** Rationale: each has
+a distinct trigger and output surface; merging would blur routing and would require
+contract/test updates. Revisit only if maintenance burden or repeated routing confusion
+shows up in evidence.
 
 ## The gate
 
@@ -131,11 +134,14 @@ fails CI — a gate that fires every time, not a style note that gets forgotten.
 
 ## Recommended next step (post-#12)
 
-Once PR #12's rename sweep merges, a follow-up *may* trim the heaviest bodies and collapse
-the disclaimer to a single linked source — **if** the team decides self-containment is worth
-trading for compactness. The data says that trade is optional, not urgent: the always-loaded
-cost is already small, and per-signal cost is already tight. Measure first, then cut only
-what the numbers justify.
+Optional, evidence-triggered follow-ups:
+
+- If token budgets ever block a needed addition, consider a scoped pass over the heaviest
+  skill bodies (start with `organizing-project-folders`, `breaking-down-the-work`) and measure
+  “tokens saved per decision signal lost.”
+- If the team decides compactness outweighs per-file self-containment, consider collapsing
+  the repeated “does not create …” boundary-note family to a single linked source and re-run
+  `ng tokens` to quantify the win.
 
 ## Boundary
 

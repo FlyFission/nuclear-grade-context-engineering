@@ -35,15 +35,14 @@ This skill puts a folder-decision checklist in front of the agent, so folders ge
 
 ## Process
 
-1. Pick the pattern first. Decide whether you are structuring a production codebase (a product-first tree: deliverable roots plus a small approved set of common pieces, where the folder tree is the work breakdown laid onto disk) or an agent workflow workspace (the Model Workspace Protocol). Use the matching pattern.
+1. Pick the pattern first. Decide whether you are structuring a production codebase (a product-first tree: deliverable roots plus a small approved set of common pieces, where the folder tree is the work breakdown laid onto disk) or an agent workflow workspace (the Model Workspace Protocol — see `references/model-workspace-protocol.md` for full details).
 2. Set the source of truth. If a work breakdown exists, build folders from its outline numbers and turn dictionary entries into per-folder notes. If not, work out the implied breakdown first, or hand off to `breaking-down-the-work`.
-3. Run the folder-decision checklist for every proposed folder. Is it earned (does grouping cut the mental load, or would one file do)? Does its content share one reason to change? Are its ties to other folders loose? Does it map to exactly one work-breakdown piece or one disposition rule? Is it the single home for this idea? Is it named safely and kept shallow? Is it documented?
-4. For the workflow pattern, apply the Model Workspace Protocol. Numbered stage folders set the order (`01_...`, `02_...`). Each stage has a context file with Inputs, Process, and Outputs. Keep lasting reference material separate from each run's working output. Scripts do the mechanical work. Every output is something you can open and edit, with a human review gate at each boundary.
-5. Name for platform safety and clean sorting. Use lowercase letters and numbers, ISO-8601 dates (like 2026-05-30), one dot used only for the file extension, no spaces or special characters, and zero-padded sequence numbers. Pick one word separator (hyphen or underscore) and stick with it. The one accepted exception is the Model Workspace Protocol stage prefix `NN_` (a zero-padded number then an underscore, as in `01_research`), where the underscore marks the sequence boundary. Files that are normally capitalized by convention (`README.md`, `LICENSE`, and Model Workspace Protocol context files such as `CONTEXT.md` and `CLAUDE.md`) are an accepted exception to the lowercase rule. Ban junk-drawer names (`misc`, `stuff`, `tmp`, `new`, `old`, `backup`, `final`, bare `utils`).
-6. Limit depth and path length. Prefer flatter trees. Cap nesting near eight levels and total path length near 255 characters. Do not blindly nest one folder per work-breakdown level.
-7. Give each non-trivial folder a short README or dictionary note (purpose, what belongs, what does not, owner) and a note on what happens to its contents.
-8. Compare with the existing tree before proposing changes. Respect current conventions, propose the least new structure you can, and flag conflicts as findings instead of overwriting a saved known-good layout.
-9. Output the folder map (outline number to path, with a disposition column) and the result of the naming, depth, and single-source check.
+3. Run the folder-decision checklist for every proposed folder. Is it earned? Does its content share one reason to change? Are its ties to other folders loose? Does it map to exactly one work-breakdown piece or one disposition rule? Is it the single home for this idea? Is it named safely and kept shallow? Is it documented?
+4. For workflow workspaces, apply the Model Workspace Protocol: numbered stage folders (`01_`, `02_`), context file per stage (Inputs/Process/Outputs), review gates between stages.
+5. Name for platform safety: lowercase, ISO-8601 dates, one dot for extension, no spaces/special chars, zero-padded numbers. Exception: `NN_` stage prefix and normally capitalized files (`README.md`, `CONTEXT.md`). Ban junk-drawer names (`misc`, `stuff`, `tmp`, `utils`).
+6. Limit depth (≤8 levels) and path length (≤255 chars). Prefer flatter trees.
+7. Document each non-trivial folder with purpose, what belongs, and disposition (keep/temp/archive/generated).
+8. Respect existing conventions. Propose minimal changes and flag conflicts instead of overwriting saved layouts.
 
 ## Outputs
 

@@ -81,10 +81,9 @@ doesn't deliver.
 - **Shared command snippets are not waste.** The `ng validate ...` command recurs in ~17
   verification sections; that is a legitimate shared reference and is excluded from the
   redundancy scan by design.
-- **`core-source-rationale.md`** is 2,165 tokens of design justification (why the source
-  foundation was chosen) — now measured as part of the `docs/` tree. Useful to repo
-  designers, not to an agent executing a change — a relocation candidate, not a runtime cost
-  the gate should police.
+- **`core-source-rationale.md`** was 2,165 tokens of design justification (why the source
+  foundation was chosen). It has been relocated to `.research/design-decisions/` as it's
+  useful to repo designers, not to an agent executing a change.
 
 ## Over-prescription observations (reported, not acted on)
 

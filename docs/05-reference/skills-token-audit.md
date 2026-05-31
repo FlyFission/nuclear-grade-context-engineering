@@ -43,9 +43,9 @@ cards. Current reproducible aggregates (`python tools/ng.py tokens .`):
 | Surface | Count | Tokens | Notes |
 |---|---|---|---|
 | Skill descriptions | 27 | 2,812 | always-loaded; avg ~104, still bounded 80–500 chars |
-| Skill bodies | 27 | 35,366 | on-invocation; one body loads when a skill fires |
+| Skill bodies | 27 | 35,366 | on-invocation; one body loads when a skill fires; heaviest 2,641 (`organizing-project-folders`) |
 | Command cards | 26 | 23,392 | largest 1,406 (`ng-folders.md`), within the 1,600 budget |
-| All measured prose | | 218,612 | onboarding / reference / worked examples / doctrine |
+| All measured prose | | ~219,400 | onboarding / reference / worked examples / doctrine |
 
 The headline conclusion is unchanged: the always-loaded surface is the lean descriptions
 (~104 tokens each), not the bodies, and the budget gate stays green. The historical baseline
@@ -138,10 +138,10 @@ so the gate blocks regression rather than the accepted corpus:
 
 | Budget | Value | Measured max today |
 |---|---|---|
-| `description_max` | 200 | 138 |
-| `skill_body_max` | 3000 | 2,489 |
-| `command_max` | 1600 | 1,295 |
-| `repeated_block_max_files` | 8 | 0 prose blocks |
+| `description_max` | 200 | 140 |
+| `skill_body_max` | 3000 | 2,641 |
+| `command_max` | 1600 | 1,406 |
+| `repeated_block_max_files` | 8 | 0 prose blocks over threshold |
 
 A new skill that balloons past these, or a boilerplate paragraph copied into a 9th file,
 fails CI — a gate that fires every time, not a style note that gets forgotten.

@@ -18,7 +18,7 @@ Each step is a control point. Each one stops one specific failure mode. Skip any
 
 | # | Step | Stops | Produces | Abort if |
 |---|---|---|---|---|
-| 1 | **Question** — frame the decision before code moves | Solving the wrong problem, confidently | The fact that would change your mind | You cannot name a question that has an answer |
+| 1 | **Question** — frame the decision before code moves | Solving the wrong problem, confidently | The fact that would change your mind | No answer would change what you do |
 | 2 | **Specify** — write what must be true and what must not break | Shifting goalposts; reviewers guessing intent from the diff | Intent, boundary, must-not-break list | The spec cannot be falsified |
 | 3 | **Execute** — build inside the boundary; agents work here, not before | Scope drift, surprise blast radius, silent dependency changes | The diff and the trace from spec to change | A step crosses the boundary without escalation |
 | 4 | **Verify** — test the claim against reality, not against confidence | Green-tests-but-wrong-feature; persuasion over proof | Evidence, named gaps, what was not tested | The evidence does not address the spec |
@@ -29,6 +29,8 @@ Each step is a control point. Each one stops one specific failure mode. Skip any
 The loop closes when operation feeds the next question.
 
 This is what "nuclear-grade" buys you over prompt-and-pray: every step has a job, an artifact, and a stop condition. A skipped step is not a shortcut — it is a known failure mode you chose to accept.
+
+These seven are the everyday form of the loop. For standard and high-consequence work the same loop fans out into eleven beats — `Question -> Discover -> Specify -> Plan -> Execute -> Verify -> Review -> Decide -> Baseline -> Operate -> Learn` — splitting Question into Question/Discover, Specify into Specify/Plan, Decide into Review/Decide, and Operate into Operate/Learn. Same control points, more beats.
 
 ## Two speeds, one loop
 

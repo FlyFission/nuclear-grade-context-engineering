@@ -95,7 +95,7 @@ This is practical, not decorative. Instructions should be hard to misuse. Small 
 Question -> Discover -> Specify -> Plan -> Execute -> Verify -> Review -> Decide -> Baseline -> Operate -> Learn
 ```
 
-Each step is a control point: it stops one specific failure mode and produces one artifact you can point at. A skipped step is not a shortcut — it is a named failure mode you chose to accept. The per-step "stops / produces / abort if" detail lives in [`WORKFLOWS.md`](WORKFLOWS.md).
+Each step is a control point: it stops one specific failure mode and produces one artifact you can point at. A skipped step is not a shortcut — it is a named failure mode you chose to accept. The control-point detail — stops / produces / abort-if — is tabled for the everyday seven-step form of this loop in [`WORKFLOWS.md`](WORKFLOWS.md), and the same control points apply when the loop fans out into all eleven beats.
 
 ```mermaid
 flowchart LR

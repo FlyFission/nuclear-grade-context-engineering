@@ -89,40 +89,27 @@ treat green tests as a yes -> make an explicit release decision and save the res
 
 This is practical, not decorative. Instructions should be hard to misuse. Small actions should still serve the goal. And "I'm confident" should never be confused with "here is the proof."
 
-## The core loop: seven control points
-
-Each step is a control point. Each one stops one specific failure mode. A skipped step is not a shortcut — it is a known failure mode you chose to accept.
-
-| # | Step | Stops | Produces | Abort if |
-|---|---|---|---|---|
-| 1 | **Question** — frame the decision before code moves | Solving the wrong problem, confidently | The fact that would change your mind | You cannot name a question that has an answer |
-| 2 | **Specify** — write what must be true and what must not break | Shifting goalposts; reviewers guessing intent from the diff | Intent, boundary, must-not-break list | The spec cannot be falsified |
-| 3 | **Execute** — build inside the boundary; agents work here, not before | Scope drift, surprise blast radius, silent dependency changes | The diff and the trace from spec to change | A step crosses the boundary without escalation |
-| 4 | **Verify** — test the claim against reality, not against confidence | Green-tests-but-wrong-feature; persuasion over proof | Evidence, named gaps, what was not tested | The evidence does not address the spec |
-| 5 | **Decide** — ship, defer, or stop, on purpose and on the record | Silent merges; evidence-shaped PRs with no decision | A decision with reasoning, leftover risk, rollback, monitoring | Nobody owns the decision |
-| 6 | **Save the approved version** (baseline) — lock what everyone agreed is correct | Drift; "the prompt changed and nobody knew" | Controlled record of code, prompts, models, tools, deps, evals, docs | You cannot say what the controlled items are |
-| 7 | **Operate** — run it in the real world; watch it; learn from it | Forgotten near misses; lessons dying in chat history | Signals, OPEX entries, triggers for a new baseline | There is no owner for what to watch |
-
-The loop closes when operation feeds the next question.
-
-```mermaid
-flowchart LR
-    Q[1 Question] --> S[2 Specify] --> E[3 Execute] --> V[4 Verify]
-    V --> Dec{5 Decide}
-    Dec -->|ship / defer| B[6 Save approved version] --> O[7 Operate]
-    Dec -->|block| S
-    O -.signals + OPEX feed the next question.-> Q
-```
-
-The expanded path — useful for standard and high-consequence work — fans the same loop out into eleven beats:
+## The full path
 
 ```text
 Question -> Discover -> Specify -> Plan -> Execute -> Verify -> Review -> Decide -> Baseline -> Operate -> Learn
 ```
 
+Each step is a control point: it stops one specific failure mode and produces one artifact you can point at. A skipped step is not a shortcut — it is a named failure mode you chose to accept. The per-step "stops / produces / abort if" detail lives in [`WORKFLOWS.md`](WORKFLOWS.md).
+
+```mermaid
+flowchart LR
+    Q[Question] --> D[Discover] --> S[Specify] --> P[Plan]
+    P --> E[Execute] --> V[Verify] --> R[Review]
+    R --> Dec{Decide}
+    Dec -->|ship / defer| B[Baseline] --> O[Operate] --> L[Learn]
+    Dec -->|block| P
+    L -.feeds future basis.-> Q
+```
+
 More diagrams (mode decision tree, skill graph, packet artifact graph) are in [`docs/diagrams.md`](docs/diagrams.md).
 
-A "baseline" is just the version you have agreed is correct and want to protect. Small and standard change records are the Git-native way to walk a change through this loop. You sort the risk early so the simple path stays easy to teach. You only add the heavier records — what is under control, ripple effects, the saved baseline, drift, and operating lessons — when the stakes are high enough to earn them.
+A "baseline" is just the version you have agreed is correct and want to protect. Small and standard change records are the Git-native way to walk a change through this path. You sort the risk early so the simple path stays easy to teach. You only add the heavier records — what is under control, ripple effects, the saved baseline, drift, and operating lessons — when the stakes are high enough to earn them.
 
 Underneath the path sit a few habits borrowed from high-reliability work, what we call HPI for AI agents (Human Performance Improvement). Use them when they change the outcome: brief the work before a risky step, double-check critical actions, hand off cleanly, get a second set of eyes when trust is on the line, and capture the lesson after a near miss.
 

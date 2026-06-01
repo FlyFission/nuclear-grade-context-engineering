@@ -20,12 +20,16 @@ IEC standards
 ISO standards
 ANSI/ANS standards
 NEI documents
+INPO documents (member-only, e.g. INPO 12-012; cite the public NRC trait set instead)
+copyrighted leadership/management books (e.g. Marquet, Turn the Ship Around! / Leadership Is Language)
 proprietary QA manuals
 proprietary procurement manuals
 utility procedures
 vendor proprietary qualification packages
 customer confidential procedures
 ```
+
+Leadership and high-reliability ideas (intent-based leadership, leader-leader, the "I intend to" ladder) may be **paraphrased as concept inspiration** and attributed by name, but their books must not be quoted, closely reworded, or used to shape the structure of any artifact. Prefer the public government analogues (Rickover public speeches, NRC safety-culture traits, naval mission-command doctrine) for direct citation.
 
 ---
 

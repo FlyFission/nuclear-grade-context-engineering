@@ -34,7 +34,24 @@ cost" conclusion from #7 holds up under measurement. The body cuts that #7 weigh
 a *judgment* trade, not a measured win — which is why this PR ships measurement only and
 defers any body edits.
 
-## Measured baseline (2026-05, 23 skills)
+## Refresh — 2026-05-31 (leadership and high-reliability pass, 27 skills)
+
+The leadership and high-reliability pass added four skills (`deciding-who-decides`,
+`declaring-intent`, `responding-to-incidents`, `tracking-deficiencies`) and four command
+cards. Current reproducible aggregates (`python tools/ng.py tokens .`):
+
+| Surface | Count | Tokens | Notes |
+|---|---|---|---|
+| Skill descriptions | 27 | 2,812 | always-loaded; avg ~104, still bounded 80–500 chars |
+| Skill bodies | 27 | 35,366 | on-invocation; one body loads when a skill fires; heaviest 2,641 (`organizing-project-folders`) |
+| Command cards | 26 | 23,392 | largest 1,406 (`ng-folders.md`), within the 1,600 budget |
+| All measured prose | | ~219,600 | onboarding / reference / worked examples / doctrine |
+
+The headline conclusion is unchanged: the always-loaded surface is the lean descriptions
+(~104 tokens each), not the bodies, and the budget gate stays green. The historical baseline
+below is the original 2026-05 23-skill snapshot, kept for provenance.
+
+## Measured baseline (2026-05 original snapshot, 23 skills)
 
 | Surface | Files | Tokens | Notes |
 |---|---|---|---|
@@ -71,17 +88,20 @@ doesn't deliver.
 
 ## Redundancy findings (counts, not estimates)
 
-- **Assurance disclaimer.** "does not create ..." appears **58 times across 55 files**;
+- **Assurance disclaimer.** "does not create ..." appears **79 times across 69 files** (after the leadership and high-reliability pass; 58 across 55 files on main before it);
   the fuller "It does not ..." lineage sentence appears in a similar spread. This
   is genuine cross-file repetition. It is *sub-paragraph* and varies in wording, so it does
   not trip the paragraph-level redundancy index — it is tracked by the `phrase_frequency`
   count in `ng tokens` instead. It is defensible (each self-contained file keeps its own
   legal boundary) but is the largest single dedup opportunity if the team ever chooses to
   trade self-containment for compactness.
-- **No repeated prose blocks.** After excluding fenced code, **zero** paragraph-sized prose
-  blocks recur across ≥3 files. The source-lineage notes are *not* copies — each cites
-  different standards (DOE, NASA, GAO, MIL-STD, …), so the earlier "22× identical" estimate
-  was wrong; measurement corrected it.
+- **One small repeated block.** After excluding fenced code, exactly one ~46-token block
+  recurs across ≥3 files — the `**Boundary:**` line shared by four new operating-system docs
+  (4 files, well under the 8-file gate threshold), introduced by the leadership pass. It is
+  defensible for the same reason as the disclaimer: each self-contained doc keeps its own
+  boundary note. The source-lineage notes are *not* copies — each cites different standards
+  (DOE, NASA, GAO, MIL-STD, …), so the earlier "22× identical" estimate was wrong; measurement
+  corrected it.
 - **Shared command snippets are not waste.** The `ng validate ...` command recurs in ~17
   verification sections; that is a legitimate shared reference and is excluded from the
   redundancy scan by design.
@@ -128,7 +148,7 @@ so the gate blocks regression rather than the accepted corpus:
 | `description_max` | 200 | 140 |
 | `skill_body_max` | 3000 | 2,641 |
 | `command_max` | 1600 | 1,406 |
-| `repeated_block_max_files` | 8 | 0 prose blocks |
+| `repeated_block_max_files` | 8 | 0 prose blocks over threshold |
 
 A new skill that balloons past these, or a boilerplate paragraph copied into a 9th file,
 fails CI — a gate that fires every time, not a style note that gets forgotten.

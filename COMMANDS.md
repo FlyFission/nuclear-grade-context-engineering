@@ -28,6 +28,10 @@ These are portable command prompts: plain Markdown prompt cards you can paste in
 | [`ng-breakdown`](commands/ng-breakdown.md) | You need to split a deliverable into clean pieces | A work-breakdown table and a short dictionary |
 | [`ng-folders`](commands/ng-folders.md) | You need a folder layout from a work breakdown or an existing tree | A folder map and a naming and depth check |
 | [`ng-close-packet`](commands/ng-close-packet.md) | A change record has gone stale and `ng status` flagged it | A finished, closed-with-reason, or deleted record |
+| [`ng-decide-authority`](commands/ng-decide-authority.md) | An agent could act on something irreversible, trust-bearing, or thinly evidenced and you must place authority | Who decides and the escalation trigger |
+| [`ng-intent`](commands/ng-intent.md) | You are about to take a critical or irreversible action and want the reasoning challenged first | An intent declaration or release brief with abort criteria and rollback |
+| [`ng-incident`](commands/ng-incident.md) | Production is broken, data is at risk, or an agent action caused harm | A stabilize-first incident record with owned corrective actions |
+| [`ng-deficiency`](commands/ng-deficiency.md) | A known problem will outlive a single change and must be owned, not normalized | A deficiency entry, aged and dispositioned |
 
 ## What every prompt card must include
 

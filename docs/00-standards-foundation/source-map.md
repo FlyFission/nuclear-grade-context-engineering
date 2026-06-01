@@ -160,6 +160,26 @@ These sources shape how we break work down and keep folders in order. Nothing mo
 
 ---
 
+## Tier 8 — Leadership, Human-Performance, and High-Reliability Operating Culture
+
+These sources shape how people and AI agents are directed, how authority and intent are handled, and how teams stay honest and recover from failure. They are concept lineage only. The workflows built from them are original and software-native. We claim no compliance with any program, and we reproduce no proprietary book.
+
+| Source | Public link | Classification | Status | Role in Nuclear-grade | Confidence | Direct repo use |
+|---|---|---:|---|---|---:|---|
+| Rickover, "Doing a Job" (public speech text) | https://govleaders.org/rickover.php | Supporting | verified-public | Ownership with technical depth; give authority early but stay responsible; face facts; write it down. | High | Concept lineage for charter ownership/technical-depth articles and `critical-systems.md`; no program claim. |
+| Rickover, "Paper Reactors, Real Reactors" (1953 memo) | https://whatisnuclear.com/rickover.html | Supporting | verified-public | Real responsibility and physical reality discipline an engineer in ways a paper design never does. | Medium-high | Concept lineage for face-facts and evidence-over-persuasion framing; no program claim. |
+| NRC Safety Culture Policy Statement (nine traits) | https://www.nrc.gov/about-nrc/safety-culture/sc-policy-statement | Supporting | verified-public | Public safety-culture traits: questioning attitude, personal accountability, environment for raising concerns, decision-making. | High | Concept lineage for charter integrity/questioning/stop-work articles; pure .gov; preferred over member-only trait documents. |
+| SUBSAFE program (public NAVSEA history) | https://www.navsea.navy.mil/ | Supporting | supporting-context | Quality program after the USS Thresher loss; five pillars: work discipline, material control, documentation, compliance verification, culture. | Medium-high | Concept lineage for `critical-systems.md` Tier 0 framing; history/public-affairs sources only; no program claim. |
+| Navy "Get Real, Get Better" / Culture of Excellence (public Navy) | https://www.mynavyhr.navy.mil/ | Supporting | supporting-context | Honest self-assessment: actual vs standard condition, where red, root cause, owner, verify improvement. | Medium | Concept lineage for the Get-Real retro structure in `learning-from-experience`; public Navy framing; no program claim. |
+| Naval Doctrine Publications NDP-1 / NDP-6 (mission command) | https://www.govinfo.gov/ | Supporting | supporting-context | Decentralized execution by commander's intent; act on purpose when the plan changes; disciplined initiative; mutual trust. | Medium-high | Concept lineage for "authority to information" and clarity-as-alignment; public doctrine; no program claim. |
+| David Marquet, intent-based leadership / leader-leader (Turn the Ship Around!, Leadership Is Language) | https://davidmarquet.com/ | Supporting | supporting-context | Push authority to the information; the "I intend to" ladder; leaders create leaders; control + competence + clarity. | High | Concept inspiration only, paraphrased — NOT direct template lineage; the books are copyrighted. Listed on `do-not-cite-directly.md`. |
+| Google SRE book (free public edition) | https://sre.google/books/ | Supporting | verified-public | SLOs, error budgets, incident response, control loops; the 100%-reliability caution. | High | Supporting context for `incident-response.md`; reliability framing only; no program claim. |
+| DORA / State of DevOps research | https://dora.dev/ | Supporting | verified-public | Delivery metrics (lead time, deploy frequency, change fail rate, recovery time); warning against gaming metrics; AI as amplifier. | High | Concept lineage for the metrics-with-cautions note; metrics framing only; no dashboard claim. |
+
+These sources direct how work is led and how teams stay honest. They do not add governance, CI, supply-chain, or compliance machinery, and David Marquet's books are paraphrased as inspiration only, never reproduced or used as template lineage.
+
+---
+
 ## Context-Only / Do-Not-Overweight Sources
 
 | Source family | Classification | Status | Why |

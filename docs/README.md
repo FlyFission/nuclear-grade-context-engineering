@@ -17,6 +17,10 @@ These docs have two parts. First, learn how to use the workflow. Second, look up
 | Review a packet | [`04-adoption/reviewer-playbook.md`](04-adoption/reviewer-playbook.md) |
 | Manage controlled configuration | [`02-operating-system/configuration-management.md`](02-operating-system/configuration-management.md) |
 | Add HPI controls for agent work | [`02-operating-system/hpi-overlays.md`](02-operating-system/hpi-overlays.md) |
+| Lead people and agents the high-reliability way | [`01-field-guide/leadership-and-high-reliability.md`](01-field-guide/leadership-and-high-reliability.md) |
+| Place authority and declare intent | [`02-operating-system/authority-and-intent.md`](02-operating-system/authority-and-intent.md) |
+| Scale rigor by risk tier | [`02-operating-system/risk-tiers-and-modes.md`](02-operating-system/risk-tiers-and-modes.md) |
+| Run an incident, track deficiencies | [`02-operating-system/incident-response.md`](02-operating-system/incident-response.md), [`02-operating-system/deficiency-register.md`](02-operating-system/deficiency-register.md) |
 | Understand CLI behavior | [`05-reference/cli-reference.md`](05-reference/cli-reference.md) |
 | See the workflow as diagrams | [`diagrams.md`](diagrams.md) |
 | Decode a term or idiom | [`glossary.md`](glossary.md) |
@@ -25,8 +29,8 @@ These docs have two parts. First, learn how to use the workflow. Second, look up
 
 ```text
 00-standards-foundation/   public source map, citation safety, and boundary rules
-01-field-guide/            source-to-concept translation
-02-operating-system/       lifecycle, HPI overlays, modes, packets, thresholds, validators, context packs
+01-field-guide/            source-to-concept translation, leadership and high-reliability guide
+02-operating-system/       lifecycle, HPI overlays, modes, packets, authority and intent, incidents, deficiencies, critical systems
 03-worked-examples/        completed example packets and proof chains
 04-adoption/               team rollout, agent authority, reviewer playbook
 05-reference/              skill, command, and CLI contracts

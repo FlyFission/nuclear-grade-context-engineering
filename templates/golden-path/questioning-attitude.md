@@ -90,4 +90,4 @@ Danger words to challenge: probably, should, seems, obvious, just docs, safe, se
 
 ## Source-lineage note
 
-Original Nuclear-grade template inspired by the questioning-attitude, validate-your-assumptions, pause-when-unsure, and review habits in DOE-HDBK-1028-2009, used as public source lineage. No compliance claim is made.
+Original Nuclear-grade template inspired by the questioning-attitude, validate-your-assumptions, pause-when-unsure, and review habits in DOE-HDBK-1028-2009, mapped in `docs/00-standards-foundation/source-map.md` and used as public source lineage. No compliance claim is made.

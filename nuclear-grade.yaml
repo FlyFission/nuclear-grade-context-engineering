@@ -27,11 +27,14 @@ templates:
     - turnover.md
     - self-check.md
     - decision.md
+    - intent.md
+    - deficiency.md
   optional:
     - standard/supplier-trust.md
     - standard/red-team.md
     - standard/execution-trace.md
     - standard/wbs.md
+    - standard/incident.md
 skills:
   - questioning-attitude
   - using-nuclear-grade
@@ -56,6 +59,10 @@ skills:
   - breaking-down-the-work
   - organizing-project-folders
   - closing-stale-packets
+  - deciding-who-decides
+  - declaring-intent
+  - responding-to-incidents
+  - tracking-deficiencies
 commands:
   - ng-question.md
   - ng-classify.md
@@ -79,6 +86,10 @@ commands:
   - ng-breakdown.md
   - ng-folders.md
   - ng-close-packet.md
+  - ng-decide-authority.md
+  - ng-intent.md
+  - ng-incident.md
+  - ng-deficiency.md
 token_budgets:
   # Per-file token ceilings enforced by `ng tokens` (see nuclear_grade/tokens.py).
   # Seeded above the 2026-05 measured maxima (desc 138, skill body 2489, command

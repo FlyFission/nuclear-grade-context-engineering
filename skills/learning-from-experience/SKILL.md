@@ -30,12 +30,14 @@ Lessons from real operation (OPEX) only help if they change future work. So trea
 
 ## Process
 
-1. State what happened. Use plain words, no blame.
-2. Find the actual error, the weak or missing control, and which approved version or file it touched.
+1. State the actual condition in plain words, no blame, and name the standard or expected condition it fell short of.
+2. Name where it is red — the gap between actual and standard — then find the root cause, not the symptom, and the weak or missing control and which approved version or file it touched.
 3. Pick a lasting fix: update a basis, a test, a checker, a template, a skill, a command, a doc, a monitor, a threshold, or an approved version.
 4. Do not close the lesson with just regret or an explanation when a real control could change instead.
-5. Verify the fix, or close the lesson on purpose and say why no fix was needed.
+5. Give the correction an owner, then verify the improvement — or close the lesson on purpose and say why no fix was needed.
 6. Feed the lesson into future questioning, planning, verification, and handoffs.
+
+This actual-vs-standard, root-cause, owner, verify structure keeps a retro from drifting into a vague "what went well / what could improve." A standing deficiency that will outlive this lesson belongs in the deficiency register (`tracking-deficiencies`).
 
 ## Outputs
 

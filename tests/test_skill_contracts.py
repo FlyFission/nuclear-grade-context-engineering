@@ -38,6 +38,10 @@ EXPECTED_SKILLS = {
     "breaking-down-the-work",
     "organizing-project-folders",
     "closing-stale-packets",
+    "deciding-who-decides",
+    "declaring-intent",
+    "responding-to-incidents",
+    "tracking-deficiencies",
 }
 
 REQUIRED_SECTIONS = (

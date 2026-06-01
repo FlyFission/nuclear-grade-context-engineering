@@ -50,4 +50,4 @@
 
 ## Source-lineage note
 
-Original Nuclear-grade template inspired by the self-checking, pause-when-unsure, flagging, procedure-use, and verification habits in DOE-HDBK-1028-2009, used as public source lineage. No compliance claim is made.
+Original Nuclear-grade template inspired by the self-checking, pause-when-unsure, flagging, procedure-use, and verification habits in DOE-HDBK-1028-2009, mapped in `docs/00-standards-foundation/source-map.md` and used as public source lineage. No compliance claim is made.

@@ -117,6 +117,15 @@ A "baseline" is just the version you have agreed is correct and want to protect.
 
 Underneath the path sit a few habits borrowed from high-reliability work, what we call HPI for AI agents (Human Performance Improvement). Use them when they change the outcome: brief the work before a risky step, double-check critical actions, hand off cleanly, get a second set of eyes when trust is on the line, and capture the lesson after a near miss.
 
+## Leadership and high reliability: top-down and bottom-up
+
+The submarine world it borrows from is not only about procedure. It is about how authority moves. Nuclear-grade applies that in two directions at once.
+
+- **Top-down:** supervisors supply *clarity* (the mission, the constraints, what good looks like) and grow *competence* (evidence, evals, a track record) so that authority can move to where the information already is. The leader's job shifts from approving every move to verifying clarity and competence.
+- **Bottom-up:** the person or agent closest to the work *declares intent and reasoning* before a critical action — "I intend to do X because the checks show Y" — surfaces what they see, and *escalates at trust boundaries*. Anyone may halt unclear work, and bad news is protected, never punished.
+
+The point is to push authority to the information, not to remove a human gate. The gradient raises rigor where it matters: reversible, well-evidenced work is decided at the edge; anything irreversible, trust-bearing, or thinly evidenced escalates. And because AI amplifies an organization's existing strengths and weaknesses, this discipline matters more with agents, not less — treat AI output as a hypothesis to prove, not as authority. See [`docs/01-field-guide/leadership-and-high-reliability.md`](docs/01-field-guide/leadership-and-high-reliability.md).
+
 ## Change records: small vs. standard
 
 This first release checks two kinds of change records.
@@ -163,8 +172,8 @@ templates/                      fill-in records for small, standard, and high-co
 tools/                          the command-line tool and the checker
 tests/                          tests for the checker, the tool, the contracts, and the public docs
 docs/00-standards-foundation/   sources, safe citation, compliance boundaries
-docs/01-field-guide/            how each source idea maps to a plain concept
-docs/02-operating-system/       the path, the habits, the modes, the records, the checks
+docs/01-field-guide/            how each source idea maps to a plain concept, incl. the leadership and high-reliability guide
+docs/02-operating-system/       the path, the habits, the modes, the records, the checks, authority and intent, incidents, deficiencies
 docs/03-worked-examples/        the flagship worked example
 docs/04-adoption/               rollout, agent permissions, reviewer playbook
 docs/05-reference/              the skill, command, and tool contracts

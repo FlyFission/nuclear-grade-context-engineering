@@ -7,7 +7,7 @@ Normal AI coding:
 prompt -> diff -> persuasion -> merge risk
 
 Nuclear-grade:
-question -> specify -> execute -> verify -> decide -> save approved version -> operation
+question -> specify -> execute -> verify -> decide -> save approved version -> operate
 ```
 
 A "baseline" — the saved approved version — is the version everyone agreed is correct.

@@ -23,7 +23,7 @@ Normal AI coding:
 prompt -> diff -> persuasion -> merge risk
 
 Nuclear-grade:
-question -> specify -> execute -> verify -> decide -> save approved version -> operation
+question -> specify -> execute -> verify -> decide -> save approved version -> operate
 ```
 
 This first release (v0) is a working toolkit you can use today: skills an agent can follow, command prompts you can paste, templates for small and large changes, a small command-line tool, a checker, a public list of sources, one fully worked example, and one hands-on comparison study.
@@ -95,11 +95,7 @@ This is practical, not decorative. Instructions should be hard to misuse. Small 
 Question -> Discover -> Specify -> Plan -> Execute -> Verify -> Review -> Decide -> Baseline -> Operate -> Learn
 ```
 
-Short version for everyday use:
-
-```text
-Question -> Specify -> Execute -> Verify -> Decide
-```
+Each step is a control point: it stops one specific failure mode and produces one artifact you can point at. A skipped step is not a shortcut — it is a named failure mode you chose to accept. The control-point detail — stops / produces / abort-if — is tabled for the everyday seven-step form of this loop in [`WORKFLOWS.md`](WORKFLOWS.md), and the same control points apply when the loop fans out into all eleven beats.
 
 ```mermaid
 flowchart LR

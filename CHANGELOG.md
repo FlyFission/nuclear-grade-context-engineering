@@ -6,6 +6,11 @@ These entries record public-facing changes. They do not claim the project is a m
 
 ## [Unreleased]
 
+### Changed
+
+- Reframed the core loop as seven control points in `WORKFLOWS.md`. Each step (`Question`, `Specify`, `Execute`, `Verify`, `Decide`, `Save approved version`, `Operate`) is now tabled with the failure mode it stops, the artifact it produces, and the abort condition for proceeding. A skipped step is now a named failure mode you chose to accept, not an unstated shortcut. The everyday seven-step form is reconciled with the full eleven-beat path used for standard and high-consequence work.
+- `README.md` keeps the canonical eleven-step path and original lifecycle diagram, with one new sentence introducing the control-point treatment and pointing to `WORKFLOWS.md` for the detail. No simplified-vs-full duplication on the landing page.
+
 ## [0.4.0] - 2026-05-31
 
 ### Breaking

@@ -7,14 +7,34 @@ Normal AI coding:
 prompt -> diff -> persuasion -> merge risk
 
 Nuclear-grade:
-question -> specify -> execute -> verify -> decide -> baseline -> operation
+question -> specify -> execute -> verify -> decide -> save approved version -> operation
 ```
 
-A "baseline" is the version everyone agreed is correct.
+A "baseline" — the saved approved version — is the version everyone agreed is correct.
+
+## The core loop: seven control points
+
+Each step is a control point. Each one stops one specific failure mode. Skip any of them and you ship a different kind of risk.
+
+| # | Step | Stops | Produces | Abort if |
+|---|---|---|---|---|
+| 1 | **Question** — frame the decision before code moves | Solving the wrong problem, confidently | The fact that would change your mind | You cannot name a question that has an answer |
+| 2 | **Specify** — write what must be true and what must not break | Shifting goalposts; reviewers guessing intent from the diff | Intent, boundary, must-not-break list | The spec cannot be falsified |
+| 3 | **Execute** — build inside the boundary; agents work here, not before | Scope drift, surprise blast radius, silent dependency changes | The diff and the trace from spec to change | A step crosses the boundary without escalation |
+| 4 | **Verify** — test the claim against reality, not against confidence | Green-tests-but-wrong-feature; persuasion over proof | Evidence, named gaps, what was not tested | The evidence does not address the spec |
+| 5 | **Decide** — ship, defer, or stop, on purpose and on the record | Silent merges; evidence-shaped PRs with no decision | A decision with reasoning, leftover risk, rollback, monitoring | Nobody owns the decision |
+| 6 | **Save the approved version** (baseline) — lock what everyone agreed is correct | Drift; "the prompt changed and nobody knew" | Controlled record of code, prompts, models, tools, deps, evals, docs | You cannot say what the controlled items are |
+| 7 | **Operate** — run it in the real world; watch it; learn from it | Forgotten near misses; lessons dying in chat history | Signals, OPEX entries, triggers for a new baseline | There is no owner for what to watch |
+
+The loop closes when operation feeds the next question.
+
+This is what "nuclear-grade" buys you over prompt-and-pray: every step has a job, an artifact, and a stop condition. A skipped step is not a shortcut — it is a known failure mode you chose to accept.
+
+## Two speeds, one loop
 
 For AI agents, we add a few small habits from Human Performance Improvement (HPI). Brief the work first. Double-check risky actions. Hand off cleanly. Get a second set of eyes when needed. Decide on the careful side. Learn from near misses.
 
-The workflow has two speeds. While you explore and try ideas you can throw away, move fast. Slow down when the work turns into something real: a piece of evidence, a claim, a file you must keep under control, public wording, a baseline, a release call, or a change to what the agent is allowed to do.
+The workflow has two speeds. While you explore and try ideas you can throw away, move fast — the loop still runs, but the artifacts are lightweight. Slow down when the work turns into something real: a piece of evidence, a claim, a file you must keep under control, public wording, a saved approved version, a release call, or a change to what the agent is allowed to do.
 
 ## Workflow catalog
 

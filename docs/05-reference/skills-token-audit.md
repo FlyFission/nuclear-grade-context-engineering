@@ -23,12 +23,12 @@ Skills load in two stages, and the two stages cost very differently:
 
 | Cost | What loads | When | Tokens | Share |
 |---|---|---|---|---|
-| **Always-loaded** | frontmatter `description` (×23 skills) | every routing decision | **2,337** | **7.7%** |
-| **On-invocation** | skill body | only when that one skill fires | 27,902 | 92.3% |
+| **Always-loaded** | frontmatter `description` (×23 skills) | every routing decision | **2,361** | **7.2%** |
+| **On-invocation** | skill body | only when that one skill fires | 30,222 | 92.8% |
 
-The always-loaded surface a routing agent pays on *every* turn is just **2,337 tokens —
-about 102 per skill** — and is bounded by the contract test at 80–500 characters per
-description. The 27,902 tokens of bodies are real, but an agent reads **one** body when a
+The always-loaded surface a routing agent pays on *every* turn is just **2,361 tokens —
+about 103 per skill** — and is bounded by the contract test at 80–500 characters per
+description. The 30,222 tokens of bodies are real, but an agent reads **one** body when a
 skill fires, not all 23. So the "always-loaded cost is lean; bodies aren't the always-on
 cost" conclusion from #7 holds up under measurement. The body cuts that #7 weighed remain
 a *judgment* trade, not a measured win — which is why this PR ships measurement only and
@@ -45,7 +45,7 @@ cards. Current reproducible aggregates (`python tools/ng.py tokens .`):
 | Skill descriptions | 27 | 2,812 | always-loaded; avg ~104, still bounded 80–500 chars |
 | Skill bodies | 27 | 35,366 | on-invocation; one body loads when a skill fires; heaviest 2,641 (`organizing-project-folders`) |
 | Command cards | 26 | 23,392 | largest 1,406 (`ng-folders.md`), within the 1,600 budget |
-| All measured prose | | ~219,400 | onboarding / reference / worked examples / doctrine |
+| All measured prose | | ~219,600 | onboarding / reference / worked examples / doctrine |
 
 The headline conclusion is unchanged: the always-loaded surface is the lean descriptions
 (~104 tokens each), not the bodies, and the budget gate stays green. The historical baseline
@@ -55,17 +55,21 @@ below is the original 2026-05 23-skill snapshot, kept for provenance.
 
 | Surface | Files | Tokens | Notes |
 |---|---|---|---|
-| Skill descriptions | 23 | 2,337 | always-loaded; avg 102, max 138 |
-| Skill bodies | 23 | 27,902 | on-invocation; avg 1,213, max 2,489 |
-| Command cards | 22 | 18,079 | avg 822, max 1,295 (`ng-folders.md`) |
-| Templates | 23 | 18,404 | repetitive by design (form scaffolds) |
-| Docs (top-level + `docs/` tree) | 87 | 117,931 | onboarding / reference / worked examples |
-| **All measured prose** | | **184,653** | |
+| Skill descriptions | 23 | 2,361 | always-loaded; avg 103, max 140 |
+| Skill bodies | 23 | 30,222 | on-invocation; avg 1,314, max 2,641 |
+| Command cards | 22 | 19,923 | avg 906, max 1,406 (`ng-folders.md`) |
+| Templates | 23 | 18,969 | repetitive by design (form scaffolds) |
+| Docs (top-level + `docs/` tree) | 87 | 123,142 | onboarding / reference / worked examples |
+| **All measured prose** | | **194,603** | |
 
-Heaviest skill bodies: `structuring-agentic-folders` (2,489), `decomposing-work-breakdown`
-(2,108), `closing-stale-packets` (1,960), `controlling-mission-drift` (1,890),
-`red-teaming-agent-changes` (1,617). Leanest: `baselining-configuration` (738),
-`screening-change-impact` (754), `checking-source-lineage` (803).
+("All measured prose" includes this audit page itself, so the grand total drifts by a few
+hundred tokens as this doc is edited; the skill, command, and template figures above are
+stable. Re-run `python tools/ng.py tokens .` for the live number.)
+
+Heaviest skill bodies: `organizing-project-folders` (2,641), `breaking-down-the-work`
+(2,217), `closing-stale-packets` (1,962), `staying-on-mission` (1,953),
+`stress-testing-agent-changes` (1,742). Leanest: `checking-what-a-change-affects` (832),
+`checking-source-claims` (872), `checking-legal-and-safety-wording` (879).
 
 ## Cost per decision signal
 
@@ -84,17 +88,20 @@ doesn't deliver.
 
 ## Redundancy findings (counts, not estimates)
 
-- **Assurance disclaimer.** "does not create ..." appears **78 times across 69 files** (2026-05-31 refresh; 57 across 54 at the original baseline);
+- **Assurance disclaimer.** "does not create ..." appears **79 times across 69 files** (after the leadership and high-reliability pass; 58 across 55 files on main before it);
   the fuller "It does not ..." lineage sentence appears in a similar spread. This
   is genuine cross-file repetition. It is *sub-paragraph* and varies in wording, so it does
   not trip the paragraph-level redundancy index — it is tracked by the `phrase_frequency`
   count in `ng tokens` instead. It is defensible (each self-contained file keeps its own
   legal boundary) but is the largest single dedup opportunity if the team ever chooses to
   trade self-containment for compactness.
-- **No repeated prose blocks.** After excluding fenced code, **zero** paragraph-sized prose
-  blocks recur across ≥3 files. The source-lineage notes are *not* copies — each cites
-  different standards (DOE, NASA, GAO, MIL-STD, …), so the earlier "22× identical" estimate
-  was wrong; measurement corrected it.
+- **One small repeated block.** After excluding fenced code, exactly one ~46-token block
+  recurs across ≥3 files — the `**Boundary:**` line shared by four new operating-system docs
+  (4 files, well under the 8-file gate threshold), introduced by the leadership pass. It is
+  defensible for the same reason as the disclaimer: each self-contained doc keeps its own
+  boundary note. The source-lineage notes are *not* copies — each cites different standards
+  (DOE, NASA, GAO, MIL-STD, …), so the earlier "22× identical" estimate was wrong; measurement
+  corrected it.
 - **Shared command snippets are not waste.** The `ng validate ...` command recurs in ~17
   verification sections; that is a legitimate shared reference and is excluded from the
   redundancy scan by design.
@@ -105,7 +112,7 @@ doesn't deliver.
 
 ## Over-prescription observations (reported, not acted on)
 
-These are flagged for a future, post-#12 prose pass; this PR does not edit any skill body.
+These are flagged for a future prose pass; the audit does not edit any skill body.
 
 - Some `## When to Use` / `## When Not to Use` lists prescribe *how to decide* applicability,
   which the model is already good at, rather than only naming the landmines.
@@ -115,17 +122,17 @@ These are flagged for a future, post-#12 prose pass; this PR does not edit any s
 ## Overlap clusters flagged for a human decision (NOT merged)
 
 The user asked to flag conceptual overlap rather than merge it. Four clusters of skills sit
-on adjacent surfaces and are worth a deliberate keep-or-merge decision **after** the #12
-rename sweep lands (merging now would collide with it):
+on adjacent surfaces and are worth a deliberate keep-or-merge decision (names below reflect
+the post-#12 plain-language slugs):
 
-1. **Trust-boundary trio** — `checking-source-lineage`, `checking-license-and-assurance-boundaries`,
-   `checking-dependency-and-model-trust`.
-2. **Agent-handoff trio** — `packing-agent-context`, `turning-over-agent-work`,
-   `self-checking-agent-actions`.
-3. **Evidence / decision trio** — `proving-claims`, `reviewing-ship-readiness`,
+1. **Trust-boundary trio** — `checking-source-claims`, `checking-legal-and-safety-wording`,
+   `vetting-outside-code-and-models`.
+2. **Agent-handoff trio** — `briefing-an-agent`, `handing-off-work`,
+   `double-checking-before-acting`.
+3. **Evidence / decision trio** — `proving-claims`, `checking-release-readiness`,
    `reviewing-code-quality`.
-4. **Framing / risk overlap** — `questioning-attitude`, `classifying-change-risk`,
-   `identifying-controlled-items`.
+4. **Framing / risk overlap** — `questioning-attitude`, `rating-change-risk`,
+   `choosing-what-to-control`.
 
 Flagged only. Each is independently routed today; consolidation is a structural change with
 test-contract and routing implications, to be decided separately.
@@ -146,13 +153,13 @@ so the gate blocks regression rather than the accepted corpus:
 A new skill that balloons past these, or a boilerplate paragraph copied into a 9th file,
 fails CI — a gate that fires every time, not a style note that gets forgotten.
 
-## Recommended next step (post-#12)
+## Recommended next step
 
-Once PR #12's rename sweep merges, a follow-up *may* trim the heaviest bodies and collapse
-the disclaimer to a single linked source — **if** the team decides self-containment is worth
-trading for compactness. The data says that trade is optional, not urgent: the always-loaded
-cost is already small, and per-signal cost is already tight. Measure first, then cut only
-what the numbers justify.
+Now that PR #12's rename sweep has landed, a follow-up *may* trim the heaviest bodies and
+collapse the disclaimer to a single linked source — **if** the team decides self-containment
+is worth trading for compactness. The data says that trade is optional, not urgent: the
+always-loaded cost is already small, and per-signal cost is already tight. Measure first,
+then cut only what the numbers justify.
 
 ## Boundary
 

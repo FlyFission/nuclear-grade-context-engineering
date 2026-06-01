@@ -39,6 +39,32 @@ def test_split_frontmatter_handles_missing_frontmatter():
     assert "just prose" in body
 
 
+def test_crlf_checkout_is_measured_identically_to_lf():
+    """A CRLF checkout (Windows core.autocrlf) must yield the same counts as LF,
+    or descriptions read as 0 tokens and the budget goes unenforced there."""
+
+    lf = '---\nname: demo\ndescription: A short trigger line.\n---\n\n# Demo\n\nBody text here.\n'
+    crlf = lf.replace("\n", "\r\n")
+
+    lf_desc, lf_body = tokens.split_frontmatter(lf)
+    crlf_desc, crlf_body = tokens.split_frontmatter(crlf.replace("\r\n", "\n"))
+
+    assert lf_desc == crlf_desc != ""
+    assert tokens.count_tokens(lf_desc) == tokens.count_tokens(crlf_desc) > 0
+
+
+def test_read_text_normalizes_crlf(tmp_path):
+    path = tmp_path / "f.md"
+    path.write_bytes(b"---\r\nname: demo\r\ndescription: Trigger here now.\r\n---\r\n\r\nBody.\r\n")
+
+    text = tokens._read_text(path)
+    description, body = tokens.split_frontmatter(text)
+
+    assert "\r" not in text
+    assert description == "Trigger here now."
+    assert tokens.count_tokens(description) > 0
+
+
 def test_build_report_derives_skills_dynamically_from_tree():
     """The skill set is read from the directory, never hardcoded, so it stays
     correct as skills are added (#11's 23rd) or renamed (#12)."""

@@ -59,6 +59,8 @@ State what would prove this wrong, not just what success looks like. Treat the s
 
 ## Verification command
 
+The intent record is filed inside a change packet, so validate the packet it lives in. The packet's `risk.md` declares the mode (Quick or Standard) and carries that mode's base files; `intent.md` is checked alongside them.
+
 ```bash
 python tools/ng.py validate .nuclear/changes/<slug>
 ```

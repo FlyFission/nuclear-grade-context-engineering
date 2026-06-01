@@ -59,6 +59,8 @@ Decide fix-or-accept; never leave it as a silent "known issue." Do not imply for
 
 ## Verification command
 
+The deficiency record is filed inside a change packet, so validate the packet it lives in. The packet's `risk.md` declares the mode (Quick or Standard) and carries that mode's base files; `deficiency.md` is checked alongside them.
+
 ```bash
 python tools/ng.py validate .nuclear/changes/<slug>
 ```

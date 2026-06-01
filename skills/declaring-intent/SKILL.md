@@ -72,4 +72,4 @@ Before a critical action, say what you intend to do and the reasoning behind it,
 
 ## Source-lineage note
 
-This skill is an original software-workflow translation of stating intent before acting — the "I intend to" construct and leader-leader idea (concept lineage from intent-based leadership) — grounded in the deliberate-action, self-checking, and three-way-communication habits in DOE-HDBK-1028-2009, used as public idea lineage. It does not create DOE compliance, formal assurance, safety, security, certification, or regulatory adequacy.
+This skill is an original software-workflow translation of stating intent before acting. The "I intend to" construct and leader-leader idea are concept inspiration from intent-based leadership only — paraphrased, not template lineage (a copyrighted source; see `docs/00-standards-foundation/do-not-cite-directly.md`). Its public idea lineage is the deliberate-action, self-checking, and three-way-communication habits in DOE-HDBK-1028-2009, mapped in `docs/00-standards-foundation/source-map.md`. It does not create DOE compliance, formal assurance, safety, security, certification, or regulatory adequacy.

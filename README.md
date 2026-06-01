@@ -28,32 +28,20 @@ question -> specify -> execute -> verify -> decide -> save approved version -> o
 
 This first release (v0) is a working toolkit you can use today: skills an agent can follow, command prompts you can paste, templates for small and large changes, a small command-line tool, a checker, a public list of sources, one fully worked example, and one hands-on comparison study.
 
-## Try it in 60 seconds
+## Watch an AI agent prove it stayed in its workspace
 
 ```bash
-python tools/ng.py doctor .
-python tools/ng.py list
-python tools/ng.py new demo-change --mode quick
-python tools/ng.py validate .nuclear/changes/demo-change
-```
-
-The fourth command is *supposed* to print `FAILED: ...` with `still contains the placeholder marker`. That is the safety check doing its job. Every template ships with a `NUCLEAR-GRADE-PLACEHOLDER` line, and the checker refuses to pass until you delete it. So fill in the parts that matter, delete the marker line, and run `validate` again:
-
-```bash
-# In .nuclear/changes/demo-change/risk.md and proof.md, replace the prompts with
-# real content, then delete the line that starts with "<!-- NUCLEAR-GRADE-PLACEHOLDER".
-python tools/ng.py validate .nuclear/changes/demo-change
-# OK: .nuclear/changes/demo-change
-```
-
-Look at the included real example:
-
-```bash
-python -m pytest docs/03-worked-examples/ai-agent-tool-permissions/tests/test_workspace_guard.py -q
+python -m pytest docs/03-worked-examples/ai-agent-tool-permissions/tests/test_workspace_guard.py -v
+# 4 passed — every write attempt outside the agent's workspace was denied and logged.
 python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions
+# OK — the change record exposes the evidence behind that result.
 ```
 
-If your shell only has `python3`, use `python3`.
+That packet is your template, not a curiosity. See [`CORE.md`](CORE.md) for the seven habits behind it and the decision matrix that picks up the rest by trigger; copy [`docs/03-worked-examples/ai-agent-tool-permissions/`](docs/03-worked-examples/ai-agent-tool-permissions/) to start your own.
+
+The longer guided tour — including the safety-check learning device — lives in [`QUICKSTART.md`](QUICKSTART.md). If your shell only has `python3`, use `python3`.
+
+> *A note on tone.* "Nuclear-grade" names the *standard of care*, not a compliance claim (see [`DISCLAIMER.md`](DISCLAIMER.md)). When you adopt this, you do not have to adopt the vocabulary — if the name would mis-calibrate your team or sound like an assurance claim you cannot back, rename the local copy. Keep the discipline; drop the branding.
 
 ## What you get
 
@@ -196,12 +184,20 @@ Included now:
 - a hands-on comparison across twelve real use cases (see `docs/03-worked-examples/skill-workflow-comparison/`);
 - tests for the checker, the tool, the skill and command contracts, the public docs, and the example code.
 
+The comparison is honest about its limits: it is author-judged across twelve scenarios, design evidence not proof of effectiveness. See [`docs/03-worked-examples/skill-workflow-comparison/methodology.md`](docs/03-worked-examples/skill-workflow-comparison/methodology.md) for what the trials measure and what they do not.
+
 Not included yet:
 
 - a packaged plug-in for one specific agent platform;
 - full worked examples for external API controls and human approval steps;
 - deep automated checking for the heavier change patterns;
 - a production sandbox, a compliance package, or any regulated-use assurance workflow.
+
+## Across tools
+
+Cursor, Claude Code, Aider, Codex, and Copilot each read slightly different files for their reasoning and rules. `.nuclear/`, `AGENTS.md`, and the `SKILL.md` contract are a **shared, tool-agnostic shape** that all of them can import as plain markdown: a portable surface for agent authority, change records, and evidence. No matter which IDE ships reasoning steps natively, the packets and habits travel with the repository.
+
+See [`MAXIMS.md`](MAXIMS.md) for the principles in short form, and [`CORE.md`](CORE.md) for the decision matrix that picks the right kit for your project.
 
 ## License and limits
 

@@ -27,6 +27,10 @@ Nuclear-grade Public v0 is a workflow you can use today, not a finished platform
 
 - More worked examples for API controls and human approval steps.
 - Optional packaging for specific agent platforms.
+- Cross-tool renderers: official `.cursorrules`, Claude-Code-skill, Aider-conventions, and Copilot-instructions exports that consume the same `SKILL.md` source of truth, so the same discipline reads natively in each IDE.
+- Optional MCP server over `.nuclear/`: agents query past risk and decision records before proposing changes; opt-in, preserves deterministic CI as the default.
+- Optional semantic check above the deterministic validator: an opt-in LLM-as-Judge layer that asks whether the code satisfies `proof.md`. Per-change LLM auditing is the principled non-default (see `docs/02-operating-system/validators.md` line 3); opt-in is the principled extension.
+- GitHub template repository (`nuclear-grade-starter`) so adopters can click "Use this template" for the Agent-authority kit (see `starter-kit/`).
 - Richer status reports for active packets.
 - Checks for release mode and incident mode once those patterns settle.
 - Optional repeatable checking for HPI records, once real use proves the templates.

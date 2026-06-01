@@ -38,6 +38,8 @@ A skill is a self-contained set of instructions an agent can follow. Each one li
 
 `using-nuclear-grade` is the way in and the router. From there the main path runs question -> rate risk -> create -> prove -> check release -> baseline -> learn, and the heavier overlays switch on only when the stakes call for them. Reach for an overlay when its trigger fires, not by default.
 
+The diagram below is the full-system view. For cherry-pick adoption see [`CORE.md`](CORE.md): seven core habits (`questioning-attitude`, `rating-change-risk`, `proving-claims`, `double-checking-before-acting`, `staying-on-mission`, `checking-release-readiness`, `learning-from-experience`) plus the decision matrix that invokes the ancillary clusters by trigger.
+
 ```mermaid
 flowchart TD
     UNG([using-nuclear-grade<br/>router / entry point])
@@ -61,6 +63,9 @@ flowchart TD
       CMD[staying-on-mission]
       RCQ[reviewing-code-quality]
       CSP[closing-stale-packets]
+      DWD[deciding-who-decides]
+      DI[declaring-intent]
+      VOC[vetting-outside-code-and-models]
     end
 
     CCP -.delegate / resume.-> PAC
@@ -71,7 +76,12 @@ flowchart TD
     QA -.long drifting session.-> CMD
     PC -.standards drift in diff.-> RCQ
     LFO -.stale packet sweep.-> CSP
+    CCR -.irreversible action.-> DWD
+    DWD --> DI
+    CCR -.outside dependency / model.-> VOC
 ```
+
+**Consequence note.** If your agent has write, run, network, or approval authority over its own working set, treat `deciding-who-decides`, `declaring-intent`, `stress-testing-agent-changes`, `vetting-outside-code-and-models`, `recording-what-an-agent-did`, `briefing-an-agent`, and `handing-off-work` as **main-path, not overlay** — the trigger is always on for you. The agent-tool-permissions worked example is your template. See the Agent-authority row in [`CORE.md`](CORE.md)'s decision matrix.
 
 See [`docs/diagrams.md`](docs/diagrams.md) for the lifecycle, mode, and packet diagrams.
 See [`docs/05-reference/skills-token-audit.md`](docs/05-reference/skills-token-audit.md) for the measured token cost of these skills and the `ng tokens` budget gate.

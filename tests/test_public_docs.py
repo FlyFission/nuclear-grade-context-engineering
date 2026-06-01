@@ -14,6 +14,8 @@ PUBLIC_DOCS = (
     "SUPPORT.md",
     "GOVERNANCE.md",
     "AGENTS.md",
+    "CORE.md",
+    "MAXIMS.md",
 )
 
 UNSAFE_RESIDUE = (

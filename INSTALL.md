@@ -2,6 +2,8 @@
 
 Nuclear-grade runs inside your repo. Public v0 does not need a package registry, a hosted service, or an agent marketplace plug-in.
 
+> The `ng` CLI scaffolds and checks packets, but Nuclear-grade is markdown-first. Many adopters only need [`CORE.md`](CORE.md) (the seven habits + the decision matrix) plus one [`starter-kit/`](starter-kit/) directory copied into their repo. The steps below set up the optional CLI.
+
 ## Requirements
 
 - Python 3.11 or newer (tested on 3.12).

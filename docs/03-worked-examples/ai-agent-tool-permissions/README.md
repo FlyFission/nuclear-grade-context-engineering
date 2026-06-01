@@ -4,6 +4,8 @@
 
 **Example status:** Worked example v0. This directory now includes a finished Standard-mode packet at `.nuclear/changes/add-agent-tool-permissions/`, a small sample build, and pytest proof for C-001.
 
+**For adopters: this packet is your template, not just an illustration.** If your agent has write, run, network, or approval authority over its own working set, see the Agent-authority row in [`../../../CORE.md`](../../../CORE.md)'s decision matrix and start by copying this packet's shape.
+
 **Boundary:** This example is for teaching and is built for software. It is not a compliance package, a regulated safety analysis, a formal QA record, or a certification claim.
 
 ---

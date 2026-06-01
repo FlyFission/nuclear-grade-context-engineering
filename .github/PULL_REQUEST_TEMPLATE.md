@@ -2,9 +2,19 @@
 
 <!-- What changed, why it matters, and what evidence should reviewers inspect. -->
 
+## Mode
+
+<!-- Quick / Standard / stronger. One line on why a lower mode is insufficient. -->
+
 ## Change packet
 
 <!-- For non-trivial changes, link .nuclear/changes/<slug>/. For trivial docs-only changes, write N/A and explain why. -->
+
+## Proof command + result
+
+```bash
+# the exact command(s) that prove this change, and the actual outcome (e.g. test names + status)
+```
 
 ## Verification
 

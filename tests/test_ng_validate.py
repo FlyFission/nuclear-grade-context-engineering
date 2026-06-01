@@ -343,3 +343,65 @@ def test_unresolved_clarification_marker_fails(tmp_path):
 
     assert not result.ok
     assert any("[NEEDS CLARIFICATION]" in m for m in result.messages)
+
+
+# Internal link checker -----------------------------------------------------
+
+from tools.ng_validate import check_internal_links  # noqa: E402
+
+
+def test_check_internal_links_passes_when_targets_resolve(tmp_path):
+    write(tmp_path / "a.md", "see [b](b.md)")
+    write(tmp_path / "b.md", "ok")
+
+    failures = check_internal_links(tmp_path, ["a.md"])
+
+    assert failures == []
+
+
+def test_check_internal_links_flags_missing_target(tmp_path):
+    write(tmp_path / "a.md", "see [missing](does-not-exist.md)")
+
+    failures = check_internal_links(tmp_path, ["a.md"])
+
+    assert len(failures) == 1
+    assert "does-not-exist.md" in failures[0]
+    assert "a.md" in failures[0]
+
+
+def test_check_internal_links_ignores_anchors(tmp_path):
+    write(tmp_path / "a.md", "[here](#section) and [also](other.md#section)")
+    write(tmp_path / "other.md", "ok")
+
+    failures = check_internal_links(tmp_path, ["a.md"])
+
+    assert failures == []
+
+
+def test_check_internal_links_ignores_external_urls(tmp_path):
+    write(
+        tmp_path / "a.md",
+        "[http](http://example.com) [https](https://example.com) [mail](mailto:x@y.z)",
+    )
+
+    failures = check_internal_links(tmp_path, ["a.md"])
+
+    assert failures == []
+
+
+def test_check_internal_links_resolves_relative_to_each_file(tmp_path):
+    # nested file links to a sibling; should resolve to docs/sibling.md, not <root>/sibling.md
+    write(tmp_path / "docs" / "nested.md", "[sibling](sibling.md)")
+    write(tmp_path / "docs" / "sibling.md", "ok")
+
+    failures = check_internal_links(tmp_path, ["docs/nested.md"])
+
+    assert failures == []
+
+
+def test_check_internal_links_skips_files_that_do_not_exist(tmp_path):
+    # Files in the list that don't exist on disk are silently skipped --
+    # the existence check is the doctor's REQUIRED_PUBLIC_FILES job, not this checker's.
+    failures = check_internal_links(tmp_path, ["never-created.md"])
+
+    assert failures == []

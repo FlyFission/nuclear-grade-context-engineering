@@ -9,12 +9,19 @@ if str(ROOT) not in sys.path:
 
 from nuclear_grade.ng_validate import (
     ValidationResult,
+    check_internal_links,
     detect_packet_mode,
     main,
     validate_packet,
 )
 
-__all__ = ["ValidationResult", "detect_packet_mode", "main", "validate_packet"]
+__all__ = [
+    "ValidationResult",
+    "check_internal_links",
+    "detect_packet_mode",
+    "main",
+    "validate_packet",
+]
 
 
 if __name__ == "__main__":

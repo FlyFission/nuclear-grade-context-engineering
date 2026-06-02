@@ -1,9 +1,9 @@
 # Adoption Docs
 
-Start here when you bring Nuclear-grade to a team or an agent workflow.
+Most adopters should start one level up at [`../../CORE.md`](../../CORE.md) — the seven core habits and the decision matrix that triggers the ancillary clusters — and only descend into the docs below when a profile points here.
 
 - `enterprise-rollout.md`
-- `agent-authority-model.md`
+- `agent-authority-model.md` — includes the self-modification boundary and the enforcement rung-ladder for agents with authority over their own working set.
 - `reviewer-playbook.md`
 
 ## Source-lineage note

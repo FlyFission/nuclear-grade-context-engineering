@@ -6,6 +6,26 @@ Nuclear-grade should make decisions faster, not pile on paperwork. Move fast whi
 
 > **Note on the demo:** the first time you run `validate` on a fresh packet, expect `FAILED: ... has unfilled template prompts`. Templates ship with empty prompts on purpose. Fill in the prompts that matter, then run `validate` again. The checker is supposed to refuse silent gaps.
 
+## 0. Choose how much to adopt, and let the agent draft
+
+You do not need the whole repository to get value. Most adopters need the **Core 7** habits and one ancillary cluster, picked by trigger. See [`CORE.md`](CORE.md) for the decision matrix and [`starter-kit/`](starter-kit/) for drop-in directories.
+
+The intended loop is **not** "human types out a packet." It is:
+
+```text
+user prompt
+  -> agent drafts risk.md / proof.md from the query
+  -> human edits and approves the draft
+  -> agent writes code against the approved spec
+  -> human reviews via the validator + the Core habits
+```
+
+The human is editor and approver, not typist. Hand-filling the templates step-by-step is the *learning* path below; the *working* path is to have your agent generate the draft from your request and review the draft against the Core habits.
+
+> *Caution.* An agent that drafts its own spec *and* self-validates against a structural check is the "ships green by editing its own test" trap in new clothing. Trust-bearing specs need an independent approver — a human, or a check the agent cannot rewrite. See [`docs/04-adoption/agent-authority-model.md`](docs/04-adoption/agent-authority-model.md).
+
+The numbered steps below walk through the loop by hand so the safety check, the validator, and the habits are visible.
+
 ## 1. Check the repo
 
 ```bash

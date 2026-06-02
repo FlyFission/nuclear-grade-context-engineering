@@ -6,6 +6,7 @@ These docs have two parts. First, learn how to use the workflow. Second, look up
 
 | Need | Start |
 |---|---|
+| Pick a starter set (adopt lightly) | [`../CORE.md`](../CORE.md) |
 | Try the workflow | [`../QUICKSTART.md`](../QUICKSTART.md) |
 | Install or initialize | [`../INSTALL.md`](../INSTALL.md) |
 | Pick a workflow | [`../WORKFLOWS.md`](../WORKFLOWS.md) |
@@ -39,9 +40,10 @@ These docs have two parts. First, learn how to use the workflow. Second, look up
 ## Suggested first path
 
 1. [`../README.md`](../README.md)
-2. [`../QUICKSTART.md`](../QUICKSTART.md)
-3. [`../WORKFLOWS.md`](../WORKFLOWS.md)
-4. [`02-operating-system/change-control-packets.md`](02-operating-system/change-control-packets.md)
-5. [`03-worked-examples/ai-agent-tool-permissions/README.md`](03-worked-examples/ai-agent-tool-permissions/README.md)
+2. [`../CORE.md`](../CORE.md) — pick the seven habits and the ancillary clusters you actually need.
+3. [`../QUICKSTART.md`](../QUICKSTART.md)
+4. [`../WORKFLOWS.md`](../WORKFLOWS.md)
+5. [`02-operating-system/change-control-packets.md`](02-operating-system/change-control-packets.md)
+6. [`03-worked-examples/ai-agent-tool-permissions/README.md`](03-worked-examples/ai-agent-tool-permissions/README.md) — if your agent has authority over its own working set, read this **first**, as the template.
 
 One reminder about limits. This repo borrows ideas from public sources. It does not claim to meet any standard. See [`../DISCLAIMER.md`](../DISCLAIMER.md).

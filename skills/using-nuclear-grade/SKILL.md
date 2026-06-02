@@ -35,6 +35,7 @@ The repo charter (`.nuclear/charter.md`) holds the lasting rules every change fo
 
 1. Start with a questioning attitude. Name the decision question, the assumptions, the fact that would change the decision, the gaps in evidence, and when to stop.
 2. Sort the change into Quick, Standard, or a stronger mode that a human reviews.
+   - If you are adopting Nuclear-grade for the first time, pick the Core 7 habits from `CORE.md` and invoke ancillary clusters by trigger rather than enabling everything at once.
 3. Create or find the change record under `.nuclear/changes/<slug>/`.
 4. Write down the least you need: what the change must do, what it must prove, the files it touches, and the claims it must not make.
 5. If the chosen workflow or template stops fitting the real situation, write down where you went off it and why.

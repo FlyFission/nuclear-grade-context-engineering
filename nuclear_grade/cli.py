@@ -18,6 +18,7 @@ if __package__ in (None, ""):
 from nuclear_grade.efficacy import run_all as run_efficacy
 from nuclear_grade.ng_validate import (
     PLACEHOLDER_MARKER,
+    check_internal_links,
     detect_packet_mode,
     has_closure_note,
     validate_packet,
@@ -94,6 +95,8 @@ REQUIRED_PUBLIC_FILES = (
     "SECURITY.md",
     "CONTRIBUTING.md",
     "CODE_OF_CONDUCT.md",
+    "CORE.md",
+    "MAXIMS.md",
 )
 REQUIRED_SKILL_SECTIONS = (
     "## Overview",
@@ -597,6 +600,8 @@ def collect_doctor_failures(repo: Path) -> list[str]:
         failures.append(f"missing commands directory: {commands_dir.name}")
     else:
         failures.extend(check_command_contracts(commands_dir))
+
+    failures.extend(check_internal_links(repo, list(REQUIRED_PUBLIC_FILES)))
     return failures
 
 

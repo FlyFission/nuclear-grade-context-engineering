@@ -323,6 +323,31 @@ def _check_relative_links(packet_path: Path, md_file: Path, text: str, messages:
             messages.append(f"{rel_file} has broken relative link: {target}")
 
 
+def check_internal_links(repo: Path, files: list[str]) -> list[str]:
+    """Check that internal markdown links in `files` resolve from each file's directory.
+
+    External URLs (http(s)://, mailto:) and pure anchors (#section) are ignored.
+    Returns a list of failure messages, one per broken link.
+    """
+
+    failures: list[str] = []
+    for relative_name in files:
+        md_file = repo / relative_name
+        if not md_file.exists():
+            continue
+        text = md_file.read_text(encoding="utf-8")
+        for match in MARKDOWN_LINK_PATTERN.finditer(text):
+            target = match.group(1).strip()
+            if _is_external_or_anchor(target):
+                continue
+            target_path = target.strip("<>").split("#", 1)[0]
+            if not target_path:
+                continue
+            if not (md_file.parent / target_path).exists():
+                failures.append(f"{relative_name} has broken relative link: {target}")
+    return failures
+
+
 def _is_external_or_anchor(target: str) -> bool:
     lowered = target.lower()
     return (

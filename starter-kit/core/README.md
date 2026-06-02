@@ -29,6 +29,9 @@ Then fill in the `<fill-in>` markers in `AGENTS.md` and `.nuclear/charter.md`.
   repo's own AGENTS.md (its strongest exportable artifact) and trimmed with `<fill-in>` markers.
 - [`.nuclear/charter.md`](.nuclear/charter.md) — a five-article charter skeleton: lasting rules
   every change follows.
+- [`.nuclear/README.md`](.nuclear/README.md) and an empty `.nuclear/changes/` — the workspace
+  skeleton `ng doctor` looks for. Equivalent to what `ng init` would create, so the kit-as-shipped
+  passes `ng doctor` without requiring the CLI.
 
 ## The Core 7
 

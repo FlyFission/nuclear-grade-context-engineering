@@ -37,11 +37,17 @@ If you must cross a non-goal or a charter article, record why here:
 
 ## Build sequence
 
-Number the fewest steps needed to finish the change.
+Number the fewest steps needed to finish the change. Stamp each step with the
+requirement IDs it delivers (`REQ-NNN` from `basis.md` or `spec.md`) so the chain
+requirement → task → code → evidence stays unbroken. Every requirement should
+appear against at least one step; a step with no requirement is either scaffolding
+or scope creep — say which.
 
-1.
-2.
-3.
+| # | Task | Requirements covered |
+|---|---|---|
+| 1 | | REQ-001 |
+| 2 | | |
+| 3 | | |
 
 ## Two-speed work plan
 
@@ -71,9 +77,9 @@ Keep fast trial work apart from the slower gates where work is accepted.
 
 ## Affected files and assets
 
-| File / asset | Change expected | Why it matters | Owner |
-|---|---|---|---|
-| | | | |
+| File / asset | Change expected | Requirements covered | Why it matters | Owner |
+|---|---|---|---|---|
+| | | REQ-001 | | |
 
 ## Non-goals
 
@@ -92,8 +98,16 @@ Use only if activated.
 
 ## Review checkpoints
 
+Approve the work in stages, not all at once. Each gate is approved by a human (or
+an out-of-band check the agent cannot rewrite) before the next phase opens — an
+agent that drafts and self-approves its own spec is the "ships green by editing its
+own test" trap. See the agent-drafts-spec workflow in `CORE.md`.
+
 | Checkpoint | Required before moving on | Status |
 |---|---|---|
+| Requirements approved | Each requirement is one clear trigger→response statement with a `REQ-NNN` ID, reviewed by a human. | planned / pass / gap |
+| Design approved | The design outline in `basis.md` is complete enough for this change and reviewed. | planned / pass / gap |
+| Tasks approved | Every build step carries the requirement IDs it delivers, and the sequence is reviewed. | planned / pass / gap |
 | Specification reviewed | The protected outcomes, the outcomes to prevent, and the assumptions are stated plainly. | planned / pass / gap |
 | Tests/evals defined | Each piece of evidence maps to a claim. | planned / pass / gap |
 | Build complete | The affected files match the plan. | planned / pass / gap |

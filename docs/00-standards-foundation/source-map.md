@@ -123,6 +123,7 @@ The confidence fields say how well a source family fits this repo. They do not s
 | OWASP Top 10 | https://owasp.org/www-project-top-ten/ | Supporting | verified-public | Common appsec risk awareness. | High | Failure-mode prompts. |
 | 18F Engineering Guide | https://engineering.18f.gov/ | Supporting | verified-public | Public government software delivery habits. | High | Usability/adoption/de-risking. |
 | 18F De-risking Government Technology | https://derisking-guide.18f.gov/ | Supporting | verified-public | Incremental delivery/de-risking. | High | Anti-overhead adoption strategy. |
+| EARS (Easy Approach to Requirements Syntax), Mavin | https://alistairmavin.com/ears/ | Supporting | verified-public | Controlled requirement grammar: ubiquitous / event (WHEN) / state (WHILE) / optional (WHERE) / unwanted (IF-THEN) trigger→response shapes for testable, unambiguous requirements. | High | Concept lineage for the requirement-grammar note in `basis.md` and `spec.md`; serves the operational-unambiguity charter article; public method page; no compliance claim. |
 
 ---
 

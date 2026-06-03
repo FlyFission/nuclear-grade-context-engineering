@@ -24,9 +24,14 @@
 
 Use status labels: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 
-| ID | Claim | Basis link | Control / design feature | Support type | Verification evidence | Ship posture | Status |
-|---|---|---|---|---|---|---|---|
-| C-001 | | `basis.md` | | fact / assumption / unknown / source claim / local proof / decision authority | `verification.md` | | planned |
+Use the same `REQ-NNN` IDs the requirement carries in `basis.md` / `spec.md` so the
+chain reads end to end (`C-NNN` is an accepted alias for an older record). The
+`Task / code ref` column reaches the `plan.md` build step and the code path that
+delivers the claim, closing requirement → task → code → evidence.
+
+| ID | Claim | Basis link | Task / code ref | Control / design feature | Support type | Verification evidence | Ship posture | Status |
+|---|---|---|---|---|---|---|---|---|
+| REQ-001 | | `basis.md` | `plan.md` step 1 / `path/to/file` | | fact / assumption / unknown / source claim / local proof / decision authority | `verification.md` | | planned |
 
 ## Evidence chain
 

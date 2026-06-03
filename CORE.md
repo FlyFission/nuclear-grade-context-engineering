@@ -98,6 +98,21 @@ user prompt
 The human is editor and approver, not typist. This is what makes Quick mode feel like a
 speed-up rather than a tax.
 
+For a Standard change the loop runs in **stages, with a gate between each** — the agent
+drafts a phase, the human approves it, and only then does the next phase open:
+
+```text
+requirements draft -> human approves
+  -> design draft   -> human approves
+  -> tasks/plan draft -> human approves
+  -> agent builds against the approved spec
+```
+
+Staging keeps a late discovery from silently rewriting an earlier decision, and it gives
+the human a small, reviewable artifact at each step instead of one large one at the end.
+The gates map to the `plan.md` review checkpoints (Requirements approved / Design approved
+/ Tasks approved).
+
 **Caution.** An agent that drafts its own spec *and* self-validates it against a structural
 check is the "ships green by editing its own test" trap in new clothing. Trust-bearing specs
 need an independent approver — a human, or an out-of-band check the agent cannot rewrite. See

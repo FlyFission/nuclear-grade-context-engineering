@@ -74,9 +74,39 @@ Use this section only when activated.
 
 Include only the important claims that need evidence.
 
+Write each requirement as one controlled, testable statement — a clear trigger
+and a clear response — so a builder and a reviewer read it the same way and a
+test can check it. This serves the "operational unambiguity" charter article.
+Prefer these shapes:
+
+- `THE SYSTEM SHALL <response>` — an always-true rule.
+- `WHEN <trigger> THE SYSTEM SHALL <response>` — an event.
+- `WHILE <state> THE SYSTEM SHALL <response>` — a continuous state.
+- `WHERE <feature is present> THE SYSTEM SHALL <response>` — an optional feature.
+- `IF <unwanted condition> THEN THE SYSTEM SHALL <response>` — a failure path.
+
+Worked example — REQ-001: `WHEN a draft packet fails the structural validator THE
+SYSTEM SHALL block the merge and name the first failing section.` One trigger, one
+response, testable. Keep the `REQ-NNN` IDs; `trace.md` and `plan.md` reference them.
+
 | ID | Requirement / claim | Basis | Design feature or control | Evidence planned |
 |---|---|---|---|---|
 | REQ-001 | | | | |
+
+## Design outline
+
+A short completeness check, not a design essay. Tick what this change actually
+needs; link the real design notes instead of restating them (see the overhead
+trap above).
+
+| Section | Covered? | Where it lives |
+|---|---|---|
+| Overview — what changes and why | yes / no / n/a | |
+| Architecture — shape and major parts | yes / no / n/a | |
+| Components and interfaces — boundaries above | yes / no / n/a | `Interfaces and trust boundaries` |
+| Data models — shapes, classes, ownership | yes / no / n/a | |
+| Error handling — failure paths and responses | yes / no / n/a | `Unacceptable outcomes` |
+| Testing strategy — how each claim is checked | yes / no / n/a | `verification.md` |
 
 ## Required links
 

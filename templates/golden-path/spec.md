@@ -32,6 +32,13 @@
 
 ## Requirements or claims
 
+Write each requirement as one controlled, testable statement — a clear trigger and
+a clear response — so it reads the same to everyone and a test can check it. Prefer
+`THE SYSTEM SHALL <response>`; `WHEN <trigger> THE SYSTEM SHALL <response>`;
+`WHILE <state> …`; `WHERE <feature present> …`; `IF <unwanted condition> THEN THE
+SYSTEM SHALL <response>`. The requirement states the rule; the acceptance scenarios
+below exercise it.
+
 | ID | Requirement / claim | Basis or source | Acceptance evidence |
 |---|---|---|---|
 | REQ-001 | | | |

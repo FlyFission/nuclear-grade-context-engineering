@@ -95,6 +95,36 @@ flowchart LR
     L -.feeds future basis.-> Q
 ```
 
+Zoomed out, those eleven beats are three moves — **PRO**: Plan · Run · Operate — or five with the gate named — **PROVE**: Plan · Run · Observe · Verdict · Embed. One label, two zoom levels (full crosswalk in [`docs/diagrams.md`](docs/diagrams.md)):
+
+```mermaid
+flowchart TB
+  classDef plan fill:#DCE6FA,stroke:#3A5BA8,color:#12203F;
+  classDef run fill:#E4DEF7,stroke:#5B49A6,color:#1E1640;
+  classDef emb fill:#DCEFDE,stroke:#2E7D45,color:#102810;
+  classDef gate fill:#FFD24D,stroke:#B07400,color:#3A2600,stroke-width:2px;
+  subgraph LP["P — PLAN"]
+    direction LR
+    A1(["Question"]) --> A2(["Discover"]) --> A3(["Specify"]) --> A4(["Plan"])
+  end
+  subgraph LRUN["R — RUN"]
+    direction LR
+    B1(["Execute"]) --> B2(["Verify"]) --> B3(["Review"]) --> B4{"Decide"}
+  end
+  subgraph LOPS["O — OPERATE"]
+    direction LR
+    C1(["Baseline"]) --> C2(["Operate"]) --> C3(["Learn"])
+  end
+  A4 --> B1
+  B4 -->|"ship / defer"| C1
+  B4 -.->|"block"| A4
+  C3 -.->|"lessons feed the next basis"| A1
+  class A1,A2,A3,A4 plan
+  class B1,B2,B3 run
+  class B4 gate
+  class C1,C2,C3 emb
+```
+
 More diagrams (mode decision tree, skill graph, packet artifact graph) are in [`docs/diagrams.md`](docs/diagrams.md).
 
 A "baseline" is just the version you have agreed is correct and want to protect. Small and standard change records are the Git-native way to walk a change through this path. You sort the risk early so the simple path stays easy to teach. You only add the heavier records — what is under control, ripple effects, the saved baseline, drift, and operating lessons — when the stakes are high enough to earn them.

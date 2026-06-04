@@ -95,6 +95,31 @@ flowchart LR
     L -.feeds future basis.-> Q
 ```
 
+Zoomed out, those eleven beats are three moves — **PRO**: Plan · Run · Operate — or five with the gate named — **PROVE**: Plan · Run · Observe · Verdict · Embed. One label, two zoom levels (full crosswalk in [`docs/diagrams.md`](docs/diagrams.md)):
+
+```mermaid
+flowchart TB
+  subgraph PLAN["P — PLAN"]
+    direction LR
+    A1(["Question"]) --> A2(["Discover"]) --> A3(["Specify"]) --> A4(["Plan"])
+  end
+  subgraph RUN["R — RUN"]
+    direction LR
+    B1(["Execute"]) --> B2(["Verify"]) --> B3(["Review"]) --> B4{"Decide"}
+  end
+  subgraph OPS["O — OPERATE"]
+    direction LR
+    C1(["Baseline"]) --> C2(["Operate"]) --> C3(["Learn"])
+  end
+  A4 --> B1
+  B4 -->|"ship / defer"| C1
+  B4 -->|"block"| A4
+  C3 -.->|"lesson feeds the next basis"| A1
+  style PLAN fill:#EAF2FB,stroke:#5B8DEF
+  style RUN fill:#E7F4F2,stroke:#3AA8A0
+  style OPS fill:#F0EAFB,stroke:#8E6FD8
+```
+
 More diagrams (mode decision tree, skill graph, packet artifact graph) are in [`docs/diagrams.md`](docs/diagrams.md).
 
 A "baseline" is just the version you have agreed is correct and want to protect. Small and standard change records are the Git-native way to walk a change through this path. You sort the risk early so the simple path stays easy to teach. You only add the heavier records — what is under control, ripple effects, the saved baseline, drift, and operating lessons — when the stakes are high enough to earn them.

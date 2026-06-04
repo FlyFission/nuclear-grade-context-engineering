@@ -22,7 +22,84 @@ flowchart LR
 
 ---
 
-## 2. Mode decision tree
+## 2. The PROVE path — one path, two zoom levels
+
+The same eleven beats, grouped into a handle you can remember. Zoom out to **PRO** — three moves. Zoom in to **PROVE** — five, with the acceptance gate named on its own. The beats, their order, and the control points are unchanged; this is a label, not a new workflow.
+
+**PRO — the billboard (3):**
+
+```mermaid
+flowchart TB
+  subgraph PLAN["P — PLAN"]
+    direction LR
+    A1(["Question"]) --> A2(["Discover"]) --> A3(["Specify"]) --> A4(["Plan"])
+  end
+  subgraph RUN["R — RUN"]
+    direction LR
+    B1(["Execute"]) --> B2(["Verify"]) --> B3(["Review"]) --> B4{"Decide"}
+  end
+  subgraph OPS["O — OPERATE"]
+    direction LR
+    C1(["Baseline"]) --> C2(["Operate"]) --> C3(["Learn"])
+  end
+  A4 --> B1
+  B4 -->|"ship / defer"| C1
+  B4 -->|"block"| A4
+  C3 -.->|"lesson feeds the next basis"| A1
+  style PLAN fill:#EAF2FB,stroke:#5B8DEF
+  style RUN fill:#E7F4F2,stroke:#3AA8A0
+  style OPS fill:#F0EAFB,stroke:#8E6FD8
+```
+
+**PROVE — the working map (5):**
+
+```mermaid
+flowchart TB
+  subgraph LP["P — PLAN"]
+    direction LR
+    Q(["Question"]) --> D(["Discover"]) --> S(["Specify"]) --> PL(["Plan"])
+  end
+  subgraph LRUN["R — RUN"]
+    E(["Execute"])
+  end
+  subgraph LO["O — OBSERVE"]
+    direction LR
+    V(["Verify"]) --> RV(["Review"])
+  end
+  subgraph LV["V — VERDICT"]
+    DEC{"Decide"}
+  end
+  subgraph LE["E — EMBED"]
+    direction LR
+    B(["Baseline"]) --> OP(["Operate"]) --> L(["Learn"])
+  end
+  PL --> E --> V
+  RV --> DEC
+  DEC -->|"ship / defer"| B
+  DEC -->|"block"| PL
+  L -.->|"lesson feeds the next basis"| Q
+  style LP fill:#EAF2FB,stroke:#5B8DEF
+  style LRUN fill:#E7F4F2,stroke:#3AA8A0
+  style LO fill:#FBF1DD,stroke:#D9A23B
+  style LV fill:#FBEAE7,stroke:#E2604B
+  style LE fill:#F0EAFB,stroke:#8E6FD8
+```
+
+**Crosswalk — how the zoom levels line up:**
+
+| Full path (11 beats) | PROVE — working map (5) | PRO — billboard (3) |
+|---|---|---|
+| Question · Discover · Specify · Plan | **P** — Plan | **P** — Plan |
+| Execute | **R** — Run | **R** — Run |
+| Verify · Review | **O** — Observe | ↳ inside Run |
+| Decide | **V** — Verdict | ↳ inside Run |
+| Baseline · Operate · Learn | **E** — Embed | **O** — Operate |
+
+PROVE and PRO are memory handles for the full eleven-beat path; the [seven control points](../WORKFLOWS.md) are its everyday short form, and the [Core 7](../CORE.md) are always-on habits, not path stages. "PROVE" names the prove-your-claims habit — evidence behind every claim — not formal proof or verification.
+
+---
+
+## 3. Mode decision tree
 
 Which packet mode a change earns. Rigor scales with consequence, not effort tolerance.
 
@@ -38,7 +115,7 @@ flowchart TD
 
 ---
 
-## 3. Skill-relationship graph
+## 4. Skill-relationship graph
 
 How the skills compose. `using-nuclear-grade` is the single way in and the router; the main path is the per-change pipeline; the heavier overlays switch on only when the stakes call for them.
 
@@ -79,7 +156,7 @@ flowchart TD
 
 ---
 
-## 4. Packet artifact-dependency graph
+## 5. Packet artifact-dependency graph
 
 How a Standard packet's records depend on each other. Later records point back to the basis they depend on; operating lessons feed forward into the next change. The text form lives in [`00-standards-foundation/artifact-dependency-graph.md`](00-standards-foundation/artifact-dependency-graph.md).
 

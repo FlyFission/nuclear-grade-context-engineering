@@ -10,6 +10,8 @@
 Question -> Discover -> Specify -> Plan -> Execute -> Verify -> Review -> Decide -> Baseline -> Operate -> Learn
 ```
 
+That spine carries a handle: **PROVE** — Plan · Run · Observe · Verdict · Embed — or **PRO** (Plan · Run · Operate) zoomed out. See [`../diagrams.md`](../diagrams.md).
+
 This is a way of working, not a compliance program. You sort the risk inside `risk.md`. That file holds the chosen mode, the triggers that force you to escalate, what the change must prove, and the conditions that make you hold.
 
 Under the spine sit habits from Human Performance Improvement (HPI). Scale them to how much is at stake: preview the task, check the real repo and files, pause when unsure, check your own work, hand off cleanly, pick the right kind of verification, decide with care, and learn from real use (lessons from real operation, or OPEX). Use `hpi-overlays.md` for those small controls. Keep this lifecycle steady.

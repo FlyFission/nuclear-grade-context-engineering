@@ -30,7 +30,7 @@ The loop closes when operation feeds the next question.
 
 This is what "nuclear-grade" buys you over prompt-and-pray: every step has a job, an artifact, and a stop condition. A skipped step is not a shortcut — it is a known failure mode you chose to accept.
 
-These seven are the everyday form of the loop. For standard and high-consequence work the same loop fans out into eleven beats — `Question -> Discover -> Specify -> Plan -> Execute -> Verify -> Review -> Decide -> Baseline -> Operate -> Learn` — splitting Question into Question/Discover, Specify into Specify/Plan, Decide into Review/Decide, and Operate into Operate/Learn. Same control points, more beats.
+These seven are the everyday form of the loop. For standard and high-consequence work the same loop fans out into eleven beats — `Question -> Discover -> Specify -> Plan -> Execute -> Verify -> Review -> Decide -> Baseline -> Operate -> Learn` — splitting Question into Question/Discover, Specify into Specify/Plan, Decide into Review/Decide, and Operate into Operate/Learn. Same control points, more beats. Those eleven beats also carry a memory handle — **PROVE** (Plan · Run · Observe · Verdict · Embed), or just **PRO** (Plan · Run · Operate) zoomed out; see [`docs/diagrams.md`](docs/diagrams.md).
 
 ## Two speeds, one loop
 

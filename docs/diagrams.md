@@ -30,31 +30,41 @@ The same eleven beats, grouped into a handle you can remember. Zoom out to **PRO
 
 ```mermaid
 flowchart TB
-  subgraph PLAN["P — PLAN"]
+  classDef plan fill:#DCE6FA,stroke:#3A5BA8,color:#12203F;
+  classDef run fill:#E4DEF7,stroke:#5B49A6,color:#1E1640;
+  classDef emb fill:#DCEFDE,stroke:#2E7D45,color:#102810;
+  classDef gate fill:#FFD24D,stroke:#B07400,color:#3A2600,stroke-width:2px;
+  subgraph LP["P — PLAN"]
     direction LR
     A1(["Question"]) --> A2(["Discover"]) --> A3(["Specify"]) --> A4(["Plan"])
   end
-  subgraph RUN["R — RUN"]
+  subgraph LRUN["R — RUN"]
     direction LR
     B1(["Execute"]) --> B2(["Verify"]) --> B3(["Review"]) --> B4{"Decide"}
   end
-  subgraph OPS["O — OPERATE"]
+  subgraph LOPS["O — OPERATE"]
     direction LR
     C1(["Baseline"]) --> C2(["Operate"]) --> C3(["Learn"])
   end
   A4 --> B1
   B4 -->|"ship / defer"| C1
-  B4 -->|"block"| A4
-  C3 -.->|"lesson feeds the next basis"| A1
-  style PLAN fill:#EAF2FB,stroke:#5B8DEF
-  style RUN fill:#E7F4F2,stroke:#3AA8A0
-  style OPS fill:#F0EAFB,stroke:#8E6FD8
+  B4 -.->|"block"| A4
+  C3 -.->|"lessons feed the next basis"| A1
+  class A1,A2,A3,A4 plan
+  class B1,B2,B3 run
+  class B4 gate
+  class C1,C2,C3 emb
 ```
 
 **PROVE — the working map (5):**
 
 ```mermaid
 flowchart TB
+  classDef plan fill:#DCE6FA,stroke:#3A5BA8,color:#12203F;
+  classDef run fill:#E4DEF7,stroke:#5B49A6,color:#1E1640;
+  classDef obs fill:#D2EBE6,stroke:#248A7E,color:#0E2A26;
+  classDef emb fill:#DCEFDE,stroke:#2E7D45,color:#102810;
+  classDef gate fill:#FFD24D,stroke:#B07400,color:#3A2600,stroke-width:2px;
   subgraph LP["P — PLAN"]
     direction LR
     Q(["Question"]) --> D(["Discover"]) --> S(["Specify"]) --> PL(["Plan"])
@@ -76,13 +86,13 @@ flowchart TB
   PL --> E --> V
   RV --> DEC
   DEC -->|"ship / defer"| B
-  DEC -->|"block"| PL
-  L -.->|"lesson feeds the next basis"| Q
-  style LP fill:#EAF2FB,stroke:#5B8DEF
-  style LRUN fill:#E7F4F2,stroke:#3AA8A0
-  style LO fill:#FBF1DD,stroke:#D9A23B
-  style LV fill:#FBEAE7,stroke:#E2604B
-  style LE fill:#F0EAFB,stroke:#8E6FD8
+  DEC -.->|"block"| PL
+  L -.->|"lessons feed the next basis"| Q
+  class Q,D,S,PL plan
+  class E run
+  class V,RV obs
+  class DEC gate
+  class B,OP,L emb
 ```
 
 **Crosswalk — how the zoom levels line up:**

@@ -119,11 +119,10 @@ These are flagged for a future prose pass; the audit does not edit any skill bod
 - A few `## Process` sections step through tasks the model handles well unaided, where a
   shorter "where the landmines are" framing would carry the same guidance for fewer tokens.
 
-## Overlap clusters flagged for a human decision (NOT merged)
+## Overlap clusters — decision: keep all four as separate skills
 
-The user asked to flag conceptual overlap rather than merge it. Four clusters of skills sit
-on adjacent surfaces and are worth a deliberate keep-or-merge decision (names below reflect
-the post-#12 plain-language slugs):
+Four clusters of skills sit on adjacent surfaces and were reviewed for a deliberate
+keep-or-merge call (names below reflect the post-#12 plain-language slugs):
 
 1. **Trust-boundary trio** — `checking-source-claims`, `checking-legal-and-safety-wording`,
    `vetting-outside-code-and-models`.
@@ -134,8 +133,14 @@ the post-#12 plain-language slugs):
 4. **Framing / risk overlap** — `questioning-attitude`, `rating-change-risk`,
    `choosing-what-to-control`.
 
-Flagged only. Each is independently routed today; consolidation is a structural change with
-test-contract and routing implications, to be decided separately.
+**Decision (issue #14): keep all four clusters as separate, independently routed skills.**
+Each member covers a distinct object at a distinct moment in the loop — the trust-boundary
+trio separates *source claims* from *legal/safety wording* from *outside code and models*;
+the handoff trio separates *briefing an agent* from *handing off work* from *double-checking
+before acting*. Merging any cluster would collapse distinct routing triggers and break the
+per-skill test contracts, trading reliable activation for a token saving the budget gate
+already shows is unnecessary. Revisit only if two members begin firing on identical triggers
+in practice.
 
 ## The gate
 
@@ -153,13 +158,25 @@ so the gate blocks regression rather than the accepted corpus:
 A new skill that balloons past these, or a boilerplate paragraph copied into a 9th file,
 fails CI — a gate that fires every time, not a style note that gets forgotten.
 
-## Recommended next step
+## Decisions on the optional follow-ups (issue #14)
 
-Now that PR #12's rename sweep has landed, a follow-up *may* trim the heaviest bodies and
-collapse the disclaimer to a single linked source — **if** the team decides self-containment
-is worth trading for compactness. The data says that trade is optional, not urgent: the
-always-loaded cost is already small, and per-signal cost is already tight. Measure first,
-then cut only what the numbers justify.
+With PR #12's rename sweep landed, the remaining audit follow-ups were reviewed and
+dispositioned:
+
+- **Assurance disclaimer — keep per-file self-containment.** The cross-file repetition is a
+  deliberate trade: each self-contained file carries its own legal boundary, and the wording
+  varies by source lineage, so collapsing it to one linked source would force every reader
+  (human or agent) to hold a second file just for the boundary. Not collapsed.
+- **Heaviest skill bodies — cuts deferred as optional, evidence-triggered.** The
+  always-loaded cost is already small and per-signal cost is already tight, so trims are a
+  quality nicety, not a budget need. Trim a body only when a specific section is shown to
+  mislead or bloat — not as a sweep. The budget gate prevents regression in the meantime.
+- **`core-source-rationale.md` relocation — kept as an open option, deferred.** It remains a
+  relocation candidate (design justification, not agent-runtime context), but the move is
+  optional and the destination is undecided, so it is left in place rather than moved
+  speculatively before a release.
+
+Measure first, then cut only what the numbers justify.
 
 ## Boundary
 

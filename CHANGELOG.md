@@ -6,10 +6,24 @@ These entries record public-facing changes. They do not claim the project is a m
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-06-04
+
+### Added
+
+- Navy-nuclear leadership and high-reliability guide (`docs/01-field-guide/leadership-and-high-reliability.md`), translating Naval Reactors discipline and intent-based leadership into how people and agents run the work — concept lineage only, no program claim. (#19)
+
 ### Changed
 
 - Reframed the core loop as seven control points in `WORKFLOWS.md`. Each step (`Question`, `Specify`, `Execute`, `Verify`, `Decide`, `Save approved version`, `Operate`) is now tabled with the failure mode it stops, the artifact it produces, and the abort condition for proceeding. A skipped step is now a named failure mode you chose to accept, not an unstated shortcut. The everyday seven-step form is reconciled with the full eleven-beat path used for standard and high-consequence work.
 - `README.md` keeps the canonical eleven-step path and original lifecycle diagram, with one new sentence introducing the control-point treatment and pointing to `WORKFLOWS.md` for the detail. No simplified-vs-full duplication on the landing page.
+- Restructured the adoption surface around the CORE habits, a decision matrix, and starter kits, so a team can pick the right kit by trigger (`CORE.md`, `starter-kit/`). (#21)
+- Sharpened requirements discipline across the change templates. (#22)
+- Recorded the token-audit follow-up decisions (#14): keep all four overlap clusters as separate skills and keep the per-file assurance disclaimer; the optional body cuts and the `core-source-rationale.md` relocation are deferred as evidence-triggered. (#23)
+- Set the repository code owners (`CODEOWNERS`) and citation author (`CITATION.cff`) to `@FlyFission`. (#23)
+
+### Fixed
+
+- Corrected a CRLF token miscount and refreshed the token-audit baseline for current `main`. (#18)
 
 ## [0.4.0] - 2026-05-31
 

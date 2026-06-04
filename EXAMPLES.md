@@ -12,7 +12,7 @@ Public v0 ships one fully worked example that is checked by tests, plus one hand
 
 | Example | What it checks | Start here |
 |---|---|---|
-| Skill and workflow comparison | How each published skill and workflow does against plain prompting across six real use cases | `docs/03-worked-examples/skill-workflow-comparison/README.md` |
+| Skill and workflow comparison | How each published skill and workflow does against plain prompting across twelve real use cases | `docs/03-worked-examples/skill-workflow-comparison/README.md` |
 
 Run it:
 

@@ -1,3 +1,3 @@
-# MAINTAINER: replace <MAINTAINER> with the GitHub handle or team that should
-# review every change. Multiple owners can be listed space-separated.
-* @MAINTAINER
+# Default reviewers for every change in this repository.
+# Multiple owners can be listed space-separated.
+* @FlyFission

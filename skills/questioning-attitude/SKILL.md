@@ -35,7 +35,7 @@ This is the front door. Before an agent builds, merges, or releases, find the re
 1. Restate the change as one clear question that evidence could prove right or wrong.
 2. List the assumptions that have to be true for the change to work.
 3. Sort what you know into facts, assumptions, unknowns, and "how good is this source?"
-4. Spot the uncertainty, the danger words, the warning signs, the steps where mistakes are likely, and any hidden reasons this should be treated as a standard change.
+4. Spot the uncertainty, the danger words, the warning signs, the steps where mistakes are likely, and any hidden reasons this should be treated as a standard change. Name the work type — greenfield, brownfield, defect-fix, or refactor-migration — because the type sets which questions matter: brownfield and migration force blast-radius and rollback-of-state questions; a defect forces a reproduction and a regression guard; greenfield forces interface and acceptance questions. Work type is orthogonal to the Quick/Standard/stronger mode, which grades rigor, not kind. See `docs/02-operating-system/work-type-lens.md`.
 5. Ask what evidence would change the decision. If nothing could change it, the question is not useful yet.
 6. Check the facts before you trust memory, confidence, or anything an agent generated.
 7. Name the conditions that should make you pause, hold, or escalate.
@@ -48,6 +48,7 @@ This is the front door. Before an agent builds, merges, or releases, find the re
 - What you know, what you don't, and any shaky sources.
 - The triggers for choosing a mode or escalating.
 - The evidence you need before you execute, verify, review, decide, or save the version.
+- The work type, and the questions that type forces.
 - The one fact that would change the decision.
 
 ## Verification

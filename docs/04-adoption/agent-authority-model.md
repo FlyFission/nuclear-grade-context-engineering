@@ -52,6 +52,18 @@ The rule: the control that decides whether the agent's work is acceptable must s
 
 Match the rung to the authority. An agent that can edit files at rungs 1-3 has no real gate; promote to rung 4-5 before granting write or run authority over its own controls.
 
+## Plan-phase vs build-phase authority
+
+Planning and building are different authority phases, and naming the line keeps a
+read-only planner from sliding into an unreviewed writer. During the question,
+specification, and plan phases the agent is read-only over product code: its writes are
+confined to the change-record packet, and it prepares, but does not take, release
+actions. Build authority over product code opens only after the plan clears its
+human-approved gate (the `plan.md` review checkpoints — Requirements / Design / Tasks
+approved). This is the self-modification boundary above, applied in time: the control
+that approves the plan must sit where the planning agent cannot rewrite it. See the
+agent-drafts-spec workflow in `CORE.md`.
+
 ## Exit criteria
 
 Agent authority is acceptable when a reviewer can see five things: what the agent was allowed to do, what it actually changed, what evidence it produced, what it was forbidden to claim, and **where the controls that gate its work live relative to its writable set** (rung 4 or higher when the agent has authority over its own tests, prompts, or CI).

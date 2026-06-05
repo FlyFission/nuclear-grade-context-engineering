@@ -16,6 +16,7 @@
 - Owner:
 - Date:
 - Request / issue / PR:
+- Work type: greenfield / brownfield / defect-fix / refactor-migration
 - Current golden-path phase: Question
 
 ## Decision question

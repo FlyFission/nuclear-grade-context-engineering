@@ -28,6 +28,7 @@
 | Skills/commands/templates | | update / no-op / defer / block | | | |
 | Dependencies/models/tools | | update / no-op / defer / block | | | |
 | Release/operate/support | | update / no-op / defer / block | | | |
+| Runtime/data blast radius (only if a running system or stored data is touched: schema/state, API consumers, backward-compat, rollback-of-state) | | update / no-op / defer / block | | | |
 
 ## Revalidation triggers
 

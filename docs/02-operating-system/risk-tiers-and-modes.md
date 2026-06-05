@@ -17,7 +17,7 @@ The mistake is to apply critical-systems ceremony to a button-color change. The 
 | Tier 2 — normal | feature work, API extension, UI release | Standard or Quick | standard review, automated tests, feature flags where useful |
 | Tier 3 — experimental | prototype, internal tool, throwaway exploration | Quick | lightweight review, time-boxed, no production authority |
 
-How to use it: rate consequence and reversibility with `rating-change-risk`, pick the mode, and — for Tier 0/1 — add the intent release brief (`authority-and-intent.md`) and, at Tier 0, the critical-systems controls (`critical-systems.md`). Do not invent a separate "tier" record; the mode is the record.
+How to use it: classify the work type with the work-type lens (`work-type-lens.md`) — orthogonal to the tier, it shapes which questions you ask, not how much rigor — then rate consequence and reversibility with `rating-change-risk`, pick the mode, and — for Tier 0/1 — add the intent release brief (`authority-and-intent.md`) and, at Tier 0, the critical-systems controls (`critical-systems.md`). Do not invent a separate "tier" record; the mode is the record.
 
 ## Design review at the higher tiers
 

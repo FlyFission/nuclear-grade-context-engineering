@@ -21,6 +21,7 @@ These docs have two parts. First, learn how to use the workflow. Second, look up
 | Lead people and agents the high-reliability way | [`01-field-guide/leadership-and-high-reliability.md`](01-field-guide/leadership-and-high-reliability.md) |
 | Place authority and declare intent | [`02-operating-system/authority-and-intent.md`](02-operating-system/authority-and-intent.md) |
 | Scale rigor by risk tier | [`02-operating-system/risk-tiers-and-modes.md`](02-operating-system/risk-tiers-and-modes.md) |
+| Classify the kind of change (work type) | [`02-operating-system/work-type-lens.md`](02-operating-system/work-type-lens.md) |
 | Run an incident, track deficiencies | [`02-operating-system/incident-response.md`](02-operating-system/incident-response.md), [`02-operating-system/deficiency-register.md`](02-operating-system/deficiency-register.md) |
 | Understand CLI behavior | [`05-reference/cli-reference.md`](05-reference/cli-reference.md) |
 | See the workflow as diagrams | [`diagrams.md`](diagrams.md) |

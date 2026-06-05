@@ -11,6 +11,7 @@
 | 5 | REQ-005 | Added one trigger prompt to each of the three edited skill blocks | `docs/05-reference/skill-evaluation.md` |
 | 6 | REQ-006 | Wrote this packet | `.nuclear/changes/incorporate-planning-lessons/` |
 | 7 | REQ-001/002/003 | Mirrored the lenses on the command surface; added a CHANGELOG entry | `commands/ng-question.md`, `commands/ng-impact.md`, `commands/ng-breakdown.md`, `CHANGELOG.md` |
+| 8 | REQ-001 | Adversarial-review follow-up: cross-linked the work-type lens from the mode side to guard work-type/mode confusion | `docs/02-operating-system/risk-tiers-and-modes.md`, `skills/rating-change-risk/SKILL.md`, `docs/README.md` |
 
 ## Decisions during execution
 

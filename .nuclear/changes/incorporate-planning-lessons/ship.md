@@ -32,7 +32,7 @@ This packet's validator only lints structure — it cannot judge whether the add
 ## Monitoring and post-release checks
 
 - Watch the triggering behavior of the three refreshed eval prompts; refine an individual prompt if it over- or under-triggers.
-- Watch whether the work-type lens gets confused with the rigor mode in adopter use; the orthogonality sentence and the lens doc are the guard.
+- Watch whether the work-type lens gets confused with the rigor mode in adopter use; the orthogonality sentence, the lens doc, and the mode-side cross-links (`rating-change-risk`, `risk-tiers-and-modes.md`, docs index) are the guard.
 
 ## Maintainer follow-ups
 

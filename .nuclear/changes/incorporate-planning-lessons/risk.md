@@ -40,6 +40,9 @@
 | skill-evaluation prompts | Docs | Trigger prompts for the 3 edited skills | `docs/05-reference/skill-evaluation.md` |
 | ng-question / ng-impact / ng-breakdown | Commands | Mirror the new lenses on the paste-ready surface | `commands/` |
 | CHANGELOG.md | Docs | Records this change | `CHANGELOG.md` |
+| rating-change-risk | Skill (Core 7) | Cross-links work type as orthogonal to mode | `skills/rating-change-risk/SKILL.md` |
+| risk-tiers-and-modes doc | Docs | Points to the work-type lens from the mode side | `docs/02-operating-system/risk-tiers-and-modes.md` |
+| docs index | Docs | Makes the work-type lens discoverable | `docs/README.md` |
 
 ## Threshold screen
 

@@ -12,6 +12,7 @@
 | Full suite and lint clean | `python -m pytest` (117 passed); `ruff check .` | pass |
 | This packet validates | `python tools/ng.py validate .nuclear/changes/incorporate-planning-lessons` | pass |
 | No new always-on cost | no new skill/template/command; manifest unchanged | pass |
+| Work-type/mode confusion guarded by cross-links | mode-side docs and `rating-change-risk` point to `work-type-lens.md` | pass |
 
 ## Light efficacy note (baseline vs skill)
 

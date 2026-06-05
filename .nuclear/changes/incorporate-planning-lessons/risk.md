@@ -3,7 +3,7 @@
 ## Change identity
 
 - Slug: incorporate-planning-lessons
-- PR / issue: (TBD on push)
+- PR / issue: #26
 - Owner: maintainer
 - Date: 2026-06-05
 - Current lifecycle phase: Verify

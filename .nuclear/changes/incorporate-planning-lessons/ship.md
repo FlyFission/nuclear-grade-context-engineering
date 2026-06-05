@@ -36,7 +36,7 @@ This packet's validator only lints structure — it cannot judge whether the add
 
 ## Maintainer follow-ups
 
-- Optional: a CHANGELOG entry for the doctrine refinement.
+- The CHANGELOG `[Unreleased]` entry for this refinement shipped with the change; no separate follow-up remains.
 - Optional stretches recorded in `basis.md`: a scored planning-eval harness and a standalone brownfield worked example.
 
 ## Required links

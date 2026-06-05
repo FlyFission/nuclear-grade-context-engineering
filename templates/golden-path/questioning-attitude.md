@@ -23,6 +23,12 @@
 
 What decision must this change record make?
 
+## Work-type questions
+
+For each work type marked in the change context, answer the questions it forces; overlapping types stack, so cover the union (brownfield/migration → blast radius + rollback-of-state; defect-fix → reproduction + regression; greenfield → interfaces + acceptance). See `docs/02-operating-system/work-type-lens.md`.
+
+- Forced questions and answers (per marked type):
+
 ## Assumptions to validate
 
 | Assumption | Why it matters | Validation source | Status |
@@ -86,6 +92,7 @@ Danger words to challenge: probably, should, seems, obvious, just docs, safe, se
 ## Exit criteria
 
 - Assumptions are checked, marked as a gap, or assigned to someone.
+- For each work type marked, the questions it forces are answered or marked not applicable.
 - The triggers to escalate are not hidden.
 - The next artifact and the evidence it owes are named.
 

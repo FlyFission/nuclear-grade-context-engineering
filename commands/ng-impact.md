@@ -30,7 +30,7 @@ Inputs:
 - controlled items:
 - planned or actual diff:
 
-For each family of files, decide one of: update, leave as is, defer, or block. Name the updates needed, the controls now stale, the evidence links, the owners, and what should trigger a re-check. Pay close attention to public claims, validator behavior, source-lineage notes, handoffs, trust checks, lessons from operation (OPEX), and the release.
+For each family of files, decide one of: update, leave as is, defer, or block. Name the updates needed, the controls now stale, the evidence links, the owners, and what should trigger a re-check. Pay close attention to public claims, validator behavior, source-lineage notes, handoffs, trust checks, lessons from operation (OPEX), and the release. When the change touches a running system or stored data, also screen the runtime blast radius: schema and state migration, API consumers that depend on the contract, backward-compatibility, and rollback-of-state.
 
 ## Files created or modified
 

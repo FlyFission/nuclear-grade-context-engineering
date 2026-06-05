@@ -38,6 +38,8 @@
 | change-impact doc | Docs | Holds runtime blast-radius depth | `docs/02-operating-system/change-impact.md` |
 | agent-authority model | Docs | Names plan-vs-build authority | `docs/04-adoption/agent-authority-model.md` |
 | skill-evaluation prompts | Docs | Trigger prompts for the 3 edited skills | `docs/05-reference/skill-evaluation.md` |
+| ng-question / ng-impact / ng-breakdown | Commands | Mirror the new lenses on the paste-ready surface | `commands/` |
+| CHANGELOG.md | Docs | Records this change | `CHANGELOG.md` |
 
 ## Threshold screen
 

@@ -6,6 +6,10 @@ These entries record public-facing changes. They do not claim the project is a m
 
 ## [Unreleased]
 
+### Changed
+
+- Folded generic, tool-agnostic planning lessons from an external multi-repo review into existing controls, declining the tool-specific mechanics on the record. `questioning-attitude` now classifies the work type (greenfield/brownfield/defect-fix/refactor-migration) at the front door, orthogonal to the rigor modes; `checking-what-a-change-affects` and the CM change-impact template screen runtime/data blast radius (schema/state, API consumers, backward-compatibility, rollback-of-state); the Standard plan build sequence gains delegable handoff-slice columns (prerequisites, per-slice proof, stop/done condition) mirrored in `breaking-down-the-work`; and `docs/04-adoption/agent-authority-model.md` names the read-only plan phase versus the write-enabled build phase. Adds `docs/02-operating-system/work-type-lens.md`; command prompts and skill-evaluation prompts updated to match. No new always-on skill, template, or command, and the manifest is unchanged. Recorded as a dogfooded packet (`.nuclear/changes/incorporate-planning-lessons/`). (#26)
+
 ## [0.5.0] - 2026-06-04
 
 ### Added

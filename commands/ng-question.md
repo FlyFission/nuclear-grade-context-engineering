@@ -37,6 +37,7 @@ Inputs:
 
 Return:
 - the decision question in one sentence
+- the work type (greenfield, brownfield, defect-fix, or refactor-migration) and the questions that type forces
 - the evidence that would change the decision
 - the assumptions that must be true
 - known facts, unknowns, danger words, and worries about how good the sources are

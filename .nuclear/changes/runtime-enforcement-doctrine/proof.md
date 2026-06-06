@@ -23,8 +23,8 @@ brief prohibited appears nowhere in the tree.
 - Command/check/eval/review: `python -m pytest -q`; `python -m ruff check .`;
   `python tools/ng.py doctor .`; `python tools/ng.py tokens .`;
   `python tools/ng.py validate .nuclear/changes/runtime-enforcement-doctrine`; a recursive
-  case-insensitive grep for the prohibited word; a manual existence check of all 18 link
-  targets in the new page.
+  case-insensitive grep for the prohibited word; a link-resolution check of all 28 internal
+  links (17 distinct targets) in the new page.
 - Environment: Python 3.13, repo working tree on `claude/governance-patterns-integration-JsJIW`.
 - Inputs/fixtures: the new page, the one-row `docs/README.md` edit, and this packet.
 - Expected result: full suite green; ruff clean; doctor OK; token budget OK; this packet
@@ -36,8 +36,9 @@ brief prohibited appears nowhere in the tree.
 
 - Status: pass
 - Actual result: `python -m pytest` → 117 passed; `ruff check .` → all checks passed;
-  `doctor .` → OK; `tokens .` → OK: token budget; prohibited-word grep → zero matches; all 18
-  link targets in the new page confirmed to exist. Packet validation: see below.
+  `doctor .` → OK; `tokens .` → OK: token budget; prohibited-word grep → zero matches; all 28
+  internal links (17 distinct targets) in the new page confirmed to resolve. Packet
+  validation: see below.
 - Evidence link or artifact path: `docs/02-operating-system/runtime-enforcement.md`;
   `docs/README.md` (the "See how controls enforce, not just advise" row); commands above.
 - If failed/gap: none. Validator result for this packet is recorded by the

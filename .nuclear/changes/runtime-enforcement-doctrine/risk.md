@@ -40,7 +40,7 @@ and name the proof required.
 |---|---|
 | Consequence if wrong | A crosswalk row points to the wrong file or reads poorly; reversible by edit. No runtime, evidence-gate, or trust-boundary effect. |
 | Reversibility | Fully reversible; one new doc plus one additive index row. |
-| Detectability | High; broken internal links and boundary-phrase residue are covered by `pytest` and `doctor`, and the page renders visibly. |
+| Detectability | High; the test suite, `doctor`, `tokens`, and packet validation run green, and this page's link correctness is established by the explicit link-resolution check recorded in `proof.md`. The new page is not in the top-level public-doc test set, so its links and wording are checked by that proof step, not by `pytest`/`doctor`. |
 | Exposure | Public docs, but additive and within the existing boundary wording. |
 | Uncertainty | Low; no logic change; every linked control already exists and was path-checked. |
 | Why Quick is enough | No new trust boundary, dependency, permission, gate, or release effect. |
@@ -70,7 +70,10 @@ Move up to Standard if any of these are true:
 - a trust decision about a dependency, model, or API changed — no;
 - a failure could be silent, delayed, costly, or hard to undo — no;
 - the AI had the power to write, run commands, use the network, or approve actions, beyond
-  just drafting under review — no;
+  just drafting under review — no (the agent drafted documentation and ran read-only
+  verification commands — tests, `doctor`, validators; it changed no product code, held no
+  credentials, and the merge decision stays with a human via PR review, matching the
+  accepted `prove-overlay` Quick packet, also an AI-prepared docs change);
 - the proof will not fit in one small `proof.md` — false.
 
 None apply. Quick stands. (If a follow-up adds validator code or a new gate, re-classify to

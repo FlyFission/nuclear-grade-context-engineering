@@ -186,6 +186,55 @@ flowchart TD
 
 ---
 
+## 6. Who does what in one change
+
+How four roles hand off authority over a single change: **you**, the **AI agent**, the **change record**, and the **reviewer**. The agent moves fast inside limits you approved first; the record carries the claims and their evidence; the reviewer decides on the evidence, not the pitch. Read top to bottom.
+
+```mermaid
+sequenceDiagram
+    actor You
+    participant Agent as AI agent
+    participant Record as Change record
+    actor Reviewer
+    You->>Agent: Ask the hard question, set the goal
+    Agent->>Record: Draft the risk and what "good" means
+    Record-->>You: You read the draft
+    You->>Agent: Approve the limits (may / may not do)
+    Agent->>Agent: Build only inside the limits
+    Agent->>Record: Write each claim with its evidence
+    Record-->>Reviewer: Show evidence, gaps, decision
+    Reviewer->>Record: Decide on purpose (ship / defer / block)
+    Record->>Record: Save the approved version (baseline)
+    Note over You,Reviewer: Lessons from real use feed the next change
+```
+
+**In words (text fallback):** you ask + set the goal → agent drafts the risk and the definition of "good" → you approve the limits → agent builds only inside them → agent writes each claim with its evidence → reviewer checks the evidence and decides (ship / defer / block) → the approved version is saved as the baseline → lessons from real use feed the next change.
+
+---
+
+## 7. Keeping the approved version under control
+
+The configuration-management loop in one picture. A **baseline** is the version everyone agreed is correct and wants to protect. Changes do not edit the baseline directly — they go through evidence and a decision first, and only an accepted change becomes the new baseline.
+
+```mermaid
+flowchart LR
+    classDef item fill:#DCE6FA,stroke:#3A5BA8,color:#12203F;
+    classDef gate fill:#FFD24D,stroke:#B07400,color:#3A2600,stroke-width:2px;
+    classDef base fill:#DCEFDE,stroke:#2E7D45,color:#102810;
+    CI["Controlled items<br/>code, prompts, models,<br/>deps, docs, releases"]:::item --> CH["A change"]
+    CH --> EV["Evidence<br/>pass or gap, named"]
+    EV --> DEC{"Decide<br/>on purpose"}:::gate
+    DEC -->|"ship / defer"| BL["Saved baseline<br/>the approved version"]:::base
+    DEC -.->|"block"| CH
+    BL --> OP["Operate"]
+    OP --> LE["Lessons learned"]
+    LE -.->|"feed the next change"| CI
+```
+
+**In words (text fallback):** controlled items (code, prompts, models, dependencies, docs, releases) → a change → named evidence (pass or gap) → a deliberate decision → if ship/defer, save the new baseline; if block, back to the change → operate the baseline → lessons learned feed the next change to the controlled items.
+
+---
+
 ## Source-lineage note
 
 These diagrams are an original visual restatement of the Nuclear-grade workflow, influenced by public lifecycle, configuration-management, and software-assurance sources mapped in [`00-standards-foundation/source-map.md`](00-standards-foundation/source-map.md). They do not create formal V&V, compliance, certification, safety, security, or regulatory adequacy.

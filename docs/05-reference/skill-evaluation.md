@@ -22,6 +22,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should trigger: Review this plan for hidden risks before we let the coding agent edit files.
 - Should trigger: What facts would change the release decision for this dependency update?
 - Should trigger: The agent is asking many plausible questions but has not named the decision question the evidence must answer.
+- Should trigger: This is a brownfield change to the billing schema — classify the work type and name the migration and rollback questions it forces.
 - Should not trigger: Fix a README typo and show the diff.
 - Should not trigger: Explain what this small Python helper function does.
 
@@ -46,6 +47,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should trigger: This lifecycle rename may stale docs, skills, commands, validators, and examples; screen the impact.
 - Should trigger: If we change the packet template, what downstream artifacts need revalidation?
 - Should trigger: Does a prompt/model baseline update affect release docs or evidence?
+- Should trigger: This change alters a database schema other services read — screen the runtime blast radius and backward-compatibility, not just repo docs.
 - Should not trigger: Create an empty Standard packet folder.
 - Should not trigger: What does the changelog say changed last week?
 
@@ -188,6 +190,7 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 - Should trigger: Break this billing-revamp epic into a clean deliverable breakdown that covers all the scope with no overlaps before we plan.
 - Should trigger: We keep discovering work mid-sprint; give me a product WBS with a dictionary for this new ingestion subsystem.
 - Should trigger: Decompose this feature into work packages and check that the children actually sum to the whole.
+- Should trigger: We are handing these work packages to separate agents — turn the WBS leaves into delegable build-sequence slices with prereqs, per-slice proof, and stop conditions.
 - Should not trigger: Fix this typo in the README and show the diff.
 - Should not trigger: This backlog item is already broken down and owned; just start coding it.
 

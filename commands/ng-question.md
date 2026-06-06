@@ -37,6 +37,7 @@ Inputs:
 
 Return:
 - the decision question in one sentence
+- the work type(s), all that apply (a production defect is brownfield and defect-fix), and the questions each forces
 - the evidence that would change the decision
 - the assumptions that must be true
 - known facts, unknowns, danger words, and worries about how good the sources are

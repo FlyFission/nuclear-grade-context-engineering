@@ -72,6 +72,7 @@ Then hand off to ng-folders.
 - A dictionary row per part, with its scope, deliverable, how it is accepted, owner, and dependencies.
 - Named common parts and an explicit deferred-scope or gap line.
 - A self-check that the parts add up to the whole (the 100% rule) and do not overlap.
+- For delegated execution, a per-leaf note of prerequisites, the proof that closes it, and a stop/done condition, so `plan.md` can carry it as a slice (a handoff contract, not a schedule).
 
 ## Verification command
 

@@ -12,6 +12,7 @@ An impact screen asks a simple question. When a controlled item changes, what el
 ## When to Use
 
 - A change affects more than one kind of artifact.
+- A change touches a running system, a schema, stored data, or an API other code depends on (brownfield or migration work).
 - Public claims, where ideas came from, checkers, tests, templates, skills, commands, dependencies, prompts, or the release may need updates.
 - A saved version or a re-check trigger may change.
 - A near miss, a weak control, or a lesson from real operation (OPEX) hints at hidden ripple effects.
@@ -29,7 +30,7 @@ An impact screen asks a simple question. When a controlled item changes, what el
 
 ## Process
 
-1. Name the kinds of artifacts the change might affect.
+1. Name the kinds of artifacts the change might affect. When the change touches a running system or stored data, screen the runtime blast radius too — schema and state migration, API consumers that depend on the contract, backward-compatibility, and rollback-of-state — not just repo artifacts. See `docs/02-operating-system/change-impact.md`.
 2. For each kind, pick one action: update it, leave it alone, defer it, or block on it.
 3. Name the stale links, evidence, examples, claims, handoffs, or controls.
 4. Link evidence for each choice.

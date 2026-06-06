@@ -43,11 +43,16 @@ requirement → task → code → evidence stays unbroken. Every requirement sho
 appear against at least one step; a step with no requirement is either scaffolding
 or scope creep — say which.
 
-| # | Task | Requirements covered |
-|---|---|---|
-| 1 | | REQ-001 |
-| 2 | | |
-| 3 | | |
+For work that will be handed to another agent or session, make each step a delegable
+slice: name its prerequisites, the proof that closes it, and the stop or done
+condition. This is a handoff contract, not a schedule — see `briefing-an-agent` and
+`handing-off-work`.
+
+| # | Task | Requirements covered | Prereqs / blocked-by | Proof for this step | Stop / done condition |
+|---|---|---|---|---|---|
+| 1 | | REQ-001 | | | |
+| 2 | | | | | |
+| 3 | | | | | |
 
 ## Two-speed work plan
 

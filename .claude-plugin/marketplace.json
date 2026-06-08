@@ -8,7 +8,7 @@
     {
       "name": "nuclear-grade",
       "source": "./",
-      "description": "Risk-graded context-engineering skills, command prompts, and change-record templates. No hooks are configured, so nothing runs automatically; the bundled ng CLI is included and runs only when you invoke it."
+      "description": "Risk-graded context-engineering skills, command prompts, and change-record templates. No hooks are configured, so nothing runs automatically; the bundled ng CLI is included and runs only when you invoke it directly (python tools/ng.py), never on its own."
     }
   ]
 }

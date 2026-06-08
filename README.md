@@ -264,7 +264,7 @@ Use Nuclear-grade if you are:
 /reload-plugins   # or restart Claude Code — loads the new skills/commands into this session
 ```
 
-That exposes the skills and command prompts as a plugin. No hooks are configured, so nothing runs automatically; the install does copy the repo's `ng` CLI, which runs only when you invoke it. Prefer plain files, or using another tool? Use the repo directly:
+That exposes the skills and command prompts as a plugin. No hooks are configured, so nothing runs automatically; the install does copy the repo's `ng` CLI (invoked as `python tools/ng.py` — the plugin adds no `ng` command to your `PATH`), which runs only when you invoke it. Prefer plain files, or using another tool? Use the repo directly:
 
 1. **Get the tool.** Clone the repo and install it (no third-party dependencies). See [`INSTALL.md`](INSTALL.md).
 2. **Check your setup.** Run `python tools/ng.py doctor .` to confirm things are wired up, and `python tools/ng.py list` to see what is available.

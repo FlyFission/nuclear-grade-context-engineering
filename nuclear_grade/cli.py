@@ -167,13 +167,19 @@ MISSION_TEMPLATE = (
 )
 
 CI_WORKFLOW_TEMPLATE = """\
-# Nuclear-grade change-record gate (rung 4).
+# Nuclear-grade change-record gate (rung 4 -- only with branch protection).
 #
-# The OUT-OF-BAND gate: it runs in CI, where the agent that authored a change
-# cannot edit the check to make it pass. The in-session skills (and any hooks)
-# are rungs 1-3 and advisory by doctrine; this workflow is the control that
-# bites. It checks that change records are STRUCTURALLY complete -- it does not
-# decide engineering adequacy, safety, security, or compliance.
+# The OUT-OF-BAND gate: it runs in CI and checks that change records are
+# STRUCTURALLY complete. It does not decide engineering adequacy, safety,
+# security, or compliance. The in-session skills (and any hooks) are rungs 1-3
+# and advisory by doctrine; this workflow is the control that bites -- but only
+# when branch protection makes it bite (see below).
+#
+# IMPORTANT: on a `pull_request` run this workflow executes from the PR's own
+# code, so the same PR can edit this file (e.g. drop the validate step) while
+# keeping the check name. The "the author cannot edit the check" property holds
+# ONLY if branch protection requires this check, requires review, and restricts
+# who can change `.github/workflows/`. Without that, this gate is advisory.
 #
 # Hardening: the job runs with a read-only token (least privilege); the trigger
 # is `pull_request`, so a fork PR never runs with a write token or repository

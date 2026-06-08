@@ -433,6 +433,7 @@ def test_scaffold_ci_writes_hardened_workflow(tmp_path):
     assert "secrets." not in text
     assert "nuclear-grade validate" in text
     assert "rung 4" in text  # the out-of-band-gate honesty banner
+    assert "branch protection" in text  # honest that rung-4 needs rung-5 (Codex P1)
 
 
 def test_scaffold_ci_dry_run_is_non_mutating(tmp_path):

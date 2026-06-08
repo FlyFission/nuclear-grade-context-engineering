@@ -20,7 +20,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 
 | Claim / requirement ID | Support type | Verification type | Verification method | Acceptance criteria | Result status | Evidence link | Gap / follow-up |
 |---|---|---|---|---|---|---|---|
-| REQ-001 | local proof | deterministic test | `ng scaffold-ci` into a temp dir; YAML `safe_load` | a workflow file that parses and runs the validator | pass | `tests/test_ng_cli.py` | live run deferred |
+| REQ-001 | local proof | deterministic test | `ng scaffold-ci` into a temp dir; assert the hardening lines by string match | a workflow file with the hardening present that runs the validator | pass | `tests/test_ng_cli.py` | live run deferred; YAML is left unparsed by design (no third-party dependency) |
 | REQ-002 | local proof | deterministic test | guard test asserts permissions/trigger/no-secrets | `contents: read`; `pull_request`; no `pull_request_target`; no `secrets.` | pass | `tests/test_ng_cli.py` | none |
 | REQ-003 | local proof | deterministic test + CI | `permissions: contents: read` in `ci.yml`; suite green | block present; CI passes | pass | `.github/workflows/ci.yml` | none |
 | REQ-004 | local proof | deterministic test | write / dry-run / force / hardening tests | all pass | pass | `tests/test_ng_cli.py` | none |
@@ -30,7 +30,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 
 | Method | Command / review / eval | Environment | Result | Evidence link |
 |---|---|---|---|---|
-| Generate + YAML parse | `ng scaffold-ci <tmp>`; `yaml.safe_load` | Python 3, container | valid; `contents: read`; trigger `pull_request` | this packet |
+| Generate + string-assert | `ng scaffold-ci <tmp>`; assert `contents: read`, `pull_request`, no `secrets.`, validator step, branch-protection note | Python 3, container | hardening lines present | this packet |
 | Full suite | `python -m pytest -q` | Python 3 | 120 passed | CI |
 | Lint | `python -m ruff check .` | ruff 0.15.16 | clean | CI |
 | Doctor | `python tools/ng.py doctor .` | repo | OK | CI |

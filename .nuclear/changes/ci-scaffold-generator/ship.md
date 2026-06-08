@@ -36,6 +36,7 @@
 | Risk / gap | Impact | Disposition | Owner | Recheck trigger |
 |---|---|---|---|---|
 | No live GitHub Actions run here | Gate behavior unproven end-to-end | defer | FlyFission | Maintainer runs the generated workflow on a real PR |
+| Gate runs from PR code on `pull_request` | A PR can edit the generated workflow unless branch protection requires the check | accept | FlyFission | Pair with branch protection (require this check + review + restrict workflow edits); the generated banner documents this |
 | Actions tag-pinned, not SHA-pinned | Mutable-tag supply-chain risk | accept | FlyFission | The in-file comment recommends SHA-pinning for production |
 | Validator install assumes `nuclear-grade` is installable | A non-published package breaks the install step | accept | FlyFission | The template comments the git-install fallback; PyPI publish is a ROADMAP item |
 

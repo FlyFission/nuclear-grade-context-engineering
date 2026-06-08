@@ -417,3 +417,37 @@ def test_migrate_is_idempotent_when_mode_already_declared(tmp_path):
     assert "already declares mode" in result.stdout
     text = (packet / "risk.md").read_text(encoding="utf-8")
     assert text.count("## Selected mode") == 1
+
+
+def test_scaffold_ci_writes_hardened_workflow(tmp_path):
+    result = run_ng("scaffold-ci", str(tmp_path))
+
+    assert result.returncode == 0, result.stderr
+    workflow = tmp_path / ".github" / "workflows" / "nuclear-grade.yml"
+    assert workflow.exists()
+    text = workflow.read_text(encoding="utf-8")
+    # F5 hardening: least privilege, safe trigger, no secrets, and it runs the validator.
+    assert "permissions:\n  contents: read\n" in text
+    assert "on:\n  pull_request:\n" in text
+    assert "pull_request_target" not in text
+    assert "secrets." not in text
+    assert "nuclear-grade validate" in text
+    assert "rung 4" in text  # the out-of-band-gate honesty banner
+
+
+def test_scaffold_ci_dry_run_is_non_mutating(tmp_path):
+    result = run_ng("scaffold-ci", str(tmp_path), "--dry-run")
+
+    assert result.returncode == 0, result.stderr
+    assert "would create" in result.stdout
+    assert not (tmp_path / ".github").exists()
+
+
+def test_scaffold_ci_refuses_overwrite_without_force(tmp_path):
+    assert run_ng("scaffold-ci", str(tmp_path)).returncode == 0
+
+    result = run_ng("scaffold-ci", str(tmp_path))
+    assert result.returncode != 0
+    assert "already exists" in result.stderr
+
+    assert run_ng("scaffold-ci", str(tmp_path), "--force").returncode == 0

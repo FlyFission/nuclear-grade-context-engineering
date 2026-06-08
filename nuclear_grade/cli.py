@@ -166,6 +166,60 @@ MISSION_TEMPLATE = (
     "safety, security, certification, or regulatory adequacy.\n"
 )
 
+CI_WORKFLOW_TEMPLATE = """\
+# Nuclear-grade change-record gate (rung 4).
+#
+# The OUT-OF-BAND gate: it runs in CI, where the agent that authored a change
+# cannot edit the check to make it pass. The in-session skills (and any hooks)
+# are rungs 1-3 and advisory by doctrine; this workflow is the control that
+# bites. It checks that change records are STRUCTURALLY complete -- it does not
+# decide engineering adequacy, safety, security, or compliance.
+#
+# Hardening: the job runs with a read-only token (least privilege); the trigger
+# is `pull_request`, so a fork PR never runs with a write token or repository
+# secrets; and the job references none. Pin each action below to a full commit
+# SHA for production immutability.
+name: Nuclear-grade change records
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-change-records:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4  # pin to a full commit SHA for production
+
+      - name: Set up Python
+        uses: actions/setup-python@v5  # pin to a full commit SHA for production
+        with:
+          python-version: "3.12"
+
+      - name: Install the validator
+        # Not on PyPI in your setup? Install from source instead, pinned to a tag:
+        #   pip install "nuclear-grade @ git+https://github.com/FlyFission/nuclear-grade-context-engineering@v0.5.0"
+        run: python -m pip install --upgrade pip nuclear-grade
+
+      - name: Validate every change record
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          found=0
+          for packet in .nuclear/changes/*/; do
+            echo "Validating $packet"
+            nuclear-grade validate "$packet"
+            found=1
+          done
+          if [ "$found" -eq 0 ]; then
+            echo "No change records under .nuclear/changes/ -- nothing to validate."
+          fi
+"""
+
 
 @dataclass(frozen=True)
 class PlannedWrite:
@@ -235,6 +289,15 @@ def build_parser() -> argparse.ArgumentParser:
     )
     migrate_parser.set_defaults(handler=handle_migrate)
 
+    scaffold_parser = subcommands.add_parser(
+        "scaffold-ci",
+        help="Write a hardened GitHub Actions workflow that validates change records (the rung-4 out-of-band gate).",
+    )
+    scaffold_parser.add_argument("repo", nargs="?", default=".", type=Path)
+    scaffold_parser.add_argument("--dry-run", action="store_true")
+    scaffold_parser.add_argument("--force", action="store_true", help="Overwrite an existing workflow file.")
+    scaffold_parser.set_defaults(handler=handle_scaffold_ci)
+
     eval_parser = subcommands.add_parser(
         "eval",
         help="Score worked-example artifacts for the decision signals they claim to teach.",
@@ -270,6 +333,16 @@ def handle_init(args: argparse.Namespace) -> int:
         PlannedWrite(repo / ".nuclear" / "mission.md", content=MISSION_TEMPLATE),
     ]
     return apply_writes(writes, dry_run=args.dry_run, overwrite=args.yes)
+
+
+def handle_scaffold_ci(args: argparse.Namespace) -> int:
+    repo = args.repo.resolve()
+    workflow = repo / ".github" / "workflows" / "nuclear-grade.yml"
+    writes = [
+        PlannedWrite(repo / ".github" / "workflows", is_dir=True),
+        PlannedWrite(workflow, content=CI_WORKFLOW_TEMPLATE),
+    ]
+    return apply_writes(writes, dry_run=args.dry_run, overwrite=args.force)
 
 
 def handle_new(args: argparse.Namespace) -> int:

@@ -166,6 +166,85 @@ MISSION_TEMPLATE = (
     "safety, security, certification, or regulatory adequacy.\n"
 )
 
+CI_WORKFLOW_TEMPLATE = """\
+# Nuclear-grade change-record gate (rung 4 -- only with branch protection).
+#
+# The OUT-OF-BAND gate: it runs in CI and checks that change records are
+# STRUCTURALLY complete. It does not decide engineering adequacy, safety,
+# security, or compliance. The in-session skills (and any hooks) are rungs 1-3
+# and advisory by doctrine; this workflow is the control that bites -- but only
+# when branch protection makes it bite (see below).
+#
+# IMPORTANT: on a `pull_request` run this workflow executes from the PR's own
+# code, so the same PR can edit this file (e.g. drop the validate step) while
+# keeping the check name. The "the author cannot edit the check" property holds
+# ONLY if branch protection requires this check, requires review, and restricts
+# who can change `.github/workflows/` -- e.g. a CODEOWNERS rule on that path plus
+# "require review from Code Owners". Without that, this gate is advisory.
+#
+# (This is why the trigger stays `pull_request` and NOT `pull_request_target`:
+# the latter would run a fork PR's checkout in the base-branch context WITH a
+# write token and secrets -- a privilege-escalation/exfil vector. The right fix
+# for "the author controls this file" is branch protection, not a riskier trigger.)
+#
+# Hardening: the job runs with a read-only token (least privilege); the trigger
+# is `pull_request`, so a fork PR never runs with a write token or repository
+# secrets; and the job references none. Pin each action below to a full commit
+# SHA for production immutability.
+name: Nuclear-grade change records
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-change-records:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4  # pin to a full commit SHA for production
+
+      - name: Set up Python
+        uses: actions/setup-python@v5  # pin to a full commit SHA for production
+        with:
+          python-version: "3.12"
+
+      - name: Install the validator
+        # Pinned to the version that generated this workflow, so this required gate
+        # stays reproducible (an unpinned install could change validation on a future
+        # release with no repo change). Not on PyPI in your setup? Install from source
+        # pinned to the same tag instead:
+        #   pip install "nuclear-grade @ git+https://github.com/FlyFission/nuclear-grade-context-engineering@vNG_VERSION"
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "nuclear-grade==NG_VERSION"
+
+      - name: Validate every change record
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          found=0
+          for packet in .nuclear/changes/*/; do
+            # Skip packets deliberately closed via the documented closure path
+            # (a `NUCLEAR-GRADE-CLOSED: <rationale>` line). They are kept for audit
+            # history; the validator still rejects their unfilled fields, so closing
+            # a record -- not deleting it -- must not block this gate forever.
+            if grep -rqE '^[[:space:]]*NUCLEAR-GRADE-CLOSED:[[:space:]]*[^[:space:]]' "$packet"; then
+              echo "Skipping closed record: $packet"
+              continue
+            fi
+            echo "Validating $packet"
+            nuclear-grade validate "$packet"
+            found=1
+          done
+          if [ "$found" -eq 0 ]; then
+            echo "No open change records under .nuclear/changes/ -- nothing to validate."
+          fi
+"""
+
 
 @dataclass(frozen=True)
 class PlannedWrite:
@@ -235,6 +314,15 @@ def build_parser() -> argparse.ArgumentParser:
     )
     migrate_parser.set_defaults(handler=handle_migrate)
 
+    scaffold_parser = subcommands.add_parser(
+        "scaffold-ci",
+        help="Write a hardened GitHub Actions workflow that validates change records (the rung-4 out-of-band gate).",
+    )
+    scaffold_parser.add_argument("repo", nargs="?", default=".", type=Path)
+    scaffold_parser.add_argument("--dry-run", action="store_true")
+    scaffold_parser.add_argument("--force", action="store_true", help="Overwrite an existing workflow file.")
+    scaffold_parser.set_defaults(handler=handle_scaffold_ci)
+
     eval_parser = subcommands.add_parser(
         "eval",
         help="Score worked-example artifacts for the decision signals they claim to teach.",
@@ -270,6 +358,57 @@ def handle_init(args: argparse.Namespace) -> int:
         PlannedWrite(repo / ".nuclear" / "mission.md", content=MISSION_TEMPLATE),
     ]
     return apply_writes(writes, dry_run=args.dry_run, overwrite=args.yes)
+
+
+def _validator_version() -> str:
+    """The nuclear-grade version to pin the generated gate to, so a required check
+    stays reproducible.
+
+    Prefer the source checkout's ``pyproject.toml`` (guarded to *this* package): when
+    ``scaffold-ci`` runs via the repo-local ``tools/ng.py`` wrapper, the checkout is the
+    version actually being executed, whereas ``importlib.metadata`` reads whatever
+    distribution is installed in the environment -- which may be an older wheel and would
+    pin the gate to a stale validator. Fall back to installed metadata only when there is
+    no matching checkout (e.g. the console script run from a wheel); otherwise return ""
+    and the generator emits an unpinned install."""
+    try:
+        import tomllib
+
+        pyproject = REPO_ROOT / "pyproject.toml"
+        if pyproject.is_file():
+            project = tomllib.loads(pyproject.read_text(encoding="utf-8")).get("project", {})
+            if project.get("name") == "nuclear-grade" and project.get("version"):
+                return str(project["version"])
+    except Exception:
+        pass
+    try:
+        from importlib.metadata import PackageNotFoundError, version
+
+        try:
+            return version("nuclear-grade")
+        except PackageNotFoundError:
+            return ""
+    except Exception:
+        return ""
+
+
+def handle_scaffold_ci(args: argparse.Namespace) -> int:
+    repo = args.repo.resolve()
+    pinned = _validator_version()
+    content = CI_WORKFLOW_TEMPLATE
+    if pinned:
+        content = content.replace("nuclear-grade==NG_VERSION", f"nuclear-grade=={pinned}")
+        content = content.replace("@vNG_VERSION", f"@v{pinned}")
+    else:
+        # No discoverable version: keep the workflow working, unpinned.
+        content = content.replace("nuclear-grade==NG_VERSION", "nuclear-grade")
+        content = content.replace("@vNG_VERSION", "@main")
+    workflow = repo / ".github" / "workflows" / "nuclear-grade.yml"
+    writes = [
+        PlannedWrite(repo / ".github" / "workflows", is_dir=True),
+        PlannedWrite(workflow, content=content),
+    ]
+    return apply_writes(writes, dry_run=args.dry_run, overwrite=args.force)
 
 
 def handle_new(args: argparse.Namespace) -> int:

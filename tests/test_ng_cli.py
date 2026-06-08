@@ -3,6 +3,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
 from nuclear_grade.ng_validate import CLOSURE_MARKER
 from tests.test_ng_validate import minimal_quick_packet
 from tools import ng as ng_cli
@@ -417,3 +419,72 @@ def test_migrate_is_idempotent_when_mode_already_declared(tmp_path):
     assert "already declares mode" in result.stdout
     text = (packet / "risk.md").read_text(encoding="utf-8")
     assert text.count("## Selected mode") == 1
+
+
+def test_scaffold_ci_writes_hardened_workflow(tmp_path):
+    result = run_ng("scaffold-ci", str(tmp_path))
+
+    assert result.returncode == 0, result.stderr
+    workflow = tmp_path / ".github" / "workflows" / "nuclear-grade.yml"
+    assert workflow.exists()
+    text = workflow.read_text(encoding="utf-8")
+    # F5 hardening: least privilege, safe trigger, no secrets, and it runs the validator.
+    assert "permissions:\n  contents: read\n" in text
+    assert "on:\n  pull_request:\n" in text
+    # `pull_request_target` is *named* in the explanatory banner (why it is avoided), but
+    # must never be an actual `on:` trigger key -- check the indented key, not a substring.
+    assert "\n  pull_request_target:" not in text
+    assert "secrets." not in text
+    assert "nuclear-grade validate" in text
+    assert "rung 4" in text  # the out-of-band-gate honesty banner
+    assert "branch protection" in text  # honest that rung-4 needs rung-5 (Codex P1)
+    assert "nuclear-grade==" in text  # the validator is version-pinned for a reproducible gate (Codex P2)
+
+
+def test_scaffold_ci_emits_parseable_yaml(tmp_path):
+    # A deterministic guard that the generated workflow is valid YAML, not merely that
+    # the right substrings are present -- a stray indent or quote could satisfy the
+    # string asserts above while leaving the file unparseable. Skips locally when PyYAML
+    # is absent; CI installs it, so the parse always runs there.
+    yaml = pytest.importorskip("yaml")
+    assert run_ng("scaffold-ci", str(tmp_path)).returncode == 0
+    workflow = tmp_path / ".github" / "workflows" / "nuclear-grade.yml"
+    doc = yaml.safe_load(workflow.read_text(encoding="utf-8"))
+    assert isinstance(doc, dict)
+    # PyYAML (YAML 1.1) parses the bare key `on:` as boolean True; accept either form.
+    trigger = doc.get("on", doc.get(True))
+    # Exactly `pull_request` -- this also proves `pull_request_target` is not a trigger.
+    assert isinstance(trigger, dict) and set(trigger) == {"pull_request"}
+    assert doc.get("permissions") == {"contents": "read"}
+    assert "validate-change-records" in doc.get("jobs", {})
+
+
+def test_scaffold_ci_skips_closed_packets(tmp_path):
+    # A packet closed via the documented closure path (NUCLEAR-GRADE-CLOSED) is kept
+    # for audit history; the validator still rejects its unfilled fields, so the gate
+    # must skip closed records rather than block CI forever (Codex). The marker comes
+    # from the validator constant, so the workflow can't drift from the closure contract.
+    from nuclear_grade.ng_validate import CLOSURE_MARKER
+
+    assert run_ng("scaffold-ci", str(tmp_path)).returncode == 0
+    text = (tmp_path / ".github" / "workflows" / "nuclear-grade.yml").read_text(encoding="utf-8")
+    assert CLOSURE_MARKER in text
+    assert "Skipping closed record" in text
+
+
+def test_scaffold_ci_dry_run_is_non_mutating(tmp_path):
+    result = run_ng("scaffold-ci", str(tmp_path), "--dry-run")
+
+    assert result.returncode == 0, result.stderr
+    assert "would create" in result.stdout
+    assert not (tmp_path / ".github").exists()
+
+
+def test_scaffold_ci_refuses_overwrite_without_force(tmp_path):
+    assert run_ng("scaffold-ci", str(tmp_path)).returncode == 0
+
+    result = run_ng("scaffold-ci", str(tmp_path))
+    assert result.returncode != 0
+    assert "already exists" in result.stderr
+
+    assert run_ng("scaffold-ci", str(tmp_path), "--force").returncode == 0

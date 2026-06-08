@@ -15,13 +15,15 @@ in-session hooks are rungs 1–3 and defeatable; the real gate is the out-of-ban
 
 ## Security properties (enforced by `tests/test_hooks.py`)
 
-- **Pure standard library, zero network** — the scripts import only `json` and `sys`. A test fails
-  the build if `socket`, `urllib`, `requests`, `http`, `subprocess`, `ftplib`, or `smtplib` appears
-  in a hook source.
+- **Pure standard library, zero network** — the scripts import only `json` and `sys`. A test
+  AST-parses each hook and fails the build if anything beyond `json`/`sys` is imported (a
+  banned-substring scan also rejects `socket`, `urllib`, `requests`, `http`, `subprocess`, etc.).
 - **Static output** — the injected text is a fixed constant. The UserPromptSubmit hook never
   reflects the user's prompt (a seeded prompt is asserted absent from the output), so it cannot be
   used to launder injected instructions.
-- **No file reads, no side effects** — the hooks read stdin and print JSON; nothing else.
+- **No file reads, no side effects** — the hooks read stdin and print JSON; a test fails the build if
+  a hook calls `open`, `exec`, `eval`, or `compile`. The matcher includes `clear` and `compact` so the
+  preamble is re-injected after `/clear` or context compaction, not only at startup/resume.
 - **Advisory only (rung 1)** — these hooks inject *text*; they do not block anything. The blocking
   `PreToolUse` gate is a separate, deliberately-deferred tier (it must decide on structured facts
   only, fail closed, and never auto-allow).
@@ -35,7 +37,7 @@ Copy the two scripts into your repo (for example `.claude/hooks/`) and register 
 {
   "hooks": {
     "SessionStart": [
-      { "matcher": "startup|resume", "hooks": [ { "type": "command", "command": "python3 ${CLAUDE_PROJECT_DIR}/.claude/hooks/session_start.py" } ] }
+      { "matcher": "startup|resume|clear|compact", "hooks": [ { "type": "command", "command": "python3 ${CLAUDE_PROJECT_DIR}/.claude/hooks/session_start.py" } ] }
     ],
     "UserPromptSubmit": [
       { "matcher": "*", "hooks": [ { "type": "command", "command": "python3 ${CLAUDE_PROJECT_DIR}/.claude/hooks/user_prompt_submit.py" } ] }

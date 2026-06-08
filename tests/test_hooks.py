@@ -1,3 +1,4 @@
+import ast
 import json
 import subprocess
 import sys
@@ -74,3 +75,30 @@ def test_preamble_clusters_stay_in_sync_with_core():
     for cluster in CLUSTERS:
         assert cluster in core, f"cluster missing from CORE.md: {cluster}"
         assert cluster in preamble, f"preamble drifted from CORE.md (missing cluster): {cluster}"
+
+
+def test_hooks_import_only_json_and_sys():
+    """Robust form of the 'pure standard library' guarantee: AST-parse each hook
+    and assert it imports nothing beyond json/sys (a banned-substring scan would
+    miss os/pathlib/importlib)."""
+    allowed = {"json", "sys"}
+    for script in HOOK_SCRIPTS:
+        tree = ast.parse(script.read_text(encoding="utf-8"))
+        imported: set[str] = set()
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                imported.update(alias.name.split(".")[0] for alias in node.names)
+            elif isinstance(node, ast.ImportFrom) and node.module:
+                imported.add(node.module.split(".")[0])
+        assert imported <= allowed, f"{script.name} imports beyond json/sys: {sorted(imported - allowed)}"
+
+
+def test_hooks_do_no_file_io_or_dynamic_exec():
+    """The 'no file reads, no side effects' guarantee: ban open/exec/eval/compile
+    calls (open() is a builtin, so the import allowlist alone would miss it)."""
+    banned_calls = {"open", "exec", "eval", "compile", "__import__"}
+    for script in HOOK_SCRIPTS:
+        tree = ast.parse(script.read_text(encoding="utf-8"))
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
+                assert node.func.id not in banned_calls, f"{script.name} calls {node.func.id}()"

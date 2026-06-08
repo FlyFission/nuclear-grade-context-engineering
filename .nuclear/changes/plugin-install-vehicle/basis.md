@@ -14,14 +14,14 @@
 
 ## Mission / need
 
-Adopters currently copy Markdown by hand or run the `ng` CLI. The repo should install in one line as a Claude Code plugin, packaging the existing skills and command prompts, without shipping executable code or overclaiming.
+Adopters currently copy Markdown by hand or run the `ng` CLI. The repo should install as a Claude Code plugin in two commands, packaging the existing skills and command prompts, without auto-running any code or overclaiming.
 
 ## Protected outcomes
 
 | Protected outcome | Why it matters | Evidence needed |
 |---|---|---|
 | The documented install works as written | A broken manifest blocks every adopter | Manifests match the current official schema; parse clean; packaging test green |
-| No executable code ships in this tier | Avoids any new RCE / supply-chain surface | `.claude-plugin/` holds only the two manifests; no `hooks/` directory |
+| No hooks are configured, so nothing auto-runs | Avoids any new auto-executed / supply-chain surface | no `hooks/hooks.json`; the bundled `ng` CLI runs only when invoked |
 | Version stays single-sourced | Plugin/package version drift misleads adopters | `test_plugin_version_tracks_pyproject` passes |
 | No enforcement/assurance overclaim | The repo's whole brand is anti-overclaiming | Install docs reviewed; `test_public_docs` boundary check green |
 
@@ -61,9 +61,9 @@ Adopters currently copy Markdown by hand or run the `ng` CLI. The repo should in
 
 | ID | Requirement / claim | Basis | Design feature or control | Evidence planned |
 |---|---|---|---|---|
-| REQ-001 | WHEN a user runs the documented marketplace-add + install commands THE SYSTEM SHALL expose the existing skills and commands as the `nuclear-grade` plugin with no executable hooks | one-line install need | schema-correct manifests; auto-discovery; no `hooks/` | schema check + parse + packaging test + deferred live install |
+| REQ-001 | WHEN a user runs the documented marketplace-add + install commands THE SYSTEM SHALL expose the existing skills and commands as the `nuclear-grade` plugin with no hooks configured | two-command install need | schema-correct manifests; auto-discovery; no `hooks/hooks.json` | schema check + parse + packaging test + deferred live install |
 | REQ-002 | THE plugin manifest version SHALL equal the `pyproject` package version | avoid drift | single-source guard | `test_plugin_version_tracks_pyproject` |
-| REQ-003 | THE plugin SHALL ship no executable code in this tier | no new trust surface | only manifests in `.claude-plugin/`; components at root | structure test |
+| REQ-003 | THE plugin SHALL configure no auto-run hooks (no `hooks/hooks.json`) in this tier | no auto-executed trust surface | components at root; no `hooks/hooks.json` | structure + no-auto-activation tests |
 | REQ-004 | Public install docs SHALL lead with the plugin and SHALL NOT claim the project "does not package as a plug-in" | honest, current docs | INSTALL.md / README edits | `test_public_docs` + review |
 
 ## Design outline

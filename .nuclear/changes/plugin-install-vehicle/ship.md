@@ -27,7 +27,7 @@
 | Basis / requirements / claims | pass | `basis.md` | REQ-001..004 |
 | Questioning attitude | pass | `risk.md` | captured inline |
 | Verification | pass (one deferred) | `verification.md` | live install deferred |
-| Dependency / supply-chain evidence | not applicable | this packet | no new dependency; no executable code |
+| Dependency / supply-chain evidence | not applicable | this packet | no new dependency; no auto-run hooks configured |
 | AI-assisted work checks | pass | `verification.md` | schema verified vs official docs |
 | Review / approval | planned | the PR | maintainer review pending |
 

@@ -8,7 +8,7 @@
     {
       "name": "nuclear-grade",
       "source": "./",
-      "description": "Risk-graded context-engineering skills and command prompts plus change-record templates (skills and commands only — no executable hooks in this tier)."
+      "description": "Risk-graded context-engineering skills, command prompts, and change-record templates. No hooks are configured, so nothing runs automatically; the bundled ng CLI is included and runs only when you invoke it."
     }
   ]
 }

@@ -18,7 +18,7 @@
 |---|---|---|---|---|---|---|---|---|
 | REQ-001 | One-line install exposes existing skills/commands as the `nuclear-grade` plugin, no hooks | `basis.md` | `plan.md` step 2 / `.claude-plugin/plugin.json` | schema-correct manifests; auto-discovery | source claim / local proof | `verification.md` | ship with residual risk | pass for schema+parse; live install deferred |
 | REQ-002 | plugin.json version equals pyproject version | `basis.md` | `plan.md` step 3 / `tests/test_plugin_packaging.py` | version-sync test | local proof | `verification.md` | ship | pass |
-| REQ-003 | No executable code in this tier | `basis.md` | `plan.md` step 2 / `.claude-plugin/` | only manifests; no `hooks/` | local proof | `verification.md` | ship | pass |
+| REQ-003 | No auto-run hooks configured (no `hooks/hooks.json`) | `basis.md` | `plan.md` step 2 / `.claude-plugin/` | no `hooks/hooks.json`; bundled CLI runs only on invocation | local proof | `verification.md` | ship | pass |
 | REQ-004 | Install docs lead with the plugin; no "does not package" claim | `basis.md` | `plan.md` step 4 / `INSTALL.md` | honest wording; boundary note | local proof | `verification.md` | ship | pass |
 
 ## Evidence chain

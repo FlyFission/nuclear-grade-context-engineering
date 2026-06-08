@@ -256,14 +256,14 @@ Use Nuclear-grade if you are:
 
 ## Quick start
 
-**Claude Code (one line).** This repository is its own plugin marketplace:
+**Claude Code (two commands).** This repository is its own plugin marketplace:
 
 ```bash
 /plugin marketplace add FlyFission/nuclear-grade-context-engineering
 /plugin install nuclear-grade@nuclear-grade
 ```
 
-That installs the skills and command prompts as a plugin — Markdown only, with no executable hooks in this tier. Prefer plain files, or using another tool? Use the repo directly:
+That exposes the skills and command prompts as a plugin. No hooks are configured, so nothing runs automatically; the install does copy the repo's `ng` CLI, which runs only when you invoke it. Prefer plain files, or using another tool? Use the repo directly:
 
 1. **Get the tool.** Clone the repo and install it (no third-party dependencies). See [`INSTALL.md`](INSTALL.md).
 2. **Check your setup.** Run `python tools/ng.py doctor .` to confirm things are wired up, and `python tools/ng.py list` to see what is available.

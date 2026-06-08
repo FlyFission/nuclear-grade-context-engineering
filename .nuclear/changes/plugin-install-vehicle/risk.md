@@ -12,11 +12,11 @@
 - Date: 2026-06-08
 - Current lifecycle phase: Decide
 - Current work phase: accept
-- Summary: Add `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json` so the repo installs in one line as a Claude Code plugin that packages the existing skills and command prompts. This is the no-hooks tier — skills + commands + inert JSON manifests, zero executable code. Adds `tests/test_plugin_packaging.py` (manifest validity, version-sync with `pyproject.toml`, structure gotchas) and updates the public install docs to lead with the plugin and drop the now-false "does not package as a plug-in" statements.
+- Summary: Add `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json` so the repo installs as a Claude Code plugin (two commands) that exposes the existing skills and command prompts. This is the no-hooks tier — no hooks are configured, so nothing auto-runs; the repo-as-marketplace source also copies the bundled `ng` CLI, which runs only when invoked. Adds `tests/test_plugin_packaging.py` (manifest validity, version-sync with `pyproject.toml`, structure gotchas) and updates the public install docs to lead with the plugin and drop the now-false "does not package as a plug-in" statements.
 
 ## Mission anchor
 
-- Objective: a one-line install that exposes the existing Markdown skills/commands as a plugin, without shipping executable code or overclaiming.
+- Objective: a one-line install that exposes the existing Markdown skills/commands as a plugin, without shipping auto-run code or overclaiming.
 - Success criteria: schema-correct manifests (per official Claude Code docs); version single-sourced with `pyproject`; honest install docs; full suite + doctor + tokens + validate green.
 - Non-goals / forbidden directions: no executable hooks; no SessionStart/PreToolUse behavior; no enforcement claims; no change to the `ng` CLI; no edits to command/skill bodies.
 - Drift check: re-anchor / escalate / stop when an action stops serving the objective.
@@ -26,7 +26,7 @@
 
 - Decision question: can the repo be made one-line installable without adding an executable trust surface or an overclaim?
 - Evidence that would change the decision: a live `/plugin install` failing on a Claude Code surface, or the manifest schema differing from current docs.
-- Assumptions that changed the mode: the no-hooks tier adds no executable code, but it does add a public distribution surface — a promise to adopters — so Standard, not Quick.
+- Assumptions that changed the mode: the no-hooks tier adds no auto-run code, but it does add a public distribution surface — a promise to adopters — so Standard, not Quick.
 - Facts still needing validation: the live `/plugin install` smoke-test on an actual Claude Code surface (cannot run in this CI container).
 - Stop or hold conditions: stop if the install would require executable hooks, or if any doc would imply the in-session plugin "enforces" anything.
 
@@ -67,7 +67,7 @@
 - Mode: Standard
 - Why this mode: it adds a public distribution surface adopters will depend on (a "release consequence" trigger) and edits public install docs.
 - Why lighter mode is not enough: Quick fits local reversible docs; this introduces a new install contract worth a basis, a plan, a trace, and a release decision.
-- Why heavier mode is not yet required: no executable code, no new dependency/permission/data/auth, fully reversible; Nuclear/Incident triggers do not apply. The later hooks tier will warrant Standard+ with a security review.
+- Why heavier mode is not yet required: no auto-run code, no new dependency/permission/data/auth, fully reversible; Nuclear/Incident triggers do not apply. The later hooks tier will warrant Standard+ with a security review.
 
 ## Activated artifacts
 

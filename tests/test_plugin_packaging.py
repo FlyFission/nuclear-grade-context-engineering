@@ -55,3 +55,13 @@ def test_skills_are_discoverable():
     # Auto-discovery needs SKILL.md files under skills/*/.
     skill_files = list((ROOT / "skills").glob("*/SKILL.md"))
     assert len(skill_files) >= 20, f"expected the skill catalog, found {len(skill_files)}"
+
+
+def test_no_auto_activated_hooks_config():
+    # The no-hooks tier rests on Claude Code auto-discovering hooks ONLY from
+    # hooks/hooks.json at the plugin root; its absence is what keeps installing the
+    # plugin from running any hook. Hook *scripts* may ship for explicit opt-in
+    # (see HOOKS.md) -- only hooks/hooks.json auto-activates, so that is what we guard.
+    assert not (ROOT / "hooks" / "hooks.json").exists(), (
+        "shipping hooks/hooks.json auto-activates hooks on install -- it would break the no-hooks tier"
+    )

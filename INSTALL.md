@@ -14,7 +14,7 @@ For Claude Code users, this repository is its own plugin marketplace. Add it, in
 /reload-plugins   # or restart Claude Code — loads the new skills/commands into this session
 ```
 
-The plugin exposes the existing skills (`skills/`) and command prompts (`commands/`). It configures **no hooks**, so nothing runs automatically when you install it or start a session. Because the marketplace source is the repository root, the install also copies the repo's `ng` Python CLI — but the plugin puts no `ng` command on your `PATH`, so it runs only when you invoke it directly (for example `python tools/ng.py validate`), never on its own.
+The plugin exposes the existing skills (`skills/`) and command prompts (`commands/`). It configures **no hooks**, so nothing runs automatically when you install it or start a session. Because the marketplace source is the repository root, the install also copies the repo's `ng` Python CLI into Claude's plugin cache — but the plugin adds no `ng` command to your `PATH` and runs nothing on its own. The CLI is a separate, repo-side tool: to use it, work from a checkout of this repo (the **Use in this repo** and **Add to another repo** steps below), not from the plugin install alone.
 
 ## Requirements
 

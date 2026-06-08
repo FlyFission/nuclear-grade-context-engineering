@@ -1,8 +1,20 @@
 # Install Nuclear-grade
 
-Nuclear-grade runs inside your repo. Public v0 does not need a package registry, a hosted service, or an agent marketplace plug-in.
+Nuclear-grade runs inside your repo and is Markdown-first. For Claude Code it also installs as a plugin — two commands, then a reload to activate it (see below). No package registry or hosted service is required either way.
 
 > The `ng` CLI scaffolds and checks packets, but Nuclear-grade is markdown-first. Many adopters only need [`CORE.md`](CORE.md) (the seven habits + the decision matrix) plus one [`starter-kit/`](starter-kit/) directory copied into their repo. The steps below set up the optional CLI.
+
+## Install as a Claude Code plugin
+
+For Claude Code users, this repository is its own plugin marketplace. Add it, install the plugin, then reload to activate it in the current session:
+
+```bash
+/plugin marketplace add FlyFission/nuclear-grade-context-engineering
+/plugin install nuclear-grade@nuclear-grade
+/reload-plugins   # or restart Claude Code — loads the new skills/commands into this session
+```
+
+The plugin exposes the existing skills (`skills/`) and command prompts (`commands/`). It configures **no hooks**, so nothing runs automatically when you install it or start a session. Because the marketplace source is the repository root, the install also copies the repo's `ng` Python CLI into Claude's plugin cache — but the plugin adds no `ng` command to your `PATH` and runs nothing on its own. The CLI is a separate, repo-side tool: to use it, work from a checkout of this repo (the **Use in this repo** and **Add to another repo** steps below), not from the plugin install alone.
 
 ## Requirements
 
@@ -48,7 +60,7 @@ python tools/ng.py validate /path/to/your/repo/.nuclear/changes/add-boundary
 
 ## Tool and agent harness notes
 
-Public v0 ships paste-ready command prompts in `commands/` and agent-ready skills in `skills/`. They are plain Markdown files you can paste into, or adapt for, an AI coding agent. Public v0 does not package them as a marketplace plug-in.
+Public v0 ships paste-ready command prompts in `commands/` and agent-ready skills in `skills/`. They are plain Markdown files you can paste into, or adapt for, an AI coding agent. For Claude Code they also install as a plugin (see the plugin install above); the plugin packages these same Markdown files, with no executable hooks in this tier.
 
 ## Optional editable install
 
@@ -59,7 +71,7 @@ python -m pip install -e .
 nuclear-grade doctor .
 ```
 
-The repo-local `python tools/ng.py ...` commands are still the main way to get started in Public v0. The console script is a convenience for local checkout work. It is not a packaged marketplace or a standalone release.
+The repo-local `python tools/ng.py ...` commands remain a primary way to work in Public v0, alongside the Claude Code plugin (above) for agent users. The console script is a convenience for local checkout work, not a standalone release.
 
 ## Boundary note
 

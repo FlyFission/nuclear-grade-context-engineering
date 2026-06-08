@@ -1,0 +1,14 @@
+{
+  "name": "nuclear-grade",
+  "description": "Nuclear-grade context engineering — the repository as its own Claude Code plugin marketplace.",
+  "owner": {
+    "name": "FlyFission"
+  },
+  "plugins": [
+    {
+      "name": "nuclear-grade",
+      "source": "./",
+      "description": "Risk-graded context-engineering skills, command prompts, and change-record templates. No hooks are configured, so nothing runs automatically; the bundled ng CLI is included for repo-side use (run from a checkout) and runs nothing on its own."
+    }
+  ]
+}

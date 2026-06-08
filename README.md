@@ -256,6 +256,16 @@ Use Nuclear-grade if you are:
 
 ## Quick start
 
+**Claude Code.** This repository is its own plugin marketplace. Add it and install the plugin, then reload to activate it in the current session:
+
+```bash
+/plugin marketplace add FlyFission/nuclear-grade-context-engineering
+/plugin install nuclear-grade@nuclear-grade
+/reload-plugins   # or restart Claude Code — loads the new skills/commands into this session
+```
+
+That exposes the skills and command prompts as a plugin. No hooks are configured, so nothing runs automatically; the install copies the repo's `ng` CLI into the plugin cache, but the plugin adds no `ng` command to your `PATH` and runs nothing on its own — the CLI is a repo-side tool you run from a checkout (below). Prefer plain files, or using another tool? Use the repo directly:
+
 1. **Get the tool.** Clone the repo and install it (no third-party dependencies). See [`INSTALL.md`](INSTALL.md).
 2. **Check your setup.** Run `python tools/ng.py doctor .` to confirm things are wired up, and `python tools/ng.py list` to see what is available.
 3. **Make your first record.** Run `python tools/ng.py new <slug> --mode quick`, fill in the two files, then prove it with `python tools/ng.py validate .nuclear/changes/<slug>`.

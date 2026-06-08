@@ -37,14 +37,17 @@ Copy the two scripts into your repo (for example `.claude/hooks/`) and register 
 {
   "hooks": {
     "SessionStart": [
-      { "matcher": "startup|resume|clear|compact", "hooks": [ { "type": "command", "command": "python3 ${CLAUDE_PROJECT_DIR}/.claude/hooks/session_start.py" } ] }
+      { "matcher": "startup|resume|clear|compact", "hooks": [ { "type": "command", "command": "python3", "args": ["${CLAUDE_PROJECT_DIR}/.claude/hooks/session_start.py"] } ] }
     ],
     "UserPromptSubmit": [
-      { "matcher": "*", "hooks": [ { "type": "command", "command": "python3 ${CLAUDE_PROJECT_DIR}/.claude/hooks/user_prompt_submit.py" } ] }
+      { "matcher": "*", "hooks": [ { "type": "command", "command": "python3", "args": ["${CLAUDE_PROJECT_DIR}/.claude/hooks/user_prompt_submit.py"] } ] }
     ]
   }
 }
 ```
+
+The commands use **exec form** (`command` + `args`) so a project path containing spaces or shell
+metacharacters is passed as a single argument and the hook starts correctly.
 
 The preamble mirrors the decision matrix in [`CORE.md`](CORE.md); a test asserts the cluster names
 stay in sync.

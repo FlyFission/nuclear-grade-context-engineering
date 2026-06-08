@@ -1,8 +1,19 @@
 # Install Nuclear-grade
 
-Nuclear-grade runs inside your repo. Public v0 does not need a package registry, a hosted service, or an agent marketplace plug-in.
+Nuclear-grade runs inside your repo and is Markdown-first. For Claude Code it also installs in one line as a plugin (see below). No package registry or hosted service is required either way.
 
 > The `ng` CLI scaffolds and checks packets, but Nuclear-grade is markdown-first. Many adopters only need [`CORE.md`](CORE.md) (the seven habits + the decision matrix) plus one [`starter-kit/`](starter-kit/) directory copied into their repo. The steps below set up the optional CLI.
+
+## Install as a Claude Code plugin (one line)
+
+For Claude Code users, this repository is its own plugin marketplace. Add it, then install:
+
+```bash
+/plugin marketplace add FlyFission/nuclear-grade-context-engineering
+/plugin install nuclear-grade@nuclear-grade
+```
+
+The plugin packages the existing skills (`skills/`) and command prompts (`commands/`) — Markdown only. This tier ships **no executable hooks**, so installing it adds no runtime code. The `ng` CLI below is a separate tool for authoring and validating change records.
 
 ## Requirements
 
@@ -48,7 +59,7 @@ python tools/ng.py validate /path/to/your/repo/.nuclear/changes/add-boundary
 
 ## Tool and agent harness notes
 
-Public v0 ships paste-ready command prompts in `commands/` and agent-ready skills in `skills/`. They are plain Markdown files you can paste into, or adapt for, an AI coding agent. Public v0 does not package them as a marketplace plug-in.
+Public v0 ships paste-ready command prompts in `commands/` and agent-ready skills in `skills/`. They are plain Markdown files you can paste into, or adapt for, an AI coding agent. For Claude Code they also install as a plugin (see the one-line install above); the plugin packages these same Markdown files, with no executable hooks in this tier.
 
 ## Optional editable install
 
@@ -59,7 +70,7 @@ python -m pip install -e .
 nuclear-grade doctor .
 ```
 
-The repo-local `python tools/ng.py ...` commands are still the main way to get started in Public v0. The console script is a convenience for local checkout work. It is not a packaged marketplace or a standalone release.
+The repo-local `python tools/ng.py ...` commands remain a primary way to work in Public v0, alongside the Claude Code plugin (above) for agent users. The console script is a convenience for local checkout work, not a standalone release.
 
 ## Boundary note
 

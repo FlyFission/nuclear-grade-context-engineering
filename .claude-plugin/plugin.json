@@ -1,0 +1,18 @@
+{
+  "name": "nuclear-grade",
+  "version": "0.5.0",
+  "description": "Risk-graded context engineering for AI-assisted software work — a catalog of agent skills, paste-ready command prompts, and change-record templates that keep agent work questioned, controlled, and reviewable.",
+  "author": {
+    "name": "FlyFission"
+  },
+  "homepage": "https://github.com/FlyFission/nuclear-grade-context-engineering",
+  "repository": "https://github.com/FlyFission/nuclear-grade-context-engineering",
+  "license": "MIT",
+  "keywords": [
+    "context-engineering",
+    "ai-agents",
+    "configuration-management",
+    "evidence",
+    "governance"
+  ]
+}

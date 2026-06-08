@@ -79,7 +79,7 @@ flowchart TB
   subgraph LV["V — VERDICT"]
     DEC{"Decide"}
   end
-  subgraph LE["E — EMBED"]
+  subgraph LE["E — EDUCATE"]
     direction LR
     B(["Baseline"]) --> OP(["Operate"]) --> L(["Learn"])
   end
@@ -103,9 +103,9 @@ flowchart TB
 | Execute | **R** — Run | **R** — Run |
 | Verify · Review | **O** — Observe | ↳ inside Run |
 | Decide | **V** — Verdict | ↳ inside Run |
-| Baseline · Operate · Learn | **E** — Embed | **O** — Operate |
+| Baseline · Operate · Learn | **E** — Educate | **O** — Operate |
 
-PROVE and PRO are memory handles for the full eleven-beat path; the [seven control points](../WORKFLOWS.md) are its everyday short form, and the [Core 7](../CORE.md) are always-on habits, not path stages. "PROVE" names the prove-your-claims habit — evidence behind every claim — not formal proof or verification.
+PROVE and PRO are memory handles for the same eleven-beat path; the [seven control points](../WORKFLOWS.md) are the everyday short form of those eleven beats, and the [Core 7](../CORE.md) are always-on habits, not path stages. One letter is reused across the two zoom levels — **O** is *Observe* (Verify · Review) in PROVE but *Operate* (run it in the world) in PRO — so when they differ, read the crosswalk above, not the letter. "PROVE" names the prove-your-claims habit — evidence behind every claim — not formal proof or verification.
 
 ---
 

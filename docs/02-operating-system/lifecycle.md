@@ -10,7 +10,7 @@
 Question -> Discover -> Specify -> Plan -> Execute -> Verify -> Review -> Decide -> Baseline -> Operate -> Learn
 ```
 
-That spine carries a handle: **PROVE** — Plan · Run · Observe · Verdict · Embed — or **PRO** (Plan · Run · Operate) zoomed out. See [`../diagrams.md`](../diagrams.md).
+That spine carries a handle: **PROVE** — Plan · Run · Observe · Verdict · Educate — or **PRO** (Plan · Run · Operate) zoomed out. See [`../diagrams.md`](../diagrams.md).
 
 This is a way of working, not a compliance program. You sort the risk inside `risk.md`. That file holds the chosen mode, the triggers that force you to escalate, what the change must prove, and the conditions that make you hold.
 

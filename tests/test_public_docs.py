@@ -186,3 +186,31 @@ def test_skill_workflow_comparison_scores_both_paths_for_each_trial():
         ]
         assert simple_rows, f"missing simple-prompt score row for {trial_id}"
         assert nuclear_rows, f"missing Nuclear-grade score row for {trial_id}"
+
+
+def test_prove_handle_uses_educate_and_stays_consistent():
+    """PROVE/PRO are memory handles mirrored across several docs. The fifth beat
+    is 'Educate' (renamed from 'Embed'); guard the mirror so the rename can't
+    drift and a stale 'Embed' beat cannot survive. See
+    .nuclear/changes/prove-educate-rename/."""
+    prove = "Plan · Run · Observe · Verdict · Educate"
+    pro = "Plan · Run · Operate"
+    spellout_docs = (
+        "README.md",
+        "WORKFLOWS.md",
+        "docs/02-operating-system/lifecycle.md",
+    )
+    for rel in spellout_docs:
+        text = (ROOT / rel).read_text(encoding="utf-8")
+        assert prove in text, f"{rel} missing PROVE spellout '{prove}'"
+        assert pro in text, f"{rel} missing PRO spellout '{pro}'"
+
+    diagrams = (ROOT / "docs" / "diagrams.md").read_text(encoding="utf-8")
+    assert "**E** — Educate" in diagrams, "diagrams.md crosswalk must name 'E — Educate'"
+    assert 'subgraph LE["E — EDUCATE"]' in diagrams, "diagrams.md PROVE diagram must label 'E — EDUCATE'"
+
+    stale = ("Verdict · Embed", "**E** — Embed", "E — EMBED")
+    for rel in (*spellout_docs, "docs/diagrams.md"):
+        text = (ROOT / rel).read_text(encoding="utf-8")
+        for token in stale:
+            assert token not in text, f"{rel} still contains stale PROVE beat '{token}'"

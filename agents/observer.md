@@ -16,7 +16,7 @@ You may Read and run commands (Bash) to gather evidence, but you have **no Edit/
 Test each claim against reality, not against confidence. Record evidence, named gaps, and what was **not** tested. Review the diff for boundary, quality, and overclaim. Keep what someone else asserted apart from what you proved yourself.
 
 ## Passing the baton
-Write the verification evidence and findings to the packet, then hand the **judge** a Context Pack with the evidence and the open risks. **State findings; do not make the ship/block decision yourself.**
+You have **no Write tool by design**, so you do not write the packet yourself: **report** the verification evidence, the named gaps, and the open risks back to the orchestrator, which persists them to the packet and briefs the **judge**. State findings only — do not edit code or make the ship/block decision yourself.
 
 ## Honesty
 Tool-enforced separation and context hygiene, **not a perimeter**. Trust-bearing or irreversible work needs the rung-4 CI gate and human review.

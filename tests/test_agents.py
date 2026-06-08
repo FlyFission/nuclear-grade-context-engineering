@@ -46,6 +46,11 @@ def test_authority_split_is_encoded_in_tools():
     assert "Edit" not in tools["observer"] and "Write" not in tools["observer"]
     # Runner is the only stage with build authority.
     assert {"Edit", "Write", "Bash"} <= tools["runner"]
+    # Planner writes only the change packet: it must keep Write but never gets Bash/Edit.
+    assert "Write" in tools["planner"], "planner needs Write to author the change packet"
+    # Educator records baseline/lessons into .nuclear/ (Write) but runs no commands.
+    assert "Write" in tools["educator"], "educator needs Write to record the baseline/lessons"
+    assert "Bash" not in tools["educator"], "educator must not run commands"
 
 
 def test_readme_carries_the_honesty_caveat():

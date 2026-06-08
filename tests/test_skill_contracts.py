@@ -125,3 +125,21 @@ def test_skill_evaluation_prompts_cover_every_skill():
         block = evaluation.split(heading, 1)[1].split("\n### `", 1)[0]
         assert block.count("Should trigger:") >= 3
         assert block.count("Should not trigger:") >= 2
+
+
+def test_using_nuclear_grade_forces_classification_and_trip_wire():
+    """The router must force a spoken risk classification (a declaration of intent)
+    and MUST-promote the cheap 'it's only small' traps; guard that directive
+    behavior against silent regression. See
+    .nuclear/changes/directive-dispatcher-skill/."""
+    # Case-insensitive so a capitalization tweak does not fail the contract,
+    # while the classify-first move and the trip-wire must stay present.
+    text = (SKILLS_DIR / "using-nuclear-grade" / "SKILL.md").read_text(encoding="utf-8").lower()
+
+    assert "classify first" in text, "router must lead with a mandatory classification"
+    assert "declaration of intent" in text, "classification is a declaration, not a permission request"
+    assert "standard-plus" in text and "must" in text, "router must MUST-promote, not merely suggest"
+
+    traps = ("authentication", "dependency manifest", "model id", ".github/", "public wording", "migration")
+    missing = [trap for trap in traps if trap not in text]
+    assert len(traps) - len(missing) >= 5, f"dispatcher trip-wire missing traps: {missing}"

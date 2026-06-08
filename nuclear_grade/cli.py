@@ -206,9 +206,14 @@ jobs:
           python-version: "3.12"
 
       - name: Install the validator
-        # Not on PyPI in your setup? Install from source instead, pinned to a tag:
-        #   pip install "nuclear-grade @ git+https://github.com/FlyFission/nuclear-grade-context-engineering@v0.5.0"
-        run: python -m pip install --upgrade pip nuclear-grade
+        # Pinned to the version that generated this workflow, so this required gate
+        # stays reproducible (an unpinned install could change validation on a future
+        # release with no repo change). Not on PyPI in your setup? Install from source
+        # pinned to the same tag instead:
+        #   pip install "nuclear-grade @ git+https://github.com/FlyFission/nuclear-grade-context-engineering@vNG_VERSION"
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "nuclear-grade==NG_VERSION"
 
       - name: Validate every change record
         shell: bash
@@ -341,12 +346,43 @@ def handle_init(args: argparse.Namespace) -> int:
     return apply_writes(writes, dry_run=args.dry_run, overwrite=args.yes)
 
 
+def _validator_version() -> str:
+    """The nuclear-grade version to pin the generated gate to, so a required check
+    stays reproducible. Prefer the installed package; fall back to the source-checkout
+    pyproject; otherwise return "" (the generator then emits an unpinned install)."""
+    try:
+        from importlib.metadata import PackageNotFoundError, version
+
+        try:
+            return version("nuclear-grade")
+        except PackageNotFoundError:
+            pass
+    except Exception:
+        pass
+    try:
+        import tomllib
+
+        data = tomllib.loads((REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+        return str(data.get("project", {}).get("version", ""))
+    except Exception:
+        return ""
+
+
 def handle_scaffold_ci(args: argparse.Namespace) -> int:
     repo = args.repo.resolve()
+    pinned = _validator_version()
+    content = CI_WORKFLOW_TEMPLATE
+    if pinned:
+        content = content.replace("nuclear-grade==NG_VERSION", f"nuclear-grade=={pinned}")
+        content = content.replace("@vNG_VERSION", f"@v{pinned}")
+    else:
+        # No discoverable version: keep the workflow working, unpinned.
+        content = content.replace("nuclear-grade==NG_VERSION", "nuclear-grade")
+        content = content.replace("@vNG_VERSION", "@main")
     workflow = repo / ".github" / "workflows" / "nuclear-grade.yml"
     writes = [
         PlannedWrite(repo / ".github" / "workflows", is_dir=True),
-        PlannedWrite(workflow, content=CI_WORKFLOW_TEMPLATE),
+        PlannedWrite(workflow, content=content),
     ]
     return apply_writes(writes, dry_run=args.dry_run, overwrite=args.force)
 

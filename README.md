@@ -256,11 +256,12 @@ Use Nuclear-grade if you are:
 
 ## Quick start
 
-**Claude Code (two commands).** This repository is its own plugin marketplace:
+**Claude Code.** This repository is its own plugin marketplace. Add it and install the plugin, then reload to activate it in the current session:
 
 ```bash
 /plugin marketplace add FlyFission/nuclear-grade-context-engineering
 /plugin install nuclear-grade@nuclear-grade
+/reload-plugins   # or restart Claude Code — loads the new skills/commands into this session
 ```
 
 That exposes the skills and command prompts as a plugin. No hooks are configured, so nothing runs automatically; the install does copy the repo's `ng` CLI, which runs only when you invoke it. Prefer plain files, or using another tool? Use the repo directly:

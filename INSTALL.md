@@ -1,16 +1,17 @@
 # Install Nuclear-grade
 
-Nuclear-grade runs inside your repo and is Markdown-first. For Claude Code it also installs as a plugin in two commands (see below). No package registry or hosted service is required either way.
+Nuclear-grade runs inside your repo and is Markdown-first. For Claude Code it also installs as a plugin — two commands, then a reload to activate it (see below). No package registry or hosted service is required either way.
 
 > The `ng` CLI scaffolds and checks packets, but Nuclear-grade is markdown-first. Many adopters only need [`CORE.md`](CORE.md) (the seven habits + the decision matrix) plus one [`starter-kit/`](starter-kit/) directory copied into their repo. The steps below set up the optional CLI.
 
-## Install as a Claude Code plugin (two commands)
+## Install as a Claude Code plugin
 
-For Claude Code users, this repository is its own plugin marketplace. Add it, then install:
+For Claude Code users, this repository is its own plugin marketplace. Add it, install the plugin, then reload to activate it in the current session:
 
 ```bash
 /plugin marketplace add FlyFission/nuclear-grade-context-engineering
 /plugin install nuclear-grade@nuclear-grade
+/reload-plugins   # or restart Claude Code — loads the new skills/commands into this session
 ```
 
 The plugin exposes the existing skills (`skills/`) and command prompts (`commands/`). It configures **no hooks**, so nothing runs automatically when you install it or start a session. Because the marketplace source is the repository root, the install also copies the repo's `ng` Python CLI — but that runs only when you invoke it (for example `ng validate`), never on its own.
@@ -59,7 +60,7 @@ python tools/ng.py validate /path/to/your/repo/.nuclear/changes/add-boundary
 
 ## Tool and agent harness notes
 
-Public v0 ships paste-ready command prompts in `commands/` and agent-ready skills in `skills/`. They are plain Markdown files you can paste into, or adapt for, an AI coding agent. For Claude Code they also install as a plugin (see the one-line install above); the plugin packages these same Markdown files, with no executable hooks in this tier.
+Public v0 ships paste-ready command prompts in `commands/` and agent-ready skills in `skills/`. They are plain Markdown files you can paste into, or adapt for, an AI coding agent. For Claude Code they also install as a plugin (see the plugin install above); the plugin packages these same Markdown files, with no executable hooks in this tier.
 
 ## Optional editable install
 

@@ -1,15 +1,15 @@
 ---
 name: using-nuclear-grade
-description: Turns an AI-assisted change into a clear evidence path. Picks a mode, sets up the change record, and plans the proof, then points to the charter and the goal anchor. Use when you start using this workflow on a change, a repo, or a release call. Do not use for a throwaway experiment with nothing worth reviewing.
+description: The always-first router for AI-assisted work — before acting, state the mode (Quick or Standard-plus) and the one fact that sets it, then set up the matching change record and plan the proof. Use at the start of any change, repo adoption, or release call. Do not use for a throwaway experiment with nothing worth reviewing.
 ---
 
 # Using Nuclear-grade
 
 ## Overview
 
-Use Nuclear-grade to turn AI-assisted work into a clear evidence path. Start by asking the real question the change has to answer. Then judge how high the stakes are. Build the smallest change record that does the job. Write down what the change must do. Prove the claims that matter. Then say the release decision out loud.
+This is the always-first router for Nuclear-grade work. Before you act, classify the change by consequence and route to the matching rigor — move fast while ideas are throwaway, slow down the moment the work becomes a promise. Start by asking the real question the change must answer, then state the mode it earns and the one fact that sets it. Build the smallest change record that does the job, prove the claims that matter, and say the release decision out loud.
 
-The repo charter (`.nuclear/charter.md`) holds the lasting rules every change follows. Each change also gets a goal anchor. The anchor states what that one change is for, so the work does not drift off course.
+The repo charter (`.nuclear/charter.md`) holds the lasting rules every change follows. Each change also gets a goal anchor — what that one change is for — so the work does not drift off course.
 
 ## When to Use
 
@@ -33,16 +33,29 @@ The repo charter (`.nuclear/charter.md`) holds the lasting rules every change fo
 
 ## Process
 
-1. Start with a questioning attitude. Name the decision question, the assumptions, the fact that would change the decision, the gaps in evidence, and when to stop.
-2. Sort the change into Quick, Standard, or a stronger mode that a human reviews.
-   - If you are adopting Nuclear-grade for the first time, pick the Core 7 habits from `CORE.md` and invoke ancillary clusters by trigger rather than enabling everything at once.
-3. Create or find the change record under `.nuclear/changes/<slug>/`.
-4. Write down the least you need: what the change must do, what it must prove, the files it touches, and the claims it must not make.
-5. If the chosen workflow or template stops fitting the real situation, write down where you went off it and why.
-6. Keep the build work tied to the claims and the evidence.
-7. Move fast while ideas are easy to undo. Slow down before you accept a claim, write public wording, save an approved version, ship a release, or change what an agent may do.
-8. Run the checker on Quick or Standard records.
-9. Stop before release if the evidence status, the rollback plan, the monitoring, the decision, the trigger for saving a version, or the legal wording is unclear.
+**Classify first — out loud.** Before the first tool call, state the mode this change earns — **Quick**, or **Standard-plus** (Standard, or a stronger human-reviewed mode) — and the **one fact** that sets it. This is a declaration of intent, not a request for permission: you name the mode and act. Re-state it whenever the change grows.
+
+You MUST treat the change as **Standard-plus**, never Quick, when it touches any of these — the cheap "it's only small" traps:
+
+- authentication, permissions, or secrets;
+- behavior a user can see;
+- data handling, schema, or a migration;
+- a dependency or a dependency manifest;
+- a model id, a prompt, or what a tool or agent may do;
+- CI or `.github/`;
+- a release, a saved baseline, or public wording.
+
+When one is present, justify the mode in the record or escalate — do not let "it is a one-line change" downgrade it.
+
+Then:
+
+1. **Question first.** Name the decision question, the assumptions, the one fact that would change the decision, the evidence gaps, and the stop conditions.
+2. **Build the smallest record that fits the mode** under `.nuclear/changes/<slug>/`. Adopting for the first time? Take the Core 7 habits from `CORE.md` and switch on ancillary clusters by trigger, not all at once.
+3. **Write the least you need:** what the change must do, what it must prove, the files it touches, and the claims it must not make.
+4. **Keep build work tied to the claims and their evidence.** If the chosen path stops fitting, write down where you left it and why.
+5. **Slow down at the promise boundary** — before you accept a claim, write public wording, save an approved version, ship a release, or change what an agent may do.
+6. **Run the checker** on Quick or Standard records (`python tools/ng.py validate .nuclear/changes/<slug>`).
+7. **Stop before release** if the evidence status, the rollback, the monitoring, the decision, the baseline trigger, or the legal wording is unclear.
 
 ## Outputs
 
@@ -66,6 +79,8 @@ The repo charter (`.nuclear/charter.md`) holds the lasting rules every change fo
 
 ## Common Rationalizations
 
+- "It's a small change, so it's Quick." Size is not stakes. A one-line edit to auth, a dependency, a model id, a migration, or public wording is Standard-plus.
+- "I'll classify it later." The mode call is the cheapest control and the one most prone to motivated error under pressure. State it before the first tool call, not after the diff exists.
 - "The tests pass, so we don't need a record." Passing tests do not save the assumptions, the scope, the leftover risk, or the release decision.
 - "The agent remembers the context." Chat history is not a lasting review record.
 - "This is only documentation." Public docs can create claims about law, trust, and assurance.
@@ -73,6 +88,7 @@ The repo charter (`.nuclear/charter.md`) holds the lasting rules every change fo
 
 ## Red Flags
 
+- Work began before a mode was declared. The classification is the entry gate; skip it and everything after is on the honor system.
 - The record cannot name a single claim that matters.
 - The evidence is loose prose instead of commands, links, reviews, or named gaps.
 - The work says or hints at compliance, approval, safety, security, or formal verification and validation. None of those are provided here.

@@ -228,12 +228,20 @@ jobs:
           shopt -s nullglob
           found=0
           for packet in .nuclear/changes/*/; do
+            # Skip packets deliberately closed via the documented closure path
+            # (a `NUCLEAR-GRADE-CLOSED: <rationale>` line). They are kept for audit
+            # history; the validator still rejects their unfilled fields, so closing
+            # a record -- not deleting it -- must not block this gate forever.
+            if grep -rqE '^[[:space:]]*NUCLEAR-GRADE-CLOSED:[[:space:]]*[^[:space:]]' "$packet"; then
+              echo "Skipping closed record: $packet"
+              continue
+            fi
             echo "Validating $packet"
             nuclear-grade validate "$packet"
             found=1
           done
           if [ "$found" -eq 0 ]; then
-            echo "No change records under .nuclear/changes/ -- nothing to validate."
+            echo "No open change records under .nuclear/changes/ -- nothing to validate."
           fi
 """
 

@@ -459,6 +459,19 @@ def test_scaffold_ci_emits_parseable_yaml(tmp_path):
     assert "validate-change-records" in doc.get("jobs", {})
 
 
+def test_scaffold_ci_skips_closed_packets(tmp_path):
+    # A packet closed via the documented closure path (NUCLEAR-GRADE-CLOSED) is kept
+    # for audit history; the validator still rejects its unfilled fields, so the gate
+    # must skip closed records rather than block CI forever (Codex). The marker comes
+    # from the validator constant, so the workflow can't drift from the closure contract.
+    from nuclear_grade.ng_validate import CLOSURE_MARKER
+
+    assert run_ng("scaffold-ci", str(tmp_path)).returncode == 0
+    text = (tmp_path / ".github" / "workflows" / "nuclear-grade.yml").read_text(encoding="utf-8")
+    assert CLOSURE_MARKER in text
+    assert "Skipping closed record" in text
+
+
 def test_scaffold_ci_dry_run_is_non_mutating(tmp_path):
     result = run_ng("scaffold-ci", str(tmp_path), "--dry-run")
 

@@ -31,7 +31,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 | Method | Command / review / eval | Environment | Result | Evidence link |
 |---|---|---|---|---|
 | Generate + string-assert + YAML parse | `ng scaffold-ci <tmp>`; assert `contents: read`, `pull_request`, no `secrets.`, validator step, branch-protection note; then `yaml.safe_load` the file | Python 3 + PyYAML, container | hardening lines present; parses as valid YAML | this packet |
-| Full suite | `python -m pytest -q` | Python 3 | 121 passed | CI |
+| Full suite | `python -m pytest -q` | Python 3 | 122 passed | CI |
 | Lint | `python -m ruff check .` | ruff 0.15.16 | clean | CI |
 | Doctor | `python tools/ng.py doctor .` | repo | OK | CI |
 | Token budget | `python tools/ng.py tokens .` | repo | OK | CI |
@@ -44,6 +44,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 | Privileged fork trigger | test asserts no `pull_request_target` | pass | `tests/test_ng_cli.py` |
 | Secret reference | test asserts no `secrets.` | pass | `tests/test_ng_cli.py` |
 | Clobbering an existing workflow | refuses without `--force`; `--dry-run` is non-mutating | pass | `tests/test_ng_cli.py` |
+| Closed packet blocks the gate forever | generated loop (and this repo's CI) skip dirs with a genuine `NUCLEAR-GRADE-CLOSED:` note | pass | `tests/test_ng_cli.py` |
 
 ## AI-assisted work checks
 

@@ -20,7 +20,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 
 | Claim / requirement ID | Support type | Verification type | Verification method | Acceptance criteria | Result status | Evidence link | Gap / follow-up |
 |---|---|---|---|---|---|---|---|
-| REQ-001 | local proof | deterministic test | `ng scaffold-ci` into a temp dir; assert the hardening lines by string match | a workflow file with the hardening present that runs the validator | pass | `tests/test_ng_cli.py` | live run deferred; YAML is left unparsed by design (no third-party dependency) |
+| REQ-001 | local proof | deterministic test | `ng scaffold-ci` into a temp dir; assert the hardening lines by string match, then parse the file as YAML | a workflow file with the hardening present that runs the validator, and that parses as valid YAML | pass | `tests/test_ng_cli.py` | live Actions run deferred (no runner here), tracked in `ship.md`; YAML validity is now parsed deterministically (PyYAML, test-only dep — the shipped package stays zero-dep) |
 | REQ-002 | local proof | deterministic test | guard test asserts permissions/trigger/no-secrets | `contents: read`; `pull_request`; no `pull_request_target`; no `secrets.` | pass | `tests/test_ng_cli.py` | none |
 | REQ-003 | local proof | deterministic test + CI | `permissions: contents: read` in `ci.yml`; suite green | block present; CI passes | pass | `.github/workflows/ci.yml` | none |
 | REQ-004 | local proof | deterministic test | write / dry-run / force / hardening tests | all pass | pass | `tests/test_ng_cli.py` | none |
@@ -30,8 +30,8 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 
 | Method | Command / review / eval | Environment | Result | Evidence link |
 |---|---|---|---|---|
-| Generate + string-assert | `ng scaffold-ci <tmp>`; assert `contents: read`, `pull_request`, no `secrets.`, validator step, branch-protection note | Python 3, container | hardening lines present | this packet |
-| Full suite | `python -m pytest -q` | Python 3 | 120 passed | CI |
+| Generate + string-assert + YAML parse | `ng scaffold-ci <tmp>`; assert `contents: read`, `pull_request`, no `secrets.`, validator step, branch-protection note; then `yaml.safe_load` the file | Python 3 + PyYAML, container | hardening lines present; parses as valid YAML | this packet |
+| Full suite | `python -m pytest -q` | Python 3 | 121 passed | CI |
 | Lint | `python -m ruff check .` | ruff 0.15.16 | clean | CI |
 | Doctor | `python tools/ng.py doctor .` | repo | OK | CI |
 | Token budget | `python tools/ng.py tokens .` | repo | OK | CI |

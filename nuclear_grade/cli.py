@@ -179,7 +179,13 @@ CI_WORKFLOW_TEMPLATE = """\
 # code, so the same PR can edit this file (e.g. drop the validate step) while
 # keeping the check name. The "the author cannot edit the check" property holds
 # ONLY if branch protection requires this check, requires review, and restricts
-# who can change `.github/workflows/`. Without that, this gate is advisory.
+# who can change `.github/workflows/` -- e.g. a CODEOWNERS rule on that path plus
+# "require review from Code Owners". Without that, this gate is advisory.
+#
+# (This is why the trigger stays `pull_request` and NOT `pull_request_target`:
+# the latter would run a fork PR's checkout in the base-branch context WITH a
+# write token and secrets -- a privilege-escalation/exfil vector. The right fix
+# for "the author controls this file" is branch protection, not a riskier trigger.)
 #
 # Hardening: the job runs with a read-only token (least privilege); the trigger
 # is `pull_request`, so a fork PR never runs with a write token or repository
@@ -348,22 +354,32 @@ def handle_init(args: argparse.Namespace) -> int:
 
 def _validator_version() -> str:
     """The nuclear-grade version to pin the generated gate to, so a required check
-    stays reproducible. Prefer the installed package; fall back to the source-checkout
-    pyproject; otherwise return "" (the generator then emits an unpinned install)."""
+    stays reproducible.
+
+    Prefer the source checkout's ``pyproject.toml`` (guarded to *this* package): when
+    ``scaffold-ci`` runs via the repo-local ``tools/ng.py`` wrapper, the checkout is the
+    version actually being executed, whereas ``importlib.metadata`` reads whatever
+    distribution is installed in the environment -- which may be an older wheel and would
+    pin the gate to a stale validator. Fall back to installed metadata only when there is
+    no matching checkout (e.g. the console script run from a wheel); otherwise return ""
+    and the generator emits an unpinned install."""
+    try:
+        import tomllib
+
+        pyproject = REPO_ROOT / "pyproject.toml"
+        if pyproject.is_file():
+            project = tomllib.loads(pyproject.read_text(encoding="utf-8")).get("project", {})
+            if project.get("name") == "nuclear-grade" and project.get("version"):
+                return str(project["version"])
+    except Exception:
+        pass
     try:
         from importlib.metadata import PackageNotFoundError, version
 
         try:
             return version("nuclear-grade")
         except PackageNotFoundError:
-            pass
-    except Exception:
-        pass
-    try:
-        import tomllib
-
-        data = tomllib.loads((REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8"))
-        return str(data.get("project", {}).get("version", ""))
+            return ""
     except Exception:
         return ""
 

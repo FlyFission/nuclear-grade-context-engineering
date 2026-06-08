@@ -26,7 +26,9 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install test dependencies
-        run: python -m pip install --upgrade pip pytest ruff
+        # pyyaml is test-only (the shipped nuclear_grade package keeps zero runtime
+        # deps); it lets the scaffold-ci test parse the generated workflow as real YAML.
+        run: python -m pip install --upgrade pip pytest ruff pyyaml
 
       - name: Run tests
         run: python -m pytest -q

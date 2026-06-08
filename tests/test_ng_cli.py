@@ -3,6 +3,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
 from nuclear_grade.ng_validate import CLOSURE_MARKER
 from tests.test_ng_validate import minimal_quick_packet
 from tools import ng as ng_cli
@@ -429,12 +431,32 @@ def test_scaffold_ci_writes_hardened_workflow(tmp_path):
     # F5 hardening: least privilege, safe trigger, no secrets, and it runs the validator.
     assert "permissions:\n  contents: read\n" in text
     assert "on:\n  pull_request:\n" in text
-    assert "pull_request_target" not in text
+    # `pull_request_target` is *named* in the explanatory banner (why it is avoided), but
+    # must never be an actual `on:` trigger key -- check the indented key, not a substring.
+    assert "\n  pull_request_target:" not in text
     assert "secrets." not in text
     assert "nuclear-grade validate" in text
     assert "rung 4" in text  # the out-of-band-gate honesty banner
     assert "branch protection" in text  # honest that rung-4 needs rung-5 (Codex P1)
     assert "nuclear-grade==" in text  # the validator is version-pinned for a reproducible gate (Codex P2)
+
+
+def test_scaffold_ci_emits_parseable_yaml(tmp_path):
+    # A deterministic guard that the generated workflow is valid YAML, not merely that
+    # the right substrings are present -- a stray indent or quote could satisfy the
+    # string asserts above while leaving the file unparseable. Skips locally when PyYAML
+    # is absent; CI installs it, so the parse always runs there.
+    yaml = pytest.importorskip("yaml")
+    assert run_ng("scaffold-ci", str(tmp_path)).returncode == 0
+    workflow = tmp_path / ".github" / "workflows" / "nuclear-grade.yml"
+    doc = yaml.safe_load(workflow.read_text(encoding="utf-8"))
+    assert isinstance(doc, dict)
+    # PyYAML (YAML 1.1) parses the bare key `on:` as boolean True; accept either form.
+    trigger = doc.get("on", doc.get(True))
+    # Exactly `pull_request` -- this also proves `pull_request_target` is not a trigger.
+    assert isinstance(trigger, dict) and set(trigger) == {"pull_request"}
+    assert doc.get("permissions") == {"contents": "read"}
+    assert "validate-change-records" in doc.get("jobs", {})
 
 
 def test_scaffold_ci_dry_run_is_non_mutating(tmp_path):

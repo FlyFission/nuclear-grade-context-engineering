@@ -96,7 +96,7 @@ flowchart LR
     L -.feeds future basis.-> Q
 ```
 
-Zoomed out, those eleven beats are three moves — **PRO**: Plan · Run · Operate — or five with the gate named — **PROVE**: Plan · Run · Observe · Verdict · Embed. One label, two zoom levels:
+Zoomed out, those eleven beats are three moves — **PRO**: Plan · Run · Operate — or five with the gate named — **PROVE**: Plan · Run · Observe · Verdict · Educate. One label, two zoom levels:
 
 ```mermaid
 flowchart TB

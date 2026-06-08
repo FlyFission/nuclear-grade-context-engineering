@@ -32,6 +32,7 @@ The same eleven beats, grouped into a handle you can remember. Zoom out to **PRO
 flowchart TB
   classDef plan fill:#DCE6FA,stroke:#3A5BA8,color:#12203F;
   classDef run fill:#E4DEF7,stroke:#5B49A6,color:#1E1640;
+  %% 'emb': green style for the Baseline/Operate/Learn nodes; the class name is kept from before the Embed -> Educate rename (it is shared by both the PRO and PROVE diagrams).
   classDef emb fill:#DCEFDE,stroke:#2E7D45,color:#102810;
   classDef gate fill:#FFD24D,stroke:#B07400,color:#3A2600,stroke-width:2px;
   subgraph LP["P — PLAN"]
@@ -63,6 +64,7 @@ flowchart TB
   classDef plan fill:#DCE6FA,stroke:#3A5BA8,color:#12203F;
   classDef run fill:#E4DEF7,stroke:#5B49A6,color:#1E1640;
   classDef obs fill:#D2EBE6,stroke:#248A7E,color:#0E2A26;
+  %% 'emb': green style for the Baseline/Operate/Learn nodes; the class name is kept from before the Embed -> Educate rename (it is shared by both the PRO and PROVE diagrams).
   classDef emb fill:#DCEFDE,stroke:#2E7D45,color:#102810;
   classDef gate fill:#FFD24D,stroke:#B07400,color:#3A2600,stroke-width:2px;
   subgraph LP["P — PLAN"]
@@ -79,7 +81,7 @@ flowchart TB
   subgraph LV["V — VERDICT"]
     DEC{"Decide"}
   end
-  subgraph LE["E — EMBED"]
+  subgraph LE["E — EDUCATE"]
     direction LR
     B(["Baseline"]) --> OP(["Operate"]) --> L(["Learn"])
   end
@@ -103,9 +105,9 @@ flowchart TB
 | Execute | **R** — Run | **R** — Run |
 | Verify · Review | **O** — Observe | ↳ inside Run |
 | Decide | **V** — Verdict | ↳ inside Run |
-| Baseline · Operate · Learn | **E** — Embed | **O** — Operate |
+| Baseline · Operate · Learn | **E** — Educate | **O** — Operate |
 
-PROVE and PRO are memory handles for the full eleven-beat path; the [seven control points](../WORKFLOWS.md) are its everyday short form, and the [Core 7](../CORE.md) are always-on habits, not path stages. "PROVE" names the prove-your-claims habit — evidence behind every claim — not formal proof or verification.
+PROVE and PRO are memory handles for the same eleven-beat path; the [seven control points](../WORKFLOWS.md) are the everyday short form of those eleven beats, and the [Core 7](../CORE.md) are always-on habits, not path stages. One letter is reused across the two zoom levels — **O** is *Observe* (Verify · Review) in PROVE but *Operate* (run it in the world) in PRO — so when they differ, read the crosswalk above, not the letter. "PROVE" names the prove-your-claims habit — evidence behind every claim — not formal proof or verification.
 
 ---
 

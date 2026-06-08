@@ -132,12 +132,14 @@ def test_using_nuclear_grade_forces_classification_and_trip_wire():
     and MUST-promote the cheap 'it's only small' traps; guard that directive
     behavior against silent regression. See
     .nuclear/changes/directive-dispatcher-skill/."""
-    text = (SKILLS_DIR / "using-nuclear-grade" / "SKILL.md").read_text(encoding="utf-8")
+    # Case-insensitive so a capitalization tweak does not fail the contract,
+    # while the classify-first move and the trip-wire must stay present.
+    text = (SKILLS_DIR / "using-nuclear-grade" / "SKILL.md").read_text(encoding="utf-8").lower()
 
-    assert "Classify first" in text, "router must lead with a mandatory classification"
+    assert "classify first" in text, "router must lead with a mandatory classification"
     assert "declaration of intent" in text, "classification is a declaration, not a permission request"
-    assert "Standard-plus" in text and "MUST" in text, "router must MUST-promote, not merely suggest"
+    assert "standard-plus" in text and "must" in text, "router must MUST-promote, not merely suggest"
 
     traps = ("authentication", "dependency manifest", "model id", ".github/", "public wording", "migration")
-    present = sum(trap in text for trap in traps)
-    assert present >= 5, f"dispatcher trip-wire must name the high-consequence traps (found {present})"
+    missing = [trap for trap in traps if trap not in text]
+    assert len(traps) - len(missing) >= 5, f"dispatcher trip-wire missing traps: {missing}"

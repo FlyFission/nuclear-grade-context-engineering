@@ -54,7 +54,7 @@ Then:
 3. **Write the least you need:** what the change must do, what it must prove, the files it touches, and the claims it must not make.
 4. **Keep build work tied to the claims and their evidence.** If the chosen path stops fitting, write down where you left it and why.
 5. **Slow down at the promise boundary** — before you accept a claim, write public wording, save an approved version, ship a release, or change what an agent may do.
-6. **Run the checker** on Quick or Standard records (`python tools/ng.py validate .nuclear/changes/<slug>`).
+6. **Run the checker** on Quick or Standard-plus records (`python tools/ng.py validate .nuclear/changes/<slug>`).
 7. **Stop before release** if the evidence status, the rollback, the monitoring, the decision, the baseline trigger, or the legal wording is unclear.
 
 ## Outputs

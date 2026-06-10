@@ -181,6 +181,32 @@ These sources direct how work is led and how teams stay honest. They do not add 
 
 ---
 
+## Tier 9 — Context-Engineering Mechanics Sources
+
+These sources shape how we budget, order, compress, and retrieve an agent's context window,
+and how we name context failure modes. They are supporting context only. The doctrine built
+from them — `docs/02-operating-system/context-window-discipline.md` — is original and
+tool-agnostic. Benchmark numbers from these papers are their claims on their benchmarks, not
+promises about any workload. No compliance claim is made.
+
+| Source | Public link | Classification | Status | Role in Nuclear-grade | Confidence | Direct repo use |
+|---|---|---:|---|---|---:|---|
+| Anthropic, Effective context engineering for AI agents | https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents | Supporting | supporting-context | Attention budget; context rot; smallest set of high-signal tokens; compaction, structured notes, sub-agents; just-in-time retrieval. | High | Concept lineage for context-window discipline and context-pack budgets; no compliance claim. |
+| LangChain context-engineering documentation | https://docs.langchain.com/oss/python/langchain/context-engineering | Supporting | supporting-context | Context lifetimes (runtime config vs per-run state vs cross-run store); write/select/compress/isolate strategies; model vs tool vs lifecycle context. | High | Lifetime-separation vocabulary in `context-window-discipline.md`; no framework dependency or compliance claim. |
+| Neo4j, What is context engineering in AI agents? A practical guide | https://neo4j.com/blog/agentic-ai/what-is-context-engineering/ | Supporting | supporting-context | Select/structure/deliver framing; traceable retrieval paths (graph traversals as citable evidence). | Medium-high | Background framing only; no graph-database dependency. |
+| Breunig, How Long Contexts Fail | https://www.dbreunig.com/2025/06/22/how-contexts-fail-and-how-to-fix-them.html | Supporting | supporting-context | Failure-mode taxonomy: context poisoning, distraction, confusion, clash. | High | Failure-mode names in `context-window-discipline.md`; no compliance claim. |
+| Chroma, Context Rot research report | https://research.trychroma.com/context-rot | Supporting | supporting-context | Measured recall degradation as input token count grows, even on simple tasks. | High | Evidence behind the finite-context premise; no compliance claim. |
+| Liu et al., Lost in the Middle (arXiv 2307.03172, TACL) | https://arxiv.org/abs/2307.03172 | Supporting | verified-public | Position effects: recall is strongest at the start and end of long contexts, weakest in the middle. | High | Lineage for placement-and-ordering rules; no compliance claim. |
+| Agentic Context Engineering (ACE) (arXiv 2510.04618) | https://arxiv.org/abs/2510.04618 | Supporting | verified-public | Contexts as evolving playbooks; names brevity bias and context collapse; incremental delta updates beat wholesale rewrites. | High | Lineage for the append-only-deltas rule on durable records; no compliance claim. |
+| LLMLingua family (LLMLingua / LongLLMLingua / LLMLingua-2) | https://github.com/microsoft/LLMLingua | Supporting | supporting-context | Prompt compression up to ~20x on benchmarks with small accuracy loss; query-aware reordering for long contexts. | High | Evidence that prose compresses well; caveat lineage for compress-with-care; no tooling dependency. |
+| cAST: structural chunking via Abstract Syntax Tree (arXiv 2506.15655) | https://arxiv.org/abs/2506.15655 | Supporting | verified-public | AST-aligned chunking (one function/class per retrieval unit) improves code retrieval and generation. | High | Lineage for retrieve-code-by-structure guidance; no indexing-stack requirement. |
+| LongCodeZip (arXiv 2510.00446) | https://arxiv.org/abs/2510.00446 | Supporting | verified-public | Function/block-boundary code compression; much lower safe compression ratios for code than for prose. | High | Caveat lineage: code and exact logic are loss-sensitive under compression; no compliance claim. |
+
+These sources shape how an agent's working context is budgeted and kept honest. Nothing more.
+They add no framework, vendor, or database dependency, and no governance or compliance machinery.
+
+---
+
 ## Context-Only / Do-Not-Overweight Sources
 
 | Source family | Classification | Status | Why |

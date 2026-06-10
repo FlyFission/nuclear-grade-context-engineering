@@ -16,6 +16,8 @@ role + mode + packet state + affected files + required evidence + approval gates
 
 It exists because Nuclear-grade is a way to control the raw power of an AI or LLM. Powerful agents should not get endless context and vague authority. They should get a focused packet, clear limits, and a duty to prove their work.
 
+The research grounding — why small, ordered context outperforms big context, and the named ways a context window fails — is in [`context-window-discipline.md`](context-window-discipline.md).
+
 ---
 
 ## 2. Activation threshold

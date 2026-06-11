@@ -4,6 +4,8 @@
 
 **Thesis:** More rigor should cut down on costly back-and-forth, not pile up prompt clutter. The packet is the line that bounds the context.
 
+This is not just cost control: model recall measurably degrades as context grows, so the smallest honest context is also the most reliable one. The evidence and the failure-mode names are in [`context-window-discipline.md`](context-window-discipline.md).
+
 ---
 
 ## Context rule

@@ -22,6 +22,7 @@ These docs have two parts. First, learn how to use the workflow. Second, look up
 | Place authority and declare intent | [`02-operating-system/authority-and-intent.md`](02-operating-system/authority-and-intent.md) |
 | Scale rigor by risk tier | [`02-operating-system/risk-tiers-and-modes.md`](02-operating-system/risk-tiers-and-modes.md) |
 | See how controls enforce, not just advise | [`02-operating-system/runtime-enforcement.md`](02-operating-system/runtime-enforcement.md) |
+| Budget and order an agent's context window | [`02-operating-system/context-window-discipline.md`](02-operating-system/context-window-discipline.md) |
 | Classify the kind of change (work type) | [`02-operating-system/work-type-lens.md`](02-operating-system/work-type-lens.md) |
 | Run an incident, track deficiencies | [`02-operating-system/incident-response.md`](02-operating-system/incident-response.md), [`02-operating-system/deficiency-register.md`](02-operating-system/deficiency-register.md) |
 | Understand CLI behavior | [`05-reference/cli-reference.md`](05-reference/cli-reference.md) |

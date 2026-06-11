@@ -20,6 +20,13 @@ Plain-language decoding of Nuclear-grade terms and idioms. The skills and docs u
 | Turnover | Handing unfinished work to another agent or person with state, remaining scope, authority limits, and open evidence. |
 | Context pack | A focused briefing for an agent: role, authority, evidence obligations, forbidden actions, stop conditions. |
 | Source lineage | A note saying which public sources influenced a concept, without claiming compliance with them. |
+| Attention budget | The finite capacity a model has to use what is in its context window; every token spends some of it. |
+| Context rot | Slow decay in a model's recall and focus as its context window fills up across turns. |
+| Context poisoning | A wrong or hallucinated "fact" enters the context early and keeps getting cited as if verified. |
+| Context confusion | Too many tools or irrelevant documents in scope, so the agent picks the wrong one. |
+| Context clash | Two sources in the context contradict each other and the agent oscillates or loops. |
+| Context collapse | Re-summarizing a long-lived document over and over until its useful detail is gone. |
+| Brevity bias | Compression that keeps fluent prose but drops the load-bearing specifics (commands, limits, exact wording). |
 
 ## Idioms used in the skills
 

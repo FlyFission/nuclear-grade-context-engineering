@@ -46,9 +46,12 @@ the triggering external report was carried into the repo.
   internal links checked across the five touched docs, all resolve. Web verification
   confirmed each Tier 9 source: Anthropic context-engineering post; LangChain
   context-engineering docs; Neo4j practical guide; Breunig failure-mode post; Chroma
-  context-rot report; arXiv 2307.03172 (Lost in the Middle, TACL 2023); arXiv 2510.04618
+  context-rot report; arXiv 2307.03172 (Lost in the Middle; the arXiv abstract page itself
+  records TACL acceptance); arXiv 2510.04618
   (ACE); microsoft/LLMLingua (arXiv 2310.05736 / 2310.06839 / 2403.12968); arXiv 2506.15655
-  (cAST, EMNLP 2025 Findings); arXiv 2510.00446 (LongCodeZip, ASE 2025). Packet validation:
+  (cAST; venue EMNLP 2025 Findings verified against the ACL Anthology record,
+  https://aclanthology.org/2025.findings-emnlp.430/); arXiv 2510.00446 (LongCodeZip; no
+  independently verified venue, so none is claimed). Packet validation:
   recorded by the `python tools/ng.py validate .nuclear/changes/context-window-discipline`
   run after this file was added; the only prior finding was the then-missing `proof.md`.
 - Evidence link or artifact path: `docs/02-operating-system/context-window-discipline.md`;

@@ -1,6 +1,6 @@
 # Results Summary
 
-> *Author-judged qualitative 1-5 scores. See `methodology.md` for limits. No independent reviewer panel. No timing, defect-rate, or A/B measurement. The "overhead" column is judgment, not minutes. For the reproducible, mechanical layer that checks each artifact still surfaces its claimed decision signals, see [`efficacy-harness.md`](efficacy-harness.md) (`python tools/ng.py eval .`).*
+> *Author-judged qualitative 1-5 scores. See `methodology.md` for limits. No independent reviewer panel. No timing, defect-rate, or A/B measurement. The "overhead" column is judgment, not minutes. For the reproducible, mechanical layer that checks each artifact still surfaces its claimed decision signals, see [`efficacy-harness.md`](efficacy-harness.md) (`python tools/ng.py eval .`). Replication from the public trial records is invited.*
 
 ## Aggregate Score Table
 

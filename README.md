@@ -4,7 +4,7 @@
 
 <br/>
 
-**A simple, evidence-first way to let AI do serious software work — without losing control.**
+**Authority without discipline is how complex systems fail. This is nuclear's control loop, ported to AI-assisted software work.**
 
 [![CI](https://github.com/FlyFission/nuclear-grade-context-engineering/actions/workflows/ci.yml/badge.svg)](https://github.com/FlyFission/nuclear-grade-context-engineering/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-2E7D45.svg)](LICENSE)
@@ -18,17 +18,50 @@
 
 AI agents no longer just suggest code. They edit files, change prompts, call tools, swap dependencies, write the evidence, and help ship releases. That is a lot of power with very little ceremony. Nuclear-grade gives that work a clear, safe path — so you can move fast and still trust what ships.
 
-You do not need to read the whole repo to start. Run the two commands in [See it work in 30 seconds](#see-it-work-in-30-seconds), then copy one folder.
+You do not need to read the whole repo to start. Run the commands just below, then copy one folder.
+
+## Why this exists
+
+I have spent over a decade in the nuclear field, and I run [FlyFission Consulting Group](https://flyfission.com/), an independent design-review and advisory practice for nuclear projects. That work teaches one durable lesson: complex systems rarely fail in one big step. They fail when authority outruns evidence, one reasonable-looking shortcut at a time.
+
+AI agents are gaining exactly that kind of authority over codebases. This repo ports the habits that keep high-consequence engineering honest — a questioning attitude, configuration management, evidence before decisions — into a shape software teams can use at AI speed. It borrows the discipline, not the regulations: see [What this is NOT](#what-this-is-not).
+
+## See it work in 30 seconds
+
+Read a checked change record, then run the tests that back it:
+
+```bash
+git clone https://github.com/FlyFission/nuclear-grade-context-engineering.git
+cd nuclear-grade-context-engineering
+python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions
+# OK — a real change record: claims, evidence, gaps, and the decision, all checked. Stdlib only, nothing to install.
+python -m pytest docs/03-worked-examples/ai-agent-tool-permissions/tests/test_workspace_guard.py -v  # this one needs pytest
+# 4 passed — every write attempt outside the agent's workspace was denied and logged.
+```
+
+Here is a slice of that record's claim-to-evidence table ([`verification.md`](docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions/verification.md)):
+
+| Claim | Verification method | Result | Gap / follow-up |
+|---|---|---|---|
+| C-001 workspace-only writes | Pytest parent-`../` escape test | pass | Add fuzz and property tests before production reuse. |
+| C-001 workspace-only writes | Pytest symlink-escape test | pass | TOCTOU hardening before a production sandbox claim. |
+| C-004a denied writes are logged | Checks on the audit event | pass | In-memory only; a lasting audit log is deferred. |
+
+The gap column is the point. The record states what is **not** proven yet, instead of letting green tests imply more than they show.
+
+That packet is your template, not a curiosity. Copy [`docs/03-worked-examples/ai-agent-tool-permissions/`](docs/03-worked-examples/ai-agent-tool-permissions/) to start your own, and see [`CORE.md`](CORE.md) for the seven habits behind it. The longer guided tour lives in [`QUICKSTART.md`](QUICKSTART.md). If your shell only has `python3`, use `python3`.
 
 ## Contents
 
+- [Why this exists](#why-this-exists)
+- [See it work in 30 seconds](#see-it-work-in-30-seconds)
 - [What this is](#what-this-is)
 - [The one idea](#the-one-idea)
-- [See it work in 30 seconds](#see-it-work-in-30-seconds)
 - [How one change flows](#how-one-change-flows)
 - [Who does what](#who-does-what)
 - [Keeping the approved version under control](#keeping-the-approved-version-under-control)
 - [The common way vs. the nuclear-grade way](#the-common-way-vs-the-nuclear-grade-way)
+- [Does it actually help?](#does-it-actually-help)
 - [What you get](#what-you-get)
 - [Pick how much you want](#pick-how-much-you-want)
 - [Which change record do I need?](#which-change-record-do-i-need)
@@ -40,6 +73,7 @@ You do not need to read the whole repo to start. Run the two commands in [See it
 - [What this is NOT](#what-this-is-not)
 - [License and limits](#license-and-limits)
 - [Where the ideas come from](#where-the-ideas-come-from)
+- [Author](#author)
 
 ## What this is
 
@@ -64,19 +98,6 @@ question -> specify -> execute -> verify -> decide -> save approved version -> o
 ```
 
 This first release (v0) is a working toolkit you can use today: skills an agent can follow, command prompts you can paste, templates for small and large changes, a small command-line tool, a checker, a public list of sources, one fully worked example, and one hands-on comparison study.
-
-## See it work in 30 seconds
-
-Watch an AI agent prove it stayed inside its workspace, then read the change record that backs the result:
-
-```bash
-python -m pytest docs/03-worked-examples/ai-agent-tool-permissions/tests/test_workspace_guard.py -v
-# 4 passed — every write attempt outside the agent's workspace was denied and logged.
-python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions
-# OK — the change record exposes the evidence behind that result.
-```
-
-That packet is your template, not a curiosity. Copy [`docs/03-worked-examples/ai-agent-tool-permissions/`](docs/03-worked-examples/ai-agent-tool-permissions/) to start your own, and see [`CORE.md`](CORE.md) for the seven habits behind it. The longer guided tour lives in [`QUICKSTART.md`](QUICKSTART.md). If your shell only has `python3`, use `python3`.
 
 ## How one change flows
 
@@ -196,6 +217,12 @@ treat green tests as a yes -> make an explicit release decision and save the res
 
 This is practical, not decorative. Instructions should be hard to misuse. Small actions should still serve the goal. And "I'm confident" should never be confused with "here is the proof."
 
+## Does it actually help?
+
+The comparison study ran twelve scenarios, each from the same facts down two paths: a direct coding-agent prompt, and these skills and workflows. The records were scored on decision clarity, hidden-risk discovery, evidence quality, and ship-or-defer usefulness, with overhead scored separately. The workflow path scored at or above the direct prompt on every dimension in every scenario — the biggest gains were in hidden-risk discovery — and it costs real overhead, which the study reports instead of hiding.
+
+The scores are author-judged, and the limits are stated up front. The rubric, the methodology, and every trial record are public: [results](docs/03-worked-examples/skill-workflow-comparison/results-summary.md) · [methodology](docs/03-worked-examples/skill-workflow-comparison/methodology.md). Replication is invited.
+
 ## What you get
 
 | Part | What it does | Start here |
@@ -280,6 +307,7 @@ Cursor, Claude Code, Aider, Codex, and Copilot each read slightly different file
 
 | Topic | Where |
 |---|---|
+| Questions and ideas | [GitHub Discussions](https://github.com/FlyFission/nuclear-grade-context-engineering/discussions) |
 | How to contribute | [`CONTRIBUTING.md`](CONTRIBUTING.md) |
 | How decisions are made | [`GOVERNANCE.md`](GOVERNANCE.md) |
 | Reporting a vulnerability | [`SECURITY.md`](SECURITY.md) |
@@ -334,3 +362,7 @@ The public sources named here are influences and idea lineage. They are not stan
 ## Where the ideas come from
 
 Nuclear-grade is an original software workflow inspired by public sources. The source families are mapped in [`docs/00-standards-foundation/source-map.md`](docs/00-standards-foundation/source-map.md) and translated into plain concepts in [`docs/01-field-guide/source-to-concept-crosswalk.md`](docs/01-field-guide/source-to-concept-crosswalk.md).
+
+## Author
+
+Nuclear-grade is written and maintained by **Ben Huffer** ([@FlyFission](https://github.com/FlyFission)), founder of [FlyFission Consulting Group](https://flyfission.com/), an independent design-review and project-advisory practice for nuclear projects. Questions and field stories are welcome in [Discussions](https://github.com/FlyFission/nuclear-grade-context-engineering/discussions) or on [LinkedIn](https://www.linkedin.com/in/ben-huffer-646bab67/).

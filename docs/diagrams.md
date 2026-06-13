@@ -8,7 +8,7 @@ Diagrams are Mermaid so they render natively on GitHub, stay diffable in version
 
 ## 1. Core lifecycle
 
-The full lifecycle. The short launch version is `Question -> Specify -> Execute -> Verify -> Decide`.
+The full lifecycle. The short, at-a-glance version is `question -> specify -> execute -> verify -> decide -> baseline -> operate -> learn` (the eight everyday control points); the full path below splits three of them to reach the eleven beats.
 
 ```mermaid
 flowchart LR
@@ -107,7 +107,7 @@ flowchart TB
 | Decide | **V** — Verdict | ↳ inside Run |
 | Baseline · Operate · Learn | **E** — Educate | **O** — Operate |
 
-PROVE and PRO are memory handles for the same eleven-beat path; the [seven control points](../WORKFLOWS.md) are the everyday short form of those eleven beats, and the [Core 7](../CORE.md) are always-on habits, not path stages. One letter is reused across the two zoom levels — **O** is *Observe* (Verify · Review) in PROVE but *Operate* (run it in the world) in PRO — so when they differ, read the crosswalk above, not the letter. "PROVE" names the prove-your-claims habit — evidence behind every claim — not formal proof or verification.
+PROVE and PRO are memory handles for the same eleven-beat path; the [eight control points](../WORKFLOWS.md) are the everyday short form of those eleven beats, and the [Core 7](../CORE.md) are always-on habits, not path stages. One letter is reused across the two zoom levels — **O** is *Observe* (Verify · Review) in PROVE but *Operate* (run it in the world) in PRO — so when they differ, read the crosswalk above, not the letter. "PROVE" names the prove-your-claims habit — evidence behind every claim — not formal proof or verification.
 
 ---
 

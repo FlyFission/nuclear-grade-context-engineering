@@ -20,8 +20,15 @@ AI agents no longer just suggest code. They edit files, change prompts, call too
 
 You do not need to read the whole repo to start. Run one command in [See it work, then make it yours](#see-it-work-then-make-it-yours), copy one folder, and add the rest only when a change earns it.
 
+## Why this exists
+
+I have spent over a decade in the nuclear field, and I run [FlyFission Consulting Group](https://flyfission.com/), an independent design-review and advisory practice for nuclear projects. That work teaches one durable lesson: complex systems rarely fail in one big step. They fail when authority outruns evidence, one reasonable-looking shortcut at a time.
+
+AI agents are gaining exactly that kind of authority over codebases. This repo ports the habits that keep high-consequence engineering honest (a questioning attitude, configuration management, evidence before decisions) into a shape software teams can use at AI speed. It borrows the discipline, not the regulations: see [What this is NOT](#what-this-is-not).
+
 ## Contents
 
+- [Why this exists](#why-this-exists)
 - [What this is](#what-this-is)
 - [The one idea](#the-one-idea)
 - [See it work, then make it yours](#see-it-work-then-make-it-yours)
@@ -29,6 +36,7 @@ You do not need to read the whole repo to start. Run one command in [See it work
 - [Who does what](#who-does-what)
 - [Keeping the approved version under control](#keeping-the-approved-version-under-control)
 - [The common way vs. the nuclear-grade way](#the-common-way-vs-the-nuclear-grade-way)
+- [Does it actually help?](#does-it-actually-help)
 - [What you get](#what-you-get)
 - [Pick how much you want](#pick-how-much-you-want)
 - [Which change record do I need?](#which-change-record-do-i-need)
@@ -40,6 +48,7 @@ You do not need to read the whole repo to start. Run one command in [See it work
 - [What this is NOT](#what-this-is-not)
 - [License and limits](#license-and-limits)
 - [Where the ideas come from](#where-the-ideas-come-from)
+- [Author](#author)
 
 ## What this is
 
@@ -213,9 +222,13 @@ hand the agent free rein  -> hand it focused context and a duty to prove
 treat green tests as a yes -> make an explicit release decision and record what you trust
 ```
 
-**What it buys you, and what it costs.** We ran twelve realistic changes both ways, plain prompting versus Nuclear-grade, and scored each one. On a tiny, reversible doc fix the two landed within a point on every axis, and the extra rigor wasn't worth the overhead: simple prompting was enough. But on changes where a mistake is expensive and hard to walk back — an agent gaining file and API authority, a data-retention migration, a payment path, a release cut — plain prompting scored **1–2 out of 5** at surfacing hidden risk and at producing a defensible ship-or-defer call, while Nuclear-grade scored **4–5**. It cost more overhead every time. So the rule matches the one idea: spend the rigor where the consequence lives. These are author-judged trials: design evidence, not proof of effectiveness. See [`results-summary.md`](docs/03-worked-examples/skill-workflow-comparison/results-summary.md) and [`methodology.md`](docs/03-worked-examples/skill-workflow-comparison/methodology.md) for what they do and do not show.
-
 This earns its keep. Instructions should be hard to misuse, small actions should still serve the goal, and "I'm confident" should never get mistaken for "here is the proof."
+
+## Does it actually help?
+
+We ran twelve realistic changes both ways, a direct coding-agent prompt versus these skills and workflows, and scored each on decision clarity, hidden-risk discovery, evidence quality, and ship-or-defer usefulness, with overhead tracked separately so the cost shows up next to the benefit. On a tiny, reversible doc fix the two landed within a point on every axis: the extra rigor was not worth the overhead, and plain prompting was enough. But on changes where a mistake is expensive and hard to walk back (an agent gaining file and API authority, a data-retention migration, a payment path, a release cut), plain prompting scored **1–2 out of 5** at surfacing hidden risk and at producing a defensible ship-or-defer call, while Nuclear-grade scored **4–5**, and it cost more overhead every time. The biggest gains were in hidden-risk discovery, and the rule matches the one idea: spend the rigor where the consequence lives.
+
+The scores are author-judged design evidence, not proof of effectiveness, and the limits are stated up front. The rubric, the methodology, and every trial record are public: [results](docs/03-worked-examples/skill-workflow-comparison/results-summary.md) · [methodology](docs/03-worked-examples/skill-workflow-comparison/methodology.md). Replication is invited.
 
 ## What you get
 
@@ -301,6 +314,7 @@ Cursor, Claude Code, Aider, Codex, and Copilot each read slightly different file
 
 | Topic | Where |
 |---|---|
+| Questions and ideas | [GitHub Discussions](https://github.com/FlyFission/nuclear-grade-context-engineering/discussions) |
 | How to contribute | [`CONTRIBUTING.md`](CONTRIBUTING.md) |
 | How decisions are made | [`GOVERNANCE.md`](GOVERNANCE.md) |
 | Reporting a vulnerability | [`SECURITY.md`](SECURITY.md) |
@@ -355,3 +369,7 @@ The public sources named here are influences and idea lineage. They are not stan
 ## Where the ideas come from
 
 Nuclear-grade is an original software workflow inspired by public sources. The source families are mapped in [`docs/00-standards-foundation/source-map.md`](docs/00-standards-foundation/source-map.md) and translated into plain concepts in [`docs/01-field-guide/source-to-concept-crosswalk.md`](docs/01-field-guide/source-to-concept-crosswalk.md).
+
+## Author
+
+Nuclear-grade is written and maintained by **Ben Huffer** ([@FlyFission](https://github.com/FlyFission)), founder of [FlyFission Consulting Group](https://flyfission.com/), an independent design-review and project-advisory practice for nuclear projects. Questions and field stories are welcome in [Discussions](https://github.com/FlyFission/nuclear-grade-context-engineering/discussions) or on [LinkedIn](https://www.linkedin.com/in/ben-huffer-646bab67/).

@@ -18,13 +18,13 @@
 
 AI agents no longer just suggest code. They edit files, change prompts, call tools, swap dependencies, write the evidence, and help ship releases. That is a lot of power with very little ceremony. Nuclear-grade gives that work a clear, safe path — so you can move fast and still trust what ships.
 
-You do not need to read the whole repo to start. Run the two commands in [See it work in 30 seconds](#see-it-work-in-30-seconds), then copy one folder.
+You do not need to read the whole repo to start. Run one command in [See it work, then make it yours](#see-it-work-then-make-it-yours), copy one folder, and add the rest only when a change earns it.
 
 ## Contents
 
 - [What this is](#what-this-is)
 - [The one idea](#the-one-idea)
-- [See it work in 30 seconds](#see-it-work-in-30-seconds)
+- [See it work, then make it yours](#see-it-work-then-make-it-yours)
 - [How one change flows](#how-one-change-flows)
 - [Who does what](#who-does-what)
 - [Keeping the approved version under control](#keeping-the-approved-version-under-control)
@@ -43,7 +43,7 @@ You do not need to read the whole repo to start. Run the two commands in [See it
 
 ## What this is
 
-Before an agent builds, you ask hard questions and find the facts. You write down what the change must do. The agent works only inside the limits you set. Then you check the claims against real evidence, decide on purpose, save the approved version, and learn from what happens next.
+Before an agent builds, you ask hard questions and find the facts. You write down what the change must do. The agent works only inside the limits you set. Then you check the claims against real evidence, decide on purpose, put the result to work, and learn from what happens next.
 
 The discipline is borrowed from how high-consequence engineering is run: question your assumptions, prove your claims, and never let standards slip one small step at a time. The name is the standard of care, not the vocabulary — keep the discipline and rename the local copy if "nuclear-grade" would mis-calibrate your team (see [`DISCLAIMER.md`](DISCLAIMER.md)).
 
@@ -53,30 +53,47 @@ The discipline is borrowed from how high-consequence engineering is run: questio
 
 An agent can try ideas and throw them away cheaply, so let it. But the rules tighten as soon as the work turns into a claim, a file you have to keep under control, a public statement, an approved version, a release call, or a change to what the agent is allowed to do.
 
-The very first question is the most important one: **what does this evidence have to prove, and what fact would change my decision?**
+So the first question is the one that matters most: **what does this change have to prove, and what fact would change my decision?**
+
+That question has a shape, and the shape has a name.
+
+### Become a PRO by learning to PROVE
+
+How do you do software engineering people can stake a decision on? You **PROVE** every claim — five moves, in order:
+
+> **PROVE** — Plan · Run · Observe · Verdict · Educate
+
+Zoom out and the same job is three moves — **PRO** — Plan · Run · Operate. PRO is the billboard; PROVE is the working map, with the **Verdict** — the moment a draft becomes a decision — pulled out so it can't be skipped. Run every change this way and you operate like a PRO: nothing ships on a vibe, every claim drags its evidence along, and the version you trust is the version you can defend out loud.
 
 ```text
 Normal AI coding:
 prompt -> diff -> persuasion -> merge risk
 
 Nuclear-grade:
-question -> specify -> execute -> verify -> decide -> save approved version -> operate
+question -> specify -> execute -> verify -> decide -> operate -> learn
 ```
 
 This first release (v0) is a working toolkit you can use today: skills an agent can follow, command prompts you can paste, templates for small and large changes, a small command-line tool, a checker, a public list of sources, one fully worked example, and one hands-on comparison study.
 
-## See it work in 30 seconds
+## See it work, then make it yours
 
-Watch an AI agent prove it stayed inside its workspace, then read the change record that backs the result:
+The repo ships a finished change record for the kind of change that should make you a little nervous: giving an AI agent permission to write files and call external APIs — with the proof it stayed inside its workspace. Clone it and read the evidence with one command. No install, no build step, standard library only:
+
+```bash
+git clone https://github.com/FlyFission/nuclear-grade-context-engineering
+cd nuclear-grade-context-engineering
+python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions
+# OK — the record links every permission claim to its evidence (or a named gap).
+```
+
+Want to watch that evidence regenerate? The example ships the test that backs the headline claim. This one needs `pytest` (`pip install pytest`); nothing else in the repo does:
 
 ```bash
 python -m pytest docs/03-worked-examples/ai-agent-tool-permissions/tests/test_workspace_guard.py -v
-# 4 passed — every write attempt outside the agent's workspace was denied and logged.
-python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions
-# OK — the change record exposes the evidence behind that result.
+# 4 passed — every write outside the agent's workspace was denied and logged.
 ```
 
-That packet is your template, not a curiosity. Copy [`docs/03-worked-examples/ai-agent-tool-permissions/`](docs/03-worked-examples/ai-agent-tool-permissions/) to start your own, and see [`CORE.md`](CORE.md) for the seven habits behind it. The longer guided tour lives in [`QUICKSTART.md`](QUICKSTART.md). If your shell only has `python3`, use `python3`.
+That packet — `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, `ship.md` — is the template you copy for your own changes. Start from [`docs/03-worked-examples/ai-agent-tool-permissions/`](docs/03-worked-examples/ai-agent-tool-permissions/), keep [`CORE.md`](CORE.md) open for the seven habits behind it, and take the full guided tour in [`QUICKSTART.md`](QUICKSTART.md) when you want depth. (Shell only has `python3`? Use that instead of `python`.)
 
 ## How one change flows
 
@@ -156,7 +173,9 @@ sequenceDiagram
 
 ## Keeping the approved version under control
 
-A **baseline** is just the version everyone agreed is correct and wants to protect. Changes never edit the baseline directly — they go through evidence and a decision first, and only an accepted change becomes the new baseline. That is configuration management, in one loop:
+You already have git, CI, and branch protection. Keep them — this rides on top, it does not replace them. What they do not give you is the *decision*: a green pipeline says the suite passed on some commit, not that a human weighed the leftover risk and chose to ship, and not what would force a re-check. And they were never aimed at the things that now drive an AI system's behavior — the prompts, the model IDs, the eval sets, the agent's own permissions. Git versions your code; none of it records *why this is the version you trust*.
+
+A **baseline** closes that gap. It is the version everyone agreed is correct, plus the evidence behind the agreement. Changes never edit the baseline directly — they go through evidence and a decision first, and only an accepted change becomes the new baseline. That is configuration management, in one loop:
 
 ```mermaid
 flowchart LR
@@ -179,7 +198,7 @@ flowchart LR
 
 | The common way | The nuclear-grade way |
 |---|---|
-| Ask an agent, look at the diff, run the tests. | Question the assumptions, name what must stay under control, write down the intent, check the evidence, decide, and save the approved version. |
+| Ask an agent, look at the diff, run the tests. | Question the assumptions, name what must stay under control, write down the intent, check the evidence, then decide on purpose and record what you trust. |
 | The pull request text tries to talk reviewers into a yes. | A change record links intent, what must not break, what is under control, the evidence, the gaps, and the decision. |
 | Agents get broad access and vague instructions. | Agents get a role, a list of what they may do, what they may not do, what they must prove, where the work stands, and when to stop. |
 | Green tests become the reason to ship. | The release record states the evidence, the leftover risk, the rollback plan, what to watch, the decision, and what to save. |
@@ -191,10 +210,12 @@ The shift, in one view:
 review the diff           -> review the whole approved setup
 trust the prompt history  -> keep a controlled record of the change
 hand the agent free rein  -> hand it focused context and a duty to prove
-treat green tests as a yes -> make an explicit release decision and save the result
+treat green tests as a yes -> make an explicit release decision and record what you trust
 ```
 
-This is practical, not decorative. Instructions should be hard to misuse. Small actions should still serve the goal. And "I'm confident" should never be confused with "here is the proof."
+**What it buys you — and what it costs.** We ran twelve realistic changes both ways, plain prompting versus Nuclear-grade, and scored each one. On a tiny, reversible doc fix the two roughly tied: simple prompting was enough, and the heavier path would have been pure tax. But on the changes where a mistake is expensive and hard to walk back — an agent gaining file and API authority, a data-retention migration, a payment path, a release cut — plain prompting scored **1–2 out of 5** at surfacing hidden risk and at producing a defensible ship-or-defer call, while Nuclear-grade scored **4–5**. It cost more overhead on every one of those, too. So the rule is the same as the one idea: spend the rigor where the consequence lives. These are author-judged trials — design evidence, not proof of effectiveness — and they say so plainly; see [`results-summary.md`](docs/03-worked-examples/skill-workflow-comparison/results-summary.md) and [`methodology.md`](docs/03-worked-examples/skill-workflow-comparison/methodology.md) for exactly what they do and do not show.
+
+This earns its keep. Instructions should be hard to misuse, small actions should still serve the goal, and "I'm confident" should never get mistaken for "here is the proof."
 
 ## What you get
 

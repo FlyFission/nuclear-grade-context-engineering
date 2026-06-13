@@ -1,10 +1,10 @@
 <div align="center">
 
-<img src="docs/assets/landing-banner.svg" alt="Nuclear-grade Context Engineering — let AI do serious software work without losing control. Go fast while exploring; slow down when the work becomes a promise." width="820">
+<img src="docs/assets/landing-banner.svg" alt="Nuclear-grade Context Engineering: let AI do serious software work and stay in control of what ships. Go fast while exploring; slow down when the work becomes a promise." width="820">
 
 <br/>
 
-**A simple, evidence-first way to let AI do serious software work — without losing control.**
+**A simple, evidence-first way to let AI do serious software work and stay in control of what ships.**
 
 [![CI](https://github.com/FlyFission/nuclear-grade-context-engineering/actions/workflows/ci.yml/badge.svg)](https://github.com/FlyFission/nuclear-grade-context-engineering/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-2E7D45.svg)](LICENSE)
@@ -43,9 +43,9 @@ You do not need to read the whole repo to start. Run one command in [See it work
 
 ## What this is
 
-Before an agent builds, you ask hard questions and find the facts. You write down what the change must do. The agent works only inside the limits you set. Then you check the claims against real evidence, decide on purpose, put the result to work, and learn from what happens next.
+Before an agent builds, you ask hard questions and find the facts. You write down what the change must do. The agent works only inside the limits you set. Then you check the claims against real evidence, decide on purpose, lock the version you trust, put it to work, and learn from what happens next.
 
-The discipline is borrowed from how high-consequence engineering is run: question your assumptions, prove your claims, and never let standards slip one small step at a time. The name is the standard of care, not the vocabulary — keep the discipline and rename the local copy if "nuclear-grade" would mis-calibrate your team (see [`DISCLAIMER.md`](DISCLAIMER.md)).
+The discipline is borrowed from how high-consequence engineering is run: question your assumptions, prove your claims, and never let standards slip one small step at a time. The name is the standard of care, not the vocabulary. Keep the discipline and rename the local copy if "nuclear-grade" would mis-calibrate your team (see [`DISCLAIMER.md`](DISCLAIMER.md)).
 
 ## The one idea
 
@@ -61,43 +61,43 @@ That question has a shape, and the shape has a name.
 
 The kind of software engineering people stake decisions on runs on one habit: you **PROVE** every claim. Five moves, in order:
 
-> **PROVE** — Plan · Run · Observe · Verdict · Educate
+> **PROVE**: Plan · Run · Observe · Verdict · Educate
 
-(Observe = weigh the evidence; Verdict = decide on purpose; Educate = ship the result, then learn from how it runs.) The same path at a glance is three moves, **PRO**: Plan · Run · Operate — up close it's PROVE, from across the room it's PRO. The step PROVE never lets you fold away is **Verdict**, the point where a draft becomes a decision. Make this your loop and the payoff is in the name: you become the engineer who ships nothing on a vibe, carries the evidence for every claim, and can defend the version they trust out loud. A PRO.
+(Observe = weigh the evidence; Verdict = decide on purpose; Educate = ship the result, then learn from how it runs.) The same path at a glance is three moves, **PRO**: Plan · Run · Operate. Up close it's PROVE, from across the room it's PRO. The step PROVE never lets you fold away is **Verdict**, the point where a draft becomes a decision. Make this your loop and the payoff is in the name: you become the engineer who ships nothing on a vibe, carries the evidence for every claim, and can defend the version they trust out loud. A PRO.
 
 ```text
 Normal AI coding:
 prompt -> diff -> persuasion -> merge risk
 
 Nuclear-grade:
-question -> specify -> execute -> verify -> decide -> operate -> learn
+question -> specify -> execute -> verify -> decide -> baseline -> operate -> learn
 ```
 
 This first release (v0) is a working toolkit you can use today: skills an agent can follow, command prompts you can paste, templates for small and large changes, a small command-line tool, a checker, a public list of sources, one fully worked example, and one hands-on comparison study.
 
 ## See it work, then make it yours
 
-The repo ships a finished change record for the kind of change that should make you a little nervous: giving an AI agent permission to write files and call external APIs. It ships with passing evidence for the claim that matters most — the agent cannot write outside its workspace — and named gaps for the claims still open. Clone it and read that evidence with one command. No install, no build step, standard library only (you need `git` and Python 3.11+, and `python3` if your shell has no `python`):
+The repo ships a finished change record for the kind of change that should make you a little nervous: giving an AI agent permission to write files and call external APIs. It ships with passing evidence for the claim that matters most (the agent cannot write outside its workspace), and named gaps for the claims still open. Clone it and read that evidence with one command. No install, no build step, standard library only (you need `git` and Python 3.11+, and `python3` if your shell has no `python`):
 
 ```bash
 git clone https://github.com/FlyFission/nuclear-grade-context-engineering
 cd nuclear-grade-context-engineering
 python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions
-# OK — the record links every permission claim to its evidence (or a named gap).
+# OK: the record links every permission claim to its evidence (or a named gap).
 ```
 
 Want to watch that evidence regenerate? The example ships the test behind that workspace-boundary claim. This step needs `pytest` (`pip install pytest`); nothing else in the repo does:
 
 ```bash
 python -m pytest docs/03-worked-examples/ai-agent-tool-permissions/tests/test_workspace_guard.py -v
-# 4 passed — every write outside the agent's workspace was denied and logged.
+# 4 passed: every write outside the agent's workspace was denied and logged.
 ```
 
 That packet is a complete Standard record: `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, and `ship.md`, plus an `adversarial-review.md` this high-stakes example adds on top. Copy [`docs/03-worked-examples/ai-agent-tool-permissions/`](docs/03-worked-examples/ai-agent-tool-permissions/) as the template for your own changes, keep [`CORE.md`](CORE.md) open for the seven habits behind it, and take the full guided tour in [`QUICKSTART.md`](QUICKSTART.md) when you want depth.
 
 ## How one change flows
 
-Every change walks the same path — the headline above, shown in full. Each step is a control point: it stops one specific failure and produces one artifact you can point at. A skipped step is not a shortcut; it is a named failure mode you chose to accept.
+Every change walks the same path: the headline above, shown in full. Each step is a control point: it stops one specific failure and produces one artifact you can point at. A skipped step is not a shortcut; it is a named failure mode you chose to accept.
 
 ```text
 Question -> Discover -> Specify -> Plan -> Execute -> Verify -> Review -> Decide -> Baseline -> Operate -> Learn
@@ -113,7 +113,7 @@ flowchart LR
     L -.feeds future basis.-> Q
 ```
 
-Zoomed out, those eleven beats are three moves — **PRO**: Plan · Run · Operate — or five with the gate named — **PROVE**: Plan · Run · Observe · Verdict · Educate. One label, two zoom levels:
+Zoomed out, those eleven beats are three moves (**PRO**: Plan · Run · Operate) or five with the gate named (**PROVE**: Plan · Run · Observe · Verdict · Educate). One label, two zoom levels:
 
 ```mermaid
 flowchart TB
@@ -143,13 +143,13 @@ flowchart TB
   class C1,C2,C3 emb
 ```
 
-*If the diagrams above do not render (for example on PyPI), the eleven-beat line just above is the same path in text.* The control-point detail — what each step stops and produces — is in [`WORKFLOWS.md`](WORKFLOWS.md), and every diagram here is canonical in [`docs/diagrams.md`](docs/diagrams.md).
+*If the diagrams above do not render (for example on PyPI), the eleven-beat line just above is the same path in text.* The control-point detail (what each step stops and produces) is in [`WORKFLOWS.md`](WORKFLOWS.md), and every diagram here is canonical in [`docs/diagrams.md`](docs/diagrams.md).
 
-Underneath the path sit a few habits borrowed from high-reliability work — what we call **HPI for AI agents** (Human Performance Improvement). Use them when they change the outcome: brief the work before a risky step, double-check critical actions, hand off cleanly, get a second set of eyes when trust is on the line, and capture the lesson after a near miss.
+Underneath the path sit a few habits borrowed from high-reliability work, which we call **HPI for AI agents** (Human Performance Improvement). Use them when they change the outcome: brief the work before a risky step, double-check critical actions, hand off cleanly, get a second set of eyes when trust is on the line, and capture the lesson after a near miss.
 
 ## Who does what
 
-Four roles share the work: **you**, the **AI agent**, the **change record**, and the **reviewer**. The agent moves fast — but only inside limits you approve first. The record carries each claim and its evidence. The reviewer decides on the evidence, not the pitch.
+Four roles share the work: **you**, the **AI agent**, the **change record**, and the **reviewer**. The agent moves fast, but only inside limits you approve first. The record carries each claim and its evidence. The reviewer decides on the evidence, not the pitch.
 
 ```mermaid
 sequenceDiagram
@@ -173,9 +173,9 @@ sequenceDiagram
 
 ## Keeping the approved version under control
 
-You already have git, CI, and branch protection. Keep them — this rides on top, it does not replace them. What they do not give you is the *decision*: a green pipeline says the suite passed on some commit, not that a human weighed the leftover risk and chose to ship, and not what would force a re-check. And they were never aimed at the things that now drive an AI system's behavior — the prompts, the model IDs, the eval sets, the agent's own permissions. Git versions your code; none of it records *why this is the version you trust*.
+You already have git, CI, and branch protection. Keep them; this rides on top, it does not replace them. What they do not give you is the *decision*: a green pipeline says the suite passed on some commit, not that a human weighed the leftover risk and chose to ship, and not what would force a re-check. And they were never aimed at the things that now drive an AI system's behavior: the prompts, the model IDs, the eval sets, the agent's own permissions. Git versions your code; none of it records *why this is the version you trust*.
 
-A **baseline** closes that gap. It is the version everyone agreed is correct, plus the evidence behind the agreement. Changes never edit the baseline directly — they go through evidence and a decision first, and only an accepted change becomes the new baseline. That is configuration management, in one loop:
+A **baseline** closes that gap. It is the version everyone agreed is correct, plus the evidence behind the agreement. Changes never edit the baseline directly; they go through evidence and a decision first, and only an accepted change becomes the new baseline. That is configuration management, in one loop:
 
 ```mermaid
 flowchart LR
@@ -192,7 +192,7 @@ flowchart LR
     LE -.->|"feed the next change"| CI
 ```
 
-**In words:** controlled items (code, prompts, models, dependencies, docs, releases) → a change → named evidence (pass or gap) → a deliberate decision → if ship or defer, save the new baseline; if block, back to the change → operate the baseline → lessons feed the next change. You only add the heavier records — what is under control, ripple effects, the saved baseline, drift, and operating lessons — when the stakes are high enough to earn them. Canonical copy in [`docs/diagrams.md`](docs/diagrams.md).
+**In words:** controlled items (code, prompts, models, dependencies, docs, releases) → a change → named evidence (pass or gap) → a deliberate decision → if ship or defer, save the new baseline; if block, back to the change → operate the baseline → lessons feed the next change. You only add the heavier records (what is under control, ripple effects, the saved baseline, drift, and operating lessons) when the stakes are high enough to earn them. Canonical copy in [`docs/diagrams.md`](docs/diagrams.md).
 
 ## The common way vs. the nuclear-grade way
 
@@ -213,7 +213,7 @@ hand the agent free rein  -> hand it focused context and a duty to prove
 treat green tests as a yes -> make an explicit release decision and record what you trust
 ```
 
-**What it buys you — and what it costs.** We ran twelve realistic changes both ways, plain prompting versus Nuclear-grade, and scored each one. On a tiny, reversible doc fix the two landed within a point on every axis, and the extra rigor wasn't worth the overhead: simple prompting was enough. But on changes where a mistake is expensive and hard to walk back — an agent gaining file and API authority, a data-retention migration, a payment path, a release cut — plain prompting scored **1–2 out of 5** at surfacing hidden risk and at producing a defensible ship-or-defer call, while Nuclear-grade scored **4–5**. It cost more overhead every time. So the rule matches the one idea: spend the rigor where the consequence lives. These are author-judged trials: design evidence, not proof of effectiveness. See [`results-summary.md`](docs/03-worked-examples/skill-workflow-comparison/results-summary.md) and [`methodology.md`](docs/03-worked-examples/skill-workflow-comparison/methodology.md) for what they do and do not show.
+**What it buys you, and what it costs.** We ran twelve realistic changes both ways, plain prompting versus Nuclear-grade, and scored each one. On a tiny, reversible doc fix the two landed within a point on every axis, and the extra rigor wasn't worth the overhead: simple prompting was enough. But on changes where a mistake is expensive and hard to walk back — an agent gaining file and API authority, a data-retention migration, a payment path, a release cut — plain prompting scored **1–2 out of 5** at surfacing hidden risk and at producing a defensible ship-or-defer call, while Nuclear-grade scored **4–5**. It cost more overhead every time. So the rule matches the one idea: spend the rigor where the consequence lives. These are author-judged trials: design evidence, not proof of effectiveness. See [`results-summary.md`](docs/03-worked-examples/skill-workflow-comparison/results-summary.md) and [`methodology.md`](docs/03-worked-examples/skill-workflow-comparison/methodology.md) for what they do and do not show.
 
 This earns its keep. Instructions should be hard to misuse, small actions should still serve the goal, and "I'm confident" should never get mistaken for "here is the proof."
 
@@ -230,15 +230,15 @@ This earns its keep. Instructions should be hard to misuse, small actions should
 | Worked example | A real change record proving an AI agent stayed inside its workspace | [`EXAMPLES.md`](EXAMPLES.md) |
 | Sources | The public ideas this borrows from, and how to talk about them safely | [`docs/00-standards-foundation/source-map.md`](docs/00-standards-foundation/source-map.md) |
 
-As of v0.5.0 that is **27 skills** and **26 command prompts**. The live list is the source of truth — see [`nuclear-grade.yaml`](nuclear-grade.yaml), [`SKILLS.md`](SKILLS.md), and [`COMMANDS.md`](COMMANDS.md) — so treat any count here as a snapshot, not a promise.
+As of v0.5.0 that is **27 skills** and **26 command prompts**. The live list is the source of truth (see [`nuclear-grade.yaml`](nuclear-grade.yaml), [`SKILLS.md`](SKILLS.md), and [`COMMANDS.md`](COMMANDS.md)), so treat any count here as a snapshot, not a promise.
 
 ## Pick how much you want
 
 You do not adopt the whole system on day one. It scales with the stakes:
 
-- **Start with the Core 7** — seven always-on habits that fit any change. See [`CORE.md`](CORE.md).
-- **Add clusters by consequence** — bring in the heavier skills, templates, and records only when a change touches users, data, dependencies, permissions, AI authority, or a release.
-- **Grow into the full system** — the complete skill set, command prompts, and modes once your team has tested the lighter path.
+- **Start with the Core 7**: seven always-on habits that fit any change. See [`CORE.md`](CORE.md).
+- **Add clusters by consequence**: bring in the heavier skills, templates, and records only when a change touches users, data, dependencies, permissions, AI authority, or a release.
+- **Grow into the full system**: the complete skill set, command prompts, and modes once your team has tested the lighter path.
 
 Ready-made bundles live in [`starter-kit/`](starter-kit/), and [`CORE.md`](CORE.md) has a decision matrix that picks the right kit for your project by trigger.
 
@@ -282,16 +282,16 @@ Use Nuclear-grade if you are:
 ```bash
 /plugin marketplace add FlyFission/nuclear-grade-context-engineering
 /plugin install nuclear-grade@nuclear-grade
-/reload-plugins   # or restart Claude Code — loads the new skills/commands into this session
+/reload-plugins   # or restart Claude Code; loads the new skills/commands into this session
 ```
 
-That exposes the skills and command prompts as a plugin. No hooks are configured, so nothing runs automatically; the install copies the repo's `ng` CLI into the plugin cache, but the plugin adds no `ng` command to your `PATH` and runs nothing on its own — the CLI is a repo-side tool you run from a checkout (below). Prefer plain files, or using another tool? Use the repo directly:
+That exposes the skills and command prompts as a plugin. No hooks are configured, so nothing runs automatically; the install copies the repo's `ng` CLI into the plugin cache, but the plugin adds no `ng` command to your `PATH` and runs nothing on its own; the CLI is a repo-side tool you run from a checkout (below). Prefer plain files, or using another tool? Use the repo directly:
 
 1. **Get the tool.** Clone the repo and install it (no third-party dependencies). See [`INSTALL.md`](INSTALL.md).
 2. **Check your setup.** Run `python tools/ng.py doctor .` to confirm things are wired up, and `python tools/ng.py list` to see what is available.
 3. **Make your first record.** Run `python tools/ng.py new <slug> --mode quick`, fill in the two files, then prove it with `python tools/ng.py validate .nuclear/changes/<slug>`.
 
-If your shell only has `python3`, use `python3`. The full guided tour is in [`QUICKSTART.md`](QUICKSTART.md). **Using an AI agent? Point it at [`AGENTS.md`](AGENTS.md)** — it is the shared brief agents read first.
+If your shell only has `python3`, use `python3`. The full guided tour is in [`QUICKSTART.md`](QUICKSTART.md). **Using an AI agent? Point it at [`AGENTS.md`](AGENTS.md)**: it is the shared brief agents read first.
 
 ## Works across your tools
 

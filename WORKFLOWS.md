@@ -7,12 +7,12 @@ Normal AI coding:
 prompt -> diff -> persuasion -> merge risk
 
 Nuclear-grade:
-question -> specify -> execute -> verify -> decide -> save approved version -> operate
+question -> specify -> execute -> verify -> decide -> baseline -> operate -> learn
 ```
 
-A "baseline" — the saved approved version — is the version everyone agreed is correct.
+A "baseline" (the saved approved version) is the version everyone agreed is correct.
 
-## The core loop: seven control points
+## The core loop: eight control points
 
 Each step is a control point. Each one stops one specific failure mode. Skip any of them and you ship a different kind of risk.
 
@@ -23,20 +23,21 @@ Each step is a control point. Each one stops one specific failure mode. Skip any
 | 3 | **Execute** — build inside the boundary; agents work here, not before | Scope drift, surprise blast radius, silent dependency changes | The diff and the trace from spec to change | A step crosses the boundary without escalation |
 | 4 | **Verify** — test the claim against reality, not against confidence | Green-tests-but-wrong-feature; persuasion over proof | Evidence, named gaps, what was not tested | The evidence does not address the spec |
 | 5 | **Decide** — ship, defer, or stop, on purpose and on the record | Silent merges; evidence-shaped PRs with no decision | A decision with reasoning, leftover risk, rollback, monitoring | Nobody owns the decision |
-| 6 | **Save the approved version** (baseline) — lock what everyone agreed is correct | Drift; "the prompt changed and nobody knew" | Controlled record of code, prompts, models, tools, deps, evals, docs | You cannot say what the controlled items are |
-| 7 | **Operate** — run it in the real world; watch it; learn from it | Forgotten near misses; lessons dying in chat history | Signals, OPEX entries, triggers for a new baseline | There is no owner for what to watch |
+| 6 | **Baseline** — lock the approved version everyone agreed on | Drift; "the prompt changed and nobody knew" | Controlled record of code, prompts, models, tools, deps, evals, docs | You cannot say what the controlled items are |
+| 7 | **Operate** — run it in the real world and watch it | Production surprises going unseen | Signals, monitors, triggers for a new baseline | There is no owner for what to watch |
+| 8 | **Learn** — feed the lesson back into the controls | Forgotten near misses; lessons dying in chat history | OPEX entries; updated tests, monitors, baselines | A near miss changes nothing |
 
-The loop closes when operation feeds the next question.
+The loop closes when what you learn feeds the next question.
 
-This is what "nuclear-grade" buys you over prompt-and-pray: every step has a job, an artifact, and a stop condition. A skipped step is not a shortcut — it is a known failure mode you chose to accept.
+This is what "nuclear-grade" buys you over prompt-and-pray: every step has a job, an artifact, and a stop condition. A skipped step is not a shortcut; it is a known failure mode you chose to accept.
 
-These seven are the everyday form of the loop. For standard and high-consequence work the same loop fans out into eleven beats — `Question -> Discover -> Specify -> Plan -> Execute -> Verify -> Review -> Decide -> Baseline -> Operate -> Learn` — splitting Question into Question/Discover, Specify into Specify/Plan, Decide into Review/Decide, and Operate into Operate/Learn. Same control points, more beats. Those eleven beats also carry a memory handle — **PROVE** (Plan · Run · Observe · Verdict · Educate), or just **PRO** (Plan · Run · Operate) zoomed out; see [`docs/diagrams.md`](docs/diagrams.md).
+These eight are the everyday form of the loop. For standard and high-consequence work the same loop fans out into eleven beats (`Question -> Discover -> Specify -> Plan -> Execute -> Verify -> Review -> Decide -> Baseline -> Operate -> Learn`), splitting Question into Question/Discover, Specify into Specify/Plan, and Decide into Review/Decide. Same control points, more beats. Those eleven beats also carry a memory handle: **PROVE** (Plan · Run · Observe · Verdict · Educate), or just **PRO** (Plan · Run · Operate) zoomed out; see [`docs/diagrams.md`](docs/diagrams.md).
 
 ## Two speeds, one loop
 
 For AI agents, we add a few small habits from Human Performance Improvement (HPI). Brief the work first. Double-check risky actions. Hand off cleanly. Get a second set of eyes when needed. Decide on the careful side. Learn from near misses.
 
-The workflow has two speeds. While you explore and try ideas you can throw away, move fast — the loop still runs, but the artifacts are lightweight. Slow down when the work turns into something real: a piece of evidence, a claim, a file you must keep under control, public wording, a saved approved version, a release call, or a change to what the agent is allowed to do.
+The workflow has two speeds. While you explore and try ideas you can throw away, move fast: the loop still runs, but the artifacts are lightweight. Slow down when the work turns into something real: a piece of evidence, a claim, a file you must keep under control, public wording, a saved approved version, a release call, or a change to what the agent is allowed to do.
 
 ## Workflow catalog
 

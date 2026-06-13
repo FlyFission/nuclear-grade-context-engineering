@@ -16,7 +16,7 @@
 
 # Nuclear Grade Context Engineering
 
-AI agents no longer just suggest code. They edit files, change prompts, call tools, swap dependencies, write the evidence, and help ship releases. That is a lot of power with very little ceremony. Nuclear-grade gives that work a clear, safe path — so you can move fast and still trust what ships.
+AI agents no longer just suggest code. They edit files, change prompts, call tools, swap dependencies, write the evidence, and help ship releases. That is a lot of power with very little ceremony. Nuclear-grade gives that work a clear path you stay in control of, so you can move fast and still stand behind what ships.
 
 You do not need to read the whole repo to start. Run one command in [See it work, then make it yours](#see-it-work-then-make-it-yours), copy one folder, and add the rest only when a change earns it.
 
@@ -59,11 +59,11 @@ That question has a shape, and the shape has a name.
 
 ### Become a PRO by learning to PROVE
 
-How do you do software engineering people can stake a decision on? You **PROVE** every claim — five moves, in order:
+The kind of software engineering people stake decisions on runs on one habit: you **PROVE** every claim. Five moves, in order:
 
 > **PROVE** — Plan · Run · Observe · Verdict · Educate
 
-Zoom out and the same job is three moves — **PRO** — Plan · Run · Operate. PRO is the billboard; PROVE is the working map, with the **Verdict** — the moment a draft becomes a decision — pulled out so it can't be skipped. Run every change this way and you operate like a PRO: nothing ships on a vibe, every claim drags its evidence along, and the version you trust is the version you can defend out loud.
+(Observe = weigh the evidence; Verdict = decide on purpose; Educate = ship the result, then learn from how it runs.) The same path at a glance is three moves, **PRO**: Plan · Run · Operate — up close it's PROVE, from across the room it's PRO. The step PROVE never lets you fold away is **Verdict**, the point where a draft becomes a decision. Make this your loop and the payoff is in the name: you become the engineer who ships nothing on a vibe, carries the evidence for every claim, and can defend the version they trust out loud. A PRO.
 
 ```text
 Normal AI coding:
@@ -77,7 +77,7 @@ This first release (v0) is a working toolkit you can use today: skills an agent 
 
 ## See it work, then make it yours
 
-The repo ships a finished change record for the kind of change that should make you a little nervous: giving an AI agent permission to write files and call external APIs — with the proof it stayed inside its workspace. Clone it and read the evidence with one command. No install, no build step, standard library only:
+The repo ships a finished change record for the kind of change that should make you a little nervous: giving an AI agent permission to write files and call external APIs. It ships with passing evidence for the claim that matters most — the agent cannot write outside its workspace — and named gaps for the claims still open. Clone it and read that evidence with one command. No install, no build step, standard library only (you need `git` and Python 3.11+, and `python3` if your shell has no `python`):
 
 ```bash
 git clone https://github.com/FlyFission/nuclear-grade-context-engineering
@@ -86,18 +86,18 @@ python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.n
 # OK — the record links every permission claim to its evidence (or a named gap).
 ```
 
-Want to watch that evidence regenerate? The example ships the test that backs the headline claim. This one needs `pytest` (`pip install pytest`); nothing else in the repo does:
+Want to watch that evidence regenerate? The example ships the test behind that workspace-boundary claim. This step needs `pytest` (`pip install pytest`); nothing else in the repo does:
 
 ```bash
 python -m pytest docs/03-worked-examples/ai-agent-tool-permissions/tests/test_workspace_guard.py -v
 # 4 passed — every write outside the agent's workspace was denied and logged.
 ```
 
-That packet — `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, `ship.md` — is the template you copy for your own changes. Start from [`docs/03-worked-examples/ai-agent-tool-permissions/`](docs/03-worked-examples/ai-agent-tool-permissions/), keep [`CORE.md`](CORE.md) open for the seven habits behind it, and take the full guided tour in [`QUICKSTART.md`](QUICKSTART.md) when you want depth. (Shell only has `python3`? Use that instead of `python`.)
+That packet is a complete Standard record: `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, and `ship.md`, plus an `adversarial-review.md` this high-stakes example adds on top. Copy [`docs/03-worked-examples/ai-agent-tool-permissions/`](docs/03-worked-examples/ai-agent-tool-permissions/) as the template for your own changes, keep [`CORE.md`](CORE.md) open for the seven habits behind it, and take the full guided tour in [`QUICKSTART.md`](QUICKSTART.md) when you want depth.
 
 ## How one change flows
 
-Every change walks the same path. Each step is a control point: it stops one specific failure and produces one artifact you can point at. A skipped step is not a shortcut — it is a named failure mode you chose to accept.
+Every change walks the same path — the headline above, shown in full. Each step is a control point: it stops one specific failure and produces one artifact you can point at. A skipped step is not a shortcut; it is a named failure mode you chose to accept.
 
 ```text
 Question -> Discover -> Specify -> Plan -> Execute -> Verify -> Review -> Decide -> Baseline -> Operate -> Learn
@@ -213,7 +213,7 @@ hand the agent free rein  -> hand it focused context and a duty to prove
 treat green tests as a yes -> make an explicit release decision and record what you trust
 ```
 
-**What it buys you — and what it costs.** We ran twelve realistic changes both ways, plain prompting versus Nuclear-grade, and scored each one. On a tiny, reversible doc fix the two roughly tied: simple prompting was enough, and the heavier path would have been pure tax. But on the changes where a mistake is expensive and hard to walk back — an agent gaining file and API authority, a data-retention migration, a payment path, a release cut — plain prompting scored **1–2 out of 5** at surfacing hidden risk and at producing a defensible ship-or-defer call, while Nuclear-grade scored **4–5**. It cost more overhead on every one of those, too. So the rule is the same as the one idea: spend the rigor where the consequence lives. These are author-judged trials — design evidence, not proof of effectiveness — and they say so plainly; see [`results-summary.md`](docs/03-worked-examples/skill-workflow-comparison/results-summary.md) and [`methodology.md`](docs/03-worked-examples/skill-workflow-comparison/methodology.md) for exactly what they do and do not show.
+**What it buys you — and what it costs.** We ran twelve realistic changes both ways, plain prompting versus Nuclear-grade, and scored each one. On a tiny, reversible doc fix the two landed within a point on every axis, and the extra rigor wasn't worth the overhead: simple prompting was enough. But on changes where a mistake is expensive and hard to walk back — an agent gaining file and API authority, a data-retention migration, a payment path, a release cut — plain prompting scored **1–2 out of 5** at surfacing hidden risk and at producing a defensible ship-or-defer call, while Nuclear-grade scored **4–5**. It cost more overhead every time. So the rule matches the one idea: spend the rigor where the consequence lives. These are author-judged trials: design evidence, not proof of effectiveness. See [`results-summary.md`](docs/03-worked-examples/skill-workflow-comparison/results-summary.md) and [`methodology.md`](docs/03-worked-examples/skill-workflow-comparison/methodology.md) for what they do and do not show.
 
 This earns its keep. Instructions should be hard to misuse, small actions should still serve the goal, and "I'm confident" should never get mistaken for "here is the proof."
 
@@ -226,7 +226,7 @@ This earns its keep. Instructions should be hard to misuse, small actions should
 | Command prompts | Ready-to-paste prompt cards for questioning, sorting risk, checking impact, saving an approved version, reviewing evidence, release checks, and more | [`COMMANDS.md`](COMMANDS.md) |
 | Templates | Fill-in records for small changes, standard changes, and high-consequence ones | [`templates/`](templates/) |
 | Command-line tool | `init`, `new`, `validate`, `doctor`, `list`, `status`, `migrate`, `tokens` | [`docs/05-reference/cli-reference.md`](docs/05-reference/cli-reference.md) |
-| Checker | A no-dependencies check for small and standard change records | [`tools/ng_validate.py`](tools/ng_validate.py) |
+| Checker | The dependency-free check behind `ng.py validate`, for small and standard change records | [`tools/ng_validate.py`](tools/ng_validate.py) |
 | Worked example | A real change record proving an AI agent stayed inside its workspace | [`EXAMPLES.md`](EXAMPLES.md) |
 | Sources | The public ideas this borrows from, and how to talk about them safely | [`docs/00-standards-foundation/source-map.md`](docs/00-standards-foundation/source-map.md) |
 

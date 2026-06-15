@@ -38,17 +38,13 @@ AI agents are gaining exactly that kind of authority over codebases. This repo p
 - [The common way vs. the nuclear-grade way](#the-common-way-vs-the-nuclear-grade-way)
 - [Does it actually help?](#does-it-actually-help)
 - [What you get](#what-you-get)
-- [Pick how much you want](#pick-how-much-you-want)
-- [Which change record do I need?](#which-change-record-do-i-need)
+- [Adopt at your pace](#adopt-at-your-pace)
 - [Who this is for](#who-this-is-for)
 - [Quick start](#quick-start)
 - [Works across your tools](#works-across-your-tools)
-- [Project and community](#project-and-community)
-- [Map of the repo](#map-of-the-repo)
 - [What this is NOT](#what-this-is-not)
 - [License and limits](#license-and-limits)
-- [Where the ideas come from](#where-the-ideas-come-from)
-- [Author](#author)
+- [Project, sources, and author](#project-sources-and-author)
 
 ## What this is
 
@@ -72,7 +68,7 @@ The kind of software engineering people stake decisions on runs on one habit: yo
 
 > **PROVE**: Plan · Run · Observe · Verdict · Educate
 
-(Observe = weigh the evidence; Verdict = decide on purpose; Educate = ship the result, then learn from how it runs.) The same path at a glance is three moves, **PRO**: Plan · Run · Operate. Up close it's PROVE, from across the room it's PRO. The step PROVE never lets you fold away is **Verdict**, the point where a draft becomes a decision. Make this your loop and the payoff is in the name: you become the engineer who ships nothing on a vibe, carries the evidence for every claim, and can defend the version they trust out loud. A PRO.
+(Observe = weigh the evidence; Verdict = decide on purpose; Educate = ship the result, then learn from how it runs.) The same path at a glance is three moves, **PRO**: Plan · Run · Operate — up close it's PROVE, from across the room it's PRO. The step it never lets you fold away is **Verdict**, where a draft becomes a decision: ship it and you can defend every line.
 
 ```text
 Normal AI coding:
@@ -82,7 +78,7 @@ Nuclear-grade:
 question -> specify -> execute -> verify -> decide -> baseline -> operate -> learn
 ```
 
-This first release (v0) is a working toolkit you can use today: skills an agent can follow, command prompts you can paste, templates for small and large changes, a small command-line tool, a checker, a public list of sources, one fully worked example, and one hands-on comparison study.
+Nuclear-grade is a working toolkit you can use today: skills an agent can follow, command prompts you can paste, templates for small and large changes, a small command-line tool, a checker, a public list of sources, one fully worked example, and one hands-on comparison study.
 
 ## See it work, then make it yours
 
@@ -102,7 +98,7 @@ python -m pytest docs/03-worked-examples/ai-agent-tool-permissions/tests/test_wo
 # 4 passed: every write outside the agent's workspace was denied and logged.
 ```
 
-That packet is a complete Standard record: `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, and `ship.md`, plus an `adversarial-review.md` this high-stakes example adds on top. Copy [`docs/03-worked-examples/ai-agent-tool-permissions/`](docs/03-worked-examples/ai-agent-tool-permissions/) as the template for your own changes, keep [`CORE.md`](CORE.md) open for the seven habits behind it, and take the full guided tour in [`QUICKSTART.md`](QUICKSTART.md) when you want depth.
+That packet is a complete Standard record: `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, and `ship.md`, plus an `adversarial-review.md` this high-stakes example adds on top. Copy [`docs/03-worked-examples/ai-agent-tool-permissions/`](docs/03-worked-examples/ai-agent-tool-permissions/) as the template for your own changes, keep [`CORE.md`](CORE.md) open for the seven habits behind it, and take the full guided tour in [`QUICKSTART.md`](QUICKSTART.md) when you want depth. It is a worked teaching example, not a production guarantee — see [What this is NOT](#what-this-is-not).
 
 ## How one change flows
 
@@ -122,7 +118,7 @@ flowchart LR
     L -.feeds future basis.-> Q
 ```
 
-Zoomed out, those eleven beats are three moves (**PRO**: Plan · Run · Operate) or five with the gate named (**PROVE**: Plan · Run · Observe · Verdict · Educate). One label, two zoom levels:
+Those eleven beats are the same path zoomed in. Zoomed out, they're three moves (**PRO**: Plan · Run · Operate) or five with the gate named (**PROVE**: Plan · Run · Observe · Verdict · Educate) — one path, three levels of detail:
 
 ```mermaid
 flowchart TB
@@ -154,7 +150,7 @@ flowchart TB
 
 *If the diagrams above do not render (for example on PyPI), the eleven-beat line just above is the same path in text.* The control-point detail (what each step stops and produces) is in [`WORKFLOWS.md`](WORKFLOWS.md), and every diagram here is canonical in [`docs/diagrams.md`](docs/diagrams.md).
 
-Underneath the path sit a few habits borrowed from high-reliability work, which we call **HPI for AI agents** (Human Performance Improvement). Use them when they change the outcome: brief the work before a risky step, double-check critical actions, hand off cleanly, get a second set of eyes when trust is on the line, and capture the lesson after a near miss.
+Underneath the path sit a few **optional** habits borrowed from high-reliability work — **HPI for AI agents** (Human Performance Improvement). Reach for them only when they change the outcome: brief the work before a risky step, double-check critical actions, hand off cleanly, get a second set of eyes when trust is on the line, and capture the lesson after a near miss. [`WORKFLOWS.md`](WORKFLOWS.md) covers them.
 
 ## Who does what
 
@@ -243,21 +239,38 @@ The scores are author-judged design evidence, not proof of effectiveness, and th
 | Worked example | A real change record proving an AI agent stayed inside its workspace | [`EXAMPLES.md`](EXAMPLES.md) |
 | Sources | The public ideas this borrows from, and how to talk about them safely | [`docs/00-standards-foundation/source-map.md`](docs/00-standards-foundation/source-map.md) |
 
-As of v0.5.0 that is **27 skills** and **26 command prompts**. The live list is the source of truth (see [`nuclear-grade.yaml`](nuclear-grade.yaml), [`SKILLS.md`](SKILLS.md), and [`COMMANDS.md`](COMMANDS.md)), so treat any count here as a snapshot, not a promise.
+The live list is the source of truth (see [`nuclear-grade.yaml`](nuclear-grade.yaml), [`SKILLS.md`](SKILLS.md), and [`COMMANDS.md`](COMMANDS.md)); treat any count here as a snapshot, not a promise.
 
-## Pick how much you want
+### Map of the repo
 
-You do not adopt the whole system on day one. It scales with the stakes:
+```text
+skills/                         skills an agent can follow
+commands/                       paste-ready command prompts
+templates/                      fill-in records for small, standard, and high-consequence changes
+starter-kit/                    ready-made bundles to drop into a project
+tools/                          the command-line tool and the checker
+tests/                          tests for the checker, the tool, the contracts, and the public docs
+docs/00-standards-foundation/   sources, safe citation, compliance boundaries
+docs/01-field-guide/            how each source idea maps to a plain concept, incl. the leadership and high-reliability guide
+docs/02-operating-system/       the path, the habits, the modes, the records, the checks, authority and intent, incidents, deficiencies
+docs/03-worked-examples/        the flagship worked example and the comparison study
+docs/04-adoption/               rollout, agent permissions, reviewer playbook
+docs/05-reference/              the skill, command, and tool contracts
+docs/diagrams.md                visual maps of the path, modes, skills, and records
+docs/glossary.md                plain-language decoding of terms and idioms
+```
 
-- **Start with the Core 7**: seven always-on habits that fit any change. See [`CORE.md`](CORE.md).
+## Adopt at your pace
+
+You do not adopt the whole system on day one; rigor scales with consequence, not effort.
+
+- **Start with seven always-on habits** (the Core 7): they fit any change. See [`CORE.md`](CORE.md).
 - **Add clusters by consequence**: bring in the heavier skills, templates, and records only when a change touches users, data, dependencies, permissions, AI authority, or a release.
 - **Grow into the full system**: the complete skill set, command prompts, and modes once your team has tested the lighter path.
 
 Ready-made bundles live in [`starter-kit/`](starter-kit/), and [`CORE.md`](CORE.md) has a decision matrix that picks the right kit for your project by trigger.
 
-## Which change record do I need?
-
-Rigor scales with consequence, not effort. This release checks two kinds of change records, both kept under `.nuclear/changes/<name>/`:
+**Which change record do you need?** This release checks two kinds, both kept under `.nuclear/changes/<name>/`:
 
 ```mermaid
 flowchart TD
@@ -310,40 +323,6 @@ If your shell only has `python3`, use `python3`. The full guided tour is in [`QU
 
 Cursor, Claude Code, Aider, Codex, and Copilot each read slightly different files for their reasoning and rules. `.nuclear/`, [`AGENTS.md`](AGENTS.md), and the `SKILL.md` contract are a **shared, tool-agnostic shape** that all of them can import as plain markdown: a portable surface for agent authority, change records, and evidence. No matter which IDE ships reasoning steps natively, the packets and habits travel with the repository.
 
-## Project and community
-
-| Topic | Where |
-|---|---|
-| Questions and ideas | [GitHub Discussions](https://github.com/FlyFission/nuclear-grade-context-engineering/discussions) |
-| How to contribute | [`CONTRIBUTING.md`](CONTRIBUTING.md) |
-| How decisions are made | [`GOVERNANCE.md`](GOVERNANCE.md) |
-| Reporting a vulnerability | [`SECURITY.md`](SECURITY.md) |
-| Community expectations | [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) |
-| Getting help | [`SUPPORT.md`](SUPPORT.md) |
-| Where this is going | [`ROADMAP.md`](ROADMAP.md) |
-| What changed | [`CHANGELOG.md`](CHANGELOG.md) |
-| The principles in short form | [`MAXIMS.md`](MAXIMS.md) |
-| Citing this work | [`CITATION.cff`](CITATION.cff) |
-
-## Map of the repo
-
-```text
-skills/                         skills an agent can follow
-commands/                       paste-ready command prompts
-templates/                      fill-in records for small, standard, and high-consequence changes
-starter-kit/                    ready-made bundles to drop into a project
-tools/                          the command-line tool and the checker
-tests/                          tests for the checker, the tool, the contracts, and the public docs
-docs/00-standards-foundation/   sources, safe citation, compliance boundaries
-docs/01-field-guide/            how each source idea maps to a plain concept, incl. the leadership and high-reliability guide
-docs/02-operating-system/       the path, the habits, the modes, the records, the checks, authority and intent, incidents, deficiencies
-docs/03-worked-examples/        the flagship worked example and the comparison study
-docs/04-adoption/               rollout, agent permissions, reviewer playbook
-docs/05-reference/              the skill, command, and tool contracts
-docs/diagrams.md                visual maps of the path, modes, skills, and records
-docs/glossary.md                plain-language decoding of terms and idioms
-```
-
 ## What this is NOT
 
 Nuclear-grade is not a compliance program, a certification, a regulated quality-assurance system, a safety analysis, a production sandbox, a regulatory submission, legal advice, or a substitute for qualified engineering, legal, security, safety, or compliance review.
@@ -366,10 +345,21 @@ That permission is not a promise about quality. Using this repo does not create 
 
 The public sources named here are influences and idea lineage. They are not standards this repo claims to meet.
 
-## Where the ideas come from
+## Project, sources, and author
+
+| Topic | Where |
+|---|---|
+| Questions and ideas | [GitHub Discussions](https://github.com/FlyFission/nuclear-grade-context-engineering/discussions) |
+| How to contribute | [`CONTRIBUTING.md`](CONTRIBUTING.md) |
+| How decisions are made | [`GOVERNANCE.md`](GOVERNANCE.md) |
+| Reporting a vulnerability | [`SECURITY.md`](SECURITY.md) |
+| Community expectations | [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) |
+| Getting help | [`SUPPORT.md`](SUPPORT.md) |
+| Where this is going | [`ROADMAP.md`](ROADMAP.md) |
+| What changed | [`CHANGELOG.md`](CHANGELOG.md) |
+| The principles in short form | [`MAXIMS.md`](MAXIMS.md) |
+| Citing this work | [`CITATION.cff`](CITATION.cff) |
 
 Nuclear-grade is an original software workflow inspired by public sources. The source families are mapped in [`docs/00-standards-foundation/source-map.md`](docs/00-standards-foundation/source-map.md) and translated into plain concepts in [`docs/01-field-guide/source-to-concept-crosswalk.md`](docs/01-field-guide/source-to-concept-crosswalk.md).
 
-## Author
-
-Nuclear-grade is written and maintained by **Ben Huffer** ([@FlyFission](https://github.com/FlyFission)), founder of [FlyFission Consulting Group](https://flyfission.com/), an independent design-review and project-advisory practice for nuclear projects. Questions and field stories are welcome in [Discussions](https://github.com/FlyFission/nuclear-grade-context-engineering/discussions) or on [LinkedIn](https://www.linkedin.com/in/ben-huffer-646bab67/).
+Written and maintained by **Ben Huffer** ([@FlyFission](https://github.com/FlyFission)), founder of [FlyFission Consulting Group](https://flyfission.com/), an independent design-review and project-advisory practice for nuclear projects. Questions and field stories are welcome in [Discussions](https://github.com/FlyFission/nuclear-grade-context-engineering/discussions) or on [LinkedIn](https://www.linkedin.com/in/ben-huffer-646bab67/).

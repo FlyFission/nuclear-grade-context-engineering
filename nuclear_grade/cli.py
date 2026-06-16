@@ -16,6 +16,7 @@ if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from nuclear_grade.efficacy import run_all as run_efficacy
+from nuclear_grade.metrics import build_inventory
 from nuclear_grade.ng_validate import (
     PLACEHOLDER_MARKER,
     check_internal_links,
@@ -336,6 +337,13 @@ def build_parser() -> argparse.ArgumentParser:
     )
     tokens_parser.add_argument("repo", nargs="?", default=".", type=Path)
     tokens_parser.set_defaults(handler=handle_tokens)
+
+    metrics_parser = subcommands.add_parser(
+        "metrics",
+        help="Count the repo's parts (skills, commands, docs, templates, records) for a before/after comparison.",
+    )
+    metrics_parser.add_argument("repo", nargs="?", default=".", type=Path)
+    metrics_parser.set_defaults(handler=handle_metrics)
 
     return parser
 
@@ -667,6 +675,41 @@ def handle_tokens(args: argparse.Namespace) -> int:
             print(f"- {violation}")
         return 1
     print("\nOK: token budget")
+    return 0
+
+
+def handle_metrics(args: argparse.Namespace) -> int:
+    repo = args.repo.resolve()
+    inv = build_inventory(repo)
+
+    rows = (
+        (inv.skills, "skills", "skills/*/SKILL.md"),
+        (inv.commands, "commands", "commands/*.md"),
+        (inv.template_files, f"template files across {inv.template_modes} modes", "templates/**/*.md"),
+        (inv.root_docs, "root docs", "*.md"),
+        (inv.docs_tree, "docs/ reference tree", "docs/**/*.md"),
+        (inv.change_record_files, f"change-record files in {inv.change_record_packets} packets", ".nuclear/**/*.md"),
+        (inv.starter_kits, "starter kits", "starter-kit/*/"),
+        (inv.agent_roles, "agent-role docs", "agents/*.md"),
+    )
+    print("Nuclear-grade part inventory (counts parts, not their quality or necessity):\n")
+    print(f"  {'count':>6}  surface")
+    print(f"  {'-' * 6}  {'-' * 7}")
+    for count, label, source in rows:
+        print(f"  {count:>6}  {label}  ({source})")
+
+    print("\nDerived:")
+    print(
+        f"  authored skill/command surface: {inv.authored_surface} hand-maintained objects "
+        f"({inv.commands_per_skill:.1f} commands per skill)"
+    )
+    print(f"  self-contained prose files (skills+commands+templates+root+docs): {inv.prose_files}")
+    print(f"  total markdown files: {inv.markdown_total}")
+
+    print(
+        "\nThis counts parts, not quality. A high count is not proof of waste; it is the "
+        "surface a maintainer keeps in sync and a reader navigates."
+    )
     return 0
 
 

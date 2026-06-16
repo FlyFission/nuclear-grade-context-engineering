@@ -29,16 +29,27 @@ Highest reach, lowest effort: this repo is already a valid Claude plugin marketp
 
 Community skills live in `skills/.experimental/<name>/` and install by URL; OpenAI may
 later promote them to the curated tier. Codex reads only `name` + `description` for
-routing, and the flagship skill already complies.
+routing, and the flagship skill already complies — but metadata compliance is not enough to
+*work*.
+
+The flagship skill is a **router**: its body points at repo-local artifacts
+(`.nuclear/charter.md`, `WORKFLOWS.md`/`CORE.md`, the `python tools/ng.py` CLI). Installed from
+the catalog **without this repository**, those targets are missing and the router dead-ends. A
+single catalog skill cannot carry the charter, the docs, and the CLI, so treat this entry as a
+**discovery pointer that bootstraps the repo**, not a self-contained skill.
 
 - **(you)** Fork <https://github.com/openai/skills>, then add a folder:
 
   ```text
   skills/.experimental/using-nuclear-grade/
-  ├── SKILL.md      # copy this repo's skills/using-nuclear-grade/SKILL.md (already compliant)
+  ├── SKILL.md      # this repo's skills/using-nuclear-grade/SKILL.md + the bootstrap step below
   └── LICENSE.txt   # copy this repo's MIT LICENSE
   ```
 
+- **(you)** Prepend a **bootstrap step** to the published `SKILL.md`: before it routes, have it
+  install the full repo (clone it, or `ng install` from a local checkout) so the charter,
+  `WORKFLOWS.md`/`CORE.md`, and the `ng` CLI it references exist. Without this, the catalog entry
+  routes users into missing files.
 - **(you)** Open a PR to `openai/skills` describing the skill and linking back here.
 - Start with the single router skill — it is the entry point. Follow up with the Core 7 if
   it gets traction; submitting all skills at once fits their per-skill catalog poorly.

@@ -13,6 +13,14 @@ This skill keeps a written mission anchor in front of the work. When an action s
 
 The anchor is also the clarity that lets authority move to the edge: it is the commander's intent that keeps a decentralized decision aligned with the goal. Push decisions to where the information is, but only against a clear, shared anchor — otherwise local wins quietly drift from the mission.
 
+## Decision contract
+
+- **Claim checked:** the current action was tested against the written anchor's goal, success criteria, and non-goals, the loop and attempt count were actually run, and any crossed non-goal or loosened standard has a justification row, not a quiet edit.
+- **Artifact observed:** the written anchor (`.nuclear/mission.md`, `## Mission anchor` in `risk.md`, or `.nuclear/charter.md`) and the current action/diff -> a recorded continue/re-anchor/escalate/stop decision, updated anchor, and any justification row.
+- **Decision affected:** block -- continue / re-anchor / escalate / stop, plus the restated goal anchor.
+- **Failure class:** mission-drift (an action serving a swapped-in goal, a crossed non-goal, or a standard loosened "just this once").
+- **Next action:** stop and return to the anchor when a non-goal would be crossed with no justification; 3 failed attempts or scope you cannot check escalates to the owner.
+
 ## When to Use
 
 - A long work session has many steps, and the current action is hard to tie back to the original goal.
@@ -86,6 +94,35 @@ The anchor is also the clarity that lets authority move to the edge: it is the c
 - A non-goal was crossed by an edit instead of by a recorded decision.
 - A standard was loosened without a justification row.
 - Progress is measured by activity (tokens, edits) instead of by success criteria met.
+
+## Prompt
+
+```text
+Run a Nuclear-grade mission-drift check on the current work.
+
+Inputs:
+- mission anchor (objective, success criteria, non-goals):
+- charter principles in play:
+- current action:
+- recent attempts at this objective (how many, what variants):
+- affected files / diff so far:
+
+Do this:
+- Restate the goal from the written record, not from memory.
+- Zoom out one layer; judge at the level of the goal and the architecture, not the detail.
+- Test the current action against the success criteria and the non-goals.
+- Decide whether the action serves the mission, or a smaller local goal that has quietly replaced it.
+- Check the loop: if the same goal has failed 3 times, stop trying the next variant.
+- Check for slipping standards against the charter and any countable tripwires.
+
+Return one decision:
+- RE-ANCHOR: the action serves the mission; restate the goal and continue.
+- ESCALATE: a non-goal or a standard must be crossed for a defensible reason; include a justification row (what is crossed, why, and why no simpler path exists).
+- STOP: the action serves a smaller local goal, or the justification does not hold.
+
+Also return the updated goal text, so the decision survives the next context reset.
+Do not imply formal assurance, compliance, certification, safety, security, or regulatory adequacy.
+```
 
 ## Source-lineage note
 

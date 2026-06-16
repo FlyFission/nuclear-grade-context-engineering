@@ -9,6 +9,14 @@ description: Checks dependencies, models, APIs, SaaS tools, generated files, and
 
 Trusting outside code is really a decision about how you will use it. A dependency, model, API, SaaS tool (software you rent online), or vendor claim should be accepted only for the job its evidence and controls actually support. Trust it for that job. Do not trust it past that.
 
+## Decision contract
+
+- **Claim checked:** the dependency, model, API, or SaaS is accepted only for a use no broader than repo-side evidence supports, vendor claims kept apart from proof, each gap given a re-check trigger or routed to a release decision.
+- **Artifact observed:** the named dependency/version/provider, vendor claims, and own-repo evidence -> a supplier-trust section or `supplier-trust.md` with the use decision, gaps, backup controls, and release impact.
+- **Decision affected:** block -- whether to trust and use the dependency, model, API, or SaaS; unresolved gaps feed `ship.md` defer/block/ship-with-risk.
+- **Failure class:** boundary-overreach (trust stated past repo-side evidence, or vendor marketing treated as proof).
+- **Next action:** route the unresolved gap to `ship.md`; credentials, production data, or security/privacy claims escalate to a qualified review.
+
 ## When to Use
 
 - A change adds or updates a package, a model, an API, an online service, a generated file, a build service, or a data source.
@@ -64,6 +72,27 @@ Trusting outside code is really a decision about how you will use it. A dependen
 - There is no re-check trigger.
 - Public claims go past the evidence you actually saw.
 - Tests pass, but the dependency advisory, license, permission, or model-behavior evidence is missing.
+
+## Prompt
+
+```text
+Check Nuclear-grade dependency/model/API trust.
+
+Inputs:
+- packet:
+- external item:
+- provider/source:
+- version/model/API surface:
+- intended use:
+- consequence if wrong/unavailable/compromised/changed:
+- data/credential/permission/network impact:
+- vendor/source claims:
+- repo-observed evidence:
+- compensating controls:
+- revalidation trigger:
+
+Keep the outside claims separate from your local evidence. Return a decision for how you intend to use it, the gaps, the controls that make up for them, the effect on the release, and whether to ship, defer, block, or require a qualified review.
+```
 
 ## Source-lineage note
 

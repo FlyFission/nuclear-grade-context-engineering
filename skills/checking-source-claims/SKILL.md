@@ -9,6 +9,14 @@ description: Checks that the way you cite source families, agencies, standards, 
 
 "Source lineage" means showing where an idea came from. Honest lineage keeps public claims clean. It links an idea to a real public source. At the same time, it keeps the repo from sounding like it formally meets that source's rules.
 
+## Decision contract
+
+- **Claim checked:** every cited source is public and in the source map or marked "public URL needed", and each reference reads as influence or idea lineage rather than compliance, certification, or formal assurance.
+- **Artifact observed:** the changed public text against `source-map.md`, `source-to-concept-crosswalk.md`, and `compliance-boundaries.md` -> narrowed wording and updated source-map or crosswalk rows.
+- **Decision affected:** warn -- whether public/source wording is narrowed to honest influence or idea lineage rather than a compliance claim.
+- **Failure class:** overstated-lineage (an unconfirmed source cited as direct lineage, or a compliance/approval claim outside a disclaimer).
+- **Next action:** downgrade the source to "public URL needed" or reword to influence; wording affecting regulated, customer, or investor trust escalates.
+
 ## When to Use
 
 - A doc, template, skill, command, or change record cites a source family.
@@ -65,6 +73,25 @@ description: Checks that the way you cite source families, agencies, standards, 
 - A source row has no public URL and no status.
 - A doc says "compliant", "approved", "certified", or "formal" outside a negative sentence.
 - Every file repeats the source details instead of linking to the source map.
+
+## Prompt
+
+```text
+Run a Nuclear-grade source-lineage check (where the ideas come from).
+
+Inputs:
+- changed public text: <paste/link>
+- cited source families: <list>
+- source-map rows: <links>
+- source or vendor claims used as evidence: <list>
+
+Return:
+- a status for each source: verified-public, supporting-context, public-url-needed, or excluded-direct
+- the difference between an influence, a source's claim, local proof, a requirement, and an authority
+- the wording changes needed so you make no claim of compliance or approval
+- the source-map or crosswalk updates
+- the validation and scan commands
+```
 
 ## Source-lineage note
 

@@ -40,6 +40,13 @@ def test_new_change_record_rejects_unknown_mode(tmp_path):
     assert new_change_record("demo", "bogus", str(tmp_path)).startswith("unknown mode")
 
 
+def test_new_change_record_rejects_path_traversal(tmp_path):
+    # A slug that escapes .nuclear/changes must be refused before any write.
+    message = new_change_record("../../../../etc/evil", "quick", str(tmp_path))
+
+    assert message.startswith("invalid slug")
+
+
 def test_status_lists_packets(tmp_path):
     new_change_record("demo", "standard", str(tmp_path))
 

@@ -11,6 +11,14 @@ A context pack gives an agent or a reviewer the right focused information, and n
 
 A good brief is how you supply competence and clarity so the agent can decide well rather than be micromanaged: name what good looks like, and state the decision rights — what it may decide at the edge and what it must escalate. Authority that outruns the clarity in the brief is the setup for a confident, wrong action.
 
+## Decision contract
+
+- **Claim checked:** the agent can answer what it may do, what must stay true, what evidence it owes, and when to stop -- its power over files, commands, network, credentials, approvals, and release is bounded no wider than the brief's clarity, with the goal anchor and forbidden actions stated.
+- **Artifact observed:** the change-record path, its mode, the assigned role, and `context-packs.md` -> a context-pack with role, goal anchor, scoped files/commands, phase, authority bounds, stop conditions, next action, and a handoff prompt when responsibility transfers.
+- **Decision affected:** block -- whether the briefed agent may start, and the authority bounds it may act within.
+- **Failure class:** boundary-overreach (authority wider than the brief's clarity, or forbidden actions and allowed files unstated).
+- **Next action:** bound the authority to the brief and state the forbidden actions; stop or escalate when credentials, production data, or release power appear.
+
 ## When to Use
 
 - An AI agent will edit files, run commands, call tools, or prepare release evidence.
@@ -72,6 +80,30 @@ A good brief is how you supply competence and clarity so the agent can decide we
 - No list of allowed files or commands.
 - No record of the last action that finished, for work that is resumed or handed off.
 - The source lineage is pasted in whole instead of linked.
+
+## Prompt
+
+```text
+Build a Nuclear-grade context pack for this work.
+
+Inputs:
+- packet: .nuclear/changes/<slug>/
+- role: <builder|reviewer|verifier|releaser|researcher>
+- decision question: <one sentence>
+- objective: <one paragraph>
+- work phase: <explore|candidate|audit|accept>
+- affected files: <list>
+- last completed action:
+- changed conditions:
+- critical next action and likely error:
+- allowed commands/tools: <list>
+- forbidden actions: <list>
+- do-not-touch targets: <list>
+- approval gates: <list>
+- required evidence: <commands/links/reviews>
+
+Return a short context pack. Include the mode, the decision question, the goal, the work phase, a risk summary, a basis summary, the evidence required, the limits on what the agent may do, the claims it must not make, the open gaps, the last action completed, what has changed, the critical next action, and the next action. If responsibility is changing hands, add a step where the incoming owner confirms they understand.
+```
 
 ## Source-lineage note
 

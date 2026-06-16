@@ -50,6 +50,15 @@ Run the checker when any of these are true:
 | Token/context discipline | Agent context packs stay focused on the mode, the packet, the affected files, and the relevant source excerpts. | Context packs | The prompt or context asks for the whole repo or all standards with no reason to turn that on. |
 | CM record visibility | Turned-on CM records name the controlled items, the impact, the baseline, the variance, the OPEX, and the triggers. | CM records | Controlled state changes with no owner, no evidence link, and no re-check trigger. |
 
+**Possible future check (not built): stage-contract structure.** A stage contract (see
+[`agentic-workflow-architecture.md`](agentic-workflow-architecture.md)) could be linted
+structurally — does each stage name Inputs / Process / Outputs, an enforcement rung, and a
+next-stage consumer for each output? That would stay inside the validator principle (structure,
+not judgment). It is deliberately deferred: the roadmap keeps the deterministic checker the
+default and stages any richer semantic check as an opt-in layer, so a structural stage-contract
+check should arrive the same way — and never as a gate the authoring agent can edit (see
+[`runtime-enforcement.md`](runtime-enforcement.md)).
+
 ---
 
 ## 4. Mode-specific validation gates

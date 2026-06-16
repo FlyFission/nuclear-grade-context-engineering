@@ -9,6 +9,14 @@ description: Brings an abandoned or half-filled change packet to an honest termi
 
 A change packet that is started and then abandoned is a quiet integrity problem. It looks like work in progress, but no one owns it, its claims were never proven, and a reader cannot tell whether the change shipped, was dropped, or is still pending. `ng status` now surfaces these: a `scaffold` packet is an untouched draft still carrying the placeholder marker; an `invalid` packet fails validation for another reason. This skill turns that signal into a decision. Every stale packet must reach one honest terminal state: completed (filled and validating), closed (deliberately abandoned with a recorded reason), or deleted (never a real change). The forbidden state is the one most packets drift into: half-done and silent, where a green-looking directory hides an unproven claim. Closing a packet with a written rationale is a first-class successful outcome, not a failure to ship.
 
+## Decision contract
+
+- **Claim checked:** every stale packet reached one honest terminal state -- completed and validating, closed with a recorded reason and decider, or deleted as a genuinely empty scaffold -- none left half-done and silent.
+- **Artifact observed:** `ng status .`/`validate` output and the packet against its originating issue/PR/anchor -> a `NUCLEAR-GRADE-CLOSED:` rationale line and an `ng status .` where every packet is `ok` or `closed`.
+- **Decision affected:** block -- bring the stale packet to a terminal state so `ng status` reports ok/closed, not scaffold/invalid.
+- **Failure class:** silent-stale-packet (a half-done packet hiding an unproven claim, or a faked pass by deleting the marker).
+- **Next action:** complete, close-with-reason, or delete; escalate to the owner before deleting any packet whose change is not confirmed dead.
+
 ## When to Use
 
 - `ng status` reports a `scaffold` or `invalid` packet and you are deciding what to do about it.
@@ -78,6 +86,35 @@ A change packet that is started and then abandoned is a quiet integrity problem.
 - A packet was made to pass by deleting the marker rather than by filling the content.
 - Abandoned packets are deleted to tidy the listing, erasing decisions that should have been recorded.
 - The same kind of packet is repeatedly started and abandoned, with no OPEX note about why.
+
+## Prompt
+
+```text
+Bring a stale Nuclear-grade change packet to an honest terminal state.
+
+Inputs:
+- ng status output (packet name, mode, health tag):
+- packet path (.nuclear/changes/<slug>):
+- originating issue / PR / anchor:
+- is the underlying change still wanted? yes / no / unknown:
+
+Do this:
+- Establish ownership and intent before acting.
+- Choose exactly one terminal state:
+  - COMPLETE: change is still wanted; fill the prompts that matter, remove the
+    placeholder marker because the packet is filled, and make validate pass.
+  - CLOSE: change was deliberately abandoned; add a `NUCLEAR-GRADE-CLOSED:` marker
+    line with the rationale (why dropped, what replaced it if anything, who decided)
+    and keep the packet as a record. `ng status` then reports it as `closed`.
+  - DELETE: it was never a real change (empty scaffold, nothing to learn); remove
+    the directory so it stops looking like work.
+- Prefer CLOSE over DELETE when any rationale is worth preserving.
+- Do not fake a pass by deleting the marker on an unfilled packet.
+
+Return the chosen state, the closure note (for CLOSE), and confirmation that
+ng status no longer shows an unexplained scaffold or invalid packet.
+Do not imply formal assurance, compliance, certification, safety, security, or regulatory adequacy.
+```
 
 ## Source-lineage note
 

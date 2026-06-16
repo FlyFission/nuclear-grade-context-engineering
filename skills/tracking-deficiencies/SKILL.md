@@ -9,6 +9,14 @@ description: Keeps a standing register of known deficiencies so flaky tests, noi
 
 A deficiency you have decided to live with quietly becomes the new standard. This skill keeps a standing register of known problems so each one is aged, owned, and either fixed or formally accepted as risk with a named owner and a revisit date. The aim is to stop the slow normalization of deviation — the small erosions that, uncorrected, become the culture.
 
+## Decision contract
+
+- **Claim checked:** every tracked deficiency has a visible first-seen age, a named owner, and a disposition -- a fix-by date or a formal risk-acceptance with a named owner and a concrete revisit trigger -- never "known, untracked."
+- **Artifact observed:** the deficiency, where it shows up, its consequence and frequency, and any related incident/OPEX/controlled item -> a deficiency entry or `deficiency.md` row (description, age, owner, disposition, review trigger) linked to those records.
+- **Decision affected:** block -- per deficiency, fix by a date or formally risk-accept it with a named owner and a revisit date.
+- **Failure class:** normalized-deviation (a known problem living in chat/memory, or an accepted risk with no owner, date, or trigger).
+- **Next action:** assign an owner and a fix-or-accept disposition; escalate when it touches safety, security, data integrity, or drives repeat incidents.
+
 ## When to Use
 
 - A known problem will outlive the current change: a flaky test, a noisy alert, an unowned service, a dead dashboard, a recurring incident, or deferred hardening.
@@ -68,6 +76,29 @@ A deficiency you have decided to live with quietly becomes the new standard. Thi
 - Accepted risks have no owner, no date, and no review trigger.
 - The same deficiency appears in incident after incident with no standing entry.
 - Standards quietly lower to match the deficiency instead of the deficiency rising to meet the standard.
+
+## Prompt
+
+```text
+Log this deficiency the Nuclear-grade way.
+
+Inputs:
+- deficiency and where it shows up:
+- how it was found:
+- consequence and frequency:
+- candidate owner:
+- related incident / OPEX / controlled item:
+
+Return:
+- a one-line description with a link to where it shows up
+- the date first seen, so its age is visible
+- the assigned owner (an unowned deficiency is itself a finding)
+- the disposition: fix by a date, or formally accept the risk with a named owner and a revisit date
+- the review trigger so an accepted risk does not become permanent by default
+- links to related incident, OPEX, and controlled-item records
+
+Decide fix-or-accept; never leave it as a silent "known issue." Do not imply formal assurance.
+```
 
 ## Source-lineage note
 

@@ -44,15 +44,23 @@ appear against at least one step; a step with no requirement is either scaffoldi
 or scope creep — say which.
 
 For work that will be handed to another agent or session, make each step a delegable
-slice: name its prerequisites, the proof that closes it, and the stop or done
-condition. This is a handoff contract, not a schedule — see `briefing-an-agent` and
-`handing-off-work`.
+slice written as a **stage contract**: name its prerequisites, its **Inputs by exact
+`file#section`** (and a context budget, so the runner is not handed the whole plan), the
+**Outputs** and where they land, the proof that closes it, and the stop or done condition.
+This is a handoff contract, not a schedule — see `briefing-an-agent`, `handing-off-work`,
+the full form in `templates/standard/stage-contract.md`, and the doctrine in
+`docs/02-operating-system/agentic-workflow-architecture.md`. Writing the inputs here is what
+lets a human review what each fan-out slice will and will not load before build authority opens.
 
-| # | Task | Requirements covered | Prereqs / blocked-by | Proof for this step | Stop / done condition |
-|---|---|---|---|---|---|
-| 1 | | REQ-001 | | | |
-| 2 | | | | | |
-| 3 | | | | | |
+| # | Task | Reqs | Prereqs | Inputs (`file#section`) + budget | Outputs / artifact | Proof | Stop/done |
+|---|---|---|---|---|---|---|---|
+| 1 | | REQ-001 | | | | | |
+| 2 | | | | | | | |
+| 3 | | | | | | | |
+
+For any slice whose work is model-mediated, record its **determinism posture** (model id,
+prompt reference, and which steps are replayable vs human judgment) — a disclosure of what can
+be reproduced, not a guarantee. See `docs/02-operating-system/agentic-workflow-architecture.md`.
 
 ## Two-speed work plan
 

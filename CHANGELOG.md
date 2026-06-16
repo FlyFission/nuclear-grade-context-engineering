@@ -6,6 +6,11 @@ These entries record public-facing changes. They do not claim the project is a m
 
 ## [Unreleased]
 
+### Added
+
+- One-command, cross-tool skill distribution. `nuclear-grade install <codex|claude|cursor|windsurf|vscode>` (and `python tools/ng.py install`) places the `SKILL.md` catalog where each tool auto-loads it by description, with `--core` (the `using-nuclear-grade` router + the Core 7) or `--full`, `--scope user|project`, a `--dest` override, and `--dry-run`; it prints the always-on description token cost of what it installed. `install.sh` fans out to every detected tool. Adds `.codex-plugin/plugin.json` so the repo is a publishable Codex plugin, and `INTEGRATIONS.md` documenting the per-tool paths and the CLI-vs-skills-vs-MCP token tradeoff. Claude Code continues to work via the existing plugin marketplace; no hooks are installed.
+- Optional MCP server (`nuclear-grade[mcp]` extra; `python -m nuclear_grade.mcp_server`) exposing the existing checks as callable tools — `validate_change_record`, `doctor`, `status`, and `new_change_record` — wrapping the same logic the CLI uses (no shelling out). `nuclear-grade mcp-config <tool>` prints the ready-to-paste server config for each tool. The base install keeps zero runtime dependencies; the server is opt-in because MCP tool schemas load into context every session (~1k tokens/tool) while skills stay leaner.
+
 ### Changed
 
 - Reworked the `README.md` landing page: led with the PRO/PROVE handle, fixed the runnable quickstart (clone + `cd`, dependency-free `ng.py validate` first, `pytest` second), made the configuration-management value explicit against plain git/CI, and added outcomes from the twelve-scenario comparison study. Softened the subtitle to a method claim ("stay in control of what ships") and updated the banner SVG to match. Reconciled the headline path to `question -> specify -> execute -> verify -> decide -> baseline -> operate -> learn` across `README.md`, `WORKFLOWS.md`, and `docs/diagrams.md`, unfolding the everyday loop from seven to eight control points so Learn is a named step alongside Baseline. Trimmed em-dash density on the landing page.

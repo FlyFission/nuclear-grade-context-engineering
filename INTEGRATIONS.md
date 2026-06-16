@@ -24,22 +24,23 @@ checkout (`python tools/ng.py install …`) or via the installed console script
 
 | Tool | Command | Skills land in | Scope |
 |---|---|---|---|
-| Codex CLI | `python tools/ng.py install codex` | `~/.codex/skills/` (honors `$CODEX_HOME`) | user — every project |
-| Claude Code | plugin (below) **or** `python tools/ng.py install claude` | `~/.claude/skills/` | user or `--scope project` |
-| Cursor | `python tools/ng.py install cursor` | `~/.cursor/skills/` | user or project |
-| Windsurf | `python tools/ng.py install windsurf --scope project --repo .` | `.windsurf/skills/` | project only |
-| VS Code + Copilot | `python tools/ng.py install vscode` | `~/.vscode/skills/` | user or project |
+| Codex CLI | `… install codex` | user `~/.codex/skills/` (honors `$CODEX_HOME`); project `.codex/skills/` | user or project |
+| Claude Code | plugin (below) **or** `… install claude` | user `~/.claude/skills/`; project `.claude/skills/` | user or project |
+| Cursor | `… install cursor` | user `~/.cursor/skills/`; project `.cursor/skills/` | user or project |
+| Windsurf | `… install windsurf` | user `~/.codeium/windsurf/skills/`; project `.windsurf/skills/` | user or project |
+| VS Code + Copilot | `… install vscode` | project `.github/skills/`; user `~/.config/github-copilot/skills/` | user or project |
 
-Or fan out to every detected tool in one step:
+Default scope is `user` (available in every project); pass `--scope project --repo .`
+for a single repo. Or fan out to every detected tool in one step:
 
 ```bash
 ./install.sh            # Core set into each detected tool
 ./install.sh --full     # all skills
 ```
 
-> Codex and Claude Code paths are confirmed against current docs. Cursor,
-> Windsurf, and VS Code paths are best-known defaults — the command says so when
-> you run it. If your install differs, point it anywhere with
+> Codex, Claude Code, and Cursor paths are confirmed against current docs.
+> Windsurf's user path and VS Code's paths are best-known defaults — the command
+> says so when you run it. If your install differs, point it anywhere with
 > `--dest <path>`.
 
 ### Claude Code: the native plugin
@@ -55,6 +56,27 @@ surfaces the skills **and** the command prompts with no copying:
 
 The plugin configures **no hooks**, so nothing runs automatically. The optional
 always-on routing hooks remain opt-in — see [`HOOKS.md`](HOOKS.md).
+
+### Codex: the plugin package and skill installer
+
+The repo ships a `.codex-plugin/plugin.json` manifest, so it is a publishable
+Codex plugin that bundles the skills. Besides `ng install codex`, Codex users can
+pull the skills with the built-in installer from a Codex session:
+
+```text
+$skill-installer install nuclear-grade from https://github.com/FlyFission/nuclear-grade-context-engineering
+```
+
+(Codex's self-serve plugin directory is still rolling out; verify the exact
+installer syntax against <https://developers.openai.com/codex/plugins>.)
+
+### Windsurf / Cursor: the community skills CLI
+
+The cross-tool `skills` CLI also installs into these tools:
+
+```bash
+npx skills add FlyFission/nuclear-grade-context-engineering
+```
 
 ## Profiles and token cost
 
@@ -74,8 +96,36 @@ tokens per skill), so you can keep context lean. Re-running updates in place.
 | **MCP server** | every tool's name + description + JSON schema | loaded for the whole session whether used or not |
 
 Ranking, lean to heavy: **CLI ≈ Skills ≪ MCP**. Nuclear-grade therefore ships
-skills (auto-surfaced) and keeps the `ng` checks as an on-demand CLI; an MCP
-server is deferred until its standing cost is worth paying.
+skills (auto-surfaced) and keeps the `ng` checks as an on-demand CLI; the MCP
+server below is **opt-in** for when a tool must *call* the checks.
+
+## Calling the checks as tools (optional MCP server)
+
+Skills let the model *read* Nuclear-grade's guidance; the MCP server lets a tool
+*call* its checks as tools. It is opt-in and carries a real standing cost, so
+reach for it only when a tool must run the checks itself.
+
+```bash
+pip install "nuclear-grade[mcp]"        # optional extra; the base install stays zero-dependency
+python tools/ng.py mcp-config codex     # prints the config to paste for your tool
+```
+
+The server (`python -m nuclear_grade.mcp_server`) exposes `validate_change_record`,
+`doctor`, `status`, and `new_change_record`, wrapping the same logic the CLI uses
+(it does not shell out). `ng mcp-config <tool>` prints the exact server entry for:
+
+| Tool | Config file | Top-level key |
+|---|---|---|
+| Codex CLI | `~/.codex/config.toml` | `[mcp_servers.nuclear_grade]` |
+| Claude Code | `.mcp.json` (or `claude mcp add`) | `mcpServers` |
+| Cursor | `.cursor/mcp.json` | `mcpServers` |
+| Windsurf | `~/.codeium/windsurf/mcp_config.json` | `mcpServers` |
+| VS Code + Copilot | `.vscode/mcp.json` | `servers` (note: not `mcpServers`) |
+
+**Why opt-in:** an MCP server's tool schemas load into the model's context every
+session whether used or not (~1k tokens per tool); skills load only short
+descriptions until they fire. Prefer `ng install` for everyday use; add the MCP
+server when an agent needs to execute the checks.
 
 ## Verify it worked
 

@@ -41,7 +41,8 @@ The Core set is the always-first router plus the Core 7 (the lean default);
 `--full` adds the rest. The command prints the always-on token cost so you can
 keep context lean, and re-running updates in place. See
 [`INTEGRATIONS.md`](INTEGRATIONS.md) for per-tool paths, the `--scope`/`--dest`
-options, and how skills compare to MCP on token cost.
+options, the opt-in MCP server (`nuclear-grade[mcp]`), and how skills compare to
+MCP on token cost.
 
 ## Requirements
 

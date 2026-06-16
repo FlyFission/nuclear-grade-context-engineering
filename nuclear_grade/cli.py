@@ -107,10 +107,11 @@ TOOL_LABELS = {
     "windsurf": "Windsurf",
     "vscode": "VS Code + Copilot",
 }
-# Skill-directory paths confirmed against each tool's current docs. Unverified
-# tools print a "verify / override with --dest" note so a wrong default is obvious
-# and recoverable rather than silently writing to the wrong place.
-VERIFIED_TOOLS = frozenset({"codex", "claude"})
+# Skill-directory paths confirmed against each tool's current docs (Codex, Claude
+# Code, Cursor). Windsurf-user and VS Code paths are best-known defaults; those
+# print a "verify / override with --dest" note so a wrong default is obvious and
+# recoverable rather than silently writing to the wrong place.
+VERIFIED_TOOLS = frozenset({"codex", "claude", "cursor"})
 
 REQUIRED_PUBLIC_FILES = (
     "README.md",
@@ -401,6 +402,13 @@ def build_parser() -> argparse.ArgumentParser:
     install_parser.add_argument("--dry-run", action="store_true")
     install_parser.set_defaults(handler=handle_install)
 
+    mcp_config_parser = subcommands.add_parser(
+        "mcp-config",
+        help="Print the MCP server config to register nuclear-grade's checks as tools (codex, claude, cursor, windsurf, vscode).",
+    )
+    mcp_config_parser.add_argument("tool", choices=INSTALL_TOOLS)
+    mcp_config_parser.set_defaults(handler=handle_mcp_config)
+
     return parser
 
 
@@ -481,21 +489,43 @@ def _codex_home() -> Path:
     return Path(os.environ.get("CODEX_HOME") or (Path.home() / ".codex"))
 
 
+def _vscode_user_skills() -> Path:
+    """VS Code + GitHub Copilot user-scope skills dir.
+
+    Windows uses %APPDATA%\\github-copilot\\skills; elsewhere
+    ~/.config/github-copilot/skills.
+    """
+
+    appdata = os.environ.get("APPDATA")
+    if appdata:
+        return Path(appdata) / "github-copilot" / "skills"
+    return Path.home() / ".config" / "github-copilot" / "skills"
+
+
 def install_dest(tool: str, scope: str, repo: Path) -> Path:
     """Resolve the skills directory a tool reads, for the requested scope.
 
     `user` scope installs once for every project; `project` scope installs inside
-    one repo. Codex is user-scoped only ($CODEX_HOME/skills); Windsurf is
-    project-scoped only (.windsurf/skills). Other tools honor `scope`.
+    one repo. Paths are each tool's documented skills location as of 2026-06.
+    Codex/Claude/Cursor are doc-confirmed; Windsurf-user and VS Code paths are
+    best-known. Override any of them with --dest.
     """
 
+    home = Path.home()
     if tool == "codex":
-        return _codex_home() / "skills"
+        # $CODEX_HOME/skills (user) or .codex/skills (project).
+        return (repo / ".codex" / "skills") if scope == "project" else (_codex_home() / "skills")
+    if tool == "claude":
+        return (repo / ".claude" / "skills") if scope == "project" else (home / ".claude" / "skills")
+    if tool == "cursor":
+        return (repo / ".cursor" / "skills") if scope == "project" else (home / ".cursor" / "skills")
     if tool == "windsurf":
-        return repo / ".windsurf" / "skills"
-    parent = repo if scope == "project" else Path.home()
-    subdir = {"claude": ".claude", "cursor": ".cursor", "vscode": ".vscode"}[tool]
-    return parent / subdir / "skills"
+        # Project: .windsurf/skills. User: ~/.codeium/windsurf/skills.
+        return (repo / ".windsurf" / "skills") if scope == "project" else (home / ".codeium" / "windsurf" / "skills")
+    if tool == "vscode":
+        # VS Code + Copilot: project .github/skills (team-shared); user ~/.config/github-copilot/skills.
+        return (repo / ".github" / "skills") if scope == "project" else _vscode_user_skills()
+    raise ValueError(f"unknown tool: {tool}")
 
 
 def handle_install(args: argparse.Namespace) -> int:
@@ -544,6 +574,56 @@ def handle_install(args: argparse.Namespace) -> int:
             f"note: the {label} skills path is a best-known default; verify against the tool's "
             "current docs, or override with --dest <path>."
         )
+    return 0
+
+
+def _mcp_json(top_key: str) -> str:
+    return (
+        "{\n"
+        f'  "{top_key}": {{\n'
+        '    "nuclear-grade": {\n'
+        '      "command": "python",\n'
+        '      "args": ["-m", "nuclear_grade.mcp_server"]\n'
+        "    }\n"
+        "  }\n"
+        "}\n"
+    )
+
+
+def handle_mcp_config(args: argparse.Namespace) -> int:
+    """Print a ready-to-paste MCP server config for the chosen tool.
+
+    Prints rather than edits: merging into a user's config file is theirs to do.
+    The server needs the optional extra:  pip install "nuclear-grade[mcp]".
+    """
+
+    tool = args.tool
+    if tool == "codex":
+        path = "~/.codex/config.toml"
+        snippet = (
+            "[mcp_servers.nuclear_grade]\n"
+            'command = "python"\n'
+            'args = ["-m", "nuclear_grade.mcp_server"]\n'
+        )
+    else:
+        path, top_key = {
+            "claude": (".mcp.json (project) or ~/.claude.json (user)", "mcpServers"),
+            "cursor": (".cursor/mcp.json (project) or ~/.cursor/mcp.json (user)", "mcpServers"),
+            "windsurf": ("~/.codeium/windsurf/mcp_config.json", "mcpServers"),
+            "vscode": (".vscode/mcp.json", "servers"),
+        }[tool]
+        snippet = _mcp_json(top_key)
+
+    print(f"# Register nuclear-grade's checks as MCP tools for {TOOL_LABELS[tool]}.")
+    print('# First install the optional extra:  pip install "nuclear-grade[mcp]"')
+    print(f"# File: {path}")
+    print(snippet, end="")
+    if tool == "claude":
+        print("# or run: claude mcp add nuclear-grade -- python -m nuclear_grade.mcp_server")
+    print(
+        "# Note: MCP tool schemas load into context every session (~1k tokens/tool); "
+        "skills stay leaner -- prefer `ng install` unless your tool must CALL the checks."
+    )
     return 0
 
 

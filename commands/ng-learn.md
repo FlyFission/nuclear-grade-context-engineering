@@ -39,7 +39,7 @@ Inputs:
 - owner:
 - due date or trigger:
 
-Produce a no-blame OPEX record. Each finding must either change a lasting control or be closed with a clear reason why not.
+Produce a no-blame OPEX record (no-blame covers honest error, not a willful violation like a knowingly bypassed gate, disabled control, or fabricated result — surface those as findings, never file them as mistakes). Each finding must either change a lasting control or be closed with a clear reason why not.
 ```
 
 ## Verification

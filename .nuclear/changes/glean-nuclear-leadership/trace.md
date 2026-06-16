@@ -12,7 +12,7 @@
 
 | ID | Claim | Design feature (where) | Evidence type | Evidence | Status |
 |---|---|---|---|---|---|
-| REQ-001 | Honest error is protected; willful violation is accountable, never normalized | Charter Art. 19 refinement; `learning-from-experience` Overview/Process/Red Flags; `ng-learn` prompt + failure modes | local proof | `verification.md` (skill + command contract tests) | pass |
+| REQ-001 | Honest error is protected; willful violation is accountable, never normalized | Charter Art. 19 refinement; `learning-from-experience` skill (Overview/Process/Red Flags/Prompt); regenerated `ng-learn` card prompt | local proof | `verification.md` (skill + command parity tests) | pass |
 | REQ-002 | Control-stack layers must fail independently; same-model act-and-check is one barrier; layer count scales with consequence | "HPI control stack" section in `configuration-management.md`; cross-link in `authority-and-intent.md`; crosswalk row | manual review | `verification.md` (read + link check) | pass |
 | REQ-003 | Deliberate temporary modifications are visible, have a named back-out, and expire | Temporary-modifications section in `variance-and-drift.md`; back-out column in `templates/cm/variance.md`; crosswalk row | manual review | `verification.md` (token audit + read) | pass |
 | REQ-004 | Competence-to-act is defined: action class → demonstrated competence → revalidation trigger | Qualification section in `authority-and-intent.md` | manual review | `verification.md` (read + link check) | pass |

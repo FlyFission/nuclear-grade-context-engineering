@@ -12,7 +12,7 @@
 
 | Field | Value |
 |---|---|
-| Points to | Reviewed commit `39651964` (PR #43, branch `claude/inspiring-ride-hix4tl`); the squash/merge commit on `main` is recorded here at merge |
+| Points to | PR #43 (`claude/inspiring-ride-hix4tl`), reconciled onto current `main`; the immutable point of record is the squash-merge commit on `main`, recorded here at merge. The pre-reconciliation tip `39651964` is superseded by the main-merge reconciliation (regenerated-command model and conflict resolution). |
 | Charter version | 1.3.0 |
 | Controlled items covered | the items listed in `controlled-items.md` |
 | Evidence | `verification.md` |

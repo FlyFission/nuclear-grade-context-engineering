@@ -12,7 +12,7 @@
 
 | Evidence area | Status | Command / method | Notes |
 |---|---|---|---|
-| Full test suite | pass | `python -m pytest -q` | 142 passed with PyYAML installed (CI installs it; commit `39651964`); 141 passed + 1 skipped without PyYAML — `test_scaffold_ci_emits_parseable_yaml` skips via `pytest.importorskip("yaml")`. Skill and command contract tests confirm the edited skill and command stay valid |
+| Full test suite | pass | `python -m pytest -q` | On the reconciled tree (PR #43 on `main`): 181 passed with PyYAML installed (CI installs it); 180 passed + 1 skipped without PyYAML — `test_scaffold_ci_emits_parseable_yaml` skips via `pytest.importorskip("yaml")`. `test_command_parity.py` confirms the edited skill `## Prompt` and the regenerated `ng-learn` card match the golden fixture byte-for-byte |
 | Token budget | pass | `python tools/ng.py tokens .` | `OK: token budget`; the new doc and additions stay within budget |
 | Repo health | pass | `python tools/ng.py doctor .` | `OK: Nuclear-grade doctor` |
 | Packet validation | pass | `python tools/ng.py validate .nuclear/changes/glean-nuclear-leadership` | required files present; no placeholders; links resolve; statuses present |

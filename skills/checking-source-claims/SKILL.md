@@ -9,6 +9,13 @@ description: Checks that the way you cite source families, agencies, standards, 
 
 "Source lineage" means showing where an idea came from. Honest lineage keeps public claims clean. It links an idea to a real public source. At the same time, it keeps the repo from sounding like it formally meets that source's rules.
 
+## Decision contract
+
+- **Claim verified:** every cited source is public and listed in the source map or marked "public URL needed", and each reference reads as influence or idea lineage rather than compliance, certification, or formal assurance.
+- **Observed artifact:** reads the changed public text against `docs/00-standards-foundation/source-map.md`, `docs/01-field-guide/source-to-concept-crosswalk.md`, and `docs/00-standards-foundation/compliance-boundaries.md`; leaves narrowed wording and updated source-map or crosswalk rows.
+- **Decision it can change:** whether public/source wording is narrowed to honest influence or idea lineage rather than a compliance claim.
+- **Class:** soft note
+
 ## When to Use
 
 - A doc, template, skill, command, or change record cites a source family.

@@ -11,6 +11,13 @@ Folders are a real engineering decision, not an afterthought. Each folder is a c
 
 This skill puts a folder-decision checklist in front of the agent, so folders get reasoned about instead of created by default. When the structure is a step-by-step agent workflow, it also applies the Model Workspace Protocol: numbered stage folders, a context file per stage, layered context, and review gates between stages.
 
+## Decision contract
+
+- **Claim verified:** every folder maps to exactly one work-breakdown piece or one disposition rule with one home, its contents share one reason to change, and its name passes the platform-safe naming, depth, and path checks.
+- **Observed artifact:** reads the work breakdown and its dictionary (`templates/standard/wbs.md` or a `wbs.md`) and the current tree against conventions; leaves a folder map (outline number to path with a disposition column), per-folder README/dictionary stubs, and a naming/depth/single-source check.
+- **Decision it can change:** accept vs rework the folder layout, or where a given file belongs.
+- **Class:** soft note
+
 ## When to Use
 
 - Laying out a new repo, service, feature, or agent workspace tree.

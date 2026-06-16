@@ -14,6 +14,18 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 4. Prefer concrete artifacts, decisions, and evidence links over long prose.
 5. Update the skill only when the revised behavior is clearly better, or when the trigger description fixes a clear miss.
 
+## Deletion signal: the third class, measured not declared
+
+Each skill's `## Decision contract` declares one of two classes -- `hard gate` or `soft note`. The reviewer's third class, the **deletion signal** ("this check almost never changes the decision"), is deliberately *not* something a skill declares about itself: a guard inside the writable set is a suggestion the author can edit. It is earned from the numbers instead.
+
+To measure it, extend the baseline-vs-skill comparison above:
+
+1. For each `Should trigger:` prompt, run the baseline and the skill, and record one bit -- did the skill change the decision its contract names (the mode choice, the ship posture, the verdict, the authority line), or only reword the same outcome?
+2. Track that bit over real runs, not a single sample.
+3. A skill whose decision-changing rate stays at or near zero across a meaningful sample is a **relocation candidate**: its content is reference, not a control, and belongs in `docs/` (the move already applied to `core-source-rationale.md`). Open the relocation as its own change with its own evidence; do not delete on one run.
+
+`ng decisions` prints the declared class and named decision for every skill, and `ng tokens` reports tokens-per-decision-signal for the worked examples; together they point a reviewer at the skills paying the most prose for the least decision movement.
+
 ## Prompt Bank
 
 ### `questioning-attitude`

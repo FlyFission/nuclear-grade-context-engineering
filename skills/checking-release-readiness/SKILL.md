@@ -9,6 +9,13 @@ description: Records a ship, block, defer, or ship-with-risk decision that ties 
 
 Release readiness is a careful, audited decision you write down. It is not a mood. It ties seven things together before a candidate becomes the accepted version: the baseline (the version everyone agreed is correct), the evidence status, the leftover risk, the rollback plan, the monitoring plan, the handoff, and the release decision itself.
 
+## Decision contract
+
+- **Claim verified:** the candidate has named evidence, a rollback, monitoring, and residual risk that is either accepted or made a blocker -- enough to accept or reject the ship.
+- **Observed artifact:** reads the `verification.md`/`trace.md` evidence statuses and CI status; leaves the release decision and its reasoning in `ship.md`.
+- **Decision it can change:** the `ship.md` release decision -- ship, block, defer, or ship with named leftover risk.
+- **Class:** hard gate
+
 ## When to Use
 
 - A Standard change record is getting close to merge or release.

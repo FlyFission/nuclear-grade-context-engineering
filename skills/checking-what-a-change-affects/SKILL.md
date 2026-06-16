@@ -9,6 +9,13 @@ description: Screens what a controlled change might leave out of date across doc
 
 An impact screen asks a simple question. When a controlled item changes, what else does that change leave out of date? You look downstream for ripple effects before they surprise you.
 
+## Decision contract
+
+- **Claim verified:** every artifact a controlled change could leave stale -- docs, tests, checkers, skills, commands, templates, prompts, releases, saved versions, and runtime blast radius (schema/state migration, API consumers, backward-compatibility, rollback-of-state) -- has one named action with evidence, and no stale surface is quietly accepted.
+- **Observed artifact:** reads the controlled-item list, `risk.md`, `basis.md`, `plan.md`, the diff, and `docs/02-operating-system/change-impact.md`; leaves `change-impact.md` (or a short impact screen) with per-item actions, re-check triggers, and required follow-ups.
+- **Decision it can change:** per affected item, update / leave alone / defer / block; blockers carry into `ship.md`.
+- **Class:** hard gate
+
 ## When to Use
 
 - A change affects more than one kind of artifact.

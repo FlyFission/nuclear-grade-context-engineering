@@ -7,6 +7,7 @@ engineering adequacy, safety, security, compliance, or verification and validati
 from __future__ import annotations
 
 import argparse
+import re
 import shutil
 import sys
 from dataclasses import dataclass
@@ -100,6 +101,7 @@ REQUIRED_PUBLIC_FILES = (
 )
 REQUIRED_SKILL_SECTIONS = (
     "## Overview",
+    "## Decision contract",
     "## When to Use",
     "## When Not to Use",
     "## Inputs",
@@ -123,6 +125,24 @@ REQUIRED_COMMAND_SECTIONS = (
     "## Failure modes",
     "## Legal/assurance boundary note",
 )
+
+# A skill's `## Decision contract` block names the one decision the skill can move
+# and the class of signal it leaves. The labels are load-bearing -- a reviewer (and
+# this lint) reads them to learn what running the skill could change. "deletion
+# signal" is never self-declared: a check that rarely moves its decision is surfaced
+# by measurement (`ng tokens`/`ng eval`), because a guard inside the writable set is
+# a suggestion the author can edit. So only two classes are declarable here.
+DECISION_CONTRACT_LABELS = (
+    "**Claim verified:**",
+    "**Observed artifact:**",
+    "**Decision it can change:**",
+    "**Class:**",
+)
+DECISION_CLASSES = ("hard gate", "soft note")
+DECISION_CLASS_PATTERN = re.compile(
+    r"\*\*Class:\*\*\s*(hard gate|soft note)\b", re.IGNORECASE
+)
+DECISION_TEXT_PATTERN = re.compile(r"\*\*Decision it can change:\*\*\s*(.+)")
 
 MODE_DEFAULT_BLOCK = {
     "quick": "## Selected mode\n\n- **Mode:** Quick\n",
@@ -336,6 +356,13 @@ def build_parser() -> argparse.ArgumentParser:
     )
     tokens_parser.add_argument("repo", nargs="?", default=".", type=Path)
     tokens_parser.set_defaults(handler=handle_tokens)
+
+    decisions_parser = subcommands.add_parser(
+        "decisions",
+        help="Roll up every skill's decision contract: the one decision it can move and its class.",
+    )
+    decisions_parser.add_argument("repo", nargs="?", default=".", type=Path)
+    decisions_parser.set_defaults(handler=handle_decisions)
 
     return parser
 
@@ -670,6 +697,54 @@ def handle_tokens(args: argparse.Namespace) -> int:
     return 0
 
 
+def collect_skill_decisions(skills_dir: Path) -> list[tuple[str, str, str]]:
+    """Return (class, name, decision) for each skill's `## Decision contract`.
+
+    A skill with no readable class is returned with an empty class so the rollup
+    shows the gap rather than hiding it; `ng doctor` is what fails the build on a
+    malformed block. Rows sort hard gate, then soft note, then by name.
+    """
+    rows: list[tuple[str, str, str]] = []
+    for skill_file in sorted(skills_dir.glob("*/SKILL.md")):
+        text = skill_file.read_text(encoding="utf-8")
+        class_match = DECISION_CLASS_PATTERN.search(text)
+        decision_match = DECISION_TEXT_PATTERN.search(text)
+        klass = class_match.group(1).lower() if class_match else ""
+        decision = decision_match.group(1).strip() if decision_match else ""
+        rows.append((klass, skill_file.parent.name, decision))
+    order = {"hard gate": 0, "soft note": 1, "": 2}
+    rows.sort(key=lambda row: (order.get(row[0], 2), row[1]))
+    return rows
+
+
+def handle_decisions(args: argparse.Namespace) -> int:
+    repo = args.repo.resolve()
+    rows = collect_skill_decisions(repo / "skills")
+    if not rows:
+        print("no skills found", file=sys.stderr)
+        return 2
+
+    width = max(len(name) for _, name, _ in rows)
+    print("Skill decision contracts -- the one decision each skill can move:\n")
+    print(f"  {'class':<9}  {'skill':<{width}}  decision it can change")
+    for klass, name, decision in rows:
+        shown = decision if len(decision) <= 64 else decision[:61] + "..."
+        print(f"  {klass or '(none)':<9}  {name:<{width}}  {shown}")
+
+    hard = sum(1 for klass, _, _ in rows if klass == "hard gate")
+    soft = sum(1 for klass, _, _ in rows if klass == "soft note")
+    print(f"\n{len(rows)} skills: {hard} hard gate, {soft} soft note.")
+    missing = [name for klass, name, _ in rows if not klass]
+    if missing:
+        print(f"Missing a declarable class (run `ng doctor`): {', '.join(missing)}")
+    print(
+        "A skill that cannot name a decision it can move is docs, not a skill. "
+        "'deletion signal' is measured, not declared -- see "
+        "docs/05-reference/skill-evaluation.md."
+    )
+    return 0
+
+
 def apply_writes(writes: list[PlannedWrite], dry_run: bool, overwrite: bool) -> int:
     for write in writes:
         if write.path.exists() and not write.is_dir and not overwrite:
@@ -776,6 +851,19 @@ def check_skill_contracts(skills_dir: Path) -> list[str]:
         for section in REQUIRED_SKILL_SECTIONS:
             if section not in text:
                 failures.append(f"{skill_file} missing {section}")
+        # The decision-contract block must name the claim, the artifact, the decision
+        # it can change, and a declarable class. The lint checks the block is present
+        # and well-formed; whether the named decision is the honest one is human
+        # judgment, like every other structural check here.
+        if "## Decision contract" in text:
+            for label in DECISION_CONTRACT_LABELS:
+                if label not in text:
+                    failures.append(f"{skill_file} decision contract missing {label}")
+            if not DECISION_CLASS_PATTERN.search(text):
+                failures.append(
+                    f"{skill_file} decision contract Class must be one of "
+                    f"{', '.join(DECISION_CLASSES)}"
+                )
     return failures
 
 

@@ -9,6 +9,13 @@ description: Creates or updates Quick or Standard change records, adds the requi
 
 A change record keeps the whole story in Git, together: the scope, what the change must do, the plan, the trace from claim to evidence, the proof, and the release decision. Use the smallest record that still lets a doubting reviewer decide.
 
+## Decision contract
+
+- **Claim verified:** the record carries every file its mode requires, with the required links, exit criteria, source-lineage notes, and plain status labels (`pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`) present and the internal links resolving.
+- **Observed artifact:** reads the mode from `risk.md` and the `templates/quick/` or `templates/standard/` templates; leaves a Quick record (`risk.md`, `proof.md`) or Standard record (`risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, `ship.md`) plus the validator result.
+- **Decision it can change:** whether the packet is structurally complete and valid (`python tools/ng.py validate` pass/fail).
+- **Class:** hard gate
+
 ## When to Use
 
 - You are starting a real AI-assisted change.

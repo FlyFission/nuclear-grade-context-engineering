@@ -11,6 +11,13 @@ A context pack gives an agent or a reviewer the right focused information, and n
 
 A good brief is how you supply competence and clarity so the agent can decide well rather than be micromanaged: name what good looks like, and state the decision rights — what it may decide at the edge and what it must escalate. Authority that outruns the clarity in the brief is the setup for a confident, wrong action.
 
+## Decision contract
+
+- **Claim verified:** the agent can answer what it may do, what must stay true, what evidence it owes, and when to stop -- its power over files, commands, network, credentials, approvals, and release is bounded no wider than the brief's clarity, with the goal anchor and forbidden actions stated.
+- **Observed artifact:** reads the change-record path, its mode, the assigned role, and `docs/02-operating-system/context-packs.md`; leaves a context-pack section or file with role, goal anchor, scoped files/commands, phase, authority bounds, stop conditions, next action, and a handoff prompt when responsibility transfers.
+- **Decision it can change:** whether the briefed agent may start, and the authority bounds it may act within.
+- **Class:** hard gate
+
 ## When to Use
 
 - An AI agent will edit files, run commands, call tools, or prepare release evidence.

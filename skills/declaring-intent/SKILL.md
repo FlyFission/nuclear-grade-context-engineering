@@ -9,6 +9,13 @@ description: States what an agent intends to do and why before a critical or irr
 
 Before a critical action, say what you intend to do and the reasoning behind it, then act unless someone stops you. The value is that a reviewer can challenge the thinking before the action happens, not the wreckage after. The declaration also forces the actor to make the "why" and the "how will I know" explicit. For an agent, the stated intent is a proposal to be reviewed, never evidence that the agent actually understood.
 
+## Decision contract
+
+- **Claim verified:** the declared intent names a falsifying signal (not just success), carries concrete abort criteria and a checked rollback, and the preconditions are proven rather than assumed before the action runs.
+- **Observed artifact:** reads the intended action and target, the reasoning and precondition evidence, the expected result, and the abort/rollback criteria and decision rights; leaves an intent declaration or `intent.md` (action, reasoning, expected result, abort, rollback, decision rights, backup) and the actual-vs-expected result after acting.
+- **Decision it can change:** whether a reviewer clears the critical or irreversible action before it runs, given expected result, abort criteria, and rollback.
+- **Class:** hard gate
+
 ## When to Use
 
 - Before a deploy, migration, data change, public claim, dependency or model swap, or release.

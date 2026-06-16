@@ -9,6 +9,13 @@ description: Checks dependencies, models, APIs, SaaS tools, generated files, and
 
 Trusting outside code is really a decision about how you will use it. A dependency, model, API, SaaS tool (software you rent online), or vendor claim should be accepted only for the job its evidence and controls actually support. Trust it for that job. Do not trust it past that.
 
+## Decision contract
+
+- **Claim verified:** the dependency, model, API, or SaaS is accepted only for a use no broader than the repo-side evidence supports, with vendor claims kept separate from proof and every trust gap given a re-check trigger or routed to a release decision.
+- **Observed artifact:** reads the named dependency/version/provider, vendor claims, and own-repo evidence; leaves a supplier-trust section or `supplier-trust.md` with the use decision, gaps, backup controls, and the release impact for `ship.md`/`decision.md`.
+- **Decision it can change:** whether to trust and use the dependency, model, API, or SaaS; unresolved gaps feed `ship.md` defer/block/ship-with-risk.
+- **Class:** hard gate
+
 ## When to Use
 
 - A change adds or updates a package, a model, an API, an online service, a generated file, a build service, or a data source.

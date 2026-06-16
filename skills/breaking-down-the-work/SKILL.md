@@ -11,6 +11,13 @@ A work breakdown (WBS) splits one deliverable into smaller pieces someone can ow
 
 Three things can wreck it. Under-coverage: some scope is orphaned and no one owns it. Over-coverage: invented or gold-plated scope that no one asked for. And a third drift where verbs pose as the backbone and hide products that are actually missing. This skill holds two rules: the 100% rule (the pieces add up to exactly the whole, no more and no less) and no overlaps. It also forces a dictionary entry for every piece. That way the breakdown can be reviewed before any folder or line of code exists.
 
+## Decision contract
+
+- **Claim verified:** the product-first children cover exactly the parent's scope with nothing orphaned and nothing invented (100% rule), no two siblings overlap, and every outline number carries a filled dictionary entry.
+- **Observed artifact:** reads the one-line deliverable, the mission anchor (`.nuclear/mission.md` or the `## Mission anchor` in `risk.md`), and `templates/standard/wbs.md`; leaves an outline-numbered work-breakdown table plus a per-piece dictionary and a handoff note to `organizing-project-folders` and each leaf's `plan.md` slice.
+- **Decision it can change:** plan-ready vs not -- whether the child pieces sum to 100% of the scope with no gaps and no overlaps (MECE).
+- **Class:** hard gate
+
 ## When to Use
 
 - An epic, feature, or new subsystem needs breaking down before planning or layout.

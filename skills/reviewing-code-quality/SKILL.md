@@ -9,6 +9,13 @@ description: Reviews a diff or module for slipping standards, favoring deletion 
 
 Standards drift in code is the slow buildup of complexity. Files grow until no one can hold them in their head. Layers get added that do not pull their weight. Logic for one feature leaks into shared code. Clever, hard-to-follow code replaces plain, direct code. Each step looks fine on its own. Added up, they make a system no one can maintain. This review holds the line and keeps standards rising. Its strongest move is deletion: prefer removing structure over moving it around. It ends in one honest verdict, not a softened summary. A review that always says "looks good" is not a control.
 
+## Decision contract
+
+- **Claim verified:** the diff was read against its goal, deletion was considered before rearranging for each complexity finding, and the verdict matches the findings -- with an INCONCLUSIVE verdict naming the missing evidence.
+- **Observed artifact:** reads the diff or module, its mission anchor or goal, and the shared-versus-feature layering map; leaves a ranked findings list (each with location, standard at risk, and concrete fix) and one verdict with a reason tying it to the findings.
+- **Decision it can change:** one verdict on the diff or module -- VERIFIED, NOT VERIFIED, or INCONCLUSIVE.
+- **Class:** hard gate
+
 ## When to Use
 
 - A diff or module is up for review and you want a standards check, not just a "does it work" check.

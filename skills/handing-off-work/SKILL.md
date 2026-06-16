@@ -9,6 +9,13 @@ description: Hands off unfinished work with a closed-loop briefing of state, cha
 
 A handoff transfers responsibility, not just context. The next person or agent has to know what changed, what is left, what they are allowed to do, and when to stop.
 
+## Decision contract
+
+- **Claim verified:** the receiving owner can resume without the chat history -- the last finished action, changed conditions, remaining scope, authority limits, open evidence, and stop conditions are all stated -- and the owner has restated scope, authority, proof owed, and when to stop before acting.
+- **Observed artifact:** reads the change-record path, current phase, mode, the done/changed/assumed/open state, and the authority limits; leaves a `turnover.md` (or a turnover section in the context pack, or a release/support handoff note) with the resume point, what changed, what remains, the next decision gate, and the incoming owner's confirmation.
+- **Decision it can change:** whether the receiving owner may resume, or must hold and re-question first.
+- **Class:** hard gate
+
 ## When to Use
 
 - Another agent, a reviewer, a verifier, a releaser, or a support owner will keep working.

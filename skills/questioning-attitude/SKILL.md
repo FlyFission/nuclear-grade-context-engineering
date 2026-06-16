@@ -9,6 +9,13 @@ description: Challenges the assumptions behind a change before an agent builds, 
 
 This is the front door. Before an agent builds, merges, or releases, find the real question the work has to answer. Trust facts over confidence. Say out loud what you are not sure about. And stop the moment a doubt would change what you decide.
 
+## Decision contract
+
+- **Claim verified:** the change is restated as one decision question evidence could settle, its assumptions are named and each checked, marked a gap, or assigned, and the one fact that would change the decision is stated.
+- **Observed artifact:** reads the request/diff/plan/dependency; leaves a questioning-attitude write-up (or `questioning-attitude.md`) of assumptions, knowns, unknowns, shaky sources, and stop conditions.
+- **Decision it can change:** the Quick/Standard mode choice it routes into `rating-change-risk`, and whether to proceed, escalate, or stop now.
+- **Class:** soft note
+
 ## When to Use
 
 - A request is vague, high-stakes, or easy to talk yourself into.

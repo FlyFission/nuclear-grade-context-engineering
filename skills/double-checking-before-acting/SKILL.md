@@ -9,6 +9,13 @@ description: Checks a critical agent action against its exact target, expected r
 
 A self-check turns a high-stakes action into a careful one. Before you claim success, name the target, the result you expect, when to stop, the action itself, and the check you will run afterward.
 
+## Decision contract
+
+- **Claim verified:** the exact target, expected result, and stop condition were named before the action, and the real result was compared against the expected one before any success was claimed.
+- **Observed artifact:** reads the proposed action, target, and authority; leaves the action, target, expected result, stop condition, real result, evidence, and any mismatch in a `self-check.md` note.
+- **Decision it can change:** whether to proceed with or abort the critical action -- a big edit, command, public claim, trust change, or release.
+- **Class:** hard gate
+
 ## When to Use
 
 - A command can delete, move, publish, release, migrate, or change something outside the repo.

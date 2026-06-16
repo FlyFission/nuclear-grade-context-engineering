@@ -9,6 +9,13 @@ description: Records the version everyone agreed is correct, the evidence behind
 
 A baseline is simply the version everyone agreed is correct and wants to protect. This skill writes down that version, the evidence that backs it, and the things that would make it out of date.
 
+## Decision contract
+
+- **Claim verified:** the accepted version can be rebuilt exactly from its named commit/PR/release, everything under control is either included or deliberately left out, the accepted residual risks have owners, and the triggers that would force a new known-good version are recorded.
+- **Observed artifact:** reads `controlled-items.md`, `change-impact.md`, `verification.md`, and the `ship.md` decision plus the identifying commit/PR/release; leaves a `baseline.md` (or a known-good section inside `ship.md`) with included/excluded scope, accepted gaps, and re-record triggers.
+- **Decision it can change:** records the accepted baseline the ship decision produced, and the triggers that invalidate it.
+- **Class:** soft note
+
 ## When to Use
 
 - A standard change ships, or the public-facing state of the workflow changes.

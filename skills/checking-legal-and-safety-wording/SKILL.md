@@ -9,6 +9,13 @@ description: Reviews public text for license, warranty, compliance, safety, secu
 
 This skill keeps two things apart: what the MIT license lets people do, and what the repo proves. People may use the repo. But using it does not create formal verification and validation, compliance, certification, safety, security, or fitness for regulated use.
 
+## Decision contract
+
+- **Claim verified:** public text stays inside the assurance boundary -- "you may use it" is kept apart from "it is proven fit", banned claim phrases appear only in negative or disclaimer sentences, and `python tools/ng.py doctor .` passes.
+- **Observed artifact:** reads the changed public text against `LICENSE`, `DISCLAIMER.md`, `SECURITY.md`, and `docs/00-standards-foundation/compliance-boundaries.md`; leaves bounded wording, updated docs/templates, and the scan results or list of gaps found.
+- **Decision it can change:** whether public text stays inside the assurance boundary (`python tools/ng.py doctor` boundary check); an overreaching license/safety/compliance claim blocks until reworded.
+- **Class:** hard gate
+
 ## When to Use
 
 - You are editing the README, install docs, public docs, templates, skills, commands, examples, or release notes.

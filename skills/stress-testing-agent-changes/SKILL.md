@@ -9,6 +9,13 @@ description: Attacks your own agent change, tool grant, dependency, model, or re
 
 When an agent can use tools, read data, or affect releases, it gives attackers something to aim at. Normal "does it work" testing does not test for that. This skill is about attacking your own work on purpose to find weak spots (red teaming). You do it in an orderly way: list the kinds of attacks that matter here, say what safe behavior should look like, try the attacks (or simulate them), write down what happened, and tie the findings into the packet's evidence record.
 
+## Decision contract
+
+- **Claim verified:** each attack type chosen for this setup has a recorded `contained`, `uncertain`, or `exposed` result with the expected behavior written before the result, no finding is quietly dropped, and `python tools/ng.py validate .nuclear/changes/<slug>` passes.
+- **Observed artifact:** reads `basis.md`, `risk.md`, and past OPEX records to name the agent role, tools, and data reach; leaves a red-team record inline in `verification.md` (or `red-team.md`) with each type's result, leftover risk, and backup controls, linked to `ship.md`.
+- **Decision it can change:** per adversarial class, contained / uncertain / exposed; uncertain or exposed findings feed `ship.md`.
+- **Class:** hard gate
+
 ## When to Use
 
 - An agent is getting new tools, network access, credentials, or the power to write files.

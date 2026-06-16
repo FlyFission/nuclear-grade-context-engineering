@@ -9,6 +9,13 @@ description: Brings an abandoned or half-filled change packet to an honest termi
 
 A change packet that is started and then abandoned is a quiet integrity problem. It looks like work in progress, but no one owns it, its claims were never proven, and a reader cannot tell whether the change shipped, was dropped, or is still pending. `ng status` now surfaces these: a `scaffold` packet is an untouched draft still carrying the placeholder marker; an `invalid` packet fails validation for another reason. This skill turns that signal into a decision. Every stale packet must reach one honest terminal state: completed (filled and validating), closed (deliberately abandoned with a recorded reason), or deleted (never a real change). The forbidden state is the one most packets drift into: half-done and silent, where a green-looking directory hides an unproven claim. Closing a packet with a written rationale is a first-class successful outcome, not a failure to ship.
 
+## Decision contract
+
+- **Claim verified:** every stale packet has reached one honest terminal state -- completed and validating, closed with a recorded reason and decider, or deleted as a genuinely empty scaffold -- with none left half-done and silent.
+- **Observed artifact:** reads `python tools/ng.py status .` and `validate` output and the packet under `.nuclear/changes/<slug>` against its originating issue/PR/anchor; leaves a `NUCLEAR-GRADE-CLOSED:` rationale line (for closures) and an `ng status .` where every packet is `ok` or `closed`.
+- **Decision it can change:** bring the stale packet to a terminal state -- completed, closed-with-reason, or deleted -- so `ng status` reports ok/closed, not scaffold/invalid.
+- **Class:** hard gate
+
 ## When to Use
 
 - `ng status` reports a `scaffold` or `invalid` packet and you are deciding what to do about it.

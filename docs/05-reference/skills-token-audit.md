@@ -51,6 +51,26 @@ The headline conclusion is unchanged: the always-loaded surface is the lean desc
 (~104 tokens each), not the bodies, and the budget gate stays green. The historical baseline
 below is the original 2026-05 23-skill snapshot, kept for provenance.
 
+## Refresh -- 2026-06-16 (decision-contract pass, 27 skills)
+
+Every skill now carries a `## Decision contract` block -- the one decision it can move
+and the class of signal it leaves -- enforced by `ng doctor` and
+`tests/test_skill_contracts.py`. The block lives in the body, not the always-loaded
+`description`, so it costs tokens only when a skill fires:
+
+| Surface | Count | Tokens | Change | Notes |
+|---|---|---|---|---|
+| Skill descriptions | 27 | 2,814 | +2 | always-loaded; unchanged by design -- the block is body-only |
+| Skill bodies | 27 | 42,587 | +7,221 | on-invocation; one body loads when a skill fires; heaviest 2,852 (`organizing-project-folders`) |
+
+The always-loaded surface a routing agent pays on every turn is unchanged (2,812 ->
+2,814), which confirms the block sits in the on-invocation tier where it was placed on
+purpose. The budget gate stays green: the heaviest body, `organizing-project-folders`,
+is 2,852 against the 3,000 `skill_body_max`, leaving ~148 headroom -- and it is also the
+heaviest `soft note` body, i.e. the standing relocation candidate the deletion-signal
+measurement (cost-per-decision-signal, below) is meant to catch. The blocks average ~270
+tokens; tightening the wordier ones is an evidence-triggered follow-up, not a budget need.
+
 ## Measured baseline (2026-05 original snapshot, 23 skills)
 
 | Surface | Files | Tokens | Notes |
@@ -151,7 +171,7 @@ so the gate blocks regression rather than the accepted corpus:
 | Budget | Value | Measured max today |
 |---|---|---|
 | `description_max` | 200 | 140 |
-| `skill_body_max` | 3000 | 2,641 |
+| `skill_body_max` | 3000 | 2,852 |
 | `command_max` | 1600 | 1,406 |
 | `repeated_block_max_files` | 8 | 0 prose blocks over threshold |
 

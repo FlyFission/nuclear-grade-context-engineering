@@ -1,6 +1,12 @@
 import re
 from pathlib import Path
 
+from nuclear_grade.cli import (
+    DECISION_CLASS_PATTERN,
+    DECISION_CLASSES,
+    DECISION_CONTRACT_LABELS,
+)
+
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS_DIR = ROOT / "skills"
 SKILLS_INDEX = ROOT / "SKILLS.md"
@@ -46,6 +52,7 @@ EXPECTED_SKILLS = {
 
 REQUIRED_SECTIONS = (
     "## Overview",
+    "## Decision contract",
     "## When to Use",
     "## When Not to Use",
     "## Inputs",
@@ -100,6 +107,28 @@ def test_every_skill_has_valid_agent_operable_contract():
 
         for section in REQUIRED_SECTIONS:
             assert section in text, f"{skill_name} missing {section}"
+
+
+def test_every_skill_declares_a_decision_contract():
+    """Charter Art. 11: name the decision the evidence must support. Every skill is a
+    control in that loop, so it must expose -- in a scannable block -- the claim it
+    verifies, the artifact it leaves, the one decision it can change, and a declarable
+    class. The lint checks the block is present and well-formed, not that the named
+    decision is the honest one (that is human judgment). See
+    docs/05-reference/skill-authoring-contract.md."""
+    for skill_name in EXPECTED_SKILLS:
+        text = (SKILLS_DIR / skill_name / "SKILL.md").read_text(encoding="utf-8")
+
+        assert "## Decision contract" in text, f"{skill_name} missing decision contract"
+        for label in DECISION_CONTRACT_LABELS:
+            assert label in text, f"{skill_name} decision contract missing {label}"
+        match = DECISION_CLASS_PATTERN.search(text)
+        assert match, (
+            f"{skill_name} decision contract Class must be one of {DECISION_CLASSES}"
+        )
+        # "deletion signal" is measured, never self-declared (a guard inside the
+        # writable set is a suggestion the author can edit).
+        assert "deletion signal" not in match.group(0).lower()
 
 
 def test_skills_index_lists_every_skill_folder():

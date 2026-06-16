@@ -234,3 +234,5 @@ proprietary QA/procurement/utility manuals
 ```
 
 You may mention these only as broad industry background, and only when they are public and you need to. They must not shape the structure or the wording of any template.
+
+Regulated and quality-managed industries often use formal consensus standards such as ASME NQA-1 and ISO 9001 for quality assurance, assessment, and corrective action. Nuclear-grade names them only as high-level industry background; it does not reproduce them, derive any template or workflow from them, and claims no compliance or lineage with them. The assessment-and-correction concepts in this repo trace instead to the public sources above (10 CFR 830 Subpart A, the DOE QA page, and DOE O 413.3B).

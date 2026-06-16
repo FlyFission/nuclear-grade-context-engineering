@@ -11,6 +11,14 @@ This is the always-first router for Nuclear-grade work. Before you act, classify
 
 The repo charter (`.nuclear/charter.md`) holds the lasting rules every change follows. Each change also gets a goal anchor — what that one change is for — so the work does not drift off course.
 
+## Decision contract
+
+- **Claim checked:** this change is named the cheapest-fitting mode -- Quick or Standard-plus -- with the one fact that sets it stated before the first tool call, and any Standard-plus trap (auth, user-visible, data, dependency, model/prompt/agent power, CI, release) forces the stronger mode.
+- **Artifact observed:** the request, diff, and any record under `.nuclear/changes/` -> the declared mode, its one-fact reason, and the change-record path that routes the work into its skill cluster.
+- **Decision affected:** block -- the mode declared before the first tool call (Quick or Standard-plus) and the skill cluster it routes into.
+- **Failure class:** unclassified-or-downgraded-start (work begun before a mode, or a Standard-plus trap waved off as Quick).
+- **Next action:** state the mode before the first tool call; raise to Standard or human review when a trap or outside-trust claim appears.
+
 ## When to Use
 
 - A person or an AI agent will change code, tests, docs, prompts, tools, dependencies, or release evidence.

@@ -9,6 +9,14 @@ description: Captures an agent run's tool calls, decision points, inputs, output
 
 A "does it work" check proves what an agent produced, not how it got there. Sometimes how it got there matters: for debugging, for auditing, for reviewing cost, or for defending a release decision. This skill says what to record about the run, how much detail to capture, and how to link it into the packet's `trace.md` and `verification.md` as evidence someone else could reproduce.
 
+## Decision contract
+
+- **Claim checked:** every step that mattered -- tool call, edit, command, API call, approval -- has a recorded result and status, and each stayed inside the power `basis.md` granted.
+- **Artifact observed:** the run log/transcript/trace export against `basis.md` and `plan.md` -> step-level trace rows, decision-point and approval records, and a token/delay summary in `trace.md`/`verification.md`, linked to `ship.md`.
+- **Decision affected:** warn -- the step-level execution evidence the `ship.md` decision relies on.
+- **Failure class:** unevidenced-run (a stayed-in-scope claim with no step-level evidence, or unexplained cost).
+- **Next action:** record the gap for `ship.md`; a power breach or unexpected side effect escalates to pause/incident.
+
 ## When to Use
 
 - An agent ran tool calls that matter (file writes, API calls, command runs) and the packet needs evidence you can check.
@@ -81,6 +89,34 @@ A "does it work" check proves what an agent produced, not how it got there. Some
 - Odd token cost or delay shows up but is never explained.
 - Decision points are written as "agent chose X" with no limit or power reference.
 - Human approval steps are claimed but not documented with reviewer and date.
+
+## Prompt
+
+```text
+Trace this agent run and produce clear evidence.
+
+Inputs:
+- packet: .nuclear/changes/<slug>/
+- execution source: <log / transcript / tool-call export>
+- authority scope: <basis.md section or inline>
+- token/latency data available: <yes/no>
+- approval gates exercised: <list or none>
+
+For each consequential step (tool call, file edit, command run, API call,
+approval gate):
+- Name the action and the tool.
+- Record the inputs (shortened) and the output or result.
+- Set an evidence status: pass, gap, fail, or not applicable.
+- At decision points: record the choice made, the limit applied, and the authority check.
+- For approval gates: the reviewer, the date, and the decision.
+
+Return:
+- trace rows for trace.md: step, action, inputs, outputs, evidence status.
+- the decision-point records.
+- a summary of token use and speed (if available).
+- a run summary: steps within scope, steps uncertain, and gaps.
+- a link from each trace row to the claim in verification.md it supports.
+```
 
 ## Source-lineage note
 

@@ -33,9 +33,9 @@ These are portable command prompts: plain Markdown prompt cards you can paste in
 | [`ng-incident`](commands/ng-incident.md) | Production is broken, data is at risk, or an agent action caused harm | A stabilize-first incident record with owned corrective actions |
 | [`ng-deficiency`](commands/ng-deficiency.md) | A known problem will outlive a single change and must be owned, not normalized | A deficiency entry, aged and dispositioned |
 
-## What every prompt card must include
+## How the prompt cards are made
 
-Every prompt card must have: its purpose, when to use it, when not to use it, the inputs, the prompt text itself, the files it creates or changes, the expected outputs, a command to verify the result, the common failure modes, and a short note on legal and safety limits.
+Each card is generated from its paired skill by `ng gen-commands`, so the skill is the single source and the two never drift. A card carries the skill's summary, when to use it and when not to, the inputs, the exact prompt text (kept in the skill's `## Prompt` section), how to verify the result, and a pointer back to the skill for the rest. To change a command, edit the skill and regenerate — do not edit the card by hand.
 
 See `docs/05-reference/command-authoring-contract.md`.
 

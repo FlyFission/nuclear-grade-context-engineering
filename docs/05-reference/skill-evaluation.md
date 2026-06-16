@@ -14,6 +14,20 @@ Do not treat this file as proof that a skill is effective. It is the minimum pro
 4. Prefer concrete artifacts, decisions, and evidence links over long prose.
 5. Update the skill only when the revised behavior is clearly better, or when the trigger description fixes a clear miss.
 
+## The existence decision: evidence-based, not declared
+
+A skill carries two separate decisions (see `skill-authoring-contract.md`): the receipt it must emit, and -- separately -- whether it deserves to exist at all. The receipt's tier (`block` / `warn` / `observe`) is author-declared; the existence decision is not. Whether a skill earns its keep comes from the numbers, because a guard inside the writable set is a suggestion the author can edit.
+
+To measure it, extend the baseline-vs-skill comparison above:
+
+1. For each `Should trigger:` prompt, run the baseline and the skill, and record one bit -- did the skill change a real decision (merge, rollback, escalation, or review scope), or only reword the same outcome?
+2. Track that bit over real runs, not a single sample.
+3. A skill whose decision-changing rate stays at or near zero is demoted to the `observe` tier -- it stays in telemetry, out of the operator receipt -- and becomes a **relocation candidate**: its content is reference, not a control, and belongs in `docs/` (the move already applied to `core-source-rationale.md`). Open the relocation or deletion as its own change with its own evidence; no skill is removed on one run, and the call is a human's.
+
+If a skill changes decisions but says so only in vague prose, amend its receipt until it is machine-checkable rather than dropping it.
+
+`ng decisions` prints the operator receipt (`block`/`warn`) and, with `--all`, the `observe`-tier skills held in telemetry; `ng tokens` reports tokens-per-decision-signal for the worked examples. Together they point a reviewer at the skills paying the most prose for the least decision movement.
+
 ## Prompt Bank
 
 ### `questioning-attitude`

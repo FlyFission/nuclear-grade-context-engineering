@@ -24,7 +24,7 @@ checkout (`python tools/ng.py install …`) or via the installed console script
 
 | Tool | Command | Skills land in | Scope |
 |---|---|---|---|
-| Codex CLI | `… install codex` | user `~/.codex/skills/` (honors `$CODEX_HOME`); project `.codex/skills/` | user or project |
+| Codex CLI | `… install codex` | user `~/.agents/skills/`; project `.agents/skills/` | user or project |
 | Claude Code | plugin (below) **or** `… install claude` | user `~/.claude/skills/`; project `.claude/skills/` | user or project |
 | Cursor | `… install cursor` | user `~/.cursor/skills/`; project `.cursor/skills/` | user or project |
 | Windsurf | `… install windsurf` | user `~/.codeium/windsurf/skills/`; project `.windsurf/skills/` | user or project |

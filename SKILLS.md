@@ -1,6 +1,6 @@
 # Nuclear-grade Skills
 
-A skill is a self-contained set of instructions an agent can follow. Each one lives in a `SKILL.md` file that says when to use it, what it needs, the steps to take, what it produces, how to check the result, when to stop and ask for help, the excuses to watch for, and where the idea comes from.
+A skill is a self-contained set of instructions an agent can follow. Each one lives in a `SKILL.md` file that says when to use it, what it needs, the steps to take, what it produces, the one decision it can change, how to check the result, when to stop and ask for help, the excuses to watch for, and where the idea comes from.
 
 ## The skills
 
@@ -93,7 +93,7 @@ Each `SKILL.md` must have:
 - A short header (called YAML frontmatter) with a `name` and a `description`. A `license` and a `compatibility` note are optional.
 - A `name` that is all lowercase with words joined by hyphens.
 - A `description` that says what the skill does, when to reach for it, and a clear "Do not use for ..." line. It must be 80 to 500 characters and must not contain a colon followed by a space.
-- These sections: Overview, when to use it, when not to use it, inputs, the process, outputs, how to verify, when to escalate, the common excuses to watch for, the red flags, and a short note on where the idea comes from.
+- These sections: Overview, a decision contract (the one decision the skill can change and its tier -- block, warn, or observe), when to use it, when not to use it, inputs, the process, outputs, how to verify, when to escalate, the common excuses to watch for, the red flags, and a short note on where the idea comes from.
 
 A skill can add optional `references/`, `scripts/`, and `assets/` folders so an agent can pull in detail only when it needs it. See `docs/05-reference/skill-authoring-contract.md`.
 

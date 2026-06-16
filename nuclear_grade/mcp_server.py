@@ -80,7 +80,10 @@ def new_change_record(slug: str, mode: str = "quick", repo_path: str = ".") -> s
     if mode not in MODE_FILES:
         return f"unknown mode: {mode} (choose from {', '.join(MODE_FILES)})"
     repo = Path(repo_path).resolve()
-    packet = repo / ".nuclear" / "changes" / slug
+    changes_dir = (repo / ".nuclear" / "changes").resolve()
+    packet = (changes_dir / slug).resolve()
+    if packet == changes_dir or not packet.is_relative_to(changes_dir):
+        return f"invalid slug: {slug!r} (must stay under .nuclear/changes)"
     if packet.exists():
         return f"already exists: {packet}"
     templates = template_root_for(repo, mode)

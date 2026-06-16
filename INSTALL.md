@@ -23,7 +23,7 @@ auto-surfaces by their `description` — the same files work unmodified across
 tools. `ng install` places them where each tool looks:
 
 ```bash
-python tools/ng.py install codex          # ~/.codex/skills (Core set; install once)
+python tools/ng.py install codex          # ~/.agents/skills (Core set; install once)
 python tools/ng.py install codex --full   # all 27 skills
 python tools/ng.py install claude         # ~/.claude/skills
 python tools/ng.py install cursor         # ~/.cursor/skills

@@ -222,6 +222,20 @@ def test_doctor_passes_on_this_repo():
     assert "OK:" in result.stdout
 
 
+def test_decisions_rolls_up_every_skill_contract():
+    result = run_ng("decisions", str(ROOT))
+
+    assert result.returncode == 0, result.stdout + result.stderr
+    # The operator receipt promotes block/warn; the summary accounts for every skill.
+    assert "Operator receipt" in result.stdout
+    assert "27 skills:" in result.stdout
+    assert "block" in result.stdout and "warn" in result.stdout
+    assert "checking-release-readiness" in result.stdout
+    assert "ship.md" in result.stdout
+    # No skill should be missing a tier (that line only prints on a gap).
+    assert "Missing a declarable tier" not in result.stdout
+
+
 def test_doctor_passes_on_initialized_workspace(tmp_path):
     assert run_ng("init", str(tmp_path)).returncode == 0
 
@@ -260,7 +274,7 @@ def test_doctor_uses_repo_relative_skill_and_command_contracts(tmp_path):
     assert str(tmp_path / "skills" / "sample" / "SKILL.md") in result.stdout
     assert "missing ## Source-lineage note" in result.stdout
     assert str(tmp_path / "commands" / "sample.md") in result.stdout
-    assert "missing ## Legal/assurance boundary note" in result.stdout
+    assert "missing ## Verification" in result.stdout
 
 
 def test_doctor_checks_additional_public_docs(tmp_path):
@@ -566,13 +580,12 @@ def test_install_rejects_unknown_tool(tmp_path):
 
 
 def test_install_dest_resolution_per_tool(tmp_path, monkeypatch):
-    monkeypatch.setenv("CODEX_HOME", str(tmp_path / "codexhome"))
     monkeypatch.delenv("APPDATA", raising=False)  # force the POSIX VS Code-user path
     repo = tmp_path / "repo"
     home = Path.home()
 
-    assert ng_cli.install_dest("codex", "user", repo) == tmp_path / "codexhome" / "skills"
-    assert ng_cli.install_dest("codex", "project", repo) == repo / ".codex" / "skills"
+    assert ng_cli.install_dest("codex", "user", repo) == home / ".agents" / "skills"
+    assert ng_cli.install_dest("codex", "project", repo) == repo / ".agents" / "skills"
     assert ng_cli.install_dest("claude", "user", repo) == home / ".claude" / "skills"
     assert ng_cli.install_dest("claude", "project", repo) == repo / ".claude" / "skills"
     assert ng_cli.install_dest("cursor", "project", repo) == repo / ".cursor" / "skills"

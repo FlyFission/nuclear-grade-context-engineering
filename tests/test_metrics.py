@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from nuclear_grade.metrics import build_inventory
+from nuclear_grade.metrics import GENERATED_COMMAND_MARKER, build_inventory
 from tests.test_ng_cli import ROOT, run_ng
 
 
@@ -26,6 +26,9 @@ def test_build_inventory_counts_a_synthetic_repo(tmp_path):
 
     assert inv.skills == 2
     assert inv.commands == 3
+    # The synthetic command files carry no generation marker, so they count as
+    # hand-authored: the authored surface is all 5 objects.
+    assert inv.generated_commands == 0
     assert inv.template_files == 3
     assert inv.template_modes == 2
     assert inv.root_docs == 2
@@ -45,7 +48,19 @@ def test_inventory_matches_the_filesystem_on_this_repo():
     assert inv.commands == len(list((ROOT / "commands").glob("*.md")))
     assert inv.root_docs == len(list(ROOT.glob("*.md")))
     assert inv.skills > 0 and inv.commands > 0
-    assert inv.authored_surface == inv.skills + inv.commands
+    # Independent recount of generated cards (no magic numbers): a command is
+    # generated when it carries the marker `ng gen-commands` writes.
+    generated = sum(
+        1
+        for path in (ROOT / "commands").glob("*.md")
+        if GENERATED_COMMAND_MARKER in path.read_text(encoding="utf-8")
+    )
+    assert inv.generated_commands == generated
+    assert inv.authored_surface == inv.skills + inv.commands - inv.generated_commands
+    # The teardown's headline: every command is now generated, so the only
+    # hand-maintained skill/command objects left are the skills themselves.
+    assert inv.generated_commands == inv.commands
+    assert inv.authored_surface == inv.skills
 
 
 def test_metrics_cli_runs_on_this_repo():

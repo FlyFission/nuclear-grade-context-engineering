@@ -5,17 +5,18 @@ What this measures
 The number of *parts* the repo carries -- the surfaces a maintainer must keep in
 sync and a reader must navigate:
 
-- **skills** (``skills/*/SKILL.md``) and **commands** (``commands/*.md``), the
-  two parallel surfaces that today describe the same workflows twice;
+- **skills** (``skills/*/SKILL.md``) and **commands** (``commands/*.md``); the
+  commands are generated from the skills (``ng gen-commands``), so they are a
+  projection of one source, not a second hand-maintained surface;
 - **templates** and the **modes** they span;
 - **root docs** (``*.md``) and the **docs/** reference tree;
 - **change records** under ``.nuclear/`` (the repo dogfooding itself);
 - **starter kits** and **agent-role docs**.
 
 It also derives the **authored skill/command surface** -- the count of
-hand-maintained objects standing behind the workflow ideas -- and the
-**commands-per-skill** ratio, because that ratio is the clearest single signal of
-duplicated maintenance effort (a parallel command tree shows up as ~1.0).
+hand-maintained objects standing behind the workflow ideas, which now excludes
+generated command cards -- and the **commands-per-skill** ratio (~1.0 once every
+skill has one generated card).
 
 What this does NOT measure
 --------------------------
@@ -42,6 +43,12 @@ from pathlib import Path
 # adding or removing a mode never needs an edit here.
 TEMPLATE_MODES = ("quick", "standard", "cm", "golden-path")
 
+# A command card produced by `ng gen-commands` (see gen_commands.render_card)
+# carries this substring in its generation note. Detecting it from the file -- not
+# from nuclear-grade.yaml -- keeps the inventory filesystem-only while still telling
+# a generated projection apart from a hand-authored card.
+GENERATED_COMMAND_MARKER = "generated from `skills/"
+
 
 def _count(paths) -> int:
     """Length of an iterable of paths, without materializing a list."""
@@ -55,6 +62,7 @@ class Inventory:
 
     skills: int
     commands: int
+    generated_commands: int
     template_files: int
     template_modes: int
     root_docs: int
@@ -67,13 +75,18 @@ class Inventory:
 
     @property
     def authored_surface(self) -> int:
-        """Hand-maintained skill + command objects (the parallel surface)."""
+        """Hand-maintained skill + command objects.
 
-        return self.skills + self.commands
+        Generated cards are projections of their skills, not a second
+        hand-maintained surface, so they do not count -- once every command is
+        generated this equals the skill count.
+        """
+
+        return self.skills + (self.commands - self.generated_commands)
 
     @property
     def commands_per_skill(self) -> float:
-        """~1.0 means a command mirrors every skill -- the duplication signal."""
+        """~1.0 means one command card per skill (now a generated projection)."""
 
         return self.commands / self.skills if self.skills else 0.0
 
@@ -88,7 +101,13 @@ def build_inventory(root: Path) -> Inventory:
     """Count every part under ``root`` from the filesystem (no git, no manifest)."""
 
     skills = _count((root / "skills").glob("*/SKILL.md"))
-    commands = _count((root / "commands").glob("*.md"))
+    command_files = sorted((root / "commands").glob("*.md"))
+    commands = len(command_files)
+    generated_commands = sum(
+        1
+        for path in command_files
+        if GENERATED_COMMAND_MARKER in path.read_text(encoding="utf-8")
+    )
 
     template_files = _count((root / "templates").rglob("*.md"))
     templates_dir = root / "templates"
@@ -116,6 +135,7 @@ def build_inventory(root: Path) -> Inventory:
     return Inventory(
         skills=skills,
         commands=commands,
+        generated_commands=generated_commands,
         template_files=template_files,
         template_modes=template_modes,
         root_docs=root_docs,

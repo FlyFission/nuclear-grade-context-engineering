@@ -15,6 +15,7 @@ from pathlib import Path
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from nuclear_grade import gen_commands
 from nuclear_grade.efficacy import run_all as run_efficacy
 from nuclear_grade.metrics import build_inventory
 from nuclear_grade.ng_validate import (
@@ -112,18 +113,12 @@ REQUIRED_SKILL_SECTIONS = (
     "## Red Flags",
     "## Source-lineage note",
 )
-REQUIRED_COMMAND_SECTIONS = (
-    "## Purpose",
-    "## Use when",
-    "## Do not use when",
-    "## Inputs",
-    "## Prompt text",
-    "## Files created or modified",
-    "## Expected outputs",
-    "## Verification command",
-    "## Failure modes",
-    "## Legal/assurance boundary note",
-)
+# Command cards are generated from skills (see nuclear_grade/gen_commands.py), so
+# the required-section contract is single-sourced there. When commands became
+# generated, the card dropped from ten hand-authored sections to five projected
+# ones; the dropped material (purpose, files, expected outputs, the verification
+# command, failure modes, legal note) now lives in the skill the card points to.
+REQUIRED_COMMAND_SECTIONS = gen_commands.REQUIRED_CARD_SECTIONS
 
 MODE_DEFAULT_BLOCK = {
     "quick": "## Selected mode\n\n- **Mode:** Quick\n",
@@ -344,6 +339,18 @@ def build_parser() -> argparse.ArgumentParser:
     )
     metrics_parser.add_argument("repo", nargs="?", default=".", type=Path)
     metrics_parser.set_defaults(handler=handle_metrics)
+
+    gen_commands_parser = subcommands.add_parser(
+        "gen-commands",
+        help="Generate commands/*.md cards from skills/*/SKILL.md (the single source).",
+    )
+    gen_commands_parser.add_argument("repo", nargs="?", default=".", type=Path)
+    gen_commands_parser.add_argument(
+        "--check",
+        action="store_true",
+        help="Report drift between the cards and their skills instead of writing (for CI).",
+    )
+    gen_commands_parser.set_defaults(handler=handle_gen_commands)
 
     return parser
 
@@ -699,9 +706,14 @@ def handle_metrics(args: argparse.Namespace) -> int:
         print(f"  {count:>6}  {label}  ({source})")
 
     print("\nDerived:")
+    generated = (
+        f", {inv.generated_commands} of {inv.commands} commands generated from skills"
+        if inv.generated_commands
+        else ""
+    )
     print(
-        f"  authored skill/command surface: {inv.authored_surface} hand-maintained objects "
-        f"({inv.commands_per_skill:.1f} commands per skill)"
+        f"  authored skill/command surface: {inv.authored_surface} hand-maintained objects"
+        f"{generated} ({inv.commands_per_skill:.1f} command cards per skill)"
     )
     print(f"  self-contained prose files (skills+commands+templates+root+docs): {inv.prose_files}")
     print(f"  total markdown files: {inv.markdown_total}")
@@ -710,6 +722,23 @@ def handle_metrics(args: argparse.Namespace) -> int:
         "\nThis counts parts, not quality. A high count is not proof of waste; it is the "
         "surface a maintainer keeps in sync and a reader navigates."
     )
+    return 0
+
+
+def handle_gen_commands(args: argparse.Namespace) -> int:
+    repo = args.repo.resolve()
+    if args.check:
+        drifted = gen_commands.check(repo)
+        if drifted:
+            print("FAILED: commands/ is out of sync with skills/ -- run `ng gen-commands`:")
+            for name in drifted:
+                print(f"- {name}")
+            return 1
+        print("OK: every command card matches its skill.")
+        return 0
+
+    written = gen_commands.write(repo)
+    print(f"Generated {len(written)} command card(s) from skills/ into commands/.")
     return 0
 
 

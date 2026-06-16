@@ -73,6 +73,30 @@ A good brief is how you supply competence and clarity so the agent can decide we
 - No record of the last action that finished, for work that is resumed or handed off.
 - The source lineage is pasted in whole instead of linked.
 
+## Prompt
+
+```text
+Build a Nuclear-grade context pack for this work.
+
+Inputs:
+- packet: .nuclear/changes/<slug>/
+- role: <builder|reviewer|verifier|releaser|researcher>
+- decision question: <one sentence>
+- objective: <one paragraph>
+- work phase: <explore|candidate|audit|accept>
+- affected files: <list>
+- last completed action:
+- changed conditions:
+- critical next action and likely error:
+- allowed commands/tools: <list>
+- forbidden actions: <list>
+- do-not-touch targets: <list>
+- approval gates: <list>
+- required evidence: <commands/links/reviews>
+
+Return a short context pack. Include the mode, the decision question, the goal, the work phase, a risk summary, a basis summary, the evidence required, the limits on what the agent may do, the claims it must not make, the open gaps, the last action completed, what has changed, the critical next action, and the next action. If responsibility is changing hands, add a step where the incoming owner confirms they understand.
+```
+
 ## Source-lineage note
 
 This skill is an original context-discipline pattern. It draws on public configuration-management, secure-development, AI-risk, and systems-engineering sources mapped in `docs/00-standards-foundation/source-map.md`. It does not create formal assurance.

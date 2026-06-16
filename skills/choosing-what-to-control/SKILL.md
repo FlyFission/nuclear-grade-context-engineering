@@ -65,6 +65,17 @@ Controlled items are the parts of a system whose approved version matters. They 
 - Public claims change but stay uncontrolled.
 - Agent tool power changes, but no controlled item records the new permission state.
 
+## Prompt
+
+List the items this change must keep under control (CM).
+
+Inputs:
+- change:
+- packet:
+- affected files/items:
+
+Return a short table. For each item, give: the item, its type, its current state, its intended state, why it is controlled, a link to its evidence (or the gap), its owner, and what should trigger a re-check. Do not list unrelated repo files. Do not imply formal assurance or compliance.
+
 ## Source-lineage note
 
 This skill is an original workflow for keeping approved versions under control. It draws on public configuration-management and software-assurance sources mapped in `docs/00-standards-foundation/source-map.md`. It does not create formal assurance or compliance.

@@ -68,6 +68,31 @@ A self-check turns a high-stakes action into a careful one. Before you claim suc
 - A mismatch is treated as a reason to retry instead of a reason to pause.
 - Public wording claims safe, secure, approved, or compliant with no scoped evidence behind it.
 
+## Prompt
+
+```text
+Self-check this Nuclear-grade agent action before it happens.
+
+Inputs:
+- packet:
+- current phase:
+- intended action:
+- exact target:
+- authority source:
+- expected result:
+- likely wrong-target or wrong-state error:
+- stop condition:
+- proof or after-action check:
+
+Return:
+- the risky point being checked;
+- the action and the target;
+- the expected result;
+- the stop condition;
+- the evidence to collect after the action;
+- whether to go ahead, pause, or ask for help.
+```
+
 ## Source-lineage note
 
 This skill is an original software-workflow translation of self-checking, pause when unsure, flagging, procedure adherence, and verification practices from DOE-HDBK-1028-2009 as public source lineage. It does not create DOE compliance, formal assurance, safety, security, certification, or regulatory adequacy.

@@ -69,6 +69,29 @@ A deficiency you have decided to live with quietly becomes the new standard. Thi
 - The same deficiency appears in incident after incident with no standing entry.
 - Standards quietly lower to match the deficiency instead of the deficiency rising to meet the standard.
 
+## Prompt
+
+```text
+Log this deficiency the Nuclear-grade way.
+
+Inputs:
+- deficiency and where it shows up:
+- how it was found:
+- consequence and frequency:
+- candidate owner:
+- related incident / OPEX / controlled item:
+
+Return:
+- a one-line description with a link to where it shows up
+- the date first seen, so its age is visible
+- the assigned owner (an unowned deficiency is itself a finding)
+- the disposition: fix by a date, or formally accept the risk with a named owner and a revisit date
+- the review trigger so an accepted risk does not become permanent by default
+- links to related incident, OPEX, and controlled-item records
+
+Decide fix-or-accept; never leave it as a silent "known issue." Do not imply formal assurance.
+```
+
 ## Source-lineage note
 
 This skill is an original software-workflow translation of not-living-with-deficiencies and rising-standards culture (concept lineage from naval-reactor practice and the normalization-of-deviation literature), grounded in the operating-experience and corrective-action habits in DOE-HDBK-1028-2009, used as public idea lineage. It does not create DOE compliance, formal assurance, safety, security, certification, or regulatory adequacy.

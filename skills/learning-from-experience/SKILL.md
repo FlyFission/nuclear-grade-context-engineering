@@ -69,6 +69,25 @@ This actual-vs-standard, root-cause, owner, verify structure keeps a retro from 
 - The record blames one person or one model as the sole cause.
 - The follow-up has no owner and no trigger.
 
+## Prompt
+
+```text
+Create a Nuclear-grade OPEX record (lessons from real operation).
+
+Inputs:
+- event or near miss:
+- affected packet / baseline / artifact:
+- evidence:
+- impact:
+- immediate correction:
+- weak or missing control:
+- candidate durable update:
+- owner:
+- due date or trigger:
+
+Produce a no-blame OPEX record. Each finding must either change a lasting control or be closed with a clear reason why not.
+```
+
 ## Source-lineage note
 
 This skill is an original software-workflow translation of operating experience, post-job review, reporting errors and near misses, change management, independent oversight, and no-blame learning practices from DOE-HDBK-1028-2009 as public source lineage. It does not create DOE compliance, formal assurance, safety, security, certification, or regulatory adequacy.

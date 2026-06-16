@@ -79,6 +79,35 @@ A change packet that is started and then abandoned is a quiet integrity problem.
 - Abandoned packets are deleted to tidy the listing, erasing decisions that should have been recorded.
 - The same kind of packet is repeatedly started and abandoned, with no OPEX note about why.
 
+## Prompt
+
+```text
+Bring a stale Nuclear-grade change packet to an honest terminal state.
+
+Inputs:
+- ng status output (packet name, mode, health tag):
+- packet path (.nuclear/changes/<slug>):
+- originating issue / PR / anchor:
+- is the underlying change still wanted? yes / no / unknown:
+
+Do this:
+- Establish ownership and intent before acting.
+- Choose exactly one terminal state:
+  - COMPLETE: change is still wanted; fill the prompts that matter, remove the
+    placeholder marker because the packet is filled, and make validate pass.
+  - CLOSE: change was deliberately abandoned; add a `NUCLEAR-GRADE-CLOSED:` marker
+    line with the rationale (why dropped, what replaced it if anything, who decided)
+    and keep the packet as a record. `ng status` then reports it as `closed`.
+  - DELETE: it was never a real change (empty scaffold, nothing to learn); remove
+    the directory so it stops looking like work.
+- Prefer CLOSE over DELETE when any rationale is worth preserving.
+- Do not fake a pass by deleting the marker on an unfilled packet.
+
+Return the chosen state, the closure note (for CLOSE), and confirmation that
+ng status no longer shows an unexplained scaffold or invalid packet.
+Do not imply formal assurance, compliance, certification, safety, security, or regulatory adequacy.
+```
+
 ## Source-lineage note
 
 This skill is an original software workflow influenced by configuration-management closure discipline and the work-control and self-checking practices in DOE-HDBK-1028-2009 mapped in `docs/00-standards-foundation/source-map.md`. It does not create DOE compliance, formal assurance, safety, security, certification, or regulatory adequacy.

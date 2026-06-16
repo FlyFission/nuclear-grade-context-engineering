@@ -35,6 +35,7 @@ templates:
     - standard/execution-trace.md
     - standard/wbs.md
     - standard/incident.md
+    - standard/stage-contract.md
 skills:
   - questioning-attitude
   - using-nuclear-grade

@@ -188,6 +188,29 @@ def test_skill_workflow_comparison_scores_both_paths_for_each_trial():
         assert nuclear_rows, f"missing Nuclear-grade score row for {trial_id}"
 
 
+def test_agentic_workflow_doc_stays_in_boundary():
+    """The agentic-workflow-architecture doctrine makes public-facing methodology
+    claims, so guard it like a public doc: boundary phrases only in negative
+    context, and the assurance + source-lineage notes must stay present. Prevents
+    the synthesis from drifting into an unbounded compliance claim over time.
+    See .nuclear/changes/incorporate-agentic-workflow-architecture/."""
+    doc = ROOT / "docs" / "02-operating-system" / "agentic-workflow-architecture.md"
+    text = doc.read_text(encoding="utf-8")
+
+    for line in text.splitlines():
+        lowered = line.lower()
+        for phrase in BOUNDARY_PHRASES:
+            if phrase.lower() in lowered:
+                assert any(marker in lowered for marker in NEGATIVE_CONTEXT), (
+                    f"agentic-workflow-architecture.md has unbounded phrase: {line}"
+                )
+
+    assert "Source-lineage note" in text, "doctrine doc must keep its source-lineage note"
+    assert "does not create compliance" in text.lower(), (
+        "doctrine doc must keep its assurance-boundary disclaimer"
+    )
+
+
 def test_prove_handle_uses_educate_and_stays_consistent():
     """PROVE/PRO are memory handles mirrored across several docs. The fifth beat
     is 'Educate' (renamed from 'Embed'); guard the mirror so the rename can't

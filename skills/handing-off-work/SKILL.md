@@ -75,6 +75,28 @@ A handoff transfers responsibility, not just context. The next person or agent h
 - New build work is mixed into the handoff.
 - The incoming owner is told to act before confirming the scope and the stop conditions.
 
+## Prompt
+
+```text
+Create a Nuclear-grade turnover record.
+
+Inputs:
+- packet:
+- current phase:
+- outgoing owner / role:
+- incoming owner / role:
+- last completed action:
+- completed artifacts:
+- changed conditions:
+- remaining work:
+- allowed files/commands/tools:
+- forbidden files/commands/tools:
+- proof still needed:
+- stop or hold conditions:
+
+Produce a short turnover record. Include the critical next action, the likely error, the control, the evidence, and a prompt for the incoming owner to confirm they have it and understand it before they act.
+```
+
 ## Source-lineage note
 
 This skill is an original software-workflow translation of turnover, effective communication, place-keeping, flagging, task briefing, and review practices from DOE-HDBK-1028-2009 as public source lineage. It does not create DOE compliance, formal assurance, safety, security, certification, or regulatory adequacy.

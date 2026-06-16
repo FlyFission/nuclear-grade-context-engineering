@@ -95,6 +95,35 @@ The anchor is also the clarity that lets authority move to the edge: it is the c
 - A standard was loosened without a justification row.
 - Progress is measured by activity (tokens, edits) instead of by success criteria met.
 
+## Prompt
+
+```text
+Run a Nuclear-grade mission-drift check on the current work.
+
+Inputs:
+- mission anchor (objective, success criteria, non-goals):
+- charter principles in play:
+- current action:
+- recent attempts at this objective (how many, what variants):
+- affected files / diff so far:
+
+Do this:
+- Restate the goal from the written record, not from memory.
+- Zoom out one layer; judge at the level of the goal and the architecture, not the detail.
+- Test the current action against the success criteria and the non-goals.
+- Decide whether the action serves the mission, or a smaller local goal that has quietly replaced it.
+- Check the loop: if the same goal has failed 3 times, stop trying the next variant.
+- Check for slipping standards against the charter and any countable tripwires.
+
+Return one decision:
+- RE-ANCHOR: the action serves the mission; restate the goal and continue.
+- ESCALATE: a non-goal or a standard must be crossed for a defensible reason; include a justification row (what is crossed, why, and why no simpler path exists).
+- STOP: the action serves a smaller local goal, or the justification does not hold.
+
+Also return the updated goal text, so the decision survives the next context reset.
+Do not imply formal assurance, compliance, certification, safety, security, or regulatory adequacy.
+```
+
 ## Source-lineage note
 
 This skill is an original software workflow influenced by nuclear-industry mission ownership and rising-standards culture (Rickover and Navy nuclear practice as concept lineage, not an implemented program) and by the change-management, decision-making, and self-checking practices in DOE-HDBK-1028-2009 mapped in `docs/00-standards-foundation/source-map.md`. It does not create DOE compliance, formal assurance, safety, security, certification, or regulatory adequacy.

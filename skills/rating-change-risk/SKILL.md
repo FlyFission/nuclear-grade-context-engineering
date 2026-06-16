@@ -79,6 +79,28 @@ Sort the change before you build it. That way the care you take matches the stak
 - No rollback or restore path is named for release-facing work.
 - The agent's tool power is broader than the change record shows.
 
+## Prompt
+
+```text
+Sort this change into a Nuclear-grade mode.
+
+Inputs:
+- Request or diff: <paste/link>
+- Affected files/assets: <list>
+- Impact on users, security, dependencies, data, AI behavior, or release: <known facts>
+
+Return:
+- the decision question and the proof that must clear before work goes on
+- the chosen mode: Quick, Standard, or a stronger mode that a human reviews
+- how bad it is if wrong, how easy to undo, how exposed, how easy to catch, how uncertain
+- the work mode and which safety habit (HPI) to use: none, context pack, handoff, self-check, an independent check, a record of lessons from real operation (OPEX), or a trust check
+- the assumptions or facts that drove the mode choice
+- the record files this mode needs
+- the least proof required
+- the conditions that should make you ask for help
+- a limits note: do not claim formal verification and validation, compliance, certification, safety, security, or regulatory adequacy
+```
+
 ## Source-lineage note
 
 This skill is an original risk-scaling workflow. It draws on public sources mapped in `docs/00-standards-foundation/source-map.md`. It does not set any regulatory class and does not create compliance.

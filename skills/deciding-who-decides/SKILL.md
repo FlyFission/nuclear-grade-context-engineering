@@ -79,6 +79,29 @@ Authority should sit where the evidence and competence are, not automatically at
 - The escalation trigger is vague ("if it seems risky") rather than a named condition.
 - An irreversible action is placed at the edge because the diff looked small.
 
+## Prompt
+
+```text
+Decide who decides for this action the Nuclear-grade way.
+
+Inputs:
+- action and target:
+- reversible? (yes/no):
+- evidence and how good it is:
+- consequence if wrong:
+- agent authority / existing human gates:
+
+Return:
+- the decision in one sentence, and whether it is reversible
+- evidence rating (proven / partial / asserted) and consequence rating (low / meaningful / protected)
+- placement: who decides (agent at the edge, or a named human gate)
+- the concrete escalation trigger an agent can obey
+- any human approval that stays mandatory regardless of the gradient
+- a check that the placement raises rigor at the boundary, not lowers it
+
+Do not let confidence stand in for evidence. Do not use "authority to information" to skip a required gate.
+```
+
 ## Source-lineage note
 
 This skill is an original software-workflow translation of decentralized-decision and decision-rights ideas. Pushing authority to where the information is takes concept inspiration from intent-based leadership (paraphrased, not template lineage; see `docs/00-standards-foundation/do-not-cite-directly.md`) and from public naval mission-command doctrine, bounded by the conservative-decision-making and questioning-attitude habits in DOE-HDBK-1028-2009, mapped in `docs/00-standards-foundation/source-map.md`. It does not create DOE compliance, formal assurance, safety, security, certification, or regulatory adequacy.

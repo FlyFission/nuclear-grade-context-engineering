@@ -73,6 +73,27 @@ Trusting outside code is really a decision about how you will use it. A dependen
 - Public claims go past the evidence you actually saw.
 - Tests pass, but the dependency advisory, license, permission, or model-behavior evidence is missing.
 
+## Prompt
+
+```text
+Check Nuclear-grade dependency/model/API trust.
+
+Inputs:
+- packet:
+- external item:
+- provider/source:
+- version/model/API surface:
+- intended use:
+- consequence if wrong/unavailable/compromised/changed:
+- data/credential/permission/network impact:
+- vendor/source claims:
+- repo-observed evidence:
+- compensating controls:
+- revalidation trigger:
+
+Keep the outside claims separate from your local evidence. Return a decision for how you intend to use it, the gaps, the controls that make up for them, the effect on the release, and whether to ship, defer, block, or require a qualified review.
+```
+
 ## Source-lineage note
 
 This skill is an original software-workflow translation of vendor oversight, validation of assumptions, verification practices, change management, and conservative decision making from DOE-HDBK-1028-2009 plus public software supply-chain and AI-risk source families mapped in the repo. It does not create DOE compliance, formal assurance, safety, security, certification, procurement adequacy, or regulatory adequacy.

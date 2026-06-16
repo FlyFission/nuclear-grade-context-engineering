@@ -75,6 +75,17 @@ An impact screen asks a simple question. When a controlled item changes, what el
 - A template's shape changed, but the checker or tests did not.
 - Evidence was deleted while change records still link to it.
 
+## Prompt
+
+Run a Nuclear-grade ripple-effect check.
+
+Inputs:
+- packet:
+- controlled items:
+- planned or actual diff:
+
+For each family of files, decide one of: update, leave as is, defer, or block. Name the updates needed, the controls now stale, the evidence links, the owners, and what should trigger a re-check. Pay close attention to public claims, validator behavior, source-lineage notes, handoffs, trust checks, lessons from operation (OPEX), and the release. When the change touches a running system or stored data, also screen the runtime blast radius: schema and state migration, API consumers that depend on the contract, backward-compatibility, and rollback-of-state.
+
 ## Source-lineage note
 
 This skill is an original impact-screen workflow. It draws on public configuration-management, lifecycle, secure-development, and release-readiness sources mapped in `docs/00-standards-foundation/source-map.md`. It does not create formal assurance or compliance.

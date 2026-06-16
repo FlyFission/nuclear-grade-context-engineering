@@ -77,6 +77,24 @@ Evidence should answer named claims. It should not just create a vague sense tha
 - A claim says "safe", "secure", "compliant", or "approved" with no scope around it.
 - The release decision ignores failed or deferred evidence.
 
+## Prompt
+
+```text
+Prove the important Nuclear-grade claims in this packet.
+
+Inputs:
+- packet: .nuclear/changes/<slug>/
+- claims: <list or source file>
+- evidence available: <commands/links/reviews/logs>
+- known gaps: <list>
+
+Return:
+- claim -> basis -> control/design feature -> support type -> verification type -> evidence -> status -> ship posture
+- narrower wording for any claim that is too broad
+- the gaps, deferrals, or blockers, stated plainly
+- the validator command to run
+```
+
 ## Source-lineage note
 
 This skill is an original claim-evidence workflow influenced by public software assurance, verification discipline, and secure development sources mapped in `docs/00-standards-foundation/source-map.md`. It is not formal verification.

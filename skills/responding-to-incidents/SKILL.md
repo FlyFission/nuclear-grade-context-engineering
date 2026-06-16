@@ -78,6 +78,30 @@ In a casualty you stabilize first and analyze second. An incident is run by one 
 - Status goes quiet for long stretches during the event.
 - The incident is closed with corrective actions that have no owner or no closure trigger.
 
+## Prompt
+
+```text
+Run this incident the Nuclear-grade stabilize-first way.
+
+Inputs:
+- symptom and start time:
+- what changed just before:
+- responders and who can authorize rollback/failover/comms:
+- reversible actions available:
+- status channel and cadence:
+
+Return:
+- the named commander and the role for each responder
+- the safest reversible stabilizing action to take first
+- a running timeline with each line labeled fact or hypothesis
+- decisions recorded with who made them, reversible-first while the cause is unconfirmed
+- the fixed status cadence
+- corrective actions, each with an owner and a closure trigger
+- the handoff to the post-incident learning and deficiency records
+
+Stabilize first, analyze second. Do not act on an unconfirmed cause with an irreversible fix. Do not imply this is a safety or compliance program.
+```
+
 ## Source-lineage note
 
 This skill is an original software-workflow translation of stabilize-first casualty-control response (concept lineage from naval damage-control and high-reliability incident practice), grounded in the procedure-use, place-keeping, three-way-communication, turnover, and operating-experience habits in DOE-HDBK-1028-2009, used as public idea lineage. It does not create DOE compliance, formal assurance, safety, security, certification, or regulatory adequacy.

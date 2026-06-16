@@ -78,6 +78,29 @@ Before a critical action, say what you intend to do and the reasoning behind it,
 - The review window is zero because the work felt urgent.
 - A reviewer approves the result without ever seeing the reasoning.
 
+## Prompt
+
+```text
+Declare intent before this action the Nuclear-grade way.
+
+Inputs:
+- intended action and target:
+- reasoning / evidence preconditions are met:
+- expected result:
+- abort criteria (numbers where possible):
+- rollback (and is it verified?):
+- who may stop it, by when / backup watcher:
+
+Return:
+- "I intend to <action> on <target> because <evidence/reasoning>"
+- the expected result and the precise signals that would falsify it
+- the abort criteria and the verified rollback
+- the decision rights and the backup
+- after acting: the actual result compared to the expected result, and any gap
+
+State what would prove this wrong, not just what success looks like. Treat the stated intent as a proposal to review, not proof the agent understood. Do not imply certification or formal assurance.
+```
+
 ## Source-lineage note
 
 This skill is an original software-workflow translation of stating intent before acting. The "I intend to" construct and leader-leader idea are concept inspiration from intent-based leadership only — paraphrased, not template lineage (a copyrighted source; see `docs/00-standards-foundation/do-not-cite-directly.md`). Its public idea lineage is the deliberate-action, self-checking, and three-way-communication habits in DOE-HDBK-1028-2009, mapped in `docs/00-standards-foundation/source-map.md`. It does not create DOE compliance, formal assurance, safety, security, certification, or regulatory adequacy.

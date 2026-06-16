@@ -78,6 +78,23 @@ A change record keeps the whole story in Git, together: the scope, what the chan
 - Claims that reach past what the tests or the review evidence cover.
 - Record files that repeat each other instead of linking.
 
+## Prompt
+
+```text
+Create or update a Nuclear-grade change record.
+
+Inputs:
+- slug: <slug>
+- mode: <quick|standard>
+- scope: <summary>
+- affected files/assets: <list>
+- questioned assumptions: <list>
+- what the change must prove: <command/review/evidence>
+- safety-habit (HPI) records started: <turnover/self-check/opex/supplier-trust/none>
+
+Use the repo templates. Keep the record short. Lean on links, and point at evidence. Include the required links, the conditions for being done, and a note on where the ideas come from. Do not imply formal assurance or compliance.
+```
+
 ## Source-lineage note
 
 This change-record skill is an original Git-native workflow. It draws on public configuration, lifecycle, assurance, secure-development, and release-readiness sources mapped in `docs/00-standards-foundation/source-map.md`. It does not create a certified quality assurance program.

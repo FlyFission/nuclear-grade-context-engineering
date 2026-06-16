@@ -88,6 +88,33 @@ This is the front door. Before an agent builds, merges, or releases, find the re
 - Words like "probably", "should", "safe", "secure", "approved", or "compliant" show up with no evidence.
 - Release text says "safe", "secure", "approved", or "compliant" without a qualified outside authority behind it.
 
+## Prompt
+
+```text
+Question this change the Nuclear-grade way.
+
+Inputs:
+- request/diff/change record:
+- affected items:
+- known assumptions:
+- evidence available:
+- limits or deadlines:
+
+Return:
+- the decision question in one sentence
+- the work type(s), all that apply (a production defect is brownfield and defect-fix), and the questions each forces
+- the evidence that would change the decision
+- the assumptions that must be true
+- known facts, unknowns, danger words, and worries about how good the sources are
+- facts to check before work continues
+- warning signs, signs an agent is about to slip, steps where mistakes are likely, and hidden reasons to treat this as a Standard change
+- evidence needed before you execute, verify, review, decide, or save the approved version (the baseline)
+- conditions that should make you pause or ask for help
+- the next thing to produce: Quick proof, Standard spec, context pack, handoff, self-check, a record of what stays under control (the controlled items), or a release decision
+
+Trust facts over confidence. Do not imply formal verification and validation, compliance, certification, safety, security, or regulatory adequacy.
+```
+
 ## Source-lineage note
 
 This skill is an original software-workflow translation of the questioning-attitude, validate-your-assumptions, pause-when-unsure, and review habits from DOE-HDBK-1028-2009, the Human Performance Improvement Handbook, Volumes 1 and 2, used as public idea lineage. It does not create DOE compliance, formal assurance, safety, security, certification, or regulatory adequacy.

@@ -24,6 +24,15 @@ A self-assessment produces findings, not a new register. Each finding routes to 
 - A known problem that will outlive this look becomes a deficiency-register entry — with an owner, a disposition, and a review trigger (`deficiency-register.md`).
 - A finding touching safety, security, data integrity, or a protected outcome escalates rather than waiting for the next assessment.
 
+## Independence, proportionate to consequence
+
+Who performs the assessment scales with what is at stake. Routine, low-consequence work can be
+self-assessed reflexively. **Release-bearing or protected-outcome work is assessed — or
+independently reviewed — by someone not responsible for the work being graded**, with findings
+routed to the deciding authority, so a team cannot quietly pass its own adherence. This applies
+the graded, independent-verification principle the repo already uses for high-tier proof
+(`deciding-who-decides`, `proving-claims`) on a schedule; it adds no new independence machinery.
+
 ## The discipline
 
 An assessment that raises nothing is the finding worth distrusting most. Name a real gap against the standard, or record why none is warranted this time — silence is not evidence of health. Keep it lightweight and proportionate: the point is honest actual-vs-standard correction routed to an owner, not assessment theater and not a second copy of the mechanical checks `ng doctor` already runs. Raise the work to meet the standard; do not quietly lower the standard to match how the work has drifted.

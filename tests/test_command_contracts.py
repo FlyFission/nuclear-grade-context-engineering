@@ -1,5 +1,7 @@
 from pathlib import Path
 
+from nuclear_grade.cli import OPTIONAL_FILES
+
 ROOT = Path(__file__).resolve().parents[1]
 COMMANDS_DIR = ROOT / "commands"
 COMMANDS_INDEX = ROOT / "COMMANDS.md"
@@ -77,3 +79,24 @@ def test_catalog_lists_every_command_card():
 
     for command_name in EXPECTED_COMMANDS:
         assert f"  - {command_name}" in catalog
+
+
+def test_catalog_optional_templates_match_cli():
+    """The CLI's OPTIONAL_FILES tuple and the catalog's templates.optional list
+    are two copies of one fact. Guard them so an optional template added to the
+    catalog (but not the tuple) cannot silently drop out of `ng list`/`ng doctor`.
+    """
+    optional: list[str] = []
+    in_block = False
+    for line in CATALOG.read_text(encoding="utf-8").splitlines():
+        if line.startswith("  optional:"):
+            in_block = True
+            continue
+        if in_block:
+            if line.lstrip().startswith("- "):
+                optional.append(line.split("- ", 1)[1].strip())
+            elif line.strip() and not line.startswith("    "):
+                break
+
+    assert optional, "could not parse templates.optional from nuclear-grade.yaml"
+    assert set(optional) == set(OPTIONAL_FILES)

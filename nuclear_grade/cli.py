@@ -77,6 +77,7 @@ OPTIONAL_FILES = (
     "standard/execution-trace.md",
     "standard/wbs.md",
     "standard/incident.md",
+    "standard/stage-contract.md",
 )
 MODE_FILES = {
     "quick": QUICK_FILES,

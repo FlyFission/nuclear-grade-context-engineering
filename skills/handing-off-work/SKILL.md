@@ -9,6 +9,14 @@ description: Hands off unfinished work with a closed-loop briefing of state, cha
 
 A handoff transfers responsibility, not just context. The next person or agent has to know what changed, what is left, what they are allowed to do, and when to stop.
 
+## Decision contract
+
+- **Claim checked:** the receiving owner can resume without the chat history -- the last finished action, changed conditions, remaining scope, authority limits, open evidence, and stop conditions are all stated -- and the owner has restated scope, authority, proof owed, and when to stop before acting.
+- **Artifact observed:** the change-record path, current phase, mode, the done/changed/assumed/open state, and the authority limits -> a `turnover.md` with the resume point, what changed, what remains, the next decision gate, and the incoming owner's confirmation.
+- **Decision affected:** block -- whether the receiving owner may resume, or must hold and re-question first.
+- **Failure class:** open-loop-handoff (state only implied, or the owner acts before confirming scope and stop conditions).
+- **Next action:** make the incoming owner restate scope, authority, and stop conditions first; escalate when credentials, production data, or release authority are involved.
+
 ## When to Use
 
 - Another agent, a reviewer, a verifier, a releaser, or a support owner will keep working.
@@ -66,6 +74,28 @@ A handoff transfers responsibility, not just context. The next person or agent h
 - No section for the conditions that changed.
 - New build work is mixed into the handoff.
 - The incoming owner is told to act before confirming the scope and the stop conditions.
+
+## Prompt
+
+```text
+Create a Nuclear-grade turnover record.
+
+Inputs:
+- packet:
+- current phase:
+- outgoing owner / role:
+- incoming owner / role:
+- last completed action:
+- completed artifacts:
+- changed conditions:
+- remaining work:
+- allowed files/commands/tools:
+- forbidden files/commands/tools:
+- proof still needed:
+- stop or hold conditions:
+
+Produce a short turnover record. Include the critical next action, the likely error, the control, the evidence, and a prompt for the incoming owner to confirm they have it and understand it before they act.
+```
 
 ## Source-lineage note
 

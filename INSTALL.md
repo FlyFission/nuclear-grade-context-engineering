@@ -16,6 +16,34 @@ For Claude Code users, this repository is its own plugin marketplace. Add it, in
 
 The plugin exposes the existing skills (`skills/`) and command prompts (`commands/`). It configures **no hooks**, so nothing runs automatically when you install it or start a session. Because the marketplace source is the repository root, the install also copies the repo's `ng` Python CLI into Claude's plugin cache — but the plugin adds no `ng` command to your `PATH` and runs nothing on its own. The CLI is a separate, repo-side tool: to use it, work from a checkout of this repo (the **Use in this repo** and **Add to another repo** steps below), not from the plugin install alone.
 
+## Install into Codex, Cursor, Windsurf, or VS Code
+
+Nuclear-grade's skills are plain `SKILL.md` files that every modern agent tool
+auto-surfaces by their `description` — the same files work unmodified across
+tools. `ng install` places them where each tool looks:
+
+```bash
+python tools/ng.py install codex          # ~/.agents/skills (Core set; install once)
+python tools/ng.py install codex --full   # all 27 skills
+python tools/ng.py install claude         # ~/.claude/skills
+python tools/ng.py install cursor         # ~/.cursor/skills
+python tools/ng.py install windsurf --scope project --repo .   # .windsurf/skills (project-scoped)
+```
+
+Or fan out to every detected tool in one step:
+
+```bash
+./install.sh          # Core set into each detected tool
+./install.sh --full   # all skills
+```
+
+The Core set is the always-first router plus the Core 7 (the lean default);
+`--full` adds the rest. The command prints the always-on token cost so you can
+keep context lean, and re-running updates in place. See
+[`INTEGRATIONS.md`](INTEGRATIONS.md) for per-tool paths, the `--scope`/`--dest`
+options, the opt-in MCP server (`nuclear-grade[mcp]`), and how skills compare to
+MCP on token cost.
+
 ## Requirements
 
 - Python 3.11 or newer (tested on 3.12).

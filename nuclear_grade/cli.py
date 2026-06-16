@@ -7,6 +7,8 @@ engineering adequacy, safety, security, compliance, or verification and validati
 from __future__ import annotations
 
 import argparse
+import os
+import re
 import shutil
 import sys
 from dataclasses import dataclass
@@ -15,7 +17,9 @@ from pathlib import Path
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from nuclear_grade import gen_commands
 from nuclear_grade.efficacy import run_all as run_efficacy
+from nuclear_grade.metrics import build_inventory
 from nuclear_grade.ng_validate import (
     PLACEHOLDER_MARKER,
     check_internal_links,
@@ -27,8 +31,10 @@ from nuclear_grade.tokens import (
     build_report,
     check_budgets,
     cost_per_signal,
+    count_tokens,
     load_budgets,
     phrase_frequency,
+    split_frontmatter,
 )
 
 PACKAGE_DIR = Path(__file__).resolve().parent
@@ -71,6 +77,7 @@ OPTIONAL_FILES = (
     "standard/execution-trace.md",
     "standard/wbs.md",
     "standard/incident.md",
+    "standard/stage-contract.md",
 )
 MODE_FILES = {
     "quick": QUICK_FILES,
@@ -78,6 +85,39 @@ MODE_FILES = {
     "cm": CM_FILES,
     "golden-path": GOLDEN_PATH_FILES,
 }
+
+# --- `ng install`: cross-tool skill distribution --------------------------------
+# Skills auto-surface in each tool by their frontmatter `description` (the model
+# picks them when a request matches); installing is just placing the same SKILL.md
+# files where the tool looks for them. The lean `--core` profile ships the
+# always-first router plus the Core 7 dispositions (see CORE.md); `--full` ships
+# every skill under skills/*/.
+CORE_SKILLS = (
+    "using-nuclear-grade",  # the always-first router
+    "questioning-attitude",
+    "rating-change-risk",
+    "proving-claims",
+    "double-checking-before-acting",
+    "staying-on-mission",
+    "checking-release-readiness",
+    "learning-from-experience",
+)
+
+INSTALL_TOOLS = ("codex", "claude", "cursor", "windsurf", "vscode")
+TOOL_LABELS = {
+    "codex": "Codex CLI",
+    "claude": "Claude Code",
+    "cursor": "Cursor",
+    "windsurf": "Windsurf",
+    "vscode": "VS Code + Copilot",
+}
+# Skill-directory paths confirmed against each tool's current docs (Codex, Claude
+# Code, Cursor, Windsurf). VS Code's project path (.github/skills) is confirmed,
+# but its user-scope path is a best-known default, so VS Code stays unverified:
+# unverified tools print a "verify / override with --dest" note so a wrong default
+# is obvious and recoverable rather than silently writing to the wrong place.
+VERIFIED_TOOLS = frozenset({"codex", "claude", "cursor", "windsurf"})
+
 REQUIRED_PUBLIC_FILES = (
     "README.md",
     "DISCLAIMER.md",
@@ -100,6 +140,7 @@ REQUIRED_PUBLIC_FILES = (
 )
 REQUIRED_SKILL_SECTIONS = (
     "## Overview",
+    "## Decision contract",
     "## When to Use",
     "## When Not to Use",
     "## Inputs",
@@ -111,18 +152,36 @@ REQUIRED_SKILL_SECTIONS = (
     "## Red Flags",
     "## Source-lineage note",
 )
-REQUIRED_COMMAND_SECTIONS = (
-    "## Purpose",
-    "## Use when",
-    "## Do not use when",
-    "## Inputs",
-    "## Prompt text",
-    "## Files created or modified",
-    "## Expected outputs",
-    "## Verification command",
-    "## Failure modes",
-    "## Legal/assurance boundary note",
+# Command cards are generated from skills (see nuclear_grade/gen_commands.py), so
+# the required-section contract is single-sourced there. When commands became
+# generated, the card dropped from ten hand-authored sections to five projected
+# ones; the dropped material (purpose, files, expected outputs, the verification
+# command, failure modes, legal note) now lives in the skill the card points to.
+REQUIRED_COMMAND_SECTIONS = gen_commands.REQUIRED_CARD_SECTIONS
+
+# A skill's `## Decision contract` block is the compact receipt every run must emit:
+# the claim checked, the artifact observed, the decision affected (with its tier), the
+# failure class, and the next action. The labels are load-bearing -- a reviewer (and
+# this lint) reads them to learn what running the skill could change. The tier keeps
+# the control loop from becoming audit-the-audit: only `block` and `warn` are promoted
+# into the operator receipt (`ng decisions`); `observe` stays in telemetry. Tiers are
+# declarable, but a skill demoting itself to noise is not: a check that never moves a
+# decision is surfaced by measurement (`ng eval`/`ng tokens`) over runs, because a
+# guard inside the writable set is a suggestion the author can edit.
+DECISION_CONTRACT_LABELS = (
+    "**Claim checked:**",
+    "**Artifact observed:**",
+    "**Decision affected:**",
+    "**Failure class:**",
+    "**Next action:**",
 )
+DECISION_TIERS = ("block", "warn", "observe")
+# Promoted into the operator receipt; the rest (observe) stays in telemetry.
+DECISION_RECEIPT_TIERS = ("block", "warn")
+DECISION_TIER_PATTERN = re.compile(
+    r"\*\*Decision affected:\*\*\s*(block|warn|observe)\b", re.IGNORECASE
+)
+DECISION_TEXT_PATTERN = re.compile(r"\*\*Decision affected:\*\*\s*(.+)")
 
 MODE_DEFAULT_BLOCK = {
     "quick": "## Selected mode\n\n- **Mode:** Quick\n",
@@ -337,6 +396,74 @@ def build_parser() -> argparse.ArgumentParser:
     tokens_parser.add_argument("repo", nargs="?", default=".", type=Path)
     tokens_parser.set_defaults(handler=handle_tokens)
 
+    install_parser = subcommands.add_parser(
+        "install",
+        help="Install skills into a tool's skills directory so they auto-surface (codex, claude, cursor, windsurf, vscode).",
+    )
+    install_parser.add_argument("tool", choices=INSTALL_TOOLS)
+    profile_group = install_parser.add_mutually_exclusive_group()
+    profile_group.add_argument(
+        "--core",
+        dest="full",
+        action="store_false",
+        help="Install the lean Core set: the router + Core 7 (default).",
+    )
+    profile_group.add_argument(
+        "--full",
+        dest="full",
+        action="store_true",
+        help="Install every skill.",
+    )
+    install_parser.set_defaults(full=False)
+    install_parser.add_argument(
+        "--scope",
+        choices=("user", "project"),
+        default="user",
+        help="user = available in every project (default); project = inside --repo.",
+    )
+    install_parser.add_argument("--repo", default=".", type=Path, help="Repo root for --scope project.")
+    install_parser.add_argument("--dest", default=None, help="Override the destination skills directory.")
+    install_parser.add_argument("--dry-run", action="store_true")
+    install_parser.set_defaults(handler=handle_install)
+
+    mcp_config_parser = subcommands.add_parser(
+        "mcp-config",
+        help="Print the MCP server config to register nuclear-grade's checks as tools (codex, claude, cursor, windsurf, vscode).",
+    )
+    mcp_config_parser.add_argument("tool", choices=INSTALL_TOOLS)
+    mcp_config_parser.set_defaults(handler=handle_mcp_config)
+
+    metrics_parser = subcommands.add_parser(
+        "metrics",
+        help="Count the repo's parts (skills, commands, docs, templates, records) for a before/after comparison.",
+    )
+    metrics_parser.add_argument("repo", nargs="?", default=".", type=Path)
+    metrics_parser.set_defaults(handler=handle_metrics)
+
+    gen_commands_parser = subcommands.add_parser(
+        "gen-commands",
+        help="Generate commands/*.md cards from skills/*/SKILL.md (the single source).",
+    )
+    gen_commands_parser.add_argument("repo", nargs="?", default=".", type=Path)
+    gen_commands_parser.add_argument(
+        "--check",
+        action="store_true",
+        help="Report drift between the cards and their skills instead of writing (for CI).",
+    )
+    gen_commands_parser.set_defaults(handler=handle_gen_commands)
+
+    decisions_parser = subcommands.add_parser(
+        "decisions",
+        help="Operator receipt: the block/warn decision each skill can move (observe stays in telemetry).",
+    )
+    decisions_parser.add_argument("repo", nargs="?", default=".", type=Path)
+    decisions_parser.add_argument(
+        "--all",
+        action="store_true",
+        help="Also list observe-class skills held in telemetry, not just the promoted receipt.",
+    )
+    decisions_parser.set_defaults(handler=handle_decisions)
+
     return parser
 
 
@@ -409,6 +536,145 @@ def handle_scaffold_ci(args: argparse.Namespace) -> int:
         PlannedWrite(workflow, content=content),
     ]
     return apply_writes(writes, dry_run=args.dry_run, overwrite=args.force)
+
+
+def _vscode_user_skills() -> Path:
+    """VS Code + GitHub Copilot user-scope skills dir.
+
+    Windows uses %APPDATA%\\github-copilot\\skills; elsewhere
+    ~/.config/github-copilot/skills.
+    """
+
+    appdata = os.environ.get("APPDATA")
+    if appdata:
+        return Path(appdata) / "github-copilot" / "skills"
+    return Path.home() / ".config" / "github-copilot" / "skills"
+
+
+def install_dest(tool: str, scope: str, repo: Path) -> Path:
+    """Resolve the skills directory a tool reads, for the requested scope.
+
+    `user` scope installs once for every project; `project` scope installs inside
+    one repo. Paths are each tool's documented skills location as of 2026-06.
+    Codex/Claude/Cursor are doc-confirmed; Windsurf-user and VS Code paths are
+    best-known. Override any of them with --dest.
+    """
+
+    home = Path.home()
+    if tool == "codex":
+        # Codex scans .agents/skills from the cwd up to the repo root (project)
+        # and $HOME/.agents/skills (user). See developers.openai.com/codex/skills.
+        return (repo / ".agents" / "skills") if scope == "project" else (home / ".agents" / "skills")
+    if tool == "claude":
+        return (repo / ".claude" / "skills") if scope == "project" else (home / ".claude" / "skills")
+    if tool == "cursor":
+        return (repo / ".cursor" / "skills") if scope == "project" else (home / ".cursor" / "skills")
+    if tool == "windsurf":
+        # Project: .windsurf/skills. User: ~/.codeium/windsurf/skills.
+        return (repo / ".windsurf" / "skills") if scope == "project" else (home / ".codeium" / "windsurf" / "skills")
+    if tool == "vscode":
+        # VS Code + Copilot: project .github/skills (team-shared); user ~/.config/github-copilot/skills.
+        return (repo / ".github" / "skills") if scope == "project" else _vscode_user_skills()
+    raise ValueError(f"unknown tool: {tool}")
+
+
+def handle_install(args: argparse.Namespace) -> int:
+    if args.full:
+        names = [path.parent.name for path in sorted(SKILLS.glob("*/SKILL.md"))]
+        profile = "full"
+    else:
+        names = list(CORE_SKILLS)
+        profile = "core"
+
+    missing = [name for name in names if not (SKILLS / name / "SKILL.md").is_file()]
+    if missing:
+        print(f"missing source skills: {', '.join(sorted(missing))}", file=sys.stderr)
+        return 2
+
+    repo = args.repo.resolve()
+    dest = Path(args.dest).expanduser().resolve() if args.dest is not None else install_dest(args.tool, args.scope, repo)
+
+    # Reuse apply_writes for dry-run, parent creation, and copy. An install is an
+    # update, so overwrite refreshes existing skill files when re-run.
+    writes: list[PlannedWrite] = [PlannedWrite(dest, is_dir=True)]
+    for name in names:
+        skill_dir = SKILLS / name
+        writes.append(PlannedWrite(dest / name, is_dir=True))
+        for src in sorted(path for path in skill_dir.rglob("*") if path.is_file()):
+            writes.append(PlannedWrite(dest / name / src.relative_to(skill_dir), source=src))
+
+    code = apply_writes(writes, dry_run=args.dry_run, overwrite=True)
+    if code != 0:
+        return code
+
+    # The honest always-on cost: the sum of the installed skills' descriptions,
+    # which a routing agent reads every session whether or not a skill fires.
+    standing = sum(
+        count_tokens(split_frontmatter((SKILLS / name / "SKILL.md").read_text(encoding="utf-8"))[0])
+        for name in names
+    )
+    label = TOOL_LABELS[args.tool]
+    verb = "would install" if args.dry_run else "installed"
+    print(f"\n{verb} {len(names)} skill(s) ({profile} profile) for {label} -> {dest}")
+    print(f"always-on description cost: ~{standing} tokens (skill bodies load only when a skill fires)")
+    if profile == "core":
+        print("re-run with --full for all skills; re-run anytime to update.")
+    if args.tool not in VERIFIED_TOOLS and args.dest is None:
+        print(
+            f"note: the {label} skills path is a best-known default; verify against the tool's "
+            "current docs, or override with --dest <path>."
+        )
+    return 0
+
+
+def _mcp_json(top_key: str) -> str:
+    return (
+        "{\n"
+        f'  "{top_key}": {{\n'
+        '    "nuclear-grade": {\n'
+        '      "command": "python",\n'
+        '      "args": ["-m", "nuclear_grade.mcp_server"]\n'
+        "    }\n"
+        "  }\n"
+        "}\n"
+    )
+
+
+def handle_mcp_config(args: argparse.Namespace) -> int:
+    """Print a ready-to-paste MCP server config for the chosen tool.
+
+    Prints rather than edits: merging into a user's config file is theirs to do.
+    The server needs the optional extra:  pip install "nuclear-grade[mcp]".
+    """
+
+    tool = args.tool
+    if tool == "codex":
+        path = "~/.codex/config.toml"
+        snippet = (
+            "[mcp_servers.nuclear_grade]\n"
+            'command = "python"\n'
+            'args = ["-m", "nuclear_grade.mcp_server"]\n'
+        )
+    else:
+        path, top_key = {
+            "claude": (".mcp.json (project) or ~/.claude.json (user)", "mcpServers"),
+            "cursor": (".cursor/mcp.json (project) or ~/.cursor/mcp.json (user)", "mcpServers"),
+            "windsurf": ("~/.codeium/windsurf/mcp_config.json", "mcpServers"),
+            "vscode": (".vscode/mcp.json", "servers"),
+        }[tool]
+        snippet = _mcp_json(top_key)
+
+    print(f"# Register nuclear-grade's checks as MCP tools for {TOOL_LABELS[tool]}.")
+    print('# First install the optional extra:  pip install "nuclear-grade[mcp]"')
+    print(f"# File: {path}")
+    print(snippet, end="")
+    if tool == "claude":
+        print("# or run: claude mcp add nuclear-grade -- python -m nuclear_grade.mcp_server")
+    print(
+        "# Note: MCP tool schemas load into context every session (~1k tokens/tool); "
+        "skills stay leaner -- prefer `ng install` unless your tool must CALL the checks."
+    )
+    return 0
 
 
 def handle_new(args: argparse.Namespace) -> int:
@@ -670,6 +936,135 @@ def handle_tokens(args: argparse.Namespace) -> int:
     return 0
 
 
+def handle_metrics(args: argparse.Namespace) -> int:
+    repo = args.repo.resolve()
+    inv = build_inventory(repo)
+
+    rows = (
+        (inv.skills, "skills", "skills/*/SKILL.md"),
+        (inv.commands, "commands", "commands/*.md"),
+        (inv.template_files, f"template files across {inv.template_modes} modes", "templates/**/*.md"),
+        (inv.root_docs, "root docs", "*.md"),
+        (inv.docs_tree, "docs/ reference tree", "docs/**/*.md"),
+        (inv.change_record_files, f"change-record files in {inv.change_record_packets} packets", ".nuclear/**/*.md"),
+        (inv.starter_kits, "starter kits", "starter-kit/*/"),
+        (inv.agent_roles, "agent-role docs", "agents/*.md"),
+    )
+    print("Nuclear-grade part inventory (counts parts, not their quality or necessity):\n")
+    print(f"  {'count':>6}  surface")
+    print(f"  {'-' * 6}  {'-' * 7}")
+    for count, label, source in rows:
+        print(f"  {count:>6}  {label}  ({source})")
+
+    print("\nDerived:")
+    generated = (
+        f", {inv.generated_commands} of {inv.commands} commands generated from skills"
+        if inv.generated_commands
+        else ""
+    )
+    print(
+        f"  authored skill/command surface: {inv.authored_surface} hand-maintained objects"
+        f"{generated} ({inv.commands_per_skill:.1f} command cards per skill)"
+    )
+    print(f"  self-contained prose files (skills+commands+templates+root+docs): {inv.prose_files}")
+    print(f"  total markdown files: {inv.markdown_total}")
+
+    print(
+        "\nThis counts parts, not quality. A high count is not proof of waste; it is the "
+        "surface a maintainer keeps in sync and a reader navigates."
+    )
+    return 0
+
+
+def collect_skill_decisions(skills_dir: Path) -> list[tuple[str, str, str]]:
+    """Return (tier, name, decision) for each skill's `## Decision contract` receipt.
+
+    A skill with no readable tier is returned with an empty tier so the rollup shows
+    the gap rather than hiding it; `ng doctor` is what fails the build on a malformed
+    receipt. Rows sort block, then warn, then observe, then by name.
+    """
+    rows: list[tuple[str, str, str]] = []
+    for skill_file in sorted(skills_dir.glob("*/SKILL.md")):
+        text = skill_file.read_text(encoding="utf-8")
+        tier_match = DECISION_TIER_PATTERN.search(text)
+        value_match = DECISION_TEXT_PATTERN.search(text)
+        tier = tier_match.group(1).lower() if tier_match else ""
+        decision = value_match.group(1).strip() if value_match else ""
+        # The value leads with the tier token; strip it for the "which decision" view.
+        if tier and decision.lower().startswith(tier):
+            decision = decision[len(tier):].lstrip(" -–—").strip()
+        rows.append((tier, skill_file.parent.name, decision))
+    order = {"block": 0, "warn": 1, "observe": 2, "": 3}
+    rows.sort(key=lambda row: (order.get(row[0], 3), row[1]))
+    return rows
+
+
+def handle_decisions(args: argparse.Namespace) -> int:
+    repo = args.repo.resolve()
+    skills_dir = repo / "skills"
+    if not skills_dir.exists():
+        skills_dir = SKILLS
+    rows = collect_skill_decisions(skills_dir)
+    if not rows:
+        print("no skills found", file=sys.stderr)
+        return 2
+
+    width = max(len(name) for _, name, _ in rows)
+
+    def render(header: str, subset: list[tuple[str, str, str]]) -> None:
+        print(header)
+        print(f"  {'tier':<7}  {'skill':<{width}}  decision affected")
+        for tier, name, decision in subset:
+            shown = decision if len(decision) <= 60 else decision[:57] + "..."
+            print(f"  {tier or '(none)':<7}  {name:<{width}}  {shown}")
+
+    promoted = [row for row in rows if row[0] in DECISION_RECEIPT_TIERS]
+    telemetry = [row for row in rows if row[0] == "observe"]
+    missing = [name for tier, name, _ in rows if not tier]
+
+    render("Operator receipt -- block and warn signals promoted from the skills:", promoted)
+
+    block = sum(1 for tier, _, _ in rows if tier == "block")
+    warn = sum(1 for tier, _, _ in rows if tier == "warn")
+    print(
+        f"\n{len(rows)} skills: {block} block, {warn} warn, {len(telemetry)} observe "
+        f"-- {len(promoted)} promoted to the operator receipt, {len(telemetry)} in telemetry."
+    )
+
+    if telemetry and args.all:
+        print()
+        render("Telemetry -- observe signals, not promoted into the operator receipt:", telemetry)
+    elif telemetry:
+        print(f"Use `ng decisions --all` to list the {len(telemetry)} observe-class skill(s) in telemetry.")
+
+    if missing:
+        print(f"Missing a declarable tier (run `ng doctor`): {', '.join(missing)}")
+    print(
+        "\nTwo decisions stay separate: whether a skill should exist (evidence-based, "
+        "see docs/05-reference/skill-evaluation.md) and the receipt it must emit. "
+        "An 'observe' check that never moves a decision is a relocation candidate, "
+        "never auto-deleted."
+    )
+    return 0
+
+
+def handle_gen_commands(args: argparse.Namespace) -> int:
+    repo = args.repo.resolve()
+    if args.check:
+        drifted = gen_commands.check(repo)
+        if drifted:
+            print("FAILED: commands/ is out of sync with skills/ -- run `ng gen-commands`:")
+            for name in drifted:
+                print(f"- {name}")
+            return 1
+        print("OK: every command card matches its skill.")
+        return 0
+
+    written = gen_commands.write(repo)
+    print(f"Generated {len(written)} command card(s) from skills/ into commands/.")
+    return 0
+
+
 def apply_writes(writes: list[PlannedWrite], dry_run: bool, overwrite: bool) -> int:
     for write in writes:
         if write.path.exists() and not write.is_dir and not overwrite:
@@ -776,6 +1171,19 @@ def check_skill_contracts(skills_dir: Path) -> list[str]:
         for section in REQUIRED_SKILL_SECTIONS:
             if section not in text:
                 failures.append(f"{skill_file} missing {section}")
+        # The decision-contract receipt must carry all five fields and a declarable
+        # tier. The lint checks the receipt is present and well-formed; whether the
+        # named decision is the honest one is human judgment, like every other
+        # structural check here.
+        if "## Decision contract" in text:
+            for label in DECISION_CONTRACT_LABELS:
+                if label not in text:
+                    failures.append(f"{skill_file} decision contract missing {label}")
+            if not DECISION_TIER_PATTERN.search(text):
+                failures.append(
+                    f"{skill_file} decision contract Decision affected must start "
+                    f"with one of {', '.join(DECISION_TIERS)}"
+                )
     return failures
 
 

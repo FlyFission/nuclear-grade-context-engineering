@@ -11,6 +11,14 @@ Lessons from real operation (OPEX) only help if they change future work. So trea
 
 No-blame applies to honest error and at-risk slips: the point is to fix the control, not the person or the model. It does not extend to a willful violation — knowingly disabling a control, fabricating a passing result, or routing around a required gate. Surface that and correct it as a finding; never file it as "just a mistake," and never normalize it (Charter Art. 3, 19). A bypassable gate is also its own weak control, so the lesson fixes both the violation and the gate that allowed it.
 
+## Decision contract
+
+- **Claim checked:** the event is stated as actual-versus-standard with a root cause and weak control named, and closes with an owned, verified control fix or a deliberate waiver saying why no fix was needed.
+- **Artifact observed:** the event, near miss, or operating signal and the control it touched -> an OPEX record with the finding, action, owner, and evidence or close-out reason.
+- **Decision affected:** block -- whether a durable control (test, template, prompt, monitor, checker, or baseline) is updated, or the lesson is explicitly waived with a reason.
+- **Failure class:** unlearned-lesson (a fix with no control change, or a record closed with regret instead of a fix).
+- **Next action:** assign an owner and a recheck trigger; a repeated weak control escalates to a second independent reviewer.
+
 ## When to Use
 
 - A bad handoff, a wrong-file edit, a made-up claim, an agent going past its allowed tools, a bug that escaped to users, or a surprise in review happened.
@@ -72,6 +80,25 @@ This actual-vs-standard, root-cause, owner, verify structure keeps a retro from 
 - The record blames one person or one model as the sole cause.
 - A knowingly bypassed gate or a fabricated result is filed as "just a mistake," so the violation goes unowned and the bypassable gate is never fixed.
 - The follow-up has no owner and no trigger.
+
+## Prompt
+
+```text
+Create a Nuclear-grade OPEX record (lessons from real operation).
+
+Inputs:
+- event or near miss:
+- affected packet / baseline / artifact:
+- evidence:
+- impact:
+- immediate correction:
+- weak or missing control:
+- candidate durable update:
+- owner:
+- due date or trigger:
+
+Produce a no-blame OPEX record. Each finding must either change a lasting control or be closed with a clear reason why not.
+```
 
 ## Source-lineage note
 

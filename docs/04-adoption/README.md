@@ -5,6 +5,7 @@ Most adopters should start one level up at [`../../CORE.md`](../../CORE.md) — 
 - `enterprise-rollout.md`
 - `agent-authority-model.md` — includes the self-modification boundary and the enforcement rung-ladder for agents with authority over their own working set.
 - `reviewer-playbook.md`
+- `listing-and-discovery.md` — how to submit the skills to official directories (the Claude Code community directory and the `openai/skills` catalog).
 
 ## Source-lineage note
 

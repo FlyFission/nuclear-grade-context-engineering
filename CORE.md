@@ -56,9 +56,12 @@ Scan the triggers. For every "yes," invoke that cluster. Default is Core only.
 | The change makes public claims about safety, security, compliance, licensing, or provenance | **Claims discipline** | [`checking-legal-and-safety-wording`](skills/checking-legal-and-safety-wording/SKILL.md), [`checking-source-claims`](skills/checking-source-claims/SKILL.md) |
 | Production failure, data loss, or agent-caused harm | **Incident & deficiency** | [`responding-to-incidents`](skills/responding-to-incidents/SKILL.md), [`tracking-deficiencies`](skills/tracking-deficiencies/SKILL.md) |
 | Repo layout / structure decision, or visible code-quality drift in a diff | **Hygiene** | [`organizing-project-folders`](skills/organizing-project-folders/SKILL.md), [`reviewing-code-quality`](skills/reviewing-code-quality/SKILL.md) |
+| Planning a multi-stage AI / agentic workflow (workspace, orchestration, repo convention) | **Workflow architecture** — a composing path, not a new cluster (see [`docs/02-operating-system/agentic-workflow-architecture.md`](docs/02-operating-system/agentic-workflow-architecture.md)) | [`organizing-project-folders`](skills/organizing-project-folders/SKILL.md), [`breaking-down-the-work`](skills/breaking-down-the-work/SKILL.md), [`briefing-an-agent`](skills/briefing-an-agent/SKILL.md), [`recording-what-an-agent-did`](skills/recording-what-an-agent-did/SKILL.md) |
 
 All 27 skills are accounted for: 7 Core + 19 ancillary across 5 clusters + 1 router
-([`using-nuclear-grade`](skills/using-nuclear-grade/SKILL.md)).
+([`using-nuclear-grade`](skills/using-nuclear-grade/SKILL.md)). The workflow-architecture
+trigger above composes existing skills rather than adding a sixth cluster or a new skill — its
+home is the doctrine page, not a new `SKILL.md`.
 
 ### What each ancillary trigger feels like in practice
 

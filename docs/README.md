@@ -26,6 +26,7 @@ These docs have two parts. First, learn how to use the workflow. Second, look up
 | Keep durable memory retrievable across runs | [`02-operating-system/durable-memory.md`](02-operating-system/durable-memory.md) |
 | Classify the kind of change (work type) | [`02-operating-system/work-type-lens.md`](02-operating-system/work-type-lens.md) |
 | Run an incident, track deficiencies | [`02-operating-system/incident-response.md`](02-operating-system/incident-response.md), [`02-operating-system/deficiency-register.md`](02-operating-system/deficiency-register.md) |
+| Periodically self-assess the method | [`02-operating-system/program-self-assessment.md`](02-operating-system/program-self-assessment.md) |
 | Understand CLI behavior | [`05-reference/cli-reference.md`](05-reference/cli-reference.md) |
 | See the workflow as diagrams | [`diagrams.md`](diagrams.md) |
 | Decode a term or idiom | [`glossary.md`](glossary.md) |
@@ -35,7 +36,7 @@ These docs have two parts. First, learn how to use the workflow. Second, look up
 ```text
 00-standards-foundation/   public source map, citation safety, and boundary rules
 01-field-guide/            source-to-concept translation, leadership and high-reliability guide
-02-operating-system/       lifecycle, HPI overlays, modes, packets, authority and intent, incidents, deficiencies, critical systems
+02-operating-system/       lifecycle, HPI overlays, modes, packets, authority and intent, incidents, deficiencies, periodic self-assessment, critical systems
 03-worked-examples/        completed example packets and proof chains
 04-adoption/               team rollout, agent authority, reviewer playbook
 05-reference/              skill, command, and CLI contracts

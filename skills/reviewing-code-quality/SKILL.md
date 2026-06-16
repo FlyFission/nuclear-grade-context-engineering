@@ -9,6 +9,14 @@ description: Reviews a diff or module for slipping standards, favoring deletion 
 
 Standards drift in code is the slow buildup of complexity. Files grow until no one can hold them in their head. Layers get added that do not pull their weight. Logic for one feature leaks into shared code. Clever, hard-to-follow code replaces plain, direct code. Each step looks fine on its own. Added up, they make a system no one can maintain. This review holds the line and keeps standards rising. Its strongest move is deletion: prefer removing structure over moving it around. It ends in one honest verdict, not a softened summary. A review that always says "looks good" is not a control.
 
+## Decision contract
+
+- **Claim checked:** the diff was read against its goal, deletion was considered before rearranging for each complexity finding, and the verdict matches the findings -- an INCONCLUSIVE verdict naming the missing evidence.
+- **Artifact observed:** the diff or module, its mission anchor or goal, and the shared-versus-feature layering map -> a ranked findings list (each with location, standard at risk, concrete fix) and one verdict with a reason.
+- **Decision affected:** block -- one verdict on the diff or module: VERIFIED, NOT VERIFIED, or INCONCLUSIVE.
+- **Failure class:** standards-drift (oversized files, thin pass-through layers, feature logic in shared code, or clever indirection accepted as fine).
+- **Next action:** return NOT VERIFIED for the owner to decide, or INCONCLUSIVE naming the missing context; standards drift that recurs escalates to a control.
+
 ## When to Use
 
 - A diff or module is up for review and you want a standards check, not just a "does it work" check.
@@ -73,6 +81,33 @@ Standards drift in code is the slow buildup of complexity. Files grow until no o
 - Feature-specific branches inside shared or core code.
 - Clever indirection where plain, direct code would read clearly.
 - A review summary that softens every finding into "looks good" with no verdict.
+
+## Prompt
+
+```text
+Run a Nuclear-grade code-quality review on this change.
+
+Inputs:
+- diff or module:
+- objective / mission anchor:
+- agreed limits or conventions:
+- shared vs feature-specific layers:
+
+Do this:
+- Read the change against its goal; flag scope drift first.
+- Look to delete before you rearrange; ask what can be removed entirely.
+- Use the countable tripwires as prompts, not laws (file around 1000 lines, function around 50 lines, deep nesting, duplicated branches).
+- Test each abstraction: it must remove more complexity than it adds; flag thin pass-throughs.
+- Check the layering: flag feature logic leaking into shared, canonical, or framework code.
+- Prefer plain, direct code over clever indirection.
+
+Return:
+- a ranked list of findings (location, the standard at risk, a concrete fix, often a deletion)
+- one verdict: VERIFIED, NOT VERIFIED, or INCONCLUSIVE
+- a short reason tying the verdict to the findings
+
+Do not soften every finding into "looks good." Do not imply formal assurance, compliance, certification, safety, security, or regulatory adequacy.
+```
 
 ## Source-lineage note
 

@@ -18,7 +18,7 @@ Use status labels: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned
 
 | ID | Claim | Basis link | Task / code ref | Control / design feature | Support type | Verification evidence | Ship posture | Status |
 |---|---|---|---|---|---|---|---|---|
-| REQ-001 | Every skill declares a valid decision contract | `basis.md` | `nuclear_grade/cli.py` `check_skill_contracts` | required section plus class lint | local proof | `verification.md` | ship | pass |
+| REQ-001 | Every skill declares a valid decision-contract receipt | `basis.md` | `nuclear_grade/cli.py` `check_skill_contracts` | required section plus tier lint | local proof | `verification.md` | ship | pass |
 | REQ-002 | The blocks roll up into one generated view | `basis.md` | `nuclear_grade/cli.py` `handle_decisions` | `ng decisions` | local proof | `verification.md` | ship | pass |
 | REQ-003 | The block stays out of the always-loaded description | `basis.md` | `skills/*/SKILL.md` body placement | body-only block | local proof | `verification.md` | ship | pass |
 

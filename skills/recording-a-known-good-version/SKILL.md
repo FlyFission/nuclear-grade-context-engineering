@@ -11,10 +11,11 @@ A baseline is simply the version everyone agreed is correct and wants to protect
 
 ## Decision contract
 
-- **Claim verified:** the accepted version can be rebuilt exactly from its named commit/PR/release, everything under control is either included or deliberately left out, the accepted residual risks have owners, and the triggers that would force a new known-good version are recorded.
-- **Observed artifact:** reads `controlled-items.md`, `change-impact.md`, `verification.md`, and the `ship.md` decision plus the identifying commit/PR/release; leaves a `baseline.md` (or a known-good section inside `ship.md`) with included/excluded scope, accepted gaps, and re-record triggers.
-- **Decision it can change:** records the accepted baseline the ship decision produced, and the triggers that invalidate it.
-- **Class:** soft note
+- **Claim checked:** the accepted version can be rebuilt exactly from its named commit/PR/release, everything under control is either included or deliberately left out, the accepted residual risks have owners, and the triggers that force a new known-good version are recorded.
+- **Artifact observed:** `controlled-items.md`, `change-impact.md`, `verification.md`, the `ship.md` decision, and the identifying commit/PR/release -> a `baseline.md` with included/excluded scope, accepted gaps, and re-record triggers.
+- **Decision affected:** warn -- the accepted baseline the ship decision produced, and the triggers that invalidate it.
+- **Failure class:** unrebuildable-baseline (a version recorded as accepted with missing evidence or silently dropped scope).
+- **Next action:** record the missing link or excluded scope as a named gap; escalate when the version affects customers, regulated work, or outside trust.
 
 ## When to Use
 

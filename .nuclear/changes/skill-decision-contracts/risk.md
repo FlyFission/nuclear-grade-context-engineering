@@ -12,7 +12,7 @@
 - Date: 2026-06-16
 - Current lifecycle phase: Verify
 - Current work phase: audit
-- Summary: Add a required `## Decision contract` block to every skill (the one decision it can move and its class), enforce it in `ng doctor` and the skill-contract tests, and add `ng decisions` to roll the blocks up into one generated view.
+- Summary: Add a required five-field `## Decision contract` receipt to every skill (claim checked, artifact observed, decision affected with a block/warn/observe tier, failure class, next action), enforce it in `ng doctor` and the skill-contract tests, and add `ng decisions` as an operator receipt that promotes block/warn and keeps observe in telemetry.
 
 ## Mission anchor
 
@@ -20,13 +20,13 @@ State what this change is for, so a long session can be checked against it. See 
 
 - Objective: Make every skill name the decision it can change, so a reviewer scans one declaration instead of auditing prose -- Charter Art. 11, enforced structurally.
 - Success criteria: every skill carries a well-formed decision contract; `ng doctor` and the tests enforce it; `ng decisions` renders all 27; the token budget stays green.
-- Non-goals / forbidden directions: cutting or merging skills; rewriting skill bodies as a prose sweep; auto-declaring a deletion-signal class.
+- Non-goals / forbidden directions: cutting or merging skills; rewriting skill bodies as a prose sweep; self-declaring a skill as deletable.
 - Drift check: re-anchor / escalate / stop when an action stops serving the objective.
 - Traces to: reviewer feedback on decision artifacts, and `.nuclear/charter.md` Article 11.
 
 ## Questioning-attitude summary
 
-- Decision question: should every skill be required to declare, in a scannable and machine-checkable block, the one decision it can change and its class?
+- Decision question: should every skill be required to declare, in a scannable and machine-checkable block, the one decision it can change and its tier?
 - Evidence that would change the decision: a block that becomes generic boilerplate which never changes a reader's judgment, or that blows the token budget.
 - Assumptions that changed the mode: this edits the skill authoring contract and the validator -- controlled items every skill and CI depend on.
 - Facts still needing validation: none open; tests, doctor, and tokens pass locally.

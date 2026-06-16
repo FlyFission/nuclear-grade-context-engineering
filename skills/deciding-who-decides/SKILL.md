@@ -11,10 +11,11 @@ Authority should sit where the evidence and competence are, not automatically at
 
 ## Decision contract
 
-- **Claim verified:** the action's reversibility, evidence grade, and consequence place it either at the agent's edge or behind a named human gate, with an escalation trigger concrete enough to obey and no required approval skipped.
-- **Observed artifact:** reads the proposed action and target, the evidence on hand and its grade, the consequence, and the agent's granted authority and standing gates; leaves a decision-rights line (action, who decides, escalation trigger), the evidence the decider must hold, and any mandatory human gate.
-- **Decision it can change:** may the agent act at the edge or must it escalate -- the decision-rights line and its escalation trigger.
-- **Class:** hard gate
+- **Claim checked:** the action's reversibility, evidence grade, and consequence place it at the agent's edge or behind a named human gate, with an escalation trigger concrete enough to obey and no required approval skipped.
+- **Artifact observed:** the proposed action and target, the evidence and its grade, the consequence, and the agent's authority and standing gates -> a decision-rights line (action, who decides, escalation trigger), the evidence the decider must hold, and any mandatory human gate.
+- **Decision affected:** block -- may the agent act at the edge or must it escalate: the decision-rights line and its escalation trigger.
+- **Failure class:** misplaced-authority (an irreversible or thinly-evidenced action placed at the edge, or a gate skipped).
+- **Next action:** escalate to the named human when consequence is protected and evidence is short of proven; stop when only the agent's assurance authorizes it.
 
 ## When to Use
 

@@ -15,10 +15,11 @@ The anchor is also the clarity that lets authority move to the edge: it is the c
 
 ## Decision contract
 
-- **Claim verified:** the current action was tested against the written anchor's goal, success criteria, and non-goals, the loop and attempt count were actually run, and any crossed non-goal or loosened standard has a justification row rather than a quiet edit.
-- **Observed artifact:** reads the written anchor (`.nuclear/mission.md`, the `## Mission anchor` in `risk.md`, or `.nuclear/charter.md`) and the current action and diff; leaves a recorded re-anchor/escalate/stop decision, an updated mission anchor, and any justification row.
-- **Decision it can change:** continue / re-anchor / escalate / stop, plus the restated goal anchor.
-- **Class:** hard gate
+- **Claim checked:** the current action was tested against the written anchor's goal, success criteria, and non-goals, the loop and attempt count were actually run, and any crossed non-goal or loosened standard has a justification row, not a quiet edit.
+- **Artifact observed:** the written anchor (`.nuclear/mission.md`, `## Mission anchor` in `risk.md`, or `.nuclear/charter.md`) and the current action/diff -> a recorded continue/re-anchor/escalate/stop decision, updated anchor, and any justification row.
+- **Decision affected:** block -- continue / re-anchor / escalate / stop, plus the restated goal anchor.
+- **Failure class:** mission-drift (an action serving a swapped-in goal, a crossed non-goal, or a standard loosened "just this once").
+- **Next action:** stop and return to the anchor when a non-goal would be crossed with no justification; 3 failed attempts or scope you cannot check escalates to the owner.
 
 ## When to Use
 

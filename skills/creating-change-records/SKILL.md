@@ -11,10 +11,11 @@ A change record keeps the whole story in Git, together: the scope, what the chan
 
 ## Decision contract
 
-- **Claim verified:** the record carries every file its mode requires, with the required links, exit criteria, source-lineage notes, and plain status labels (`pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`) present and the internal links resolving.
-- **Observed artifact:** reads the mode from `risk.md` and the `templates/quick/` or `templates/standard/` templates; leaves a Quick record (`risk.md`, `proof.md`) or Standard record (`risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, `ship.md`) plus the validator result.
-- **Decision it can change:** whether the packet is structurally complete and valid (`python tools/ng.py validate` pass/fail).
-- **Class:** hard gate
+- **Claim checked:** the record carries every file its mode requires, with the required links, exit criteria, source-lineage notes, and plain status labels (`pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`) present and the internal links resolving.
+- **Artifact observed:** the mode from `risk.md` and the `templates/quick/` or `templates/standard/` templates -> a Quick record (`risk.md`, `proof.md`) or Standard record (`risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, `ship.md`) plus the validator result.
+- **Decision affected:** block -- whether the packet is structurally complete and valid (`python tools/ng.py validate` pass/fail).
+- **Failure class:** incomplete-record (a missing file, broken internal link, or proof command absent).
+- **Next action:** add the missing file or link and rerun the validator; raise Quick to Standard or human review when proof cannot answer the reviewer.
 
 ## When to Use
 

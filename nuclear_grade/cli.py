@@ -126,23 +126,29 @@ REQUIRED_COMMAND_SECTIONS = (
     "## Legal/assurance boundary note",
 )
 
-# A skill's `## Decision contract` block names the one decision the skill can move
-# and the class of signal it leaves. The labels are load-bearing -- a reviewer (and
-# this lint) reads them to learn what running the skill could change. "deletion
-# signal" is never self-declared: a check that rarely moves its decision is surfaced
-# by measurement (`ng tokens`/`ng eval`), because a guard inside the writable set is
-# a suggestion the author can edit. So only two classes are declarable here.
+# A skill's `## Decision contract` block is the compact receipt every run must emit:
+# the claim checked, the artifact observed, the decision affected (with its tier), the
+# failure class, and the next action. The labels are load-bearing -- a reviewer (and
+# this lint) reads them to learn what running the skill could change. The tier keeps
+# the control loop from becoming audit-the-audit: only `block` and `warn` are promoted
+# into the operator receipt (`ng decisions`); `observe` stays in telemetry. Tiers are
+# declarable, but a skill demoting itself to noise is not: a check that never moves a
+# decision is surfaced by measurement (`ng eval`/`ng tokens`) over runs, because a
+# guard inside the writable set is a suggestion the author can edit.
 DECISION_CONTRACT_LABELS = (
-    "**Claim verified:**",
-    "**Observed artifact:**",
-    "**Decision it can change:**",
-    "**Class:**",
+    "**Claim checked:**",
+    "**Artifact observed:**",
+    "**Decision affected:**",
+    "**Failure class:**",
+    "**Next action:**",
 )
-DECISION_CLASSES = ("hard gate", "soft note")
-DECISION_CLASS_PATTERN = re.compile(
-    r"\*\*Class:\*\*\s*(hard gate|soft note)\b", re.IGNORECASE
+DECISION_TIERS = ("block", "warn", "observe")
+# Promoted into the operator receipt; the rest (observe) stays in telemetry.
+DECISION_RECEIPT_TIERS = ("block", "warn")
+DECISION_TIER_PATTERN = re.compile(
+    r"\*\*Decision affected:\*\*\s*(block|warn|observe)\b", re.IGNORECASE
 )
-DECISION_TEXT_PATTERN = re.compile(r"\*\*Decision it can change:\*\*\s*(.+)")
+DECISION_TEXT_PATTERN = re.compile(r"\*\*Decision affected:\*\*\s*(.+)")
 
 MODE_DEFAULT_BLOCK = {
     "quick": "## Selected mode\n\n- **Mode:** Quick\n",
@@ -359,9 +365,14 @@ def build_parser() -> argparse.ArgumentParser:
 
     decisions_parser = subcommands.add_parser(
         "decisions",
-        help="Roll up every skill's decision contract: the one decision it can move and its class.",
+        help="Operator receipt: the block/warn decision each skill can move (observe stays in telemetry).",
     )
     decisions_parser.add_argument("repo", nargs="?", default=".", type=Path)
+    decisions_parser.add_argument(
+        "--all",
+        action="store_true",
+        help="Also list observe-class skills held in telemetry, not just the promoted receipt.",
+    )
     decisions_parser.set_defaults(handler=handle_decisions)
 
     return parser
@@ -698,22 +709,25 @@ def handle_tokens(args: argparse.Namespace) -> int:
 
 
 def collect_skill_decisions(skills_dir: Path) -> list[tuple[str, str, str]]:
-    """Return (class, name, decision) for each skill's `## Decision contract`.
+    """Return (tier, name, decision) for each skill's `## Decision contract` receipt.
 
-    A skill with no readable class is returned with an empty class so the rollup
-    shows the gap rather than hiding it; `ng doctor` is what fails the build on a
-    malformed block. Rows sort hard gate, then soft note, then by name.
+    A skill with no readable tier is returned with an empty tier so the rollup shows
+    the gap rather than hiding it; `ng doctor` is what fails the build on a malformed
+    receipt. Rows sort block, then warn, then observe, then by name.
     """
     rows: list[tuple[str, str, str]] = []
     for skill_file in sorted(skills_dir.glob("*/SKILL.md")):
         text = skill_file.read_text(encoding="utf-8")
-        class_match = DECISION_CLASS_PATTERN.search(text)
-        decision_match = DECISION_TEXT_PATTERN.search(text)
-        klass = class_match.group(1).lower() if class_match else ""
-        decision = decision_match.group(1).strip() if decision_match else ""
-        rows.append((klass, skill_file.parent.name, decision))
-    order = {"hard gate": 0, "soft note": 1, "": 2}
-    rows.sort(key=lambda row: (order.get(row[0], 2), row[1]))
+        tier_match = DECISION_TIER_PATTERN.search(text)
+        value_match = DECISION_TEXT_PATTERN.search(text)
+        tier = tier_match.group(1).lower() if tier_match else ""
+        decision = value_match.group(1).strip() if value_match else ""
+        # The value leads with the tier token; strip it for the "which decision" view.
+        if tier and decision.lower().startswith(tier):
+            decision = decision[len(tier):].lstrip(" -–—").strip()
+        rows.append((tier, skill_file.parent.name, decision))
+    order = {"block": 0, "warn": 1, "observe": 2, "": 3}
+    rows.sort(key=lambda row: (order.get(row[0], 3), row[1]))
     return rows
 
 
@@ -725,22 +739,40 @@ def handle_decisions(args: argparse.Namespace) -> int:
         return 2
 
     width = max(len(name) for _, name, _ in rows)
-    print("Skill decision contracts -- the one decision each skill can move:\n")
-    print(f"  {'class':<9}  {'skill':<{width}}  decision it can change")
-    for klass, name, decision in rows:
-        shown = decision if len(decision) <= 64 else decision[:61] + "..."
-        print(f"  {klass or '(none)':<9}  {name:<{width}}  {shown}")
 
-    hard = sum(1 for klass, _, _ in rows if klass == "hard gate")
-    soft = sum(1 for klass, _, _ in rows if klass == "soft note")
-    print(f"\n{len(rows)} skills: {hard} hard gate, {soft} soft note.")
-    missing = [name for klass, name, _ in rows if not klass]
-    if missing:
-        print(f"Missing a declarable class (run `ng doctor`): {', '.join(missing)}")
+    def render(header: str, subset: list[tuple[str, str, str]]) -> None:
+        print(header)
+        print(f"  {'tier':<7}  {'skill':<{width}}  decision affected")
+        for tier, name, decision in subset:
+            shown = decision if len(decision) <= 60 else decision[:57] + "..."
+            print(f"  {tier or '(none)':<7}  {name:<{width}}  {shown}")
+
+    promoted = [row for row in rows if row[0] in DECISION_RECEIPT_TIERS]
+    telemetry = [row for row in rows if row[0] == "observe"]
+    missing = [name for tier, name, _ in rows if not tier]
+
+    render("Operator receipt -- block and warn signals promoted from the skills:", promoted)
+
+    block = sum(1 for tier, _, _ in rows if tier == "block")
+    warn = sum(1 for tier, _, _ in rows if tier == "warn")
     print(
-        "A skill that cannot name a decision it can move is docs, not a skill. "
-        "'deletion signal' is measured, not declared -- see "
-        "docs/05-reference/skill-evaluation.md."
+        f"\n{len(rows)} skills: {block} block, {warn} warn, {len(telemetry)} observe "
+        f"-- {len(promoted)} promoted to the operator receipt, {len(telemetry)} in telemetry."
+    )
+
+    if telemetry and args.all:
+        print()
+        render("Telemetry -- observe signals, not promoted into the operator receipt:", telemetry)
+    elif telemetry:
+        print(f"Use `ng decisions --all` to list the {len(telemetry)} observe-class skill(s) in telemetry.")
+
+    if missing:
+        print(f"Missing a declarable tier (run `ng doctor`): {', '.join(missing)}")
+    print(
+        "\nTwo decisions stay separate: whether a skill should exist (evidence-based, "
+        "see docs/05-reference/skill-evaluation.md) and the receipt it must emit. "
+        "An 'observe' check that never moves a decision is a relocation candidate, "
+        "never auto-deleted."
     )
     return 0
 
@@ -851,18 +883,18 @@ def check_skill_contracts(skills_dir: Path) -> list[str]:
         for section in REQUIRED_SKILL_SECTIONS:
             if section not in text:
                 failures.append(f"{skill_file} missing {section}")
-        # The decision-contract block must name the claim, the artifact, the decision
-        # it can change, and a declarable class. The lint checks the block is present
-        # and well-formed; whether the named decision is the honest one is human
-        # judgment, like every other structural check here.
+        # The decision-contract receipt must carry all five fields and a declarable
+        # tier. The lint checks the receipt is present and well-formed; whether the
+        # named decision is the honest one is human judgment, like every other
+        # structural check here.
         if "## Decision contract" in text:
             for label in DECISION_CONTRACT_LABELS:
                 if label not in text:
                     failures.append(f"{skill_file} decision contract missing {label}")
-            if not DECISION_CLASS_PATTERN.search(text):
+            if not DECISION_TIER_PATTERN.search(text):
                 failures.append(
-                    f"{skill_file} decision contract Class must be one of "
-                    f"{', '.join(DECISION_CLASSES)}"
+                    f"{skill_file} decision contract Decision affected must start "
+                    f"with one of {', '.join(DECISION_TIERS)}"
                 )
     return failures
 

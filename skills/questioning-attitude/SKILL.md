@@ -11,10 +11,11 @@ This is the front door. Before an agent builds, merges, or releases, find the re
 
 ## Decision contract
 
-- **Claim verified:** the change is restated as one decision question evidence could settle, its assumptions are named and each checked, marked a gap, or assigned, and the one fact that would change the decision is stated.
-- **Observed artifact:** reads the request/diff/plan/dependency; leaves a questioning-attitude write-up (or `questioning-attitude.md`) of assumptions, knowns, unknowns, shaky sources, and stop conditions.
-- **Decision it can change:** the Quick/Standard mode choice it routes into `rating-change-risk`, and whether to proceed, escalate, or stop now.
-- **Class:** soft note
+- **Claim checked:** the change is restated as one decision question evidence could settle, each assumption is checked, marked a gap, or assigned, and the one fact that would change the decision is named.
+- **Artifact observed:** the request/diff/plan/dependency -> a questioning-attitude write-up (or `questioning-attitude.md`) of assumptions, unknowns, shaky sources, and stop conditions.
+- **Decision affected:** warn -- the Quick/Standard mode choice routed into `rating-change-risk`, and whether to proceed, escalate, or stop.
+- **Failure class:** unexamined-assumption (an unchecked assumption driving the build, or a claim with no evidence).
+- **Next action:** raise the mode or escalate/stop when a load-bearing assumption is a gap; otherwise proceed with the gaps named.
 
 ## When to Use
 

@@ -11,10 +11,11 @@ Evidence should answer named claims. It should not just create a vague sense tha
 
 ## Decision contract
 
-- **Claim verified:** every material claim is tied to evidence, a stated gap, or a deliberate deferral, and no claim reaches past what the evidence supports.
-- **Observed artifact:** reads `basis.md`/test and review evidence; leaves claim-to-evidence rows with a status (`pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`) in `trace.md`/`verification.md`.
-- **Decision it can change:** the release posture the `ship.md` decision weighs -- a `fail` or unowned `gap` becomes a blocker, a named `deferred` becomes accepted residual risk.
-- **Class:** soft note
+- **Claim checked:** every material claim is tied to evidence, a stated gap, or a deliberate deferral, and no claim reaches past its evidence.
+- **Artifact observed:** `basis.md`, test, and review evidence -> claim-to-evidence rows with a status (`pass`/`fail`/`gap`/`deferred`/`not applicable`/`planned`) in `trace.md`/`verification.md`.
+- **Decision affected:** warn -- the release posture the `ship.md` decision weighs.
+- **Failure class:** overreaching-claim (a claim stated past its evidence, or a `fail`/unowned `gap` carried as shippable).
+- **Next action:** record the gap as residual risk for `ship.md`; a `fail` or unowned `gap` escalates to block.
 
 ## When to Use
 

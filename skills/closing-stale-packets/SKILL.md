@@ -11,10 +11,11 @@ A change packet that is started and then abandoned is a quiet integrity problem.
 
 ## Decision contract
 
-- **Claim verified:** every stale packet has reached one honest terminal state -- completed and validating, closed with a recorded reason and decider, or deleted as a genuinely empty scaffold -- with none left half-done and silent.
-- **Observed artifact:** reads `python tools/ng.py status .` and `validate` output and the packet under `.nuclear/changes/<slug>` against its originating issue/PR/anchor; leaves a `NUCLEAR-GRADE-CLOSED:` rationale line (for closures) and an `ng status .` where every packet is `ok` or `closed`.
-- **Decision it can change:** bring the stale packet to a terminal state -- completed, closed-with-reason, or deleted -- so `ng status` reports ok/closed, not scaffold/invalid.
-- **Class:** hard gate
+- **Claim checked:** every stale packet reached one honest terminal state -- completed and validating, closed with a recorded reason and decider, or deleted as a genuinely empty scaffold -- none left half-done and silent.
+- **Artifact observed:** `ng status .`/`validate` output and the packet against its originating issue/PR/anchor -> a `NUCLEAR-GRADE-CLOSED:` rationale line and an `ng status .` where every packet is `ok` or `closed`.
+- **Decision affected:** block -- bring the stale packet to a terminal state so `ng status` reports ok/closed, not scaffold/invalid.
+- **Failure class:** silent-stale-packet (a half-done packet hiding an unproven claim, or a faked pass by deleting the marker).
+- **Next action:** complete, close-with-reason, or delete; escalate to the owner before deleting any packet whose change is not confirmed dead.
 
 ## When to Use
 

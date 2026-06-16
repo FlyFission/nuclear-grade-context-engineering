@@ -11,10 +11,11 @@ In a casualty you stabilize first and analyze second. An incident is run by one 
 
 ## Decision contract
 
-- **Claim verified:** the incident has one named commander, a timeline that keeps confirmed facts separate from hypotheses, and corrective actions that each carry an owner and a definition of done -- none left as "we should."
-- **Observed artifact:** reads the current symptom, what changed, who can authorize rollbacks/failovers/comms, and the reversible actions available; leaves an `incident.md` (timeline, facts-vs-hypotheses, decisions, comms), owned corrective actions with closure triggers, and a handoff to the learning record and deficiency entries.
-- **Decision it can change:** whether the incident is stabilized and its corrective actions are owned with closure triggers (incident stays open until then).
-- **Class:** hard gate
+- **Claim checked:** the incident has one named commander, a timeline that keeps confirmed facts separate from hypotheses, and corrective actions that each carry an owner and a definition of done -- none left as "we should."
+- **Artifact observed:** the current symptom, what changed, who can authorize rollbacks/failovers/comms, and the reversible actions available -> an `incident.md` (timeline, facts-vs-hypotheses, decisions, comms), owned corrective actions with closure triggers, and a handoff to learning and deficiency records.
+- **Decision affected:** block -- whether the incident is stabilized and its corrective actions are owned with closure triggers (it stays open until then).
+- **Failure class:** premature-incident-close (closed with unowned actions, or a hypothesis recorded as fact).
+- **Next action:** stop a proposed irreversible fix until the cause is confirmed or risk is accepted by a named owner; keep the incident open until actions are owned.
 
 ## When to Use
 

@@ -11,10 +11,11 @@ A deficiency you have decided to live with quietly becomes the new standard. Thi
 
 ## Decision contract
 
-- **Claim verified:** every tracked deficiency has a visible first-seen age, a named owner, and a disposition that is either a fix-by date or a formal risk-acceptance with a named owner and a concrete revisit trigger -- never "known, untracked."
-- **Observed artifact:** reads the deficiency, where it shows up, its consequence and frequency, and any related incident/OPEX/controlled item; leaves a deficiency entry or `deficiency.md` register row (description, age, owner, disposition, review trigger) linked to those related records.
-- **Decision it can change:** per deficiency, fix by a date or formally risk-accept it with a named owner and a revisit date.
-- **Class:** hard gate
+- **Claim checked:** every tracked deficiency has a visible first-seen age, a named owner, and a disposition -- a fix-by date or a formal risk-acceptance with a named owner and a concrete revisit trigger -- never "known, untracked."
+- **Artifact observed:** the deficiency, where it shows up, its consequence and frequency, and any related incident/OPEX/controlled item -> a deficiency entry or `deficiency.md` row (description, age, owner, disposition, review trigger) linked to those records.
+- **Decision affected:** block -- per deficiency, fix by a date or formally risk-accept it with a named owner and a revisit date.
+- **Failure class:** normalized-deviation (a known problem living in chat/memory, or an accepted risk with no owner, date, or trigger).
+- **Next action:** assign an owner and a fix-or-accept disposition; escalate when it touches safety, security, data integrity, or drives repeat incidents.
 
 ## When to Use
 

@@ -11,10 +11,11 @@ Sort the change before you build it. That way the care you take matches the stak
 
 ## Decision contract
 
-- **Claim verified:** the chosen mode matches the stakes -- Quick only for local, easy-to-undo, easy-to-prove work that adds no new trust boundary, and Standard or stronger once consequence, exposure, reversibility, detectability, unknowns, or agent power cross the line -- and the proof that mode owes is named.
-- **Observed artifact:** reads the request/diff, the files/dependencies/credentials/APIs/users the change touches, `docs/02-operating-system/activation-thresholds.md`, and any prior `risk.md`; leaves the mode, decision question, evidence bar, required record files, proof command or gap, and escalation triggers in `risk.md`.
-- **Decision it can change:** the mode (Quick / Standard / stronger) and the evidence obligation that mode sets.
-- **Class:** hard gate
+- **Claim checked:** the chosen mode matches the stakes -- Quick only for local, easy-to-undo, easy-to-prove work that adds no new trust boundary, and Standard or stronger once consequence, exposure, reversibility, detectability, unknowns, or agent power cross the line -- and the proof that mode owes is named.
+- **Artifact observed:** the request/diff, the files/dependencies/credentials/APIs/users touched, `activation-thresholds.md`, and any prior `risk.md` -> the mode, decision question, evidence bar, required files, proof command or gap, and escalation triggers in `risk.md`.
+- **Decision affected:** block -- the mode (Quick / Standard / stronger) and the evidence obligation that mode sets.
+- **Failure class:** underrated-mode (a mode picked from effort, not stakes, weaker than the obvious consequence).
+- **Next action:** raise the mode to fit the stakes; escalate when money, sensitive data, irreversible actions, autonomous tools, or release readiness are involved.
 
 ## When to Use
 

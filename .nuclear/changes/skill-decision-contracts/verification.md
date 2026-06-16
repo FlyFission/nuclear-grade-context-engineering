@@ -20,7 +20,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 
 | Claim / requirement ID | Support type | Verification type | Verification method | Acceptance criteria | Result status | Evidence link | Gap / follow-up |
 |---|---|---|---|---|---|---|---|
-| REQ-001 | local proof | deterministic test | `pytest` and `ng doctor` over all skills | every skill has the block, the labels, and a valid class | pass | `tests/test_skill_contracts.py` | none |
+| REQ-001 | local proof | deterministic test | `pytest` and `ng doctor` over all skills | every skill has the receipt, the five fields, and a valid tier | pass | `tests/test_skill_contracts.py` | none |
 | REQ-002 | local proof | deterministic test | `ng decisions` and a CLI smoke test | all 27 skills render with a named decision | pass | `tests/test_ng_cli.py` | none |
 | REQ-003 | local proof | deterministic test | `ng tokens` | descriptions stay flat, bodies stay under budget | pass | `docs/05-reference/skills-token-audit.md` | none |
 
@@ -42,7 +42,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 | test | `python -m pytest -q` | local Python 3.11 | pass | CI to confirm on the PR |
 | doctor | `python tools/ng.py doctor .` | local Python 3.11 | `OK: Nuclear-grade doctor` | CI to confirm on the PR |
 | tokens | `python tools/ng.py tokens .` | local Python 3.11 | `OK: token budget` | CI to confirm on the PR |
-| rollup | `python tools/ng.py decisions .` | local Python 3.11 | 27 skills, 20 hard gate, 7 soft note | CI to confirm on the PR |
+| rollup | `python tools/ng.py decisions .` | local Python 3.11 | 27 skills, 20 block, 7 warn, 0 observe | CI to confirm on the PR |
 
 ## Negative / failure-mode checks
 

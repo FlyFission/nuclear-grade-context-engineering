@@ -11,10 +11,11 @@ Release readiness is a careful, audited decision you write down. It is not a moo
 
 ## Decision contract
 
-- **Claim verified:** the candidate has named evidence, a rollback, monitoring, and residual risk that is either accepted or made a blocker -- enough to accept or reject the ship.
-- **Observed artifact:** reads the `verification.md`/`trace.md` evidence statuses and CI status; leaves the release decision and its reasoning in `ship.md`.
-- **Decision it can change:** the `ship.md` release decision -- ship, block, defer, or ship with named leftover risk.
-- **Class:** hard gate
+- **Claim checked:** the candidate has evidence, rollback, monitoring, and residual risk that is accepted or made a blocker.
+- **Artifact observed:** `verification.md`/`trace.md` statuses and CI status -> the decision recorded in `ship.md`.
+- **Decision affected:** block -- the `ship.md` ship/block/defer/ship-with-risk release decision.
+- **Failure class:** unevidenced-or-unsafe-release (a gap or missing rollback treated as shippable).
+- **Next action:** block the release; record the gap, its owner, and a recheck trigger.
 
 ## When to Use
 

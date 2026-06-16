@@ -29,7 +29,7 @@ A reviewer cannot tell, without reading 27 prose skills, which ones could change
 | Unacceptable outcome | Consequence | Prevent / detect / mitigate |
 |---|---|---|
 | Blocks become generic boilerplate | reintroduces the audit-the-audit problem | `ng decisions` surfaces generic rows; the redundancy gate fails copy-paste |
-| A self-declared deletion-signal class | a guard inside the writable set the author can edit | only `hard gate` and `soft note` are declarable; deletion signal is measured |
+| A self-declared deletion of a skill | a guard inside the writable set the author can edit | only the `block`/`warn`/`observe` tier is declarable; the existence (delete) decision is measured |
 | A skill body exceeds the token budget | CI regression | the `ng tokens` budget gate |
 
 ## Assumptions, constraints, and invalidation triggers
@@ -60,7 +60,7 @@ Keep confidence apart from evidence before any derived claim is accepted.
 
 | ID | Requirement / claim | Basis | Design feature or control | Evidence planned |
 |---|---|---|---|---|
-| REQ-001 | WHEN a skill is validated THE SYSTEM SHALL require a `## Decision contract` block with the three labels and a class of `hard gate` or `soft note`. | removes audit-the-audit | `REQUIRED_SKILL_SECTIONS` and `check_skill_contracts` | `pytest`, `ng doctor` |
+| REQ-001 | WHEN a skill is validated THE SYSTEM SHALL require a `## Decision contract` receipt with all five fields and a `Decision affected` tier of `block`, `warn`, or `observe`. | removes audit-the-audit | `REQUIRED_SKILL_SECTIONS` and `check_skill_contracts` | `pytest`, `ng doctor` |
 | REQ-002 | THE SYSTEM SHALL roll up every skill's decision contract into one generated view. | single-source reviewer scan | `ng decisions` | `ng decisions` output and a smoke test |
 | REQ-003 | THE SYSTEM SHALL keep the per-skill block out of the always-loaded description. | bounded routing cost | the block sits in the body | `ng tokens` descriptions flat |
 

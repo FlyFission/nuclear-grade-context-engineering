@@ -11,10 +11,11 @@ description: Checks that the way you cite source families, agencies, standards, 
 
 ## Decision contract
 
-- **Claim verified:** every cited source is public and listed in the source map or marked "public URL needed", and each reference reads as influence or idea lineage rather than compliance, certification, or formal assurance.
-- **Observed artifact:** reads the changed public text against `docs/00-standards-foundation/source-map.md`, `docs/01-field-guide/source-to-concept-crosswalk.md`, and `docs/00-standards-foundation/compliance-boundaries.md`; leaves narrowed wording and updated source-map or crosswalk rows.
-- **Decision it can change:** whether public/source wording is narrowed to honest influence or idea lineage rather than a compliance claim.
-- **Class:** soft note
+- **Claim checked:** every cited source is public and in the source map or marked "public URL needed", and each reference reads as influence or idea lineage rather than compliance, certification, or formal assurance.
+- **Artifact observed:** the changed public text against `source-map.md`, `source-to-concept-crosswalk.md`, and `compliance-boundaries.md` -> narrowed wording and updated source-map or crosswalk rows.
+- **Decision affected:** warn -- whether public/source wording is narrowed to honest influence or idea lineage rather than a compliance claim.
+- **Failure class:** overstated-lineage (an unconfirmed source cited as direct lineage, or a compliance/approval claim outside a disclaimer).
+- **Next action:** downgrade the source to "public URL needed" or reword to influence; wording affecting regulated, customer, or investor trust escalates.
 
 ## When to Use
 

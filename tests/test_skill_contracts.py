@@ -2,9 +2,9 @@ import re
 from pathlib import Path
 
 from nuclear_grade.cli import (
-    DECISION_CLASS_PATTERN,
-    DECISION_CLASSES,
     DECISION_CONTRACT_LABELS,
+    DECISION_TIER_PATTERN,
+    DECISION_TIERS,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -111,24 +111,22 @@ def test_every_skill_has_valid_agent_operable_contract():
 
 def test_every_skill_declares_a_decision_contract():
     """Charter Art. 11: name the decision the evidence must support. Every skill is a
-    control in that loop, so it must expose -- in a scannable block -- the claim it
-    verifies, the artifact it leaves, the one decision it can change, and a declarable
-    class. The lint checks the block is present and well-formed, not that the named
-    decision is the honest one (that is human judgment). See
-    docs/05-reference/skill-authoring-contract.md."""
+    control in that loop, so it must emit -- in a compact receipt -- the claim checked,
+    the artifact observed, the decision affected (with a block/warn/observe tier), the
+    failure class, and the next action. The lint checks the receipt is present and
+    well-formed, not that the named decision is the honest one (that is human
+    judgment). See docs/05-reference/skill-authoring-contract.md."""
     for skill_name in EXPECTED_SKILLS:
         text = (SKILLS_DIR / skill_name / "SKILL.md").read_text(encoding="utf-8")
 
         assert "## Decision contract" in text, f"{skill_name} missing decision contract"
         for label in DECISION_CONTRACT_LABELS:
             assert label in text, f"{skill_name} decision contract missing {label}"
-        match = DECISION_CLASS_PATTERN.search(text)
+        match = DECISION_TIER_PATTERN.search(text)
         assert match, (
-            f"{skill_name} decision contract Class must be one of {DECISION_CLASSES}"
+            f"{skill_name} decision affected must start with one of {DECISION_TIERS}"
         )
-        # "deletion signal" is measured, never self-declared (a guard inside the
-        # writable set is a suggestion the author can edit).
-        assert "deletion signal" not in match.group(0).lower()
+        assert match.group(1).lower() in DECISION_TIERS
 
 
 def test_skills_index_lists_every_skill_folder():

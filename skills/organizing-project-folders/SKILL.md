@@ -13,10 +13,11 @@ This skill puts a folder-decision checklist in front of the agent, so folders ge
 
 ## Decision contract
 
-- **Claim verified:** every folder maps to exactly one work-breakdown piece or one disposition rule with one home, its contents share one reason to change, and its name passes the platform-safe naming, depth, and path checks.
-- **Observed artifact:** reads the work breakdown and its dictionary (`templates/standard/wbs.md` or a `wbs.md`) and the current tree against conventions; leaves a folder map (outline number to path with a disposition column), per-folder README/dictionary stubs, and a naming/depth/single-source check.
-- **Decision it can change:** accept vs rework the folder layout, or where a given file belongs.
-- **Class:** soft note
+- **Claim checked:** every folder maps to one work-breakdown piece or disposition rule with one home, its contents share one reason to change, and its name passes the naming/depth/path checks.
+- **Artifact observed:** the work breakdown, its dictionary, and the current tree -> a folder map (outline number to path with disposition), per-folder README stubs, and a naming/depth/single-source check.
+- **Decision affected:** warn -- accept vs rework the folder layout, or where a given file belongs.
+- **Failure class:** junk-drawer-layout (a folder mapping to no piece or rule, or one idea with two homes).
+- **Next action:** name the real idea or stop grouping; escalate to the owner on conflict with a saved known-good convention.
 
 ## When to Use
 

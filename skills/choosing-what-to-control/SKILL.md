@@ -11,10 +11,11 @@ Controlled items are the parts of a system whose approved version matters. They 
 
 ## Decision contract
 
-- **Claim verified:** every item whose approved state affects trust, agent power, the release, repeatability, or public understanding is named -- with its owner, current and intended state, an evidence link or stated gap, and a re-check trigger -- and nothing in scope is silently left uncontrolled.
-- **Observed artifact:** reads the request/diff/record and `docs/02-operating-system/controlled-items.md` (plus any `risk.md`, `basis.md`, `plan.md`); leaves the controlled-item list (or `controlled-items.md`) with owners, states, triggers, and named gaps.
-- **Decision it can change:** which code, prompts, models, dependencies, docs, and releases become controlled items (feeds `change-impact.md` and the baseline).
-- **Class:** soft note
+- **Claim checked:** every item whose approved state affects trust, agent power, the release, repeatability, or public understanding is named -- with owner, current and intended state, an evidence link or stated gap, and a re-check trigger -- and nothing in scope is silently left uncontrolled.
+- **Artifact observed:** the request/diff/record and `controlled-items.md` (plus any `risk.md`, `basis.md`, `plan.md`) -> the controlled-item list with owners, states, triggers, and named gaps.
+- **Decision affected:** warn -- which code, prompts, models, dependencies, docs, and releases become controlled items (feeds `change-impact.md` and the baseline).
+- **Failure class:** uncontrolled-item (drift in an unlisted prompt, doc, or agent-power state left untracked).
+- **Next action:** name the item, owner, and re-check trigger; escalate when drift could hit users, security, releases, or agent power.
 
 ## When to Use
 

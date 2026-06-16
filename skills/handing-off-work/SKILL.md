@@ -11,10 +11,11 @@ A handoff transfers responsibility, not just context. The next person or agent h
 
 ## Decision contract
 
-- **Claim verified:** the receiving owner can resume without the chat history -- the last finished action, changed conditions, remaining scope, authority limits, open evidence, and stop conditions are all stated -- and the owner has restated scope, authority, proof owed, and when to stop before acting.
-- **Observed artifact:** reads the change-record path, current phase, mode, the done/changed/assumed/open state, and the authority limits; leaves a `turnover.md` (or a turnover section in the context pack, or a release/support handoff note) with the resume point, what changed, what remains, the next decision gate, and the incoming owner's confirmation.
-- **Decision it can change:** whether the receiving owner may resume, or must hold and re-question first.
-- **Class:** hard gate
+- **Claim checked:** the receiving owner can resume without the chat history -- the last finished action, changed conditions, remaining scope, authority limits, open evidence, and stop conditions are all stated -- and the owner has restated scope, authority, proof owed, and when to stop before acting.
+- **Artifact observed:** the change-record path, current phase, mode, the done/changed/assumed/open state, and the authority limits -> a `turnover.md` with the resume point, what changed, what remains, the next decision gate, and the incoming owner's confirmation.
+- **Decision affected:** block -- whether the receiving owner may resume, or must hold and re-question first.
+- **Failure class:** open-loop-handoff (state only implied, or the owner acts before confirming scope and stop conditions).
+- **Next action:** make the incoming owner restate scope, authority, and stop conditions first; escalate when credentials, production data, or release authority are involved.
 
 ## When to Use
 

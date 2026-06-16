@@ -74,7 +74,7 @@ Keep fast trial work apart from the slower gates where work is accepted.
 List what this change does not do, on purpose.
 
 - Cutting, merging, or rewriting skills.
-- Auto-declaring a deletion-signal class.
+- Self-declaring a skill as deletable.
 
 ## Review checkpoints
 

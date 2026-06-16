@@ -13,10 +13,11 @@ Three things can wreck it. Under-coverage: some scope is orphaned and no one own
 
 ## Decision contract
 
-- **Claim verified:** the product-first children cover exactly the parent's scope with nothing orphaned and nothing invented (100% rule), no two siblings overlap, and every outline number carries a filled dictionary entry.
-- **Observed artifact:** reads the one-line deliverable, the mission anchor (`.nuclear/mission.md` or the `## Mission anchor` in `risk.md`), and `templates/standard/wbs.md`; leaves an outline-numbered work-breakdown table plus a per-piece dictionary and a handoff note to `organizing-project-folders` and each leaf's `plan.md` slice.
-- **Decision it can change:** plan-ready vs not -- whether the child pieces sum to 100% of the scope with no gaps and no overlaps (MECE).
-- **Class:** hard gate
+- **Claim checked:** product-first children cover exactly the parent (100% rule), no two siblings overlap, every outline number has a filled dictionary entry.
+- **Artifact observed:** the one-line deliverable, mission anchor, and `templates/standard/wbs.md` -> an outline-numbered table, per-piece dictionary, and handoff to folders and each leaf's `plan.md`.
+- **Decision affected:** block -- plan-ready vs not: do the children sum to 100% with no gaps and no overlaps (MECE).
+- **Failure class:** non-mece-breakdown (orphaned scope, invented scope, or overlap with no stated gap).
+- **Next action:** name the gap or re-cut the boundary; escalate to the owner when children cannot add up without overlap.
 
 ## When to Use
 

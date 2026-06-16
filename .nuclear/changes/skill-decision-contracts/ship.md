@@ -17,7 +17,7 @@
 
 - Included: the `## Decision contract` block on 27 skills, its enforcement, `ng decisions`, and the doc updates.
 - Excluded: command cards, agent role files, and any prose trim of skill bodies.
-- Known non-goals: cutting or merging skills, and auto-declaring a deletion-signal class.
+- Known non-goals: cutting or merging skills, and self-declaring a skill as deletable.
 
 ## Evidence status summary
 

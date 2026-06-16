@@ -11,10 +11,11 @@ This skill keeps two things apart: what the MIT license lets people do, and what
 
 ## Decision contract
 
-- **Claim verified:** public text stays inside the assurance boundary -- "you may use it" is kept apart from "it is proven fit", banned claim phrases appear only in negative or disclaimer sentences, and `python tools/ng.py doctor .` passes.
-- **Observed artifact:** reads the changed public text against `LICENSE`, `DISCLAIMER.md`, `SECURITY.md`, and `docs/00-standards-foundation/compliance-boundaries.md`; leaves bounded wording, updated docs/templates, and the scan results or list of gaps found.
-- **Decision it can change:** whether public text stays inside the assurance boundary (`python tools/ng.py doctor` boundary check); an overreaching license/safety/compliance claim blocks until reworded.
-- **Class:** hard gate
+- **Claim checked:** public text stays inside the assurance boundary -- "you may use it" kept apart from "it is proven fit", banned claim phrases only in negative or disclaimer sentences, and `python tools/ng.py doctor .` passes.
+- **Artifact observed:** the changed public text against `LICENSE`, `DISCLAIMER.md`, `SECURITY.md`, and `compliance-boundaries.md` -> bounded wording, updated docs/templates, and the scan results or list of gaps.
+- **Decision affected:** block -- whether public text stays inside the assurance boundary; an overreaching license/safety/compliance claim blocks until reworded.
+- **Failure class:** assurance-overreach (public copy promising safe, secure, compliant, approved, or certified results the repo has not proven).
+- **Next action:** reword to evidence-tied wording before release; requests for legal advice or regulated-use approval escalate to a qualified professional.
 
 ## When to Use
 

@@ -13,10 +13,11 @@ The repo charter (`.nuclear/charter.md`) holds the lasting rules every change fo
 
 ## Decision contract
 
-- **Claim verified:** this change is named the cheapest-fitting mode -- Quick or Standard-plus -- the one fact that sets it is stated out loud before the first tool call, and any Standard-plus trap (auth, user-visible, data, dependency, model/prompt/agent power, CI, release) forces the stronger mode.
-- **Observed artifact:** reads the request, diff, and any record under `.nuclear/changes/`; leaves the declared mode, its one-fact reason, and the change-record path (`.nuclear/changes/<slug>/`) that routes the work into its skill cluster.
-- **Decision it can change:** the mode declared before the first tool call (Quick or Standard-plus) and the skill cluster it routes the change into.
-- **Class:** hard gate
+- **Claim checked:** this change is named the cheapest-fitting mode -- Quick or Standard-plus -- with the one fact that sets it stated before the first tool call, and any Standard-plus trap (auth, user-visible, data, dependency, model/prompt/agent power, CI, release) forces the stronger mode.
+- **Artifact observed:** the request, diff, and any record under `.nuclear/changes/` -> the declared mode, its one-fact reason, and the change-record path that routes the work into its skill cluster.
+- **Decision affected:** block -- the mode declared before the first tool call (Quick or Standard-plus) and the skill cluster it routes into.
+- **Failure class:** unclassified-or-downgraded-start (work begun before a mode, or a Standard-plus trap waved off as Quick).
+- **Next action:** state the mode before the first tool call; raise to Standard or human review when a trap or outside-trust claim appears.
 
 ## When to Use
 

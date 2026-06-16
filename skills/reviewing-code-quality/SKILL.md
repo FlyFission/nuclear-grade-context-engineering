@@ -11,10 +11,11 @@ Standards drift in code is the slow buildup of complexity. Files grow until no o
 
 ## Decision contract
 
-- **Claim verified:** the diff was read against its goal, deletion was considered before rearranging for each complexity finding, and the verdict matches the findings -- with an INCONCLUSIVE verdict naming the missing evidence.
-- **Observed artifact:** reads the diff or module, its mission anchor or goal, and the shared-versus-feature layering map; leaves a ranked findings list (each with location, standard at risk, and concrete fix) and one verdict with a reason tying it to the findings.
-- **Decision it can change:** one verdict on the diff or module -- VERIFIED, NOT VERIFIED, or INCONCLUSIVE.
-- **Class:** hard gate
+- **Claim checked:** the diff was read against its goal, deletion was considered before rearranging for each complexity finding, and the verdict matches the findings -- an INCONCLUSIVE verdict naming the missing evidence.
+- **Artifact observed:** the diff or module, its mission anchor or goal, and the shared-versus-feature layering map -> a ranked findings list (each with location, standard at risk, concrete fix) and one verdict with a reason.
+- **Decision affected:** block -- one verdict on the diff or module: VERIFIED, NOT VERIFIED, or INCONCLUSIVE.
+- **Failure class:** standards-drift (oversized files, thin pass-through layers, feature logic in shared code, or clever indirection accepted as fine).
+- **Next action:** return NOT VERIFIED for the owner to decide, or INCONCLUSIVE naming the missing context; standards drift that recurs escalates to a control.
 
 ## When to Use
 

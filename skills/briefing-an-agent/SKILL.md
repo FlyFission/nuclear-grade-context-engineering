@@ -13,10 +13,11 @@ A good brief is how you supply competence and clarity so the agent can decide we
 
 ## Decision contract
 
-- **Claim verified:** the agent can answer what it may do, what must stay true, what evidence it owes, and when to stop -- its power over files, commands, network, credentials, approvals, and release is bounded no wider than the brief's clarity, with the goal anchor and forbidden actions stated.
-- **Observed artifact:** reads the change-record path, its mode, the assigned role, and `docs/02-operating-system/context-packs.md`; leaves a context-pack section or file with role, goal anchor, scoped files/commands, phase, authority bounds, stop conditions, next action, and a handoff prompt when responsibility transfers.
-- **Decision it can change:** whether the briefed agent may start, and the authority bounds it may act within.
-- **Class:** hard gate
+- **Claim checked:** the agent can answer what it may do, what must stay true, what evidence it owes, and when to stop -- its power over files, commands, network, credentials, approvals, and release is bounded no wider than the brief's clarity, with the goal anchor and forbidden actions stated.
+- **Artifact observed:** the change-record path, its mode, the assigned role, and `context-packs.md` -> a context-pack with role, goal anchor, scoped files/commands, phase, authority bounds, stop conditions, next action, and a handoff prompt when responsibility transfers.
+- **Decision affected:** block -- whether the briefed agent may start, and the authority bounds it may act within.
+- **Failure class:** boundary-overreach (authority wider than the brief's clarity, or forbidden actions and allowed files unstated).
+- **Next action:** bound the authority to the brief and state the forbidden actions; stop or escalate when credentials, production data, or release power appear.
 
 ## When to Use
 

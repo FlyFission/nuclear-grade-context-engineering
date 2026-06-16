@@ -11,10 +11,11 @@ A self-check turns a high-stakes action into a careful one. Before you claim suc
 
 ## Decision contract
 
-- **Claim verified:** the exact target, expected result, and stop condition were named before the action, and the real result was compared against the expected one before any success was claimed.
-- **Observed artifact:** reads the proposed action, target, and authority; leaves the action, target, expected result, stop condition, real result, evidence, and any mismatch in a `self-check.md` note.
-- **Decision it can change:** whether to proceed with or abort the critical action -- a big edit, command, public claim, trust change, or release.
-- **Class:** hard gate
+- **Claim checked:** the target, expected result, and stop condition were named before the action, and the real result was compared against the expected one before claiming success.
+- **Artifact observed:** the proposed action, target, and authority -> a `self-check.md` note of action, target, expected/real result, stop condition, evidence, and any mismatch.
+- **Decision affected:** block -- whether to proceed with or abort the critical action: a big edit, command, public claim, trust change, or release.
+- **Failure class:** wrong-target-or-unverified-action (acting on an assumed target, or claiming success without comparing the result).
+- **Next action:** pause and escalate when authority, target, or evidence is unclear; a mismatch halts the action rather than triggering a retry.
 
 ## When to Use
 

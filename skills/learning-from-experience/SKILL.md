@@ -11,10 +11,11 @@ Lessons from real operation (OPEX) only help if they change future work. So trea
 
 ## Decision contract
 
-- **Claim verified:** the event is stated as actual-versus-standard with a root cause and the weak control named, and it closes either with an owned, verified control fix or a deliberate waiver saying why no fix was needed.
-- **Observed artifact:** reads the event, near miss, or operating signal and the control it touched; leaves an OPEX record (lessons-from-operation record) with the finding, action, owner, and evidence or close-out reason.
-- **Decision it can change:** whether a durable control -- a test, template, prompt, monitor, checker, or baseline -- is updated, or the lesson is explicitly waived with a reason.
-- **Class:** hard gate
+- **Claim checked:** the event is stated as actual-versus-standard with a root cause and weak control named, and closes with an owned, verified control fix or a deliberate waiver saying why no fix was needed.
+- **Artifact observed:** the event, near miss, or operating signal and the control it touched -> an OPEX record with the finding, action, owner, and evidence or close-out reason.
+- **Decision affected:** block -- whether a durable control (test, template, prompt, monitor, checker, or baseline) is updated, or the lesson is explicitly waived with a reason.
+- **Failure class:** unlearned-lesson (a fix with no control change, or a record closed with regret instead of a fix).
+- **Next action:** assign an owner and a recheck trigger; a repeated weak control escalates to a second independent reviewer.
 
 ## When to Use
 

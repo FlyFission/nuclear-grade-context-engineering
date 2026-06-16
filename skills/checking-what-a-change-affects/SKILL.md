@@ -11,10 +11,11 @@ An impact screen asks a simple question. When a controlled item changes, what el
 
 ## Decision contract
 
-- **Claim verified:** every artifact a controlled change could leave stale -- docs, tests, checkers, skills, commands, templates, prompts, releases, saved versions, and runtime blast radius (schema/state migration, API consumers, backward-compatibility, rollback-of-state) -- has one named action with evidence, and no stale surface is quietly accepted.
-- **Observed artifact:** reads the controlled-item list, `risk.md`, `basis.md`, `plan.md`, the diff, and `docs/02-operating-system/change-impact.md`; leaves `change-impact.md` (or a short impact screen) with per-item actions, re-check triggers, and required follow-ups.
-- **Decision it can change:** per affected item, update / leave alone / defer / block; blockers carry into `ship.md`.
-- **Class:** hard gate
+- **Claim checked:** every artifact a controlled change could leave stale -- docs, tests, checkers, skills, commands, templates, prompts, releases, saved versions, and runtime blast radius (schema/state migration, API consumers, backward-compatibility, rollback-of-state) -- has one named action with evidence, and no stale surface is quietly accepted.
+- **Artifact observed:** the controlled-item list, `risk.md`, `basis.md`, `plan.md`, the diff, and `change-impact.md` -> `change-impact.md` with per-item actions, re-check triggers, and required follow-ups.
+- **Decision affected:** block -- per affected item, update / leave alone / defer / block; blockers carry into `ship.md`.
+- **Failure class:** missed-ripple (a stale doc, test, checker, or runtime contract quietly accepted).
+- **Next action:** assign each stale surface an action with an owner and trigger; escalate when it touches outside trust, security, or the release.
 
 ## When to Use
 

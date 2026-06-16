@@ -11,10 +11,11 @@ When an agent can use tools, read data, or affect releases, it gives attackers s
 
 ## Decision contract
 
-- **Claim verified:** each attack type chosen for this setup has a recorded `contained`, `uncertain`, or `exposed` result with the expected behavior written before the result, no finding is quietly dropped, and `python tools/ng.py validate .nuclear/changes/<slug>` passes.
-- **Observed artifact:** reads `basis.md`, `risk.md`, and past OPEX records to name the agent role, tools, and data reach; leaves a red-team record inline in `verification.md` (or `red-team.md`) with each type's result, leftover risk, and backup controls, linked to `ship.md`.
-- **Decision it can change:** per adversarial class, contained / uncertain / exposed; uncertain or exposed findings feed `ship.md`.
-- **Class:** hard gate
+- **Claim checked:** each attack type chosen for this setup has a recorded `contained`/`uncertain`/`exposed` result with expected behavior written before the result, no finding quietly dropped, and `python tools/ng.py validate .nuclear/changes/<slug>` passes.
+- **Artifact observed:** `basis.md`, `risk.md`, and past OPEX records naming the agent role, tools, and data reach -> a red-team record in `verification.md` (or `red-team.md`) with each type's result, leftover risk, and backup controls.
+- **Decision affected:** block -- per adversarial class, contained / uncertain / exposed; uncertain or exposed findings feed `ship.md`.
+- **Failure class:** unhardened-agent-power (an unchecked attack type, or an exposed finding shipped with no named leftover risk).
+- **Next action:** name leftover risk and backup controls in `ship.md`; an `exposed` finding touching credentials, production data, or users escalates.
 
 ## When to Use
 

@@ -11,10 +11,11 @@ A "does it work" check proves what an agent produced, not how it got there. Some
 
 ## Decision contract
 
-- **Claim verified:** every step that mattered -- tool call, file edit, command, API call, approval -- has a recorded result and evidence status, and each one stayed inside the power `basis.md` granted.
-- **Observed artifact:** reads the run log/transcript/trace export against `basis.md` (allowed power, stop conditions) and `plan.md`; leaves step-level trace rows, decision-point and approval records, and a token/delay summary in `trace.md`/`verification.md`, linked to `ship.md`.
-- **Decision it can change:** provides the step-level execution evidence the `ship.md` decision relies on; an error or limit breach routes to pause/incident/deficiency.
-- **Class:** soft note
+- **Claim checked:** every step that mattered -- tool call, edit, command, API call, approval -- has a recorded result and status, and each stayed inside the power `basis.md` granted.
+- **Artifact observed:** the run log/transcript/trace export against `basis.md` and `plan.md` -> step-level trace rows, decision-point and approval records, and a token/delay summary in `trace.md`/`verification.md`, linked to `ship.md`.
+- **Decision affected:** warn -- the step-level execution evidence the `ship.md` decision relies on.
+- **Failure class:** unevidenced-run (a stayed-in-scope claim with no step-level evidence, or unexplained cost).
+- **Next action:** record the gap for `ship.md`; a power breach or unexpected side effect escalates to pause/incident.
 
 ## When to Use
 

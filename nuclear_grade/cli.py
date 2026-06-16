@@ -7,6 +7,7 @@ engineering adequacy, safety, security, compliance, or verification and validati
 from __future__ import annotations
 
 import argparse
+import os
 import shutil
 import sys
 from dataclasses import dataclass
@@ -27,8 +28,10 @@ from nuclear_grade.tokens import (
     build_report,
     check_budgets,
     cost_per_signal,
+    count_tokens,
     load_budgets,
     phrase_frequency,
+    split_frontmatter,
 )
 
 PACKAGE_DIR = Path(__file__).resolve().parent
@@ -78,6 +81,37 @@ MODE_FILES = {
     "cm": CM_FILES,
     "golden-path": GOLDEN_PATH_FILES,
 }
+
+# --- `ng install`: cross-tool skill distribution --------------------------------
+# Skills auto-surface in each tool by their frontmatter `description` (the model
+# picks them when a request matches); installing is just placing the same SKILL.md
+# files where the tool looks for them. The lean `--core` profile ships the
+# always-first router plus the Core 7 dispositions (see CORE.md); `--full` ships
+# every skill under skills/*/.
+CORE_SKILLS = (
+    "using-nuclear-grade",  # the always-first router
+    "questioning-attitude",
+    "rating-change-risk",
+    "proving-claims",
+    "double-checking-before-acting",
+    "staying-on-mission",
+    "checking-release-readiness",
+    "learning-from-experience",
+)
+
+INSTALL_TOOLS = ("codex", "claude", "cursor", "windsurf", "vscode")
+TOOL_LABELS = {
+    "codex": "Codex CLI",
+    "claude": "Claude Code",
+    "cursor": "Cursor",
+    "windsurf": "Windsurf",
+    "vscode": "VS Code + Copilot",
+}
+# Skill-directory paths confirmed against each tool's current docs. Unverified
+# tools print a "verify / override with --dest" note so a wrong default is obvious
+# and recoverable rather than silently writing to the wrong place.
+VERIFIED_TOOLS = frozenset({"codex", "claude"})
+
 REQUIRED_PUBLIC_FILES = (
     "README.md",
     "DISCLAIMER.md",
@@ -337,6 +371,36 @@ def build_parser() -> argparse.ArgumentParser:
     tokens_parser.add_argument("repo", nargs="?", default=".", type=Path)
     tokens_parser.set_defaults(handler=handle_tokens)
 
+    install_parser = subcommands.add_parser(
+        "install",
+        help="Install skills into a tool's skills directory so they auto-surface (codex, claude, cursor, windsurf, vscode).",
+    )
+    install_parser.add_argument("tool", choices=INSTALL_TOOLS)
+    profile_group = install_parser.add_mutually_exclusive_group()
+    profile_group.add_argument(
+        "--core",
+        dest="full",
+        action="store_false",
+        help="Install the lean Core set: the router + Core 7 (default).",
+    )
+    profile_group.add_argument(
+        "--full",
+        dest="full",
+        action="store_true",
+        help="Install every skill.",
+    )
+    install_parser.set_defaults(full=False)
+    install_parser.add_argument(
+        "--scope",
+        choices=("user", "project"),
+        default="user",
+        help="user = available in every project (default); project = inside --repo.",
+    )
+    install_parser.add_argument("--repo", default=".", type=Path, help="Repo root for --scope project.")
+    install_parser.add_argument("--dest", default=None, help="Override the destination skills directory.")
+    install_parser.add_argument("--dry-run", action="store_true")
+    install_parser.set_defaults(handler=handle_install)
+
     return parser
 
 
@@ -409,6 +473,78 @@ def handle_scaffold_ci(args: argparse.Namespace) -> int:
         PlannedWrite(workflow, content=content),
     ]
     return apply_writes(writes, dry_run=args.dry_run, overwrite=args.force)
+
+
+def _codex_home() -> Path:
+    """Codex's home directory: $CODEX_HOME if set, else ~/.codex."""
+
+    return Path(os.environ.get("CODEX_HOME") or (Path.home() / ".codex"))
+
+
+def install_dest(tool: str, scope: str, repo: Path) -> Path:
+    """Resolve the skills directory a tool reads, for the requested scope.
+
+    `user` scope installs once for every project; `project` scope installs inside
+    one repo. Codex is user-scoped only ($CODEX_HOME/skills); Windsurf is
+    project-scoped only (.windsurf/skills). Other tools honor `scope`.
+    """
+
+    if tool == "codex":
+        return _codex_home() / "skills"
+    if tool == "windsurf":
+        return repo / ".windsurf" / "skills"
+    parent = repo if scope == "project" else Path.home()
+    subdir = {"claude": ".claude", "cursor": ".cursor", "vscode": ".vscode"}[tool]
+    return parent / subdir / "skills"
+
+
+def handle_install(args: argparse.Namespace) -> int:
+    if args.full:
+        names = [path.parent.name for path in sorted(SKILLS.glob("*/SKILL.md"))]
+        profile = "full"
+    else:
+        names = list(CORE_SKILLS)
+        profile = "core"
+
+    missing = [name for name in names if not (SKILLS / name / "SKILL.md").is_file()]
+    if missing:
+        print(f"missing source skills: {', '.join(sorted(missing))}", file=sys.stderr)
+        return 2
+
+    repo = args.repo.resolve()
+    dest = Path(args.dest).expanduser().resolve() if args.dest is not None else install_dest(args.tool, args.scope, repo)
+
+    # Reuse apply_writes for dry-run, parent creation, and copy. An install is an
+    # update, so overwrite refreshes existing skill files when re-run.
+    writes: list[PlannedWrite] = [PlannedWrite(dest, is_dir=True)]
+    for name in names:
+        skill_dir = SKILLS / name
+        writes.append(PlannedWrite(dest / name, is_dir=True))
+        for src in sorted(path for path in skill_dir.rglob("*") if path.is_file()):
+            writes.append(PlannedWrite(dest / name / src.relative_to(skill_dir), source=src))
+
+    code = apply_writes(writes, dry_run=args.dry_run, overwrite=True)
+    if code != 0:
+        return code
+
+    # The honest always-on cost: the sum of the installed skills' descriptions,
+    # which a routing agent reads every session whether or not a skill fires.
+    standing = sum(
+        count_tokens(split_frontmatter((SKILLS / name / "SKILL.md").read_text(encoding="utf-8"))[0])
+        for name in names
+    )
+    label = TOOL_LABELS[args.tool]
+    verb = "would install" if args.dry_run else "installed"
+    print(f"\n{verb} {len(names)} skill(s) ({profile} profile) for {label} -> {dest}")
+    print(f"always-on description cost: ~{standing} tokens (skill bodies load only when a skill fires)")
+    if profile == "core":
+        print("re-run with --full for all skills; re-run anytime to update.")
+    if args.tool not in VERIFIED_TOOLS and args.dest is None:
+        print(
+            f"note: the {label} skills path is a best-known default; verify against the tool's "
+            "current docs, or override with --dest <path>."
+        )
+    return 0
 
 
 def handle_new(args: argparse.Namespace) -> int:

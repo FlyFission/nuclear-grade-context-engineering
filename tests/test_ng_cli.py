@@ -488,3 +488,89 @@ def test_scaffold_ci_refuses_overwrite_without_force(tmp_path):
     assert "already exists" in result.stderr
 
     assert run_ng("scaffold-ci", str(tmp_path), "--force").returncode == 0
+
+
+# --- ng install -----------------------------------------------------------------
+
+ALL_SKILLS = sorted(path.parent.name for path in (ROOT / "skills").glob("*/SKILL.md"))
+
+
+def test_install_dry_run_is_non_mutating(tmp_path):
+    dest = tmp_path / "skills"
+    result = run_ng("install", "codex", "--dry-run", "--dest", str(dest))
+
+    assert result.returncode == 0, result.stderr
+    assert "would install" in result.stdout
+    assert not dest.exists()
+
+
+def test_install_core_installs_router_plus_core_seven(tmp_path):
+    dest = tmp_path / "skills"
+    result = run_ng("install", "codex", "--dest", str(dest))
+
+    assert result.returncode == 0, result.stderr
+    installed = sorted(path.name for path in dest.iterdir())
+    assert installed == sorted(ng_cli.CORE_SKILLS)
+    assert len(installed) == 8
+    assert (dest / "using-nuclear-grade" / "SKILL.md").exists()
+
+
+def test_install_full_installs_every_skill(tmp_path):
+    dest = tmp_path / "skills"
+    result = run_ng("install", "codex", "--full", "--dest", str(dest))
+
+    assert result.returncode == 0, result.stderr
+    installed = sorted(path.name for path in dest.iterdir())
+    assert installed == ALL_SKILLS
+    assert len(installed) >= 20
+
+
+def test_install_reports_always_on_cost(tmp_path):
+    result = run_ng("install", "codex", "--dest", str(tmp_path / "skills"))
+
+    assert result.returncode == 0, result.stderr
+    assert "always-on description cost" in result.stdout
+
+
+def test_install_is_idempotent_update(tmp_path):
+    dest = tmp_path / "skills"
+    assert run_ng("install", "codex", "--dest", str(dest)).returncode == 0
+
+    # Re-running refreshes in place rather than refusing like `new` does.
+    second = run_ng("install", "codex", "--dest", str(dest))
+
+    assert second.returncode == 0, second.stderr
+    assert len(list(dest.iterdir())) == 8
+
+
+def test_install_unverified_tool_warns_to_verify_path(tmp_path):
+    # Cursor's path is a best-known default; without --dest the install must flag it.
+    result = run_ng("install", "cursor", "--scope", "project", "--repo", str(tmp_path))
+
+    assert result.returncode == 0, result.stderr
+    assert "best-known default" in result.stdout
+    assert (tmp_path / ".cursor" / "skills" / "using-nuclear-grade" / "SKILL.md").exists()
+
+
+def test_install_verified_tool_has_no_verify_note(tmp_path):
+    result = run_ng("install", "codex", "--dest", str(tmp_path / "skills"))
+
+    assert "best-known default" not in result.stdout
+
+
+def test_install_rejects_unknown_tool(tmp_path):
+    result = run_ng("install", "emacs", "--dest", str(tmp_path / "skills"))
+
+    assert result.returncode != 0
+    assert "invalid choice" in result.stderr
+
+
+def test_install_dest_resolution_per_tool(tmp_path, monkeypatch):
+    monkeypatch.setenv("CODEX_HOME", str(tmp_path / "codexhome"))
+    repo = tmp_path / "repo"
+
+    assert ng_cli.install_dest("codex", "user", repo) == tmp_path / "codexhome" / "skills"
+    assert ng_cli.install_dest("claude", "user", repo) == Path.home() / ".claude" / "skills"
+    assert ng_cli.install_dest("claude", "project", repo) == repo / ".claude" / "skills"
+    # Windsurf is project-scoped only: scope is ignored, always inside the repo.
+    assert ng_cli.install_dest("windsurf", "user", repo) == repo / ".windsurf" / "skills"

@@ -7,6 +7,7 @@ engineering adequacy, safety, security, compliance, or verification and validati
 from __future__ import annotations
 
 import argparse
+import os
 import re
 import shutil
 import sys
@@ -30,8 +31,10 @@ from nuclear_grade.tokens import (
     build_report,
     check_budgets,
     cost_per_signal,
+    count_tokens,
     load_budgets,
     phrase_frequency,
+    split_frontmatter,
 )
 
 PACKAGE_DIR = Path(__file__).resolve().parent
@@ -81,6 +84,39 @@ MODE_FILES = {
     "cm": CM_FILES,
     "golden-path": GOLDEN_PATH_FILES,
 }
+
+# --- `ng install`: cross-tool skill distribution --------------------------------
+# Skills auto-surface in each tool by their frontmatter `description` (the model
+# picks them when a request matches); installing is just placing the same SKILL.md
+# files where the tool looks for them. The lean `--core` profile ships the
+# always-first router plus the Core 7 dispositions (see CORE.md); `--full` ships
+# every skill under skills/*/.
+CORE_SKILLS = (
+    "using-nuclear-grade",  # the always-first router
+    "questioning-attitude",
+    "rating-change-risk",
+    "proving-claims",
+    "double-checking-before-acting",
+    "staying-on-mission",
+    "checking-release-readiness",
+    "learning-from-experience",
+)
+
+INSTALL_TOOLS = ("codex", "claude", "cursor", "windsurf", "vscode")
+TOOL_LABELS = {
+    "codex": "Codex CLI",
+    "claude": "Claude Code",
+    "cursor": "Cursor",
+    "windsurf": "Windsurf",
+    "vscode": "VS Code + Copilot",
+}
+# Skill-directory paths confirmed against each tool's current docs (Codex, Claude
+# Code, Cursor, Windsurf). VS Code's project path (.github/skills) is confirmed,
+# but its user-scope path is a best-known default, so VS Code stays unverified:
+# unverified tools print a "verify / override with --dest" note so a wrong default
+# is obvious and recoverable rather than silently writing to the wrong place.
+VERIFIED_TOOLS = frozenset({"codex", "claude", "cursor", "windsurf"})
+
 REQUIRED_PUBLIC_FILES = (
     "README.md",
     "DISCLAIMER.md",
@@ -359,6 +395,43 @@ def build_parser() -> argparse.ArgumentParser:
     tokens_parser.add_argument("repo", nargs="?", default=".", type=Path)
     tokens_parser.set_defaults(handler=handle_tokens)
 
+    install_parser = subcommands.add_parser(
+        "install",
+        help="Install skills into a tool's skills directory so they auto-surface (codex, claude, cursor, windsurf, vscode).",
+    )
+    install_parser.add_argument("tool", choices=INSTALL_TOOLS)
+    profile_group = install_parser.add_mutually_exclusive_group()
+    profile_group.add_argument(
+        "--core",
+        dest="full",
+        action="store_false",
+        help="Install the lean Core set: the router + Core 7 (default).",
+    )
+    profile_group.add_argument(
+        "--full",
+        dest="full",
+        action="store_true",
+        help="Install every skill.",
+    )
+    install_parser.set_defaults(full=False)
+    install_parser.add_argument(
+        "--scope",
+        choices=("user", "project"),
+        default="user",
+        help="user = available in every project (default); project = inside --repo.",
+    )
+    install_parser.add_argument("--repo", default=".", type=Path, help="Repo root for --scope project.")
+    install_parser.add_argument("--dest", default=None, help="Override the destination skills directory.")
+    install_parser.add_argument("--dry-run", action="store_true")
+    install_parser.set_defaults(handler=handle_install)
+
+    mcp_config_parser = subcommands.add_parser(
+        "mcp-config",
+        help="Print the MCP server config to register nuclear-grade's checks as tools (codex, claude, cursor, windsurf, vscode).",
+    )
+    mcp_config_parser.add_argument("tool", choices=INSTALL_TOOLS)
+    mcp_config_parser.set_defaults(handler=handle_mcp_config)
+
     metrics_parser = subcommands.add_parser(
         "metrics",
         help="Count the repo's parts (skills, commands, docs, templates, records) for a before/after comparison.",
@@ -462,6 +535,145 @@ def handle_scaffold_ci(args: argparse.Namespace) -> int:
         PlannedWrite(workflow, content=content),
     ]
     return apply_writes(writes, dry_run=args.dry_run, overwrite=args.force)
+
+
+def _vscode_user_skills() -> Path:
+    """VS Code + GitHub Copilot user-scope skills dir.
+
+    Windows uses %APPDATA%\\github-copilot\\skills; elsewhere
+    ~/.config/github-copilot/skills.
+    """
+
+    appdata = os.environ.get("APPDATA")
+    if appdata:
+        return Path(appdata) / "github-copilot" / "skills"
+    return Path.home() / ".config" / "github-copilot" / "skills"
+
+
+def install_dest(tool: str, scope: str, repo: Path) -> Path:
+    """Resolve the skills directory a tool reads, for the requested scope.
+
+    `user` scope installs once for every project; `project` scope installs inside
+    one repo. Paths are each tool's documented skills location as of 2026-06.
+    Codex/Claude/Cursor are doc-confirmed; Windsurf-user and VS Code paths are
+    best-known. Override any of them with --dest.
+    """
+
+    home = Path.home()
+    if tool == "codex":
+        # Codex scans .agents/skills from the cwd up to the repo root (project)
+        # and $HOME/.agents/skills (user). See developers.openai.com/codex/skills.
+        return (repo / ".agents" / "skills") if scope == "project" else (home / ".agents" / "skills")
+    if tool == "claude":
+        return (repo / ".claude" / "skills") if scope == "project" else (home / ".claude" / "skills")
+    if tool == "cursor":
+        return (repo / ".cursor" / "skills") if scope == "project" else (home / ".cursor" / "skills")
+    if tool == "windsurf":
+        # Project: .windsurf/skills. User: ~/.codeium/windsurf/skills.
+        return (repo / ".windsurf" / "skills") if scope == "project" else (home / ".codeium" / "windsurf" / "skills")
+    if tool == "vscode":
+        # VS Code + Copilot: project .github/skills (team-shared); user ~/.config/github-copilot/skills.
+        return (repo / ".github" / "skills") if scope == "project" else _vscode_user_skills()
+    raise ValueError(f"unknown tool: {tool}")
+
+
+def handle_install(args: argparse.Namespace) -> int:
+    if args.full:
+        names = [path.parent.name for path in sorted(SKILLS.glob("*/SKILL.md"))]
+        profile = "full"
+    else:
+        names = list(CORE_SKILLS)
+        profile = "core"
+
+    missing = [name for name in names if not (SKILLS / name / "SKILL.md").is_file()]
+    if missing:
+        print(f"missing source skills: {', '.join(sorted(missing))}", file=sys.stderr)
+        return 2
+
+    repo = args.repo.resolve()
+    dest = Path(args.dest).expanduser().resolve() if args.dest is not None else install_dest(args.tool, args.scope, repo)
+
+    # Reuse apply_writes for dry-run, parent creation, and copy. An install is an
+    # update, so overwrite refreshes existing skill files when re-run.
+    writes: list[PlannedWrite] = [PlannedWrite(dest, is_dir=True)]
+    for name in names:
+        skill_dir = SKILLS / name
+        writes.append(PlannedWrite(dest / name, is_dir=True))
+        for src in sorted(path for path in skill_dir.rglob("*") if path.is_file()):
+            writes.append(PlannedWrite(dest / name / src.relative_to(skill_dir), source=src))
+
+    code = apply_writes(writes, dry_run=args.dry_run, overwrite=True)
+    if code != 0:
+        return code
+
+    # The honest always-on cost: the sum of the installed skills' descriptions,
+    # which a routing agent reads every session whether or not a skill fires.
+    standing = sum(
+        count_tokens(split_frontmatter((SKILLS / name / "SKILL.md").read_text(encoding="utf-8"))[0])
+        for name in names
+    )
+    label = TOOL_LABELS[args.tool]
+    verb = "would install" if args.dry_run else "installed"
+    print(f"\n{verb} {len(names)} skill(s) ({profile} profile) for {label} -> {dest}")
+    print(f"always-on description cost: ~{standing} tokens (skill bodies load only when a skill fires)")
+    if profile == "core":
+        print("re-run with --full for all skills; re-run anytime to update.")
+    if args.tool not in VERIFIED_TOOLS and args.dest is None:
+        print(
+            f"note: the {label} skills path is a best-known default; verify against the tool's "
+            "current docs, or override with --dest <path>."
+        )
+    return 0
+
+
+def _mcp_json(top_key: str) -> str:
+    return (
+        "{\n"
+        f'  "{top_key}": {{\n'
+        '    "nuclear-grade": {\n'
+        '      "command": "python",\n'
+        '      "args": ["-m", "nuclear_grade.mcp_server"]\n'
+        "    }\n"
+        "  }\n"
+        "}\n"
+    )
+
+
+def handle_mcp_config(args: argparse.Namespace) -> int:
+    """Print a ready-to-paste MCP server config for the chosen tool.
+
+    Prints rather than edits: merging into a user's config file is theirs to do.
+    The server needs the optional extra:  pip install "nuclear-grade[mcp]".
+    """
+
+    tool = args.tool
+    if tool == "codex":
+        path = "~/.codex/config.toml"
+        snippet = (
+            "[mcp_servers.nuclear_grade]\n"
+            'command = "python"\n'
+            'args = ["-m", "nuclear_grade.mcp_server"]\n'
+        )
+    else:
+        path, top_key = {
+            "claude": (".mcp.json (project) or ~/.claude.json (user)", "mcpServers"),
+            "cursor": (".cursor/mcp.json (project) or ~/.cursor/mcp.json (user)", "mcpServers"),
+            "windsurf": ("~/.codeium/windsurf/mcp_config.json", "mcpServers"),
+            "vscode": (".vscode/mcp.json", "servers"),
+        }[tool]
+        snippet = _mcp_json(top_key)
+
+    print(f"# Register nuclear-grade's checks as MCP tools for {TOOL_LABELS[tool]}.")
+    print('# First install the optional extra:  pip install "nuclear-grade[mcp]"')
+    print(f"# File: {path}")
+    print(snippet, end="")
+    if tool == "claude":
+        print("# or run: claude mcp add nuclear-grade -- python -m nuclear_grade.mcp_server")
+    print(
+        "# Note: MCP tool schemas load into context every session (~1k tokens/tool); "
+        "skills stay leaner -- prefer `ng install` unless your tool must CALL the checks."
+    )
+    return 0
 
 
 def handle_new(args: argparse.Namespace) -> int:

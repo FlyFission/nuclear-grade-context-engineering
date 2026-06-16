@@ -66,6 +66,25 @@ description: Checks that the way you cite source families, agencies, standards, 
 - A doc says "compliant", "approved", "certified", or "formal" outside a negative sentence.
 - Every file repeats the source details instead of linking to the source map.
 
+## Prompt
+
+```text
+Run a Nuclear-grade source-lineage check (where the ideas come from).
+
+Inputs:
+- changed public text: <paste/link>
+- cited source families: <list>
+- source-map rows: <links>
+- source or vendor claims used as evidence: <list>
+
+Return:
+- a status for each source: verified-public, supporting-context, public-url-needed, or excluded-direct
+- the difference between an influence, a source's claim, local proof, a requirement, and an authority
+- the wording changes needed so you make no claim of compliance or approval
+- the source-map or crosswalk updates
+- the validation and scan commands
+```
+
 ## Source-lineage note
 
 This skill is an original citation-safety workflow for public-source-inspired software methodology. It does not turn cited sources into requirements this repo satisfies.

@@ -34,17 +34,17 @@ EXPECTED_COMMANDS = {
     "ng-deficiency.md",
 }
 
+# Command cards are generated from their skills (nuclear_grade/gen_commands.py),
+# so the card is a thin projection: five sections sourced from the skill, plus a
+# generation lead and a pointer back to the skill for everything else. This is an
+# independent copy of the public contract -- if the generator's section set
+# changes, this guard should fail until the contract is reviewed.
 REQUIRED_SECTIONS = (
-    "## Purpose",
     "## Use when",
     "## Do not use when",
     "## Inputs",
     "## Prompt text",
-    "## Files created or modified",
-    "## Expected outputs",
-    "## Verification command",
-    "## Failure modes",
-    "## Legal/assurance boundary note",
+    "## Verification",
 )
 
 

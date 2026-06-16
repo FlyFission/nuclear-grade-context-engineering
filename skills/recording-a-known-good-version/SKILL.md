@@ -65,6 +65,21 @@ A baseline is simply the version everyone agreed is correct and wants to protect
 - Things were quietly left out.
 - There are no re-check triggers for dependencies, models, prompts, tools, or public claims.
 
+## Prompt
+
+Create or update the Nuclear-grade baseline record for this change.
+
+Inputs:
+- packet:
+- baseline identity:
+- included controlled items:
+- excluded items/claims:
+- verification evidence:
+- OPEX / near-miss links:
+- accepted gaps:
+
+Return a baseline record. Include the version that is saved, the items it covers, the items it leaves out, links to the evidence, the gaps you have accepted, and what should trigger a re-check or a new baseline. Do not imply formal assurance or compliance.
+
 ## Source-lineage note
 
 This skill is an original known-good-version workflow influenced by public configuration-management, lifecycle, release-readiness, and operating-lesson sources mapped in `docs/00-standards-foundation/source-map.md`. It does not create formal assurance or compliance.

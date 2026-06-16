@@ -82,6 +82,34 @@ A "does it work" check proves what an agent produced, not how it got there. Some
 - Decision points are written as "agent chose X" with no limit or power reference.
 - Human approval steps are claimed but not documented with reviewer and date.
 
+## Prompt
+
+```text
+Trace this agent run and produce clear evidence.
+
+Inputs:
+- packet: .nuclear/changes/<slug>/
+- execution source: <log / transcript / tool-call export>
+- authority scope: <basis.md section or inline>
+- token/latency data available: <yes/no>
+- approval gates exercised: <list or none>
+
+For each consequential step (tool call, file edit, command run, API call,
+approval gate):
+- Name the action and the tool.
+- Record the inputs (shortened) and the output or result.
+- Set an evidence status: pass, gap, fail, or not applicable.
+- At decision points: record the choice made, the limit applied, and the authority check.
+- For approval gates: the reviewer, the date, and the decision.
+
+Return:
+- trace rows for trace.md: step, action, inputs, outputs, evidence status.
+- the decision-point records.
+- a summary of token use and speed (if available).
+- a run summary: steps within scope, steps uncertain, and gaps.
+- a link from each trace row to the claim in verification.md it supports.
+```
+
 ## Source-lineage note
 
 This skill is an original run-evidence workflow for AI agents, influenced by W&B Weave trace-tree observability (span-per-call, auto-logging, audit lineage), the NVIDIA NeMo Agent Toolkit profiling model (token, latency, and cost captured per step), and OpenTelemetry distributed tracing concepts (structured spans, parent-child relationships, reproducible records), all mapped as supporting context in `docs/00-standards-foundation/source-map.md`. It does not create formal audit assurance, security certification, compliance, or regulatory adequacy. A run trace is a focused engineering record, not a formal audit trail.

@@ -65,6 +65,26 @@ This skill keeps two things apart: what the MIT license lets people do, and what
 - The command-line or command help has no boundary wording.
 - Examples imply more proof than they actually show.
 
+## Prompt
+
+```text
+Run a Nuclear-grade license and assurance-limit check.
+
+Inputs:
+- changed public text: <paste/link>
+- license/disclaimer files: <links>
+- target audience: <user/team/enterprise>
+- public trust claims to self-check: <list>
+
+Return:
+- whether the MIT license permission stays clear
+- wording that keeps the permission to use separate from any assurance claim
+- whether each public trust claim is supported, narrowed, or removed
+- the unsafe phrases and what to replace them with
+- the scan commands to run
+- the final limits note
+```
+
 ## Source-lineage note
 
 This skill is an original public-use boundary workflow informed by the repo license, disclaimer, and source-foundation docs. It is not legal advice.

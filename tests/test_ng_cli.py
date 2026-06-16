@@ -260,7 +260,7 @@ def test_doctor_uses_repo_relative_skill_and_command_contracts(tmp_path):
     assert str(tmp_path / "skills" / "sample" / "SKILL.md") in result.stdout
     assert "missing ## Source-lineage note" in result.stdout
     assert str(tmp_path / "commands" / "sample.md") in result.stdout
-    assert "missing ## Legal/assurance boundary note" in result.stdout
+    assert "missing ## Verification" in result.stdout
 
 
 def test_doctor_checks_additional_public_docs(tmp_path):

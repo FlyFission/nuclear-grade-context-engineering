@@ -9,6 +9,14 @@ description: Decides which code, prompts, models, tools, dependencies, docs, tes
 
 Controlled items are the parts of a system whose approved version matters. They matter to trust, to review, to being able to repeat a result, to what an agent may do, or to a release. This skill keeps the approved version of those items under control. Engineers call that keeping the approved version under control, or configuration management (CM).
 
+## Decision contract
+
+- **Claim checked:** every item whose approved state affects trust, agent power, the release, repeatability, or public understanding is named -- with owner, current and intended state, an evidence link or stated gap, and a re-check trigger -- and nothing in scope is silently left uncontrolled.
+- **Artifact observed:** the request/diff/record and `controlled-items.md` (plus any `risk.md`, `basis.md`, `plan.md`) -> the controlled-item list with owners, states, triggers, and named gaps.
+- **Decision affected:** warn -- which code, prompts, models, dependencies, docs, and releases become controlled items (feeds `change-impact.md` and the baseline).
+- **Failure class:** uncontrolled-item (drift in an unlisted prompt, doc, or agent-power state left untracked).
+- **Next action:** name the item, owner, and re-check trigger; escalate when drift could hit users, security, releases, or agent power.
+
 ## When to Use
 
 - A change touches prompts, models, tools, dependencies, public docs, checkers, templates, skills, commands, release files, or runbooks.

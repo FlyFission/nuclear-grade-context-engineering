@@ -9,6 +9,14 @@ description: Maps claims to evidence, statuses, gaps, tests, evals, reviews, and
 
 Evidence should answer named claims. It should not just create a vague sense that the change is fine. This skill turns each claim into a proof you can trace. It keeps six things apart: a fact, an assumption, an unknown, a source claim (something a source says), local proof (something you checked yourself), and decision authority (who gets to decide).
 
+## Decision contract
+
+- **Claim checked:** every material claim is tied to evidence, a stated gap, or a deliberate deferral, and no claim reaches past its evidence.
+- **Artifact observed:** `basis.md`, test, and review evidence -> claim-to-evidence rows with a status (`pass`/`fail`/`gap`/`deferred`/`not applicable`/`planned`) in `trace.md`/`verification.md`.
+- **Decision affected:** warn -- the release posture the `ship.md` decision weighs.
+- **Failure class:** overreaching-claim (a claim stated past its evidence, or a `fail`/unowned `gap` carried as shippable).
+- **Next action:** record the gap as residual risk for `ship.md`; a `fail` or unowned `gap` escalates to block.
+
 ## When to Use
 
 - A change record makes claims about the code, says something about safety or security, claims release readiness, or claims a dependency can be trusted.

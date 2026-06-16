@@ -9,6 +9,14 @@ description: Decides who holds authority for a change — the agent at the edge 
 
 Authority should sit where the evidence and competence are, not automatically at the top. But that gradient is bounded: an agent may decide reversible, well-evidenced work at the edge, and must escalate irreversible, trust-bearing, or thinly evidenced decisions to a human. This skill names, for a specific action, who decides and what makes it escalate. The point is to push decisions to the information, not to remove a human gate.
 
+## Decision contract
+
+- **Claim checked:** the action's reversibility, evidence grade, and consequence place it at the agent's edge or behind a named human gate, with an escalation trigger concrete enough to obey and no required approval skipped.
+- **Artifact observed:** the proposed action and target, the evidence and its grade, the consequence, and the agent's authority and standing gates -> a decision-rights line (action, who decides, escalation trigger), the evidence the decider must hold, and any mandatory human gate.
+- **Decision affected:** block -- may the agent act at the edge or must it escalate: the decision-rights line and its escalation trigger.
+- **Failure class:** misplaced-authority (an irreversible or thinly-evidenced action placed at the edge, or a gate skipped).
+- **Next action:** escalate to the named human when consequence is protected and evidence is short of proven; stop when only the agent's assurance authorizes it.
+
 ## When to Use
 
 - An agent is about to act and it is unclear whether it may decide alone or must ask first.

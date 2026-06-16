@@ -13,6 +13,14 @@ This skill keeps a written mission anchor in front of the work. When an action s
 
 The anchor is also the clarity that lets authority move to the edge: it is the commander's intent that keeps a decentralized decision aligned with the goal. Push decisions to where the information is, but only against a clear, shared anchor — otherwise local wins quietly drift from the mission.
 
+## Decision contract
+
+- **Claim checked:** the current action was tested against the written anchor's goal, success criteria, and non-goals, the loop and attempt count were actually run, and any crossed non-goal or loosened standard has a justification row, not a quiet edit.
+- **Artifact observed:** the written anchor (`.nuclear/mission.md`, `## Mission anchor` in `risk.md`, or `.nuclear/charter.md`) and the current action/diff -> a recorded continue/re-anchor/escalate/stop decision, updated anchor, and any justification row.
+- **Decision affected:** block -- continue / re-anchor / escalate / stop, plus the restated goal anchor.
+- **Failure class:** mission-drift (an action serving a swapped-in goal, a crossed non-goal, or a standard loosened "just this once").
+- **Next action:** stop and return to the anchor when a non-goal would be crossed with no justification; 3 failed attempts or scope you cannot check escalates to the owner.
+
 ## When to Use
 
 - A long work session has many steps, and the current action is hard to tie back to the original goal.

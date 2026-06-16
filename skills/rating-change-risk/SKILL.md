@@ -9,6 +9,14 @@ description: Picks Quick, Standard, or a stronger human-reviewed mode based on c
 
 Sort the change before you build it. That way the care you take matches the stakes and the evidence the change needs. The result is a mode choice, tied to the decision question, what the change must prove, and the triggers to escalate. Mode is about how much rigor; it is orthogonal to the work type (greenfield, brownfield, defect-fix, or refactor-migration), which is classified upstream in `questioning-attitude` and shapes which questions you ask. See `docs/02-operating-system/work-type-lens.md`.
 
+## Decision contract
+
+- **Claim checked:** the chosen mode matches the stakes -- Quick only for local, easy-to-undo, easy-to-prove work that adds no new trust boundary, and Standard or stronger once consequence, exposure, reversibility, detectability, unknowns, or agent power cross the line -- and the proof that mode owes is named.
+- **Artifact observed:** the request/diff, the files/dependencies/credentials/APIs/users touched, `activation-thresholds.md`, and any prior `risk.md` -> the mode, decision question, evidence bar, required files, proof command or gap, and escalation triggers in `risk.md`.
+- **Decision affected:** block -- the mode (Quick / Standard / stronger) and the evidence obligation that mode sets.
+- **Failure class:** underrated-mode (a mode picked from effort, not stakes, weaker than the obvious consequence).
+- **Next action:** raise the mode to fit the stakes; escalate when money, sensitive data, irreversible actions, autonomous tools, or release readiness are involved.
+
 ## When to Use
 
 - A change request is new, vague, or has grown.

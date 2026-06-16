@@ -9,6 +9,14 @@ description: Turns incidents, near misses, bad handoffs, review surprises, escap
 
 Lessons from real operation (OPEX) only help if they change future work. So treat agent mistakes, near misses, review surprises, sloppy analysis, and support tickets as feedback. Each one shows you where a control was weak. A control is anything that steers behavior, like a test, a checker, a rule, or a permission limit. Use the lesson to make that control stronger.
 
+## Decision contract
+
+- **Claim checked:** the event is stated as actual-versus-standard with a root cause and weak control named, and closes with an owned, verified control fix or a deliberate waiver saying why no fix was needed.
+- **Artifact observed:** the event, near miss, or operating signal and the control it touched -> an OPEX record with the finding, action, owner, and evidence or close-out reason.
+- **Decision affected:** block -- whether a durable control (test, template, prompt, monitor, checker, or baseline) is updated, or the lesson is explicitly waived with a reason.
+- **Failure class:** unlearned-lesson (a fix with no control change, or a record closed with regret instead of a fix).
+- **Next action:** assign an owner and a recheck trigger; a repeated weak control escalates to a second independent reviewer.
+
 ## When to Use
 
 - A bad handoff, a wrong-file edit, a made-up claim, an agent going past its allowed tools, a bug that escaped to users, or a surprise in review happened.

@@ -222,6 +222,20 @@ def test_doctor_passes_on_this_repo():
     assert "OK:" in result.stdout
 
 
+def test_decisions_rolls_up_every_skill_contract():
+    result = run_ng("decisions", str(ROOT))
+
+    assert result.returncode == 0, result.stdout + result.stderr
+    # The operator receipt promotes block/warn; the summary accounts for every skill.
+    assert "Operator receipt" in result.stdout
+    assert "27 skills:" in result.stdout
+    assert "block" in result.stdout and "warn" in result.stdout
+    assert "checking-release-readiness" in result.stdout
+    assert "ship.md" in result.stdout
+    # No skill should be missing a tier (that line only prints on a gap).
+    assert "Missing a declarable tier" not in result.stdout
+
+
 def test_doctor_passes_on_initialized_workspace(tmp_path):
     assert run_ng("init", str(tmp_path)).returncode == 0
 

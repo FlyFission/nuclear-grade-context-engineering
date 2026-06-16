@@ -9,6 +9,14 @@ description: Captures an agent run's tool calls, decision points, inputs, output
 
 A "does it work" check proves what an agent produced, not how it got there. Sometimes how it got there matters: for debugging, for auditing, for reviewing cost, or for defending a release decision. This skill says what to record about the run, how much detail to capture, and how to link it into the packet's `trace.md` and `verification.md` as evidence someone else could reproduce.
 
+## Decision contract
+
+- **Claim checked:** every step that mattered -- tool call, edit, command, API call, approval -- has a recorded result and status, and each stayed inside the power `basis.md` granted.
+- **Artifact observed:** the run log/transcript/trace export against `basis.md` and `plan.md` -> step-level trace rows, decision-point and approval records, and a token/delay summary in `trace.md`/`verification.md`, linked to `ship.md`.
+- **Decision affected:** warn -- the step-level execution evidence the `ship.md` decision relies on.
+- **Failure class:** unevidenced-run (a stayed-in-scope claim with no step-level evidence, or unexplained cost).
+- **Next action:** record the gap for `ship.md`; a power breach or unexpected side effect escalates to pause/incident.
+
 ## When to Use
 
 - An agent ran tool calls that matter (file writes, API calls, command runs) and the packet needs evidence you can check.

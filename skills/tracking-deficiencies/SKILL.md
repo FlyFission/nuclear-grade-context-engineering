@@ -9,6 +9,14 @@ description: Keeps a standing register of known deficiencies so flaky tests, noi
 
 A deficiency you have decided to live with quietly becomes the new standard. This skill keeps a standing register of known problems so each one is aged, owned, and either fixed or formally accepted as risk with a named owner and a revisit date. The aim is to stop the slow normalization of deviation — the small erosions that, uncorrected, become the culture.
 
+## Decision contract
+
+- **Claim checked:** every tracked deficiency has a visible first-seen age, a named owner, and a disposition -- a fix-by date or a formal risk-acceptance with a named owner and a concrete revisit trigger -- never "known, untracked."
+- **Artifact observed:** the deficiency, where it shows up, its consequence and frequency, and any related incident/OPEX/controlled item -> a deficiency entry or `deficiency.md` row (description, age, owner, disposition, review trigger) linked to those records.
+- **Decision affected:** block -- per deficiency, fix by a date or formally risk-accept it with a named owner and a revisit date.
+- **Failure class:** normalized-deviation (a known problem living in chat/memory, or an accepted risk with no owner, date, or trigger).
+- **Next action:** assign an owner and a fix-or-accept disposition; escalate when it touches safety, security, data integrity, or drives repeat incidents.
+
 ## When to Use
 
 - A known problem will outlive the current change: a flaky test, a noisy alert, an unowned service, a dead dashboard, a recurring incident, or deferred hardening.

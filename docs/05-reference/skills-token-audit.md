@@ -51,6 +51,28 @@ The headline conclusion is unchanged: the always-loaded surface is the lean desc
 (~104 tokens each), not the bodies, and the budget gate stays green. The historical baseline
 below is the original 2026-05 23-skill snapshot, kept for provenance.
 
+## Refresh -- 2026-06-16 (decision-contract pass, 27 skills)
+
+Every skill now carries a five-field `## Decision contract` receipt -- claim checked,
+artifact observed, decision affected (with a `block`/`warn`/`observe` tier), failure
+class, and next action -- enforced by `ng doctor` and `tests/test_skill_contracts.py`.
+The receipt lives in the body, not the always-loaded `description`, so it costs tokens
+only when a skill fires:
+
+| Surface | Count | Tokens | Change | Notes |
+|---|---|---|---|---|
+| Skill descriptions | 27 | 2,814 | +2 | always-loaded; unchanged by design -- the receipt is body-only |
+| Skill bodies | 27 | 44,024 | +8,658 | on-invocation; one body loads when a skill fires; heaviest 2,875 (`organizing-project-folders`) |
+
+The always-loaded surface a routing agent pays on every turn is unchanged (2,812 ->
+2,814), which confirms the receipt sits in the on-invocation tier where it was placed on
+purpose. The budget gate stays green: the heaviest body, `organizing-project-folders`,
+is 2,875 against the 3,000 `skill_body_max`, leaving ~125 headroom -- and it is also the
+heaviest `warn` body, i.e. the standing relocation candidate the existence-decision
+measurement (cost-per-decision-signal, below) is meant to catch. The receipts average
+~320 tokens; tightening the wordier ones is an evidence-triggered follow-up, not a budget
+need.
+
 ## Measured baseline (2026-05 original snapshot, 23 skills)
 
 | Surface | Files | Tokens | Notes |
@@ -151,7 +173,7 @@ so the gate blocks regression rather than the accepted corpus:
 | Budget | Value | Measured max today |
 |---|---|---|
 | `description_max` | 200 | 140 |
-| `skill_body_max` | 3000 | 2,641 |
+| `skill_body_max` | 3000 | 2,875 |
 | `command_max` | 1600 | 1,406 |
 | `repeated_block_max_files` | 8 | 0 prose blocks over threshold |
 

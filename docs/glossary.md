@@ -27,6 +27,9 @@ Plain-language decoding of Nuclear-grade terms and idioms. The skills and docs u
 | Context clash | Two sources in the context contradict each other and the agent oscillates or loops. |
 | Context collapse | Re-summarizing a long-lived document over and over until its useful detail is gone. |
 | Brevity bias | Compression that keeps fluent prose but drops the load-bearing specifics (commands, limits, exact wording). |
+| Stage contract | An explicit interface for one workflow stage or delegable slice: its Inputs (exact sections), Process, Outputs, the gate that accepts it, and what is deterministic vs model-mediated. Minimal form is a stage `CONTEXT.md`; full form is `templates/standard/stage-contract.md`. |
+| Control plane vs execution plane | The control plane is the interpretable, reviewable layer (Git, markdown, stage contracts, baselines); the execution plane is where work and side effects happen (tools, agents, CI, durable runtimes). Stage contracts live in the control plane; the gate that enforces them sits in the execution plane. |
+| Determinism posture | A disclosure of what a stage can reproduce and what it cannot: the model id, prompt, and temperature/seed for model-mediated steps, and which steps are replayable vs human-judgment. A disclosure, not a guarantee that a model step repeats. |
 
 ## Idioms used in the skills
 

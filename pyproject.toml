@@ -1,6 +1,6 @@
 [project]
 name = "nuclear-grade"
-version = "0.5.0"
+version = "0.6.0"
 description = "Configuration management for AI-assisted software work."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -8,8 +8,12 @@ license = "MIT"
 
 [project.scripts]
 nuclear-grade = "nuclear_grade.cli:main"
+nuclear-grade-mcp = "nuclear_grade.mcp_server:main"
 
 [project.optional-dependencies]
+mcp = [
+  "mcp>=1.0",
+]
 dev = [
   "pytest>=8",
   "ruff>=0.6",
@@ -38,9 +42,11 @@ include = [
   "/tools",
   "/docs",
   "/README.md",
+  "/INTEGRATIONS.md",
   "/LICENSE",
   "/CHANGELOG.md",
   "/CITATION.cff",
+  "/install.sh",
   "/pyproject.toml",
 ]
 

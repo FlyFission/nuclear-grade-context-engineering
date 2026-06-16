@@ -9,6 +9,14 @@ description: Challenges the assumptions behind a change before an agent builds, 
 
 This is the front door. Before an agent builds, merges, or releases, find the real question the work has to answer. Trust facts over confidence. Say out loud what you are not sure about. And stop the moment a doubt would change what you decide.
 
+## Decision contract
+
+- **Claim checked:** the change is restated as one decision question evidence could settle, each assumption is checked, marked a gap, or assigned, and the one fact that would change the decision is named.
+- **Artifact observed:** the request/diff/plan/dependency -> a questioning-attitude write-up (or `questioning-attitude.md`) of assumptions, unknowns, shaky sources, and stop conditions.
+- **Decision affected:** warn -- the Quick/Standard mode choice routed into `rating-change-risk`, and whether to proceed, escalate, or stop.
+- **Failure class:** unexamined-assumption (an unchecked assumption driving the build, or a claim with no evidence).
+- **Next action:** raise the mode or escalate/stop when a load-bearing assumption is a gap; otherwise proceed with the gaps named.
+
 ## When to Use
 
 - A request is vague, high-stakes, or easy to talk yourself into.
@@ -79,6 +87,33 @@ This is the front door. Before an agent builds, merges, or releases, find the re
 - Standard-change triggers get waved off because the diff is small.
 - Words like "probably", "should", "safe", "secure", "approved", or "compliant" show up with no evidence.
 - Release text says "safe", "secure", "approved", or "compliant" without a qualified outside authority behind it.
+
+## Prompt
+
+```text
+Question this change the Nuclear-grade way.
+
+Inputs:
+- request/diff/change record:
+- affected items:
+- known assumptions:
+- evidence available:
+- limits or deadlines:
+
+Return:
+- the decision question in one sentence
+- the work type(s), all that apply (a production defect is brownfield and defect-fix), and the questions each forces
+- the evidence that would change the decision
+- the assumptions that must be true
+- known facts, unknowns, danger words, and worries about how good the sources are
+- facts to check before work continues
+- warning signs, signs an agent is about to slip, steps where mistakes are likely, and hidden reasons to treat this as a Standard change
+- evidence needed before you execute, verify, review, decide, or save the approved version (the baseline)
+- conditions that should make you pause or ask for help
+- the next thing to produce: Quick proof, Standard spec, context pack, handoff, self-check, a record of what stays under control (the controlled items), or a release decision
+
+Trust facts over confidence. Do not imply formal verification and validation, compliance, certification, safety, security, or regulatory adequacy.
+```
 
 ## Source-lineage note
 

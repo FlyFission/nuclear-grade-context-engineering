@@ -9,6 +9,14 @@ description: Reviews public text for license, warranty, compliance, safety, secu
 
 This skill keeps two things apart: what the MIT license lets people do, and what the repo proves. People may use the repo. But using it does not create formal verification and validation, compliance, certification, safety, security, or fitness for regulated use.
 
+## Decision contract
+
+- **Claim checked:** public text stays inside the assurance boundary -- "you may use it" kept apart from "it is proven fit", banned claim phrases only in negative or disclaimer sentences, and `python tools/ng.py doctor .` passes.
+- **Artifact observed:** the changed public text against `LICENSE`, `DISCLAIMER.md`, `SECURITY.md`, and `compliance-boundaries.md` -> bounded wording, updated docs/templates, and the scan results or list of gaps.
+- **Decision affected:** block -- whether public text stays inside the assurance boundary; an overreaching license/safety/compliance claim blocks until reworded.
+- **Failure class:** assurance-overreach (public copy promising safe, secure, compliant, approved, or certified results the repo has not proven).
+- **Next action:** reword to evidence-tied wording before release; requests for legal advice or regulated-use approval escalate to a qualified professional.
+
 ## When to Use
 
 - You are editing the README, install docs, public docs, templates, skills, commands, examples, or release notes.
@@ -64,6 +72,26 @@ This skill keeps two things apart: what the MIT license lets people do, and what
 - Public copy promises safe, secure, compliant, approved, or certified results.
 - The command-line or command help has no boundary wording.
 - Examples imply more proof than they actually show.
+
+## Prompt
+
+```text
+Run a Nuclear-grade license and assurance-limit check.
+
+Inputs:
+- changed public text: <paste/link>
+- license/disclaimer files: <links>
+- target audience: <user/team/enterprise>
+- public trust claims to self-check: <list>
+
+Return:
+- whether the MIT license permission stays clear
+- wording that keeps the permission to use separate from any assurance claim
+- whether each public trust claim is supported, narrowed, or removed
+- the unsafe phrases and what to replace them with
+- the scan commands to run
+- the final limits note
+```
 
 ## Source-lineage note
 

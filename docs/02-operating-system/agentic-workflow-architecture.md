@@ -135,6 +135,42 @@ A workflow is ready to carry consequence when:
 - each stage and artifact has an owner;
 - there is an incident and deficiency path when something goes wrong.
 
+## 8. Running the design pass
+
+Before any build authority opens, design the workflow as a bounded, staged, inspectable system
+and let a human review the scoping. The pass produces, in order:
+
+1. **Classification** (section 4) and why — it sets each stage's enforcement.
+2. **Stage decomposition**: numbered stages, their order, and the owner of each.
+3. **A stage contract per stage** (section 3): Inputs by exact `file#section` (Layer-3 references
+   vs Layer-4 prior outputs) with a context budget, Process, Outputs, and the next-stage handoff.
+4. **Authority map**: allowed vs forbidden tools, credential scope, and do-not-touch paths.
+5. **Deterministic checks**: the scripts, tests, and transforms that need no model.
+6. **Probabilistic steps**, each with its determinism posture (section 5).
+7. **Replay / resume plan**: what re-runs safely, and what is a one-way action.
+8. **Observability plan** (section 6): which runs are traced, and where the export is linked.
+9. **Eval plan** for the model-mediated steps that carry consequence.
+10. **Release / merge gates**, each tied to an enforcement rung (1-3 advisory / 4 out-of-band CI /
+    5 human review).
+11. **Configuration control**: the prompts, model ids, tools, and artifacts that stay versioned.
+
+Flag any stage whose gate the producing agent could defeat by editing it — that is the one
+question this page keeps asking.
+
+**Where this lives in PROVE.** The [planner](../../agents/planner.md) writes this pass into the
+packet `plan.md` as delegable stage contracts; the [runner](../../agents/runner.md) is held to
+them. For a one-step change a person runs and reviews in one sitting, skip the ceremony — the
+contract earns its keep only when context must be scoped for delegation or a stage is
+release-bearing.
+
+### Failure modes
+
+- Designing the happy path only, with no stop, escalate, or replay condition.
+- Stage contracts that load whole documents instead of the exact sections a stage needs.
+- A release-bearing gate the producing agent can edit — advisory dressed up as enforcement.
+- Selling the folder system as a durable runtime when state, retries, or scale are real.
+- Model-mediated steps with no determinism posture and no eval.
+
 ## Source-lineage note
 
 This page is an original Nuclear-grade operating doctrine. The folder-and-stage-contract shape

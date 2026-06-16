@@ -9,6 +9,14 @@ description: Runs a live incident the stabilize-first way — name a commander, 
 
 In a casualty you stabilize first and analyze second. An incident is run by one named commander, keeps known facts separate from guesses, prefers reversible moves while the picture is unclear, communicates on a fixed cadence, and does not close until corrective actions are tracked to done. The goal is to stop the harm and preserve the truth of what happened, not to find blame in the moment.
 
+## Decision contract
+
+- **Claim checked:** the incident has one named commander, a timeline that keeps confirmed facts separate from hypotheses, and corrective actions that each carry an owner and a definition of done -- none left as "we should."
+- **Artifact observed:** the current symptom, what changed, who can authorize rollbacks/failovers/comms, and the reversible actions available -> an `incident.md` (timeline, facts-vs-hypotheses, decisions, comms), owned corrective actions with closure triggers, and a handoff to learning and deficiency records.
+- **Decision affected:** block -- whether the incident is stabilized and its corrective actions are owned with closure triggers (it stays open until then).
+- **Failure class:** premature-incident-close (closed with unowned actions, or a hypothesis recorded as fact).
+- **Next action:** stop a proposed irreversible fix until the cause is confirmed or risk is accepted by a named owner; keep the incident open until actions are owned.
+
 ## When to Use
 
 - Production is down or degraded, data is at risk, security is in question, or users are harmed.
@@ -69,6 +77,30 @@ In a casualty you stabilize first and analyze second. An incident is run by one 
 - Hypotheses are recorded as facts in the timeline.
 - Status goes quiet for long stretches during the event.
 - The incident is closed with corrective actions that have no owner or no closure trigger.
+
+## Prompt
+
+```text
+Run this incident the Nuclear-grade stabilize-first way.
+
+Inputs:
+- symptom and start time:
+- what changed just before:
+- responders and who can authorize rollback/failover/comms:
+- reversible actions available:
+- status channel and cadence:
+
+Return:
+- the named commander and the role for each responder
+- the safest reversible stabilizing action to take first
+- a running timeline with each line labeled fact or hypothesis
+- decisions recorded with who made them, reversible-first while the cause is unconfirmed
+- the fixed status cadence
+- corrective actions, each with an owner and a closure trigger
+- the handoff to the post-incident learning and deficiency records
+
+Stabilize first, analyze second. Do not act on an unconfirmed cause with an irreversible fix. Do not imply this is a safety or compliance program.
+```
 
 ## Source-lineage note
 

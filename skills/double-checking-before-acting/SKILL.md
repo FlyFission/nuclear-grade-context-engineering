@@ -9,6 +9,14 @@ description: Checks a critical agent action against its exact target, expected r
 
 A self-check turns a high-stakes action into a careful one. Before you claim success, name the target, the result you expect, when to stop, the action itself, and the check you will run afterward.
 
+## Decision contract
+
+- **Claim checked:** the target, expected result, and stop condition were named before the action, and the real result was compared against the expected one before claiming success.
+- **Artifact observed:** the proposed action, target, and authority -> a `self-check.md` note of action, target, expected/real result, stop condition, evidence, and any mismatch.
+- **Decision affected:** block -- whether to proceed with or abort the critical action: a big edit, command, public claim, trust change, or release.
+- **Failure class:** wrong-target-or-unverified-action (acting on an assumed target, or claiming success without comparing the result).
+- **Next action:** pause and escalate when authority, target, or evidence is unclear; a mismatch halts the action rather than triggering a retry.
+
 ## When to Use
 
 - A command can delete, move, publish, release, migrate, or change something outside the repo.
@@ -67,6 +75,31 @@ A self-check turns a high-stakes action into a careful one. Before you claim suc
 - The expected result is missing or vague.
 - A mismatch is treated as a reason to retry instead of a reason to pause.
 - Public wording claims safe, secure, approved, or compliant with no scoped evidence behind it.
+
+## Prompt
+
+```text
+Self-check this Nuclear-grade agent action before it happens.
+
+Inputs:
+- packet:
+- current phase:
+- intended action:
+- exact target:
+- authority source:
+- expected result:
+- likely wrong-target or wrong-state error:
+- stop condition:
+- proof or after-action check:
+
+Return:
+- the risky point being checked;
+- the action and the target;
+- the expected result;
+- the stop condition;
+- the evidence to collect after the action;
+- whether to go ahead, pause, or ask for help.
+```
 
 ## Source-lineage note
 

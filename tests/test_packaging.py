@@ -39,4 +39,18 @@ def test_wheel_packages_only_namespaced_package():
 def test_version_is_stamped():
     config = _config()
 
-    assert config["project"]["version"] == "0.5.0"
+    assert config["project"]["version"] == "0.6.0"
+
+
+def _version_line(rel_path: str) -> str:
+    text = (ROOT / rel_path).read_text(encoding="utf-8")
+    line = next(line for line in text.splitlines() if line.startswith("version:"))
+    return line.split(":", 1)[1].strip().strip('"')
+
+
+def test_all_version_mirrors_track_pyproject():
+    # pyproject is the source of truth; guard every mirror so a bump can't drift
+    # one of them (this caught nuclear-grade.yaml and CITATION.cff lagging once).
+    expected = _config()["project"]["version"]
+    assert _version_line("nuclear-grade.yaml") == expected, "nuclear-grade.yaml version out of sync"
+    assert _version_line("CITATION.cff") == expected, "CITATION.cff version out of sync"

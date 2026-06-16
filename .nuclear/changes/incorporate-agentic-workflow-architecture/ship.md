@@ -15,8 +15,8 @@
 
 ## Scope and exclusions
 
-- Included: the stage-contract template, the workflow-architecture doctrine doc, the planner + plan-template wiring, the vocabulary reconciliation, the external-trace bridge, the discoverability surface (workflow row, matrix trigger, command card), the coupled CI edits, the preventive boundary test, and this packet.
-- Excluded: a new skill, validator code for stage contracts, a worked example, and an eval case.
+- Included: the stage-contract template, the workflow-architecture doctrine doc, the planner + plan-template wiring, the vocabulary reconciliation, the external-trace bridge, the discoverability surface (workflow row, matrix trigger, and the doctrine's design-pass section), the coupled CI edits, the preventive boundary test, and this packet.
+- Excluded: a new skill, a standalone command card (its design pass was rehomed to the doctrine §8 to fit the generated-commands model from the single-sourcing change), validator code for stage contracts, a worked example, and an eval case.
 - Known non-goals: any claim that folders replace durable runtimes, and any compliance, certification, or formal-assurance claim.
 
 ## Evidence status summary

@@ -1,5 +1,5 @@
 name: nuclear-grade
-version: 0.5.0
+version: 0.6.0
 description: An evidence-first workflow for running AI on software changes that matter.
 validator_modes:
   - quick
@@ -91,13 +91,48 @@ commands:
   - ng-intent.md
   - ng-incident.md
   - ng-deficiency.md
-  - ng-workflow-architecture.md
+command_map:
+  # The semantic skill -> command pairing the generator projects each card from
+  # (see nuclear_grade/gen_commands.py and `ng gen-commands`). Declared here, not
+  # in skill frontmatter, so skill frontmatter stays within the Anthropic
+  # skill-creator convention (a closed key set, guarded by test_skill_contracts).
+  # `using-nuclear-grade` is the always-first dispatcher and has no command.
+  questioning-attitude: ng-question
+  rating-change-risk: ng-classify
+  creating-change-records: ng-new
+  choosing-what-to-control: ng-what-to-control
+  checking-what-a-change-affects: ng-impact
+  recording-a-known-good-version: ng-baseline
+  briefing-an-agent: ng-context-pack
+  handing-off-work: ng-turnover
+  double-checking-before-acting: ng-self-check
+  proving-claims: ng-prove
+  checking-release-readiness: ng-ship-review
+  learning-from-experience: ng-learn
+  vetting-outside-code-and-models: ng-trust-check
+  checking-source-claims: ng-source-check
+  checking-legal-and-safety-wording: ng-legal-check
+  staying-on-mission: ng-drift-check
+  reviewing-code-quality: ng-code-review
+  stress-testing-agent-changes: ng-red-team
+  recording-what-an-agent-did: ng-trace
+  breaking-down-the-work: ng-breakdown
+  organizing-project-folders: ng-folders
+  closing-stale-packets: ng-close-packet
+  deciding-who-decides: ng-decide-authority
+  declaring-intent: ng-intent
+  responding-to-incidents: ng-incident
+  tracking-deficiencies: ng-deficiency
 token_budgets:
   # Per-file token ceilings enforced by `ng tokens` (see nuclear_grade/tokens.py).
-  # Seeded above the 2026-05 measured maxima (desc 138, skill body 2489, command
-  # 1295) with headroom, so the gate blocks regression, not the accepted corpus.
+  # Seeded above the measured maxima with headroom, so the gate blocks regression,
+  # not the accepted corpus. Single-sourcing the commands moved each prompt into its
+  # skill's `## Prompt` section (the cards are generated from it), raising the
+  # measured skill-body max to 3239 (organizing-project-folders); skill_body_max is
+  # reseeded above that. The generated cards stay the leaner surface (max 1515).
+  # Earlier basis, pre-single-sourcing: desc 138, skill body 2489, command 1295.
   description_max: 200
-  skill_body_max: 3000
+  skill_body_max: 3600
   command_max: 1600
   repeated_block_max_files: 8
 boundaries:

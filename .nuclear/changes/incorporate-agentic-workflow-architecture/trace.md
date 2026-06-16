@@ -21,7 +21,7 @@
 | REQ-003 | Doctrine maps control/execution plane to PROVE + rungs, inside boundary | `basis.md` | `plan.md` step 1 / `docs/02-operating-system/agentic-workflow-architecture.md` | Boundary section + diagram | local proof | `verification.md` | ship | pass |
 | REQ-004 | Vocabulary reconciled, no conflicting definitions | `basis.md` | `plan.md` steps 1,4 / `docs/glossary.md`, `skills/organizing-project-folders/SKILL.md` | Minimal vs full form named once | local proof | `verification.md` | ship | pass |
 | REQ-005 | External-trace bridge named | `basis.md` | `plan.md` step 4 / `skills/recording-what-an-agent-did/SKILL.md` | Link targets named in Process step 7 | local proof | `verification.md` | ship | pass |
-| REQ-006 | Discoverable without a new skill | `basis.md` | `plan.md` step 5 / `WORKFLOWS.md`, `CORE.md`, `commands/ng-workflow-architecture.md` | Catalog row + matrix trigger + command | local proof | `verification.md` | ship | pass |
+| REQ-006 | Discoverable without a new skill | `basis.md` | `plan.md` step 5 / `WORKFLOWS.md`, `CORE.md`, `docs/02-operating-system/agentic-workflow-architecture.md` | Catalog row + matrix trigger + doctrine design pass | local proof | `verification.md` | ship | pass |
 | REQ-007 | CI stays green; boundary wording is guarded | `basis.md` | `plan.md` steps 5-6 / `tests/test_command_contracts.py`, `tests/test_public_docs.py` | Coupled edits + preventive test | local proof | `verification.md` | ship | pass |
 
 ## Evidence chain

@@ -372,13 +372,15 @@ def cost_per_signal(root: Path) -> dict[str, float]:
 
 # Default budgets, overridable from nuclear-grade.yaml `token_budgets:`. Seeded
 # from the measured baseline with headroom so the gate starts green and only fires
-# on genuine regression, not on ordinary edits.
-# Measured baseline maxima (2026-05, 23 skills): description 138, skill body 2489,
-# command 1295. Budgets sit above these with headroom for ordinary edits, so the
-# gate fires on regression rather than on the current, accepted corpus.
+# on genuine regression, not on ordinary edits. Kept in step with the catalog so
+# the defaults remain a true safety net if a key is dropped.
+# Skill bodies now carry a `## Prompt` section (commands are generated from it), so
+# the measured skill-body max is 3239 (organizing-project-folders); skill_body_max
+# sits above it. Earlier basis, pre-single-sourcing: desc 138, skill body 2489,
+# command 1295.
 DEFAULT_BUDGETS = {
     "description_max": 200,
-    "skill_body_max": 3000,
+    "skill_body_max": 3600,
     "command_max": 1600,
     "repeated_block_max_files": 8,
 }

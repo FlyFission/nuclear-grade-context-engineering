@@ -39,7 +39,7 @@
 | Stage-contract template | New template | The canonical reusable contract shape. | `templates/standard/stage-contract.md` |
 | Workflow-architecture doctrine | New public-facing doc | Makes methodology claims; must stay inside the assurance boundary. | `docs/02-operating-system/agentic-workflow-architecture.md` |
 | Skill prose | Skill bodies | Reconcile vocabulary and name the trace bridge; keep their contracts. | `skills/breaking-down-the-work/SKILL.md`, `skills/organizing-project-folders/SKILL.md`, `skills/recording-what-an-agent-did/SKILL.md` |
-| Discoverability + coupled edits | Registry, catalogs, command, tests | Keep CI green and make the path findable. | `nuclear-grade.yaml`, `WORKFLOWS.md`, `CORE.md`, `COMMANDS.md`, `commands/ng-workflow-architecture.md`, `tests/test_command_contracts.py`, `tests/test_public_docs.py` |
+| Discoverability + coupled edits | Registry, catalogs, doctrine, tests | Keep CI green and make the path findable. | `nuclear-grade.yaml`, `WORKFLOWS.md`, `CORE.md`, `docs/02-operating-system/agentic-workflow-architecture.md`, `tests/test_public_docs.py` |
 
 ## Threshold screen
 

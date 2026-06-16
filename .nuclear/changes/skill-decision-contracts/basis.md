@@ -46,7 +46,7 @@ Keep confidence apart from evidence before any derived claim is accepted.
 | Statement | Fact / assumption / unknown / source claim / local proof / decision authority | Evidence or source | Decision impact |
 |---|---|---|---|
 | All 27 skills carry a valid block | local proof | `ng doctor` and `test_every_skill_declares_a_decision_contract` pass | clears the ship gate |
-| The heaviest body stays under budget | local proof | `ng tokens`: 2,852 of 3,000 | clears the ship gate |
+| The heaviest body stays under budget | local proof | `ng tokens`: 2,875 of 3,000 | clears the ship gate |
 
 ## Interfaces and trust boundaries
 

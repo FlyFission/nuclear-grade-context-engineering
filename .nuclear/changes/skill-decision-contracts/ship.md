@@ -36,7 +36,7 @@
 | Risk / gap | Impact | Disposition | Owner | Recheck trigger |
 |---|---|---|---|---|
 | Some blocks are wordier than the ideal one-scan line | a mild scannability cost | accept | FlyFission | trim if a block is shown to mislead |
-| The heaviest body is now 2,852 of 3,000 tokens | less budget headroom | accept | FlyFission | `ng tokens` fails on the next addition |
+| The heaviest body is now 2,875 of 3,000 tokens | less budget headroom | accept | FlyFission | `ng tokens` fails on the next addition |
 
 ## Rollback / restore plan
 

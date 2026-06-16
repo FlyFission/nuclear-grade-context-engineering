@@ -38,10 +38,10 @@ for a single repo. Or fan out to every detected tool in one step:
 ./install.sh --full     # all skills
 ```
 
-> Codex, Claude Code, and Cursor paths are confirmed against current docs.
-> Windsurf's user path and VS Code's paths are best-known defaults — the command
-> says so when you run it. If your install differs, point it anywhere with
-> `--dest <path>`.
+> Codex, Claude Code, Cursor, and Windsurf paths are confirmed against current
+> docs. VS Code's project path (`.github/skills`) is confirmed; its user-scope
+> path is a best-known default — the command flags it. If your install differs,
+> point it anywhere with `--dest <path>`.
 
 ### Claude Code: the native plugin
 

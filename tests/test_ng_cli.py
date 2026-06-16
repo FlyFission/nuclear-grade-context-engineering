@@ -544,12 +544,12 @@ def test_install_is_idempotent_update(tmp_path):
 
 
 def test_install_unverified_tool_warns_to_verify_path(tmp_path):
-    # Windsurf's path is a best-known default; without --dest the install must flag it.
-    result = run_ng("install", "windsurf", "--scope", "project", "--repo", str(tmp_path))
+    # VS Code's user path is a best-known default; without --dest the install must flag it.
+    result = run_ng("install", "vscode", "--scope", "project", "--repo", str(tmp_path))
 
     assert result.returncode == 0, result.stderr
     assert "best-known default" in result.stdout
-    assert (tmp_path / ".windsurf" / "skills" / "using-nuclear-grade" / "SKILL.md").exists()
+    assert (tmp_path / ".github" / "skills" / "using-nuclear-grade" / "SKILL.md").exists()
 
 
 def test_install_verified_tool_has_no_verify_note(tmp_path):

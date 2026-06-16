@@ -108,10 +108,11 @@ TOOL_LABELS = {
     "vscode": "VS Code + Copilot",
 }
 # Skill-directory paths confirmed against each tool's current docs (Codex, Claude
-# Code, Cursor). Windsurf-user and VS Code paths are best-known defaults; those
-# print a "verify / override with --dest" note so a wrong default is obvious and
-# recoverable rather than silently writing to the wrong place.
-VERIFIED_TOOLS = frozenset({"codex", "claude", "cursor"})
+# Code, Cursor, Windsurf). VS Code's project path (.github/skills) is confirmed,
+# but its user-scope path is a best-known default, so VS Code stays unverified:
+# unverified tools print a "verify / override with --dest" note so a wrong default
+# is obvious and recoverable rather than silently writing to the wrong place.
+VERIFIED_TOOLS = frozenset({"codex", "claude", "cursor", "windsurf"})
 
 REQUIRED_PUBLIC_FILES = (
     "README.md",

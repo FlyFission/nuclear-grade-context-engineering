@@ -78,6 +78,15 @@ The cross-tool `skills` CLI also installs into these tools:
 npx skills add FlyFission/nuclear-grade-context-engineering
 ```
 
+## Get listed in official directories
+
+Beyond installing from this repo, you can submit to official directories so others discover
+the skills. See [`docs/04-adoption/listing-and-discovery.md`](docs/04-adoption/listing-and-discovery.md)
+for the verified, step-by-step process. The two worth pursuing today are the **Claude Code
+community directory** (`claude plugin validate` already passes, so the repo is
+submission-ready) and the **`openai/skills`** catalog; the MCP Registry is deferred and VS
+Code/Copilot need full extension repackaging.
+
 ## Profiles and token cost
 
 - `--core` (default): the always-first `using-nuclear-grade` router plus the

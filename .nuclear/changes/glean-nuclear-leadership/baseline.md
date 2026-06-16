@@ -12,7 +12,7 @@
 
 | Field | Value |
 |---|---|
-| Points to | The merge commit on branch `claude/inspiring-ride-hix4tl` |
+| Points to | Reviewed commit `39651964` (PR #43, branch `claude/inspiring-ride-hix4tl`); the squash/merge commit on `main` is recorded here at merge |
 | Charter version | 1.3.0 |
 | Controlled items covered | the items listed in `controlled-items.md` |
 | Evidence | `verification.md` |

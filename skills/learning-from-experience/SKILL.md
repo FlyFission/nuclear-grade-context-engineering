@@ -9,6 +9,8 @@ description: Turns incidents, near misses, bad handoffs, review surprises, escap
 
 Lessons from real operation (OPEX) only help if they change future work. So treat agent mistakes, near misses, review surprises, sloppy analysis, and support tickets as feedback. Each one shows you where a control was weak. A control is anything that steers behavior, like a test, a checker, a rule, or a permission limit. Use the lesson to make that control stronger.
 
+No-blame applies to honest error and at-risk slips: the point is to fix the control, not the person or the model. It does not extend to a willful violation — knowingly disabling a control, fabricating a passing result, or routing around a required gate. Surface that and correct it as a finding; never file it as "just a mistake," and never normalize it (Charter Art. 3, 19). A bypassable gate is also its own weak control, so the lesson fixes both the violation and the gate that allowed it.
+
 ## Decision contract
 
 - **Claim checked:** the event is stated as actual-versus-standard with a root cause and weak control named, and closes with an owned, verified control fix or a deliberate waiver saying why no fix was needed.
@@ -38,7 +40,7 @@ Lessons from real operation (OPEX) only help if they change future work. So trea
 
 ## Process
 
-1. State the actual condition in plain words, no blame, and name the standard or expected condition it fell short of.
+1. State the actual condition in plain words, no blame, and name the standard or expected condition it fell short of. Separate an honest error or at-risk slip (fix the control) from a willful violation — a knowingly bypassed gate, a disabled control, a fabricated result (surface and correct it, keep an owner for closure, and never normalize it).
 2. Name where it is red — the gap between actual and standard — then find the root cause, not the symptom, and the weak or missing control and which approved version or file it touched.
 3. Pick a lasting fix: update a basis, a test, a checker, a template, a skill, a command, a doc, a monitor, a threshold, or an approved version.
 4. Do not close the lesson with just regret or an explanation when a real control could change instead.
@@ -69,12 +71,14 @@ This actual-vs-standard, root-cause, owner, verify structure keeps a retro from 
 - "The agent just made a mistake." Ask what prompt, context, checker, review, or power limit let it happen.
 - "We fixed the bug." A fix with no lesson can come back through another path.
 - "No one was harmed." A near miss is a cheaper warning than a real incident.
+- "No-blame means no accountability." No-blame covers honest error, not a knowingly bypassed gate or a fabricated result. Surface the violation, fix the control that let it happen, and keep an owner for closure.
 
 ## Red Flags
 
 - The OPEX record has no lasting fix and no reason it was closed.
 - The lesson is stuck in chat history.
 - The record blames one person or one model as the sole cause.
+- A knowingly bypassed gate or a fabricated result is filed as "just a mistake," so the violation goes unowned and the bypassable gate is never fixed.
 - The follow-up has no owner and no trigger.
 
 ## Prompt
@@ -93,7 +97,7 @@ Inputs:
 - owner:
 - due date or trigger:
 
-Produce a no-blame OPEX record. Each finding must either change a lasting control or be closed with a clear reason why not.
+Produce a no-blame OPEX record (no-blame covers honest error, not a willful violation like a knowingly bypassed gate, disabled control, or fabricated result — surface those as findings, never file them as mistakes). Each finding must either change a lasting control or be closed with a clear reason why not.
 ```
 
 ## Source-lineage note

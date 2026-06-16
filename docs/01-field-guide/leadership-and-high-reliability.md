@@ -69,10 +69,10 @@ Do not copy: command-and-control approval for every decision; fear-based leaders
 | Deficiency log | `tracking-deficiencies` skill, `ng-deficiency`, `../02-operating-system/deficiency-register.md` |
 | Evidence-based retrospectives | `learning-from-experience` (Get-Real-Get-Better structure) |
 | Service ownership doctrine | framed in `../02-operating-system/critical-systems.md` (doctrine only — this repo governs changes, not org charts) |
-| Qualification / level of knowledge | framed as competence-before-authority in `authority-and-intent.md`; this repo evidences competence, it does not run an HR program |
+| Qualification / level of knowledge | competence-to-act, defined in `authority-and-intent.md` (qualification section): action class → demonstrated competence → revalidation trigger. Change-scoped and agent-facing — this repo evidences competence, it does not run an HR or certification program |
 | Operational drills | framed only; adversarial drilling of agent changes is `stress-testing-agent-changes` |
 
-The last three are deliberately doctrine-only. This repo governs how a change is run, not how an organization staffs and drills — naming the mechanism is in scope; building org machinery is not.
+Two of the last three remain deliberately doctrine-only: service ownership and organization-wide operational drills are about how a company staffs and rehearses, not how a change is run. Qualification is the exception — competence-to-act is now defined as a change-scoped, agent-facing mechanism in `../02-operating-system/authority-and-intent.md`, and the durable record an agent learns from between runs is its own doctrine in `../02-operating-system/durable-memory.md`. The line stays crisp: change-scoped and agent-facing learning mechanisms are in scope; a company-wide HR, certification, or training program is not.
 
 ---
 
@@ -95,6 +95,7 @@ Research on AI-assisted development finds that AI amplifies an organization's ex
 - Stabilize-first incident response: `../02-operating-system/incident-response.md`
 - SUBSAFE-style critical-systems framing and watch-team roles: `../02-operating-system/critical-systems.md`
 - Standing deficiency register: `../02-operating-system/deficiency-register.md`
+- Qualification (competence-to-act) and durable memory: `../02-operating-system/authority-and-intent.md`, `../02-operating-system/durable-memory.md`
 - Skills: `deciding-who-decides`, `declaring-intent`, `responding-to-incidents`, `tracking-deficiencies`
 - Commands: `ng-decide-authority`, `ng-intent`, `ng-incident`, `ng-deficiency`
 

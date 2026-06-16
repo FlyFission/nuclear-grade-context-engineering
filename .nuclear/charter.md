@@ -1,8 +1,8 @@
 # Nuclear-grade Charter
 
-**Version:** 1.2.0
+**Version:** 1.3.0
 **Ratified:** 2026-05-27
-**Last amended:** 2026-05-31
+**Last amended:** 2026-06-16
 
 The charter is the lasting backbone: the principles for how work is done here that do not bend for any single change. A mission anchor says what a given change is for; the charter says how all changes must be carried out. The tools treat the charter as advice for now (the validator does not block on it), but it is the standard a reviewer and an agent are expected to hold to.
 
@@ -28,10 +28,11 @@ The principles scale with the mode. Quick changes honor the spirit; Standard and
 16. **Cut-point self-checking.** Measure critical targets before the cut: commands, public claims, dependency/model/API changes, release actions, and other wrong-target or hard-to-reverse steps.
 17. **Authority to information.** Decision authority belongs where the evidence and competence are, not automatically at the top, and it stays bounded. Reversible, well-evidenced work may be decided at the edge; irreversible, trust-bearing, or thinly evidenced decisions are escalated to a named person. Authority is earned by demonstrated competence and shared clarity of intent, and the gradient never removes a required human gate. An agent's confidence is not competence, and its stated intent is not proof it understood.
 18. **Intent before action.** Before a critical action, state the intent and the reasoning behind it so a reviewer can challenge the thinking, not just the result. Hand off so the next owner is more capable, not more dependent.
-19. **Stop-work and standing deficiencies.** Anyone may halt unsafe or unclear work regardless of seniority, and surfacing bad news is protected, never punished. Known deficiencies are logged, owned, and fixed or explicitly risk-accepted with an owner and a revisit date — never silently normalized.
+19. **Stop-work and standing deficiencies.** Anyone may halt unsafe or unclear work regardless of seniority, and surfacing bad news is protected, never punished. That protection covers honest error and good-faith concern; it does not shield a willful violation — knowingly disabling a control, fabricating evidence, or routing around a required gate — which is itself a finding to surface and correct, never normalize (Art. 3). Known deficiencies are logged, owned, and fixed or explicitly risk-accepted with an owner and a revisit date — never silently normalized.
 
 ## Amendment log
 
+- 1.3.0 (2026-06-16): Refined Art. 19 to distinguish protected honest error and good-faith concern from an accountable willful violation (a knowingly bypassed gate, a disabled control, a fabricated result), reconciling no-blame learning with the no-normalization rule (Art. 3).
 - 1.2.0 (2026-05-31): Added leadership and high-reliability articles for authority to information, intent before action, and stop-work and standing deficiencies.
 - 1.1.0 (2026-05-30): Added doctrine-spine articles for decision-question discipline, operational unambiguity, mission-aligned small work, grounded truth, two-speed control, and cut-point self-checking.
 - 1.0.0 (2026-05-27): Initial charter.

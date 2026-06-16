@@ -23,6 +23,7 @@ These docs have two parts. First, learn how to use the workflow. Second, look up
 | Scale rigor by risk tier | [`02-operating-system/risk-tiers-and-modes.md`](02-operating-system/risk-tiers-and-modes.md) |
 | See how controls enforce, not just advise | [`02-operating-system/runtime-enforcement.md`](02-operating-system/runtime-enforcement.md) |
 | Budget and order an agent's context window | [`02-operating-system/context-window-discipline.md`](02-operating-system/context-window-discipline.md) |
+| Keep durable memory retrievable across runs | [`02-operating-system/durable-memory.md`](02-operating-system/durable-memory.md) |
 | Classify the kind of change (work type) | [`02-operating-system/work-type-lens.md`](02-operating-system/work-type-lens.md) |
 | Run an incident, track deficiencies | [`02-operating-system/incident-response.md`](02-operating-system/incident-response.md), [`02-operating-system/deficiency-register.md`](02-operating-system/deficiency-register.md) |
 | Periodically self-assess the method | [`02-operating-system/program-self-assessment.md`](02-operating-system/program-self-assessment.md) |

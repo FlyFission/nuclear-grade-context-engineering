@@ -56,6 +56,10 @@ Two leakage rules follow:
 - **Durable artifacts are not edited from inside a run as a side effect.** Charter and
   baseline changes go through their own packet.
 
+The "long-lived across changes" row is the durable memory layer. How a later agent retrieves
+that memory and keeps it from poisoning future runs is its own doctrine:
+[`durable-memory.md`](durable-memory.md).
+
 ---
 
 ## 3. Named failure modes

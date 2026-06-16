@@ -6,7 +6,7 @@
 
 **Activation threshold:** Use when the real state differs from the baseline, but the team is not making a new baseline right away.
 
-**Minimum useful version:** the gap, the affected item, the impact, the owner, an end date or recheck trigger, and the disposition.
+**Minimum useful version:** the gap, the affected item, the impact, the owner, an end date or recheck trigger, and the disposition. For a deliberate temporary modification (feature flag, bypass, loosened permission, disabled check), also record a named back-out and keep it visible to whoever operates the system.
 
 **Overhead trap:** Do not use variance records to make a stale baseline look normal. If the gap is here to stay, make a new baseline.
 
@@ -14,9 +14,9 @@
 
 ## Variance
 
-| Affected item | Baseline state | Actual state | Impact | Disposition | Owner | Recheck trigger |
-|---|---|---|---|---|---|---|
-| | | | | accept / mitigate / defer / block | | |
+| Affected item | Baseline state | Actual state | Impact | Disposition | Owner | Recheck trigger | Back-out / removal |
+|---|---|---|---|---|---|---|---|
+| | | | | accept / mitigate / defer / block | | | |
 
 ## Required links
 

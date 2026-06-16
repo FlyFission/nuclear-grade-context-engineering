@@ -37,7 +37,7 @@ Inputs:
 - owner:
 - due date or trigger:
 
-Produce a no-blame OPEX record. Each finding must either change a lasting control or be closed with a clear reason why not.
+Produce a no-blame OPEX record. No-blame covers honest error and at-risk slips; a willful violation (a knowingly bypassed gate, a disabled control, a fabricated result) is surfaced and corrected as a finding with an owner, never filed as "just a mistake" or normalized. Each finding must either change a lasting control or be closed with a clear reason why not.
 ```
 
 ## Files created or modified
@@ -62,6 +62,7 @@ python tools/ng.py validate .nuclear/changes/<slug>
 - The lesson stays in the chat history only.
 - The lesson records regret but changes no basis, test, validator, template, skill, command, doc, monitor, threshold, or baseline.
 - The record names a person or a model as the sole cause.
+- A knowingly bypassed gate or fabricated result is recorded as an honest mistake, so the violation goes unowned and the bypassable gate is never fixed.
 - A finding has no lasting fix and no reason given for closing it.
 
 ## Legal/assurance boundary note

@@ -83,6 +83,8 @@ For agent work that matters, ask which controls are in place:
 | review / oversight | peer review, independent verification, release review |
 | learning | OPEX record, near-miss issue, updated baseline, updated test/template/skill |
 
+These families are layers of defense, not a checklist: the point is that no single control is trusted alone (defense in depth). The layers only add up if they fail **independently**. Stacking controls that share one failure mode buys far less than it looks — the same model that performs an action and then "checks" it is one barrier wearing two hats, not two; code and the tests or evals a single agent generates from the same wrong spec fail together; several wrappers around one brittle classifier all miss the same input. Independent backup uses a different model, context, or method, so it does not inherit the same blind spot (see `authority-and-intent.md`). Add independent layers in proportion to consequence: a Tier 0 action earns more — and more independent — layers than a reversible one (`risk-tiers-and-modes.md`).
+
 Do not blame a model or a person as the only cause of drift. Ask which control was missing, weak, stale, or skipped.
 
 ---

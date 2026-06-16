@@ -27,6 +27,7 @@ These are portable command prompts: plain Markdown prompt cards you can paste in
 | [`ng-trace`](commands/ng-trace.md) | You need a clear record of what an agent actually did | A structured run record |
 | [`ng-breakdown`](commands/ng-breakdown.md) | You need to split a deliverable into clean pieces | A work-breakdown table and a short dictionary |
 | [`ng-folders`](commands/ng-folders.md) | You need a folder layout from a work breakdown or an existing tree | A folder map and a naming and depth check |
+| [`ng-workflow-architecture`](commands/ng-workflow-architecture.md) | You are planning a multi-stage AI or agent workflow and want it bounded and inspectable before any code | Workflow classification, stage contracts, an authority map, and gates tied to enforcement rungs |
 | [`ng-close-packet`](commands/ng-close-packet.md) | A change record has gone stale and `ng status` flagged it | A finished, closed-with-reason, or deleted record |
 | [`ng-decide-authority`](commands/ng-decide-authority.md) | An agent could act on something irreversible, trust-bearing, or thinly evidenced and you must place authority | Who decides and the escalation trigger |
 | [`ng-intent`](commands/ng-intent.md) | You are about to take a critical or irreversible action and want the reasoning challenged first | An intent declaration or release brief with abort criteria and rollback |

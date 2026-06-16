@@ -9,7 +9,7 @@ description: Designs a clean folder and file layout as real architecture, buildi
 
 Folders are a real engineering decision, not an afterthought. Each folder is a choice about what to group. A good folder maps to one piece of the work breakdown or one disposition rule (what eventually happens to its contents: kept, temporary, archived, or generated). It holds things that change together. In other words, it has high cohesion (its contents share one reason to change) and low coupling (it does not depend tightly on other folders). Its name is safe on any platform, sorts cleanly, and is easy for tools to read.
 
-This skill puts a folder-decision checklist in front of the agent, so folders get reasoned about instead of created by default. When the structure is a step-by-step agent workflow, it also applies the Model Workspace Protocol: numbered stage folders, a context file per stage, layered context, and review gates between stages.
+This skill puts a folder-decision checklist in front of the agent, so folders get reasoned about instead of created by default. When the structure is a step-by-step agent workflow, it also applies the Model Workspace Protocol: numbered stage folders, a context file per stage, layered context, and review gates between stages. That workflow shape is a named path of its own — see `docs/02-operating-system/agentic-workflow-architecture.md` for when folders are enough (and when a durable runtime is not), and `templates/standard/stage-contract.md` for the full per-stage contract a release-bearing or delegated stage uses.
 
 ## When to Use
 

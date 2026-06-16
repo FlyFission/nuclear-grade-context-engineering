@@ -44,7 +44,7 @@ Three things can wreck it. Under-coverage: some scope is orphaned and no one own
 6. Number with outline traceability (`1`, `1.2`, `1.2.3`). The number is the lasting ID that the folder map, the dictionary, and cross-references all key on.
 7. Write the dictionary. For each piece, record the scope, what is in and out of scope, the deliverable, the interfaces, the acceptance criteria, a rough size, the owner, and the dependencies. A piece with no dictionary entry cannot be estimated or owned.
 8. Use the same taxonomy everywhere. The work breakdown is the one taxonomy you reuse for ownership, folder grouping, CI grouping, and risk labels. That keeps one source of truth.
-9. Self-check (see Verification), then output the work-breakdown table plus the dictionary. Hand off to `organizing-project-folders` to turn it into a folder structure. When the work will be built by another agent or session, also hand each leaf to `plan.md` as a delegable build-sequence slice with its prerequisites, the proof that closes it, and a stop or done condition.
+9. Self-check (see Verification), then output the work-breakdown table plus the dictionary. Hand off to `organizing-project-folders` to turn it into a folder structure. When the work will be built by another agent or session, also hand each leaf to `plan.md` as a delegable build-sequence slice written as a stage contract — its prerequisites, its Inputs by exact `file#section` with a context budget, its Outputs, the proof that closes it, and a stop or done condition. The full form is `templates/standard/stage-contract.md`; the doctrine is `docs/02-operating-system/agentic-workflow-architecture.md`.
 
 ## Outputs
 
@@ -53,7 +53,7 @@ Three things can wreck it. Under-coverage: some scope is orphaned and no one own
 - Named common pieces held once, not copied across siblings.
 - A clear put-off-scope or gap line wherever the 100% rule was bounded.
 - A handoff note to folder structuring.
-- For delegated execution, a pointer from each leaf work-package to its `plan.md` build-sequence slice (prerequisites, per-slice proof, stop/done condition). See `briefing-an-agent` and `handing-off-work`.
+- For delegated execution, a pointer from each leaf work-package to its `plan.md` build-sequence slice, written as a stage contract (prerequisites, Inputs by `file#section` + context budget, Outputs, per-slice proof, stop/done condition). See `briefing-an-agent`, `handing-off-work`, and `templates/standard/stage-contract.md`.
 
 ## Verification
 

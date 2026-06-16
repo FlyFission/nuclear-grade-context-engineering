@@ -43,7 +43,7 @@ A "does it work" check proves what an agent produced, not how it got there. Some
 4. Capture token use (prompt and completion counts) and delay per step, where those are things you have to verify.
 5. Record every human approval step: what was reviewed, by whom, and what was decided.
 6. Record errors and fallbacks: what failed, what recovery was tried, and whether the fallback stayed in scope.
-7. Link each trace row to the claim in `verification.md` that the evidence supports.
+7. Link each trace row to the claim in `verification.md` that the evidence supports. When a tracing platform already holds the run, link to its export rather than copying it — an OpenAI trace, a LangSmith run, a Claude Code session log, a GitHub Actions run, a local command transcript, or an MCP/tool-call export — and record the link and its trace id in `trace.md`. The packet holds the link and the verified facts; the platform holds the raw spans.
 8. Summarize how the run went: which steps stayed in scope, which went out of scope or are unclear, and which gaps need follow-up.
 
 ## Outputs

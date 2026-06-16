@@ -32,6 +32,7 @@ EXPECTED_COMMANDS = {
     "ng-intent.md",
     "ng-incident.md",
     "ng-deficiency.md",
+    "ng-workflow-architecture.md",
 }
 
 REQUIRED_SECTIONS = (

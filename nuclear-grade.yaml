@@ -35,6 +35,7 @@ templates:
     - standard/execution-trace.md
     - standard/wbs.md
     - standard/incident.md
+    - standard/stage-contract.md
 skills:
   - questioning-attitude
   - using-nuclear-grade
@@ -90,6 +91,7 @@ commands:
   - ng-intent.md
   - ng-incident.md
   - ng-deficiency.md
+  - ng-workflow-architecture.md
 token_budgets:
   # Per-file token ceilings enforced by `ng tokens` (see nuclear_grade/tokens.py).
   # Seeded above the 2026-05 measured maxima (desc 138, skill body 2489, command

@@ -323,6 +323,8 @@ If your shell only has `python3`, use `python3`. The full guided tour is in [`QU
 
 Cursor, Claude Code, Aider, Codex, and Copilot each read slightly different files for their reasoning and rules. `.nuclear/`, [`AGENTS.md`](AGENTS.md), and the `SKILL.md` contract are a **shared, tool-agnostic shape** that all of them can import as plain markdown: a portable surface for agent authority, change records, and evidence. No matter which IDE ships reasoning steps natively, the packets and habits travel with the repository.
 
+Two tools also have native plugin packages: **Claude Code** (the repo is its own marketplace — skills, command prompts, and PROVE subagents) and **Codex** (`.codex-plugin/plugin.json`, which exports the **skills** only). For what each plugin does and does not install — and why Codex users should still clone the repo for the full workflow — see [`INTEGRATIONS.md`](INTEGRATIONS.md) and [`INSTALL.md`](INSTALL.md).
+
 ## What this is NOT
 
 Nuclear-grade is not a compliance program, a certification, a regulated quality-assurance system, a safety analysis, a production sandbox, a regulatory submission, legal advice, or a substitute for qualified engineering, legal, security, safety, or compliance review.

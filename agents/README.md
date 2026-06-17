@@ -31,3 +31,12 @@ This buys **tool-enforced separation and context hygiene** — it does **not** m
   live in the adopter's `.claude/agents/`, not the plugin.
 - Trust-bearing or irreversible work still needs the rung-4 CI gate (`ng scaffold-ci`) and rung-5
   human review.
+
+## Not exported to Codex
+
+These are **Claude** subagent definitions. The Codex plugin
+(`.codex-plugin/plugin.json`) exports `skills/` only and does **not** advertise
+these as Codex-native subagents — Codex subagent packaging is not wired up here.
+Use them through Claude Code (the marketplace plugin ships them), or convert them
+to a Codex-supported form before relying on them there. See the Codex section of
+[`../INTEGRATIONS.md`](../INTEGRATIONS.md).

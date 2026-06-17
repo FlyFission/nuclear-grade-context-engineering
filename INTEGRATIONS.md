@@ -60,8 +60,8 @@ always-on routing hooks remain opt-in — see [`HOOKS.md`](HOOKS.md).
 ### Codex: the plugin package and skill installer
 
 The repo ships a `.codex-plugin/plugin.json` manifest, so it is a publishable
-Codex plugin that bundles the skills. Besides `ng install codex`, Codex users can
-pull the skills with the built-in installer from a Codex session:
+Codex plugin that bundles the **skills**. Besides `ng install codex`, Codex users
+can pull the skills with the built-in installer from a Codex session:
 
 ```text
 $skill-installer install nuclear-grade from https://github.com/FlyFission/nuclear-grade-context-engineering
@@ -69,6 +69,44 @@ $skill-installer install nuclear-grade from https://github.com/FlyFission/nuclea
 
 (Codex's self-serve plugin directory is still rolling out; verify the exact
 installer syntax against <https://developers.openai.com/codex/plugins>.)
+
+To validate the manifest and print the exact install + restart steps from a
+checkout, run the repo-side helper:
+
+```bash
+python tools/install-codex.py            # validate, then print Codex install guidance
+python tools/install-codex.py --check    # validate the manifest only (used in tests/CI)
+```
+
+**What the Codex plugin install gives you, and what it does not.** The plugin
+exports `skills/` only — the `SKILL.md` files Codex auto-surfaces by their
+`description`. It deliberately does **not** package the rest of the repo as
+Codex-native capabilities:
+
+| Repo asset | In the Codex plugin? | Why |
+|---|---|---|
+| `skills/` | **Yes** | Exported via `plugin.json` `skills`; Codex routes to them by `description`. |
+| `agents/` | No | These are **Claude** PROVE subagent definitions. Codex subagent packaging is not supported here; treat them as Claude-only until converted (see [`agents/README.md`](agents/README.md)). |
+| `commands/` | No | Paste-ready prompt cards, not Codex slash commands. Open them from a checkout and paste. |
+| `templates/`, `.nuclear/` | No | Repo assets the skills and `ng` CLI use. The `ng init`/`ng new` commands copy them into a target repo; the Codex plugin does not. |
+| `tools/ng.py` | No | A repo-side CLI you run from a checkout. The plugin adds no `ng` command to your `PATH`. |
+
+Because the flagship `using-nuclear-grade` skill is a **router** whose body
+points at repo-local files (`.nuclear/charter.md`, `WORKFLOWS.md`/`CORE.md`, the
+`ng` CLI), skills installed *without* the repository will route you toward files
+that are not there. For the full workflow, **clone the repo** as well — the
+plugin install is a discovery pointer, not a self-contained package. See
+[`docs/04-adoption/listing-and-discovery.md`](docs/04-adoption/listing-and-discovery.md).
+
+**After installing, start a new Codex thread** (or restart Codex) so it re-scans
+its skills directory and loads the new descriptions. Then describe your task and
+Codex pulls in the matching skill on its own — no slash command needed.
+
+**How this differs from the Claude Code plugin.** The Claude Code marketplace
+plugin surfaces both the skills **and** the `commands/` prompt cards as native
+slash commands with no copying, and it ships the PROVE subagents in `agents/`.
+The Codex plugin exports skills only; commands and agents stay repo-side. Both
+tiers configure **no hooks**, so nothing runs automatically on install.
 
 ### Windsurf / Cursor: the community skills CLI
 

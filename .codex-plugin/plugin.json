@@ -2,7 +2,36 @@
   "name": "nuclear-grade",
   "version": "0.6.0",
   "description": "Risk-graded context engineering for AI-assisted software work — a catalog of agent skills, paste-ready command prompts, and change-record templates that keep agent work questioned, controlled, and reviewable.",
-  "skills": "./skills/",
+  "author": {
+    "name": "FlyFission",
+    "url": "https://github.com/FlyFission"
+  },
   "homepage": "https://github.com/FlyFission/nuclear-grade-context-engineering",
-  "license": "MIT"
+  "repository": "https://github.com/FlyFission/nuclear-grade-context-engineering",
+  "license": "MIT",
+  "keywords": [
+    "context-engineering",
+    "ai-agents",
+    "skills",
+    "code-review",
+    "change-records",
+    "evidence"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Nuclear-grade",
+    "developerName": "FlyFission",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Risk-graded agent skills that auto-surface by their description",
+      "Paste-ready command prompts for planning, review, and change records",
+      "Change-record templates and a repo-side ng CLI (run from a checkout)",
+      "Cross-tool install guidance for Codex, Claude Code, Cursor, Windsurf, and VS Code"
+    ],
+    "defaultPrompt": [
+      "Use Nuclear-grade to plan this change.",
+      "Check this PR for evidence gaps.",
+      "Create a change record for this work."
+    ]
+  }
 }

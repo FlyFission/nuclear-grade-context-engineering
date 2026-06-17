@@ -44,6 +44,25 @@ keep context lean, and re-running updates in place. See
 options, the opt-in MCP server (`nuclear-grade[mcp]`), and how skills compare to
 MCP on token cost.
 
+### Codex plugin package
+
+The repo also ships a `.codex-plugin/plugin.json` manifest, so it is a
+publishable Codex plugin. The plugin exports the **skills** only — Codex surfaces
+them by their `description`. It does **not** package `agents/` (Claude-only PROVE
+subagents), `commands/` (paste-ready prompt cards), `templates/`, `.nuclear/`, or
+`tools/ng.py` as Codex-native capabilities. Because the flagship skill routes to
+repo-local files, **clone the repo too** for the full workflow. After installing,
+start a new Codex thread (or restart Codex) so it picks up the new skills. To
+validate the manifest and print exact install/restart steps from a checkout:
+
+```bash
+python tools/install-codex.py            # validate, then print Codex install guidance
+python tools/install-codex.py --check    # validate the manifest only
+```
+
+See the Codex section of [`INTEGRATIONS.md`](INTEGRATIONS.md) for the full
+export-boundary table and how this differs from the Claude Code plugin.
+
 ## Requirements
 
 - Python 3.11 or newer (tested on 3.12).

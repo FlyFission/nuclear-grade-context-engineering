@@ -46,6 +46,12 @@ REQUIRED_INTERFACE_FIELDS: dict[str, type | tuple[type, ...]] = {
     "defaultPrompt": list,
 }
 
+# Verified against the Codex manifest loader (codex_core_plugins::manifest):
+# it rejects an interface.defaultPrompt entry longer than 128 characters with
+# "prompt must be at most 128 characters" and drops that prompt. Keep every
+# starter prompt under the limit so none is silently ignored.
+DEFAULT_PROMPT_MAX_CHARS = 128
+
 # Keys whose presence would imply a Codex-native capability this plugin does not
 # actually ship. Skills are the only exported surface (see Codex install docs).
 UNSUPPORTED_KEYS = ("agents", "commands", "hooks", "mcpServers", "apps")
@@ -75,8 +81,15 @@ def validate_manifest(manifest: dict, root: Path = ROOT) -> list[str]:
                 name = expected.__name__ if isinstance(expected, type) else "/".join(t.__name__ for t in expected)
                 errors.append(f"interface field {field} must be {name}, got {type(interface[field]).__name__}")
         prompts = interface.get("defaultPrompt")
-        if isinstance(prompts, list) and len(prompts) > 3:
-            errors.append(f"interface.defaultPrompt should hold at most 3 prompts, got {len(prompts)}")
+        if isinstance(prompts, list):
+            if len(prompts) > 3:
+                errors.append(f"interface.defaultPrompt should hold at most 3 prompts, got {len(prompts)}")
+            for index, prompt in enumerate(prompts):
+                if isinstance(prompt, str) and len(prompt) > DEFAULT_PROMPT_MAX_CHARS:
+                    errors.append(
+                        f"interface.defaultPrompt[{index}] is {len(prompt)} chars; "
+                        f"Codex ignores prompts longer than {DEFAULT_PROMPT_MAX_CHARS}"
+                    )
 
     for key in UNSUPPORTED_KEYS:
         if key in manifest:

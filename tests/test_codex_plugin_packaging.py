@@ -86,6 +86,18 @@ def test_codex_interface_carries_display_metadata():
     )
 
 
+def test_default_prompts_stay_under_the_codex_128_char_limit():
+    # Verified constraint: the Codex manifest loader ignores any
+    # interface.defaultPrompt entry longer than 128 characters
+    # ("prompt must be at most 128 characters"). Keep every prompt under it so
+    # none is silently dropped on install.
+    for index, prompt in enumerate(_manifest()["interface"]["defaultPrompt"]):
+        assert isinstance(prompt, str)
+        assert len(prompt) <= 128, (
+            f"defaultPrompt[{index}] is {len(prompt)} chars; Codex caps prompts at 128"
+        )
+
+
 def test_codex_plugin_version_tracks_pyproject():
     # One source of truth for the version; guard the mirror against drift.
     assert _manifest()["version"] == _pyproject()["project"]["version"]
@@ -145,6 +157,16 @@ def test_install_helper_flags_a_broken_manifest():
     assert any("author" in error for error in errors)
     assert any("interface" in error for error in errors)
     assert any("agents" in error for error in errors)
+
+
+def test_install_helper_flags_an_overlong_default_prompt():
+    helper = _load_install_helper()
+
+    over_limit = _manifest()
+    over_limit["interface"]["defaultPrompt"] = ["x" * 129]
+
+    errors = helper.validate_manifest(over_limit)
+    assert any("128" in error and "defaultPrompt" in error for error in errors)
 
 
 def test_install_helper_check_mode_passes_for_the_repo():

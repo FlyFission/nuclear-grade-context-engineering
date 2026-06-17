@@ -108,6 +108,17 @@ slash commands with no copying, and it ships the PROVE subagents in `agents/`.
 The Codex plugin exports skills only; commands and agents stay repo-side. Both
 tiers configure **no hooks**, so nothing runs automatically on install.
 
+**Verified manifest constraints.** Codex's manifest loader caps each
+`interface.defaultPrompt` entry at **128 characters** — an over-long prompt is
+logged (`prompt must be at most 128 characters`) and **dropped**, not fatal. Our
+prompts are all well under that, and `tools/install-codex.py` plus the packaging
+tests enforce the limit so a future edit cannot reintroduce one. The minimally
+required top-level fields are `name`, `version`, `description`, and `skills`;
+this manifest also ships `author` and `interface` as objects (Codex plugin
+validation rejects them as anything else). The full, authoritative field list
+lives in the Codex docs at <https://developers.openai.com/codex/plugins/build>;
+re-confirm it there before adding fields, since the schema is still evolving.
+
 ### Windsurf / Cursor: the community skills CLI
 
 The cross-tool `skills` CLI also installs into these tools:

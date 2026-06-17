@@ -6,7 +6,7 @@ The idea is simple. Keep a questioning attitude. Use small habits from Human Per
 ## Default behavior
 
 - Read `README.md`, `WORKFLOWS.md`, and the right change record before you edit files.
-- Use the lightest mode that is still honest.
+- Use the lightest mode that is still honest. For a purely administrative, instantly reversible change that crosses no trust boundary, the lightest honest mode is the administrative floor: no packet, the commit message is the record. Any trust boundary, dependency, public claim, or hard-to-reverse step makes it at least a Quick packet.
 - Tie every claim to evidence.
 - Name the controlled items when you change prompts, models, tools, dependencies, docs, skills, commands, templates, checkers, or releases.
 - Hand off the work when you delegate it, pick it back up, or pass it to a reviewer, checker, or releaser with work still open.

@@ -75,6 +75,7 @@ Trust check: What dependency, model, API, SaaS, or vendor claim affects the deci
 
 | If the change is... | Use |
 |---|---|
+| Purely administrative, instantly reversible, no new trust boundary | Administrative floor (no packet; the commit message is the record) |
 | Low-stakes, easy to undo, easy to prove | Quick |
 | User-facing, security-related, dependency-related, a change to AI authority, lasting, or release-facing | Standard |
 | High-stakes, hard to undo, carrying outside trust, critical, or close to regulated work | Human-reviewed stronger mode |

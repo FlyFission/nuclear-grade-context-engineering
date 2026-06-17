@@ -2,6 +2,8 @@
 
 Templates are the smallest useful records for Nuclear-grade packets. Copy them into `.nuclear/changes/<slug>/` and keep them short enough to review.
 
+Below even Quick is the **administrative floor**: a purely administrative, instantly reversible change that crosses no trust boundary needs no template at all — its commit message is the record. Reach for a template only once a tripwire fires (a trust boundary, a dependency, a public claim, or a hard-to-reverse step). See [`docs/02-operating-system/activation-thresholds.md`](../docs/02-operating-system/activation-thresholds.md).
+
 ## Quick mode
 
 Use for low-stakes changes you can undo:

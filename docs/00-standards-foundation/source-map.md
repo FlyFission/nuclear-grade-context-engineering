@@ -2,7 +2,7 @@
 
 **Purpose:** List the public, open, linkable sources that Nuclear-grade may cite directly. These are also the sources whose ideas can shape its original software workflows.
 
-**Repo posture:** Nuclear-grade is a teaching method for software engineering. It is built on public sources. It does not claim to meet DOE, NRC, ASME, EPRI, IEEE, IEC, ISO, ANSI/ANS, NEI, NASA, NIST, CISA, OpenSSF, OWASP, or any other framework.
+**Repo posture:** Nuclear-grade is a teaching method for software engineering. It is built on public sources. It does not claim to meet DOE, NRC, IAEA, CNSC, ONR, ASME, EPRI, IEEE, IEC, ISO, ANSI/ANS, NEI, NASA, NIST, CISA, OpenSSF, OWASP, or any other framework.
 
 **Use rule:** A source can shape public templates only when two things are true. First, it is public, open, and linkable. Second, the workflow we build from it is original, made for software, and claims no compliance.
 
@@ -56,6 +56,19 @@ The confidence fields say how well a source family fits this repo. They do not s
 | DOE Work Breakdown Structure Handbook | https://www.energy.gov/projectmanagement/articles/department-energy-work-breakdown-structure-handbook | Core | verified-public | Product-oriented WBS, the 100% rule, common element structures, the WBS dictionary. | High | Primary lineage for `breaking-down-the-work`; product-decomposition concepts only; no compliance claim. |
 | NNSA SD 413.3-4, Program Requirements Document | NNSA/DOE official public link not yet recorded in this repo | Supporting | public-url-needed | PRD development logic: mission, requirements, basis, project controls. | Medium | Discovery/context only for v0; not direct template lineage until official public URL is recorded. |
 | DOE-STD-3007-2017, Criticality Safety Evaluations | https://www.energy.gov/ehss/articles/doe-std-3007-2017 | Supporting | verified-public | Evaluation discipline, conservative assumptions, consequence-driven analysis. | Medium | Supporting only; too domain-specific for core UX. |
+
+---
+
+## Tier 1b - Cross-Jurisdiction Graded-Approach References (concept-only)
+
+The graded approach is the repo's central organizing principle and is already anchored to DOE (Tier 1: 10 CFR 830 and the DOE QA page). These international and foreign-regulator statements of the same idea are recorded for **concept lineage only** — they sharpen the cross-jurisdiction definition in `../01-field-guide/source-to-concept-crosswalk.md`. They are **not** direct template lineage, and nothing here claims compliance with IAEA, CNSC, or ONR. URLs are marked `public-url-needed` until a current official public link is verified in-repo (same rule as the NNSA row above).
+
+| Source | Public link | Classification | Status | Role in Nuclear-grade | Confidence | Notes |
+|---|---|---:|---|---|---:|---|
+| IAEA Safety Glossary | official IAEA publication page not yet verified in-repo | Supporting | public-url-needed | Graded approach as control measures commensurate with likelihood, consequence, and risk. | Medium | Concept-only; verify public URL before any direct citation. |
+| IAEA GSR Part 2, Leadership and Management for Safety | official IAEA publication page not yet verified in-repo | Supporting | public-url-needed | The management system is developed and applied using a graded approach, with documented grading criteria. | Medium | Concept-only; no compliance claim. |
+| CNSC REGDOC-3.5.3, Regulatory Fundamentals | official CNSC page not yet verified in-repo | Supporting | public-url-needed | Graded approach scales analysis, documentation depth, and scope of action to risk, facility characteristics, and performance history. | Medium | Concept companion for the performance-history modulator (load-bearing lineage stays DOE-HDBK-1028 / NASA Lessons Learned). |
+| ONR graded-approach guidance (IRR17) | official ONR page not yet verified in-repo | Supporting | public-url-needed | Sets the level of analysis, documentation, and actions needed to comply with safety requirements; low/medium/high pathways. | Medium | Concept-only; no compliance claim. |
 
 ---
 

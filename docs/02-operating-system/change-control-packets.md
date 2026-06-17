@@ -96,7 +96,7 @@ Do not create this whole folder by default. Turn on only the records the work ne
 
 ## Activation threshold
 
-Create a packet for any work that matters, where a future review needs more than a commit message. Move up to Standard or Nuclear when the change affects:
+Create a packet for any work that matters, where a future review needs more than a commit message. Below that line is the **administrative floor** -- a purely administrative, instantly reversible change that crosses no trust boundary needs **no packet**; its commit message is the record. The moment a trust boundary, dependency, public claim, or hard-to-reverse step appears, it is at least a Quick packet (see `activation-thresholds.md`). Move up to Standard or Nuclear when the change affects:
 
 - requirements, design basis, architecture, interfaces, or operating assumptions;
 - AI tool permissions, prompts, models, context packs, evals, or self-directed authority;

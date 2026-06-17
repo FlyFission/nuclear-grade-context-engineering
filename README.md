@@ -286,6 +286,7 @@ flowchart TD
 
 | Kind | Use it when | Files |
 |---|---|---|
+| Administrative floor | Purely administrative, instantly reversible, no new trust boundary (typo, comment, dead link) | none — the commit message is the record |
 | Quick | Low stakes, easy to undo, obvious proof, no new trust boundary | `risk.md`, `proof.md` |
 | Standard | It touches users, dependencies, permissions, data, AI behavior, operations, or a release | `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, `ship.md` |
 

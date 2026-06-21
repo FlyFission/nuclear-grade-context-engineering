@@ -7,7 +7,7 @@ description: Picks Quick, Standard, or a stronger human-reviewed mode based on c
 
 ## Overview
 
-Sort the change before you build it. That way the care you take matches the stakes and the evidence the change needs. The result is a mode choice, tied to the decision question, what the change must prove, and the triggers to escalate. Mode is about how much rigor; it is orthogonal to the work type (greenfield, brownfield, defect-fix, or refactor-migration), which is classified upstream in `questioning-attitude` and shapes which questions you ask. See `docs/02-operating-system/work-type-lens.md`.
+Sort the change before you build it. That way the care you take matches the stakes and the evidence the change needs. The result is a mode choice, tied to the decision question, what the change must prove, and the triggers to escalate. Choosing the mode is how Nuclear-grade *tailors* rigor to stakes — the same idea project-management practice calls tailoring; see `docs/02-operating-system/risk-tiers-and-modes.md`. Mode is about how much rigor; it is orthogonal to the work type (greenfield, brownfield, defect-fix, or refactor-migration), which is classified upstream in `questioning-attitude` and shapes which questions you ask. See `docs/02-operating-system/work-type-lens.md`.
 
 ## Decision contract
 

@@ -21,6 +21,7 @@ ISO standards
 ANSI/ANS standards
 NEI documents
 INPO documents (member-only, e.g. INPO 12-012; cite the public NRC trait set instead)
+PMI publications (PMBOK Guide 6th/7th/8th editions; the PMI Standard for AI in Portfolio, Program, and Project Management) — paywalled; name only as public background, never as template lineage or compliance
 copyrighted leadership/management books (e.g. Marquet, Turn the Ship Around! / Leadership Is Language)
 proprietary QA manuals
 proprietary procurement manuals

@@ -207,6 +207,22 @@ They add no framework, vendor, or database dependency, and no governance or comp
 
 ---
 
+## Tier 10 — Project- and AI-Governance Background (named only)
+
+These PMI publications are **paywalled** and are named as **background only** — to help
+project-management-literate and enterprise adopters orient. Nothing is derived from them, no text
+is reproduced, and no compliance, conformance, certification, PMP, or endorsement claim is made.
+The bridge doc is `docs/01-field-guide/pmbok-pmi-ai-crosswalk.md`; it explicitly frames the
+relationship as a *rhyme*, not a compliance matrix. PMI is also listed under "Excluded as Direct
+Template Lineage" below.
+
+| Source | Public link | Classification | Status | Role in Nuclear-grade | Confidence | Direct repo use |
+|---|---|---:|---|---|---:|---|
+| PMBOK® Guide (6th/7th/8th editions) | https://www.pmi.org/standards/pmbok | Context-only | excluded-direct | Public framing of principles, performance domains, tailoring, and logs/registers that this repo's independent practice rhymes with. | Medium | Named background only in the crosswalk doc; no template lineage, no compliance claim. |
+| PMI Standard for AI in Portfolio, Program, and Project Management (2026) | https://www.pmi.org/standards/artificial-intelligence | Context-only | excluded-direct | Public framing of human-in-the-loop AI governance, risk, ethics, data quality, stakeholders, and value for AI project work. | Medium | Named background only in the crosswalk + enterprise-rollout docs; no compliance/conformance claim. |
+
+---
+
 ## Context-Only / Do-Not-Overweight Sources
 
 | Source family | Classification | Status | Why |
@@ -230,6 +246,7 @@ IEC standards
 ISO standards
 ANSI/ANS standards
 NEI documents
+PMI publications (PMBOK Guide; the PMI Standard for AI in Portfolio, Program, and Project Management)
 proprietary QA/procurement/utility manuals
 ```
 

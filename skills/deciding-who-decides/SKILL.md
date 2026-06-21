@@ -45,7 +45,7 @@ Authority should sit where the evidence and competence are, not automatically at
 4. Place the decision: reversible + well-evidenced + low consequence may be decided at the edge; anything irreversible, trust-bearing, or thinly evidenced escalates to a named human.
 5. Name the escalation trigger in concrete terms an agent can actually obey.
 6. Check that the placement raises rigor at the boundary; if it would let an agent skip a required gate, reject it.
-7. Record who decides, who is informed, and what evidence the decider needs in hand.
+7. Record who decides, who is informed, and what evidence the decider needs in hand. Name who is affected by the action and anyone who must be consulted before it — placement is hollow if a materially affected party never appears.
 
 ## Outputs
 

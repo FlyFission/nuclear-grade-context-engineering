@@ -268,7 +268,7 @@ flowchart TB
       ID[Decider independent<br/>of the actor]:::indep
       AC2 --> IV --> GS{Gates}:::gate
       GS --> ID
-      ID -->|input not solely actor-authored| OUT2[A confident error is<br/>caught at the gate]:::good
+      ID -->|input not solely actor-authored| OUT2[A confident error is<br/>visible at the gate]:::good
     end
 ```
 

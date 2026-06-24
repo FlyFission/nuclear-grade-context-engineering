@@ -89,6 +89,12 @@ Worked example — REQ-001: `WHEN a draft packet fails the structural validator 
 SYSTEM SHALL block the merge and name the first failing section.` One trigger, one
 response, testable. Keep the `REQ-NNN` IDs; `trace.md` and `plan.md` reference them.
 
+A derived requirement can outrank the change that produced it: a behavior that
+surfaced during the work but has no parent in the original scope (a new retry,
+cache, fallback model call, or permission) was never seen by the first grade. If
+its consequence implies a higher tier than the packet's current mode, re-tier the
+packet before merge (`../../docs/02-operating-system/activation-thresholds.md`).
+
 | ID | Requirement / claim | Basis | Design feature or control | Evidence planned |
 |---|---|---|---|---|
 | REQ-001 | | | | |

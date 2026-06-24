@@ -22,6 +22,10 @@ Score this by feel. Do not turn it into a math problem.
 | Dependency trust | No new trust | Package/API/model/config changes | Critical supplier/model/build/data trust decision |
 | AI authority | Drafting only | Tool use under supervision | Write/execute/network/approval/data authority |
 
+**The front door: the dominant three.** For the ten-second call, weigh only consequence × reversibility × uncertainty; reach for the other four dimensions when one of those three is unclear or the change trips a trap surface. The full seven are for the audit trail, not the spoken classification.
+
+**Multiplicative, not additive.** A high-consequence change that is a one-keystroke revert and a known pattern is not high-rigor work — reversibility and low uncertainty pull it back down. A single "High" does not force escalation; weigh the three together. Reversibility is the axis physical engineering cannot lean on, and it is your main escape from burden — but pair it with detectability, because a failure you cannot see in time is not cheaply reversible.
+
 ---
 
 ## Artifact trigger table

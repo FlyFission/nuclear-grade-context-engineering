@@ -40,12 +40,12 @@ Sort the change before you build it. That way the care you take matches the stak
 ## Process
 
 1. Restate the decision question and the evidence bar it needs.
-2. Judge the consequence, how easy it is to undo, who is exposed, how easily a failure would be caught, how much is unknown, and how much power the agent has.
+2. Judge the dominant three first -- consequence, how easy it is to undo, and how much is unknown -- then pull in who is exposed, how easily a failure would be caught, dependency trust, and how much power the agent has only if one of the three is unclear or a trap surface fires. Weigh them together: an easy-to-undo, known-pattern change is not high-rigor even at high consequence.
 3. Name the work mode: routine, known procedure, new or uncertain, interrupted or resumed, or a critical action.
 4. Choose Quick only for local, easy-to-undo, easy-to-prove work that adds no new trust boundary.
 5. Choose Standard when the change is user-visible or lasting, or touches dependencies, permissions, data, AI, operations, or a release.
 6. Mark Nuclear, Incident, Research Board, or Release as human-reviewed patterns when they apply.
-7. Record the triggers to escalate and the least proof required.
+7. Record the triggers to escalate and the least proof required; when the tier is genuinely unclear, raise it -- over-grading costs minutes, under-grading can cost the release.
 
 ## Outputs
 

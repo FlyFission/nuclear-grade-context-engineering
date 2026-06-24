@@ -56,6 +56,8 @@ The confidence fields say how well a source family fits this repo. They do not s
 | DOE Work Breakdown Structure Handbook | https://www.energy.gov/projectmanagement/articles/department-energy-work-breakdown-structure-handbook | Core | verified-public | Product-oriented WBS, the 100% rule, common element structures, the WBS dictionary. | High | Primary lineage for `breaking-down-the-work`; product-decomposition concepts only; no compliance claim. |
 | NNSA SD 413.3-4, Program Requirements Document | NNSA/DOE official public link not yet recorded in this repo | Supporting | public-url-needed | PRD development logic: mission, requirements, basis, project controls. | Medium | Discovery/context only for v0; not direct template lineage until official public URL is recorded. |
 | DOE-STD-3007-2017, Criticality Safety Evaluations | https://www.energy.gov/ehss/articles/doe-std-3007-2017 | Supporting | verified-public | Evaluation discipline, conservative assumptions, consequence-driven analysis. | Medium | Supporting only; too domain-specific for core UX. |
+| 10 CFR Part 21, Reporting of Defects and Noncompliance | https://www.ecfr.gov/current/title-10/chapter-I/part-21 | Supporting | verified-public | Outward duty (§21.21) to evaluate a discovered defect and notify affected parties, not only fix it locally. | Medium-high | Concept lineage for the outward-reporting clause when a defect is found in a shared or supplied artifact; no compliance claim. |
+| DOE-HDBK-1230-2019, Commercial Grade Dedication Application Handbook | https://www.standards.doe.gov/standards-documents/1200/1230-bhdbk-2019 | Supporting | verified-public | Acceptance discipline for items not built under the program: identify the few critical characteristics, choose an acceptance method, verify them independently. | Medium-high | Concept lineage for the outside-artifact acceptance structure in `vetting-outside-code-and-models`; complements NIST SP 800-161. Translated to software vocabulary; the label is not reused and no compliance is claimed (see `do-not-cite-directly.md`). |
 
 ---
 
@@ -75,6 +77,7 @@ The confidence fields say how well a source family fits this repo. They do not s
 | NUREG/CR-6101 | https://www.nrc.gov/reading-rm/doc-collections/nuregs/contract/cr6101/index | Core | verified-public | Software reliability/safety in protection systems. | Medium-high | Supporting high-integrity software concepts. |
 | NUREG/CR-6263 | https://www.nrc.gov/about-nrc/regulatory/research/digital | Supporting | supporting-context | High-integrity software for nuclear power plants. | Medium | Public NRC research table context for v0; record direct NUREG page when verified. |
 | NUREG/CR-6734 | https://www.nrc.gov/reading-rm/doc-collections/nuregs/contract/cr6734/index | Core | verified-public | Software requirements guidelines. | Medium-high | Requirements/specification concepts. |
+| NUREG/CR-6303, Diversity and Defense-in-Depth Analyses | https://www.nrc.gov/reading-rm/doc-collections/nuregs/contract/cr6303/index | Supporting | verified-public | System/I&C-level diversity-and-defense-in-depth method; a multi-attribute diversity taxonomy (design, equipment, functional, signal, human). | Medium-high | Added lineage for the independent-control-layers concept (controls must fail independently); system-level, not a software-diversity standard; no compliance claim. |
 
 **Important:** NRC software sources are the clearest public link from nuclear work to software work. Give them a strong place in source lineage. But keep the templates original, and never claim they meet a standard.
 
@@ -106,6 +109,7 @@ The confidence fields say how well a source family fits this repo. They do not s
 | NASA-STD-8739.8, Software Assurance and Software Safety | https://standards.nasa.gov/standard/nasa/nasa-std-87398 | Core | verified-public | Software assurance and software safety. | High | Assurance/evidence/independent review concepts. |
 | NASA Systems Engineering Handbook | https://www.nasa.gov/reference/nasa-systems-engineering-handbook/ | Core | verified-public | Requirements, interfaces, V&V, technical reviews. | High | Systems thinking and lifecycle. |
 | NASA Lessons Learned | https://llis.nasa.gov/ | Supporting-core | verified-public | OPEX/corrective-action learning loop. | High | OPEX and post-release learning. |
+| NASA SWE-141, Software Independent Verification and Validation | https://swehb.nasa.gov/display/SWEHBVD/SWE-141+-+Software+Independent+Verification+and+Validation | Supporting | verified-public | Independence framed on three axes — technical, managerial, and financial — scaled to software consequence. | Medium-high | Concept lineage for naming the financial/budget axis of agent independence (a verifier whose budget the builder controls is captured); complements the existing control-stack note; no compliance claim. |
 
 ---
 

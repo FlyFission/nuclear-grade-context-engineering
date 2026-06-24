@@ -41,6 +41,17 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 | peer review | artifact quality, maintainability, usability, or boundary wording matters |
 | deterministic test / eval | there is repeatable evidence of the behavior |
 
+## Evidence independence
+
+Who authored the evidence for each load-bearing claim, relative to the actor that made the change? A gate is defeated not only when the actor can edit it, but when the actor is the sole author of its input — the actor's own narration of its evidence is a claim, not the verification. Match the independence rung to the consequence (rung 4+ on the load-bearing claim for trust-bearing work). See `docs/02-operating-system/actor-evidence-independence.md`.
+
+| Load-bearing claim | Who authored the evidence (actor / independent verifier / human) | Reproducible by an independent party? (command or artifact) | Independence rung (1-5) | Gap / residual risk if below the stakes |
+|---|---|---|---|---|
+| REQ-001 | | | | |
+
+- Decider independent of the actor for the ship decision? yes / no / not trust-bearing:
+- Evidence authored only by the actor is labeled a self-check and carried as residual risk in `ship.md`? yes / no / not applicable:
+
 ## Commands, evals, and reviews
 
 | Method | Command / review / eval | Environment | Result | Evidence link |

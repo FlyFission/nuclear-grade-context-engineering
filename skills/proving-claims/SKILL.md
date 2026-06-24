@@ -11,7 +11,7 @@ Evidence should answer named claims. It should not just create a vague sense tha
 
 ## Decision contract
 
-- **Claim checked:** every material claim is tied to evidence, a stated gap, or a deliberate deferral, and no claim reaches past its evidence.
+- **Claim checked:** every material claim is tied to evidence, a stated gap, or a deliberate deferral, no claim reaches past its evidence, and the load-bearing claim's evidence is reproducible by an independent party or independently authored — not the actor's own narration.
 - **Artifact observed:** `basis.md`, test, and review evidence -> claim-to-evidence rows with a status (`pass`/`fail`/`gap`/`deferred`/`not applicable`/`planned`) in `trace.md`/`verification.md`.
 - **Decision affected:** warn -- the release posture the `ship.md` decision weighs.
 - **Failure class:** overreaching-claim (a claim stated past its evidence, or a `fail`/unowned `gap` carried as shippable).
@@ -44,6 +44,7 @@ Evidence should answer named claims. It should not just create a vague sense tha
 5. Give each claim an evidence status: `pass`, `fail`, `gap`, `deferred`, `not applicable`, or `planned`.
 6. Trim any claim that reaches too far, until the evidence truly backs it.
 7. Record the gaps and how they affect the release.
+8. For each load-bearing claim, name who authored the evidence relative to the actor. If only the actor did, it is a self-check: raise it to a reproducible or independently authored check, or carry the gap as residual risk — do not count it as an independent check. See `docs/02-operating-system/actor-evidence-independence.md`.
 
 ## Outputs
 
@@ -68,7 +69,8 @@ Evidence should answer named claims. It should not just create a vague sense tha
 
 - "CI passed, so all claims pass." CI only proves what it checks.
 - "A reviewer can read the code." Review counts as evidence only when its scope and result are written down.
-- "The same agent checked itself." That can be a self-check, but it is not an independent check.
+- "The same agent checked itself." That can be a self-check, but it is not an independent check — the actor that made the change also wrote the proof, so the gate is downstream of the same mistake.
+- "The write-up says it passed." A confident narrative the actor authored is a claim, not evidence. Verify it; do not read it as the verification.
 - "We should not mention gaps." Hidden gaps lead to worse release decisions.
 
 ## Red Flags
@@ -76,6 +78,7 @@ Evidence should answer named claims. It should not just create a vague sense tha
 - The evidence status is missing.
 - A claim says "safe", "secure", "compliant", or "approved" with no scope around it.
 - The release decision ignores failed or deferred evidence.
+- The only evidence for the load-bearing claim is the actor's own narration, and no independent party can reproduce it.
 
 ## Prompt
 

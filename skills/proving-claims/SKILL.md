@@ -38,7 +38,7 @@ Evidence should answer named claims. It should not just create a vague sense tha
 ## Process
 
 1. Pull out each important claim.
-2. Pick the kind of check each claim needs.
+2. Pick the kind of check each claim needs, and match its depth to the mode: Quick shows the path ran; Standard exercises the branches that matter; Nuclear shows that the conditions which carry consequence independently change the outcome. A green bar at statement level is not condition-level evidence.
 3. Sort the support behind each claim into one of these: fact, assumption, unknown, source claim, local proof, or decision authority.
 4. Link each claim to its basis, the control or design feature, the code, the evidence, and the release posture.
 5. Give each claim an evidence status: `pass`, `fail`, `gap`, `deferred`, `not applicable`, or `planned`.

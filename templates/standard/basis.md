@@ -34,11 +34,15 @@ What must the system keep safe?
 
 ## Unacceptable outcomes
 
-What must not happen?
+What must not happen? Cover two kinds of hazard, not just the first: **fault-mode** (something
+breaks -- guard with failure-mode tests, invariants, rollback) and **performance-insufficiency**
+(nothing breaks and the result is still wrong, as when a model runs in-distribution and
+confabulates -- guard with scenario coverage, evals on the hard cases, and human review on the
+novel ones). See [`../../docs/02-operating-system/functional-insufficiency.md`](../../docs/02-operating-system/functional-insufficiency.md).
 
-| Unacceptable outcome | Consequence | Prevent / detect / mitigate |
-|---|---|---|
-| | | |
+| Unacceptable outcome | Hazard kind (fault / insufficiency) | Consequence | Prevent / detect / mitigate |
+|---|---|---|---|
+| | | | |
 
 ## Assumptions, constraints, and invalidation triggers
 

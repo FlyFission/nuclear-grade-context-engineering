@@ -59,6 +59,7 @@ List the affected code, docs, infrastructure, dependencies, prompts, models, dat
 | Uncertainty | | |
 | Dependency trust | | |
 | AI authority | | |
+| Controllability (human gate can catch/reverse in time?) | | |
 
 ## HPI work-mode screen
 

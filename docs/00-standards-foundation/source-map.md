@@ -97,6 +97,7 @@ The confidence fields say how well a source family fits this repo. They do not s
 | CISA Secure by Design | https://www.cisa.gov/securebydesign | Core | verified-public | Practical product security accountability. | High | Release readiness/security posture. |
 | CISA KEV Catalog | https://www.cisa.gov/known-exploited-vulnerabilities-catalog | Supporting | verified-public | Operational dependency/security awareness. | High | Dependency revalidation triggers. |
 | CISA SBOM guidance | https://www.cisa.gov/sbom | Supporting-core | verified-public | SBOM transparency/dependency evidence. | High | Dependency trust basis and release readiness. |
+| NIST AI 600-1, Generative AI Profile | https://doi.org/10.6028/NIST.AI.600-1 | Supporting | verified-public | Generative-AI risk profile; names that some risks are unknown and others known but hard to estimate. | Medium-high | Concept lineage for functional insufficiency (harm with no fault; the known/unknown frontier); complements NIST AI RMF; no compliance claim. |
 
 ---
 
@@ -110,6 +111,9 @@ The confidence fields say how well a source family fits this repo. They do not s
 | NASA Systems Engineering Handbook | https://www.nasa.gov/reference/nasa-systems-engineering-handbook/ | Core | verified-public | Requirements, interfaces, V&V, technical reviews. | High | Systems thinking and lifecycle. |
 | NASA Lessons Learned | https://llis.nasa.gov/ | Supporting-core | verified-public | OPEX/corrective-action learning loop. | High | OPEX and post-release learning. |
 | NASA SWE-141, Software Independent Verification and Validation | https://swehb.nasa.gov/display/SWEHBVD/SWE-141+-+Software+Independent+Verification+and+Validation | Supporting | verified-public | Independence framed on three axes — technical, managerial, and financial — scaled to software consequence. | Medium-high | Concept lineage for naming the financial/budget axis of agent independence (a verifier whose budget the builder controls is captured); complements the existing control-stack note; no compliance claim. |
+| NASA SWE-136, Software Tool Accreditation | https://swehb.nasa.gov/display/SWEHBVD/SWE-136+-+Software+Tool+Accreditation | Supporting | verified-public | Tools must not insert undetected errors; accreditation rigor scales with software class. | Medium-high | Concept lineage for qualifying a tool or agent you rely on to catch errors, proportional to that reliance; no compliance claim. |
+| NASA "A Practical Tutorial on MC/DC" (NTRS 20010057789) | https://ntrs.nasa.gov/citations/20010057789 | Supporting | verified-public | Structural-coverage hierarchy: statement, decision, and modified condition/decision coverage. | Medium | Concept lineage for grading proof depth by mode (coverage rigor scales with consequence); no compliance claim. |
+| NASA/CR-2015-218982, Application of SAE ARP4754A | https://ntrs.nasa.gov/citations/20160001634 | Supporting | verified-public | Public walk-through of functional hazard assessment and top-down/bottom-up failure analysis that set assurance level before build. | Medium | Concept lineage for deriving a change's grade two directions (worst-credible outcome and if-this-fails blast radius); no compliance claim. |
 
 ---
 
@@ -143,6 +147,9 @@ These sources shape how we attack-test agents, trace what they do, and profile t
 | W&B Weave traceability | https://wandb.ai/site/weave | Supporting | supporting-context | Trace-tree observability: span-per-call, auto-logging of inputs/outputs/metadata/latency/cost, audit lineage, reproducibility, evaluation loops. | High | Conceptual influence for `recording-what-an-agent-did` skill and trace-as-evidence vocabulary; no compliance or audit-certification claim. |
 | NVIDIA NeMo Agent Toolkit (AIQ) | https://github.com/NVIDIA/NeMo-Agent-Toolkit | Supporting | supporting-context | Framework-agnostic agent profiling (token/latency/cost per step to workflow level), offline evaluation harness, OpenTelemetry-compatible observability exporters (Phoenix, Weave, Langfuse, LangSmith). | High | Reference model for evidence-spine detail and skill-evaluation rubric; influence for future runnable `evals/` suite; no compliance claim. |
 | OpenTelemetry distributed tracing | https://opentelemetry.io/ | Supporting | supporting-context | Vendor-neutral structured spans, parent-child trace relationships, context propagation, semantic conventions for LLM/agent instrumentation. | High | Structured span vocabulary for `recording-what-an-agent-did` and `execution-trace.md`; no compliance claim. |
+| Safety Cases for Frontier AI (arXiv:2410.21572) | https://arxiv.org/abs/2410.21572 | Supporting | verified-public | Structured claim → argument → evidence assurance argument for AI systems. | Medium-high | Concept lineage for a release safety-case argument with named defeaters; no compliance claim. |
+| CoDefeater: LLMs to find defeaters in assurance cases (arXiv:2407.13717) | https://arxiv.org/abs/2407.13717 | Supporting | verified-public | The defeater hunt: enumerate reasons an assurance argument could be false. | Medium | Concept lineage for the "what would make this argument false?" step in release readiness; no compliance claim. |
+| Capability-based scaling trends for LLM red-teaming (arXiv:2505.20162) | https://arxiv.org/abs/2505.20162 | Supporting | verified-public | Fixed-capability probes miss the unknown-unsafe frontier as systems improve. | Medium | Concept lineage for scenario discovery beyond known attack classes (functional insufficiency); no compliance claim. |
 
 ---
 

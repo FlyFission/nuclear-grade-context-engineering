@@ -80,6 +80,7 @@ The metadata (the frontmatter) is always loaded. The `SKILL.md` body loads when 
 - Include stop conditions and escalation triggers.
 - Include boundary language when public trust or assurance terms show up.
 - For each skill, keep at least three should-trigger prompts and two near-miss should-not-trigger prompts in `skill-evaluation.md`.
+- Declare the skill's assumptions of use when they matter: the context it was validated for -- the trust level of its inputs, whether a human gate is present, the model tier, the granted tools. A reusable skill is only safe in that context, and the consumer should confirm the assumptions hold before relying on it. A skill written assuming a human approves each action is unsafe when dropped into an unattended agent run.
 
 ## Tests
 

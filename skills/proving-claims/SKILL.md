@@ -93,6 +93,7 @@ Inputs:
 
 Return:
 - claim -> basis -> control/design feature -> support type -> verification type -> evidence -> status -> ship posture
+- for each load-bearing claim: who authored the evidence relative to the actor, whether an independent party can reproduce it, and the independence rung (a self-check carried as residual risk if below the stakes)
 - narrower wording for any claim that is too broad
 - the gaps, deferrals, or blockers, stated plainly
 - the validator command to run

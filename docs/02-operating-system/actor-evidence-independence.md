@@ -120,17 +120,20 @@ let it stand in for the independent check the stakes require.
 The [PROVE subagent pipeline](../../agents/README.md) is the in-loop form of this boundary. The
 roles are split so the actor cannot author its own gate's input:
 
-- the **observer** (Verify · Review) has **no code-write tool** — the stage that gathers the
-  evidence cannot edit code to make the evidence pass;
+- the **observer** (Verify · Review) holds **no `Edit`/`Write` tool**, which removes the *direct*
+  path to patch code into passing its own evidence — though its `Bash` is a residual write path, so
+  the boundary is only real behind the sandbox or hook noted below;
 - the **judge** (Decide) is **read-only and independent of the runner** — it decides on the
   evidence already gathered and cannot produce new evidence to suit a verdict.
 
 This is the principle, encoded in tool boundaries. **Be honest about what it buys.** The same
 orchestrator that briefs the runner briefs the observer and the judge, so they are independent in
-*context*, not from the orchestrator — a biased brief can still lead all three. And
-plugin-shipped subagents cannot pin their own permissions, so those tool boundaries are advisory
-(rungs 1–3), **not a perimeter**. Splitting roles lowers *correlated* error; it does not remove
-the shared-brief single point of failure. For trust-bearing or irreversible work the independent
+*context*, not from the orchestrator — a biased brief can still lead all three. The observer also
+keeps `Bash`, and a shell can still write files (`>`, `sed -i`, a script), so removing `Edit`/`Write`
+removes the obvious edit path, not every one. And plugin-shipped subagents cannot pin their own
+permissions, so those tool boundaries are advisory (rungs 1–3), **not a perimeter**: the seam is
+only real when a sandbox or hook blocks the observer's write side effects. Splitting roles lowers
+*correlated* error; it does not remove the shared-brief single point of failure. For trust-bearing or irreversible work the independent
 author that actually carries the gate is the **rung-4 CI** the actor cannot push to and the
 **rung-5 human** — the subagent split makes the seam visible and cheap, it does not manufacture
 the assurance. See [`runtime-enforcement.md`](runtime-enforcement.md).

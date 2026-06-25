@@ -42,7 +42,7 @@ Release readiness is a careful, audited decision you write down. It is not a moo
 3. Review each evidence status and each open gap. Check for drift building up: does the shipped change still serve the goal anchor, with the non-goals (the things ruled out of scope) still uncrossed? See `staying-on-mission`.
 4. Confirm a rollback or restore path.
 5. Confirm the monitoring and the checks you will run after release.
-6. State why the decision is cautious enough given what is still uncertain, and confirm the change still delivers the value it was for and that the value outweighs the residual risk — a candidate that ships clean but no longer delivers its value should defer, not ship.
+6. State why the decision is cautious enough given what is still uncertain, and confirm the change still delivers the value it was for and that the value outweighs the residual risk — a candidate that ships clean but no longer delivers its value should defer, not ship. For a high-stakes release, state the argument, not just the pile of evidence -- the top claim ("this is safe to ship") and why the evidence discharges it -- then run a defeater hunt: name what would have to be true for the decision to be wrong, and whether the evidence rules it out (this is the release-level form of the `questioning-attitude` falsification step).
 7. Record one decision: ship, block, defer, or ship with named leftover risk. On trust-bearing or irreversible work, the decider is independent of the actor that produced the change. See `docs/02-operating-system/actor-evidence-independence.md`.
 8. Name the owner, the trigger to abort, whether a handoff is needed, the trigger for an operating lesson (OPEX), and the trigger to record a new baseline.
 

@@ -21,6 +21,13 @@ Score this by feel. Do not turn it into a math problem.
 | Uncertainty | Known pattern | New integration/assumption | Novel architecture, AI autonomy, disputed basis |
 | Dependency trust | No new trust | Package/API/model/config changes | Critical supplier/model/build/data trust decision |
 | AI authority | Drafting only | Tool use under supervision | Write/execute/network/approval/data authority |
+| Controllability | A human can interrupt or override in time | Delayed feedback; only checkpoint-gated | One-way or auto-committed; no mid-course catch |
+
+**The front door: the dominant three.** For the ten-second call, weigh only consequence × reversibility × uncertainty; reach for the other four dimensions when one of those three is unclear or the change trips a trap surface. The full seven are for the audit trail, not the spoken classification.
+
+**Multiplicative, not additive.** A high-consequence change that is a one-keystroke revert and a known pattern is not high-rigor work — reversibility and low uncertainty pull it back down. A single "High" does not force escalation; weigh the three together. Reversibility is the axis physical engineering cannot lean on, and it is your main escape from burden — but pair it with detectability, because a failure you cannot see in time is not cheaply reversible.
+
+**Controllability gates placement, not just height.** When an action can be caught and steered as it runs, a watching review suffices; when it commits before results are known (a one-way migration, an auto-merge, an unattended agent action), the pre-action brief and dry run become the gating controls — the after-the-fact review cannot undo it. Score controllability when a human gate is in question; otherwise the dominant three carry the call.
 
 ---
 

@@ -60,6 +60,7 @@ A deficiency you have decided to live with quietly becomes the new standard. Thi
 ## Escalation
 
 - Escalate when a deficiency touches safety, security, data integrity, or a protected outcome.
+- A deficiency in a shared or supplied artifact (a shared prompt, skill, dependency, model, or template) carries an outward duty to notify the teams, agents, or releases that depend on it; registering it locally is not enough.
 - Stop normalizing when the same deficiency drives repeat incidents; raise it as a finding.
 - Get a decision owner when no one will accept the risk and no one will fund the fix.
 

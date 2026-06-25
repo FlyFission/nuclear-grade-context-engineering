@@ -93,6 +93,7 @@ The anchor is also the clarity that lets authority move to the edge: it is the c
 - The same file, action, or fix has been retried several times.
 - A non-goal was crossed by an edit instead of by a recorded decision.
 - A standard was loosened without a justification row.
+- A behavior with no parent in the original scope appeared (a new retry, cache, fallback call, or permission) and inherited the original grade instead of being re-tiered (`rating-change-risk`).
 - Progress is measured by activity (tokens, edits) instead of by success criteria met.
 
 ## Prompt

@@ -35,6 +35,14 @@
 | What compensating controls limit trust? | | |
 | What revalidation trigger applies? | | |
 
+## Critical characteristics and acceptance
+
+List the few behaviors your use relies on (not every property the item has). For each, name the acceptance method that verified it -- a special test or eval, a survey of the supplier's process (model card, release discipline), provenance or source verification, or a track record -- and who verified it. A critical characteristic you cannot independently verify blocks acceptance; vendor wording is input, never acceptance evidence.
+
+| Critical characteristic | Why your use relies on it | Acceptance method | Independent evidence + who verified | Pass / blocked |
+|---|---|---|---|---|
+| | | | | |
+
 ## Release impact
 
 - Ship posture:
@@ -54,8 +62,9 @@
 
 - The intended use is stated plainly and stays within what the evidence supports.
 - The vendor and source claims are kept apart from local proof.
+- Each critical characteristic the use relies on has a named acceptance method and independent evidence, or is recorded as a blocking gap.
 - The gaps flow into the verification and release-decision records.
 
 ## Source-lineage note
 
-Original Nuclear-grade template inspired by public source families on vendor oversight, software supply chain, AI risk, change management, and verification, mapped in the repo. No compliance claim is made.
+Original Nuclear-grade template inspired by public source families on vendor oversight, software supply chain, AI risk, change management, verification, and the acceptance discipline in DOE-HDBK-1230-2019 (critical characteristics, an acceptance method per characteristic, and independent verification), mapped in the repo. The label is not reused and no compliance claim is made.

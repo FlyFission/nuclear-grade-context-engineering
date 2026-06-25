@@ -64,6 +64,7 @@
 | `declaring-intent` | (new skill; applies conceptually to U07, U09, U11; formal trial records pending) |
 | `responding-to-incidents` | (new skill; applies conceptually to U07, U10; formal trial records pending) |
 | `tracking-deficiencies` | (new skill; applies conceptually to U03, U10; formal trial records pending) |
+| `reporting-shared-defects` | (new skill; applies conceptually to U03, U10; formal trial records pending) |
 
 ## Workflow Coverage
 

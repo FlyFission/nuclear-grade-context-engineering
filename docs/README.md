@@ -6,6 +6,7 @@ These docs have two parts. First, learn how to use the workflow. Second, look up
 
 | Need | Start |
 |---|---|
+| Build in a high-consequence field (nuclear, aerospace, medical, energy) | [`01-field-guide/for-high-consequence-builders.md`](01-field-guide/for-high-consequence-builders.md) |
 | Pick a starter set (adopt lightly) | [`../CORE.md`](../CORE.md) |
 | Try the workflow | [`../QUICKSTART.md`](../QUICKSTART.md) |
 | Install or initialize | [`../INSTALL.md`](../INSTALL.md) |
@@ -38,7 +39,7 @@ These docs have two parts. First, learn how to use the workflow. Second, look up
 
 ```text
 00-standards-foundation/   public source map, citation safety, and boundary rules
-01-field-guide/            source-to-concept translation, leadership and high-reliability guide
+01-field-guide/            source-to-concept translation, high-consequence builder entry point, leadership and high-reliability guide
 02-operating-system/       lifecycle, HPI overlays, modes, packets, authority and intent, incidents, deficiencies, periodic self-assessment, critical systems
 03-worked-examples/        completed example packets and proof chains
 04-adoption/               team rollout, agent authority, reviewer playbook

@@ -32,6 +32,7 @@ Claim:
 - Inputs/fixtures:
 - Expected result:
 - Self-check used? yes/no; target if yes:
+- Reproducible by the reviewer (command/artifact), not just the author's narration? yes/no; how:
 
 ## Result
 

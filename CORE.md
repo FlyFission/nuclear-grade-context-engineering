@@ -122,6 +122,13 @@ need an independent approver — a human, or an out-of-band check the agent cann
 the self-modification boundary section in
 [`docs/04-adoption/agent-authority-model.md`](docs/04-adoption/agent-authority-model.md).
 
+The same coupling runs downstream of the spec: the agent that builds the change also authors most
+of its Verify evidence, the Review narrative, and the Decide framing, so a confident error can
+clear every gate it also wrote the input to. The dual of "don't let the agent edit its gate" is
+"don't let the agent be the sole author of the gate's input" — make the load-bearing claim's
+evidence reproducible or independently authored, scaled to the stakes. See
+[`docs/02-operating-system/actor-evidence-independence.md`](docs/02-operating-system/actor-evidence-independence.md).
+
 ---
 
 ## Where doctrine lives

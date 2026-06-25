@@ -29,12 +29,26 @@ The lifecycle has two speeds. While you explore and build drafts, move fast and 
 | Specify | What state or behavior is required? | Requirements, claims, outcomes to protect, assumptions, acceptance criteria. | Claims can be tested or are marked as gaps. |
 | Plan | How will the controlled setup change? | Steps, affected items, rollback, proof commands. | Work can go on without rediscovering scope. |
 | Execute | Did the build stay inside its authority? Did it make a draft, not an accepted state? | Diffs, commits, generated files, self-checks, notes on what the AI did. | Any deviation is recorded, not hidden drift. |
-| Verify | What hard evidence backs the claims? What is still a fact, an assumption, an unknown, a source claim, or local proof? | Tests, evals, reviews, and results, each with a status, a verification type, and gaps. | The evidence matches the claim. |
-| Review | Can a doubting reviewer accept the work without relying on confidence or vague instructions? | A claim-to-evidence review, a work-product review, a check of boundary wording, and a call on leftover risk. | The accept, defer, or block call can be reviewed. |
-| Decide | Should the draft become the accepted setup, ship, block, defer, or go on with leftover risk? | Decision, conditions, owner, baseline trigger. | The release decision is stated out loud. |
+| Verify | What hard evidence backs the claims? What is still a fact, an assumption, an unknown, a source claim, or local proof? | Tests, evals, reviews, and results, each with a status, a verification type, and gaps. | The evidence matches the claim, and an independent party can reproduce it — or it is labeled a self-check and carried as residual risk. |
+| Review | Can a doubting reviewer accept the work without relying on confidence or vague instructions? | A claim-to-evidence review, a work-product review, a check of boundary wording, and a call on leftover risk. | The accept, defer, or block call can be reviewed against primary evidence, not the actor's summary of it. |
+| Decide | Should the draft become the accepted setup, ship, block, defer, or go on with leftover risk? | Decision, conditions, owner, baseline trigger. | The release decision is stated out loud, by a decider independent of the actor on trust-bearing work. |
 | Baseline | What accepted state is now under control after the slow, careful acceptance? | Commit, release, or artifact, plus the state of controlled items and the triggers. | Future drift can be spotted. |
 | Operate | What signals show drift or failure? | Monitors, support signals, incident triggers. | Operators know what to watch. |
 | Learn | What should change next time? | An OPEX note tied to a basis, test, control, template, or baseline update. | The lesson changes something or is closed out. |
+
+---
+
+## Independence at the gates
+
+Verify, Review, and Decide are where a draft becomes a trusted state — and in the default
+single-agent path the same agent that built the change also authors what those gates read. That
+coupling is the loop's sharpest failure mode: a confident hallucination produces a wrong change
+*and* the evidence, narrative, and risk call that say it is correct, so the gate cannot tell a
+sound change from a fluent error — it never sees anything the actor did not write. Break the
+coupling in proportion to the stakes: make the load-bearing claim's evidence reproducible by an
+independent party or authored by an independent verifier, and keep the decider off the work it is
+deciding. This is the dual of the rule that an agent must not be able to edit its own gate. See
+[`actor-evidence-independence.md`](actor-evidence-independence.md).
 
 ---
 

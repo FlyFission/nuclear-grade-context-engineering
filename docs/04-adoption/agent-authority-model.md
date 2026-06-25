@@ -52,6 +52,43 @@ The rule: the control that decides whether the agent's work is acceptable must s
 
 Match the rung to the authority. An agent that can edit files at rungs 1-3 has no real gate; promote to rung 4-5 before granting write or run authority over its own controls.
 
+## Self-authorship boundary
+
+The self-modification boundary stops an agent from **editing its gate**. Its dual stops an agent
+from being the **sole author of the gate's input**. Both let a confident error clear the gate;
+closing one and leaving the other open leaves the gate open.
+
+The trap: the agent acts at Execute, then the same agent produces the Verify evidence, writes the
+Review narrative the human reads, and frames the Decide call. A gate it cannot edit is still
+defeated when it wrote everything that flows in — because the same reasoning that produced a wrong
+change produces the proof, the story, and the risk call that say the change is right. The gate
+never sees anything the actor did not author, so it cannot tell a sound change from a confident
+hallucination. This is persuasive documentation, manufactured by the loop.
+
+The rule: **at a trust-bearing gate, the input must have an author independent of the actor, or be
+reproducible by an independent party.** The actor's narration of its own evidence is a claim, not
+evidence — it is the thing to verify, not the verification.
+
+### Independence rungs (weak to strong)
+
+The dual of the enforcement rungs. Where enforcement rungs ask *where the gate lives* relative to
+the writable set, independence rungs ask *who authored the input the gate reads* relative to the
+actor.
+
+| Rung | Who authored the gate's input | Agent can defeat by | Use when |
+|---|---|---|---|
+| 1 | The actor narrates ("tests pass, change is correct") | being wrong, fluently | drafting only |
+| 2 | The actor shows primary artifacts it selected (raw output, diff) | selective or fabricated artifacts | reversible local work |
+| 3 | An independent party re-runs the actor's deterministic check | a check that does not address the claim; non-reproducible evidence | low stakes, reproducible evidence |
+| 4 | An independent verifier authors the evidence — a separate agent with no stake, or out-of-band CI | a shared brief that biases both actor and verifier | authority over its own working set |
+| 5 | An independent human authors or witnesses the decisive evidence and owns the decision | nothing in-loop | irreversible or trust-bearing |
+
+Match the rung to the consequence, exactly as with enforcement rungs. Anything below the rung the
+stakes call for is a self-check: label it as one and carry the gap as residual risk; do not let it
+stand in for the independent check. The full treatment — the three coupled gates, how the PROVE
+subagents encode the seam, and the honest limits — is in
+[`../02-operating-system/actor-evidence-independence.md`](../02-operating-system/actor-evidence-independence.md).
+
 ## Plan-phase vs build-phase authority
 
 Planning and building are different authority phases, and naming the line keeps a
@@ -66,7 +103,7 @@ agent-drafts-spec workflow in `CORE.md`.
 
 ## Exit criteria
 
-Agent authority is acceptable when a reviewer can see five things: what the agent was allowed to do, what it actually changed, what evidence it produced, what it was forbidden to claim, and **where the controls that gate its work live relative to its writable set** (rung 4 or higher when the agent has authority over its own tests, prompts, or CI).
+Agent authority is acceptable when a reviewer can see six things: what the agent was allowed to do, what it actually changed, what evidence it produced, what it was forbidden to claim, **where the controls that gate its work live relative to its writable set** (rung 4 or higher when the agent has authority over its own tests, prompts, or CI), and **who authored that evidence relative to the actor** (independence rung 4 or higher on the load-bearing claim when the work is trust-bearing — the actor's own narrative is not the independent check).
 
 ## Source-lineage note
 

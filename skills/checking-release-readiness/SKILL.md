@@ -11,7 +11,7 @@ Release readiness is a careful, audited decision you write down. It is not a moo
 
 ## Decision contract
 
-- **Claim checked:** the candidate has evidence, rollback, monitoring, and residual risk that is accepted or made a blocker.
+- **Claim checked:** the candidate has evidence, rollback, monitoring, and residual risk that is accepted or made a blocker; for trust-bearing work the decision rests on primary evidence the reviewer can reproduce and is made by a decider independent of the actor.
 - **Artifact observed:** `verification.md`/`trace.md` statuses and CI status -> the decision recorded in `ship.md`.
 - **Decision affected:** block -- the `ship.md` ship/block/defer/ship-with-risk release decision.
 - **Failure class:** unevidenced-or-unsafe-release (a gap or missing rollback treated as shippable).
@@ -38,12 +38,12 @@ Release readiness is a careful, audited decision you write down. It is not a moo
 ## Process
 
 1. Confirm the baseline and the artifacts the change affects.
-2. Confirm the question to decide has been answered by evidence, not by confidence.
+2. Confirm the question to decide has been answered by evidence, not by confidence — and that the load-bearing evidence is reproducible by you or authored by an independent checker, not just the actor's narrative.
 3. Review each evidence status and each open gap. Check for drift building up: does the shipped change still serve the goal anchor, with the non-goals (the things ruled out of scope) still uncrossed? See `staying-on-mission`.
 4. Confirm a rollback or restore path.
 5. Confirm the monitoring and the checks you will run after release.
 6. State why the decision is cautious enough given what is still uncertain, and confirm the change still delivers the value it was for and that the value outweighs the residual risk — a candidate that ships clean but no longer delivers its value should defer, not ship.
-7. Record one decision: ship, block, defer, or ship with named leftover risk.
+7. Record one decision: ship, block, defer, or ship with named leftover risk. On trust-bearing or irreversible work, the decider is independent of the actor that produced the change. See `docs/02-operating-system/actor-evidence-independence.md`.
 8. Name the owner, the trigger to abort, whether a handoff is needed, the trigger for an operating lesson (OPEX), and the trigger to record a new baseline.
 
 ## Outputs
@@ -67,6 +67,7 @@ Release readiness is a careful, audited decision you write down. It is not a moo
 ## Common Rationalizations
 
 - "Green CI means ship." Release readiness also covers leftover risk and rollback.
+- "The agent's write-up says it's ready." The actor authored that write-up; a decision read off the actor's own narrative is downstream of the same mistake. Decide on primary evidence you can reproduce.
 - "The gap is probably fine." Any leftover risk you accept must be named.
 - "Monitoring is overkill." Monitoring should scale with the stakes, not with habit.
 - "Support will figure it out." The handoff to operations is part of release readiness.
@@ -76,6 +77,7 @@ Release readiness is a careful, audited decision you write down. It is not a moo
 - No release decision.
 - A rollback plan that is vague or missing.
 - Deferred evidence with no owner and no stated consequence.
+- The decider is the actor, or the decision rests only on the actor's summary of its own evidence, on trust-bearing work.
 
 ## Prompt
 
@@ -95,6 +97,7 @@ Inputs:
 Return:
 - the release decision: ship, block, defer, or ship with a named leftover risk
 - whether the evidence actually answers the decision question
+- whether the decider is independent of the actor, and whether the decision rests on primary evidence the reviewer can reproduce (not the actor's narrative)
 - an evidence summary
 - the leftover risks and who owns them
 - the rollback and monitoring notes

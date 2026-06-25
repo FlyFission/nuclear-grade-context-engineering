@@ -32,6 +32,17 @@ Move the gate out of the agent's writable working set. *(See
 
 ---
 
+> **A confident hallucination clears every gate it also wrote the input to.**
+
+The agent that acts also authors most of its own Verify evidence, the Review narrative the human
+reads, and the Decide framing — so a wrong change can arrive wrapped in convincing proof that it is
+right. The dual of "don't let the agent edit its gate" is "don't let it be the sole author of its
+gate's input": make the load-bearing claim's evidence reproducible or independently authored, and
+keep the decider off the work it is deciding, scaled to the stakes. *(See
+[`docs/02-operating-system/actor-evidence-independence.md`](docs/02-operating-system/actor-evidence-independence.md).)*
+
+---
+
 > **Human judgment decides engineering adequacy; the validator checks whether the packet
 > exposes the evidence needed for that judgment.**
 

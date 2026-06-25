@@ -176,6 +176,8 @@ sequenceDiagram
 
 **In words:** you ask and set the goal → the agent drafts the risk and what "good" means → you approve the limits → the agent builds only inside them → the agent writes each claim with its evidence → the reviewer checks the evidence and decides (ship / defer / block) → the approved version is saved as the baseline → lessons from real use feed the next change. Canonical copy in [`docs/diagrams.md`](docs/diagrams.md).
 
+One caution this loop has to defend against on purpose: the agent that builds the change also drafts much of its evidence, writes the narrative the reviewer reads, and frames the decision. A confident mistake can therefore arrive wrapped in convincing proof that it is correct — persuasive documentation the loop manufactured, because the actor and the evidence-author are the same. The defense is **independence**, scaled to the stakes: the load-bearing claim's evidence is reproducible by the reviewer or authored by an independent checker, and on trust-bearing work the decider is not the actor. See [`docs/02-operating-system/actor-evidence-independence.md`](docs/02-operating-system/actor-evidence-independence.md).
+
 ## Keeping the approved version under control
 
 You already have git, CI, and branch protection. Keep them; this rides on top, it does not replace them. What they do not give you is the *decision*: a green pipeline says the suite passed on some commit, not that a human weighed the leftover risk and chose to ship, and not what would force a re-check. And they were never aimed at the things that now drive an AI system's behavior: the prompts, the model IDs, the eval sets, the agent's own permissions. Git versions your code; none of it records *why this is the version you trust*.
@@ -205,6 +207,7 @@ flowchart LR
 |---|---|
 | Ask an agent, look at the diff, run the tests. | Question the assumptions, name what must stay under control, write down the intent, check the evidence, then decide on purpose and record what you trust. |
 | The pull request text tries to talk reviewers into a yes. | A change record links intent, what must not break, what is under control, the evidence, the gaps, and the decision. |
+| The agent that writes the code also writes the evidence and the summary the reviewer reads. | The load-bearing claim's evidence is reproducible by the reviewer or authored by an independent checker; the actor does not grade its own work. |
 | Agents get broad access and vague instructions. | Agents get a role, a list of what they may do, what they may not do, what they must prove, where the work stands, and when to stop. |
 | Green tests become the reason to ship. | The release record states the evidence, the leftover risk, the rollback plan, what to watch, the decision, and what to save. |
 | Lessons disappear into the chat history. | Lessons from real operation feed back into future plans, tests, monitors, and controls. |
@@ -362,6 +365,6 @@ The public sources named here are influences and idea lineage. They are not stan
 | The principles in short form | [`MAXIMS.md`](MAXIMS.md) |
 | Citing this work | [`CITATION.cff`](CITATION.cff) |
 
-Nuclear-grade is an original software workflow inspired by public sources. The source families are mapped in [`docs/00-standards-foundation/source-map.md`](docs/00-standards-foundation/source-map.md) and translated into plain concepts in [`docs/01-field-guide/source-to-concept-crosswalk.md`](docs/01-field-guide/source-to-concept-crosswalk.md).
+Nuclear-grade is an original software workflow inspired by public sources. The source families are mapped in [`docs/00-standards-foundation/source-map.md`](docs/00-standards-foundation/source-map.md) and translated into plain concepts in [`docs/01-field-guide/source-to-concept-crosswalk.md`](docs/01-field-guide/source-to-concept-crosswalk.md). Project-management-literate and enterprise adopters can find a vocabulary bridge to the PMBOK Guide and the 2026 PMI AI standard — named as background, not compliance — in [`docs/01-field-guide/pmbok-pmi-ai-crosswalk.md`](docs/01-field-guide/pmbok-pmi-ai-crosswalk.md).
 
 Written and maintained by **Ben Huffer** ([@FlyFission](https://github.com/FlyFission)), founder of [FlyFission Consulting Group](https://flyfission.com/), an independent design-review and project-advisory practice for nuclear projects, and builder of [AscertAIn](https://ascertain.it/), an AI-powered engineering design-review platform. I build software and agentic engineering workflows for the nuclear and other mission-critical industries, where mistakes are costly and failing forward is less optional. Questions and field stories are welcome in [Discussions](https://github.com/FlyFission/nuclear-grade-context-engineering/discussions) or on [LinkedIn](https://www.linkedin.com/in/ben-huffer-646bab67/).

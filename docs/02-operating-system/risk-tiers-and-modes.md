@@ -19,6 +19,16 @@ The mistake is to apply critical-systems ceremony to a button-color change. The 
 
 How to use it: classify the work type with the work-type lens (`work-type-lens.md`) — orthogonal to the tier, it shapes which questions you ask, not how much rigor — then rate consequence and reversibility with `rating-change-risk`, pick the mode, and — for Tier 0/1 — add the intent release brief (`authority-and-intent.md`) and, at Tier 0, the critical-systems controls (`critical-systems.md`). Do not invent a separate "tier" record; the mode is the record.
 
+## This is tailoring
+
+Scaling rigor to consequence by choosing a mode is what project-management practice calls
+**tailoring** — fitting the process to the work rather than applying one fixed ceremony to
+everything. Naming it helps adopters who come from that vocabulary: the quick/standard/Nuclear
+fork is Nuclear-grade's tailoring axis, and the "two speeds, one loop" framing in
+[`../../WORKFLOWS.md`](../../WORKFLOWS.md) is its adaptive/predictive lens. This is a rhyme with
+public PMI framing, named only as background — no compliance or conformance claim. See
+[`../01-field-guide/pmbok-pmi-ai-crosswalk.md`](../01-field-guide/pmbok-pmi-ai-crosswalk.md).
+
 ## Design review at the higher tiers
 
 A nuclear-style design review is a structured attack on assumptions, not a meeting to admire diagrams. For Tier 0/1, require: architecture and data-flow sketch, failure-mode analysis, threat model, dependency map, rollback plan, observability plan, named operational owner, security/privacy impact, and a migration/deprecation plan. For critical systems, include a competent reviewer from outside the team. The questioning-attitude and reviewing-code-quality skills carry this.

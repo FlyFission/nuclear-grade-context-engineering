@@ -40,7 +40,7 @@ A good brief is how you supply competence and clarity so the agent can decide we
 
 ## Process
 
-1. Name the role, the question to decide, and the goal. Carry the goal anchor (the goal, the signs of success, and the non-goals, meaning what is out of scope) so it survives a context reset. See `staying-on-mission`.
+1. Name the role, the question to decide, and the goal. Carry the goal anchor (the goal, the signs of success, and the non-goals, meaning what is out of scope) so it survives a context reset. Name who is affected by the work and anyone who must be consulted, so the brief carries the stakes, not just the task. See `staying-on-mission`.
 2. Include only the record files, affected files, source rows, and evidence commands needed for the next decision.
 3. State the last action that finished, what conditions changed, the most important next action, the likely mistake, and how to guard against it.
 4. State the current phase: explore, candidate, audit, or accept.

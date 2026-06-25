@@ -47,6 +47,8 @@ Do not claim or imply:
 - NQA-1 compliance;
 - EPRI alignment or endorsement;
 - IEEE/IEC/ISO/ANSI/ANS/NEI compliance;
+- PMI compliance, PMBOK conformance, PMI-AI-Standard alignment, or PMP/credential qualification;
+- EU AI Act or ISO/IEC 42001 conformance;
 - nuclear licensing adequacy;
 - formal V&V adequacy;
 - safety-system qualification;

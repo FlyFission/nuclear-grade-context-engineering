@@ -34,6 +34,7 @@ EXPECTED_COMMANDS = {
     "ng-intent.md",
     "ng-incident.md",
     "ng-deficiency.md",
+    "ng-report-defect.md",
 }
 
 # Command cards are generated from their skills (nuclear_grade/gen_commands.py),

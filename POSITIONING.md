@@ -31,10 +31,11 @@ speed loses, and deserves to.
 
 We work a different axis. Not how much the agent produces, but whether you can stand
 behind what it shipped. As the agent gets cheaper and faster, that question grows more
-valuable, not less. And one fact does not soften as models improve: liability never
-transfers to the model. When an unattended agent ships something that hurts someone,
-the vendor is not the one who answers for it. A person is. That is the ground this
-project stands on, and no model release moves it.
+valuable, not less. And one thing does not change as models improve: accountability for
+the work stays with the people and the organization that put the agent to work. It does
+not pass to the model. When an unattended agent ships something that causes harm, the
+team that ran it still owns the result. That is the ground this project stands on, and
+no model release moves it.
 
 ## Who it is for, in three rings
 

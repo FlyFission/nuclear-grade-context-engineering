@@ -7,7 +7,7 @@ description: Picks Quick, Standard, or a stronger human-reviewed mode based on c
 
 ## Overview
 
-Sort the change before you build it. That way the care you take matches the stakes and the evidence the change needs. The result is a mode choice, tied to the decision question, what the change must prove, and the triggers to escalate. Mode is about how much rigor; it is orthogonal to the work type (greenfield, brownfield, defect-fix, or refactor-migration), which is classified upstream in `questioning-attitude` and shapes which questions you ask. See `docs/02-operating-system/work-type-lens.md`.
+Sort the change before you build it. That way the care you take matches the stakes and the evidence the change needs. The result is a mode choice, tied to the decision question, what the change must prove, and the triggers to escalate. Choosing the mode is how Nuclear-grade *tailors* rigor to stakes — the same idea project-management practice calls tailoring; see `docs/02-operating-system/risk-tiers-and-modes.md`. Mode is about how much rigor; it is orthogonal to the work type (greenfield, brownfield, defect-fix, or refactor-migration), which is classified upstream in `questioning-attitude` and shapes which questions you ask. See `docs/02-operating-system/work-type-lens.md`.
 
 ## Decision contract
 
@@ -43,12 +43,12 @@ Sort the change before you build it. That way the care you take matches the stak
 **Screen for the administrative floor first.** If the change is purely administrative, instantly reversible, and crosses no trust boundary -- a typo, a comment, formatting, a dead-link fix, a doc-only bump -- it needs no packet; the commit message is the record. Any tripwire (auth, data, a dependency, a model or prompt, agent authority, CI or `.github/`, a release, a baseline, or public or claim-bearing wording), or a reviewer needing more than the commit, makes it at least Quick. When in doubt it is Quick, not the floor.
 
 1. Restate the decision question and the evidence bar it needs. Grade the change itself, not the standing item it touches -- a routine file can receive a high-stakes change (auth, payments, an irreversible migration); take the higher of the two.
-2. Judge the consequence, how easy it is to undo, who is exposed, how easily a failure would be caught, how much is unknown, and how much power the agent has. Raise the mode when the affected component carries a live deficiency, a recent incident, or recurring escaped defects -- past performance is part of the stakes.
+2. Judge the dominant three first -- consequence, how easy it is to undo, and how much is unknown -- then pull in who is exposed, how easily a failure would be caught, dependency trust, and how much power the agent has only if one of the three is unclear or a trap surface fires. Weigh them together: an easy-to-undo, known-pattern change is not high-rigor even at high consequence. Raise the mode when the affected component carries a live deficiency, a recent incident, or recurring escaped defects -- past performance is part of the stakes. Derive the grade in two directions so it is defensible, not asserted from effort: top-down (the worst credible outcome this could cause) and bottom-up (if this specific edit fails, what breaks).
 3. Name the work mode: routine, known procedure, new or uncertain, interrupted or resumed, or a critical action.
 4. Choose Quick only for local, easy-to-undo, easy-to-prove work that adds no new trust boundary.
 5. Choose Standard when the change is user-visible or lasting, or touches dependencies, permissions, data, AI, operations, or a release.
 6. Mark Nuclear, Incident, Research Board, or Release as human-reviewed patterns when they apply.
-7. Record the triggers to escalate and the least proof required.
+7. Record the triggers to escalate and the least proof required; when the tier is genuinely unclear, raise it -- over-grading costs minutes, under-grading can cost the release.
 
 ## Outputs
 

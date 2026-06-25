@@ -56,6 +56,8 @@ The confidence fields say how well a source family fits this repo. They do not s
 | DOE Work Breakdown Structure Handbook | https://www.energy.gov/projectmanagement/articles/department-energy-work-breakdown-structure-handbook | Core | verified-public | Product-oriented WBS, the 100% rule, common element structures, the WBS dictionary. | High | Primary lineage for `breaking-down-the-work`; product-decomposition concepts only; no compliance claim. |
 | NNSA SD 413.3-4, Program Requirements Document | NNSA/DOE official public link not yet recorded in this repo | Supporting | public-url-needed | PRD development logic: mission, requirements, basis, project controls. | Medium | Discovery/context only for v0; not direct template lineage until official public URL is recorded. |
 | DOE-STD-3007-2017, Criticality Safety Evaluations | https://www.energy.gov/ehss/articles/doe-std-3007-2017 | Supporting | verified-public | Evaluation discipline, conservative assumptions, consequence-driven analysis. | Medium | Supporting only; too domain-specific for core UX. |
+| 10 CFR Part 21, Reporting of Defects and Noncompliance | https://www.ecfr.gov/current/title-10/chapter-I/part-21 | Supporting | verified-public | Outward duty (§21.21) to evaluate a discovered defect and notify affected parties, not only fix it locally. | Medium-high | Concept lineage for the outward-reporting clause when a defect is found in a shared or supplied artifact; no compliance claim. |
+| DOE-HDBK-1230-2019, Commercial Grade Dedication Application Handbook | https://www.standards.doe.gov/standards-documents/1200/1230-bhdbk-2019 | Supporting | verified-public | Acceptance discipline for items not built under the program: identify the few critical characteristics, choose an acceptance method, verify them independently. | Medium-high | Concept lineage for the outside-artifact acceptance structure in `vetting-outside-code-and-models`; complements NIST SP 800-161. Translated to software vocabulary; the label is not reused and no compliance is claimed (see `do-not-cite-directly.md`). |
 
 ---
 
@@ -88,6 +90,7 @@ The graded approach is the repo's central organizing principle and is already an
 | NUREG/CR-6101 | https://www.nrc.gov/reading-rm/doc-collections/nuregs/contract/cr6101/index | Core | verified-public | Software reliability/safety in protection systems. | Medium-high | Supporting high-integrity software concepts. |
 | NUREG/CR-6263 | https://www.nrc.gov/about-nrc/regulatory/research/digital | Supporting | supporting-context | High-integrity software for nuclear power plants. | Medium | Public NRC research table context for v0; record direct NUREG page when verified. |
 | NUREG/CR-6734 | https://www.nrc.gov/reading-rm/doc-collections/nuregs/contract/cr6734/index | Core | verified-public | Software requirements guidelines. | Medium-high | Requirements/specification concepts. |
+| NUREG/CR-6303, Diversity and Defense-in-Depth Analyses | https://www.nrc.gov/reading-rm/doc-collections/nuregs/contract/cr6303/index | Supporting | verified-public | System/I&C-level diversity-and-defense-in-depth method; a multi-attribute diversity taxonomy (design, equipment, functional, signal, human). | Medium-high | Added lineage for the independent-control-layers concept (controls must fail independently); system-level, not a software-diversity standard; no compliance claim. |
 
 **Important:** NRC software sources are the clearest public link from nuclear work to software work. Give them a strong place in source lineage. But keep the templates original, and never claim they meet a standard.
 
@@ -107,6 +110,7 @@ The graded approach is the repo's central organizing principle and is already an
 | CISA Secure by Design | https://www.cisa.gov/securebydesign | Core | verified-public | Practical product security accountability. | High | Release readiness/security posture. |
 | CISA KEV Catalog | https://www.cisa.gov/known-exploited-vulnerabilities-catalog | Supporting | verified-public | Operational dependency/security awareness. | High | Dependency revalidation triggers. |
 | CISA SBOM guidance | https://www.cisa.gov/sbom | Supporting-core | verified-public | SBOM transparency/dependency evidence. | High | Dependency trust basis and release readiness. |
+| NIST AI 600-1, Generative AI Profile | https://doi.org/10.6028/NIST.AI.600-1 | Supporting | verified-public | Generative-AI risk profile; names that some risks are unknown and others known but hard to estimate. | Medium-high | Concept lineage for functional insufficiency (harm with no fault; the known/unknown frontier); complements NIST AI RMF; no compliance claim. |
 
 ---
 
@@ -119,6 +123,10 @@ The graded approach is the repo's central organizing principle and is already an
 | NASA-STD-8739.8, Software Assurance and Software Safety | https://standards.nasa.gov/standard/nasa/nasa-std-87398 | Core | verified-public | Software assurance and software safety. | High | Assurance/evidence/independent review concepts. |
 | NASA Systems Engineering Handbook | https://www.nasa.gov/reference/nasa-systems-engineering-handbook/ | Core | verified-public | Requirements, interfaces, V&V, technical reviews. | High | Systems thinking and lifecycle. |
 | NASA Lessons Learned | https://llis.nasa.gov/ | Supporting-core | verified-public | OPEX/corrective-action learning loop. | High | OPEX and post-release learning. |
+| NASA SWE-141, Software Independent Verification and Validation | https://swehb.nasa.gov/display/SWEHBVD/SWE-141+-+Software+Independent+Verification+and+Validation | Supporting | verified-public | Independence framed on three axes — technical, managerial, and financial — scaled to software consequence. | Medium-high | Concept lineage for naming the financial/budget axis of agent independence (a verifier whose budget the builder controls is captured); complements the existing control-stack note; no compliance claim. |
+| NASA SWE-136, Software Tool Accreditation | https://swehb.nasa.gov/display/SWEHBVD/SWE-136+-+Software+Tool+Accreditation | Supporting | verified-public | Tools must not insert undetected errors; accreditation rigor scales with software class. | Medium-high | Concept lineage for qualifying a tool or agent you rely on to catch errors, proportional to that reliance; no compliance claim. |
+| NASA "A Practical Tutorial on MC/DC" (NTRS 20010057789) | https://ntrs.nasa.gov/citations/20010057789 | Supporting | verified-public | Structural-coverage hierarchy: statement, decision, and modified condition/decision coverage. | Medium | Concept lineage for grading proof depth by mode (coverage rigor scales with consequence); no compliance claim. |
+| NASA/CR-2015-218982, Application of SAE ARP4754A | https://ntrs.nasa.gov/citations/20160001634 | Supporting | verified-public | Public walk-through of functional hazard assessment and top-down/bottom-up failure analysis that set assurance level before build. | Medium | Concept lineage for deriving a change's grade two directions (worst-credible outcome and if-this-fails blast radius); no compliance claim. |
 
 ---
 
@@ -152,6 +160,9 @@ These sources shape how we attack-test agents, trace what they do, and profile t
 | W&B Weave traceability | https://wandb.ai/site/weave | Supporting | supporting-context | Trace-tree observability: span-per-call, auto-logging of inputs/outputs/metadata/latency/cost, audit lineage, reproducibility, evaluation loops. | High | Conceptual influence for `recording-what-an-agent-did` skill and trace-as-evidence vocabulary; no compliance or audit-certification claim. |
 | NVIDIA NeMo Agent Toolkit (AIQ) | https://github.com/NVIDIA/NeMo-Agent-Toolkit | Supporting | supporting-context | Framework-agnostic agent profiling (token/latency/cost per step to workflow level), offline evaluation harness, OpenTelemetry-compatible observability exporters (Phoenix, Weave, Langfuse, LangSmith). | High | Reference model for evidence-spine detail and skill-evaluation rubric; influence for future runnable `evals/` suite; no compliance claim. |
 | OpenTelemetry distributed tracing | https://opentelemetry.io/ | Supporting | supporting-context | Vendor-neutral structured spans, parent-child trace relationships, context propagation, semantic conventions for LLM/agent instrumentation. | High | Structured span vocabulary for `recording-what-an-agent-did` and `execution-trace.md`; no compliance claim. |
+| Safety Cases for Frontier AI (arXiv:2410.21572) | https://arxiv.org/abs/2410.21572 | Supporting | verified-public | Structured claim → argument → evidence assurance argument for AI systems. | Medium-high | Concept lineage for a release safety-case argument with named defeaters; no compliance claim. |
+| CoDefeater: LLMs to find defeaters in assurance cases (arXiv:2407.13717) | https://arxiv.org/abs/2407.13717 | Supporting | verified-public | The defeater hunt: enumerate reasons an assurance argument could be false. | Medium | Concept lineage for the "what would make this argument false?" step in release readiness; no compliance claim. |
+| Capability-based scaling trends for LLM red-teaming (arXiv:2505.20162) | https://arxiv.org/abs/2505.20162 | Supporting | verified-public | Fixed-capability probes miss the unknown-unsafe frontier as systems improve. | Medium | Concept lineage for scenario discovery beyond known attack classes (functional insufficiency); no compliance claim. |
 
 ---
 
@@ -220,6 +231,22 @@ They add no framework, vendor, or database dependency, and no governance or comp
 
 ---
 
+## Tier 10 — Project- and AI-Governance Background (named only)
+
+These PMI publications are **paywalled** and are named as **background only** — to help
+project-management-literate and enterprise adopters orient. Nothing is derived from them, no text
+is reproduced, and no compliance, conformance, certification, PMP, or endorsement claim is made.
+The bridge doc is `docs/01-field-guide/pmbok-pmi-ai-crosswalk.md`; it explicitly frames the
+relationship as a *rhyme*, not a compliance matrix. PMI is also listed under "Excluded as Direct
+Template Lineage" below.
+
+| Source | Public link | Classification | Status | Role in Nuclear-grade | Confidence | Direct repo use |
+|---|---|---:|---|---|---:|---|
+| PMBOK® Guide (6th/7th/8th editions) | https://www.pmi.org/standards/pmbok | Context-only | excluded-direct | Public framing of principles, performance domains, tailoring, and logs/registers that this repo's independent practice rhymes with. | Medium | Named background only in the crosswalk doc; no template lineage, no compliance claim. |
+| PMI Standard for AI in Portfolio, Program, and Project Management (2026) | https://www.pmi.org/standards/artificial-intelligence | Context-only | excluded-direct | Public framing of human-in-the-loop AI governance, risk, ethics, data quality, stakeholders, and value for AI project work. | Medium | Named background only in the crosswalk + enterprise-rollout docs; no compliance/conformance claim. |
+
+---
+
 ## Context-Only / Do-Not-Overweight Sources
 
 | Source family | Classification | Status | Why |
@@ -243,6 +270,7 @@ IEC standards
 ISO standards
 ANSI/ANS standards
 NEI documents
+PMI publications (PMBOK Guide; the PMI Standard for AI in Portfolio, Program, and Project Management)
 proprietary QA/procurement/utility manuals
 ```
 

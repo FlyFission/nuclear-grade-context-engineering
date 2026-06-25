@@ -31,6 +31,9 @@ Plain-language decoding of Nuclear-grade terms and idioms. The skills and docs u
 | Stage contract | An explicit interface for one workflow stage or delegable slice: its Inputs (exact sections), Process, Outputs, the gate that accepts it, and what is deterministic vs model-mediated. Minimal form is a stage `CONTEXT.md`; full form is `templates/standard/stage-contract.md`. |
 | Control plane vs execution plane | The control plane is the interpretable, reviewable layer (Git, markdown, stage contracts, baselines); the execution plane is where work and side effects happen (tools, agents, CI, durable runtimes). Stage contracts live in the control plane; the gate that enforces them sits in the execution plane. |
 | Determinism posture | A disclosure of what a stage can reproduce and what it cannot: the model id, prompt, and temperature/seed for model-mediated steps, and which steps are replayable vs human-judgment. A disclosure, not a guarantee that a model step repeats. |
+| Actor-evidence independence | At a trust-bearing gate, the evidence must have an author independent of the actor, or be reproducible by an independent party. The dual of the self-modification boundary: that one stops the agent editing its gate; this one stops it being the sole author of the gate's input. |
+| Self-authored evidence | Evidence, a narrative, or a decision the actor produced about its own work. It is a claim to be verified, not the verification — a confident error produces it just as readily as a sound change does. |
+| Independence rung | How independent the author of a gate's input is from the actor, on a 1–5 ladder (1 = the actor narrates; 5 = an independent human authors or witnesses it). Match the rung to the consequence, like the enforcement rungs. |
 
 ## Idioms used in the skills
 

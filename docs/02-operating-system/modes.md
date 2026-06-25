@@ -32,6 +32,8 @@ Move up one or more modes when any answer is "yes":
 - Will another team, a customer, an auditor, or a future maintainer rely on the claim?
 - Is there real uncertainty, disagreement, or doubt about a source?
 
+**When unsure, raise the mode.** The two errors are not symmetric: over-grading costs minutes of process on a reversible change, while under-grading can cost the release. So bias up when the answer is unclear, and let the trap surfaces in `risk-tiers-and-modes.md` (auth, payments, data, dependencies, agent authority, public claims, releases) force the mode — those are the calls you should not be able to talk yourself down from.
+
 ---
 
 ## Minimum useful version

@@ -73,6 +73,8 @@
 - Decision maker:
 - Rationale:
 - Decision question answered by evidence? yes/no:
+- Decider independent of the actor that produced the change? yes / no / not trust-bearing:
+- Decision rests on primary evidence the reviewer can reproduce, not the actor's narrative? yes/no:
 - Conditions attached:
 - Decision posture: conservative enough / not conservative enough:
 - Abort or rollback trigger:

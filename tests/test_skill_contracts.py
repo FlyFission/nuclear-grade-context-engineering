@@ -48,6 +48,7 @@ EXPECTED_SKILLS = {
     "declaring-intent",
     "responding-to-incidents",
     "tracking-deficiencies",
+    "reporting-shared-defects",
 }
 
 REQUIRED_SECTIONS = (

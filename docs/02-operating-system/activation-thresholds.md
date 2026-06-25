@@ -35,9 +35,16 @@ Score this by feel. Do not turn it into a math problem.
 | Uncertainty | Known pattern | New integration/assumption | Novel architecture, AI autonomy, disputed basis |
 | Dependency trust | No new trust | Package/API/model/config changes | Critical supplier/model/build/data trust decision |
 | AI authority | Drafting only | Tool use under supervision | Write/execute/network/approval/data authority |
+| Controllability | A human can interrupt or override in time | Delayed feedback; only checkpoint-gated | One-way or auto-committed; no mid-course catch |
 | Performance history | Clean recent record | Some past defects or churn here | Live deficiency, recent incident, or recurring escaped defects on this component |
 
-The first seven dimensions are intrinsic to the change. The last is a **modulator**: a component carrying a live deficiency, a recent incident, or recurring escaped defects earns a higher mode than its intrinsic risk alone, because past performance is part of the stakes. Read it from the `deficiency-register.md` and recent OPEX before you settle the mode; this is the operating-experience loop (DOE-HDBK-1028, NASA Lessons Learned) feeding the next decision.
+**The front door: the dominant three.** For the ten-second call, weigh only consequence × reversibility × uncertainty; reach for the other five dimensions when one of those three is unclear or the change trips a trap surface. The full eight are for the audit trail, not the spoken classification.
+
+**Multiplicative, not additive.** A high-consequence change that is a one-keystroke revert and a known pattern is not high-rigor work — reversibility and low uncertainty pull it back down. A single "High" does not force escalation; weigh the three together. Reversibility is the axis physical engineering cannot lean on, and it is your main escape from burden — but pair it with detectability, because a failure you cannot see in time is not cheaply reversible.
+
+**Controllability gates placement, not just height.** When an action can be caught and steered as it runs, a watching review suffices; when it commits before results are known (a one-way migration, an auto-merge, an unattended agent action), the pre-action brief and dry run become the gating controls — the after-the-fact review cannot undo it. Score controllability when a human gate is in question; otherwise the dominant three carry the call.
+
+The first eight dimensions are intrinsic to the change. The last is a **modulator**: a component carrying a live deficiency, a recent incident, or recurring escaped defects earns a higher mode than its intrinsic risk alone, because past performance is part of the stakes. Read it from the `deficiency-register.md` and recent OPEX before you settle the mode; this is the operating-experience loop (DOE-HDBK-1028, NASA Lessons Learned) feeding the next decision.
 
 ---
 

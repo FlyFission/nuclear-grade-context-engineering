@@ -20,7 +20,10 @@ These docs have two parts. First, learn how to use the workflow. Second, look up
 | Add HPI controls for agent work | [`02-operating-system/hpi-overlays.md`](02-operating-system/hpi-overlays.md) |
 | Lead people and agents the high-reliability way | [`01-field-guide/leadership-and-high-reliability.md`](01-field-guide/leadership-and-high-reliability.md) |
 | Place authority and declare intent | [`02-operating-system/authority-and-intent.md`](02-operating-system/authority-and-intent.md) |
+| Keep the actor from grading its own work | [`02-operating-system/actor-evidence-independence.md`](02-operating-system/actor-evidence-independence.md) |
 | Scale rigor by risk tier | [`02-operating-system/risk-tiers-and-modes.md`](02-operating-system/risk-tiers-and-modes.md) |
+| Make a second check genuinely independent | [`02-operating-system/independence-architecture.md`](02-operating-system/independence-architecture.md) |
+| Catch failures that have no fault (functional insufficiency) | [`02-operating-system/functional-insufficiency.md`](02-operating-system/functional-insufficiency.md) |
 | See how controls enforce, not just advise | [`02-operating-system/runtime-enforcement.md`](02-operating-system/runtime-enforcement.md) |
 | Budget and order an agent's context window | [`02-operating-system/context-window-discipline.md`](02-operating-system/context-window-discipline.md) |
 | Keep durable memory retrievable across runs | [`02-operating-system/durable-memory.md`](02-operating-system/durable-memory.md) |

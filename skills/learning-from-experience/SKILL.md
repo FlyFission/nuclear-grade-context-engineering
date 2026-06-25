@@ -64,6 +64,7 @@ This actual-vs-standard, root-cause, owner, verify structure keeps a retro from 
 ## Escalation
 
 - Escalate if the event touched users, data, security, credentials, releases, public claims, or repeated agent power.
+- A defect found in a shared or supplied artifact (a shared prompt, skill, dependency, model, eval, or template) carries an outward duty: evaluate who relies on it and notify the downstream teams, agents, or releases, not just fix your own copy. The inward control fix and the outward notice are separate obligations.
 - Require a second, independent reviewer when the same weak control shows up more than once.
 
 ## Common Rationalizations
@@ -102,4 +103,4 @@ Produce a no-blame OPEX record (no-blame covers honest error, not a willful viol
 
 ## Source-lineage note
 
-This skill is an original software-workflow translation of operating experience, post-job review, reporting errors and near misses, change management, independent oversight, and no-blame learning practices from DOE-HDBK-1028-2009 as public source lineage. It does not create DOE compliance, formal assurance, safety, security, certification, or regulatory adequacy.
+This skill is an original software-workflow translation of operating experience, post-job review, reporting errors and near misses, change management, independent oversight, and no-blame learning practices from DOE-HDBK-1028-2009, with the outward defect-reporting duty informed by 10 CFR Part 21 (§21.21), as public source lineage. It does not create DOE compliance, formal assurance, safety, security, certification, or regulatory adequacy.

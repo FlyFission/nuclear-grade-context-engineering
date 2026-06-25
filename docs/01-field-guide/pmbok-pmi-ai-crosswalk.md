@@ -81,7 +81,8 @@ five focus areas) because the per-item names are not reproduced here.
 
 | PMBOK 7 principle (public name) | Nuclear-grade rhyme |
 |---|---|
-| Stewardship / Leadership | Charter ownership-with-technical-depth; own the change end to end ([`leadership-and-high-reliability.md`](leadership-and-high-reliability.md)) |
+| Stewardship | Own the change end to end; act as a careful steward of the codebase and the trust placed in it ([`leadership-and-high-reliability.md`](leadership-and-high-reliability.md), `staying-on-mission`) |
+| Leadership | Push authority to where the evidence is, and declare intent before acting (`deciding-who-decides`, `declaring-intent`) |
 | Team | Clean briefing and handoff between agents/people (`briefing-an-agent`, `handing-off-work`) |
 | Stakeholders | Name who is affected / consulted (`deciding-who-decides`, `briefing-an-agent`) |
 | Value | Value + cost-of-inaction at question and release (`questioning-attitude`, `checking-release-readiness`) |

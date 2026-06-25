@@ -45,7 +45,7 @@ Run the checker when any of these are true:
 | Required section check | Templates keep their purpose, activation threshold, minimum useful version, overhead trap, required links, exit criteria, and source-lineage note. | Templates and examples | A required section is gone or renamed past recognition. |
 | Trace-link check | Important claims link to a basis, an implementation, a verification, a release, or a clearly marked gap. | Standard+ packets | A claim has no evidence link and no stated gap. |
 | Evidence status check | Evidence is labeled planned / run / passed / failed / blocked / not applicable. | `proof.md`, `verification.md`, `ship.md` | Evidence is written as prose but has no status and no reproducible command or artifact link. |
-| AI-assisted change control | The AI's scope, permissions, approvals, and independent checks are stated when the AI did real work. | AI-assisted packets | AI or tool actions changed code, docs, tests, or release evidence with no scope and no verification record. |
+| AI-assisted change control | The AI's scope, permissions, approvals, and independent checks are stated when the AI did real work, including who authored the load-bearing claim's evidence relative to the actor (the evidence-independence disclosure). | AI-assisted packets | AI or tool actions changed code, docs, tests, or release evidence with no scope and no verification record. |
 | Source-map reference check | Source-lineage notes point to `source-map.md` or approved public URLs. | Field guide/templates/examples | A new source shows up with no source-map entry and no public URL. |
 | Token/context discipline | Agent context packs stay focused on the mode, the packet, the affected files, and the relevant source excerpts. | Context packs | The prompt or context asks for the whole repo or all standards with no reason to turn that on. |
 | CM record visibility | Turned-on CM records name the controlled items, the impact, the baseline, the variance, the OPEX, and the triggers. | CM records | Controlled state changes with no owner, no evidence link, and no re-check trigger. |
@@ -58,6 +58,19 @@ not judgment). It is deliberately deferred: the roadmap keeps the deterministic 
 default and stages any richer semantic check as an opt-in layer, so a structural stage-contract
 check should arrive the same way — and never as a gate the authoring agent can edit (see
 [`runtime-enforcement.md`](runtime-enforcement.md)).
+
+**Possible future check (not built): evidence-independence disclosure.** For an AI-assisted
+Standard packet, the checker could require that `verification.md` *discloses* who authored the
+load-bearing claim's evidence relative to the actor and whether an independent party can reproduce
+it (the `## Evidence independence` section the template now carries — see
+[`actor-evidence-independence.md`](actor-evidence-independence.md)). This stays inside the
+validator principle: it checks that the packet **exposes** the independence posture, not that the
+posture is adequate. It is deferred on purpose, and the reason is the very thing the check is
+about — a structural check the authoring agent runs on its own packet is itself actor-authored
+evidence, so it can only confirm the disclosure is *present*, never that the evidence is genuinely
+independent. The independent check that actually carries the gate stays the human reviewer and the
+out-of-band CI the agent cannot push to, not a line the authoring agent wrote and the authoring
+agent linted.
 
 ---
 

@@ -257,6 +257,14 @@ If a skill changes decisions but says so only in vague prose, amend its receipt 
 - Should not trigger: I just fixed this bug and closed the packet; no standing tracking is needed.
 - Should not trigger: Start a brand-new feature that has no known deficiencies yet.
 
+### `reporting-shared-defects`
+
+- Should trigger: I found a bug in the shared prompt template three other teams import; I patched ours but the rest still have it.
+- Should trigger: The pinned model version we all depend on jailbreaks on a category we rely on; who downstream needs to know?
+- Should trigger: An OPEX review traced the incident to a defect in the shared eval harness other repos run.
+- Should not trigger: I fixed a typo in my own service that nothing else consumes.
+- Should not trigger: Production is down right now and I need to stabilize it first.
+
 ## Source-lineage note
 
 This evaluation prompt bank is an original Nuclear-grade artifact informed by public skill-authoring practice: concise skills, realistic trigger prompts, baseline-vs-skill comparison, and iterative trigger-description improvement. It does not create formal assurance, compliance, certification, safety, security, or regulatory adequacy.

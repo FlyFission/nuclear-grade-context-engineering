@@ -33,6 +33,7 @@ A skill is a self-contained set of instructions an agent can follow. Each one li
 | [`declaring-intent`](skills/declaring-intent/SKILL.md) | Before a critical or irreversible action you want a reviewer to challenge the thinking, not just the result | An intent declaration or release brief with expected result, abort criteria, and rollback |
 | [`responding-to-incidents`](skills/responding-to-incidents/SKILL.md) | Production is broken, data is at risk, or an agent action caused harm and you must stabilize first | An incident record with one commander, a fact-vs-hypothesis timeline, and owned corrective actions |
 | [`tracking-deficiencies`](skills/tracking-deficiencies/SKILL.md) | A known problem will outlive a single change and must be owned, not normalized | A deficiency register entry that is aged, owned, and fixed or formally risk-accepted |
+| [`reporting-shared-defects`](skills/reporting-shared-defects/SKILL.md) | A defect you found lives in a shared or supplied artifact others depend on, not just your copy | An outward notice to the affected consumers, plus the local fix |
 
 ## How the skills compose
 

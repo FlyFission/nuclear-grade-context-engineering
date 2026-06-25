@@ -34,11 +34,15 @@ What must the system keep safe?
 
 ## Unacceptable outcomes
 
-What must not happen?
+What must not happen? Cover two kinds of hazard, not just the first: **fault-mode** (something
+breaks -- guard with failure-mode tests, invariants, rollback) and **performance-insufficiency**
+(nothing breaks and the result is still wrong, as when a model runs in-distribution and
+confabulates -- guard with scenario coverage, evals on the hard cases, and human review on the
+novel ones). See `docs/02-operating-system/functional-insufficiency.md`.
 
-| Unacceptable outcome | Consequence | Prevent / detect / mitigate |
-|---|---|---|
-| | | |
+| Unacceptable outcome | Hazard kind (fault / insufficiency) | Consequence | Prevent / detect / mitigate |
+|---|---|---|---|
+| | | | |
 
 ## Assumptions, constraints, and invalidation triggers
 
@@ -88,6 +92,12 @@ Prefer these shapes:
 Worked example — REQ-001: `WHEN a draft packet fails the structural validator THE
 SYSTEM SHALL block the merge and name the first failing section.` One trigger, one
 response, testable. Keep the `REQ-NNN` IDs; `trace.md` and `plan.md` reference them.
+
+A derived requirement can outrank the change that produced it: a behavior that
+surfaced during the work but has no parent in the original scope (a new retry,
+cache, fallback model call, or permission) was never seen by the first grade. If
+its consequence implies a higher tier than the packet's current mode, re-tier the
+packet before merge (`../../docs/02-operating-system/activation-thresholds.md`).
 
 | ID | Requirement / claim | Basis | Design feature or control | Evidence planned |
 |---|---|---|---|---|

@@ -18,7 +18,7 @@ Portable command prompt generated from `skills/vetting-outside-code-and-models/S
 
 ## Inputs
 
-- The dependency, model, API, or tool: its name, version, provider, intended use, and which controlled items it touches.
+- The dependency, model, API, or tool: its name, version, provider, intended use, which controlled items it touches, and the critical characteristics your use relies on.
 - The vendor or source claims, the evidence you saw yourself, the backup controls, and what would force a re-check.
 - The effects on data, credentials, permissions, the build, the release, and public claims.
 
@@ -33,14 +33,15 @@ Inputs:
 - provider/source:
 - version/model/API surface:
 - intended use:
+- critical characteristics your use relies on:
 - consequence if wrong/unavailable/compromised/changed:
 - data/credential/permission/network impact:
 - vendor/source claims:
-- repo-observed evidence:
+- acceptance method per characteristic + repo-observed evidence + who verified:
 - compensating controls:
 - revalidation trigger:
 
-Keep the outside claims separate from your local evidence. Return a decision for how you intend to use it, the gaps, the controls that make up for them, the effect on the release, and whether to ship, defer, block, or require a qualified review.
+Keep the outside claims separate from your local evidence. Return a decision for how you intend to use it, the critical characteristics and the acceptance method that verified each, the gaps (a characteristic you cannot verify blocks acceptance), the controls that make up for them, the effect on the release, and whether to ship, defer, block, or require a qualified review.
 ```
 
 ## Verification

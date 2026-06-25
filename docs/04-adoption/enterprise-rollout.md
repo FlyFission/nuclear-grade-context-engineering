@@ -41,6 +41,10 @@ python tools/ng.py validate .nuclear/changes/<slug>
 
 Project teams can add their own checks once the Quick and Standard path is stable.
 
+## PM-literate and AI-governance adopters
+
+Teams that already speak PMI, EU AI Act, or ISO/IEC 42001 can orient through the vocabulary bridge in [`../01-field-guide/pmbok-pmi-ai-crosswalk.md`](../01-field-guide/pmbok-pmi-ai-crosswalk.md). It maps where Nuclear-grade's independent practice rhymes with the public framing of the PMBOK Guide and the 2026 PMI AI standard — and is explicit that this is **background only**, never a compliance, conformance, or certification claim. The packet evidence (decision rights, intent declarations, run records, release decisions with named residual risk) can feed an organization's own governance review; it does not substitute for it.
+
 ## Exit criteria
 
 Adoption is working when reviewers decide faster and more consistently from packet evidence, not from chat history or a sales pitch.

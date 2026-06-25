@@ -228,7 +228,7 @@ def test_decisions_rolls_up_every_skill_contract():
     assert result.returncode == 0, result.stdout + result.stderr
     # The operator receipt promotes block/warn; the summary accounts for every skill.
     assert "Operator receipt" in result.stdout
-    assert "27 skills:" in result.stdout
+    assert "28 skills:" in result.stdout
     assert "block" in result.stdout and "warn" in result.stdout
     assert "checking-release-readiness" in result.stdout
     assert "ship.md" in result.stdout

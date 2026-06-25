@@ -64,6 +64,7 @@ skills:
   - declaring-intent
   - responding-to-incidents
   - tracking-deficiencies
+  - reporting-shared-defects
 commands:
   - ng-question.md
   - ng-classify.md
@@ -91,6 +92,7 @@ commands:
   - ng-intent.md
   - ng-incident.md
   - ng-deficiency.md
+  - ng-report-defect.md
 command_map:
   # The semantic skill -> command pairing the generator projects each card from
   # (see nuclear_grade/gen_commands.py and `ng gen-commands`). Declared here, not
@@ -123,6 +125,7 @@ command_map:
   declaring-intent: ng-intent
   responding-to-incidents: ng-incident
   tracking-deficiencies: ng-deficiency
+  reporting-shared-defects: ng-report-defect
 token_budgets:
   # Per-file token ceilings enforced by `ng tokens` (see nuclear_grade/tokens.py).
   # Seeded above the measured maxima with headroom, so the gate blocks regression,

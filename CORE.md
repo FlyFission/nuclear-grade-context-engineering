@@ -2,7 +2,7 @@
 
 A strategic spine for adopting Nuclear-grade *without* adopting all of it.
 
-The full system has 27 skills, command prompts, templates, a checker, change-control packets,
+The full system has 28 skills, command prompts, templates, a checker, change-control packets,
 governance docs, and an operating model. Most projects need a few of those at once. This page
 names the **Core 7** habits every disciplined AI-agent change uses, and the **decision matrix**
 that says which **ancillary cluster** to invoke for which kind of change.
@@ -54,11 +54,11 @@ Scan the triggers. For every "yes," invoke that cluster. Default is Core only.
 | Agent has write / run / network / approval authority over its own working set | **Agent authority** | [`deciding-who-decides`](skills/deciding-who-decides/SKILL.md), [`declaring-intent`](skills/declaring-intent/SKILL.md), [`stress-testing-agent-changes`](skills/stress-testing-agent-changes/SKILL.md), [`vetting-outside-code-and-models`](skills/vetting-outside-code-and-models/SKILL.md), [`recording-what-an-agent-did`](skills/recording-what-an-agent-did/SKILL.md), [`briefing-an-agent`](skills/briefing-an-agent/SKILL.md), [`handing-off-work`](skills/handing-off-work/SKILL.md) |
 | You produce controlled artifacts — packets, baselines, multi-PR threads, owned configurations | **Configuration management** | [`creating-change-records`](skills/creating-change-records/SKILL.md), [`choosing-what-to-control`](skills/choosing-what-to-control/SKILL.md), [`checking-what-a-change-affects`](skills/checking-what-a-change-affects/SKILL.md), [`recording-a-known-good-version`](skills/recording-a-known-good-version/SKILL.md), [`closing-stale-packets`](skills/closing-stale-packets/SKILL.md), [`breaking-down-the-work`](skills/breaking-down-the-work/SKILL.md) |
 | The change makes public claims about safety, security, compliance, licensing, or provenance | **Claims discipline** | [`checking-legal-and-safety-wording`](skills/checking-legal-and-safety-wording/SKILL.md), [`checking-source-claims`](skills/checking-source-claims/SKILL.md) |
-| Production failure, data loss, or agent-caused harm | **Incident & deficiency** | [`responding-to-incidents`](skills/responding-to-incidents/SKILL.md), [`tracking-deficiencies`](skills/tracking-deficiencies/SKILL.md) |
+| Production failure, data loss, or agent-caused harm | **Incident & deficiency** | [`responding-to-incidents`](skills/responding-to-incidents/SKILL.md), [`tracking-deficiencies`](skills/tracking-deficiencies/SKILL.md), [`reporting-shared-defects`](skills/reporting-shared-defects/SKILL.md) |
 | Repo layout / structure decision, or visible code-quality drift in a diff | **Hygiene** | [`organizing-project-folders`](skills/organizing-project-folders/SKILL.md), [`reviewing-code-quality`](skills/reviewing-code-quality/SKILL.md) |
 | Planning a multi-stage AI / agentic workflow (workspace, orchestration, repo convention) | **Workflow architecture** — a composing path, not a new cluster (see [`docs/02-operating-system/agentic-workflow-architecture.md`](docs/02-operating-system/agentic-workflow-architecture.md)) | [`organizing-project-folders`](skills/organizing-project-folders/SKILL.md), [`breaking-down-the-work`](skills/breaking-down-the-work/SKILL.md), [`briefing-an-agent`](skills/briefing-an-agent/SKILL.md), [`recording-what-an-agent-did`](skills/recording-what-an-agent-did/SKILL.md) |
 
-All 27 skills are accounted for: 7 Core + 19 ancillary across 5 clusters + 1 router
+All 28 skills are accounted for: 7 Core + 20 ancillary across 5 clusters + 1 router
 ([`using-nuclear-grade`](skills/using-nuclear-grade/SKILL.md)). The workflow-architecture
 trigger above composes existing skills rather than adding a sixth cluster or a new skill — its
 home is the doctrine page, not a new `SKILL.md`.
@@ -79,7 +79,9 @@ home is the doctrine page, not a new `SKILL.md`.
   [`DISCLAIMER.md`](DISCLAIMER.md) and
   [`docs/00-standards-foundation/compliance-boundaries.md`](docs/00-standards-foundation/compliance-boundaries.md).
 - **Incident & deficiency.** Real failures (production outage, data loss, agent did harm) — not
-  ordinary bugs. The cluster also covers known problems that will outlive a single change.
+  ordinary bugs. The cluster also covers known problems that will outlive a single change, and
+  defects in shared or supplied artifacts that downstream consumers must be told about, not just
+  patched locally.
 - **Hygiene.** Repo layout, naming, and code-quality drift inside a diff. Lightweight; runs
   often.
 
@@ -122,6 +124,13 @@ need an independent approver — a human, or an out-of-band check the agent cann
 the self-modification boundary section in
 [`docs/04-adoption/agent-authority-model.md`](docs/04-adoption/agent-authority-model.md).
 
+The same coupling runs downstream of the spec: the agent that builds the change also authors most
+of its Verify evidence, the Review narrative, and the Decide framing, so a confident error can
+clear every gate it also wrote the input to. The dual of "don't let the agent edit its gate" is
+"don't let the agent be the sole author of the gate's input" — make the load-bearing claim's
+evidence reproducible or independently authored, scaled to the stakes. See
+[`docs/02-operating-system/actor-evidence-independence.md`](docs/02-operating-system/actor-evidence-independence.md).
+
 ---
 
 ## Where doctrine lives
@@ -150,7 +159,7 @@ the skill fires**. In always-on context put only a **one-line pointer per skill*
 description-sized cost.
 
 The framework's own measurement (see [`docs/05-reference/skills-token-audit.md`](docs/05-reference/skills-token-audit.md)):
-the 27 skill descriptions sit at ~104 tokens each (gated 80-500 characters), and the ~35k of
+the 28 skill descriptions sit at ~104 tokens each (gated 80-500 characters), and the ~35k of
 skill *bodies* are loaded only on invocation. Pasting a fat doctrine block into always-on
 context multiplies that cost across every subagent in a fan-out. The framework rejects that
 pattern by measurement.

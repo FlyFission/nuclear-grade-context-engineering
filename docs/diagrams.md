@@ -237,6 +237,45 @@ flowchart LR
 
 ---
 
+## 8. Actor-evidence independence
+
+The loop's gates after Execute — Verify, Review, Decide — assume the evidence they read is independent of the actor. In the default single-agent path it is not: the same agent authors the change *and* every input the gates read, so a confident error ships wrapped in its own proof. The seam breaks that coupling in proportion to the stakes. See [`02-operating-system/actor-evidence-independence.md`](02-operating-system/actor-evidence-independence.md).
+
+```mermaid
+flowchart TB
+    classDef actor fill:#E4DEF7,stroke:#5B49A6,color:#1E1640;
+    classDef gate fill:#FFD24D,stroke:#B07400,color:#3A2600,stroke-width:2px;
+    classDef indep fill:#D2EBE6,stroke:#248A7E,color:#0E2A26;
+    classDef bad fill:#F6D9D4,stroke:#B23A2E,color:#3A1410;
+    classDef good fill:#DCEFDE,stroke:#2E7D45,color:#102810;
+
+    subgraph COUPLED["Coupled — the hole"]
+      direction TB
+      AC([Actor builds the change]):::actor
+      AC --> AE[authors the Verify evidence]:::actor
+      AC --> AN[authors the Review narrative]:::actor
+      AC --> AD[frames the Decide call]:::actor
+      AE --> GC{Gates}:::gate
+      AN --> GC
+      AD --> GC
+      GC -->|every input actor-authored| OUT1[A confident error ships,<br/>wrapped in its own proof]:::bad
+    end
+
+    subgraph SEAM["With the independence seam"]
+      direction TB
+      AC2([Actor builds the change]):::actor
+      IV[Independent verifier, or<br/>evidence the reviewer reproduces]:::indep
+      ID[Decider independent<br/>of the actor]:::indep
+      AC2 --> IV --> GS{Gates}:::gate
+      GS --> ID
+      ID -->|input not solely actor-authored| OUT2[A confident error is<br/>visible at the gate]:::good
+    end
+```
+
+**In words (text fallback):** in the coupled default, the actor builds the change and also authors the Verify evidence, the Review narrative, and the Decide framing, so the gates only ever see what the actor wrote and a confident hallucination clears them. With the seam, the load-bearing claim's evidence is authored by an independent verifier (or reproduced by the reviewer) and the decider is independent of the actor, so the same error is visible at the gate instead of laundered through it.
+
+---
+
 ## Source-lineage note
 
 These diagrams are an original visual restatement of the Nuclear-grade workflow, influenced by public lifecycle, configuration-management, and software-assurance sources mapped in [`00-standards-foundation/source-map.md`](00-standards-foundation/source-map.md). They do not create formal V&V, compliance, certification, safety, security, or regulatory adequacy.

@@ -40,6 +40,7 @@ Inputs:
 Return:
 - the release decision: ship, block, defer, or ship with a named leftover risk
 - whether the evidence actually answers the decision question
+- whether the decider is independent of the actor, and whether the decision rests on primary evidence the reviewer can reproduce (not the actor's narrative)
 - an evidence summary
 - the leftover risks and who owns them
 - the rollback and monitoring notes

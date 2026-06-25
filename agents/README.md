@@ -4,6 +4,14 @@ Five subagents map onto the **PROVE** beats, each with tool boundaries that *enc
 split the doctrine already demands. They are an **opt-in, Standard+-only** companion to the
 single-agent path — five subagents on a typo is the busywork the lifecycle rejects.
 
+Concretely, the observer and judge encode **actor-evidence independence**: the runner that makes
+the change is not the entity that authors the evidence or the verdict, so a confident error cannot
+also write its own clean bill of health. That is the in-loop form of the principle in
+[`../docs/02-operating-system/actor-evidence-independence.md`](../docs/02-operating-system/actor-evidence-independence.md)
+— the dual of the self-modification boundary (don't let the agent edit its gate; don't let it be
+the sole author of its gate's input). The honesty note below is exactly where that independence
+stops.
+
 | Beat | Subagent | Covers | Tool authority |
 |---|---|---|---|
 | **P — Plan** | `planner` | Question · Discover · Specify · Plan | Read/Grep/Glob/WebFetch + write only to the packet; no Bash, no code edits |

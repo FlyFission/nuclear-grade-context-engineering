@@ -52,6 +52,7 @@ The workflow has two speeds. While you explore and try ideas you can throw away,
 | Workflow | Loop | Use when | Main artifact |
 |---|---|---|---|
 | Questioning attitude | question -> assumptions -> facts -> stop conditions -> next artifact | Work that is vague, high-stakes, or easy to talk yourself into | `questioning-attitude.md` or `risk.md` section |
+| Administrative floor | screen tripwires -> commit with a clear message | Purely administrative, instantly reversible work that crosses no trust boundary | the commit message (no packet) |
 | Quick change | question -> classify -> prove -> validate | Local, easy-to-undo work that is easy to prove | `risk.md`, `proof.md` |
 | Standard change | specify -> plan -> trace -> verify -> decide | The change touches users, dependencies, security, AI behavior, operations, or a release | Standard packet |
 | Controlled configuration | identify items -> impact screen -> baseline -> operate | Prompts, models, tools, dependencies, docs, releases, or agent authority need to stay under control | CM records (keeping the approved version under control) |

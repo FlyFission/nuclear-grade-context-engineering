@@ -12,6 +12,17 @@ get neither speed nor confidence. *(See [`README.md`](README.md) — "The one id
 
 ---
 
+> **Grading scales how, not whether. The baseline floor is never waived.**
+
+A graded approach changes how much evidence, review, and oversight a change earns — never
+whether the always-on habits apply. The Core 7 dispositions run on every change, down to the
+administrative floor; what scales above them is the packet, the independence, and the release
+ceremony, not the questioning attitude itself. Grading aims rigor where the consequence lives;
+it is not a license to skip it. *(See [`CORE.md`](CORE.md) — "The Core 7" — and
+[`docs/02-operating-system/activation-thresholds.md`](docs/02-operating-system/activation-thresholds.md).)*
+
+---
+
 > **The name is the standard, not the vocabulary.**
 
 "Nuclear-grade" names the *standard of care*. When you adopt the discipline, you do not have

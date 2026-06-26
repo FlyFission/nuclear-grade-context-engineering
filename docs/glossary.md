@@ -9,6 +9,7 @@ Plain-language decoding of Nuclear-grade terms and idioms. The skills and docs u
 | Packet | A small folder of Markdown files (`.nuclear/changes/<slug>/`) that records one change: what it is, why it matters, what proves it, and the release decision. |
 | Mode | How much rigor a change earns: Quick (tiny), Standard (consequential), or a stronger human-reviewed pattern. |
 | Quick mode | Low-consequence, reversible work with obvious proof and no new trust boundary. Two files: `risk.md`, `proof.md`. |
+| Administrative floor | Below Quick. A purely administrative, instantly reversible change that crosses no trust boundary (typo, comment, dead link, doc-only bump). No packet — the commit message is the record. Any trust boundary, dependency, public claim, or hard-to-reverse step lifts it to at least Quick. |
 | Standard mode | Work with user, data, dependency, permission, AI-authority, or release consequence. Six files. |
 | Controlled item | Anything whose approved state matters to trust: code, prompts, models, dependencies, docs, releases, tools. |
 | Baseline | The accepted state of controlled items at a decision point, plus what would make it stale. |

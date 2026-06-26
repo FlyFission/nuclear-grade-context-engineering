@@ -4,6 +4,8 @@
 
 **Rule:** Start with the smallest mode that can honestly hold on to the design intent, the evidence, the release readiness, and the learning. Move up by stakes, uncertainty, exposure, how hard it is to undo, how much the agent acts on its own, and how much outside trust is on the line.
 
+**Below the smallest mode sits the administrative floor.** Quick is the smallest mode that *holds a packet*; below it, a purely administrative, instantly reversible change that crosses no trust boundary holds no packet at all -- its commit message is the record. The floor is not a lighter packet; it is the honest statement that some changes have no evidence to hold. Any trust boundary, dependency, public claim, or hard-to-reverse step makes it at least Quick (see `activation-thresholds.md`). Grading the floor down never waives the always-on Core habits -- it waives the packet, not the questioning attitude.
+
 ---
 
 ## Mode table
@@ -68,4 +70,4 @@ Do not make "Nuclear" the default you reach for. The strongest Nuclear-grade mov
 
 ## Source-lineage note
 
-This mode system is an original software workflow that scales with risk. It draws on public ideas about matching effort to stakes (the graded approach), the lifecycle, keeping the approved version of everything under control, software assurance, and secure development, all from the main source map. It does not implement or claim formal compliance with any cited source.
+This mode system is an original software workflow that scales with risk. It draws on public ideas about matching effort to stakes (the graded approach), the lifecycle, keeping the approved version of everything under control, software assurance, and secure development, all from the main source map. The graded approach's cross-jurisdiction lineage is consolidated in the graded-approach row of `../01-field-guide/source-to-concept-crosswalk.md`. It does not implement or claim formal compliance with any cited source.

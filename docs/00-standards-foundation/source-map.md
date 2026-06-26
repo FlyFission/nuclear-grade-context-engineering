@@ -2,7 +2,7 @@
 
 **Purpose:** List the public, open, linkable sources that Nuclear-grade may cite directly. These are also the sources whose ideas can shape its original software workflows.
 
-**Repo posture:** Nuclear-grade is a teaching method for software engineering. It is built on public sources. It does not claim to meet DOE, NRC, ASME, EPRI, IEEE, IEC, ISO, ANSI/ANS, NEI, NASA, NIST, CISA, OpenSSF, OWASP, or any other framework.
+**Repo posture:** Nuclear-grade is a teaching method for software engineering. It is built on public sources. It does not claim to meet DOE, NRC, IAEA, CNSC, ONR, ASME, EPRI, IEEE, IEC, ISO, ANSI/ANS, NEI, NASA, NIST, CISA, OpenSSF, OWASP, or any other framework.
 
 **Use rule:** A source can shape public templates only when two things are true. First, it is public, open, and linkable. Second, the workflow we build from it is original, made for software, and claims no compliance.
 
@@ -58,6 +58,19 @@ The confidence fields say how well a source family fits this repo. They do not s
 | DOE-STD-3007-2017, Criticality Safety Evaluations | https://www.energy.gov/ehss/articles/doe-std-3007-2017 | Supporting | verified-public | Evaluation discipline, conservative assumptions, consequence-driven analysis. | Medium | Supporting only; too domain-specific for core UX. |
 | 10 CFR Part 21, Reporting of Defects and Noncompliance | https://www.ecfr.gov/current/title-10/chapter-I/part-21 | Supporting | verified-public | Outward duty (§21.21) to evaluate a discovered defect and notify affected parties, not only fix it locally. | Medium-high | Concept lineage for the outward-reporting clause when a defect is found in a shared or supplied artifact; no compliance claim. |
 | DOE-HDBK-1230-2019, Commercial Grade Dedication Application Handbook | https://www.standards.doe.gov/standards-documents/1200/1230-bhdbk-2019 | Supporting | verified-public | Acceptance discipline for items not built under the program: identify the few critical characteristics, choose an acceptance method, verify them independently. | Medium-high | Concept lineage for the outside-artifact acceptance structure in `vetting-outside-code-and-models`; complements NIST SP 800-161. Translated to software vocabulary; the label is not reused and no compliance is claimed (see `do-not-cite-directly.md`). |
+
+---
+
+## Tier 1b - Cross-Jurisdiction Graded-Approach References (concept-only)
+
+The graded approach is the repo's central organizing principle and is already anchored to DOE (Tier 1: 10 CFR 830 and the DOE QA page). These international and foreign-regulator statements of the same idea are recorded for **concept lineage only** — they sharpen the cross-jurisdiction definition in `../01-field-guide/source-to-concept-crosswalk.md`. They are **not** direct template lineage, and nothing here claims compliance with IAEA, CNSC, or ONR. URLs are marked `public-url-needed` until a current official public link is verified in-repo (same rule as the NNSA row above).
+
+| Source | Public link | Classification | Status | Role in Nuclear-grade | Confidence | Notes |
+|---|---|---:|---|---|---:|---|
+| IAEA Safety Glossary | official IAEA publication page not yet verified in-repo | Supporting | public-url-needed | Graded approach as control measures commensurate with likelihood, consequence, and risk. | Medium | Concept-only; verify public URL before any direct citation. |
+| IAEA GSR Part 2, Leadership and Management for Safety | official IAEA publication page not yet verified in-repo | Supporting | public-url-needed | The management system is developed and applied using a graded approach, with documented grading criteria. | Medium | Concept-only; no compliance claim. |
+| CNSC REGDOC-3.5.3, Regulatory Fundamentals | official CNSC page not yet verified in-repo | Supporting | public-url-needed | Graded approach scales analysis, documentation depth, and scope of action to risk, facility characteristics, and performance history. | Medium | Concept companion for the performance-history modulator (load-bearing lineage stays DOE-HDBK-1028 / NASA Lessons Learned). |
+| ONR graded-approach guidance (IRR17) | official ONR page not yet verified in-repo | Supporting | public-url-needed | Sets the level of analysis, documentation, and actions needed to comply with safety requirements; low/medium/high pathways. | Medium | Concept-only; no compliance claim. |
 
 ---
 

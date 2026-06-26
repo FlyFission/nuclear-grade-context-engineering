@@ -8,6 +8,20 @@ While you explore and build drafts, stay light when you can undo the work. Raise
 
 ---
 
+## The administrative floor (below Quick)
+
+Some changes are so small a packet would cost more than it could ever return. Name that floor instead of leaving it implicit: an **administrative** change carries **no packet -- the commit message is its record**. (The completion standard accepts "the change record or reasoning it used," and `change-control-packets.md` asks for a packet only "where a future review needs more than a commit message.")
+
+A change sits on the floor only when **all** of these hold:
+
+- it is purely administrative -- a typo, a comment, formatting, a dead-link fix, a doc-only version bump;
+- it crosses **no new trust boundary**; and
+- it is instantly reversible.
+
+**Tripwires -- any one lifts it to Quick or higher.** These are the same traps the router guards in `../../skills/using-nuclear-grade/SKILL.md`: it touches authentication, permissions, secrets, data, a dependency or manifest, a model id, a prompt, agent authority, CI or `.github/`, a release, a baseline, or public or claim-bearing wording; or a reviewer would need more than the commit message to judge it; or it is not instantly reversible. **When in doubt it is Quick, not the floor** -- the floor never downgrades a change that earns more, and it never waives the always-on Core habits (see `modes.md` and `../../MAXIMS.md`).
+
+---
+
 ## Primary threshold dimensions
 
 Score this by feel. Do not turn it into a math problem.
@@ -22,12 +36,15 @@ Score this by feel. Do not turn it into a math problem.
 | Dependency trust | No new trust | Package/API/model/config changes | Critical supplier/model/build/data trust decision |
 | AI authority | Drafting only | Tool use under supervision | Write/execute/network/approval/data authority |
 | Controllability | A human can interrupt or override in time | Delayed feedback; only checkpoint-gated | One-way or auto-committed; no mid-course catch |
+| Performance history | Clean recent record | Some past defects or churn here | Live deficiency, recent incident, or recurring escaped defects on this component |
 
-**The front door: the dominant three.** For the ten-second call, weigh only consequence × reversibility × uncertainty; reach for the other four dimensions when one of those three is unclear or the change trips a trap surface. The full seven are for the audit trail, not the spoken classification.
+**The front door: the dominant three.** For the ten-second call, weigh only consequence × reversibility × uncertainty; reach for the other five dimensions when one of those three is unclear or the change trips a trap surface. The full eight are for the audit trail, not the spoken classification.
 
 **Multiplicative, not additive.** A high-consequence change that is a one-keystroke revert and a known pattern is not high-rigor work — reversibility and low uncertainty pull it back down. A single "High" does not force escalation; weigh the three together. Reversibility is the axis physical engineering cannot lean on, and it is your main escape from burden — but pair it with detectability, because a failure you cannot see in time is not cheaply reversible.
 
 **Controllability gates placement, not just height.** When an action can be caught and steered as it runs, a watching review suffices; when it commits before results are known (a one-way migration, an auto-merge, an unattended agent action), the pre-action brief and dry run become the gating controls — the after-the-fact review cannot undo it. Score controllability when a human gate is in question; otherwise the dominant three carry the call.
+
+The first eight dimensions are intrinsic to the change. The last is a **modulator**: a component carrying a live deficiency, a recent incident, or recurring escaped defects earns a higher mode than its intrinsic risk alone, because past performance is part of the stakes. Read it from the `deficiency-register.md` and recent OPEX before you settle the mode; this is the operating-experience loop (DOE-HDBK-1028, NASA Lessons Learned) feeding the next decision.
 
 ---
 
@@ -35,6 +52,7 @@ Score this by feel. Do not turn it into a math problem.
 
 | Trigger | Minimum artifact | Minimum useful version | Exit criteria | Overhead trap |
 |---|---|---|---|---|
+| Trivial / administrative change (the floor) | none -- the commit message is the record | files changed and the one-line reason, in the commit | No tripwire fires; a reviewer needs nothing beyond the commit. | Spinning up a packet for a typo. |
 | Any non-trivial change | `risk.md` | decision question, scope, consequence, mode, proof needed | Mode is justified. | Writing a risk essay for a tiny diff. |
 | Low-risk reversible change | `proof.md` | command/check/eval and result | Evidence matches declared risk. | Treating test output as proof for unrelated claims. |
 | User-visible or durable behavior | Standard packet | basis, plan, trace, verification, ship | Important claims have evidence or explicit gaps before acceptance. | Backfilling trace after release. |
@@ -51,6 +69,7 @@ Score this by feel. Do not turn it into a math problem.
 ## Mode selection shortcut
 
 ```text
+If it is purely administrative, instantly reversible, and crosses no trust boundary → no packet; the commit message is the record (the administrative floor).
 If it is local, reversible, and obvious → Quick.
 If users, dependencies, permissions, data, operations, or architecture care → Standard.
 If failure is severe, silent, hard to reverse, externally trusted, or agentic/autonomous → Nuclear subset.

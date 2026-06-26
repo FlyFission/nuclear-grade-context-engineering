@@ -40,7 +40,9 @@ The Core 7 are the habits that make that slowdown cheap.
 | 7 | [`learning-from-experience`](skills/learning-from-experience/SKILL.md) | Something went wrong or nearly did, and a safeguard should change. |
 
 **Core habits are dispositions, not artifacts.** Their cost matches the change. 30 seconds of
-thought on a tiny edit. Longer on a hard one.
+thought on a tiny edit. Longer on a hard one. Even on the administrative floor — a trivial,
+reversible change that crosses no trust boundary and needs no packet — the dispositions still
+run: grading waives the packet, not the questioning attitude.
 
 ---
 

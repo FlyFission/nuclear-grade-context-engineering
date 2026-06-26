@@ -1,6 +1,6 @@
 ---
 name: rating-change-risk
-description: Picks Quick, Standard, or a stronger human-reviewed mode based on consequence, how easy it is to undo, and how much is unknown. Use when you start a change to code, docs, dependencies, AI power, releases, or public claims and the right level of care is unclear. Do not use for a tiny easy-to-undo edit with obvious proof, which is Quick by default.
+description: Picks Quick, Standard, or a stronger human-reviewed mode based on consequence, how easy it is to undo, and how much is unknown. Use when you start a change to code, docs, dependencies, AI power, releases, or public claims and the right level of care is unclear. Do not use for a tiny easy-to-undo edit with obvious proof, which is Quick by default, or for a purely administrative reversible edit crossing no trust boundary, which needs no packet at all.
 ---
 
 # Rating Change Risk
@@ -29,6 +29,7 @@ Sort the change before you build it. That way the care you take matches the stak
 
 - A change record already has a fresh mode choice and the scope has not changed.
 - The system is failing right now and needs incident handling first.
+- The change is purely administrative, instantly reversible, and crosses no trust boundary -- that is the administrative floor (no packet; the commit message is the record), not a mode to rate.
 
 ## Inputs
 
@@ -39,8 +40,10 @@ Sort the change before you build it. That way the care you take matches the stak
 
 ## Process
 
-1. Restate the decision question and the evidence bar it needs.
-2. Judge the dominant three first -- consequence, how easy it is to undo, and how much is unknown -- then pull in who is exposed, how easily a failure would be caught, dependency trust, and how much power the agent has only if one of the three is unclear or a trap surface fires. Weigh them together: an easy-to-undo, known-pattern change is not high-rigor even at high consequence. Derive the grade in two directions so it is defensible, not asserted from effort: top-down (the worst credible outcome this could cause) and bottom-up (if this specific edit fails, what breaks).
+**Screen for the administrative floor first.** If the change is purely administrative, instantly reversible, and crosses no trust boundary -- a typo, a comment, formatting, a dead-link fix, a doc-only bump -- it needs no packet; the commit message is the record. Any tripwire (auth, data, a dependency, a model or prompt, agent authority, CI or `.github/`, a release, a baseline, or public or claim-bearing wording), or a reviewer needing more than the commit, makes it at least Quick. When in doubt it is Quick, not the floor.
+
+1. Restate the decision question and the evidence bar it needs. Grade the change itself, not the standing item it touches -- a routine file can receive a high-stakes change (auth, payments, an irreversible migration); take the higher of the two.
+2. Judge the dominant three first -- consequence, how easy it is to undo, and how much is unknown -- then pull in who is exposed, how easily a failure would be caught, dependency trust, and how much power the agent has only if one of the three is unclear or a trap surface fires. Weigh them together: an easy-to-undo, known-pattern change is not high-rigor even at high consequence. Raise the mode when the affected component carries a live deficiency, a recent incident, or recurring escaped defects -- past performance is part of the stakes. Derive the grade in two directions so it is defensible, not asserted from effort: top-down (the worst credible outcome this could cause) and bottom-up (if this specific edit fails, what breaks).
 3. Name the work mode: routine, known procedure, new or uncertain, interrupted or resumed, or a critical action.
 4. Choose Quick only for local, easy-to-undo, easy-to-prove work that adds no new trust boundary.
 5. Choose Standard when the change is user-visible or lasting, or touches dependencies, permissions, data, AI, operations, or a release.
@@ -72,6 +75,7 @@ Sort the change before you build it. That way the care you take matches the stak
 - "It is small." Small code can change a large trust boundary.
 - "The agent only changed docs." Docs can make public claims.
 - "We can fix it later." Failures that are hard to catch or hard to undo need a stronger mode now.
+- "It is administrative, so the floor covers it." The floor holds only when every inclusion test passes and no tripwire fires; a trust boundary, a dependency, or a public claim means it was never administrative.
 
 ## Red Flags
 

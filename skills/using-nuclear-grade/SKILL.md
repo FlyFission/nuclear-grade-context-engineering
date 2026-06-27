@@ -1,6 +1,6 @@
 ---
 name: using-nuclear-grade
-description: The always-first router for AI-assisted work — before acting, state the mode (Quick or Standard-plus) and the one fact that sets it, then set up the matching change record and plan the proof. Use at the start of any change, repo adoption, or release call. Do not use for a throwaway experiment with nothing worth reviewing.
+description: The always-first router for AI-assisted work — before acting, state the mode (the administrative floor, Quick, or Standard-plus) and the one fact that sets it, then set up the matching change record and plan the proof. Use at the start of any change, repo adoption, or release call. Do not use for a throwaway experiment with nothing worth reviewing.
 ---
 
 # Using Nuclear-grade
@@ -13,9 +13,9 @@ The repo charter (`.nuclear/charter.md`) holds the lasting rules every change fo
 
 ## Decision contract
 
-- **Claim checked:** this change is named the cheapest-fitting mode -- Quick or Standard-plus -- with the one fact that sets it stated before the first tool call, and any Standard-plus trap (auth, user-visible, data, dependency, model/prompt/agent power, CI, release) forces the stronger mode.
+- **Claim checked:** this change is named the cheapest-fitting mode -- the administrative floor, Quick, or Standard-plus -- with the one fact that sets it stated before the first tool call, and any Standard-plus trap (auth, user-visible, data, dependency, model/prompt/agent power, CI, release) forces the stronger mode.
 - **Artifact observed:** the request, diff, and any record under `.nuclear/changes/` -> the declared mode, its one-fact reason, and the change-record path that routes the work into its skill cluster.
-- **Decision affected:** block -- the mode declared before the first tool call (Quick or Standard-plus) and the skill cluster it routes into.
+- **Decision affected:** block -- the mode declared before the first tool call (the administrative floor, Quick, or Standard-plus) and the skill cluster it routes into.
 - **Failure class:** unclassified-or-downgraded-start (work begun before a mode, or a Standard-plus trap waved off as Quick).
 - **Next action:** state the mode before the first tool call; raise to Standard or human review when a trap or outside-trust claim appears.
 
@@ -41,7 +41,9 @@ The repo charter (`.nuclear/charter.md`) holds the lasting rules every change fo
 
 ## Process
 
-**Classify first — out loud.** Before the first tool call, state the mode this change earns — **Quick**, or **Standard-plus** (Standard, or a stronger human-reviewed mode) — and the **one fact** that sets it. This is a declaration of intent, not a request for permission: you name the mode and act. Re-state it whenever the change grows.
+**Classify first — out loud.** Before the first tool call, state the mode this change earns — the **administrative floor** (no packet — the commit message is the record), **Quick**, or **Standard-plus** (Standard, or a stronger human-reviewed mode) — and the **one fact** that sets it. This is a declaration of intent, not a request for permission: you name the mode and act. Re-state it whenever the change grows.
+
+The **administrative floor** is the mode below Quick: it fits only a purely administrative, instantly reversible change that crosses no trust boundary — a typo, a comment, formatting, a dead-link fix, a doc-only bump — and carries no packet, with the commit message (the files changed and the one-line reason) as its record. Any trap below lifts it to at least Quick, and **when in doubt it is Quick, not the floor**. The floor never waives the always-on Core habits (see `docs/02-operating-system/activation-thresholds.md` and `MAXIMS.md`).
 
 You MUST treat the change as **Standard-plus**, never Quick, when it touches any of these — the cheap "it's only small" traps:
 
@@ -51,14 +53,14 @@ You MUST treat the change as **Standard-plus**, never Quick, when it touches any
 - a dependency or a dependency manifest;
 - a model id, a prompt, or what a tool or agent may do;
 - CI or `.github/`;
-- a release, a saved baseline, or public wording.
+- a release, a saved baseline, or claim-bearing public wording.
 
 When one is present, justify the mode in the record or escalate — do not let "it is a one-line change" downgrade it.
 
 Then:
 
 1. **Question first.** Name the decision question, the assumptions, the one fact that would change the decision, the evidence gaps, and the stop conditions.
-2. **Build the smallest record that fits the mode** under `.nuclear/changes/<slug>/`. Adopting for the first time? Take the Core 7 habits from `CORE.md` and switch on ancillary clusters by trigger, not all at once.
+2. **Build the smallest record that fits the mode.** On the administrative floor there is no packet — the commit message, naming the files changed and the one-line reason, is the record. Otherwise build the smallest record that fits the mode under `.nuclear/changes/<slug>/`. Adopting for the first time? Take the Core 7 habits from `CORE.md` and switch on ancillary clusters by trigger, not all at once.
 3. **Write the least you need:** what the change must do, what it must prove, the files it touches, and the claims it must not make.
 4. **Keep build work tied to the claims and their evidence.** If the chosen path stops fitting, write down where you left it and why.
 5. **Slow down at the promise boundary** — before you accept a claim, write public wording, save an approved version, ship a release, or change what an agent may do.
@@ -87,7 +89,7 @@ Then:
 
 ## Common Rationalizations
 
-- "It's a small change, so it's Quick." Size is not stakes. A one-line edit to auth, a dependency, a model id, a migration, or public wording is Standard-plus.
+- "It's a small change, so it's Quick." Size is not stakes. A one-line edit to auth, a dependency, a model id, a migration, or claim-bearing public wording is Standard-plus.
 - "I'll classify it later." The mode call is the cheapest control and the one most prone to motivated error under pressure. State it before the first tool call, not after the diff exists.
 - "The tests pass, so we don't need a record." Passing tests do not save the assumptions, the scope, the leftover risk, or the release decision.
 - "The agent remembers the context." Chat history is not a lasting review record.

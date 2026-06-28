@@ -117,7 +117,9 @@ Which packet mode a change earns. Rigor scales with consequence, not effort tole
 
 ```mermaid
 flowchart TD
-    Start([Change request]) --> Q1{Local, reversible,<br/>obvious proof,<br/>no new trust boundary?}
+    Start([Change request]) --> Q0{Purely administrative,<br/>instantly reversible,<br/>no new trust boundary?}
+    Q0 -->|yes| Floor[Administrative floor<br/>no packet — the commit message is the record]
+    Q0 -->|no| Q1{Local, reversible,<br/>obvious proof,<br/>no new trust boundary?}
     Q1 -->|yes| Quick[Quick packet<br/>risk.md + proof.md]
     Q1 -->|no| Q2{User / data / dep /<br/>permission / AI authority /<br/>release consequence?}
     Q2 -->|yes| Standard[Standard packet<br/>6 files]

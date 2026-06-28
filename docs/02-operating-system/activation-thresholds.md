@@ -18,7 +18,7 @@ A change sits on the floor only when **all** of these hold:
 - it crosses **no new trust boundary**; and
 - it is instantly reversible.
 
-**Tripwires -- any one lifts it to Quick or higher.** These are the same traps the router guards in `../../skills/using-nuclear-grade/SKILL.md`: it touches authentication, permissions, secrets, data, a dependency or manifest, a model id, a prompt, agent authority, CI or `.github/`, a release, a baseline, or public or claim-bearing wording; or a reviewer would need more than the commit message to judge it; or it is not instantly reversible. **When in doubt it is Quick, not the floor** -- the floor never downgrades a change that earns more, and it never waives the always-on Core habits (see `modes.md` and `../../MAXIMS.md`).
+**Tripwires -- any one lifts it to Quick or higher.** These are the same traps the router guards in `../../skills/using-nuclear-grade/SKILL.md`: it touches authentication, permissions, secrets, data, a dependency or manifest, a model id, a prompt, agent authority, CI or `.github/`, a release, a baseline, or claim-bearing public wording (a non-claim administrative fix -- a typo or dead-link in public docs -- does not by itself trip this); or a reviewer would need more than the commit message to judge it; or it is not instantly reversible. **When in doubt it is Quick, not the floor** -- the floor never downgrades a change that earns more, and it never waives the always-on Core habits (see `modes.md` and `../../MAXIMS.md`).
 
 ---
 

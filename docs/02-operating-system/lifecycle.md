@@ -31,7 +31,7 @@ The lifecycle has two speeds. While you explore and build drafts, move fast and 
 | Execute | Did the build stay inside its authority? Did it make a draft, not an accepted state? | Diffs, commits, generated files, self-checks, notes on what the AI did. | Any deviation is recorded, not hidden drift. |
 | Verify | What hard evidence backs the claims? What is still a fact, an assumption, an unknown, a source claim, or local proof? | Tests, evals, reviews, and results, each with a status, a verification type, and gaps. | The evidence matches the claim, and an independent party can reproduce it — or it is labeled a self-check and carried as residual risk. |
 | Review | Can a doubting reviewer accept the work without relying on confidence or vague instructions? | A claim-to-evidence review, a work-product review, a check of boundary wording, and a call on leftover risk. | The accept, defer, or block call can be reviewed against primary evidence, not the actor's summary of it. |
-| Decide | Should the draft become the accepted setup, ship, block, defer, or go on with leftover risk? | Decision, conditions, owner, baseline trigger. | The release decision is stated out loud, by a decider independent of the actor on trust-bearing work. |
+| Decide | Should the draft become the accepted setup, ship, block, defer, or go on with leftover risk? This **verdict** answers whether the change is *correct and worth releasing*; it is a separate state from **apply-clearance**, which answers whether it may be applied *now* (see below). | Decision, conditions, owner, baseline trigger; an apply-clearance call when the change takes a real-world action. | The release decision is stated out loud, by a decider independent of the actor on trust-bearing work; clearance to apply now is a separate, operator-owned call. |
 | Baseline | What accepted state is now under control after the slow, careful acceptance? | Commit, release, or artifact, plus the state of controlled items and the triggers. | Future drift can be spotted. |
 | Operate | What signals show drift or failure? | Monitors, support signals, incident triggers. | Operators know what to watch. |
 | Learn | What should change next time? | An OPEX note tied to a basis, test, control, template, or baseline update. | The lesson changes something or is closed out. |
@@ -49,6 +49,23 @@ coupling in proportion to the stakes: make the load-bearing claim's evidence rep
 independent party or authored by an independent verifier, and keep the decider off the work it is
 deciding. This is the dual of the rule that an agent must not be able to edit its own gate. See
 [`actor-evidence-independence.md`](actor-evidence-independence.md).
+
+---
+
+## Verdict and apply-clearance are two states
+
+`Decide` produces a **verdict**: on the evidence, is the change correct and worth releasing? That is not
+the same state as being **cleared to apply**: should it actually be applied in the current context? The
+two line up most of the time and diverge once the work touches production — approvals lapse, a freeze or
+maintenance window closes, external state drifts, or deployment policy changes *after* correctness was
+established. So a `ship` verdict is not a standing authorization. Apply-clearance is an operator/policy
+call (rung 4-5 on trust-bearing or irreversible work), context- and time-sensitive, and **re-checked at
+apply-time** — a stale "go" can otherwise ship a correct change into the wrong moment. The read-only
+decider that authors the verdict is, by design, blind to live operational context, so it cannot own this
+call; clearance is the operator's, mirroring the way Execute opens only after a human approves the plan.
+Today the loop's `Execute` beat builds a *draft*, so the gap is narrow; it widens as agents take real
+external actions, which is exactly when an explicit clearance state earns its place. The apply-clearance
+checklist lives in `ship.md`.
 
 ---
 

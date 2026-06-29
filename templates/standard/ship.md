@@ -69,6 +69,8 @@
 
 ## Release decision
 
+This is the **verdict** on correctness and release-worthiness — *should this draft become the accepted version?* It is decided on the evidence by a decider independent of the actor. It is **not, by itself, authorization to apply right now**; that is the separate **Apply clearance** section below. A `ship` verdict says the change is correct and worth releasing, not that the current moment is the right one to apply it.
+
 - Decision: ship / do not ship / defer / ship with residual risk
 - Decision maker:
 - Rationale:
@@ -79,6 +81,25 @@
 - Decision posture: conservative enough / not conservative enough:
 - Abort or rollback trigger:
 - OPEX or post-release learning trigger:
+
+## Apply clearance
+
+The release decision above answers *is this correct and worth releasing*. This section answers a **different question**: *may it be applied right now, in the current context?* The two states line up most of the time, but once a change touches production they can diverge — approvals lapse, a freeze/maintenance window closes, external state drifts, or deployment policy changes after correctness was established. A `ship` verdict is **not a standing authorization**: clearance is checked against operational reality at apply-time and can lapse. Clearance is an operator/policy call, distinct from the read-only verdict; for trust-bearing or irreversible apply, it rests with an independent human (see `docs/02-operating-system/actor-evidence-independence.md`).
+
+If the change makes no real-world action (for example a docs-only change that is its own apply), mark clearance `not applicable` and say why.
+
+| Clearance check | Status | Notes |
+|---|---|---|
+| Required approvals present and current | yes / no / not applicable | |
+| Release / maintenance (freeze) window open | yes / no / not applicable | |
+| External state unchanged since verification — verdict not stale | yes / no | |
+| Deployment policy satisfied | yes / no / not applicable | |
+| Rollback / kill-switch confirmed ready at apply-time | yes / no | |
+
+- Clearance decision: cleared to apply / hold / lapsed / not applicable (no real-world action)
+- Cleared by (operator or policy owner, independent of the actor where trust-bearing):
+- Apply window / valid until:
+- Re-clearance trigger: clearance lapses and must be re-confirmed if the apply does not happen within the window, or if approvals, external state, or policy change before apply — re-confirm clearance only, not the correctness verdict.
 
 ## Baseline trigger
 
@@ -98,6 +119,8 @@
 ## Exit criteria
 
 - The release decision is stated plainly.
+- The apply-clearance call is stated — cleared to apply / hold / lapsed — or marked `not applicable` when the change makes no real-world action.
+- Clearance was checked against operational context (approvals, window, external state, deployment policy) at apply-time, not inherited stale from the verdict.
 - The slow audit step is done before any baseline or public claim is accepted.
 - The baseline trigger is named when the controlled state changes.
 - The evidence status and the gaps are visible.

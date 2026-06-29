@@ -43,8 +43,9 @@ Release readiness is a careful, audited decision you write down. It is not a moo
 4. Confirm a rollback or restore path.
 5. Confirm the monitoring and the checks you will run after release.
 6. State why the decision is cautious enough given what is still uncertain, and confirm the change still delivers the value it was for and that the value outweighs the residual risk — a candidate that ships clean but no longer delivers its value should defer, not ship. For a high-stakes release, state the argument, not just the pile of evidence -- the top claim ("this is safe to ship") and why the evidence discharges it -- then run a defeater hunt: name what would have to be true for the decision to be wrong, and whether the evidence rules it out (this is the release-level form of the `questioning-attitude` falsification step).
-7. Record one decision: ship, block, defer, or ship with named leftover risk. On trust-bearing or irreversible work, the decider is independent of the actor that produced the change. See `docs/02-operating-system/actor-evidence-independence.md`.
-8. Name the owner, the trigger to abort, whether a handoff is needed, the trigger for an operating lesson (OPEX), and the trigger to record a new baseline.
+7. Record one decision: ship, block, defer, or ship with named leftover risk. On trust-bearing or irreversible work, the decider is independent of the actor that produced the change. See `docs/02-operating-system/actor-evidence-independence.md`. This verdict answers *correct and worth releasing?* — it is a separate state from whether the change may be applied now.
+8. For a change that takes a real-world action, record an **apply-clearance** call separate from the verdict: may it be applied *now*? Check that required approvals are present, the release/maintenance (freeze) window is open, external state is unchanged since verification (the verdict is not stale), deployment policy is satisfied, and rollback is ready at apply-time. Clearance is `cleared to apply / hold / lapsed`, owned by the operator/policy layer, and re-checked at apply-time — a `ship` verdict is not a standing authorization. Mark `not applicable` when the change makes no real-world action.
+9. Name the owner, the trigger to abort, whether a handoff is needed, the trigger for an operating lesson (OPEX), and the trigger to record a new baseline.
 
 ## Outputs
 
@@ -69,6 +70,7 @@ Release readiness is a careful, audited decision you write down. It is not a moo
 - "Green CI means ship." Release readiness also covers leftover risk and rollback.
 - "The agent's write-up says it's ready." The actor authored that write-up; a decision read off the actor's own narrative is downstream of the same mistake. Decide on primary evidence you can reproduce.
 - "The gap is probably fine." Any leftover risk you accept must be named.
+- "It passed the verdict, so apply it." The verdict says it is correct; apply-clearance says the current moment is right. Re-check approvals, the window, external state, and policy at apply-time.
 - "Monitoring is overkill." Monitoring should scale with the stakes, not with habit.
 - "Support will figure it out." The handoff to operations is part of release readiness.
 

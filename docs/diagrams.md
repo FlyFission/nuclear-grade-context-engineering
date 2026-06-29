@@ -15,10 +15,14 @@ flowchart LR
     Q[Question] --> D[Discover] --> S[Specify] --> P[Plan]
     P --> E[Execute] --> V[Verify] --> R[Review]
     R --> Dec{Decide}
-    Dec -->|ship / defer| B[Baseline] --> O[Operate] --> L[Learn]
+    Dec -->|ship / defer| Clr{Cleared to apply now?}
+    Clr -->|yes| B[Baseline] --> O[Operate] --> L[Learn]
+    Clr -.->|hold / lapsed| Clr
     Dec -->|block| P
     L -.feeds future basis.-> Q
 ```
+
+The **Decide** gate is the *verdict* — is the change correct and worth releasing? **Cleared to apply now?** is a separate, operator-owned gate: even a `ship` verdict waits if a freeze window is closed, an approval lapsed, external state drifted, or policy changed. It is re-checked at apply-time, so a stale "go" cannot ship a correct change into the wrong moment. See [`02-operating-system/lifecycle.md`](02-operating-system/lifecycle.md).
 
 ---
 
@@ -87,13 +91,15 @@ flowchart TB
   end
   PL --> E --> V
   RV --> DEC
-  DEC -->|"ship / defer"| B
+  DEC -->|"ship / defer"| CLR{"Cleared to apply now?"}
+  CLR -->|"yes"| B
+  CLR -.->|"hold / lapsed"| CLR
   DEC -.->|"block"| PL
   L -.->|"lessons feed the next basis"| Q
   class Q,D,S,PL plan
   class E run
   class V,RV obs
-  class DEC gate
+  class DEC,CLR gate
   class B,OP,L emb
 ```
 
@@ -228,14 +234,16 @@ flowchart LR
     CI["Controlled items<br/>code, prompts, models,<br/>deps, docs, releases"]:::item --> CH["A change"]
     CH --> EV["Evidence<br/>pass or gap, named"]
     EV --> DEC{"Decide<br/>on purpose"}:::gate
-    DEC -->|"ship / defer"| BL["Saved baseline<br/>the approved version"]:::base
+    DEC -->|"ship / defer"| CLR{"Cleared to<br/>apply now?"}:::gate
+    CLR -->|"yes"| BL["Saved baseline<br/>the approved version"]:::base
+    CLR -.->|"hold / lapsed"| CLR
     DEC -.->|"block"| CH
     BL --> OP["Operate"]
     OP --> LE["Lessons learned"]
     LE -.->|"feed the next change"| CI
 ```
 
-**In words (text fallback):** controlled items (code, prompts, models, dependencies, docs, releases) → a change → named evidence (pass or gap) → a deliberate decision → if ship/defer, save the new baseline; if block, back to the change → operate the baseline → lessons learned feed the next change to the controlled items.
+**In words (text fallback):** controlled items (code, prompts, models, dependencies, docs, releases) → a change → named evidence (pass or gap) → a deliberate decision (the *verdict*: correct and worth releasing?) → if ship/defer, a separate apply-clearance gate (may it be applied *now* — approvals, window, external state, policy?), re-checked at apply-time; if cleared, save the new baseline; if block, back to the change → operate the baseline → lessons learned feed the next change to the controlled items.
 
 ---
 

@@ -58,6 +58,8 @@ The discipline is borrowed from how high-consequence engineering is run: questio
 
 An agent can try ideas and throw them away cheaply, so let it. But the rules tighten as soon as the work turns into a claim, a file you have to keep under control, a public statement, an approved version, a release call, or a change to what the agent is allowed to do.
 
+**Minimum sufficient context.** Nuclear-grade is not about adding more process. It is about giving agents the smallest set of instructions, facts, limits, and evidence needed to do serious work without drifting into vibes. If a rule, template field, or artifact does not improve execution, verification, review, or decision quality, remove it.
+
 So the first question is the one that matters most: **what does this change have to prove, and what fact would change my decision?**
 
 That question has a shape, and the shape has a name.
@@ -180,7 +182,7 @@ One caution this loop has to defend against on purpose: the agent that builds th
 
 ## Keeping the approved version under control
 
-You already have git, CI, and branch protection. Keep them; this rides on top, it does not replace them. What they do not give you is the *decision*: a green pipeline says the suite passed on some commit, not that a human weighed the leftover risk and chose to ship, and not what would force a re-check. And they were never aimed at the things that now drive an AI system's behavior: the prompts, the model IDs, the eval sets, the agent's own permissions. Git versions your code; none of it records *why this is the version you trust*.
+You already have git, CI, and branch protection. Keep them; this rides on top, it does not replace them. What they do not give you is the *decision*: a green pipeline says the suite passed on some commit, not that a human weighed the leftover risk and chose to ship, and not what would force a re-check. And they were never aimed at the things that now drive an AI system's behavior: the prompts, the model IDs, the eval sets, the agent's own permissions. Agent context files such as `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, Copilot instructions, skills, and prompt templates are part of the operating envelope; changing them is not documentation-only when it changes how an agent may act. Git versions your code; none of it records *why this is the version you trust*.
 
 A **baseline** closes that gap. It is the version everyone agreed is correct, plus the evidence behind the agreement. Changes never edit the baseline directly; they go through evidence and a decision first, and only an accepted change becomes the new baseline. That is configuration management, in one loop:
 
@@ -334,6 +336,8 @@ Two tools also have native plugin packages: **Claude Code** (the repo is its own
 ## What this is NOT
 
 Nuclear-grade is not a compliance program, a certification, a regulated quality-assurance system, a safety analysis, a production sandbox, a regulatory submission, legal advice, or a substitute for qualified engineering, legal, security, safety, or compliance review.
+
+It is also not an agent runtime, task manager, approval system, sandbox, observability platform, or replacement for the tools that already run your work. It provides the minimum records and review discipline that can sit above those tools.
 
 It does not claim that any system is safe, secure, compliant, approved, certified, or fit for regulated use.
 

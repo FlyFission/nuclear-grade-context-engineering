@@ -31,6 +31,10 @@ Agents must not assume they may:
 - treat their own confidence or a fluent intent statement as evidence, or rubber-stamp another agent's output as an independent check;
 - overwrite change records or templates without saying so.
 
+## Skill loading rule
+
+Load skills by trigger, not by inventory. First screen the work for risk, evidence, decision-rights, public-claim, trust-boundary, handoff, release, incident, or hard-to-reverse triggers. Then load the smallest skill set that can change the action, evidence, gate, decision right, claim wording, or handoff. The list below is a routing aid, not a checklist; do not load the whole list just because it is listed. If a trigger is present or ambiguous, load the matching skill or state the specific evidence showing why it is not needed. Confidence is not evidence.
+
 ## Recommended skills
 
 - `skills/questioning-attitude/SKILL.md`

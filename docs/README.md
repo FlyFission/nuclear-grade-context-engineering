@@ -22,6 +22,7 @@ These docs have two parts. First, learn how to use the workflow. Second, look up
 | Lead people and agents the high-reliability way | [`01-field-guide/leadership-and-high-reliability.md`](01-field-guide/leadership-and-high-reliability.md) |
 | Place authority and declare intent | [`02-operating-system/authority-and-intent.md`](02-operating-system/authority-and-intent.md) |
 | Keep the actor from grading its own work | [`02-operating-system/actor-evidence-independence.md`](02-operating-system/actor-evidence-independence.md) |
+| Keep an LLM judge honest (guard against judge bias) | [`02-operating-system/evaluation-integrity.md`](02-operating-system/evaluation-integrity.md) |
 | Scale rigor by risk tier | [`02-operating-system/risk-tiers-and-modes.md`](02-operating-system/risk-tiers-and-modes.md) |
 | Make a second check genuinely independent | [`02-operating-system/independence-architecture.md`](02-operating-system/independence-architecture.md) |
 | Catch failures that have no fault (functional insufficiency) | [`02-operating-system/functional-insufficiency.md`](02-operating-system/functional-insufficiency.md) |
@@ -33,6 +34,8 @@ These docs have two parts. First, learn how to use the workflow. Second, look up
 | Periodically self-assess the method | [`02-operating-system/program-self-assessment.md`](02-operating-system/program-self-assessment.md) |
 | Understand CLI behavior | [`05-reference/cli-reference.md`](05-reference/cli-reference.md) |
 | See the workflow as diagrams | [`diagrams.md`](diagrams.md) |
+| Pick a prompting / reasoning technique (CoT, ReAct, PAL) and place it in PROVE | [`05-reference/reasoning-techniques.md`](05-reference/reasoning-techniques.md) |
+| See where this sits in the wider context-engineering field | [`01-field-guide/context-engineering-landscape.md`](01-field-guide/context-engineering-landscape.md) |
 | Decode a term or idiom | [`glossary.md`](glossary.md) |
 
 ## Reference foundation

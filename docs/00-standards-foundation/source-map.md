@@ -247,6 +247,28 @@ Template Lineage" below.
 
 ---
 
+## Tier 11 — Practitioner Context-Engineering Collections
+
+These are public, community-maintained collections and curricula on prompt and context engineering.
+They are **secondary / aggregator sources**: useful for orienting in the field and for the ideas
+they surface, but **not direct template lineage**. This repo derives no template or wording from
+them and claims no lineage to any standard *they* cite. They inform
+[`../01-field-guide/context-engineering-landscape.md`](../01-field-guide/context-engineering-landscape.md),
+[`../05-reference/reasoning-techniques.md`](../05-reference/reasoning-techniques.md), and
+[`../02-operating-system/evaluation-integrity.md`](../02-operating-system/evaluation-integrity.md).
+Where they name specific tools or frameworks, those stay **landscape only** (see the tool-posture
+rule in the landscape doc). No compliance claim is made.
+
+| Source | Public link | Classification | Status | Role in Nuclear-grade | Confidence | Direct repo use |
+|---|---|---:|---|---|---:|---|
+| dair-ai, Prompt Engineering Guide | https://github.com/dair-ai/Prompt-Engineering-Guide | Supporting | supporting-context | Public prompting-technique taxonomy (zero/few-shot, CoT, self-consistency, generated-knowledge, ReAct, PAL) and judge/bias-mitigation findings (distribution balance, exemplar ordering). | Medium-high | Concept lineage for `reasoning-techniques.md` and the judge-bias taxonomy in `evaluation-integrity.md`; secondary source, no template lineage. |
+| Meirtz, Awesome-Context-Engineering (arXiv 2507.13334) | https://github.com/Meirtz/Awesome-Context-Engineering | Supporting | supporting-context | Survey framing: context-as-optimization definition, "context failures are the bottleneck," RAG/memory taxonomies, agent-interop protocols (MCP/A2A/AG-UI). | Medium | Background framing for the landscape doc; survey/aggregator, no template lineage. |
+| muratcankoylan, Agent-Skills-for-Context-Engineering | https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering | Supporting | supporting-context | Skill anti-overlap routing; harness surface classification (locked/editable/append-only/human-controlled); LLM-judge bias taxonomy and process-reward framing. | Medium-high | Concept lineage for surface classification in `agent-authority-model.md`, judge biases in `evaluation-integrity.md`, and skill routing in `../05-reference/skill-authoring-contract.md`; no template lineage. |
+| NeoLabHQ, context-engineering-kit | https://github.com/NeoLabHQ/context-engineering-kit | Supporting | supporting-context | Quantified reliability×token-cost tiers; spec-driven / subagent-driven development; reflexion, meta-judge, process-reward patterns. | Medium | Illustrative external evidence for the reliability/cost framing in the comparison study; reflexion caveat in `reasoning-techniques.md`; benchmark numbers are theirs, not restated as ours. |
+| jasontang-ai, Context-Engineering | https://github.com/jasontang-ai/Context-Engineering | Context-only | supporting-context | Progressive curriculum (atoms→molecules→cells→organs) plus speculative "field-physics" framing (neural fields, attractor dynamics, quantum semantics). | Low-medium | Named as landscape; the speculative framing is **explicitly declined** in the landscape doc §3. No template lineage. |
+
+---
+
 ## Context-Only / Do-Not-Overweight Sources
 
 | Source family | Classification | Status | Why |

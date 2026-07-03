@@ -30,6 +30,7 @@ A good brief is how you supply competence and clarity so the agent can decide we
 
 - The task is a small Quick change, and all the context is already in `risk.md` and `proof.md`.
 - The agent has no power to act and only needs a file explained.
+- Responsibility is transferring with work still open or conditions changed -- use `handing-off-work` instead (this skill briefs a fresh start; a handoff carries the open-work state).
 
 ## Inputs
 

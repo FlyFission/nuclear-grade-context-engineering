@@ -68,6 +68,7 @@ Evidence should answer named claims. It should not just create a vague sense tha
 ## Common Rationalizations
 
 - "CI passed, so all claims pass." CI only proves what it checks.
+- "The model did the arithmetic." A number a model states in prose is narration, not evidence — for a quantitative, temporal, or logical claim the evidence is *executed code* the reviewer can rerun (program-aided reasoning). See `docs/05-reference/reasoning-techniques.md`.
 - "A reviewer can read the code." Review counts as evidence only when its scope and result are written down.
 - "The same agent checked itself." That can be a self-check, but it is not an independent check — the actor that made the change also wrote the proof, so the gate is downstream of the same mistake.
 - "The write-up says it passed." A confident narrative the actor authored is a claim, not evidence. Verify it; do not read it as the verification.

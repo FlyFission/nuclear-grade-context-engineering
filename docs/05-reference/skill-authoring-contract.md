@@ -82,6 +82,22 @@ The metadata (the frontmatter) is always loaded. The `SKILL.md` body loads when 
 - For each skill, keep at least three should-trigger prompts and two near-miss should-not-trigger prompts in `skill-evaluation.md`.
 - Declare the skill's assumptions of use when they matter: the context it was validated for -- the trust level of its inputs, whether a human gate is present, the model tier, the granted tools. A reusable skill is only safe in that context, and the consumer should confirm the assumptions hold before relying on it. A skill written assuming a human approves each action is unsafe when dropped into an unattended agent run.
 
+## Routing (anti-overlap)
+
+With a large skill set, the expensive failure is not a missing skill — it is two skills that both
+look right, so an agent fires the wrong one or fires both. A negative clause that only says *when
+not* to use a skill leaves the agent to guess *what instead*. Close that gap: where a skill has a
+close neighbor, the `## When Not to Use` entry names the sibling to use instead.
+
+- Prefer `Do not use for X — use \`<sibling-skill>\` instead` over a bare `Do not use for X`.
+- Only add the pointer where a real near-miss exists (e.g. `briefing-an-agent` ↔ `handing-off-work`;
+  `creating-change-records` ↔ `rating-change-risk`). Do not manufacture cross-links for distant skills.
+- This turns the skill set into a navigable graph: each near-miss edge routes to the more specific
+  skill, which is what keeps 28 skills from collapsing into "read them all and decide."
+
+Source: the explicit activation-boundary pattern in Agent-Skills-for-Context-Engineering
+(source-map Tier 11), adapted to this repo's existing `## When Not to Use` section.
+
 ## Tests
 
 `tests/test_skill_contracts.py` checks that the public contract is met.

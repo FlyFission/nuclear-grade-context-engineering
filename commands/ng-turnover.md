@@ -16,6 +16,7 @@ Portable command prompt generated from `skills/handing-off-work/SKILL.md`. Edit 
 - The work is done and the change record already holds the evidence and the decision.
 - A tiny Quick change needs only a diff and a proof note.
 - The request is just to summarize a file, with no transfer of responsibility.
+- The next owner only needs a focused brief to start or resume, with no open-work state to carry over -- use `briefing-an-agent` instead.
 
 ## Inputs
 

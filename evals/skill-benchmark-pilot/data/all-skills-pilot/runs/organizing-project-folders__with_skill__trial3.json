@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 37606,
+  "duration_api_ms": 35922,
+  "ttft_ms": 4088,
+  "ttft_stream_ms": 2278,
+  "time_to_request_ms": 45,
+  "time_to_request_from_spawn_ms": 1646742,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783122210021.0015,
+  "num_turns": 2,
+  "result": "Since there's nothing in this directory to inspect, I'll base this on the categories you described. Here's a proposed layout using the folder-decision checklist (one folder per work item or disposition rule, single home, safe names).\n\n## Folder map\n\n| Current location | Proposed home | Disposition | Notes |\n|---|---|---|---|\n| config templates (misc) | `config/templates/` | kept, versioned | Reference material, changes with config schema. |\n| one-off migration scripts (misc) | `scripts/migrations/` | archived (ran once, kept for history) | Name each `YYYY-MM-DD-description.sql`/`.sh` so history sorts chronologically. |\n| archived compliance reports (misc) | `docs/compliance/archive/` | archived, retention-governed | Flag for compliance/legal owner \u2014 a code repo may be the wrong home if there's a retention policy or access-control requirement a doc-management system enforces better. |\n| shared helper functions used by 2 services (misc) | `packages/shared/<domain-name>/` (e.g. `packages/shared/auth/`, `packages/shared/date/`) | kept, versioned, tested like real code | This is the one item in `misc` that's actually load-bearing code. It needs a real name based on what it does, not \"misc\" or \"shared\". Split by responsibility if it covers more than one concern. |\n| old meeting notes (misc) | *not the repo* | \u2014 | Meeting notes aren't source-of-truth engineering artifacts; recommend moving to your wiki/drive. If you must keep them versioned, `docs/meeting-notes/YYYY-MM-DD.md`, disposition archive. |\n| ~30 files in `utils` | split \u2014 see below | mixed | `utils` is the junk-drawer smell itself; eliminate the bare name. |\n\n### Splitting `utils`\nEach file needs sorting by one question: **is it used by one service or many?**\n- **Used by only one service:** move it into that service's own tree, e.g. `services/<name>/src/utils/` (colocated, not shared).\n- **Used by 2+ services:** goes into `packages/shared/<domain>/` next to the shared helpers pulled out of `misc` \u2014 named for what it does (`string/`, `date/`, `http/`, `validation/`), never a bare `utils`.\n\nI can't do this split for you without seeing the actual file names/contents \u2014 that's a per-file audit, not something to guess. If you paste the file list (or point me at the repo), I'll categorize each one.\n\n## Naming / depth check\n- Lowercase, hyphen-separated, ISO-8601 dates for migrations and archived notes \u2014 pass by design above.\n- Depth stays at 3 levels max (`packages/shared/date/`) \u2014 well under the 8-level cap.\n- No `misc`, `utils`, `tmp`, `stuff` names survive in the new layout.\n\n## Escalations (need an owner decision, not a default)\n1. **Compliance reports** \u2014 confirm retention rules with compliance/legal before deciding repo vs. external doc system.\n2. **Shared helpers** \u2014 once split by domain, some may turn out to only be used by one service today; confirm before promoting to `packages/shared`.\n3. **Meeting notes** \u2014 confirm whether anyone actually wants these versioned in the repo at all, or if they should just be deleted/moved.\n\nWant me to also sketch the per-folder README stubs, or help you audit the actual `misc`/`utils` file lists once you share them?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0853092,
+  "usage": {
+    "input_tokens": 56,
+    "cache_creation_input_tokens": 6179,
+    "cache_read_input_tokens": 18494,
+    "output_tokens": 2786,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 6179,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 31,
+        "output_tokens": 2588,
+        "cache_read_input_tokens": 12222,
+        "cache_creation_input_tokens": 229,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 229
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 634,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000729,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 56,
+      "outputTokens": 2786,
+      "cacheReadInputTokens": 18494,
+      "cacheCreationInputTokens": 6179,
+      "webSearchRequests": 0,
+      "costUSD": 0.0845802,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "1432385c-d6d6-4dc8-badb-1be9c545097c",
+  "_skill": "organizing-project-folders",
+  "_condition": "with_skill",
+  "_trial": 3
+}

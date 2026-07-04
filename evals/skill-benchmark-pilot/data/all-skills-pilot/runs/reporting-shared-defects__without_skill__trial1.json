@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 7005,
+  "duration_api_ms": 10100,
+  "ttft_ms": 6978,
+  "ttft_stream_ms": 1201,
+  "time_to_request_ms": 36,
+  "time_to_request_from_spawn_ms": 825068,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121388186.3035,
+  "num_turns": 1,
+  "result": "You should not consider this closed \u2014 the other three teams are shipping the same information-disclosure bug right now, and only you know about it.\n\nA few things worth doing beyond the local override:\n\n1. **Report the bug upstream in `prompt-common`** \u2014 file an issue against the shared package itself, not just a comment in your bot's repo. A comment only helps someone who already reads your codebase; it does nothing for the sales/onboarding/internal-tools teams.\n2. **Directly notify the other three teams** \u2014 a quick message to their leads/on-call flagging: what the bug is, that it can leak internal tool identifiers to customers, the trigger condition (long conversations hitting the truncation edge case), and that a fix already exists (your patched template) they can adopt or use as a reference.\n3. **Consider severity/urgency** \u2014 leaking internal tool/database identifiers to customers is a real disclosure risk. If any of those bots are customer-facing (sales, support) and actively in production, this may warrant treating it with more urgency than a normal bug report (e.g., pinging directly rather than just filing a ticket and waiting).\n4. **Push the actual fix into `prompt-common`**, not just your local override \u2014 since you already have a working fixed version, submitting it upstream (PR) fixes it for everyone and removes the need for local overrides/drift, including your own.\n\nWant help drafting the upstream issue/PR description or a heads-up message to the other teams?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0203587,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 1935,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 460,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1935,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 460,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1935,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1935
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 702,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000787,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 460,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1935,
+      "webSearchRequests": 0,
+      "costUSD": 0.0195717,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "9935a125-aeda-4d58-960a-d09e77edd59a",
+  "_skill": "reporting-shared-defects",
+  "_condition": "without_skill",
+  "_trial": 1
+}

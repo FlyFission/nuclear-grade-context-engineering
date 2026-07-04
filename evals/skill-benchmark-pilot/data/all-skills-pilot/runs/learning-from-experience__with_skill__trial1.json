@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 30099,
+  "duration_api_ms": 28850,
+  "ttft_ms": 8182,
+  "ttft_stream_ms": 1251,
+  "time_to_request_ms": 42,
+  "time_to_request_from_spawn_ms": 707671,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121270954.7585,
+  "num_turns": 1,
+  "result": "Here's an OPEX record for this. Note upfront: `git commit --no-verify` is a knowing bypass of a required gate, not an honest slip \u2014 I'll flag that distinctly (still no-blame on the person, but it can't be filed as \"just a mistake\" or the gate never gets fixed).\n\n---\n\n## OPEX Record \u2014 Hardcoded API Key Merged to Main\n\n**Date of event:** ~2026-06-26 (push) \u2192 2026-06-29 (audit caught it)\n**Recorded:** 2026-07-03\n\n### 1. What happened (actual vs. standard)\n**Standard:** All commits pass secrets-scanning before merge to main; no plaintext credentials enter version control.\n**Actual:** Pre-commit secrets-scanning hook failed on a branch. The engineer ran `git commit --no-verify`, bypassing the check, and pushed. The branch merged to main with a hardcoded API key, which sat live in production for 3 days until a routine security audit found it. Key was rotated on discovery.\n\n### 2. Classify the event\nThis has two layers, and they need different handling:\n- **Honest/systemic layer (no-blame):** the hook failed and there was no clear, fast path to get an urgent change through *safely* \u2014 that pressure is a control gap, not a person problem.\n- **Willful layer (must be named, not normalized):** `--no-verify` is an explicit, knowing bypass of a required gate. It should be surfaced as a finding on its own, separate from \"the engineer made a mistake.\" The lesson here is not \"remind people not to do this\" \u2014 it's \"the gate was bypassable by a single local flag with no downstream backstop, and there was no faster legitimate path, so bypass was the path of least resistance under deadline pressure.\"\n\n### 3. Root cause / weak controls\nThe real gap isn't the individual bypass \u2014 it's that the bypass was **sufficient** to get insecure code to production. Contributing weak controls:\n1. **Secrets scanning existed only client-side (pre-commit hook).** It was never re-enforced server-side, so a local `--no-verify` fully defeated it.\n2. **No branch protection / required CI status check** for secrets scanning on the main branch \u2014 merge was possible without the scan ever passing.\n3. **No fast-path process** for \"the linter is blocking me and I believe it's wrong / I'm on a deadline\" \u2014 the only visible option was to bypass, not to escalate.\n4. **Detection latency was 3 days**, bounded only by a periodic manual audit \u2014 no continuous/automated secret-detection scanning of the main branch or of deployed config.\n5. **No alerting on `--no-verify` usage** \u2014 the bypass itself was invisible until the downstream audit.\n\n### 4. Impact\n- Live API key exposed in production and in git history for ~3 days.\n- Key rotated after discovery (immediate correction, already done \u2014 good).\n- Unknown at this point: whether the key was accessed/used by anyone unauthorized during exposure \u2014 worth confirming via provider/access logs if not already checked.\n\n### 5. Durable control fixes (recommended)\n| # | Fix | Type | Owner | Verify by |\n|---|---|---|---|---|\n| 1 | Add secrets-scanning as a **required CI/status check** on main (server-side, e.g. gitleaks/trufflehog in CI), so `--no-verify` no longer defeats it | Control (CI gate) | Eng lead / DevOps | Confirm branch protection rule blocks merge without passing check |\n| 2 | Enable **branch protection** on main requiring that check to pass before merge, no admin override without explicit exception log | Control (git config) | Repo admin | Test with a deliberately-failing PR |\n| 3 | Add continuous secret scanning on main/production config (not just at commit time) with alerting to security channel | Monitor | Security team | First scheduled scan run + alert test |\n| 4 | Define and document an escalation path: if the pre-commit hook fails and the engineer believes it's a false positive or is time-constrained, they ping security/on-call for a fast human review \u2014 not `--no-verify` | Process/runbook | Eng manager | Add to onboarding doc; confirm one dry-run use |\n| 5 | Track/alert on `--no-verify` usage reaching origin (can be inferred from CI never having run the check on a merged commit) | Monitor | DevOps | Confirm alert fires on test bypass |\n\n### 6. Close-out condition\nThis lesson is not closed until #1 and #2 are live (server-side gate that `--no-verify` cannot defeat) \u2014 that's the fix that actually prevents recurrence. #3\u20135 reduce detection time and remove the incentive to bypass, but without #1/#2 the same shortcut is available again next deadline.\n\n---\n\nWant me to draft the actual CI config snippet (e.g., a GitHub Actions job running gitleaks as a required status check) and a short branch-protection setup checklist, since those are the two fixes that actually close the gap?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0597694,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 4141,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 2208,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4141,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 2208,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 4141,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4141
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007390000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 2208,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 4141,
+      "webSearchRequests": 0,
+      "costUSD": 0.0590304,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "21c69164-03c8-41f6-891f-aafe0187286c",
+  "_skill": "learning-from-experience",
+  "_condition": "with_skill",
+  "_trial": 1
+}

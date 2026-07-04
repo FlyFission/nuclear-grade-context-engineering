@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 17562,
+  "duration_api_ms": 17137,
+  "ttft_ms": 10124,
+  "ttft_stream_ms": 1750,
+  "time_to_request_ms": 47,
+  "time_to_request_from_spawn_ms": 485474,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783109010772.1926,
+  "num_turns": 1,
+  "result": "**Main issue: scope leak into a shared module.** `core/currency.py` is imported by billing, checkout, invoicing, and the admin dashboard \u2014 it should stay a generic, feature-agnostic utility. `format_currency_for_display` bakes in a checkout-receipt-specific business rule (appending `\"(paid)\"`) via an `is_pdf_receipt` flag, which means:\n\n- **Wrong layer**: This belongs in the checkout/receipt module, not core currency formatting. e.g. `checkout/receipt.py`:\n  ```python\n  def format_receipt_line(amount_cents, currency=\"USD\"):\n      return f\"{format_currency(amount_cents, currency)} (paid)\"\n  ```\n- **Leaky/misleading flag**: `is_pdf_receipt` is really \"append paid marker,\" not a PDF concern at all \u2014 nothing here does PDF-specific rendering. The name will confuse future readers, and nothing stops billing/invoicing from accidentally passing `is_pdf_receipt=True` for a non-paid or non-PDF context.\n- **Unsafe assumption baked into shared code**: hardcoding \"(paid)\" assumes the amount is always for a completed payment. If this function is reused (and it's now globally available, so it will be), it could mislabel pending charges, refunds, or invoices as paid.\n- **Blast radius**: any change to this file affects billing/invoicing/admin even though this feature only needs checkout receipts \u2014 increases review/testing surface for an unrelated feature.\n\n**Recommendation**: revert this addition to `core/currency.py` and implement the \"(paid)\" suffix logic in the checkout receipt module, calling the existing `format_currency` as a building block. Keep `core/currency.py` unchanged.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0336447,
+  "usage": {
+    "input_tokens": 24,
+    "cache_creation_input_tokens": 1983,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 1325,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1983,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 24,
+        "output_tokens": 1325,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1983,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1983
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 733,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000813,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 24,
+      "outputTokens": 1325,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1983,
+      "webSearchRequests": 0,
+      "costUSD": 0.0328317,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "4b8bbe62-e66e-486e-ba4c-64807275a11d",
+  "_task": "task2_shared_leak",
+  "_condition": "without_skill",
+  "_trial": 1
+}

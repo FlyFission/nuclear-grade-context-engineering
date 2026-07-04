@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 26296,
+  "duration_api_ms": 25367,
+  "ttft_ms": 7068,
+  "ttft_stream_ms": 3643,
+  "time_to_request_ms": 58,
+  "time_to_request_from_spawn_ms": 717885,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121280982.1208,
+  "num_turns": 1,
+  "result": "# Incident Write-Up: Hardcoded API Key Exposure\n\n## Summary\nA hardcoded API key was committed to the main branch and remained live in production for approximately 3 days before being caught by a routine security audit. The key was rotated immediately upon discovery.\n\n## Timeline\n- **Pre-commit**: Secrets-scanning pre-commit hook flagged the commit (working as intended).\n- **T+0**: Engineer bypassed the hook using `git commit --no-verify` under deadline pressure and pushed the branch.\n- **T+0 (shortly after)**: PR merged to `main`, deploying the key to production.\n- **T+3 days**: Routine security audit discovered the exposed key.\n- **T+3 days**: Key rotated.\n\n## Root Cause\nThe technical control (pre-commit secrets scanner) worked correctly, but it was **advisory only** \u2014 it ran client-side and could be bypassed with a single flag. There was no server-side enforcement (CI/CD gate, branch protection, or server-side commit check) to catch the secret if the local hook was skipped, and no PR-level review step caught it either.\n\n**Contributing factors:**\n1. Pre-commit hooks are opt-in/bypassable by design (`--no-verify`) \u2014 this is normal git behavior, not a bug, but means they can't be your only line of defense.\n2. No secrets scanning in CI, so the bypass had nothing else to catch it before merge.\n3. No branch protection rule requiring a passing security check before merge to `main`.\n4. Time pressure incentivized cutting corners, and there was apparently no lightweight escalation path (e.g., \"ping security to help unblock a false positive\") as an alternative to bypassing.\n5. Detection relied on periodic audit rather than continuous monitoring \u2014 3 days of exposure is a long detection gap.\n\n## Impact\n- API key exposed in a public/internal-shared repo history for 3 days.\n- Unknown whether the key was accessed by unauthorized parties during that window (worth checking key provider's access/usage logs for the exposure period, if not already done).\n- Key rotated; no other stated impact.\n\n## Corrective Actions (recommended, in priority order)\n\n**1. Move secrets scanning server-side and make it blocking (highest priority)**\nClient-side hooks are a courtesy, not a control \u2014 anything security-critical needs to be enforced somewhere the developer can't bypass it.\n- Add secrets scanning (e.g., gitleaks, trufflehog) as a required CI check on every PR.\n- Configure branch protection on `main` to require that check to pass before merge \u2014 no admin override without explicit justification.\n\n**2. Add server-side pre-receive hook scanning (if using self-hosted git) or equivalent SaaS feature**\nIf on GitHub/GitLab, enable native secret scanning + push protection, which blocks the push itself, not just the merge.\n\n**3. Remove the historical exposure**\nConfirm whether the key still exists in git history. If so, decide whether to rewrite history (high blast radius \u2014 requires team coordination) or accept that it's rotated and the old value is dead. Since it's already rotated, this is lower urgency but worth closing out.\n\n**4. Reduce friction for legitimate bypasses**\nPart of why `--no-verify` gets used is that false positives are annoying under time pressure. Provide:\n- A documented, fast path to get a false positive reviewed/allowlisted (e.g., a Slack channel or on-call for security review).\n- Inline suppression syntax for known-safe matches (most scanners support this) so engineers don't need to bypass the whole hook for one false positive.\n\n**5. Improve detection speed**\n3 days between exposure and discovery is slow. If not already in place, consider continuous secret scanning of the full repo (not just PR diffs) on a schedule shorter than \"routine audit,\" or real-time scanning via GitHub push protection / a SaaS tool.\n\n**6. Process/culture note**\nWorth a blameless discussion with the team: bypassing security controls to hit a deadline should be treated as an escalation trigger (\"I need help, this check is blocking me and I don't know why\") rather than a unilateral workaround. This isn't about punishing the engineer \u2014 the control failure (bypassable-only enforcement) is the real root cause \u2014 but it's a good moment to reinforce the norm.\n\n## Suggested owner/next steps\n- [ ] Security/platform team: implement CI-blocking secrets scan + branch protection (this week)\n- [ ] Security/platform team: enable provider-native push protection if available\n- [ ] Confirm key provider logs show no unauthorized use during exposure window\n- [ ] Decide on git history rewrite (optional, given rotation already done)\n- [ ] Share this writeup + team discussion on escalation norms\n\n---\n\nWant me to tailor this to your actual stack (e.g., specific CI system, GitHub vs GitLab, which scanner you're using) or turn the corrective actions into actual config/CI changes?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0395407,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 1850,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 1777,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1850,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 1777,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1850,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1850
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 1777,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1850,
+      "webSearchRequests": 0,
+      "costUSD": 0.038816699999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "d9673ac4-797c-4236-9f84-6f4dc59f74b0",
+  "_skill": "learning-from-experience",
+  "_condition": "without_skill",
+  "_trial": 1
+}

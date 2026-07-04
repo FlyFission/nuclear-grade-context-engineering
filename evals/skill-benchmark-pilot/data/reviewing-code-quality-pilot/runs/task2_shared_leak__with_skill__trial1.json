@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 23756,
+  "duration_api_ms": 23167,
+  "ttft_ms": 13096,
+  "ttft_stream_ms": 1390,
+  "time_to_request_ms": 37,
+  "time_to_request_from_spawn_ms": 414117,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783108939513.283,
+  "num_turns": 1,
+  "result": "## Findings\n\n**1. Feature logic leaking into shared core module \u2014 `core/currency.py:8-13`**\n`format_currency_for_display` and its `is_pdf_receipt` flag exist only to serve the checkout receipt PDF feature, but they live in `core/currency.py`, which billing, checkout, invoicing, and the admin dashboard all import. Every other consumer of this module now carries a parameter and code path that means nothing to them. This is the canonical \"feature logic in shared code\" violation.\n**Fix:** Delete this function from `core/currency.py`. Put the \"(paid)\" suffix logic in the checkout/receipt feature module (e.g. `checkout/receipt_pdf.py`), calling `format_currency()` directly from there.\n\n**2. Semantically wrong flag \u2014 `core/currency.py:11`**\nThe parameter is named `is_pdf_receipt` but the suffix it controls is \"(paid)\" \u2014 a payment-status concept, not a format concept. The function always appends \"(paid)\" whenever the PDF flag is true, regardless of whether the receipt is actually paid. If this is ever called for an unpaid/pending PDF receipt, it will silently mislabel it. This confirms the function is asking the wrong question of the wrong data (a payment-state flag disguised as a rendering flag).\n**Fix:** If a \"(paid)\" marker is needed, it should be driven by actual payment status passed from the checkout feature, not bundled into a shared currency formatter.\n\n**3. Thin wrapper that doesn't pull its weight \u2014 `core/currency.py:9-13`**\nThe new function does nothing `format_currency(...) + \" (paid)\"` couldn't do inline at the one call site in the checkout PDF export code. It adds an extra layer, an extra parameter, and an extra shared API surface for a single caller.\n**Fix:** Delete the wrapper; construct the string in the checkout feature code that calls `format_currency`.\n\n**4. Feature-spec comment in shared code \u2014 `core/currency.py:12`**\nThe comment `# PDF export needs a trailing \"(paid)\" marker per the checkout receipt spec` ties shared core code to one feature's spec document. It will rot as soon as the spec changes, and it's a signpost that this logic is in the wrong file.\n**Fix:** Removed automatically once the function is moved out of `core/currency.py`.\n\n## Verdict: **NOT VERIFIED**\n\nThe change accomplishes its stated goal (PDF receipt formatting) but does so by adding checkout-specific, payment-status-conflated logic to a shared currency module used by four unrelated parts of the app. This should be implemented entirely within the checkout/receipt feature code, calling the existing `format_currency` \u2014 nothing needs to be added to `core/currency.py`.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0579414,
+  "usage": {
+    "input_tokens": 24,
+    "cache_creation_input_tokens": 4327,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 2007,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4327,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 24,
+        "output_tokens": 2007,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 4327,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4327
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 733,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000813,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 24,
+      "outputTokens": 2007,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 4327,
+      "webSearchRequests": 0,
+      "costUSD": 0.057128399999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "9f4b54fa-86fe-4114-ba59-dfe834f7741a",
+  "_task": "task2_shared_leak",
+  "_condition": "with_skill",
+  "_trial": 1
+}

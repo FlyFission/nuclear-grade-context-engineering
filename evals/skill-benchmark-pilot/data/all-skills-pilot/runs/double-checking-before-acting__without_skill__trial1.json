@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 26838,
+  "duration_api_ms": 26357,
+  "ttft_ms": 13864,
+  "ttft_stream_ms": 1125,
+  "time_to_request_ms": 48,
+  "time_to_request_from_spawn_ms": 679861,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121243052.7048,
+  "num_turns": 1,
+  "result": "Before you run this, a few gaps in the plan could turn a routine cleanup into an incident:\n\n**1. Wrap it in a transaction with a verification step**\n```sql\nBEGIN;\nSELECT count(*) FROM users WHERE last_login < '2023-01-01' AND status = 'inactive';\n-- confirm this matches your expected ~40,000\nDELETE FROM users WHERE last_login < '2023-01-01' AND status = 'inactive';\n-- compare DELETE's reported row count to the SELECT above\nCOMMIT; -- only if it matches\n```\nPostgres reports `DELETE 40023` (or whatever) after execution \u2014 don't eyeball anything, diff that number against your pre-count. If they don't match, `ROLLBACK` instead of `COMMIT`.\n\n**2. Check foreign keys before you touch anything**\n```sql\nSELECT conrelid::regclass, confdeltype\nFROM pg_constraint\nWHERE confrelid = 'users'::regclass;\n```\n`confdeltype` tells you if any table has `ON DELETE CASCADE` pointing at `users`. If so, this delete could silently cascade into orders, sessions, audit logs, etc. \u2014 and staging may not have realistic volumes/relationships in those tables to reveal that. If cascades exist and aren't intended, you need `ON DELETE RESTRICT`/nullify logic or to delete dependents deliberately first.\n\n**3. Staging parity isn't proof**\nA matching row count on staging tells you the query is *syntactically* right, not that prod's data/constraints/triggers behave the same way. Worth a quick check for any `BEFORE DELETE`/`AFTER DELETE` triggers on `users` in prod that don't exist on staging.\n\n**4. Take a targeted export, not just the nightly snapshot**\nA full restore from last night's snapshot is your nuclear option but costs downtime and loses ~a day of unrelated writes. Cheaper insurance:\n```sql\n\\copy (SELECT * FROM users WHERE last_login < '2023-01-01' AND status = 'inactive') TO '/scratch/deleted_users_2026-07-03.csv' CSV HEADER\n```\nRun this right before the DELETE so you can re-insert precisely these rows without a full restore if something's wrong.\n\n**5. Since this is for an audit, consider soft-delete instead**\nAuditors often want to see *what* was deactivated and *why*, not just gone rows. If there's a `deleted_at` or `status` field option, `UPDATE ... SET status = 'archived', deleted_at = now()` gives you a trail and is trivially reversible. Worth confirming with whoever owns the audit requirement before you do a hard delete.\n\n**6. Timing and review**\n- 20 minutes is tight for a one-person irreversible prod change. Is anyone else reviewing the query before it runs?\n- Also confirm no read replicas/reporting pipelines depend on these rows and haven't been notified.\n\nIf you want, paste back the FK constraint query results and I can help you spot cascade risks before you commit.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.04343369999999999,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 1897,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 2016,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1897,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 2016,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1897,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1897
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 670,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00075,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 2016,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1897,
+      "webSearchRequests": 0,
+      "costUSD": 0.04268369999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "a7438914-8abf-457d-ae0a-c1d950274449",
+  "_skill": "double-checking-before-acting",
+  "_condition": "without_skill",
+  "_trial": 1
+}

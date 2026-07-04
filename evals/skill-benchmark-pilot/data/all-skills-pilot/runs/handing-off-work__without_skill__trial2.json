@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 21298,
+  "duration_api_ms": 20510,
+  "ttft_ms": 2750,
+  "ttft_stream_ms": 1276,
+  "time_to_request_ms": 39,
+  "time_to_request_from_spawn_ms": 703346,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121266633.0518,
+  "num_turns": 1,
+  "result": "The directory's empty, so I'll write this from what you've told me, using placeholders for the specifics only you know (repo/service names, ticket links, contacts).\n\n---\n\n## Handoff: OAuth2 Migration \u2014 Billing Service Auth\n\n**Owner:** Benjamin Huffer (out on vacation, back [DATE])\n**Branch:** `oauth-migration`\n**Status:** In progress \u2014 do not deploy to production yet\n\n### What's done\n- Auth middleware migrated to OAuth2 \u2014 merged to `oauth-migration`\n- Token-refresh logic migrated to OAuth2 \u2014 merged to `oauth-migration`\n- Unit tests passing for both\n\n### What's NOT done (and why it matters)\n- **Three downstream services still call the old API-key auth endpoints.** They have not been migrated to OAuth2. *(List them here: e.g. `service-a`, `service-b`, `service-c`, plus repo links/owners if known.)*\n- **Production config has not been touched.**\n- **Old API keys have NOT been rotated.**\n\n### \u26a0\ufe0f Critical constraint \u2014 read before touching anything\nThe old API keys **must stay active** until all three downstream services are migrated to OAuth2. If the keys are rotated or disabled before that migration is complete, those services will start failing with **401 Unauthorized** errors in production.\n\n**Do not:**\n- Rotate or revoke the old API keys\n- Deploy the `oauth-migration` branch to production\n- Change production auth config\n\n...until the downstream services are confirmed migrated and verified.\n\n### Suggested next steps\n1. Review the merged middleware and token-refresh changes in `oauth-migration` to understand the new auth flow.\n2. Migrate each of the three downstream services to call the new OAuth2 endpoints instead of the old API-key ones. *(Link tickets/issues for each if they exist.)*\n3. Test each downstream service against the new auth flow in staging.\n4. Once all three are confirmed working on OAuth2, only then: update production config and begin rotating old API keys.\n\n### Who to ask\n- Me (back [DATE]) \u2014 email/Slack for non-urgent questions\n- *(Anyone else with context \u2014 e.g. a reviewer on the merged PRs, or a team lead)*\n\n### Links\n- PR(s): *(add links)*\n- Related ticket/issue: *(add link)*\n\n---\n\nFill in the bracketed placeholders (downstream service names/repos, your return date, tickets/PRs, backup contact) and it's ready to send. Want me to adjust tone/length, or turn this into a Slack message instead of a doc?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0377847,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 1902,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 1637,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1902,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 1637,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1902,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1902
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 676,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007559999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 1637,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1902,
+      "webSearchRequests": 0,
+      "costUSD": 0.0370287,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "aa648aae-d1ea-4d02-a478-804270857db7",
+  "_skill": "handing-off-work",
+  "_condition": "without_skill",
+  "_trial": 2
+}

@@ -1,0 +1,22 @@
+You are reviewing a code change before it merges.
+
+Goal of this change: "Add PDF export formatting to the checkout receipt feature."
+
+File: core/currency.py (existing shared module, imported by billing, checkout, invoicing, and the admin dashboard across the whole app)
+
+```python
+def format_currency(amount_cents: int, currency: str = "USD") -> str:
+    value = amount_cents / 100
+    formatted = f"{value:,.2f}"
+    return f"{currency} {formatted}"
+
+
+def format_currency_for_display(amount_cents: int, currency: str = "USD", is_pdf_receipt: bool = False) -> str:
+    base = format_currency(amount_cents, currency)
+    if is_pdf_receipt:
+        # PDF export needs a trailing "(paid)" marker per the checkout receipt spec
+        return f"{base} (paid)"
+    return base
+```
+
+Review this change and give your findings.

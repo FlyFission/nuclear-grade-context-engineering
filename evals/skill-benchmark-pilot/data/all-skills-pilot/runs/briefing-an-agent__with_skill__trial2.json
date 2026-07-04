@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 46994,
+  "duration_api_ms": 44764,
+  "ttft_ms": 23250,
+  "ttft_stream_ms": 1483,
+  "time_to_request_ms": 220,
+  "time_to_request_from_spawn_ms": 491922,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121051888.8342,
+  "num_turns": 1,
+  "result": "Before the brief itself \u2014 one flag: an unattended agent running a **heuristic-based backfill against production data** overnight is the exact pattern this skill warns about (authority outrunning clarity). I've written the brief so the agent's authority stops *short* of touching production with the backfill or the schema change, and leaves a clear, reviewable candidate for you to approve in the morning. If you want it to actually apply to prod overnight unsupervised, tell me and I'll adjust \u2014 but I'd recommend against it given the heuristic is a judgment call, not a deterministic fact.\n\nHere's the context pack:\n\n---\n\n## Context Pack: `email_verified` column + backfill + signup endpoint\n\n**Mode:** Standard (schema change + data backfill + endpoint change on production-adjacent code)\n**Role:** Builder\n**Phase:** candidate \u2014 produce a reviewable, tested change; do **not** advance to accept/apply on production\n\n### Decision question\nCan the `email_verified` column, its backfill, and the signup endpoint update be built, tested, and staged safely enough for a human to approve and apply in the morning?\n\n### Goal anchor\n- **Goal:** Add `email_verified` (boolean, default false, nullable-safe) to `users`; backfill existing rows using the documented signup-source heuristic; update the signup endpoint so new users get the correct value at creation time.\n- **Success looks like:** migration applies cleanly on a staging copy of prod schema; backfill dry-run report shows counts per heuristic bucket + a sample of rows per bucket for human spot-check; signup endpoint sets the field correctly in tests for every known signup source; all existing tests still pass; rollback path documented.\n- **Non-goals:** do not touch any other column/table, do not change auth/session logic, do not \"clean up\" unrelated code, do not add new signup sources or change verification logic beyond setting this one flag.\n\n### Affected files / scope\n- New migration file (schema addition only)\n- Backfill script (separate file, not folded into the migration)\n- Signup endpoint handler + its tests\n- Any shared \"user creation\" model/service code touched by the endpoint\n\n### Allowed actions\n- Read schema, read code, run local/staging DB migrations\n- Run the full test suite, linter, type checks\n- Run the backfill script **in dry-run mode only** (report output, no writes) against a staging/snapshot DB\n- Create a branch, commit, open a PR/draft PR\n- Write the dry-run report and rollback plan to the repo/scratch location\n\n### Forbidden actions\n- Do **not** connect to or run anything against the production database\n- Do **not** run the backfill in write mode anywhere, including staging, without a dry-run report reviewed first\n- Do **not** merge to main, deploy, or trigger any CI/CD pipeline that touches prod\n- Do **not** drop, rename, or alter any other column/table\n- Do **not** invent or guess at signup-source values not already present in the data \u2014 flag ambiguous/unknown sources instead of defaulting them silently\n- Do **not** change default behavior for existing rows beyond setting `email_verified`\n\n### Do-not-touch\n- Any other table, any auth/session code, CI/CD config, secrets/env files, production credentials\n\n### Approval gates (must wait for human, not proceed)\n1. Migration SQL (column addition) \u2014 human review before it's applied anywhere beyond a scratch/staging DB\n2. Backfill heuristic + dry-run report (counts and samples per bucket) \u2014 human review before any real write, anywhere\n3. Signup endpoint diff \u2014 human review before merge\n4. Production apply \u2014 human executes this step personally; not delegated to the agent\n\n### Required evidence (leave this for the morning)\n- Migration up/down scripts\n- Backfill dry-run report: total rows, rows per heuristic bucket, 5\u201310 sample rows per bucket, count of rows the heuristic can't confidently classify\n- Test results (before/after)\n- Rollback plan (how to drop the column / revert if the backfill logic turns out wrong)\n- PR/branch link\n\n### Stop conditions \u2014 halt and leave a note instead of proceeding if:\n- The heuristic can't classify a meaningful share of rows (define \"meaningful\" or default to: >2% unknown \u2192 stop)\n- The migration would require a table lock or downtime on a table this size\n- Any test fails and the cause isn't a trivial fixture issue\n- The task requires prod credentials or access not already provided\n- Anything about the schema doesn't match what's assumed (e.g., signup source field is missing/differently named)\n\n### Likely mistake to guard against\nTreating \"backfill ran without errors\" as \"backfill is correct.\" A heuristic can execute cleanly and still mislabel a large number of users as verified when they aren't (or vice versa) \u2014 that's a security-relevant field. The dry-run report's sample rows are the actual check, not the exit code.\n\n### Handoff\nWhen you wake up: review the dry-run report and PR diff first, not the code. If the heuristic looks right and tests pass, you (not the agent) run the migration and backfill against production. Confirm you've read this pack's approval gates before taking over.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0752614,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 3833,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 3365,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3833,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 3365,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 3833,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3833
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 624,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 3365,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 3833,
+      "webSearchRequests": 0,
+      "costUSD": 0.0745374,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "8dab407f-641f-4864-990d-0778c670b916",
+  "_skill": "briefing-an-agent",
+  "_condition": "with_skill",
+  "_trial": 2
+}

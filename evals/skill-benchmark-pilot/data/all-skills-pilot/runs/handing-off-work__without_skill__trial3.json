@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 14753,
+  "duration_api_ms": 14340,
+  "ttft_ms": 4216,
+  "ttft_stream_ms": 1302,
+  "time_to_request_ms": 41,
+  "time_to_request_from_spawn_ms": 706151,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121269451.007,
+  "num_turns": 1,
+  "result": "# Handoff Note: OAuth2 Migration for Billing Service\n\n**From:** Ben\n**Branch:** `oauth-migration`\n**Status:** In progress \u2014 auth core done, downstream migration and cutover still pending\n\n## What's Done\n- Auth middleware migrated from API-key auth to OAuth2\n- Token-refresh logic implemented\n- Both changes merged to `oauth-migration`, unit tests passing\n\n## What's NOT Done\n- **Three downstream services still call the old API-key auth endpoints** \u2014 they have not been migrated to OAuth2 yet. (List them here if helpful \u2014 I didn't name them explicitly, so add the specific service names/repos.)\n- Production config has not been touched\n- Old API keys have **not** been rotated\n\n## \u26a0\ufe0f Critical: Do Not Rotate the Old API Keys Yet\nThe old API keys **must stay active** until all three downstream services are migrated to OAuth2. If they're rotated or disabled before that migration is complete, those services' requests will start failing with **401 Unauthorized**.\n\n**Do not deploy any production config changes or key rotations until the downstream migration is finished and verified.**\n\n## Suggested Next Steps\n1. Identify and migrate each of the three downstream services to use the new OAuth2 flow (point them at the new auth middleware / token-refresh logic on `oauth-migration`).\n2. For each service, verify it can successfully authenticate via OAuth2 in a non-prod environment before moving to the next.\n3. Once all three are confirmed working on OAuth2, update production config to switch over.\n4. Only after production is confirmed stable on OAuth2, rotate/retire the old API keys.\n5. Merge `oauth-migration` to main (or whatever your release branch is) once the full cutover is validated.\n\n## Testing Notes\n- Unit tests for middleware and token-refresh are already passing \u2014 no need to redo that work.\n- No integration/end-to-end testing against the downstream services has been done yet \u2014 this is the main gap to close.\n\n## Questions?\nI'm out starting tomorrow morning for a week. [Add backup contact or how to reach you if urgent, e.g., Slack/email, or who else has context.]\n\n---\n\nA couple of things worth filling in before you send this: the **names of the three downstream services** (so your teammate isn't hunting for them), and **how you'd like to be reached (if at all) while you're out**. Want me to adjust anything else?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0289347,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 1902,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 1046,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1902,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 1046,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1902,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1902
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 676,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000771,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 1046,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1902,
+      "webSearchRequests": 0,
+      "costUSD": 0.0281637,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "5028ecaf-86ed-4e60-ae4f-d57fa49dfd93",
+  "_skill": "handing-off-work",
+  "_condition": "without_skill",
+  "_trial": 3
+}

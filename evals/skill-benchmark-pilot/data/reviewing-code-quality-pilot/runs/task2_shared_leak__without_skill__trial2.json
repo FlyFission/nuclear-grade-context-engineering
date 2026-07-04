@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 20069,
+  "duration_api_ms": 18641,
+  "ttft_ms": 11296,
+  "ttft_stream_ms": 1449,
+  "time_to_request_ms": 45,
+  "time_to_request_from_spawn_ms": 504186,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783109029453.2444,
+  "num_turns": 1,
+  "result": "**Findings:**\n\n1. **Wrong layer / scope creep (main issue):** `core/currency.py` is shared infrastructure used by billing, checkout, invoicing, and the admin dashboard. The new function bakes in checkout-receipt-specific business logic (the `\"(paid)\"` marker, justified by \"the checkout receipt spec\") into this shared module. That couples an unrelated feature's requirements to code every other consumer depends on. If checkout's PDF spec changes again, you're now editing a file that billing/invoicing/admin also rely on.\n\n2. **Boolean flag param is a smell:** `is_pdf_receipt: bool` is a single-purpose switch disguised as a generic display option. It doesn't generalize \u2014 the next feature with a formatting quirk will add another flag (`is_invoice_pdf`, `is_admin_export`, ...), and `format_currency_for_display` will accrete unrelated special cases over time.\n\n3. **Misleading name:** `format_currency_for_display` sounds like a generic formatter, but it has a hidden checkout/PDF-specific branch. A future caller in billing or invoicing could easily pass `is_pdf_receipt=True` not realizing it's checkout-receipt-specific, or misunderstand what \"display\" formatting means.\n\n4. **Hardcoded, unlocalized string:** `\" (paid)\"` is English-only text embedded in a shared currency-formatting module \u2014 worth flagging if the app has any i18n surface, since this is exactly the kind of file that should stay locale/format-only.\n\n**Recommendation:** Keep `core/currency.py` limited to `format_currency()`. Put the receipt-specific formatting (the `(paid)` suffix) in the checkout/receipt module itself, e.g. a local helper that calls `format_currency()` and appends the marker there. That keeps the blast radius of this feature change confined to checkout instead of touching a module every other part of the app imports.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.03627469999999999,
+  "usage": {
+    "input_tokens": 24,
+    "cache_creation_input_tokens": 1983,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 1501,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1983,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 24,
+        "output_tokens": 1501,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1983,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1983
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 733,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000803,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 24,
+      "outputTokens": 1501,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1983,
+      "webSearchRequests": 0,
+      "costUSD": 0.035471699999999995,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "ffb696d4-0735-4db9-bb1c-8c7516b9a314",
+  "_task": "task2_shared_leak",
+  "_condition": "without_skill",
+  "_trial": 2
+}

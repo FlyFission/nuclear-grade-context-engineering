@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 18070,
+  "duration_api_ms": 18073,
+  "ttft_ms": 9648,
+  "ttft_stream_ms": 1248,
+  "time_to_request_ms": 45,
+  "time_to_request_from_spawn_ms": 525342,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783109050730.0781,
+  "num_turns": 1,
+  "result": "## Findings\n\n**Wrong module \u2014 scope/layering violation.** The change touches `core/currency.py`, a shared module used by billing, checkout, invoicing, and the admin dashboard. The new logic (`is_pdf_receipt`, the `\"(paid)\"` marker) is specific to the *checkout receipt* feature, not currency formatting in general. This couples unrelated features to a one-off business rule and pollutes a general-purpose utility with feature-specific logic. It belongs in a checkout/receipt module (e.g., `checkout/receipt.py`), composed on top of `format_currency()`.\n\n**Misleading flag/name.** `is_pdf_receipt` implies \"this is PDF output,\" but what it actually does is append a payment-status marker (`\"(paid)\"`). That's not a PDF formatting concern at all \u2014 it's a semantic/business marker. If invoicing or billing later adds PDF export and someone reuses `format_currency_for_display(..., is_pdf_receipt=True)` thinking it's generic \"PDF formatting,\" it will incorrectly stamp unpaid invoices/bills as \"(paid)\". The name invites misuse precisely because it now lives in a shared module that other features will naturally reach for.\n\n**Self-incriminating comment.** The comment \"PDF export needs a trailing `(paid)` marker per the checkout receipt spec\" is itself evidence this logic is checkout-specific and shouldn't be in `core/`.\n\n**No tests included** for the new function/flag.\n\n## Recommendation\n\nMove `format_currency_for_display`'s \"(paid)\" logic into checkout's own module, keep `core/currency.py` unchanged, and have checkout do something like:\n\n```python\n# checkout/receipt.py\nfrom core.currency import format_currency\n\ndef format_receipt_line_pdf(amount_cents: int, currency: str = \"USD\") -> str:\n    return f\"{format_currency(amount_cents, currency)} (paid)\"\n```\n\nThis keeps the shared module generic and avoids leaking checkout-specific formatting into billing/invoicing/admin call sites.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.03607969999999999,
+  "usage": {
+    "input_tokens": 24,
+    "cache_creation_input_tokens": 1983,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 1488,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1983,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 24,
+        "output_tokens": 1488,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1983,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1983
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 733,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000803,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 24,
+      "outputTokens": 1488,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1983,
+      "webSearchRequests": 0,
+      "costUSD": 0.035276699999999994,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "37b04771-7f9a-4e06-b5fa-248d66c299a7",
+  "_task": "task2_shared_leak",
+  "_condition": "without_skill",
+  "_trial": 3
+}

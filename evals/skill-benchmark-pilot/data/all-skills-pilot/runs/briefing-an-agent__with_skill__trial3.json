@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 47838,
+  "duration_api_ms": 48882,
+  "ttft_ms": 25316,
+  "ttft_stream_ms": 1246,
+  "time_to_request_ms": 54,
+  "time_to_request_from_spawn_ms": 515683,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121078935.902,
+  "num_turns": 1,
+  "result": "Before drafting this, one strong recommendation: for an unattended overnight run touching a **production database**, the safest design is to have the agent do all the *preparation* work (migration script, backfill script, endpoint change, tests, dry-run against a staging copy) but **stop short of executing anything against production**, leaving the actual apply step for you to run or approve in the morning. That's what the brief below enforces via its approval gates \u2014 the agent can go fully autonomous on everything else.\n\nHere's the context pack to hand it:\n\n```markdown\n# Context Pack: Add email_verified column + backfill + signup update\n\n## Mode / Role\nBuilder, operating unattended overnight, no human supervision until morning review.\n\n## Decision question\nCan I safely design, implement, and validate the email_verified column,\nbackfill, and signup-endpoint change tonight, stopping before anything\ntouches the production database?\n\n## Goal anchor\n- Goal: Add a nullable `email_verified` boolean column to `users`, backfill\n  it for existing rows using the agreed signup-source heuristic, and update\n  the signup endpoint to set it correctly for new signups.\n- Signs of success:\n  - Migration is additive and reversible (nullable or has a safe default,\n    no NOT NULL constraint added in the same step as backfill).\n  - Backfill script is idempotent, batched, and has been dry-run against a\n    staging/copy database with a sample accuracy check written up.\n  - Signup endpoint change has a passing test covering each signup source.\n  - Full test suite passes.\n  - A rollback script/plan exists for the migration.\n  - Everything is on a branch / PR, not merged or deployed.\n- Non-goals: no other schema changes, no touching other tables/columns, no\n  deploying to production, no changing auth/session behavior beyond setting\n  this one flag, no altering CI/CD or infra config.\n- Affected parties: production users, on-call/DB owner \u2014 do not risk\n  downtime or data loss on their behalf without a human in the loop.\n\n## Work phase\nCandidate \u2014 building and validating the change, not yet accepted or applied to prod.\n\n## Affected files / scope\n- New migration file (name it, don't guess an existing one)\n- Backfill script (new file, e.g. `scripts/backfill-email-verified.js`)\n- Signup endpoint handler + its tests\n- Any schema/model definition file that needs the new column\n\n## Last completed action / changed conditions\nNone yet \u2014 task just assigned. If you (the agent) find partial work already\nin progress from a prior session, stop and summarize what's there before\ncontinuing rather than assuming it's correct.\n\n## Critical next action and likely mistake\nNext action: write the migration as additive (nullable column or has a\ndefault, no NOT NULL enforced yet) before touching backfill logic.\n\nLikely mistakes to guard against:\n- Adding a NOT NULL constraint or default in the same migration as the\n  backfill \u2014 this can lock large tables on production.\n- Running the backfill as one unbatched UPDATE \u2014 batch it (e.g. by ID\n  range or LIMIT/OFFSET loop) to avoid long locks.\n- Guessing at the signup-source heuristic if any source value is\n  ambiguous or missing from the data \u2014 flag it instead of guessing a\n  default.\n- Running anything with side effects directly against the production\n  connection string, even \"just to check.\"\n\n## Allowed commands/tools\n- git (branch, commit, diff \u2014 no push/merge to a protected branch)\n- npm/yarn test, lint, build\n- Running the migration and backfill script against a **local or staging**\n  database only\n- Read-only SELECT queries against production for verification (row counts,\n  sampling signup sources) \u2014 no writes\n\n## Forbidden actions\n- Any DDL or write/UPDATE/DELETE statement against the production database\n- Dropping, renaming, or altering any other column or table\n- Deleting or truncating any data\n- Deploying or merging to a branch that triggers production deploy\n- Force-pushing, rewriting git history\n- Rotating or printing database credentials/secrets\n- Disabling or skipping backups\n\n## Do-not-touch targets\n- Any table other than `users`\n- CI/CD pipeline config\n- Infra/terraform/deployment config\n- Auth/session logic beyond setting the `email_verified` field\n- Production database connection directly (writes)\n\n## Approval gates (human required before proceeding)\n1. Before running the migration against production.\n2. Before running the backfill against production.\n3. Before merging the PR or deploying.\n4. Before treating any signup-source value as \"unclassifiable, defaulting\n   to X\" \u2014 flag it for a human decision instead.\n\n## Required evidence\n- Migration file diff + confirmation it's additive/reversible\n- Dry-run output of migration + backfill against staging or a prod DB\n  snapshot/copy\n- Sample accuracy report: N existing users spot-checked, heuristic result\n  vs. manual/expected classification\n- Test suite output (all passing), including new tests for signup endpoint\n  per signup source\n- Rollback script or documented rollback steps\n- Open PR link/branch name, not merged\n\n## Stop conditions\n- No staging DB or production snapshot available to validate against \u2014\n  stop, document the gap, do not test against live production.\n- Signup-source heuristic is ambiguous for any observed value \u2014 stop and\n  flag rather than pick a default.\n- Estimated table size makes the migration/backfill a long-locking\n  operation \u2014 stop and flag the risk instead of running it.\n- Anything requires credentials, secrets, or config you don't already have\n  scoped access to.\n\n## Handoff\nThis work ends the night in \"candidate\" phase, PR open, not deployed. Leave\na short summary: what was built, evidence produced, any flags raised, and\nthe exact commands a human should run in the morning to apply this to\nproduction (they will run these themselves, not you).\n\n**Before proceeding past the approval gates above, confirm you understand:\nyou do not have authority to write to production or deploy tonight, only to\nprepare and validate the change.**\n```\n\nWant me to save this to a file in your project (e.g. `TASK_BRIEF.md`) so you can hand it directly to the agent?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0837314,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 3833,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 3931,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3833,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 3931,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 3833,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3833
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 624,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000704,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 3931,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 3833,
+      "webSearchRequests": 0,
+      "costUSD": 0.0830274,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "8381b701-8f0f-4a25-af33-c3d8eed6fe33",
+  "_skill": "briefing-an-agent",
+  "_condition": "with_skill",
+  "_trial": 3
+}

@@ -1,0 +1,124 @@
+#!/usr/bin/env python3
+"""Blind-grade every run in runs_all/ against its skill's pre-registered pass_criteria."""
+import json
+import re
+import subprocess
+import statistics as stats
+from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+BASE = Path(__file__).parent
+RUNS_DIR = BASE / "runs_all"
+TASKS = json.loads((BASE / "all_skill_tasks.json").read_text())
+GRADER_MODEL = "claude-haiku-4-5-20251001"
+MAX_WORKERS = 8
+
+SCHEMA = json.dumps({
+    "type": "object",
+    "properties": {
+        "meets_criteria": {"type": "string", "enum": ["YES", "PARTIAL", "NO"]},
+        "quote": {"type": "string"},
+    },
+    "required": ["meets_criteria", "quote"],
+})
+
+
+def grade_review(skill: str, review_text: str) -> dict:
+    criteria = TASKS[skill]["pass_criteria"]
+    prompt = (
+        "You are grading a response against ONE specific pass criterion. "
+        "Do not reward general competence, tone, or thoroughness — check ONLY whether "
+        "this exact criterion is explicitly satisfied.\n\n"
+        f"Pass criterion:\n{criteria}\n\n"
+        f"Response to grade:\n---\n{review_text}\n---\n\n"
+        "Answer YES only if the criterion is clearly and explicitly met, "
+        "PARTIAL if it is hinted at but not explicit or is materially incomplete, "
+        "NO if it is absent."
+    )
+    cmd = [
+        "claude", "-p", prompt,
+        "--output-format", "json",
+        "--model", GRADER_MODEL,
+        "--safe-mode",
+        "--tools", "",
+        "--no-session-persistence",
+        "--max-budget-usd", "0.20",
+        "--json-schema", SCHEMA,
+    ]
+    try:
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+        record = json.loads(proc.stdout.strip())
+        return json.loads(record["result"])
+    except Exception as e:
+        return {"meets_criteria": "ERROR", "quote": str(e)[:200]}
+
+
+def grade_one(path: Path) -> dict:
+    d = json.loads(path.read_text())
+    skill = d.get("_skill")
+    condition = d.get("_condition")
+    trial = d.get("_trial")
+    if d.get("type") == "error" or d.get("is_error"):
+        return {"skill": skill, "condition": condition, "trial": trial, "error": True}
+
+    result_text = d.get("result", "")
+    usage = d.get("usage", {})
+    grade = grade_review(skill, result_text)
+
+    return {
+        "skill": skill, "condition": condition, "trial": trial, "error": False,
+        "meets_criteria": grade.get("meets_criteria"),
+        "grader_quote": grade.get("quote"),
+        "cost_usd": d.get("total_cost_usd"),
+        "input_tokens": usage.get("input_tokens"),
+        "output_tokens": usage.get("output_tokens"),
+        "cache_read_tokens": usage.get("cache_read_input_tokens"),
+        "cache_creation_tokens": usage.get("cache_creation_input_tokens"),
+        "num_turns": d.get("num_turns"),
+        "duration_ms": d.get("duration_ms"),
+    }
+
+
+def main():
+    paths = sorted(RUNS_DIR.glob("*.json"))
+    rows = []
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as ex:
+        futures = {ex.submit(grade_one, p): p for p in paths}
+        for i, fut in enumerate(as_completed(futures), 1):
+            row = fut.result()
+            rows.append(row)
+            print(f"[{i}/{len(paths)}] {row['skill']:32s} {row['condition']:15s} t{row['trial']} -> {row.get('meets_criteria', 'ERR')}")
+
+    (BASE / "graded_results_all.json").write_text(json.dumps(rows, indent=2))
+
+    print("\n\n=== SUMMARY (skill | with_skill catch | without_skill catch | cost delta) ===")
+    skills = sorted(set(r["skill"] for r in rows))
+    summary_rows = []
+    for skill in skills:
+        line = {"skill": skill}
+        for condition in ["with_skill", "without_skill"]:
+            sub = [r for r in rows if r["skill"] == skill and r["condition"] == condition and not r["error"]]
+            if not sub:
+                line[condition] = None
+                continue
+            yes = sum(1 for r in sub if r["meets_criteria"] == "YES")
+            n = len(sub)
+            costs = [r["cost_usd"] for r in sub if r["cost_usd"] is not None]
+            out_tok = [r["output_tokens"] for r in sub if r["output_tokens"] is not None]
+            line[condition] = {
+                "catch": f"{yes}/{n}",
+                "catch_rate": yes / n if n else None,
+                "mean_cost": stats.mean(costs) if costs else None,
+                "mean_output_tokens": stats.mean(out_tok) if out_tok else None,
+            }
+        summary_rows.append(line)
+        w = line.get("with_skill") or {}
+        wo = line.get("without_skill") or {}
+        print(f"{skill:32s} with={w.get('catch','?'):6s} without={wo.get('catch','?'):6s} "
+              f"cost ${w.get('mean_cost') or 0:.3f} vs ${wo.get('mean_cost') or 0:.3f}")
+
+    (BASE / "summary_all.json").write_text(json.dumps(summary_rows, indent=2))
+
+
+if __name__ == "__main__":
+    main()

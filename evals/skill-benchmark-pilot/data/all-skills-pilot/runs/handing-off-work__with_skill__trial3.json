@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 19854,
+  "duration_api_ms": 19364,
+  "ttft_ms": 3827,
+  "ttft_stream_ms": 1266,
+  "time_to_request_ms": 40,
+  "time_to_request_from_spawn_ms": 696945,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121260240.765,
+  "num_turns": 1,
+  "result": "I'll draft a turnover note based on what you've told me, flagging a few spots you'll need to fill in (service names, PR links, contact info) since I don't have those details.\n\n**A few quick questions before I finalize \u2014 or I can leave placeholders if you're short on time:**\n1. What are the three downstream services (names/repos)?\n2. Is there a PR open for `oauth-migration`, or does your teammate just check out the branch directly?\n3. Who should the teammate escalate to if they hit a blocker (you're unreachable, so someone else)?\n4. Any target date the OAuth migration needs to be done by, or is \"whenever I'm back\" fine?\n\nI'll write the note now with placeholders for anything you haven't told me \u2014 you can fill those in before sending.\n\n---\n\n```markdown\n# Turnover: OAuth2 Migration \u2014 Billing Service Auth\n\n**Date:** 2026-07-03\n**Outgoing owner:** [Your name] (unavailable on vacation 2026-07-04 through [return date])\n**Incoming owner:** [Teammate name] \u2014 first time on this project\n**Escalation contact if blocked:** [Name / Slack / on-call \u2014 TBD]\n\n## Current Phase\nOAuth2 migration is **in progress, not production-ready**. Core auth logic is done and merged; downstream consumers and production config are not yet touched.\n\n## Last Completed Action\nMerged auth middleware and token-refresh logic to the `oauth-migration` branch. Unit tests pass on that branch. [PR link(s): TBD]\n\n## What's Done\n- Auth middleware rewritten for OAuth2 \u2014 merged to `oauth-migration`, unit tests passing.\n- Token-refresh logic rewritten for OAuth2 \u2014 merged to `oauth-migration`, unit tests passing.\n\n## What's NOT Done (Remaining Work)\n- Three downstream services still call the **old** API-key auth endpoints and have not been migrated:\n  1. [Service A \u2014 TBD]\n  2. [Service B \u2014 TBD]\n  3. [Service C \u2014 TBD]\n- Production config has not been touched \u2014 still points at the old auth system.\n- Old API keys have not been rotated/revoked.\n\n## Critical Constraint \u2014 Do Not Break This\n**The old API keys must stay active until all three downstream services are migrated.** If the keys are rotated or the old auth endpoints are disabled before that migration completes, those services will start failing with 401 errors in production.\n\n## Next Action (Highest Priority)\nMigrate the three downstream services to call the new OAuth2 endpoints, one at a time, verifying each against the `oauth-migration` branch before moving to the next. Do not touch production config or key rotation until all three are confirmed working end-to-end.\n\n## Most Likely Error / How to Avoid It\nThe most likely mistake is rotating or disabling the old API keys too early (e.g., while \"cleaning up\" or closing out the migration) before all three downstream services are confirmed migrated. **Guard:** treat key rotation as a distinct, final step \u2014 do not perform it until you've manually verified all three services are on OAuth2 and passing.\n\n## Allowed / Forbidden\n- **Allowed:** work on the `oauth-migration` branch; migrate downstream services; run existing test suites.\n- **Forbidden until all 3 downstream services are migrated:** rotating/revoking old API keys, disabling old auth endpoints, deploying to production config.\n\n## Evidence / Proof Still Needed\n- Confirmation (test results or logs) that each of the 3 downstream services successfully authenticates via OAuth2 before considering it migrated.\n- Sign-off that all 3 are migrated before key rotation is scheduled.\n\n## Stop / Hold Conditions\n- **Stop and escalate** to [contact] if: unsure whether a downstream service is fully migrated, if production config changes seem necessary before all 3 services are done, or if there's any doubt about whether it's safe to rotate keys.\n- Do not rotate keys or touch prod config without explicit confirmation that all three services are migrated.\n\n---\n\n**Before starting, please confirm you understand:**\n1. Scope \u2014 only the 3 downstream service migrations right now, nothing else.\n2. Authority \u2014 you may work on `oauth-migration` and downstream repos; you may NOT rotate keys or touch prod config.\n3. Stop condition \u2014 halt and escalate to [contact] if any downstream service migration isn't cleanly verified, or before any key rotation.\n```\n\nLet me know the missing details (service names, PR links, escalation contact) and I'll fill them in, or tell me to leave the placeholders as-is if you want to send it now.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0480054,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 3490,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 1683,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3490,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 1683,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 3490,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3490
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 676,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007559999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 1683,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 3490,
+      "webSearchRequests": 0,
+      "costUSD": 0.0472494,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "b405b35e-f982-4c45-967c-cb7e68821f3b",
+  "_skill": "handing-off-work",
+  "_condition": "with_skill",
+  "_trial": 3
+}

@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 26795,
+  "duration_api_ms": 25045,
+  "ttft_ms": 6334,
+  "ttft_stream_ms": 2712,
+  "time_to_request_ms": 157,
+  "time_to_request_from_spawn_ms": 719273,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121281873.0938,
+  "num_turns": 1,
+  "result": "Here's a draft incident write-up plus root-cause-driven fixes. Since pre-commit hooks are client-side and easily bypassed, the real fix is moving enforcement server-side.\n\n## Incident Report: Hardcoded API Key Exposed in Production\n\n**Date of exposure:** [date pushed] \u2013 [date rotated] (3 days)\n**Severity:** Medium-High (credential exposed in production; no confirmed misuse)\n**Status:** Resolved \u2014 key rotated\n\n### Summary\nAn engineer's commit failed the local pre-commit secrets-scanning hook. Under time pressure to meet a deadline, they bypassed the hook with `git commit --no-verify` and pushed directly to a branch that merged to `main`. The commit contained a hardcoded API key, which reached production and remained live for 3 days until a routine security audit detected it. The key was rotated immediately upon discovery.\n\n### Timeline\n| Time | Event |\n|---|---|\n| Day 0 | Engineer commits code; pre-commit secrets scan fails |\n| Day 0 | Engineer bypasses check with `--no-verify`, pushes, PR merges to `main` |\n| Day 0 | Change deploys to production |\n| Day 3 | Routine security audit flags the hardcoded key |\n| Day 3 | Key rotated; incident opened |\n\n### Root Cause\nThe **only** enforcement point for secrets scanning was a client-side git hook, which is:\n- Opt-in per developer machine (not centrally enforced)\n- Trivially bypassable via `--no-verify`\n- Not run again anywhere in the CI/CD pipeline or at merge time\n\nThe failure was a **process/control gap**, not an individual failure \u2014 a well-intentioned engineer under deadline pressure will bypass local checks. The system should not have allowed a bypassed local check to be the last line of defense.\n\n### Contributing Factors\n- No CI-level secrets scan on PRs or pushes to `main`\n- No branch protection preventing merge without passing checks\n- No server-side push protection (e.g., GitHub secret scanning push protection) blocking the push itself\n- Deadline pressure incentivized shortcuts, with no visibility/accountability for bypasses\n\n### Impact\n- API key live in production and version-controlled history for 3 days\n- [Add: any evidence of unauthorized use from provider logs, if checked]\n\n## Corrective Actions (Recommended)\n\n**1. Move enforcement server-side (highest priority)**\n- Enable your git host's push protection for secrets (e.g., GitHub Advanced Security secret scanning push protection, or GitLab's secret detection), which blocks the push at the server regardless of local hook bypass.\n- Add the same secrets scanner (gitleaks/trufflehog/whatever the pre-commit hook uses) as a **required CI check** on every PR.\n\n**2. Branch protection on `main`**\n- Require the secrets-scan CI check to pass before merge \u2014 no bypass, including for admins if possible.\n- Require PR review before merge (if not already).\n\n**3. Keep the pre-commit hook, but as a fast local convenience layer only** \u2014 not the sole control. Document clearly that CI/server-side is the actual gate.\n\n**4. Alert on bypasses**\n- Log/alert when `--no-verify` is used and a push still reaches `main` without CI having caught it \u2014 treat repeated bypasses as a process signal, not a punitive one.\n\n**5. Reduce the \"deadline pressure \u2192 shortcut\" incentive**\n- Make the fix path fast: if pre-commit scanning has false positives that caused frustration, tune the ruleset so it's fast and accurate, and give engineers a documented way to get a legitimate exception reviewed quickly (e.g., a Slack channel to ping security) rather than silently bypassing.\n\n**6. Secrets hygiene**\n- Move any remaining hardcoded credentials to a secrets manager (Vault, AWS Secrets Manager, etc.) or environment variables injected at deploy time.\n- Rotate any other secrets that may have been in the same repo/history if not already audited.\n\n**7. Retro communication**\n- Blameless \u2014 the point isn't \"the engineer did something wrong,\" it's \"our only control was one a person could opt out of in 5 seconds.\"\n\nWant me to tailor this to your actual stack (GitHub/GitLab/Bitbucket, which scanner you use, CI system) so the recommendations reference concrete settings/config instead of generically? I can also write the actual CI config or branch protection setup if you tell me the platform.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.039525700000000004,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 1850,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 1776,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1850,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 1776,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1850,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1850
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 1776,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1850,
+      "webSearchRequests": 0,
+      "costUSD": 0.0388017,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "4c5fd68a-507c-4650-9a96-b76d7782d2ad",
+  "_skill": "learning-from-experience",
+  "_condition": "without_skill",
+  "_trial": 3
+}

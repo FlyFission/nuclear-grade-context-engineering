@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 21458,
+  "duration_api_ms": 20658,
+  "ttft_ms": 11592,
+  "ttft_stream_ms": 1366,
+  "time_to_request_ms": 65,
+  "time_to_request_from_spawn_ms": 462878,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783108988212.0945,
+  "num_turns": 1,
+  "result": "## Findings\n\n**1. Feature logic leaking into shared core module \u2014 `core/currency.py:9-14`**\n`format_currency_for_display` bakes checkout-receipt-specific behavior (the `(paid)` marker) directly into a module imported by billing, checkout, invoicing, and the admin dashboard. A currency formatter has no business knowing about payment/receipt status. This is the canonical \"special case messing up a general path\" anti-pattern \u2014 every consumer of `core/currency.py` now carries a parameter (`is_pdf_receipt`) and a code path that exists for exactly one caller.\n*Fix (deletion, not rearranging):* delete `format_currency_for_display` and the `is_pdf_receipt` flag from `core/currency.py`. In the checkout PDF export code, call `format_currency(...)` and append `\" (paid)\"` there \u2014 one line, no new shared API needed.\n\n**2. Thin/misleading wrapper**\n`format_currency_for_display` doesn't add general display logic \u2014 it's a boolean-flag branch that only does one thing for one caller, disguised as a generic \"display\" formatter. Its name promises broader utility than it delivers, and other teams (billing, invoicing) may start passing `is_pdf_receipt=False` or copying the pattern, spreading the same anti-pattern further into shared code.\n*Fix:* same as above \u2014 remove it rather than generalize it further.\n\n**3. Feature-referencing comment in shared code \u2014 `core/currency.py:12`**\n`# PDF export needs a trailing \"(paid)\" marker per the checkout receipt spec` ties core code to one feature's spec. Comments like this rot as soon as the receipt spec changes and mislead future maintainers of the shared currency module.\n*Fix:* moot once the logic is relocated to the checkout feature module, where the comment (if needed) belongs.\n\n## Verdict: **NOT VERIFIED**\n\nThe change accomplishes the stated goal (PDF receipt formatting) but does so by adding feature-specific branching to a shared module used across billing, checkout, invoicing, and admin. This is a layering violation, not a style nit \u2014 the fix is a deletion (remove the new function from `core/currency.py`) and a one-line addition in the checkout/PDF export code, not a rearrangement. Recommend the owner move the `(paid)` formatting into the checkout feature and keep `core/currency.py` untouched.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0530814,
+  "usage": {
+    "input_tokens": 24,
+    "cache_creation_input_tokens": 4327,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 1683,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4327,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 24,
+        "output_tokens": 1683,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 4327,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4327
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 733,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000813,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 24,
+      "outputTokens": 1683,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 4327,
+      "webSearchRequests": 0,
+      "costUSD": 0.0522684,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "d5319e08-ae74-4fec-baa1-7ea9744b9d16",
+  "_task": "task2_shared_leak",
+  "_condition": "with_skill",
+  "_trial": 3
+}

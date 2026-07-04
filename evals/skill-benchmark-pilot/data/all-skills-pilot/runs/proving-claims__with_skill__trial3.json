@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 22175,
+  "duration_api_ms": 20676,
+  "ttft_ms": 6155,
+  "ttft_stream_ms": 1377,
+  "time_to_request_ms": 43,
+  "time_to_request_from_spawn_ms": 1392646,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121955938.945,
+  "num_turns": 2,
+  "result": "A quick flag before I draft anything: as stated, \"safe and fully backward compatible\" is broader than your evidence supports, and both pieces of evidence (you ran the tests, you reviewed your own diff) are **self-checks** \u2014 the same person who made the change is the only one vouching for it. That's fine as a first pass, but it shouldn't be presented to reviewers as proof of \"safe and fully backward compatible,\" since:\n\n- **\"Safe\"** is unscoped \u2014 safe from what? Regressions? Data corruption? Race conditions? Payment double-charges? Each needs its own evidence.\n- **\"Fully backward compatible\"** implies every caller/consumer/API contract is covered \u2014 passing your existing suite only proves the paths your suite exercises are unchanged, not \"fully.\"\n- **Self-run tests + self-review** are the weakest tier of evidence for a payment-processing change. There's no independent reproduction here \u2014 a reviewer just has your word for it.\n\nHere's an evidence section that states what you actually have, narrows the claims to match, and calls out the gaps so reviewers know exactly what to check rather than trusting a blanket assertion:\n\n---\n\n## Evidence\n\n| Claim | Evidence | Type | Status |\n|---|---|---|---|\n| Existing automated tests pass against the refactored code | `<test command>` run locally by author, all green | Self-check (author-run) | pass \u2014 self-check only, not independently reproduced |\n| Diff was manually reviewed for correctness | Line-by-line self-review of the full diff | Self-check | pass \u2014 same limitation |\n| Refactor is backward compatible with all existing callers/integrations | *(no evidence yet)* | \u2014 | gap |\n| Refactor is safe under production conditions (e.g., idempotency, error handling, concurrency) | *(no evidence yet)* | \u2014 | gap |\n\n**Reproduce the test evidence:** `<exact command + branch/commit sha>`\n\n**Known gaps:**\n- No independent reviewer has verified this diff yet \u2014 requesting review before merge.\n- Test suite coverage of [changed code paths] is [known/unknown] \u2014 flagging for reviewer awareness.\n- No test added specifically targeting the refactored logic beyond existing regression coverage (if true).\n\n**Ask of reviewers:** please review the diff independently and confirm test coverage is adequate for the payment paths touched here before this is treated as backward-compatible.\n\n---\n\nIf you want, tell me the actual test command, what changed (interfaces, DB schema, external API contracts, etc.), and whether any new tests were added for the refactored logic \u2014 I'll tighten this into commit-accurate wording instead of placeholders.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.053448899999999994,
+  "usage": {
+    "input_tokens": 56,
+    "cache_creation_input_tokens": 4370,
+    "cache_read_input_tokens": 16463,
+    "output_tokens": 1428,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4370,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 31,
+        "output_tokens": 1007,
+        "cache_read_input_tokens": 10191,
+        "cache_creation_input_tokens": 451,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 451
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 617,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000702,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 56,
+      "outputTokens": 1428,
+      "cacheReadInputTokens": 16463,
+      "cacheCreationInputTokens": 4370,
+      "webSearchRequests": 0,
+      "costUSD": 0.0527469,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "f1f8e146-8fc8-49ea-b676-5275c76718c6",
+  "_skill": "proving-claims",
+  "_condition": "with_skill",
+  "_trial": 3
+}

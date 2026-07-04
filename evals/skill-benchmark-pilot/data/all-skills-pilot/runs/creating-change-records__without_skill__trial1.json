@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 25223,
+  "duration_api_ms": 26730,
+  "ttft_ms": 13089,
+  "ttft_stream_ms": 1390,
+  "time_to_request_ms": 46,
+  "time_to_request_from_spawn_ms": 622753,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121185983.0232,
+  "num_turns": 1,
+  "result": "A one-line diff doesn't mean one-line risk \u2014 you're changing the decision-making component of a system that autonomously moves money. The record should center on *behavioral evidence*, not code change size. Here's what a skeptical reviewer would actually need six months from now:\n\n**1. Why, with numbers, not just \"cost review\"**\nThe specific cost delta, and confirmation that cost was the *only* driver \u2014 not \"also seemed comparable on quality\" (that claim needs its own evidence below).\n\n**2. Model identity, pinned precisely**\nExact model ID/version for both old and new (not an alias like `-latest` that can silently drift under you later). If Provider B auto-updates the underlying weights behind that ID, say so and note the risk.\n\n**3. Pre-swap eval results on a fixed golden set**\nRun both models against the same set of historical refund decisions (including edge cases: high-dollar amounts, ambiguous policy situations, prior fraud attempts, adversarial/injection-style customer messages) and record:\n- Approve/deny agreement rate vs. Provider A\n- False-approve rate (refunds that shouldn't have been approved) \u2014 this is the number that matters most\n- Any change in how reliably it produces valid structured output (JSON/function calls) \u2014 providers differ here even with identical prompts, and a parsing failure defaulting to \"approve\" is a real failure mode\n- Susceptibility to prompt injection from customer-supplied text, since this agent reads untrusted input to make a financial decision\n\n**4. Rollout plan, not a flip**\nShadow mode or a small canary percentage before full cutover, with a defined comparison window and explicit success/rollback thresholds \u2014 not just \"watch it and see.\"\n\n**5. Rollback trigger and mechanism**\nWhat metric deviation triggers reverting, who's authorized to pull the trigger, and confirmation the rollback is actually fast (i.e., the \"one-line config\" is symmetric \u2014 reverting is also one line and doesn't require re-approval theater).\n\n**6. Sign-off from whoever owns refund-fraud risk**\nNot just engineering approving a config change \u2014 finance/risk/whoever eats the loss if the new model is worse at catching fraud should see the eval numbers and approve.\n\n**7. Post-launch monitoring plan**\nWhat dashboard/alert watches approval rate, dollar volume approved, and false-approve rate after launch, and for how long before calling it \"steady state.\"\n\nThe one-sentence PR description is fine as a *pointer* \u2014 but it should link to a doc (design doc, linked ticket, whatever your team uses) containing the eval results and sign-off, not just assert the conclusion. If asked in six months \"how do we know this was safe,\" the answer needs to be \"here's the eval data,\" not \"we trusted the PR description.\"\n\nWant help building the eval harness (golden dataset + comparison script) so this is fast to actually produce rather than just fast to skip?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.040821699999999995,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 1869,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 1854,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1869,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 1854,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1869,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1869
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 656,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000736,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 1854,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1869,
+      "webSearchRequests": 0,
+      "costUSD": 0.040085699999999995,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "0cf286d4-9ea0-4ce7-8f03-5679fab6cb03",
+  "_skill": "creating-change-records",
+  "_condition": "without_skill",
+  "_trial": 1
+}

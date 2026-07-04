@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 25028,
+  "duration_api_ms": 24321,
+  "ttft_ms": 9639,
+  "ttft_stream_ms": 1251,
+  "time_to_request_ms": 55,
+  "time_to_request_from_spawn_ms": 750567,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121313835.1921,
+  "num_turns": 1,
+  "result": "Before writing that section, worth flagging: \"safe and fully backward compatible\" is broader than what your evidence supports. Self-run tests + self-review of your own diff is a **self-check**, not an independent check \u2014 the same person who wrote the change is the only one who verified it. For a payment-processing module specifically, that gap matters more than usual (financial correctness, regulatory/PCI exposure).\n\nHere's the claim breakdown and what I'd put in the PR instead:\n\n## Claim decomposition\n\n| Claim | Support type | Verification type | Status | Note |\n|---|---|---|---|---|\n| \"Refactor is safe\" | none stated | \u2014 | **gap** | \"Safe\" implies no new security/financial-integrity risk. Not covered by unit tests or a self-review. |\n| \"Fully backward compatible\" | local proof (test run) + self-review | self-check | **gap (overreaching)** | Test suite passing only proves compatibility for the code paths the suite covers. \"Fully\" is unproven \u2014 you don't know the suite's coverage of this module without checking. |\n| \"Existing test suite passes\" | local proof | self-check | **pass** (narrow claim only) | This is the one thing you can actually state as fact, reproducibly. |\n| \"Diff reviewed line-by-line\" | local proof | self-check | **pass (self-check only)** | True, but doesn't substitute for peer review \u2014 you can miss your own logic errors by construction. |\n\n## Suggested evidence section for the PR\n\n```markdown\n## Evidence\n\n**Claim:** The existing automated test suite passes against this refactor.\n- Status: pass (self-run)\n- Command: `<exact test command>`\n- Coverage note: <link to coverage report, or state \"not measured \u2014 suite covers X of Y payment paths\">\n- Independence: self-check only \u2014 I ran this myself. Not yet independently reproduced.\n\n**Claim:** The diff has been reviewed for correctness.\n- Status: self-check (author review)\n- Scope: full diff, line-by-line, by me\n- Independence: none yet \u2014 needs a second reviewer before merge, given this touches payment processing.\n\n**Known gaps:**\n- No independent/peer review has occurred yet.\n- Test coverage of the changed paths has not been confirmed (see coverage note above).\n- No explicit backward-compatibility test cases were added for [list specific behaviors changed, e.g. API response shapes, retry semantics, currency rounding, idempotency keys] \u2014 flagging these for reviewer attention.\n- \"Safe\" is not a claim I can support with current evidence; scoping this PR's stated guarantee to \"existing tests pass\" until reviewed.\n\n**What would close the gaps:**\n- Peer review from someone other than me (required before merge for payment code, per [team norm if one exists]).\n- Confirmation of test coverage for the changed code paths.\n- If behavior changed in any way callers could observe, a compatibility test or explicit changelog note per behavior.\n```\n\n## What I'd change in your PR title/summary line\nReplace:\n> \"This refactor is safe and fully backward compatible.\"\n\nWith something like:\n> \"This refactor passes the existing test suite (self-run); backward compatibility of [specific behaviors] is unverified beyond that and needs reviewer confirmation.\"\n\nThis isn't about hedging for its own sake \u2014 it's that \"safe\" and \"fully backward compatible\" are exactly the kind of claims that reach past self-check evidence, and a reviewer reading the current wording would reasonably assume more verification happened than actually did. Want me to also draft specific test cases or a coverage check to close the \"fully backward compatible\" gap before you open the PR?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0535994,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 3843,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 1919,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3843,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 1919,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 3843,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3843
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 617,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000692,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 1919,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 3843,
+      "webSearchRequests": 0,
+      "costUSD": 0.0529074,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "0436f24f-5aee-424e-86e7-a2004f9d48d9",
+  "_skill": "proving-claims",
+  "_condition": "with_skill",
+  "_trial": 1
+}

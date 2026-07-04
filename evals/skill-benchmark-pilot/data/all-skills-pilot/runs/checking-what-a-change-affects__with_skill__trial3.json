@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 11354,
+  "duration_api_ms": 11113,
+  "ttft_ms": 3393,
+  "ttft_stream_ms": 1382,
+  "time_to_request_ms": 62,
+  "time_to_request_from_spawn_ms": 584697,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121147722.86,
+  "num_turns": 1,
+  "result": "No \u2014 this is a breaking change to a public API contract, not a quick one-liner, even though the diff is small.\n\n**Why it's not \"just merge\":**\n- **API consumers**: Any external client parsing `total` from the response will break silently (missing field) the moment this ships. That's the actual blast radius here, not the line count in the serializer.\n- **Backward-compatibility**: A rename with no transition period is a hard break. Standard options: emit both `total` and `order_total` for a deprecation window, version the endpoint, or confirm (with evidence, not assumption) that there are no external consumers.\n- **Docs**: API reference/OpenAPI spec, changelog, and any example payloads referencing `total` go stale immediately.\n- **Tests**: Contract/integration tests asserting on `total` will need updating \u2014 if they don't, that's a signal the change wasn't actually screened.\n- **Public claims**: If `total` is documented anywhere as a stable field name (SLA, versioning policy), this needs a release note and possibly a deprecation announcement.\n\n**Recommended path:**\n1. Add `order_total` alongside `total` (don't remove yet) \u2014 update serializer.\n2. Update API docs/OpenAPI spec and changelog now.\n3. Update tests to check both fields during the deprecation window.\n4. Set a re-check trigger (e.g., \"remove `total` after next major version / after N weeks with no traffic on old field\").\n5. If you control all consumers internally and can confirm no external clients exist, you can skip the dual-emit \u2014 but that's a decision to state explicitly, not assume.\n\nWant me to find the serializer, related tests, and API docs so we can scope the actual diff?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0322364,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 3382,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 680,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3382,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 680,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 3382,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3382
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00068,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 680,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 3382,
+      "webSearchRequests": 0,
+      "costUSD": 0.0315564,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "06ca4a9e-51f9-4f51-9a77-44c32042c9e1",
+  "_skill": "checking-what-a-change-affects",
+  "_condition": "with_skill",
+  "_trial": 3
+}

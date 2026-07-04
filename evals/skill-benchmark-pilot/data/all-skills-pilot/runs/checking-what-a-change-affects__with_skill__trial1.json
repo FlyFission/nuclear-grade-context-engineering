@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 5028,
+  "duration_api_ms": 6001,
+  "ttft_ms": 5000,
+  "ttft_stream_ms": 1252,
+  "time_to_request_ms": 48,
+  "time_to_request_from_spawn_ms": 582745,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121145992.2742,
+  "num_turns": 1,
+  "result": "No \u2014 this is a public API field rename, which is a breaking change for every existing consumer even though the code diff is one line. I'd run a proper impact screen before merging rather than treating it as Quick.\n\nKey ripple effects to check:\n- **API consumers**: anyone parsing `total` will break silently or error out. Needs a deprecation path (emit both fields, or version the endpoint) rather than a hard rename.\n- **Public docs/API reference/OpenAPI spec**: will describe a field that no longer exists.\n- **Tests/checkers**: contract tests, client SDKs, integration tests likely assert on `total`.\n- **Backward-compatibility**: no rollback-of-state issue since it's not stored data, but you do need a compatibility/rollback plan for the API contract itself.\n\nWant me to draft a `change-impact.md` for this, or do you want to first decide on the rollout strategy (dual-field period vs. version bump)?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.026616400000000002,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 3382,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 305,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3382,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 305,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 3382,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3382
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006850000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 305,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 3382,
+      "webSearchRequests": 0,
+      "costUSD": 0.0259314,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "8359aba2-e0fc-4919-b3f6-9e33aa25c8b8",
+  "_skill": "checking-what-a-change-affects",
+  "_condition": "with_skill",
+  "_trial": 1
+}

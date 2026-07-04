@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 30320,
+  "duration_api_ms": 30109,
+  "ttft_ms": 16779,
+  "ttft_stream_ms": 1500,
+  "time_to_request_ms": 63,
+  "time_to_request_from_spawn_ms": 591816,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121154957.6934,
+  "num_turns": 1,
+  "result": "This PR bundles three separate controlled items into one \"tiny\" diff \u2014 that's exactly the case where line-count is a bad proxy for blast radius. Here's what needs to be tracked before merge:\n\n| Item | Type | Current state | Intended state | Why controlled | Evidence / gap | Owner | Re-check trigger |\n|---|---|---|---|---|---|---|---|\n| System prompt wording | Prompt | Existing tone/instructions (reactive) | \"More proactive\" wording | Changes agent behavior toward customers; interacts with new refund power (a \"proactive\" agent + refund authority can mean more unsolicited refund offers) | Gap \u2014 no eval/transcript review showing how \"proactive\" changes agent behavior in practice, only a smoke test | PR author / prompt owner | Any further prompt edit, or observed pattern of agent over-promising/over-offering refunds in production logs |\n| `issue_refund(amount, order_id)` tool | Agent capability / tool grant | Does not exist \u2014 no autonomous refund power | Agent can approve refunds up to $50 with zero human sign-off | This is a new grant of financial authority to an autonomous agent \u2014 direct monetary exposure, fraud/abuse surface, no human in the loop | Gap \u2014 no stated rate limit (per customer/day), no test for hallucinated `order_id`, no abuse-case testing, no explicit sign-off from finance/eng lead on the $50 threshold | Eng lead + whoever owns financial risk (finance/product) | Any change to the $50 cap, refund eligibility logic, or first incident of an incorrect/abused refund |\n| Help-center article claim | Public doc / claim | States \"A human always reviews refunds before they are issued.\" | Sentence deleted | This is a public trust claim about your process, and it's now **false** given item 2 \u2014 silently deleting it rather than replacing it with accurate wording leaves customers misinformed | Gap \u2014 no replacement sentence stating the actual $50 auto-approval policy; needs sign-off from support/docs or legal, not just an engineer | Docs/support content owner | Any future change to refund policy or threshold; also should be re-checked *now*, before merge, not after |\n\n**Before you merge:**\n\n1. **Item 2 and item 3 are coupled and both incomplete.** You're granting the agent real money-moving power *and* removing the one sentence that told customers a human was in the loop \u2014 without adding a sentence that says what actually happens now. That's the red-flag pattern this kind of review exists to catch: agent power changes with no recorded permission state, and a public claim change with no owner sign-off.\n2. **\"Quick smoke test\" covers the happy path, not the risk.** It won't tell you whether the agent can be tricked into calling `issue_refund` with a wrong `order_id`, whether there's a per-customer rate limit, or whether \"more proactive\" wording makes the agent more likely to offer refunds unprompted.\n3. **Escalate item 2 and item 3** to whoever owns financial risk and whoever owns customer-facing claims, respectively \u2014 this isn't something one engineer should wave through with a diff review.\n\nOnce you have owners and evidence (or explicit accepted gaps) for the two gaps above, this is safe to merge with those triggers recorded somewhere durable (issue tracker, `controlled-items.md`, etc.) so drift gets caught later.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.057336399999999996,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 3442,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 2323,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3442,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 2323,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 3442,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3442
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 700,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000775,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 2323,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 3442,
+      "webSearchRequests": 0,
+      "costUSD": 0.0565614,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "2e68810d-141f-43c4-9e1e-f9cc8b27cbf2",
+  "_skill": "choosing-what-to-control",
+  "_condition": "with_skill",
+  "_trial": 2
+}

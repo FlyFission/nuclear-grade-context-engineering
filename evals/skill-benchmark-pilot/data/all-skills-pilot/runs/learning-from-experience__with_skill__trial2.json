@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 51808,
+  "duration_api_ms": 50888,
+  "ttft_ms": 27244,
+  "ttft_stream_ms": 1296,
+  "time_to_request_ms": 42,
+  "time_to_request_from_spawn_ms": 715015,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121278306.6887,
+  "num_turns": 1,
+  "result": "# Incident Write-Up: Hardcoded API Key Merged to Main\n\n## What happened (plain narrative)\n\nAn engineer's branch failed the pre-commit secrets-scanning hook. Facing a deadline, he ran `git commit --no-verify` to bypass the check and pushed directly to main. The commit contained a hardcoded API key, which stayed live in production for three days until a routine security audit caught it. The key was rotated immediately upon discovery.\n\nOne thing to be precise about before writing this up: this wasn't an honest slip like a typo or a misunderstood requirement. The engineer *knew* the hook was catching something and deliberately used a flag designed to skip it, under time pressure. That's a willful bypass of a security gate, not an honest error \u2014 it should be named as that, not softened into \"the check failed and it slipped through.\" No-blame still applies (the fix here is aimed at the control, not at punishing the person), but it shouldn't be filed as \"just a mistake\" either. The right move is a direct, non-punitive conversation with the engineer about why the gate exists and what to do instead next time, paired with fixing the control so no single person's judgment call under deadline pressure can be the only thing standing between a secret and production.\n\n---\n\n## OPEX Record\n\n| Field | Content |\n|---|---|\n| **Event** | Engineer bypassed failing pre-commit secrets-scan hook with `--no-verify` and pushed a hardcoded API key to main. |\n| **Classification** | Willful violation (knowing bypass of a security gate) \u2014 surfaced as a finding, not an honest-error near miss. |\n| **Affected artifact/baseline** | `main` branch; production deployment using the exposed key. |\n| **Evidence** | Commit history showing `--no-verify` push; audit finding that flagged the hardcoded key; timestamp gap of 3 days between merge and detection. |\n| **Impact** | Live API key exposed in production for 3 days. Key rotated on discovery; no confirmed exploitation identified (confirm and state explicitly if you checked this \u2014 see open item below). |\n| **Immediate correction taken** | Key rotated as soon as found. |\n| **Actual condition** | Secrets scanning existed only as a client-side pre-commit hook, which is bypassable by design (`git commit --no-verify`) with no compensating check before merge or deploy. Detection depended on periodic manual audit rather than continuous scanning. |\n| **Standard/expected condition** | No commit containing a secret should be able to reach `main` regardless of local hook state; if a local check is skipped, a server-side check should still block it, and detection latency should be near-real-time, not audit-cycle-dependent. |\n| **Root cause** | Single point of failure: the *only* secrets-scanning control was client-side and individually bypassable, with no server-side backstop, no branch-protection requirement, no alerting on bypass, and no fast escalation path for a dev who hits a hook failure under deadline pressure. |\n| **Weak/missing controls** | 1) No CI-enforced secrets scan gating PR merge. 2) No branch protection requiring that check to pass. 3) No server-side push protection (can't be skipped with `--no-verify`). 4) No visibility/alerting when `--no-verify` is used against a security-gated hook. 5) No documented escalation path for a legitimately-failing hook under time pressure. 6) Detection relied on periodic audit (3-day exposure window) instead of continuous scanning. |\n\n---\n\n## Root cause, restated\n\nThe pre-commit hook was necessary but not sufficient \u2014 it relies on every engineer, every time, under every deadline, choosing not to bypass it. That's not a durable control, it's a hope. The actual failure is architectural: there was nothing standing behind the client-side hook once it was skipped.\n\n---\n\n## Candidate durable fixes\n\n1. **Server-side enforcement (primary fix):** Add secrets scanning as a required CI status check, and turn on branch protection on `main` so PRs cannot merge without it passing. This can't be bypassed with `--no-verify` since it doesn't run on the developer's machine.\n2. **Push protection at the remote:** If your git host supports it (e.g., GitHub secret scanning push protection, or a server-side pre-receive hook), enable it to reject pushes containing detected secret patterns outright.\n3. **Reduce detection latency:** Move from \"routine audit catches it eventually\" to continuous scanning of `main` (on every push, or at minimum daily) with immediate alerting to the security channel \u2014 don't rely on audit cadence as the detection mechanism.\n4. **Escalation path for legitimate hook failures:** Document a fast route (e.g., ping security/lead in a channel, get a documented override or allowlist entry) so a dev under deadline pressure has a legitimate 5-minute option instead of `--no-verify`.\n5. **Visibility on bypass usage:** Log/alert when a security-gated hook is skipped, so it's a visible event rather than silent \u2014 this also removes the temptation, since it's no longer \"no one will know.\"\n6. **Direct conversation with the engineer:** Not punitive, but explicit: the hook isn't optional guidance, it's a gate, and deadline pressure isn't a valid reason to skip it. Reinforce that the escalation path (#4) is what should be used instead.\n\n## Owner and verification\n\n- **Owner:** (assign \u2014 likely security/DevOps lead)\n- **Due date/trigger:** Fix #1 and #2 should land before the next merge to `main`; verify by seeding a fake secret in a test branch and confirming CI blocks the merge and/or the push is rejected server-side.\n- **Close-out condition:** Lesson is closed only when the server-side check is live and demonstrated to block a bypass attempt \u2014 not when this write-up is filed.\n\n## Open items to confirm before finalizing\n\n- Did you verify no unauthorized use of the key during the 3-day window (logs on the exposed service)?\n- Do you know why the hook was failing on his branch \u2014 false positive, or was it correctly flagging the real secret? (If it's prone to false positives, that's a contributing factor worth fixing too, since it increases the temptation to bypass.)\n\nWant me to save this as a markdown file in a repo/docs location, or adjust the format for wherever this needs to go (e.g., a ticket, a postmortem doc, Slack)?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.08996939999999999,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 4141,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 4220,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4141,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 4220,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 4141,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4141
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 24,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000759,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 4220,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 4141,
+      "webSearchRequests": 0,
+      "costUSD": 0.0892104,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "f428f731-c7fc-4409-89f4-c7c764bb7767",
+  "_skill": "learning-from-experience",
+  "_condition": "with_skill",
+  "_trial": 2
+}

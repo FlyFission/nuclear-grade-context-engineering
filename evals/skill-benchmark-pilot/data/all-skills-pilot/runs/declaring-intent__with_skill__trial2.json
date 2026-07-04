@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 33038,
+  "duration_api_ms": 32514,
+  "ttft_ms": 18305,
+  "ttft_stream_ms": 1184,
+  "time_to_request_ms": 72,
+  "time_to_request_from_spawn_ms": 649970,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121212843.0693,
+  "num_turns": 1,
+  "result": "Staging passing without errors tells you the migration is *correct*, not that it's *safe* at 40M rows under live checkout traffic \u2014 those are different failure modes. Here's how to think through it:\n\n**Why staging isn't sufficient evidence**\nStaging usually lacks production's write volume, replica lag, connection pool pressure, and data skew (e.g., some `order_id` ranges being far hotter than others). \"No errors on staging\" doesn't tell you whether the migration will cause lock contention, replication lag, or connection starvation against a live checkout path. Treat that result as necessary, not sufficient.\n\n**Mechanics to get right before running**\n- **Batch it, don't do one UPDATE.** A single statement touching 40M rows will hold long locks / bloat the transaction log (and on MVCC engines like Postgres, cause massive dead-tuple bloat). Batch by PK range (e.g., 5-10k rows per batch), with a short pause between batches.\n- **Throttle to a measured signal**, not a fixed sleep \u2014 pause/slow batches based on replication lag and checkout query latency, not just a flat `sleep(1)`.\n- **Make it resumable/idempotent.** Track last completed PK so if you stop and restart, you don't redo work or double-write.\n- **Backfill with a default, don't block reads.** If the column is nullable with an application-level default, checkout can safely ignore `NULL` during the transition \u2014 this shrinks blast radius a lot. Confirm checkout doesn't already read `loyalty_tier` expecting it populated.\n\n**Now, apply the intent-declaration structure to force out the details you'd actually need if someone asked \"why do you think this is safe\" at 2am:**\n\n- **Action/target:** batched backfill of `loyalty_tier` on `orders` (40M rows), production, tonight.\n- **Evidence preconditions are met:** staging run clean \u2014 but what's missing? Do you know current replication lag baseline, checkout p99 latency baseline, and connection pool headroom *right now*, so you have something to compare against mid-run?\n- **Expected result:** column backfilled, checkout latency/error rate unchanged, replica lag stays within normal band.\n- **Abort criteria (need numbers):** e.g. \"abort if replication lag > 5s for 30s,\" \"abort if checkout 5xx rate exceeds baseline by 2x,\" \"abort if any lock wait > 1s.\" Vague criteria like \"if something looks wrong\" won't hold up under pressure.\n- **Rollback \u2014 is it verified?** If the column is additive/nullable and unused by checkout, rollback = stop the script, no data corruption. If checkout *does* consume the column mid-backfill, rollback is harder \u2014 have you tested that a partially-backfilled column doesn't break checkout logic?\n- **Decision rights:** who's watching dashboards during the run, who has authority to kill it, and is there an actual kill switch (can you `Ctrl+C` the script safely mid-batch, or does it need graceful shutdown handling)?\n\nThe single most important open question before tonight: **does anything currently read `loyalty_tier` expecting a value**, or is this purely additive until you flip a feature flag later? That answers most of your rollback and abort-severity questions.\n\nWant me to look at the actual migration script and table schema so we can nail down batch size, throttle signal, and whether it's truly idempotent?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0611504,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 3717,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 2474,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3717,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 2474,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 3717,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3717
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 604,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000674,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 2474,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 3717,
+      "webSearchRequests": 0,
+      "costUSD": 0.0604764,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "95659a96-a004-4841-b197-43e314eb5ef2",
+  "_skill": "declaring-intent",
+  "_condition": "with_skill",
+  "_trial": 2
+}

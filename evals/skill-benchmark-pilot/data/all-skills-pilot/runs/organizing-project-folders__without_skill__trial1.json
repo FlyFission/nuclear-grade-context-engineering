@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 14504,
+  "duration_api_ms": 14718,
+  "ttft_ms": 2678,
+  "ttft_stream_ms": 2017,
+  "time_to_request_ms": 104,
+  "time_to_request_from_spawn_ms": 1685529,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783122248755.3455,
+  "num_turns": 4,
+  "result": "The working directory is actually empty \u2014 there's no `misc` or `utils` folder here for me to inspect, so I can't base this on your real file list. I'll give you a proposed structure based on the categories you described; you (or I, once pointed at the real repo) can slot the actual files in.\n\n**Proposed structure**\n\n```\nscripts/\n  migrations/        # one-off migration scripts\nconfig/\n  templates/         # config templates\ndocs/\n  compliance/        # archived compliance reports\n  meeting-notes/      # old meeting notes (or consider deleting if stale)\nshared/\n  <lib-name>/        # shared helper functions used by 2+ services, grouped by purpose\nservices/\n  <service>/lib/     # helpers used by only one service move back into that service\n```\n\nFor `utils`, rather than one grouping, split by what the helpers actually operate on \u2014 e.g. `shared/http/`, `shared/date/`, `shared/validation/`, `shared/testing/` \u2014 so each subfolder has a clear single responsibility instead of being another catch-all.\n\nRules of thumb to keep it from re-rotting:\n- Nothing lands in a top-level \"misc\"/\"utils\" again \u2014 if it doesn't fit an existing category, that's a signal to create a properly named one.\n- Anything used by only one service belongs in that service's own directory, not a shared one.\n- Stuff that's just historical record (old meeting notes, superseded compliance reports) goes to `docs/archive/` or gets deleted, not mixed in with active code.\n\nIf you can point me at the actual repo path (or run this from inside the real repo directory), I can list the real 47 + 30 files, categorize each one concretely, and give you the exact `git mv` commands to do the reorg.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0342148,
+  "usage": {
+    "input_tokens": 96,
+    "cache_creation_input_tokens": 2323,
+    "cache_read_input_tokens": 22916,
+    "output_tokens": 826,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2323,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 37,
+        "output_tokens": 559,
+        "cache_read_input_tokens": 8458,
+        "cache_creation_input_tokens": 128,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 128
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 634,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 96,
+      "outputTokens": 826,
+      "cacheReadInputTokens": 22916,
+      "cacheCreationInputTokens": 2323,
+      "webSearchRequests": 0,
+      "costUSD": 0.0334908,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "22d9d32d-d052-452f-b459-4935e81d3ff7",
+  "_skill": "organizing-project-folders",
+  "_condition": "without_skill",
+  "_trial": 1
+}

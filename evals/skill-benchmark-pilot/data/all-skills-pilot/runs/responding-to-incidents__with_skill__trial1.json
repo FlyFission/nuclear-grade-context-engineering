@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 22622,
+  "duration_api_ms": 21825,
+  "ttft_ms": 6109,
+  "ttft_stream_ms": 4684,
+  "time_to_request_ms": 38,
+  "time_to_request_from_spawn_ms": 828488,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121391442.6433,
+  "num_turns": 1,
+  "result": "Right now: name a commander, roll back the deploy (reversible, 90s), and stop the ALTER TABLE. Dropping/rebuilding an index directly on prod is hard to reverse and locks the table further while checkout is already down \u2014 don't do it on an unconfirmed cause when a fast reversible option (full rollback) exists that undoes both suspects at once.\n\n## Commander & roles\n- **Commander:** on-call SRE (already holding pipeline access, closest to the live symptom). State this explicitly in the channel: \"I'm commander for this incident.\"\n- **DBA:** technical advisor \u2014 investigate the index/lock theory, but does not execute changes against prod without commander sign-off.\n- **Engineering manager:** comms lead \u2014 owns customer/status updates and stakeholder notification, stays out of the technical decision loop.\n\n## First action (stabilize)\nRoll back the deploy via CD pipeline now. It's the safer reversible move: it undoes both the worker and the index change in ~90 seconds, vs. an ALTER TABLE that is one-directional, could take longer than 90s to complete/lock the table, and only addresses one of two suspects.\n\n## Timeline (fact vs hypothesis)\n- **FACT** \u2014 Checkout API began returning 500s on order creation ~12 min ago.\n- **FACT** \u2014 A deploy shipped immediately prior, containing: (1) new async inventory-sync worker, (2) index change on `orders` table.\n- **HYPOTHESIS** \u2014 DBA believes the index change is root cause.\n- **HYPOTHESIS** \u2014 Unconfirmed whether the worker (contention, connection pool exhaustion, lock waits) is contributing or unrelated.\n\nDo not let \"DBA is confident\" get written into the timeline as a confirmed cause \u2014 it's a hypothesis until the rollback result or logs confirm it.\n\n## Decision log\n- **[Commander]** Initiate full deploy rollback via CD pipeline. Rationale: reversible, addresses both changed variables, fastest path to stop customer harm.\n- **[Commander]** DBA's ALTER TABLE is paused, not approved, until rollback outcome is known. If rollback fails to resolve the 500s, the index hypothesis becomes worth testing \u2014 but as a targeted, reviewed change, not a live emergency edit under pressure.\n\n## Status cadence\nPost an update in the incident channel every **5 minutes**, even if it's \"rollback still in progress, no new info.\" Commander posts; EM relays to customer-facing/stakeholder channels.\n\n## Corrective actions (post-stabilization, each needs an owner + closure trigger)\n- **Owner: DBA** \u2014 Confirm or rule out the index change as a contributing cause via logs/query plans in a non-prod environment. *Closure: written finding posted to incident doc.*\n- **Owner: SRE** \u2014 Add a deploy gate/checklist item requiring index changes and worker rollouts to ship as separate deploys, not bundled. *Closure: gate implemented and enforced in CD config.*\n- **Owner: EM** \u2014 Draft customer comms/status-page update on the outage. *Closure: published and linked in incident channel.*\n- **Owner: commander (assign at handoff)** \u2014 File post-incident review covering why two risky changes (index + new async worker) went out in one deploy. *Closure: review scheduled and doc created.*\n\n## Handoff\nOnce checkout is confirmed healthy post-rollback, close the live phase but keep the incident record open until all corrective actions above have owners and closure triggers marked done. Route the index-change investigation and the \"bundled risky changes\" finding into your post-incident learning record and deficiency tracker \u2014 don't resolve them informally in chat.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0450154,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 3786,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 1364,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3786,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 1364,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 3786,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3786
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 675,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007750000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 1364,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 3786,
+      "webSearchRequests": 0,
+      "costUSD": 0.0442404,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "052d1a45-7a98-4b26-b9b9-26ec89c58737",
+  "_skill": "responding-to-incidents",
+  "_condition": "with_skill",
+  "_trial": 1
+}

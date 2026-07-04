@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 29720,
+  "duration_api_ms": 29067,
+  "ttft_ms": 13722,
+  "ttft_stream_ms": 1307,
+  "time_to_request_ms": 78,
+  "time_to_request_from_spawn_ms": 687893,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121251194.3481,
+  "num_turns": 1,
+  "result": "I'll draft the turnover note now with placeholders for the few details only you know (service names, teammate's name, escalation contact) \u2014 fill those in before sending. Let me write it to your scratchpad.\n\n\n\tcommand: cat > \"/tmp/claude-0/-tmp-claude-0--home-user-nuclear-grade-context-engineering-26f04376-58c1-5c34-b393-c76c15bb6e8e-scratchpad-pilot-work-all-handing-off-work-with-skill-2/26f04376-58c1-5c34-b393-c76c15bb6e8e/scratchpad/turnover.md\" << 'EOF'\n# Turnover: OAuth2 Migration \u2014 Billing Service\n\n**Date:** 2026-07-03\n**Outgoing owner:** [Your name] (unavailable until [return date, ~2026-07-10])\n**Incoming owner:** [Teammate name]\n**Packet / branch:** `oauth-migration` (billing-service repo \u2014 [link])\n**Related ticket:** [JIRA/issue link]\n\n---\n\n## Current phase\nMid-migration. Core auth code is merged; downstream consumers and prod config are **not yet touched**.\n\n## Last completed action\nMerged token-refresh logic and auth middleware changes to `oauth-migration`, with passing unit tests. (Commit: [hash/PR link])\n\n## Completed artifacts\n- Auth middleware \u2014 updated to support OAuth2, merged to `oauth-migration`\n- Token-refresh logic \u2014 implemented and merged to `oauth-migration`\n- Unit tests for both \u2014 passing in CI\n\n## Changed conditions\n- None outside this branch. Production is still running the old API-key system unchanged.\n\n## Remaining work\n1. Migrate the 3 downstream services still calling old auth endpoints: [service A], [service B], [service C]\n2. Update production config to point at OAuth2 once downstream services are migrated\n3. Rotate/revoke old API keys (**only after** step 1 is fully done \u2014 see stop condition below)\n\n## Allowed\n- Work on `oauth-migration` branch (or feature branches off it)\n- Modify downstream service auth calls\n- Run existing unit/integration tests\n\n## Forbidden / hold points\n- **Do not touch production config.** Old API keys must stay active until all 3 downstream services are confirmed migrated.\n- **Do not rotate or revoke old API keys** until downstream migration is verified complete \u2014 doing so early will break all 3 services with 401s.\n- Do not merge to `main` / deploy to prod without [name/role]'s review, if that's your process \u2014 [confirm].\n\n## Proof still needed\n- Passing integration tests for each downstream service against the new OAuth2 endpoints, run **before** any prod config change\n- Confirmation each downstream service has been redeployed/verified on OAuth2 before key rotation\n\n## Stop conditions\n- Stop and escalate to [backup contact / manager] if:\n  - Any downstream service can't be migrated cleanly (e.g., needs code changes outside its own repo)\n  - You're unsure whether all 3 downstream services are fully migrated before touching prod config or keys\n  - Anything requires rotating API keys ahead of schedule\n\n## Next decision gate\nOnce all 3 downstream services are migrated and verified, the next decision is: update prod config to OAuth2, then rotate the old API keys. Do these in that order, not in parallel.\n\n## Likely error to guard against\nRotating/disabling old API keys before all 3 downstream services are confirmed migrated \u2014 this is the most likely way to cause a production incident (401s across dependent services).\n\n---\n\n## Confirmation required from incoming owner\nBefore making any changes, please confirm you understand:\n1. Scope: only the 3 downstream services + eventual prod config/key rotation, in that order.\n2. Authority: you may edit code and tests on/off `oauth-migration`; you may **not** touch prod config or rotate keys until step 1 is fully verified.\n3. Stop condition: if migration of any downstream service is unclear or blocked, stop and escalate to [contact] rather than improvising.\nEOF\necho done",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.056435400000000004,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 3490,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 2245,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3490,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 2245,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 3490,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3490
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 676,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007559999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 2245,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 3490,
+      "webSearchRequests": 0,
+      "costUSD": 0.055679400000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "2e833ba4-f681-4cd3-bebc-2f400c32b561",
+  "_skill": "handing-off-work",
+  "_condition": "with_skill",
+  "_trial": 2
+}

@@ -62,9 +62,9 @@ Which surfaces are "the agent cannot edit" versus "the agent wrote" is not a cas
 — it is the surface classification in
 [`../04-adoption/agent-authority-model.md`](../04-adoption/agent-authority-model.md#surface-classification):
 *locked* surfaces close the self-modification hole, and keeping the actor off the *sole-author*
-seat closes this one. And there is a third hole neither closes: an independent author feeding an
-**unbiased** gate still fails if the *judge that reads it* is biased — that is
-[`evaluation-integrity.md`](evaluation-integrity.md).
+seat closes this one. And there is a third hole neither closes: independent authorship of the
+evidence does not protect against a **biased judge** — a gate whose reader is skewed passes the
+wrong input no matter who wrote it. That is [`evaluation-integrity.md`](evaluation-integrity.md).
 
 ---
 

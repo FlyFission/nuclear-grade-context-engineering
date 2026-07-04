@@ -30,6 +30,7 @@ Sort the change before you build it. That way the care you take matches the stak
 - A change record already has a fresh mode choice and the scope has not changed.
 - The system is failing right now and needs incident handling first.
 - The change is purely administrative, instantly reversible, and crosses no trust boundary -- that is the administrative floor (no packet; the commit message is the record), not a mode to rate.
+- The mode is already chosen and you now need to author or update the packet files -- use `creating-change-records` instead.
 
 ## Inputs
 

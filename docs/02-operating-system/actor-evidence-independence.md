@@ -58,6 +58,14 @@ everything that flows into it**. You need both: a control the agent cannot rewri
 evidence the agent did not solely author. Closing one and leaving the other open leaves the gate
 open.
 
+Which surfaces are "the agent cannot edit" versus "the agent wrote" is not a case-by-case judgment
+— it is the surface classification in
+[`../04-adoption/agent-authority-model.md`](../04-adoption/agent-authority-model.md#surface-classification):
+*locked* surfaces close the self-modification hole, and keeping the actor off the *sole-author*
+seat closes this one. And there is a third hole neither closes: independent authorship of the
+evidence does not protect against a **biased judge** — a gate whose reader is skewed passes the
+wrong input no matter who wrote it. That is [`evaluation-integrity.md`](evaluation-integrity.md).
+
 ---
 
 ## The principle
@@ -163,6 +171,8 @@ the assurance. See [`runtime-enforcement.md`](runtime-enforcement.md).
 - [`../../skills/checking-release-readiness/SKILL.md`](../../skills/checking-release-readiness/SKILL.md) — the independent decider.
 - [`../../skills/stress-testing-agent-changes/SKILL.md`](../../skills/stress-testing-agent-changes/SKILL.md) — adversarial review is independence applied as attack.
 - [`agent-threat-model.md`](agent-threat-model.md) — self-authored evidence as a trust surface.
+- [`evaluation-integrity.md`](evaluation-integrity.md) — the complementary guard: an independent author still fails if the judge reading the evidence is biased.
+- [`../04-adoption/agent-authority-model.md`](../04-adoption/agent-authority-model.md#surface-classification) — surface classification (locked / editable / append-only / human-controlled) that decides what "the agent cannot edit" means.
 - [`../../agents/README.md`](../../agents/README.md) — the PROVE subagents that encode the seam.
 
 ## Exit criteria

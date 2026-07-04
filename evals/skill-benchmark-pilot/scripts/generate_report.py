@@ -22,6 +22,19 @@ def fmt_money(x):
     return f"${x:.4f}" if x is not None else "n/a"
 
 
+def fence_for(text):
+    """Pick a fence at least one backtick longer than the longest run already in text."""
+    longest = 0
+    run = 0
+    for ch in text:
+        if ch == "`":
+            run += 1
+            longest = max(longest, run)
+        else:
+            run = 0
+    return "`" * max(3, longest + 1)
+
+
 lines = []
 a = lines.append
 
@@ -162,10 +175,12 @@ a("")
 for task_id, label in task_names.items():
     a(f"### {label} (`{task_id}`)")
     a("")
+    prompt_text = rcq_task_prompt(task_id).strip()
+    fence = fence_for(prompt_text)
     a("**Prompt given to the model (identical in both conditions):**")
-    a("```")
-    a(rcq_task_prompt(task_id).strip())
-    a("```")
+    a(fence)
+    a(prompt_text)
+    a(fence)
     a("")
     a(f"**Pre-registered pass criterion:** {rcq_answer_keys[task_id]['pass_criteria']}")
     a("")
@@ -186,11 +201,21 @@ a("For each skill: the exact scenario given to the model (identical in both cond
   "justification. Cost/token/turn/duration figures come straight from the `claude -p "
   "--output-format json` response for that run.")
 a("")
+a("**Two verdict columns, on purpose.** `Verdict` is the primary, pre-registered call: "
+  "strict YES-count only (a PARTIAL grade means the grader judged the pass criterion "
+  "materially incomplete, so it does not count toward a WIN by the rule fixed before any "
+  "trial ran). `Weighted Δ` is a secondary lens computed after the fact (YES=1, "
+  "PARTIAL=0.5, NO=0, `with_skill` mean minus `without_skill` mean) that surfaces movement "
+  "the strict count can hide — e.g. a skill going from zero partial credit to consistent "
+  "partial credit reads as a flat TIE under the strict rule but a positive weighted delta. "
+  "Where the two disagree, both are shown and flagged rather than picking whichever looks "
+  "better.")
+a("")
 
 skills_sorted = sorted(all_tasks.keys())
 summary_lines = []
-summary_lines.append("| Skill | With skill | Without skill | Verdict | Mean cost (with) | Mean cost (without) |")
-summary_lines.append("|---|---|---|---|---|---|")
+summary_lines.append("| Skill | With skill | Without skill | Verdict | Weighted Δ | Mean cost (with) | Mean cost (without) |")
+summary_lines.append("|---|---|---|---|---|---|---|")
 
 detail_sections = []
 
@@ -208,25 +233,32 @@ for skill in skills_sorted:
         costs = [r["cost_usd"] for r in sub if r.get("cost_usd") is not None]
         cond_stats[cond] = {
             "catch": f"{yes}/{n}" + (f" (+{partial}p)" if partial else ""),
-            "yes": yes, "n": n,
+            "yes": yes, "partial": partial, "n": n,
+            "weighted": (yes + 0.5 * partial) / n if n else None,
             "mean_cost": stats.mean(costs) if costs else None,
         }
 
     delta = cond_stats["with_skill"]["yes"] - cond_stats["without_skill"]["yes"]
     verdict = "WINS" if delta > 0 else ("TIE" if delta == 0 else "LOSES")
+    weighted_delta = cond_stats["with_skill"]["weighted"] - cond_stats["without_skill"]["weighted"]
+    weighted_verdict = "WINS" if weighted_delta > 0.001 else ("TIE" if abs(weighted_delta) <= 0.001 else "LOSES")
+    flip_flag = " ⚠️FLIP" if weighted_verdict != verdict else ""
 
     summary_lines.append(
         f"| {skill} | {cond_stats['with_skill']['catch']} | {cond_stats['without_skill']['catch']} | "
-        f"{verdict} | {fmt_money(cond_stats['with_skill']['mean_cost'])} | {fmt_money(cond_stats['without_skill']['mean_cost'])} |"
+        f"{verdict} | {weighted_delta:+.2f}{flip_flag} | "
+        f"{fmt_money(cond_stats['with_skill']['mean_cost'])} | {fmt_money(cond_stats['without_skill']['mean_cost'])} |"
     )
 
+    scenario_text = scenario.strip()
+    scenario_fence = fence_for(scenario_text)
     sec = []
     sec.append(f"### `{skill}` — {verdict}")
     sec.append("")
     sec.append("**Scenario given to the model (identical in both conditions):**")
-    sec.append("```")
-    sec.append(scenario.strip())
-    sec.append("```")
+    sec.append(scenario_fence)
+    sec.append(scenario_text)
+    sec.append(scenario_fence)
     sec.append("")
     sec.append(f"**Pre-registered pass criterion:** {criteria}")
     sec.append("")
@@ -298,12 +330,33 @@ a("- **This benchmark tests decision/response behavior under a scenario prompt, 
   "raw responses; treat its result as weaker evidence than skills whose scenarios are "
   "self-contained.")
 a("- **Two skills failed on both sides** (`handing-off-work`, `organizing-project-folders`, "
-  "both 0/3 YES). That is a flag that the pass criterion may be stricter than what \"adds "
-  "value\" actually requires (both got partial credit consistently), not proof the skill is "
-  "worthless.")
-a("- **The one `LOSES` result** (`creating-change-records`, 2/3+1partial vs 3/3) is a "
-  "marginal call on an already near-ceiling task — see its detail section above for the "
-  "grader's actual reasoning before treating it as a real regression.")
+  "both 0/3 YES on the strict rule). This is a flag that the pass criterion may be "
+  "stricter than what \"adds value\" actually requires, not proof the skill is worthless — "
+  "but the two are not equivalent under the weighted lens above. `handing-off-work` flips "
+  "to a weighted WIN (0/3 PARTIAL without the skill → 3/3 PARTIAL with it — a real, "
+  "consistent movement the strict count hides). `organizing-project-folders` does not flip "
+  "(3/3 PARTIAL in both conditions — no directional signal either way).")
+a("- **A cohort of 6 skills sit on the thinnest possible margin: a single trial's "
+  "difference, riding on one PARTIAL grade.** `breaking-down-the-work`, "
+  "`checking-source-claims`, `double-checking-before-acting`, `questioning-attitude`, and "
+  "`staying-on-mission` are called WINS on a 3/3-vs-2/3(+1 partial) pattern; "
+  "`creating-change-records` is called the one LOSES on the mirror-image "
+  "2/3(+1 partial)-vs-3/3 pattern. All six have the same weighted-delta magnitude "
+  "(±0.167) — the only difference is sign. Applying the same n=3 skepticism to all six "
+  "symmetrically: none of them, including the LOSES call, should be read as a settled "
+  "result. Relabeling only the inconvenient one as \"noise\" while keeping the other five "
+  "as clean wins would be worse than leaving all six as provisional single-trial-margin "
+  "calls, which is what this report does.")
+a("- **The cost/benefit tradeoff is real and unresolved by this pilot.** Every skill costs "
+  "more per call than the plain prompt, from roughly +10% to over +200% "
+  "(`recording-a-known-good-version`: $0.0378 → $0.0872; `using-nuclear-grade`: "
+  "$0.0227 → $0.0590). On the 13 tied skills that cost buys nothing measured here. This "
+  "report does not attempt to weigh \"is the measured gain worth the cost\" — that's a "
+  "product decision for whoever adopts these skills (accept the overhead, rewrite the "
+  "skill to be leaner, or drop it for that use case), not a conclusion this data supports "
+  "on its own. Any claim about what future engineering work will do to reduce this "
+  "overhead is out of scope for this report — it documents what was measured, not a "
+  "roadmap.")
 a("- **Cost figures are per-call totals from Claude Code's own accounting** "
   "(`total_cost_usd` in the `--output-format json` response), including prompt-cache "
   "creation/read charges, not a controlled minimal-token measurement.")

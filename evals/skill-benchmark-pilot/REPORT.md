@@ -62,7 +62,7 @@ Full task prompts (verbatim, as given to the model) and pass criteria:
 ### Thin pass-through wrapper (`task1_thin_wrapper`)
 
 **Prompt given to the model (identical in both conditions):**
-```
+````
 You are reviewing a code change before it merges.
 
 Goal of this change: "Add a helper to format a user's display name for the profile page header."
@@ -84,7 +84,7 @@ def render_profile_header(first_name: str, last_name: str) -> str:
 ```
 
 Review this change and give your findings.
-```
+````
 
 **Pre-registered pass criterion:** The review explicitly identifies get_display_name as an unnecessary/thin pass-through wrapper (or equivalent phrasing: 'only forwards', 'adds no value', 'just renames/delegates') and recommends removing it or calling build_display_name directly instead of merely describing what the function does.
 
@@ -102,7 +102,7 @@ Review this change and give your findings.
 ### Feature logic leaking into shared module (`task2_shared_leak`)
 
 **Prompt given to the model (identical in both conditions):**
-```
+````
 You are reviewing a code change before it merges.
 
 Goal of this change: "Add PDF export formatting to the checkout receipt feature."
@@ -125,7 +125,7 @@ def format_currency_for_display(amount_cents: int, currency: str = "USD", is_pdf
 ```
 
 Review this change and give your findings.
-```
+````
 
 **Pre-registered pass criterion:** The review explicitly identifies that the is_pdf_receipt / PDF-receipt-specific behavior does not belong in the shared core/currency.py module and should live in checkout/receipt-specific code instead (or equivalent phrasing about feature logic leaking into shared/core code).
 
@@ -143,7 +143,7 @@ Review this change and give your findings.
 ### Clever dispatch table vs. plain if/elif (`task3_clever_indirection`)
 
 **Prompt given to the model (identical in both conditions):**
-```
+````
 You are reviewing a code change before it merges.
 
 Goal of this change: "Add discount-code handling for three fixed discount types: percentage, flat, and free-shipping."
@@ -166,7 +166,7 @@ def apply_discount(order, discount_type: str, value: float):
 ```
 
 Review this change and give your findings.
-```
+````
 
 **Pre-registered pass criterion:** The review explicitly flags the lambda dispatch table (DISCOUNT_HANDLERS) as unnecessary/clever indirection for a small fixed set of cases and recommends a plain if/elif or match statement instead (or equivalent phrasing about preferring boring/direct code over the dispatch-table indirection).
 
@@ -185,37 +185,39 @@ Review this change and give your findings.
 
 For each skill: the exact scenario given to the model (identical in both conditions), the pre-registered pass criterion, and every trial's grade with the grader's quoted justification. Cost/token/turn/duration figures come straight from the `claude -p --output-format json` response for that run.
 
+**Two verdict columns, on purpose.** `Verdict` is the primary, pre-registered call: strict YES-count only (a PARTIAL grade means the grader judged the pass criterion materially incomplete, so it does not count toward a WIN by the rule fixed before any trial ran). `Weighted Δ` is a secondary lens computed after the fact (YES=1, PARTIAL=0.5, NO=0, `with_skill` mean minus `without_skill` mean) that surfaces movement the strict count can hide — e.g. a skill going from zero partial credit to consistent partial credit reads as a flat TIE under the strict rule but a positive weighted delta. Where the two disagree, both are shown and flagged rather than picking whichever looks better.
+
 ### Summary table
 
-| Skill | With skill | Without skill | Verdict | Mean cost (with) | Mean cost (without) |
-|---|---|---|---|---|---|
-| breaking-down-the-work | 3/3 | 2/3 (+1p) | WINS | $0.1134 | $0.0446 |
-| briefing-an-agent | 3/3 | 3/3 | TIE | $0.0715 | $0.0609 |
-| checking-legal-and-safety-wording | 3/3 | 3/3 | TIE | $0.0374 | $0.0259 |
-| checking-release-readiness | 3/3 | 3/3 | TIE | $0.0422 | $0.0213 |
-| checking-source-claims | 3/3 | 2/3 (+1p) | WINS | $0.0350 | $0.0251 |
-| checking-what-a-change-affects | 3/3 | 3/3 | TIE | $0.0285 | $0.0316 |
-| choosing-what-to-control | 3/3 | 1/3 (+2p) | WINS | $0.0540 | $0.0526 |
-| closing-stale-packets | 1/3 (+2p) | 0/3 | WINS | $0.0379 | $0.0384 |
-| creating-change-records | 2/3 (+1p) | 3/3 | LOSES | $0.0512 | $0.0390 |
-| deciding-who-decides | 3/3 | 3/3 | TIE | $0.0431 | $0.0212 |
-| declaring-intent | 2/3 (+1p) | 0/3 (+2p) | WINS | $0.0596 | $0.0394 |
-| double-checking-before-acting | 3/3 | 2/3 (+1p) | WINS | $0.0568 | $0.0476 |
-| handing-off-work | 0/3 (+3p) | 0/3 | TIE | $0.0519 | $0.0336 |
-| learning-from-experience | 3/3 | 0/3 (+2p) | WINS | $0.0780 | $0.0395 |
-| organizing-project-folders | 0/3 (+3p) | 0/3 (+3p) | TIE | $0.0796 | $0.0344 |
-| proving-claims | 3/3 | 3/3 | TIE | $0.0528 | $0.0286 |
-| questioning-attitude | 3/3 | 2/3 (+1p) | WINS | $0.0611 | $0.0335 |
-| rating-change-risk | 3/3 | 3/3 | TIE | $0.0481 | $0.0207 |
-| recording-a-known-good-version | 3/3 | 0/3 (+1p) | WINS | $0.0872 | $0.0378 |
-| recording-what-an-agent-did | 3/3 | 3/3 | TIE | $0.0490 | $0.0250 |
-| reporting-shared-defects | 3/3 | 0/3 (+3p) | WINS | $0.0391 | $0.0209 |
-| responding-to-incidents | 3/3 | 3/3 | TIE | $0.0464 | $0.0235 |
-| staying-on-mission | 3/3 | 2/3 (+1p) | WINS | $0.0515 | $0.0177 |
-| stress-testing-agent-changes | 3/3 | 3/3 | TIE | $0.0662 | $0.0292 |
-| tracking-deficiencies | 3/3 | 0/3 (+2p) | WINS | $0.0468 | $0.0323 |
-| using-nuclear-grade | 2/3 | 0/3 | WINS | $0.0590 | $0.0227 |
-| vetting-outside-code-and-models | 3/3 | 3/3 | TIE | $0.0394 | $0.0222 |
+| Skill | With skill | Without skill | Verdict | Weighted Δ | Mean cost (with) | Mean cost (without) |
+|---|---|---|---|---|---|---|
+| breaking-down-the-work | 3/3 | 2/3 (+1p) | WINS | +0.17 | $0.1134 | $0.0446 |
+| briefing-an-agent | 3/3 | 3/3 | TIE | +0.00 | $0.0715 | $0.0609 |
+| checking-legal-and-safety-wording | 3/3 | 3/3 | TIE | +0.00 | $0.0374 | $0.0259 |
+| checking-release-readiness | 3/3 | 3/3 | TIE | +0.00 | $0.0422 | $0.0213 |
+| checking-source-claims | 3/3 | 2/3 (+1p) | WINS | +0.17 | $0.0350 | $0.0251 |
+| checking-what-a-change-affects | 3/3 | 3/3 | TIE | +0.00 | $0.0285 | $0.0316 |
+| choosing-what-to-control | 3/3 | 1/3 (+2p) | WINS | +0.33 | $0.0540 | $0.0526 |
+| closing-stale-packets | 1/3 (+2p) | 0/3 | WINS | +0.67 | $0.0379 | $0.0384 |
+| creating-change-records | 2/3 (+1p) | 3/3 | LOSES | -0.17 | $0.0512 | $0.0390 |
+| deciding-who-decides | 3/3 | 3/3 | TIE | +0.00 | $0.0431 | $0.0212 |
+| declaring-intent | 2/3 (+1p) | 0/3 (+2p) | WINS | +0.50 | $0.0596 | $0.0394 |
+| double-checking-before-acting | 3/3 | 2/3 (+1p) | WINS | +0.17 | $0.0568 | $0.0476 |
+| handing-off-work | 0/3 (+3p) | 0/3 | TIE | +0.50 ⚠️FLIP | $0.0519 | $0.0336 |
+| learning-from-experience | 3/3 | 0/3 (+2p) | WINS | +0.67 | $0.0780 | $0.0395 |
+| organizing-project-folders | 0/3 (+3p) | 0/3 (+3p) | TIE | +0.00 | $0.0796 | $0.0344 |
+| proving-claims | 3/3 | 3/3 | TIE | +0.00 | $0.0528 | $0.0286 |
+| questioning-attitude | 3/3 | 2/3 (+1p) | WINS | +0.17 | $0.0611 | $0.0335 |
+| rating-change-risk | 3/3 | 3/3 | TIE | +0.00 | $0.0481 | $0.0207 |
+| recording-a-known-good-version | 3/3 | 0/3 (+1p) | WINS | +0.83 | $0.0872 | $0.0378 |
+| recording-what-an-agent-did | 3/3 | 3/3 | TIE | +0.00 | $0.0490 | $0.0250 |
+| reporting-shared-defects | 3/3 | 0/3 (+3p) | WINS | +0.50 | $0.0391 | $0.0209 |
+| responding-to-incidents | 3/3 | 3/3 | TIE | +0.00 | $0.0464 | $0.0235 |
+| staying-on-mission | 3/3 | 2/3 (+1p) | WINS | +0.17 | $0.0515 | $0.0177 |
+| stress-testing-agent-changes | 3/3 | 3/3 | TIE | +0.00 | $0.0662 | $0.0292 |
+| tracking-deficiencies | 3/3 | 0/3 (+2p) | WINS | +0.67 | $0.0468 | $0.0323 |
+| using-nuclear-grade | 2/3 | 0/3 | WINS | +0.67 | $0.0590 | $0.0227 |
+| vetting-outside-code-and-models | 3/3 | 3/3 | TIE | +0.00 | $0.0394 | $0.0222 |
 
 ### Per-skill detail
 
@@ -718,8 +720,9 @@ We're considering switching our content-moderation pipeline to a new third-party
 - **Scenario/criteria authorship is not independent** — see section 2 and the executive summary above. Treat every "WINS" and "TIE" as provisional until someone outside this effort has read the scenario and criterion and agrees it's a fair test.
 - **A TIE means "this specific scenario didn't discriminate," not "the skill has no value."** Most ties are ceiling effects: 11 of the 13 tied skills in the 27-skill batch are 3/3-vs-3/3 (both conditions already fully satisfied the criterion) — the base model may already do the right thing on the case tested; a harder or subtler scenario might reveal a gap this one didn't (this is exactly what Gate 1 in the follow-up work is for). The remaining 2 ties (`handing-off-work`, `organizing-project-folders`) are 0/3-vs-0/3 floor ties, covered in their own bullet below.
 - **This benchmark tests decision/response behavior under a scenario prompt, not end-to-end codebase execution.** Runs use an empty isolated working directory with read-only tools and nothing real to find, which is appropriate for decision-quality prompts ("is this ready to ship," "what record do we need") but some scenarios ask the model to act on or inspect a repo. `using-nuclear-grade`'s `without_skill` baseline includes trials where the model asked for the missing files it expected to edit rather than classifying the change's rigor tier at all — a legitimate response to an empty sandbox, but not the same thing as testing what the model would do with a real codebase in front of it. That specific skill's detail section in section 5 shows the raw responses; treat its result as weaker evidence than skills whose scenarios are self-contained.
-- **Two skills failed on both sides** (`handing-off-work`, `organizing-project-folders`, both 0/3 YES). That is a flag that the pass criterion may be stricter than what "adds value" actually requires (both got partial credit consistently), not proof the skill is worthless.
-- **The one `LOSES` result** (`creating-change-records`, 2/3+1partial vs 3/3) is a marginal call on an already near-ceiling task — see its detail section above for the grader's actual reasoning before treating it as a real regression.
+- **Two skills failed on both sides** (`handing-off-work`, `organizing-project-folders`, both 0/3 YES on the strict rule). This is a flag that the pass criterion may be stricter than what "adds value" actually requires, not proof the skill is worthless — but the two are not equivalent under the weighted lens above. `handing-off-work` flips to a weighted WIN (0/3 PARTIAL without the skill → 3/3 PARTIAL with it — a real, consistent movement the strict count hides). `organizing-project-folders` does not flip (3/3 PARTIAL in both conditions — no directional signal either way).
+- **A cohort of 6 skills sit on the thinnest possible margin: a single trial's difference, riding on one PARTIAL grade.** `breaking-down-the-work`, `checking-source-claims`, `double-checking-before-acting`, `questioning-attitude`, and `staying-on-mission` are called WINS on a 3/3-vs-2/3(+1 partial) pattern; `creating-change-records` is called the one LOSES on the mirror-image 2/3(+1 partial)-vs-3/3 pattern. All six have the same weighted-delta magnitude (±0.167) — the only difference is sign. Applying the same n=3 skepticism to all six symmetrically: none of them, including the LOSES call, should be read as a settled result. Relabeling only the inconvenient one as "noise" while keeping the other five as clean wins would be worse than leaving all six as provisional single-trial-margin calls, which is what this report does.
+- **The cost/benefit tradeoff is real and unresolved by this pilot.** Every skill costs more per call than the plain prompt, from roughly +10% to over +200% (`recording-a-known-good-version`: $0.0378 → $0.0872; `using-nuclear-grade`: $0.0227 → $0.0590). On the 13 tied skills that cost buys nothing measured here. This report does not attempt to weigh "is the measured gain worth the cost" — that's a product decision for whoever adopts these skills (accept the overhead, rewrite the skill to be leaner, or drop it for that use case), not a conclusion this data supports on its own. Any claim about what future engineering work will do to reduce this overhead is out of scope for this report — it documents what was measured, not a roadmap.
 - **Cost figures are per-call totals from Claude Code's own accounting** (`total_cost_usd` in the `--output-format json` response), including prompt-cache creation/read charges, not a controlled minimal-token measurement.
 
 ## 8. How to independently reproduce or extend this

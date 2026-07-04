@@ -1,0 +1,6 @@
+{
+  "variant": "old_description",
+  "trial": 2,
+  "chosen_skill": "handing-off-work",
+  "reasoning": "The user is transferring unfinished, mid-task work to a fresh agent instance and needs to communicate state, what changed, remaining scope, and authority limits \u2014 exactly what handing-off-work is designed for, as opposed to briefing-an-agent which is more about preparing initial focused context for a task handoff rather than resuming interrupted work with closed-loop state."
+}

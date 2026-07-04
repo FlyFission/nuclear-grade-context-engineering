@@ -1,0 +1,62 @@
+[
+  {
+    "variant": "new_description",
+    "trial": 1,
+    "chosen_skill": "handing-off-work",
+    "reasoning": "The session was cut off mid-task and needs to transfer to a fresh agent with state, remaining scope, and authority limits \u2014 exactly the closed-loop handoff scenario this skill covers, as opposed to briefing a new agent starting a fresh task."
+  },
+  {
+    "variant": "new_description",
+    "trial": 4,
+    "chosen_skill": "handing-off-work",
+    "reasoning": "This is a mid-task transfer of unfinished work from a cut-off session to a new agent instance, requiring state, what's done/changed/remaining, and authority limits \u2014 exactly what handing-off-work is for, whereas briefing-an-agent is for starting fresh work rather than continuing interrupted work."
+  },
+  {
+    "variant": "new_description",
+    "trial": 2,
+    "chosen_skill": "handing-off-work",
+    "reasoning": "This is a mid-task transfer of unfinished work from a cut-off session to a fresh agent, requiring state, what's done/changed/left, and authority limits \u2014 exactly what handing-off-work covers, as opposed to briefing-an-agent which is for starting fresh (not already-open) work."
+  },
+  {
+    "variant": "old_description",
+    "trial": 4,
+    "chosen_skill": "handing-off-work",
+    "reasoning": "This is exactly a mid-task transfer to a new owner (a fresh agent instance) requiring a closed-loop briefing of what's done, what changed, what's left, and authority limits \u2014 the defining use case for handing-off-work, as opposed to briefing-an-agent which is for starting fresh work, not resuming interrupted work."
+  },
+  {
+    "variant": "old_description",
+    "trial": 1,
+    "chosen_skill": "handing-off-work",
+    "reasoning": "This is a mid-task handoff of unfinished work to a fresh agent instance, requiring a closed-loop briefing of state, changes, remaining scope, and authority limits \u2014 exactly what handing-off-work is designed for."
+  },
+  {
+    "variant": "old_description",
+    "trial": 2,
+    "chosen_skill": "handing-off-work",
+    "reasoning": "The user is transferring unfinished, mid-task work to a fresh agent instance and needs to communicate state, what changed, remaining scope, and authority limits \u2014 exactly what handing-off-work is designed for, as opposed to briefing-an-agent which is more about preparing initial focused context for a task handoff rather than resuming interrupted work with closed-loop state."
+  },
+  {
+    "variant": "old_description",
+    "trial": 3,
+    "chosen_skill": "handing-off-work",
+    "reasoning": "This is exactly a mid-task interruption transferring ownership to a fresh agent instance, requiring a closed-loop briefing of state, what's done, what changed, remaining scope, and authority limits \u2014 the precise use case for handing-off-work."
+  },
+  {
+    "variant": "new_description",
+    "trial": 3,
+    "chosen_skill": "handing-off-work",
+    "reasoning": "The session is being cut off mid-task and needs to transfer to a fresh agent instance, which requires a closed-loop briefing of what's done, what changed, what's remaining, and authority limits \u2014 exactly what handing-off-work is designed for, unlike briefing-an-agent which is for starting fresh work rather than transferring in-progress work."
+  },
+  {
+    "variant": "old_description",
+    "trial": 5,
+    "chosen_skill": "handing-off-work",
+    "reasoning": "This is a case of transferring unfinished, cut-off work to a new agent instance who needs state, changes, remaining scope, and authority limits \u2014 exactly what handing-off-work is designed for."
+  },
+  {
+    "variant": "new_description",
+    "trial": 5,
+    "chosen_skill": "handing-off-work",
+    "reasoning": "The session is being cut off mid-task and work must transfer to a fresh agent instance, which is exactly the closed-loop handoff scenario (state, changes, remaining scope, authority limits) that handing-off-work is designed for, rather than briefing a new agent starting fresh work."
+  }
+]

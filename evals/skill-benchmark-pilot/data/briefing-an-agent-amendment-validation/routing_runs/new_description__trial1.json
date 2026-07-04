@@ -1,0 +1,6 @@
+{
+  "variant": "new_description",
+  "trial": 1,
+  "chosen_skill": "handing-off-work",
+  "reasoning": "The session was cut off mid-task and needs to transfer to a fresh agent with state, remaining scope, and authority limits \u2014 exactly the closed-loop handoff scenario this skill covers, as opposed to briefing a new agent starting a fresh task."
+}

@@ -1,0 +1,56 @@
+#!/usr/bin/env python3
+import json
+import re
+import subprocess
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
+
+BASE = Path(__file__).parent
+RUNS_DIR = BASE / "runs"
+WORK_DIR = BASE / "work"
+SKILLS_ROOT = Path("/home/user/nuclear-grade-context-engineering/skills")
+TASKS = json.loads((BASE / "task.json").read_text())
+TRIALS = 5
+MODEL = "claude-sonnet-5"
+
+def extract_skill_body(skill_name):
+    text = (SKILLS_ROOT / skill_name / "SKILL.md").read_text()
+    parts = re.split(r"^---$", text, flags=re.MULTILINE)
+    return "---".join(parts[2:]).strip()
+
+def run_one(task_key, skill_name, condition, trial):
+    scenario = TASKS[task_key]["scenario_prompt"]
+    cwd = WORK_DIR / f"{task_key}_{condition}_{trial}"
+    cwd.mkdir(parents=True, exist_ok=True)
+    cmd = ["claude", "-p", "--output-format", "json", "--model", MODEL,
+           "--safe-mode", "--tools", "Read,Glob,Grep", "--no-session-persistence",
+           "--max-budget-usd", "0.50"]
+    if condition == "with_skill":
+        cmd += ["--append-system-prompt", extract_skill_body(skill_name)]
+    out_path = RUNS_DIR / f"{task_key}__{condition}__trial{trial}.json"
+    if out_path.exists():
+        return json.loads(out_path.read_text())
+    proc = subprocess.run(cmd, input=scenario, capture_output=True, text=True, cwd=str(cwd), timeout=180)
+    record = json.loads(proc.stdout.strip())
+    record["_task"] = task_key
+    record["_condition"] = condition
+    record["_trial"] = trial
+    out_path.write_text(json.dumps(record, indent=2))
+    return record
+
+def main():
+    RUNS_DIR.mkdir(exist_ok=True)
+    WORK_DIR.mkdir(exist_ok=True)
+    jobs = []
+    for cond in ["with_skill", "without_skill"]:
+        for trial in range(1, TRIALS+1):
+            jobs.append(("briefing-an-agent-true-niche", "briefing-an-agent", cond, trial))
+    with ThreadPoolExecutor(max_workers=8) as ex:
+        futs = {ex.submit(run_one, *j): j for j in jobs}
+        for fut in as_completed(futs):
+            j = futs[fut]
+            rec = fut.result()
+            print(j, "->", "ERR" if rec.get("is_error") else "ok")
+
+if __name__ == "__main__":
+    main()

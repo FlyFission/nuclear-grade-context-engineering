@@ -1,0 +1,6 @@
+{
+  "variant": "old_description",
+  "trial": 5,
+  "chosen_skill": "handing-off-work",
+  "reasoning": "This is a case of transferring unfinished, cut-off work to a new agent instance who needs state, changes, remaining scope, and authority limits \u2014 exactly what handing-off-work is designed for."
+}

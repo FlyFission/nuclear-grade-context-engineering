@@ -1,0 +1,6 @@
+{
+  "variant": "old_description",
+  "trial": 4,
+  "chosen_skill": "handing-off-work",
+  "reasoning": "This is exactly a mid-task transfer to a new owner (a fresh agent instance) requiring a closed-loop briefing of what's done, what changed, what's left, and authority limits \u2014 the defining use case for handing-off-work, as opposed to briefing-an-agent which is for starting fresh work, not resuming interrupted work."
+}

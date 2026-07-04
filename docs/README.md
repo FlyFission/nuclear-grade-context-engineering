@@ -20,6 +20,7 @@ These docs have two parts. First, learn how to use the workflow. Second, look up
 | Manage controlled configuration | [`02-operating-system/configuration-management.md`](02-operating-system/configuration-management.md) |
 | Add HPI controls for agent work | [`02-operating-system/hpi-overlays.md`](02-operating-system/hpi-overlays.md) |
 | Lead people and agents the high-reliability way | [`01-field-guide/leadership-and-high-reliability.md`](01-field-guide/leadership-and-high-reliability.md) |
+| See how Nuclear-grade relates to the context-engineering literature and PRP template | [`01-field-guide/context-engineering-literature-crosswalk.md`](01-field-guide/context-engineering-literature-crosswalk.md) |
 | Place authority and declare intent | [`02-operating-system/authority-and-intent.md`](02-operating-system/authority-and-intent.md) |
 | Keep the actor from grading its own work | [`02-operating-system/actor-evidence-independence.md`](02-operating-system/actor-evidence-independence.md) |
 | Scale rigor by risk tier | [`02-operating-system/risk-tiers-and-modes.md`](02-operating-system/risk-tiers-and-modes.md) |

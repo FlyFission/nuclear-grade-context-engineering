@@ -18,6 +18,25 @@ It exists because Nuclear-grade is a way to control the raw power of an AI or LL
 
 The research grounding — why small, ordered context outperforms big context, and the named ways a context window fails — is in [`context-window-discipline.md`](context-window-discipline.md).
 
+### What a context pack is made of
+
+The public context-engineering literature decomposes a context payload into six components
+(instructions, knowledge, tools, memory, state, and query — see the survey named in
+[`../01-field-guide/context-engineering-literature-crosswalk.md`](../01-field-guide/context-engineering-literature-crosswalk.md)).
+A context pack carries all six, so the list doubles as a completeness check: if a pack cannot say
+what fills a slot, that slot is being left to chance.
+
+| Component | Where it lives in the pack (§3 schema) |
+|---|---|
+| Instructions | Role, mission anchor, charter articles, forbidden actions |
+| Knowledge | Basis summary, required evidence, source-lineage excerpts |
+| Tools | The commands/tools and authority in §5 |
+| Memory | Baselines, OPEX, and open deficiencies pulled in via [`durable-memory.md`](durable-memory.md) |
+| State | Current phase, last completed action, changed conditions |
+| Query | Objective and critical next action |
+
+This is a lens on the schema below, not a new format. The pack stays one focused bundle.
+
 ---
 
 ## 2. Activation threshold

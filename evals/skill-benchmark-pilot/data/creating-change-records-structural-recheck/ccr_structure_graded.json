@@ -1,0 +1,114 @@
+[
+  {
+    "round": "round1",
+    "condition": "with_skill",
+    "trial": 2,
+    "meets_criteria": "YES",
+    "quote": "What a Standard record needs to say, specifically for this swap:\n\n- **`risk.md`** \u2014 Why this is high-stakes despite being a config change...\n- **`basis.md`** \u2014 What \"safe\" means for this agent...\n- **`plan.md`** \u2014 The rollout plan...\n- **`trace.md`** \u2014 Link each claim...\n- **`verification.md`** \u2014 The actual proof run...\n- **`ship.md`** \u2014 The release decision..."
+  },
+  {
+    "round": "gate1",
+    "condition": "with_skill",
+    "trial": 2,
+    "meets_criteria": "YES",
+    "quote": "Once I have those, I'll draft `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, and `ship.md` so the PR carries the real reasoning and evidence instead of a one-line summary"
+  },
+  {
+    "round": "round1",
+    "condition": "without_skill",
+    "trial": 2,
+    "meets_criteria": "NO",
+    "quote": "What you actually need is a **model change record** (separate from the PR, linked to it), containing: [lists 7 items without naming files or using status-label vocabulary]"
+  },
+  {
+    "round": "gate1",
+    "condition": "with_skill",
+    "trial": 1,
+    "meets_criteria": "YES",
+    "quote": "risk.md \u2014 mode justification (why Standard, not Quick)\n\t- `basis.md` \u2014 what the linter is actually supposed to catch, and what it doesn't (e.g., does it flag `DROP COLUMN`, table locks, missing `CONCURRENTLY`, irreversible ops?)\n\t- `plan.md` \u2014 rollout plan (canary, blast-radius limits, kill switch to fall back to human approval)\n\t- `trace.md` \u2014 link each linter rule to a claim (\"blocks destructive DDL\") and the test that proves it\n\t- `verification.md` \u2014 evidence beyond unit tests: has it been run against a corpus of known-bad migrations?\n\t- `ship.md` \u2014 release decision, rollback plan, who's on call"
+  },
+  {
+    "round": "round1",
+    "condition": "with_skill",
+    "trial": 1,
+    "meets_criteria": "YES",
+    "quote": "- **`risk.md`** \u2014 states this is an autonomous, money-moving agent, so mode = standard regardless of diff size; names what actually changes (model behavior, not just config).\n- **`basis.md`** \u2014 what must still hold true after the swap...\n- **`plan.md`** \u2014 the eval plan...\n- **`trace.md`** \u2014 links each claim...\n- **`verification.md`** \u2014 plain pass/fail per exit criterion...\n- **`ship.md`** \u2014 who approved the release..."
+  },
+  {
+    "round": "round1",
+    "condition": "without_skill",
+    "trial": 1,
+    "meets_criteria": "NO",
+    "quote": "The response does not explicitly name any of the 6 specified files (risk.md, basis.md, plan.md, trace.md, verification.md, ship.md) and does not use any of the 6 specific status-label words (pass, fail, gap, deferred, not applicable, planned) in an evidence-claim context."
+  },
+  {
+    "round": "round1",
+    "condition": "with_skill",
+    "trial": 3,
+    "meets_criteria": "YES",
+    "quote": "What a skeptical reviewer in six months would actually need to see, mapped to the Standard files:\n\n- **`risk.md`** \u2014 state why this is Standard despite the trivial diff\n- **`basis.md`** \u2014 what \"safe\" means for this agent\n- **`plan.md`** \u2014 the test plan before ship\n- **`trace.md`** \u2014 claim-to-evidence links\n- **`verification.md`** \u2014 plain pass/fail/gap per claim above, not just \"looks fine.\"\n- **`ship.md`** \u2014 the actual release decision, monitoring plan post-swap"
+  },
+  {
+    "round": "round1",
+    "condition": "without_skill",
+    "trial": 3,
+    "meets_criteria": "NO",
+    "quote": "The response is well-reasoned about model change validation but contains neither the 6 file names (risk.md, basis.md, plan.md, trace.md, verification.md, ship.md) nor the 6 status-label words (pass, fail, gap, deferred, not applicable, planned) required by the criterion."
+  },
+  {
+    "round": "gate1",
+    "condition": "with_skill",
+    "trial": 4,
+    "meets_criteria": "YES",
+    "quote": "Given the stakes (autonomous prod writes, no human gate), this isn't a Quick record \u2014 it should be **Standard mode**: `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, `ship.md`."
+  },
+  {
+    "round": "gate1",
+    "condition": "with_skill",
+    "trial": 5,
+    "meets_criteria": "YES",
+    "quote": "put together a Standard change record (`risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, `ship.md`)"
+  },
+  {
+    "round": "gate1",
+    "condition": "with_skill",
+    "trial": 3,
+    "meets_criteria": "PARTIAL",
+    "quote": "For the record's `risk.md` and `basis.md`, the honest content is something like:"
+  },
+  {
+    "round": "gate1",
+    "condition": "without_skill",
+    "trial": 2,
+    "meets_criteria": "YES",
+    "quote": "Linter tests pass... known gaps in its coverage"
+  },
+  {
+    "round": "gate1",
+    "condition": "without_skill",
+    "trial": 3,
+    "meets_criteria": "NO",
+    "quote": "I'd push back on this before drafting anything \u2014 not because of the PR description format, but because of what's being shipped. A 200-line change that lets an agent apply schema migrations to production with no human approval, gated only by a linter's dry-run check, is a significant increase in blast radius."
+  },
+  {
+    "round": "gate1",
+    "condition": "without_skill",
+    "trial": 4,
+    "meets_criteria": "YES",
+    "quote": "Dry-run linter tests pass... That gap is exactly the kind of thing a PR description should surface so reviewers can decide if it's an acceptable risk"
+  },
+  {
+    "round": "gate1",
+    "condition": "without_skill",
+    "trial": 5,
+    "meets_criteria": "NO",
+    "quote": "This doesn't need to block shipping for long \u2014 it needs a real PR description now, not later. I'd suggest writing one that actually covers: what triggers the migration, what the linter checks (and known gaps), failure/rollback behavior, and how to disable it."
+  },
+  {
+    "round": "gate1",
+    "condition": "without_skill",
+    "trial": 1,
+    "meets_criteria": "YES",
+    "quote": "the linter's unit tests pass ... A thin PR description here isn't just a paperwork gap"
+  }
+]

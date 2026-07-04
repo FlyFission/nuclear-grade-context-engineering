@@ -1,0 +1,62 @@
+[
+  {
+    "condition": "with_skill",
+    "trial": 3,
+    "meets_criteria": "YES",
+    "quote": "| Claim | Support type | Verification type | Status |\n|---|---|---|---|\n| \"All 42 tests pass\" | source claim (agent's own report) | self-check | `gap` \u2014 not reproduced by anyone else |"
+  },
+  {
+    "condition": "with_skill",
+    "trial": 1,
+    "meets_criteria": "YES",
+    "quote": "| Claim | Support type | Status |\n|---|---|---|\n| \"All 42 tests pass\" | Source claim (agent's report of its own run) | **gap** \u2014 unverified by anyone but the actor |\n| \"Correctly blocks abuse patterns under load\" | Source claim, no artifact (no load-test logs, no numbers) | **gap** |\n| \"Production-ready and safe to merge\" | Overreaching claim \u2014 no security/DoS/edge-case review, no independent check | **fail** (claim exceeds its evidence) |"
+  },
+  {
+    "condition": "with_skill",
+    "trial": 5,
+    "meets_criteria": "YES",
+    "quote": "| Claim | Support type | Status | Why |\n|---|---|---|---|\n| \"All 42 tests pass\" | source claim (agent's narration) | **gap** | No independent rerun; test output/logs not attached for anyone else to inspect |"
+  },
+  {
+    "condition": "with_skill",
+    "trial": 2,
+    "meets_criteria": "YES",
+    "quote": "| Claim | Support type | Status | Note |\n|---|---|---|---|\n| \"All 42 tests pass\" | source claim (agent's own narration) | gap | No one has rerun the suite independently; log/output not attached |\n| \"Correctly blocks abuse patterns under load\" | source claim | gap | Unit tests passing \u2260 load behavior proven; no load-test artifact cited |\n| \"Production-ready and safe to merge\" | unowned assertion | overreaching | This is a release/decision-authority statement, not something test output can establish on its own |"
+  },
+  {
+    "condition": "without_skill",
+    "trial": 2,
+    "meets_criteria": "NO",
+    "quote": "A few reasons this matters here specifically:\n\n- **Same-agent bias**: the agent that wrote the code also decided what \"passing\" means...\n- **\"42 tests pass\" isn't verifiable from the write-up alone**...\n- **\"Blocks abuse patterns under load\" and \"production-ready\" are strong claims**..."
+  },
+  {
+    "condition": "with_skill",
+    "trial": 4,
+    "meets_criteria": "YES",
+    "quote": "| Claim | Support type | Status |\n|---|---|---|\n| \"All 42 tests pass\" | Actor's own narration of a test run it executed itself | `gap` \u2014 unverified; needs someone else (or CI, if genuinely independent of the agent's control) to rerun and confirm the actual output |"
+  },
+  {
+    "condition": "without_skill",
+    "trial": 3,
+    "meets_criteria": "NO",
+    "quote": "What I'd do before merging:\n- Actually re-run the test suite yourself (or have me do it) and read the output directly, don't take the count on faith.\n- Read the diff, especially the concurrency/state-handling logic..."
+  },
+  {
+    "condition": "without_skill",
+    "trial": 1,
+    "meets_criteria": "PARTIAL",
+    "quote": "What I'd recommend before merging: ... Re-run the test suite independently (not just trust the reported \"42/42\") and inspect what the tests assert."
+  },
+  {
+    "condition": "without_skill",
+    "trial": 4,
+    "meets_criteria": "NO",
+    "quote": "The response is organized as a numbered list of reasoning points, but each is developed as flowing prose paragraphs, not as structured rows (table-like or clearly delineated claim | evidence pairs). None of the required status labels (pass, fail, gap, deferred, not applicable, or planned) appear anywhere in the response."
+  },
+  {
+    "condition": "without_skill",
+    "trial": 5,
+    "meets_criteria": "PARTIAL",
+    "quote": "The response uses bullet points with claim labels and discusses distinctions between claims and verification needs, but lacks the required status labels (pass, fail, gap, etc.) and formal claim-to-evidence row structure."
+  }
+]

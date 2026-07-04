@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Run with-skill vs without-skill trials for every skill in all_skill_tasks.json."""
 import json
+import re
 import subprocess
 import sys
-import re
-from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
 
 BASE = Path(__file__).parent
 RUNS_DIR = BASE / "runs_all"

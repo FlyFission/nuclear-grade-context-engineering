@@ -132,9 +132,6 @@ task_names = {"task1_thin_wrapper": "Thin pass-through wrapper",
               "task2_shared_leak": "Feature logic leaking into shared module",
               "task3_clever_indirection": "Clever dispatch table vs. plain if/elif"}
 for task_id, label in task_names.items():
-    for cond_label, cond in [("With skill", "with_skill"), ("Without skill", "without_skill")]:
-        pass
-for task_id, label in task_names.items():
     row = {}
     for cond in ["with_skill", "without_skill"]:
         sub = [r for r in rcq_graded if r["task"] == task_id and r["condition"] == cond]

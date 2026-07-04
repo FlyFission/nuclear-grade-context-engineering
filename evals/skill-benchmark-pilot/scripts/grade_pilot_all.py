@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 """Blind-grade every run in runs_all/ against its skill's pre-registered pass_criteria."""
 import json
-import re
-import subprocess
 import statistics as stats
-from pathlib import Path
+import subprocess
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
 
 BASE = Path(__file__).parent
 RUNS_DIR = BASE / "runs_all"

@@ -1,6 +1,6 @@
 ---
 name: proving-claims
-description: Maps claims to evidence, statuses, gaps, tests, evals, reviews, and traces, and narrows anything unsupported into an explicit non-claim. Use when a packet asserts something a reviewer must trust. Do not use to invent evidence that does not exist, or to treat green CI as proof of unrelated claims.
+description: Builds claim-to-evidence trace rows with statuses, gaps, tests, evals, reviews, and narrower non-claims. Use when a packet asserts something a reviewer must trust. Do not use to make the final ship decision, judge public legal wording, or invent evidence that does not exist.
 ---
 
 # Proving Claims
@@ -9,11 +9,13 @@ description: Maps claims to evidence, statuses, gaps, tests, evals, reviews, and
 
 Evidence should answer named claims. It should not just create a vague sense that the change is fine. This skill turns each claim into a proof you can trace. It keeps six things apart: a fact, an assumption, an unknown, a source claim (something a source says), local proof (something you checked yourself), and decision authority (who gets to decide).
 
+Boundary: this skill builds the claim-to-evidence trace that feeds other decisions. It does not decide whether to ship (`checking-release-readiness`), determine whether public legal/safety wording overpromises (`checking-legal-and-safety-wording`), validate source lineage (`checking-source-claims`), or create packet files (`creating-change-records`).
+
 ## Decision contract
 
 - **Claim checked:** every material claim is tied to evidence, a stated gap, or a deliberate deferral, no claim reaches past its evidence, and the load-bearing claim's evidence is reproducible by an independent party or independently authored — not the actor's own narration.
 - **Artifact observed:** `basis.md`, test, and review evidence -> claim-to-evidence rows with a status (`pass`/`fail`/`gap`/`deferred`/`not applicable`/`planned`) in `trace.md`/`verification.md`.
-- **Decision affected:** warn -- the release posture the `ship.md` decision weighs.
+- **Decision affected:** warn -- the evidence posture that later `ship.md` release-readiness weighs.
 - **Failure class:** overreaching-claim (a claim stated past its evidence, or a `fail`/unowned `gap` carried as shippable).
 - **Next action:** record the gap as residual risk for `ship.md`; a `fail` or unowned `gap` escalates to block.
 
@@ -26,8 +28,9 @@ Evidence should answer named claims. It should not just create a vague sense tha
 
 ## When Not to Use
 
-- The claim is purely about wording and carries no engineering or trust weight.
-- The request is for formal verification and validation or certification. This skill does not provide those.
+- The request is to make the final ship/defer/block decision; use `checking-release-readiness` after the trace is built.
+- The request is to judge public legal, safety, security, certification, or compliance wording; use `checking-legal-and-safety-wording`.
+- The request is to validate citation lineage or source authority; use `checking-source-claims`.
 
 ## Inputs
 

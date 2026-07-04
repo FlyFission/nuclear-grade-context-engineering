@@ -1,0 +1,79 @@
+{
+  "source": "PR #62 draft, reviewed from /tmp/ngce-pr62 on 2026-07-04",
+  "claim_boundary": "Internal, skill-informed pilot evidence only; scenarios and pass criteria were not independently authored and do not prove broad skill efficacy.",
+  "round1": {
+    "summary": "13 wins, 13 ties, 1 loss across 27 skills at n=3 per cell, plus reviewing-code-quality pilot gain on 1 of 3 tasks.",
+    "wins": [
+      "breaking-down-the-work",
+      "checking-source-claims",
+      "choosing-what-to-control",
+      "closing-stale-packets",
+      "declaring-intent",
+      "double-checking-before-acting",
+      "learning-from-experience",
+      "questioning-attitude",
+      "recording-a-known-good-version",
+      "reporting-shared-defects",
+      "staying-on-mission",
+      "tracking-deficiencies",
+      "using-nuclear-grade"
+    ],
+    "ties": [
+      "briefing-an-agent",
+      "checking-legal-and-safety-wording",
+      "checking-release-readiness",
+      "checking-what-a-change-affects",
+      "deciding-who-decides",
+      "handing-off-work",
+      "organizing-project-folders",
+      "proving-claims",
+      "rating-change-risk",
+      "recording-what-an-agent-did",
+      "responding-to-incidents",
+      "stress-testing-agent-changes",
+      "vetting-outside-code-and-models"
+    ],
+    "losses": ["creating-change-records"],
+    "separate_pilot": {
+      "reviewing-code-quality": "Gain on 1 of 3 planted-defect tasks; 2 of 3 tasks tied baseline."
+    }
+  },
+  "gate1": {
+    "summary": "Retested 14 round-1 tie/loss skills at n=5 per cell on skill-derived hard cases. 11 became wins; briefing-an-agent and proving-claims stayed flat ties; creating-change-records improved from loss to tie with partial-credit movement.",
+    "wins": [
+      "checking-legal-and-safety-wording",
+      "checking-release-readiness",
+      "checking-what-a-change-affects",
+      "deciding-who-decides",
+      "handing-off-work",
+      "organizing-project-folders",
+      "rating-change-risk",
+      "recording-what-an-agent-did",
+      "responding-to-incidents",
+      "stress-testing-agent-changes",
+      "vetting-outside-code-and-models"
+    ],
+    "ties": ["briefing-an-agent", "creating-change-records", "proving-claims"],
+    "substantive_spot_checked": ["checking-what-a-change-affects"],
+    "phrase_bar_spot_checked": ["deciding-who-decides"],
+    "amended_in_pr62": ["briefing-an-agent"]
+  },
+  "known_overlap_pairs": [
+    ["briefing-an-agent", "handing-off-work", "Both claimed handoff/resume territory before PR #62 narrowed briefing-an-agent."],
+    ["proving-claims", "checking-release-readiness", "Both can judge evidence status; release-readiness owns ship/block/defer."],
+    ["proving-claims", "checking-source-claims", "Both can handle public/source claims; proving-claims should build trace, source-claims should judge lineage."],
+    ["proving-claims", "checking-legal-and-safety-wording", "Both can catch overclaiming; legal/safety owns public assurance boundary."],
+    ["creating-change-records", "proving-claims", "Packet scaffolding versus claim-to-evidence adequacy."],
+    ["using-nuclear-grade", "rating-change-risk", "Router versus detailed mode/risk classification."],
+    ["using-nuclear-grade", "questioning-attitude", "Always-first router versus skeptical assumptions screen."],
+    ["choosing-what-to-control", "checking-what-a-change-affects", "Controlled-item inventory versus downstream impact screen."],
+    ["checking-what-a-change-affects", "recording-a-known-good-version", "Impact before change versus accepted baseline after decision."],
+    ["checking-source-claims", "checking-legal-and-safety-wording", "Source lineage versus public legal/safety assurance boundary."],
+    ["reporting-shared-defects", "tracking-deficiencies", "Outward notice versus standing deficiency register."],
+    ["deciding-who-decides", "declaring-intent", "Authority placement versus pre-action intent declaration."],
+    ["declaring-intent", "double-checking-before-acting", "Intent/abort plan versus exact immediate target/result self-check."],
+    ["responding-to-incidents", "learning-from-experience", "Live stabilization versus post-event durable learning."],
+    ["learning-from-experience", "tracking-deficiencies", "Lesson-to-control update versus persistent known-problem ownership."],
+    ["recording-what-an-agent-did", "stress-testing-agent-changes", "Execution trace versus adversarial pre-release probe record."]
+  ]
+}

@@ -1,13 +1,15 @@
 ---
 name: briefing-an-agent
-description: Prepares focused context for an AI agent, reviewer, verifier, or releaser, with a clear role, goal anchor, authority, evidence to produce, forbidden actions, and stop conditions. Use when handing off or resuming work that matters. Do not use for a tiny self-contained task that needs no handoff.
+description: Prepares focused context before an AI agent, reviewer, verifier, or releaser acts, with role, goal anchor, authority, evidence, forbidden actions, and stop conditions. Use for context packaging before work or review. Do not use as the turnover record for unfinished work; use handing-off-work.
 ---
 
 # Briefing an Agent
 
 ## Overview
 
-A context pack gives an agent or a reviewer the right focused information, and nothing extra. It states the role, the mode, the question to decide, the goal, the files affected, the evidence to produce, the approvals, the actions that are off limits, where the ideas came from, the most important next action, and the handoff state.
+A context pack gives an agent or a reviewer the right focused information, and nothing extra. It states the role, the mode, the question to decide, the goal, the files affected, the evidence to produce, the approvals, the actions that are off limits, where the ideas came from, and the most important next action.
+
+Boundary: this skill packages context before an actor starts or reviews work. It is not the durable turnover record for open work; when responsibility transfers with unfinished actions, changed conditions, or proof gaps, use `handing-off-work` and link that turnover record from the brief.
 
 A good brief is how you supply competence and clarity so the agent can decide well rather than be micromanaged: name what good looks like, and state the decision rights — what it may decide at the edge and what it must escalate. Authority that outruns the clarity in the brief is the setup for a confident, wrong action.
 
@@ -24,12 +26,12 @@ A good brief is how you supply competence and clarity so the agent can decide we
 - An AI agent will edit files, run commands, call tools, or prepare release evidence.
 - A reviewer needs a one-screen summary of a Standard change record.
 - A long research or build thread has to be boiled down into the context needed to act.
-- Work is resumed, handed off, or transferred, and the next owner needs a clean briefing.
+- Work is resumed and the actor needs a context pack that links to a separate turnover record.
 
 ## When Not to Use
 
 - The task is a small Quick change, and all the context is already in `risk.md` and `proof.md`.
-- The agent has no power to act and only needs a file explained.
+- Responsibility is transferring with open work, changed conditions, proof gaps, or required incoming-owner confirmation; use `handing-off-work` and link its turnover record.
 
 ## Inputs
 
@@ -42,24 +44,24 @@ A good brief is how you supply competence and clarity so the agent can decide we
 
 1. Name the role, the question to decide, and the goal. Carry the goal anchor (the goal, the signs of success, and the non-goals, meaning what is out of scope) so it survives a context reset. Name who is affected by the work and anyone who must be consulted, so the brief carries the stakes, not just the task. See `staying-on-mission`.
 2. Include only the record files, affected files, source rows, and evidence commands needed for the next decision.
-3. State the last action that finished, what conditions changed, the most important next action, the likely mistake, and how to guard against it.
+3. State the most important next action, the likely mistake, and how to guard against it. If the next action depends on open turnover facts, link the `handing-off-work` record instead of recreating it here.
 4. State the current phase: explore, candidate, audit, or accept.
 5. State the agent's power over files, commands, the network, credentials, approvals, and the release.
-6. State the claims that are off limits, the targets not to touch, when to stop, and whether a handoff is needed.
+6. State the claims that are off limits, the targets not to touch, and when to stop.
 7. Link the context pack back to the record and the mode rules that apply.
-8. Make the incoming owner confirm the handoff when responsibility transfers.
+8. If responsibility is changing hands, do not make the context pack carry the turnover by itself; create or link the `handing-off-work` record and require incoming-owner confirmation there.
 
 ## Outputs
 
 - A context-pack section or file.
 - Clear limits on the agent's power.
 - The next action and the evidence required.
-- The last action that finished, the conditions that changed, and a handoff prompt that asks for confirmation back, when one is needed.
+- Links to turnover or handoff records when open work is changing owners.
 
 ## Verification
 
 - A reader can answer what they may do, what must stay true, what evidence is required, and when to stop.
-- An agent that resumes or takes over can tell where to pick up and what changed.
+- An agent that resumes or takes over can find the linked turnover record when open work or changed conditions matter.
 - The context pack does not ask anyone to load the whole repo or all the standards without a reason.
 
 ## Escalation

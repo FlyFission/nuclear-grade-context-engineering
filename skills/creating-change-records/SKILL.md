@@ -1,13 +1,13 @@
 ---
 name: creating-change-records
-description: Creates or updates Quick or Standard change records, adds the required files, and refreshes what each claim must prove for an evidence-backed pull request. Use when starting or revising a change record. Do not use for a one-off throwaway script, or for work that belongs in an existing record rather than a new one.
+description: Creates or updates Quick or Standard change-record file structures, required links, status labels, and validator receipts for evidence-backed work. Use when starting or repairing a packet. Do not use to choose the mode, prove claims, or decide whether a packet should ship.
 ---
 
 # Creating Change Records
 
 ## Overview
 
-A change record keeps the whole story in Git, together: the scope, what the change must do, the plan, the trace from claim to evidence, the proof, and the release decision. Use the smallest record that still lets a doubting reviewer decide.
+A change record keeps the whole story in Git, together: the scope, what the change must do, the plan, the trace from claim to evidence, the proof, and the release decision. This skill owns the packet shell, required files, links, status labels, and validator pass/fail. It does not choose the change mode (`rating-change-risk`), decide evidence adequacy (`proving-claims`), or make the release decision (`checking-release-readiness`). Use the smallest record that still lets a doubting reviewer decide.
 
 ## Decision contract
 
@@ -26,8 +26,9 @@ A change record keeps the whole story in Git, together: the scope, what the chan
 
 ## When Not to Use
 
-- The work leaves no lasting artifact and no need for review.
-- The request is only to browse or explain existing docs.
+- The request is to choose Quick vs Standard or stronger; use `rating-change-risk`.
+- The request is to decide whether the evidence proves the claims; use `proving-claims`.
+- The request is to decide ship/defer/block; use `checking-release-readiness`.
 
 ## Inputs
 

@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 13960,
+  "duration_api_ms": 13401,
+  "ttft_ms": 12204,
+  "ttft_stream_ms": 2740,
+  "time_to_request_ms": 55,
+  "time_to_request_from_spawn_ms": 1636944,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172710674.6343,
+  "num_turns": 1,
+  "result": "I won't draft that short description as a stand-in for the record \u2014 this is exactly the situation the change-record process exists for, and shipping it with a one-liner would mean the evidence gets dressed up after the fact rather than shaping the review.\n\nA few reasons this particular change warrants more than a quick note, before we even get to paperwork:\n\n- **This is a high-stakes, autonomous change**: an agent applying schema migrations to production *without human approval* is a significant increase in blast radius. \"Small diff\" and \"self-explanatory code\" don't capture the real risk surface here \u2014 that's about what the agent can now do unattended, not how many lines changed.\n- **\"Linter unit tests pass\" isn't proof the capability is safe.** Unit tests for the linter show the linter works as coded. They don't show the linter catches the migrations that matter (destructive drops, lock-heavy alters, data loss, long-running locks on hot tables), or what happens when the linter has a false negative in production.\n- **\"Watch it run for a couple weeks and backfill\" inverts the order.** If it misbehaves in week one, you want the record (rollback plan, blast radius, what was reviewed and what wasn't) written *before* that happens, not reconstructed after.\n\nGiven the stakes (autonomous prod writes, no human gate), this isn't a Quick record \u2014 it should be **Standard mode**: `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, `ship.md`.\n\nBefore I draft anything, a few things I'd want nailed down and reflected in the record itself:\n\n1. What does the dry-run linter actually check, and what's its known false-negative surface (e.g., does it catch `DROP COLUMN`, table locks, data-destructive ops)?\n2. Is there a rollback/kill-switch if a bad migration lands autonomously?\n3. What's the human escalation path if the linter flags something \u2014 does it block, or just warn?\n4. Has anyone reviewed the linter's *coverage*, not just its unit tests passing?\n\nIf you can share those (or point me at the PR/linter code), I'll help you build the actual `risk.md` and `basis.md` today so you can ship with real evidence rather than a placeholder \u2014 that's usually not much slower than writing a fake-short description, and it gives your reviewer something real to approve.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.036044599999999996,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 3683,
+    "cache_read_input_tokens": 6272,
+    "output_tokens": 753,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3683,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 753,
+        "cache_read_input_tokens": 6272,
+        "cache_creation_input_tokens": 3683,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3683
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 674,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000764,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 753,
+      "cacheReadInputTokens": 6272,
+      "cacheCreationInputTokens": 3683,
+      "webSearchRequests": 0,
+      "costUSD": 0.035280599999999995,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "e5af7e84-284f-408a-accd-8e3259bee135",
+  "_skill": "creating-change-records",
+  "_condition": "with_skill",
+  "_trial": 4
+}

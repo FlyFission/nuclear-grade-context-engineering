@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 15346,
+  "duration_api_ms": 14679,
+  "ttft_ms": 6727,
+  "ttft_stream_ms": 1526,
+  "time_to_request_ms": 61,
+  "time_to_request_from_spawn_ms": 1488314,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172561987.712,
+  "num_turns": 1,
+  "result": "The git mechanics are trivial, but the content isn't a typo fix \u2014 it's a factual claim about your company. Two things I'd check before committing:\n\n- **\"SOC 2 Type II certified\"** \u2014 this needs to be literally true and current. Misrepresenting a SOC 2 status is a real compliance/legal issue, not a wording nitpick.\n- **\"10,000+ enterprises\"** \u2014 same deal; if that number isn't accurate/verifiable, it's a false-advertising exposure.\n\n\"Trivially revertable with git\" doesn't cover this risk \u2014 the moment it's pushed to a public README, anyone (customers, auditors, journalists) can screenshot it, and reverting later doesn't undo the fact that it was published. That's the actual blast radius, not the diff size.\n\nSo: skip the \"risk assessment packet\" ceremony if you want, but don't skip a 30-second check that someone with authority (legal, compliance, whoever owns the SOC 2 report) has actually signed off on those two specific claims. If marketing already got that sign-off, then yes \u2014 just commit it plainly.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.025767900000000003,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1965,
+    "cache_read_input_tokens": 6263,
+    "output_tokens": 759,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1965,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 759,
+        "cache_read_input_tokens": 6263,
+        "cache_creation_input_tokens": 1965,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1965
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 638,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000708,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 759,
+      "cacheReadInputTokens": 6263,
+      "cacheCreationInputTokens": 1965,
+      "webSearchRequests": 0,
+      "costUSD": 0.025059900000000003,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "0d6c3281-206a-4fb2-a1b9-88cefa6d6510",
+  "_skill": "rating-change-risk",
+  "_condition": "without_skill",
+  "_trial": 5
+}

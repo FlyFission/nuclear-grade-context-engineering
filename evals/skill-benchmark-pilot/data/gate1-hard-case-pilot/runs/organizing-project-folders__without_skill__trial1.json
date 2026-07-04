@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 9684,
+  "duration_api_ms": 9248,
+  "ttft_ms": 4278,
+  "ttft_stream_ms": 2335,
+  "time_to_request_ms": 58,
+  "time_to_request_from_spawn_ms": 1445989,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172519696.6272,
+  "num_turns": 1,
+  "result": "Copying it avoids a *direct* dependency between reports and billing, but it doesn't avoid the real problem: currency formatting (rounding, locale, currency symbols) is business logic that will need to change consistently, and two independently-tweaked copies will silently drift until an invoice and a report disagree on a total.\n\nBetter option: pull it into a neutral shared location neither team owns exclusively \u2014 e.g. `shared/formatCurrency.js` or `common/utils/` at the repo root (or a proper internal package like `@yourorg/currency-utils` if you're using a monorepo tool). Both `reports/` and `billing/` import from `shared/`, but neither imports from the other, so you still get the decoupling you want without duplicating logic that should stay in sync. The tradeoff is you now need a lightweight convention for who can change `shared/` (e.g. require review from both teams, or make it small/stable enough that changes are rare).\n\nIf the two use cases are genuinely diverging (e.g. reports needs different rounding rules than billing), then copying is fine \u2014 but that's a sign they're not really \"the same function\" anymore, not a reason to duplicate a shared one.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0224169,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1983,
+    "cache_read_input_tokens": 6263,
+    "output_tokens": 527,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1983,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 527,
+        "cache_read_input_tokens": 6263,
+        "cache_creation_input_tokens": 1983,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1983
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 659,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007289999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 527,
+      "cacheReadInputTokens": 6263,
+      "cacheCreationInputTokens": 1983,
+      "webSearchRequests": 0,
+      "costUSD": 0.0216879,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "a904620a-6fc0-42d5-aa2b-0752b04c44ed",
+  "_skill": "organizing-project-folders",
+  "_condition": "without_skill",
+  "_trial": 1
+}

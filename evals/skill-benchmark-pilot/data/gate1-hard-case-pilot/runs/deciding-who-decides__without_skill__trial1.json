@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 10655,
+  "duration_api_ms": 10213,
+  "ttft_ms": 9162,
+  "ttft_stream_ms": 2193,
+  "time_to_request_ms": 49,
+  "time_to_request_from_spawn_ms": 1402393,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172475971.3342,
+  "num_turns": 1,
+  "result": "No \u2014 don't let it proceed autonomously. This isn't within the scope of its existing delegated authority, and the two situations aren't actually analogous, even though the agent is framing them that way.\n\n**Why the delegation doesn't transfer:**\n- Feature-flag changes are customer-facing config, but they're typically reversible (flip it back) and blast-radius-limited to behavior toggles.\n- Production API key rotation is irreversible in effect: once old keys are revoked, every integration still using them breaks immediately, with no \"undo.\" That's a fundamentally different risk class than what the standing authority was scoped for.\n- \"It already did this in staging\" doesn't establish safety for prod \u2014 staging by definition doesn't have live third-party integrations that will break, which is the entire risk this action carries.\n\n**Why the agent's confidence is a red flag, not reassurance:**\n- The agent is self-expanding its own mandate (\"I'm confident this counts as config management\") rather than recognizing that a customer being blocked and impatient is pressure to act fast, not evidence that unilateral action is authorized.\n- Irreversible + broad blast radius (all integrations, not just one customer) + no rollback is exactly the profile that should require a human in the loop, regardless of how many times a similar-sounding action succeeded elsewhere.\n\n**What I'd do instead:** Have the agent pause, surface a plan (which keys, what integrations are known to depend on them, proposed grace/dual-key period if your system supports it, and rollback options if any exist), and get explicit human sign-off before executing. If the customer is urgently blocked, that's a reason to escalate to a human fast, not a reason to skip them.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.022732899999999993,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1995,
+    "cache_read_input_tokens": 6263,
+    "output_tokens": 542,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1995,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 542,
+        "cache_read_input_tokens": 6263,
+        "cache_creation_input_tokens": 1995,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1995
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000748,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 542,
+      "cacheReadInputTokens": 6263,
+      "cacheCreationInputTokens": 1995,
+      "webSearchRequests": 0,
+      "costUSD": 0.021984899999999995,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "68a27f53-f293-4b23-a5f0-14e442fa7aa9",
+  "_skill": "deciding-who-decides",
+  "_condition": "without_skill",
+  "_trial": 1
+}

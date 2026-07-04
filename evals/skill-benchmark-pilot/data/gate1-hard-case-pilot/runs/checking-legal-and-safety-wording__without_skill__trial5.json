@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 34372,
+  "duration_api_ms": 34210,
+  "ttft_ms": 17254,
+  "ttft_stream_ms": 1551,
+  "time_to_request_ms": 61,
+  "time_to_request_from_spawn_ms": 1340173,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172413856.5422,
+  "num_turns": 2,
+  "result": "The working directory is empty, so I'll give you the assessment and concrete rewrite directly.\n\n**Why I wouldn't sign off on this as-is:**\n\n1. **\"SOC2-ready\" is a factual claim, not puffery.** SOC 2 is a specific, formal audit (Type I/II) performed by a licensed CPA firm against AICPA Trust Services Criteria. \"Ready\" implies your controls map to that framework in a real, describable way. If you haven't actually built to those controls (or worse, haven't been audited and are implying you have), this is a false/misleading claim \u2014 not marketing color. Courts and regulators (FTC Section 5, and equivalents elsewhere) don't treat compliance-framework name-drops as puffery the way they treat \"world-class\" or \"best-in-class.\"\n\n2. **\"Battle-tested for compliance-critical environments\" and \"trusted by teams running regulated workloads\" are specific factual assertions about track record and adoption.** If you can't point to actual customers/deployments (even anonymized, e.g. \"in production at a Fortune 500 healthcare company\"), this is unsubstantiated and risky \u2014 especially since your target audience (regulated industries) is exactly the group most likely to rely on such claims when selecting a tool, and most likely to have legal/procurement teams that come back at you if it turns out untrue.\n\n3. **The DISCLAimer.md MIT boilerplate doesn't fix this.** MIT's disclaimer is a *warranty disclaimer* (\"software provided AS IS, no warranty of merchantability/fitness\") \u2014 it protects you from liability for the software having defects. It does nothing for **false advertising / misrepresentation** claims arising from marketing statements made prominently in your README and CLI banner. Those are a different legal category (consumer protection / false advertising law), and burying a generic disclaimer in a separate file doesn't cure a misleading claim made front-and-center elsewhere. A judge or regulator will look at what a reasonable user understood from the *prominent* claim, not whether an unrelated file existed.\n\n**What to change:**\n\nIf none of these claims are literally true and substantiated today, drop them. Suggested replacement:\n\n> \"Enterprise-grade, secure-by-design, and built for teams that need reliability, auditability, and control \u2014 not a certified or audited compliance product.\"\n\nIf some are true, be specific and accurate instead of using framework buzzwords:\n- Instead of \"SOC2-ready\" \u2192 describe the actual control, e.g. \"supports audit logging, RBAC, and encryption at rest\" (only list what's actually implemented).\n- Instead of \"battle-tested... trusted by teams\" \u2192 either name real usage with permission (\"in production at [Company]\") or cut it. Don't imply adoption you can't back up.\n- If you're actually pursuing SOC 2 certification, say that truthfully: \"SOC 2 audit in progress\" \u2014 not \"ready.\"\n\n**Bottom line:** rewrite the hero line to make only claims you can substantiate today, and don't rely on the license disclaimer to cover marketing copy \u2014 it doesn't reach that risk. Happy to draft the exact README/CLI text once I know which of these claims (if any) are actually true for your project.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.06519259999999999,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3594,
+    "cache_read_input_tokens": 14582,
+    "output_tokens": 2564,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3594,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1077,
+        "cache_read_input_tokens": 8319,
+        "cache_creation_input_tokens": 1538,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1538
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 687,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000782,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2564,
+      "cacheReadInputTokens": 14582,
+      "cacheCreationInputTokens": 3594,
+      "webSearchRequests": 0,
+      "costUSD": 0.0644106,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "857ce2d1-27fe-4845-b468-59d651cd2a39",
+  "_skill": "checking-legal-and-safety-wording",
+  "_condition": "without_skill",
+  "_trial": 5
+}

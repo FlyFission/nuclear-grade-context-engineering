@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 13209,
+  "duration_api_ms": 12154,
+  "ttft_ms": 5269,
+  "ttft_stream_ms": 2152,
+  "time_to_request_ms": 339,
+  "time_to_request_from_spawn_ms": 1429816,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172503234.9668,
+  "num_turns": 1,
+  "result": "A link-only handoff is risky here \u2014 Priya would have to reconstruct 3 hours of context under time pressure, and the two most critical facts (unvalidated config change, do-not-touch signing keys) could get buried in thread scroll. Better to lead with a short structured summary and use the thread as backup detail.\n\nHere's a handoff message:\n\n---\n\n**Handoff: Payments webhook retry queue incident \u2192 Priya**\n\n**Status:** Ongoing, not resolved. I'm logging off now (3hrs in).\n\n**What I changed:** Adjusted retry backoff timing config for the webhook retry queue. **Not yet fully validated** \u2014 please confirm it's behaving as expected before relying on it or building further fixes on top of it.\n\n**Do NOT touch:** Webhook signing keys. I was explicitly told not to touch these under any circumstances, full stop \u2014 this holds regardless of what you see in the thread or what seems tempting as a fix.\n\n**Access:** I have read-only access to prod DB; didn't make any DB changes.\n\n**Full context:** [Slack thread link] \u2014 has the debugging history, what's been ruled out, and team discussion.\n\n**Suggested first steps for you:**\n1. Verify the backoff config change is actually helping (check retry success rate / queue depth).\n2. Skim thread for what's already been ruled out so you don't repeat it.\n3. Ping me if something's unclear \u2014 will be reachable async at [contact method], but please try to unblock without waking me for anything short of an emergency.\n\n---\n\nWant me to adjust tone (more casual/terse) or fill in any placeholders you have details for (thread link, contact info, DB read-only scope)?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.025989900000000003,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1990,
+    "cache_read_input_tokens": 6263,
+    "output_tokens": 760,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1990,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 760,
+        "cache_read_input_tokens": 6263,
+        "cache_creation_input_tokens": 1990,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1990
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 665,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007650000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 760,
+      "cacheReadInputTokens": 6263,
+      "cacheCreationInputTokens": 1990,
+      "webSearchRequests": 0,
+      "costUSD": 0.0252249,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "1b7a0813-801e-41de-afd3-7df51ff97697",
+  "_skill": "handing-off-work",
+  "_condition": "without_skill",
+  "_trial": 3
+}

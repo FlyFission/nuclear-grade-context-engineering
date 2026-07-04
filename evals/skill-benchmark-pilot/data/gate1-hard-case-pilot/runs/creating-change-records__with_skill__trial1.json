@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 23037,
+  "duration_api_ms": 22457,
+  "ttft_ms": 12526,
+  "ttft_stream_ms": 1600,
+  "time_to_request_ms": 54,
+  "time_to_request_from_spawn_ms": 1626850,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172700468.9814,
+  "num_turns": 1,
+  "result": "I'm not going to draft that short description \u2014 this change has red flags that argue against a backfill-later approach:\n\n- **Removes a human gate on an irreversible, high-blast-radius action.** Schema migrations against production Postgres can drop columns/tables, lock tables, or cause data loss. \"Dry-run linter\" is the *only* control standing between an autonomous agent and prod once this ships.\n- **\"Unit tests pass\" tests the linter's own logic, not its real-world coverage.** It doesn't tell a reviewer whether the linter actually catches destructive migration patterns (drops, non-backward-compatible column changes, long-lock operations, etc.) \u2014 that's the actual question at stake.\n- **\"We'll document it after watching it run for a couple weeks\" is the classic backfill trap** \u2014 if something goes wrong in week one, there's no written trail of what was reviewed, what was assumed, or what the rollback plan was.\n\nThis is exactly the profile (new autonomy for an AI agent + irreversible production action + a single automated gate) that calls for a **Standard** change record before merge, not a one-liner:\n\n- `risk.md` \u2014 mode justification (why Standard, not Quick)\n- `basis.md` \u2014 what the linter is actually supposed to catch, and what it doesn't (e.g., does it flag `DROP COLUMN`, table locks, missing `CONCURRENTLY`, irreversible ops?)\n- `plan.md` \u2014 rollout plan (canary, blast-radius limits, kill switch to fall back to human approval)\n- `trace.md` \u2014 link each linter rule to a claim (\"blocks destructive DDL\") and the test that proves it\n- `verification.md` \u2014 evidence beyond unit tests: has it been run against a corpus of known-bad migrations?\n- `ship.md` \u2014 release decision, rollback plan, who's on call\n\nWant me to draft these based on what you know about the linter's actual rule coverage? I'd need a few details: what migration patterns the linter blocks, whether there's a rollback/kill-switch mechanism, and whether it's been tested against real destructive migration examples (not just its own unit test suite).",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0488496,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 3683,
+    "cache_read_input_tokens": 6272,
+    "output_tokens": 1608,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3683,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1608,
+        "cache_read_input_tokens": 6272,
+        "cache_creation_input_tokens": 3683,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3683
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 674,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000744,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1608,
+      "cacheReadInputTokens": 6272,
+      "cacheCreationInputTokens": 3683,
+      "webSearchRequests": 0,
+      "costUSD": 0.0481056,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "dd7925c4-1e85-453e-a5a7-3575c693f5c2",
+  "_skill": "creating-change-records",
+  "_condition": "with_skill",
+  "_trial": 1
+}

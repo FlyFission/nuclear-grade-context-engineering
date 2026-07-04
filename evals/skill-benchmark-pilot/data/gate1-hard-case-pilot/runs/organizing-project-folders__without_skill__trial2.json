@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 12060,
+  "duration_api_ms": 11313,
+  "ttft_ms": 7563,
+  "ttft_stream_ms": 2489,
+  "time_to_request_ms": 51,
+  "time_to_request_from_spawn_ms": 1452095,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172525788.2798,
+  "num_turns": 1,
+  "result": "I'd avoid copying it \u2014 for money formatting specifically, silent drift between two copies (e.g. one team fixes a rounding bug, the other doesn't) is the kind of bug that's easy to miss and embarrassing when it surfaces in an invoice or financial report. Put it in a shared location neither team owns, like `shared/utils/formatCurrency.js` (or its own tiny internal package if you already publish internal packages), with both `reports/` and `billing/` importing from it.\n\nThe tradeoff: now both teams depend on a shared file, so you need a lightweight convention for who can change it (e.g. require review from both teams, or make it a stable/rarely-changed utility with tests) rather than one team owning it outright.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0239069,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1983,
+    "cache_read_input_tokens": 6263,
+    "output_tokens": 626,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1983,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 626,
+        "cache_read_input_tokens": 6263,
+        "cache_creation_input_tokens": 1983,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1983
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 659,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000734,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 626,
+      "cacheReadInputTokens": 6263,
+      "cacheCreationInputTokens": 1983,
+      "webSearchRequests": 0,
+      "costUSD": 0.0231729,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "18a1413a-ada3-4725-80d8-a5cd9734e1a3",
+  "_skill": "organizing-project-folders",
+  "_condition": "without_skill",
+  "_trial": 2
+}

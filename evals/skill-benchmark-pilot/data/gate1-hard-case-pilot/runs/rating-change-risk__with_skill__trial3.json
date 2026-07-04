@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 22200,
+  "duration_api_ms": 21736,
+  "ttft_ms": 10785,
+  "ttft_stream_ms": 1311,
+  "time_to_request_ms": 51,
+  "time_to_request_from_spawn_ms": 1478241,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172551920.708,
+  "num_turns": 1,
+  "result": "No \u2014 this doesn't qualify for the administrative floor, and it shouldn't be committed as a plain doc fix.\n\n**Why it fails the floor:** the floor requires the change to cross no trust boundary. This one does \u2014 it's a public claim about SOC 2 Type II certification and a specific customer count. The skill calls this out directly as a rationalization trap: *\"The agent only changed docs. Docs can make public claims.\"* One sentence of markdown, but it's a compliance/certification assertion and a metrics claim, both of which are tripwires regardless of diff size.\n\n**Reversibility is weaker than it looks:** git revert undoes the file, but not the exposure. Once published, the claim can be screenshotted, cached, indexed, or used by a prospect's security/procurement team to justify a purchase decision \u2014 before anyone notices it was wrong. If \"SOC 2 Type II certified\" isn't backed by an actual, current audit report, that's a false certification claim with real legal exposure (FTC/false-advertising risk, breach-of-trust with enterprise buyers, contractual liability). If the \"10,000+\" figure isn't substantiated, same problem at smaller scale.\n\n**Consequence check (top-down / bottom-up):**\n- Top-down worst case: you publish a false compliance claim before launch, a customer or auditor catches it, and it becomes a legal/PR incident right when visibility is highest.\n- Bottom-up: if this specific sentence is wrong, the failure isn't \"ugly README\" \u2014 it's \"company misrepresented its security posture publicly.\"\n\n**What I'd do instead \u2014 Standard mode, not Quick, not skip:**\n\n- **Decision question:** Are both claims (\"SOC 2 Type II certified\" and \"10,000+ enterprises\") currently true and backed by verifiable evidence (audit report/date, customer count source)?\n- **Evidence bar:** written confirmation from whoever holds the SOC 2 report (security/compliance team) and the source of the customer figure \u2014 not marketing's say-so.\n- **Required before merge:** sign-off from security/compliance (and likely legal, given it's a certification claim on a public launch asset) that the statement is accurate as worded.\n- **Proof:** link or reference to the actual SOC 2 report/attestation date in the change record, plus the source of the 10,000+ figure.\n- **Escalation trigger:** if no one can produce the audit evidence by tomorrow, the claim doesn't ship tomorrow \u2014 that's a real trigger, not a technicality.\n\nThis isn't about the size of the diff \u2014 it's that public certification claims need to be true before they're trusted-by-default. I'd hold the merge until compliance/legal confirms the wording, then it can go out as a normal commit.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.055383600000000005,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 4603,
+    "cache_read_input_tokens": 6272,
+    "output_tokens": 1678,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4603,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1678,
+        "cache_read_input_tokens": 6272,
+        "cache_creation_input_tokens": 4603,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4603
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 638,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000708,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1678,
+      "cacheReadInputTokens": 6272,
+      "cacheCreationInputTokens": 4603,
+      "webSearchRequests": 0,
+      "costUSD": 0.054675600000000005,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "4baebfbc-b5fc-41a9-93f7-2ac89a6ef4d2",
+  "_skill": "rating-change-risk",
+  "_condition": "with_skill",
+  "_trial": 3
+}

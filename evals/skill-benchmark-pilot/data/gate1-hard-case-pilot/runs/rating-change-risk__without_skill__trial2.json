@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 13635,
+  "duration_api_ms": 12066,
+  "ttft_ms": 7769,
+  "ttft_stream_ms": 1867,
+  "time_to_request_ms": 73,
+  "time_to_request_from_spawn_ms": 1482742,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172555721.3528,
+  "num_turns": 1,
+  "result": "No \u2014 the diff size is small, but the content isn't a typo fix, it's a compliance/legal claim. \"SOC 2 Type II certified\" and \"trusted by 10,000+ enterprises\" are factual assertions that need to actually be true and current; if your SOC 2 audit has lapsed, is in progress rather than complete, or the customer count is off, publishing this publicly creates real exposure (false advertising, breach of trust with prospects/auditors doing security reviews on your README, etc.) \u2014 and \"git revert\" doesn't undo the fact that people may have already screenshotted or acted on the claim.\n\nI'd skip the heavyweight risk-assessment ritual, but do get a quick yes/no confirmation from whoever owns your actual SOC 2 report (compliance/security team) that the certification is current before merging. If that's already confirmed, then yes, treat it as a normal one-line commit.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.026697900000000004,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1965,
+    "cache_read_input_tokens": 6263,
+    "output_tokens": 821,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1965,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 821,
+        "cache_read_input_tokens": 6263,
+        "cache_creation_input_tokens": 1965,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1965
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 638,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000708,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 821,
+      "cacheReadInputTokens": 6263,
+      "cacheCreationInputTokens": 1965,
+      "webSearchRequests": 0,
+      "costUSD": 0.025989900000000003,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "0603755f-49fe-447a-bad8-4d9331a81594",
+  "_skill": "rating-change-risk",
+  "_condition": "without_skill",
+  "_trial": 2
+}

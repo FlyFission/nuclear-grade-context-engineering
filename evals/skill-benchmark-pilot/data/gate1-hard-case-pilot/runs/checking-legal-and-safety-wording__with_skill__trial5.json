@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 30306,
+  "duration_api_ms": 28677,
+  "ttft_ms": 9619,
+  "ttft_stream_ms": 1907,
+  "time_to_request_ms": 63,
+  "time_to_request_from_spawn_ms": 1314153,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172387841.1843,
+  "num_turns": 2,
+  "result": "No \u2014 I can't sign off on that wording as-is, for both the README hero and the CLI `--help` banner. Here's why and what to change.\n\n**Why it doesn't hold up**\n\n- \"Enterprise-grade,\" \"SOC2-ready,\" \"battle-tested for compliance-critical environments,\" and \"trusted by teams running regulated workloads\" aren't neutral marketing color \u2014 they're specific assurance/compliance claims. \"SOC2-ready\" in particular implies an actual audit posture; \"battle-tested for compliance-critical environments\" and \"trusted... regulated workloads\" imply a track record and named/implied customers.\n- I checked for `LICENSE`, `DISCLAIMER.md`, `SECURITY.md`, and a compliance-boundaries doc in this repo and found none. So there's currently no evidence backing any of those four claims \u2014 no SOC2 report, no named regulated-industry users, no security audit. Even if those files existed, MIT + a disclaimer only covers warranty disclaim; it doesn't retroactively make an affirmative \"SOC2-ready\" claim true.\n- \"It's just marketing\" doesn't change the legal exposure \u2014 courts and regulators look at what a reasonable reader would believe from the claim, not your internal intent. A team evaluating you for a regulated workload will read \"SOC2-ready\" as a factual representation.\n- A disclaimer buried in `DISCLAIMER.md` doesn't offset a hero-section or `--help` claim. The limiting language needs to sit next to the claim itself, at the point where the user forms their expectation \u2014 top of the README and in the `--help` output, not only in a separate file.\n\n**What to change**\n\nDrop or replace each phrase with something tied to something you can actually point to:\n\n| Remove | Replace with (only if true) |\n|---|---|\n| \"Enterprise-grade\" | Specific, checkable claims: \"typed, tested (>90% coverage), CI-gated on every PR\" |\n| \"SOC2-ready\" | Remove unless you have an actual SOC2 report or a documented control mapping you can link to. If you mean \"built with common SOC2 controls in mind,\" say that exactly, and link the doc. |\n| \"battle-tested for compliance-critical environments\" | Remove, or replace with something evidenced: \"used in production by [N] projects\" (only if verifiable) |\n| \"trusted by teams running regulated workloads\" | Remove unless you have named, permissioned customer references |\n\nSuggested README hero replacement:\n\n> **[Toolkit name]** \u2014 an open-source [what it does], MIT-licensed. Typed, tested, and CI-gated. This project does not provide formal compliance certification, security audit, or regulated-use approval \u2014 see [DISCLAIMER.md](./DISCLAIMER.md).\n\nSuggested CLI `--help` banner addition (short, since it's a terminal):\n\n```\n[Toolkit name] vX.Y \u2014 MIT licensed. No compliance/certification claims \u2014 see DISCLAIMER.md.\n```\n\n**Next steps**\n- If you genuinely have a SOC2 report or named enterprise customers who've approved being referenced, that's a different situation \u2014 but it needs a link/citation, and any customer name needs their sign-off before you publish it.\n- Add one line of boundary wording to the README hero and the `--help` banner (not just `DISCLAIMER.md`) before launch.\n- If you want a formal compliance/certification claim reviewed, that needs a qualified compliance or legal professional \u2014 not something I can approve.\n\nWant me to draft the exact README hero section and `--help` banner text for you to drop in?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0635392,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 4372,
+    "cache_read_input_tokens": 16094,
+    "output_tokens": 2114,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4372,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1346,
+        "cache_read_input_tokens": 9822,
+        "cache_creation_input_tokens": 822,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 822
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 687,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000757,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2114,
+      "cacheReadInputTokens": 16094,
+      "cacheCreationInputTokens": 4372,
+      "webSearchRequests": 0,
+      "costUSD": 0.06278220000000001,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "d51ec056-b12c-405b-bccc-5e26e0f4327c",
+  "_skill": "checking-legal-and-safety-wording",
+  "_condition": "with_skill",
+  "_trial": 5
+}

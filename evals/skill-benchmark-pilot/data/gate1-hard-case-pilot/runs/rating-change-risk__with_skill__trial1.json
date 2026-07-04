@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 17655,
+  "duration_api_ms": 15857,
+  "ttft_ms": 4159,
+  "ttft_stream_ms": 1599,
+  "time_to_request_ms": 158,
+  "time_to_request_from_spawn_ms": 1469738,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172541942.4812,
+  "num_turns": 1,
+  "result": "No \u2014 this doesn't qualify for the administrative floor, and treating it as a routine typo fix understates the stakes.\n\n**Why it's not administrative:** The floor is for changes that cross no trust boundary and make no claim. \"SOC 2 Type II certified\" is a factual/legal compliance claim, and \"Trusted by 10,000+ enterprises\" is a public quantitative claim. Per the skill's own rule: *\"a non-claim typo or dead-link fix in public docs does not by itself count [toward the floor]\"* \u2014 this is the opposite of a non-claim edit. It's a claim-bearing tripwire, so it's at minimum Quick, and given what's being claimed, it should be **Standard**.\n\n**Why \"trivially revertable\" doesn't save it:** Reversibility is about the git diff, not the real-world consequence. Once published, \"SOC 2 Type II certified\" can be:\n- Screenshotted, cached, quoted in sales decks, or relied on by a customer/prospect before you ever revert it\n- A false certification claim, which carries legal/regulatory exposure (FTC, contract reps, customer due-diligence) independent of how fast you can `git revert`\n- Attributed to your company even after the commit is reverted\n\n**Decision question this needs to clear:** *Is your organization currently, verifiably SOC 2 Type II certified (valid report, in scope, not expired), and can \"10,000+ enterprises\" be substantiated?* If marketing can't produce the actual SOC 2 report and a real customer count, do not merge this \u2014 that's the whole ballgame, not a nice-to-have.\n\n**Minimum evidence bar (Standard mode):**\n- Named person (legal/compliance or whoever owns the SOC 2 report) confirms the certification is current and the auditor/scope match what's implied\n- Source for the \"10,000+\" figure\n- Sign-off from whoever owns public claims/legal, not just marketing (marketing asking for it isn't the same as marketing/legal clearing the wording)\n\n**Suggested habit:** independent check \u2014 someone other than the requester (marketing) verifies the claim against the actual audit artifact before it goes live, since this is exactly the kind of thing that's cheap to skip and expensive to be wrong about.\n\nIf you have the SOC 2 report in hand and the customer number is real and sourced, this is a fast approval, not a blocker \u2014 but skip the packet and you're one unverifiable marketing claim away from a compliance/legal problem, not a doc typo.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.04542360000000001,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 4603,
+    "cache_read_input_tokens": 6272,
+    "output_tokens": 1014,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4603,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1014,
+        "cache_read_input_tokens": 6272,
+        "cache_creation_input_tokens": 4603,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4603
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 638,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000708,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1014,
+      "cacheReadInputTokens": 6272,
+      "cacheCreationInputTokens": 4603,
+      "webSearchRequests": 0,
+      "costUSD": 0.04471560000000001,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "6cbe02ca-d0c4-4789-9f19-699c5ee95f5a",
+  "_skill": "rating-change-risk",
+  "_condition": "with_skill",
+  "_trial": 1
+}

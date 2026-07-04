@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 25305,
+  "duration_api_ms": 23459,
+  "ttft_ms": 8926,
+  "ttft_stream_ms": 1641,
+  "time_to_request_ms": 319,
+  "time_to_request_from_spawn_ms": 1317716,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172391202.2703,
+  "num_turns": 1,
+  "result": "I can't sign off on this as-is \u2014 a few of these phrases make specific, checkable claims rather than generic marketing puffery, and the MIT disclaimer doesn't protect against that.\n\n**Why the disclaimer doesn't cover it:**\nAn MIT-style DISCLAIMER.md disclaims *implied warranties* (fitness for purpose, merchantability) under contract law \u2014 it's about limiting liability if the software breaks. It does nothing for **false advertising / misrepresentation** claims, which live under a different legal theory (FTC Act \u00a75, state UDAP/consumer-protection statutes, common-law fraud). Those hinge on whether a *factual claim* was true when made, not on whether you disclaimed warranties elsewhere. Courts and regulators generally distinguish \"puffery\" (vague, unverifiable \u2014 \"powerful\", \"best-in-class\") from specific factual assertions a reasonable buyer would rely on. Your line has both, and the specific ones are the problem.\n\n**Line-by-line:**\n\n| Phrase | Risk | Why |\n|---|---|---|\n| \"Enterprise-grade\" | Low \u2014 puffery | Vague, not independently verifiable |\n| \"battle-tested\" | Low-medium | Implies real-world production usage; fine only if true |\n| \"SOC2-ready\" | **High** | SOC2 is a specific, named audit framework. \"Ready\" implies you've assessed/built toward its actual control requirements. If you haven't done that work, this is a checkable false statement, not an opinion \u2014 and it's the exact phrase a security/compliance reviewer will search for and try to verify. |\n| \"compliance-critical environments\" | Medium | Implies suitability for regulated use; if someone deploys it in, say, a HIPAA/PCI context and it fails, this phrase resurfaces in any dispute |\n| \"trusted by teams running regulated workloads\" | **High** | This is a factual claim about specific customers/usage, not an opinion. If you can't name them or don't have evidence, it's an unsubstantiated (possibly false) statement of fact |\n\n**What I'd change:**\n\nReplace:\n> \"Enterprise-grade, SOC2-ready, battle-tested for compliance-critical environments \u2014 trusted by teams running regulated workloads.\"\n\nWith something like:\n> \"Built for reliability and auditability \u2014 designed with security-conscious teams in mind.\"\n\nOr, if you genuinely have some substantiation, be precise instead of vague-sounding-precise:\n- Instead of \"SOC2-ready\" \u2192 \"designed around SOC2 Trust Services Criteria\" *only if true*, or drop it entirely and just document your actual security practices (e.g., a SECURITY.md with what controls exist).\n- Instead of \"trusted by teams running regulated workloads\" \u2192 only use if you can substantiate it (named users, case studies) or drop it.\n- \"battle-tested\" \u2192 fine to keep only if there's real production usage history; otherwise say \"actively developed and tested\" or similar.\n\n**Bottom line:** drop \"SOC2-ready\" and \"trusted by... regulated workloads\" unless you can back them with fact \u2014 those are the two that create real exposure. The rest is stylistic. Want me to draft a replacement hero line/help banner and check where else in the README this language might repeat?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.040517899999999996,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2056,
+    "cache_read_input_tokens": 6263,
+    "output_tokens": 1702,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2056,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1702,
+        "cache_read_input_tokens": 6263,
+        "cache_creation_input_tokens": 2056,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2056
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 687,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000767,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1702,
+      "cacheReadInputTokens": 6263,
+      "cacheCreationInputTokens": 2056,
+      "webSearchRequests": 0,
+      "costUSD": 0.0397509,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "819f07be-521a-47ad-9337-36606efcdfab",
+  "_skill": "checking-legal-and-safety-wording",
+  "_condition": "without_skill",
+  "_trial": 1
+}

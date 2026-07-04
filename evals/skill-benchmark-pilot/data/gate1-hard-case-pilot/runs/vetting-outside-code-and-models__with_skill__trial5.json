@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 29447,
+  "duration_api_ms": 29055,
+  "ttft_ms": 4477,
+  "ttft_stream_ms": 1546,
+  "time_to_request_ms": 65,
+  "time_to_request_from_spawn_ms": 1610417,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172684115.8293,
+  "num_turns": 2,
+  "result": "No \u2014 I'd block that as a routine merge. Here's why, using the same discipline this skill lays out for supplier trust.\n\n**The contradiction to flag first:** the changelog says \"no behavior changes\" in the same sentence as \"includes improved internal safety filtering.\" Safety filtering that changes what gets classified or suppressed *is* a behavior change. That's a vendor claim conflicting with itself, not evidence you can rely on.\n\n**Claim checked:** whether 2.3.1 is safe to pin for production fraud classification based solely on the vendor's changelog wording.\nThat's boundary-overreach \u2014 vendor marketing/changelog text is input, never proof of behavior in your repo's specific use.\n\n**Critical characteristics your use actually depends on** (not every property of the model):\n- Classification outcome consistency on your transaction distribution \u2014 specifically false-negative rate (fraud that slips through)\n- False-positive rate (legit transactions blocked)\n- Score/label output format stability (anything downstream parsing scores)\n- Latency/availability under your load\n\n**Acceptance method required, per characteristic:**\n- Consistency/FN/FP rates \u2192 replay a labeled historical transaction set (a golden set with known fraud/non-fraud outcomes) through 2.3.0 and 2.3.1 side-by-side, diff the classifications and scores, before merging\n- Output format \u2192 contract/schema test against both versions\n- Latency \u2192 measured, not vendor-claimed\n\nNone of these are satisfied by reading the changelog. **A critical characteristic you cannot independently verify blocks acceptance** \u2014 here, none have been verified at all yet, so this gates the merge.\n\n**Recommendation:** don't merge the pin bump today as routine. Instead:\n1. Run 2.3.1 in shadow/canary mode alongside 2.3.0 on live or replayed traffic\n2. Compare fraud-catch rate and false-positive rate against a tolerance you set in advance\n3. Only then bump the pin, with the comparison results as your repo-side evidence\n4. Set a re-check trigger: any future vendor version bump resets this \u2014 a track record only counts under comparable, verified conditions, and a hosted model can change server-side even without a version bump, so also add a periodic re-survey\n\nGiven this feeds fraud detection (security/financial impact, hosted/black-box model), this also crosses into \"escalate\" territory per the skill \u2014 worth a second reviewer sign-off on the shadow-test results before it ships, not just a solo routine-dependency merge.\n\nWant me to draft a `supplier-trust.md` capturing this decision (use, gaps, backup controls, re-check trigger) so it's on record before you decide defer/block/ship?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0645628,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 4460,
+    "cache_read_input_tokens": 16686,
+    "output_tokens": 2137,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4460,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1870,
+        "cache_read_input_tokens": 10414,
+        "cache_creation_input_tokens": 318,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 318
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 655,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00073,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2137,
+      "cacheReadInputTokens": 16686,
+      "cacheCreationInputTokens": 4460,
+      "webSearchRequests": 0,
+      "costUSD": 0.0638328,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "74ef7515-77f2-4b56-b704-06b2267627de",
+  "_skill": "vetting-outside-code-and-models",
+  "_condition": "with_skill",
+  "_trial": 5
+}

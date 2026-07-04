@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 14408,
+  "duration_api_ms": 13816,
+  "ttft_ms": 3441,
+  "ttft_stream_ms": 1604,
+  "time_to_request_ms": 46,
+  "time_to_request_from_spawn_ms": 1928953,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783173002677.095,
+  "num_turns": 1,
+  "result": "No \u2014 that write-up is a self-check, not evidence sufficient to merge. The same actor that wrote the code also ran the tests and authored the narrative confirming success. That's exactly the pattern this skill flags: \"the actor that made the change also wrote the proof, so the gate is downstream of the same mistake.\"\n\nBreaking down the claims in that PR description:\n\n| Claim | Support type | Status | Why |\n|---|---|---|---|\n| \"All 42 tests pass\" | source claim (agent's narration) | **gap** | No independent rerun; test output/logs not attached for anyone else to inspect |\n| \"Correctly blocks abuse patterns under load\" | source claim | **gap** \u2014 likely overreaching | Passing unit/integration tests \u2260 load behavior claim unless there's an actual load test artifact (logs, metrics, a reproducible load-test command) |\n| \"Production-ready and safe to merge\" | source claim | **overreaching-claim** | This is a release-readiness/safety claim with no scope \u2014 nothing here ties it to security review, rollout plan, or independent check |\n\nWhat's missing before this can be trusted as evidence:\n1. **Reproducibility** \u2014 someone other than the authoring agent needs to actually run the test command and get the same result, or a second agent/human needs to independently execute it. Right now nobody can confirm \"42 tests pass\" is true.\n2. **Evidence for the load claim specifically** \u2014 if there's a load test, get its logs/config attached; if there isn't one, the claim should be narrowed to \"unit tests cover rate-limit logic; load behavior not yet verified\" and that gap flagged.\n3. **Narrower wording** \u2014 drop \"production-ready and safe to merge\" until there's been at least one independent pass (peer review or independent verification). That phrase implies a release decision the write-up hasn't earned.\n\nRecommended next action: don't block indefinitely, but don't merge on this alone either. Get one independent party (human reviewer or a separate agent session with no access to the original agent's reasoning) to rerun the test suite and skim the diff, then record that as a `pass`/`fail` in `trace.md`. If that's not feasible right now, merge only with the gap explicitly recorded in `ship.md` as residual risk \u2014 not silently accepted.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0395896,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 3993,
+    "cache_read_input_tokens": 6272,
+    "output_tokens": 868,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3993,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 868,
+        "cache_read_input_tokens": 6272,
+        "cache_creation_input_tokens": 3993,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3993
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 868,
+      "cacheReadInputTokens": 6272,
+      "cacheCreationInputTokens": 3993,
+      "webSearchRequests": 0,
+      "costUSD": 0.0388656,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "a91bbf10-5abd-452b-a5a3-3fc9d56f7d71",
+  "_skill": "proving-claims",
+  "_condition": "with_skill",
+  "_trial": 5
+}

@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 16311,
+  "duration_api_ms": 15775,
+  "ttft_ms": 8251,
+  "ttft_stream_ms": 1343,
+  "time_to_request_ms": 50,
+  "time_to_request_from_spawn_ms": 1548273,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172621957.5146,
+  "num_turns": 1,
+  "result": "A few things here that I'd flag before drafting anything:\n\n1. **The rollback is still the right move, even though latency recovered.** \"It fixed itself\" isn't the same as \"we know why.\" Priya's timing correlation is a good hypothesis, but rolling back the 1:45am deploy is how you *confirm* it \u2014 and it's safe, reversible, and 2 minutes. Shipping new eviction logic written in the last 10 minutes with zero staging testing, at 2am, into a service that's still recovering, is the classic incident-response trap: fixing the \"real problem\" mid-incident often causes incident #2. That fix belongs in a PR reviewed and tested tomorrow, not shipped now.\n\n2. **\"Crisis averted, close it out\" without an assigned owner is how this recurs.** The backlog draining doesn't tell you if it'll happen again at 1:45am tomorrow. You need a named owner and a concrete next step before people go back to sleep, even if that step is just \"Priya opens a ticket in the morning.\"\n\nHere's what I'd suggest instead: roll back the 1:45am deploy now for confirmation (or leave it rolled back if it's still live), close the page, and assign Priya (or whoever) as owner of a proper fix + root-cause writeup tomorrow \u2014 not tonight.\n\nWant me to draft the Slack summary along those lines, and a next-day investigation outline for Priya (rather than a code fix to ship right now)?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0306759,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2150,
+    "cache_read_input_tokens": 6263,
+    "output_tokens": 1001,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2150,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1001,
+        "cache_read_input_tokens": 6263,
+        "cache_creation_input_tokens": 2150,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2150
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 781,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000876,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1001,
+      "cacheReadInputTokens": 6263,
+      "cacheCreationInputTokens": 2150,
+      "webSearchRequests": 0,
+      "costUSD": 0.029799899999999997,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "bfcb6766-df0e-4e98-9dc5-f607d7432719",
+  "_skill": "responding-to-incidents",
+  "_condition": "without_skill",
+  "_trial": 5
+}

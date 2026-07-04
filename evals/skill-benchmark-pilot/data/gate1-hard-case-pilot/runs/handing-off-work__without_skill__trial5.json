@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 14271,
+  "duration_api_ms": 13468,
+  "ttft_ms": 6172,
+  "ttft_stream_ms": 3236,
+  "time_to_request_ms": 48,
+  "time_to_request_from_spawn_ms": 1436730,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172510479.608,
+  "num_turns": 1,
+  "result": "Pasting a raw Slack link with \"pick up where I left off\" is a bad handoff for an incident \u2014 Priya would have to reconstruct 3 hours of context under time pressure, and the critical constraints (unvalidated config change, the signing-key restriction) could get buried or missed. A structured handoff message takes 2 minutes and prevents that. Here's a draft:\n\n---\n\n**Handoff: Payments webhook retry queue incident**\n\nHey Priya, handing off \u2014 here's where things stand.\n\n**Status:** Webhook retry queue failure, still unresolved. Full debugging history is in this thread: [link]\n\n**What I changed:** I adjusted the retry backoff timing config. **This is not yet validated** \u2014 I haven't confirmed it fixes the issue or ruled out side effects. Please treat it as provisional and keep an eye on it before assuming it's the fix.\n\n**What I did NOT touch:** Webhook signing keys. I was explicitly told not to touch these under any circumstances \u2014 please don't either, regardless of what the debugging points toward.\n\n**Access:** I have read-only access to the production DB. [Note whether Priya already has this or needs it granted.]\n\n**Next steps I'd suggest:** [e.g., monitor retry success rate post-config-change / re-check queue depth / whatever the actual next diagnostic step is]\n\n**Open questions:** [anything unresolved \u2014 e.g., root cause still unknown, whether other services are affected]\n\nI'm offline now but reachable at [contact] if something's urgent.\n\n---\n\nFill in the bracketed parts \u2014 I don't have the specifics of the next diagnostic steps or your contact preference. Want me to adjust tone/length, or add a section for anyone else on the incident channel?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0264349,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1990,
+    "cache_read_input_tokens": 6263,
+    "output_tokens": 790,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1990,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 790,
+        "cache_read_input_tokens": 6263,
+        "cache_creation_input_tokens": 1990,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1990
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 665,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00076,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 790,
+      "cacheReadInputTokens": 6263,
+      "cacheCreationInputTokens": 1990,
+      "webSearchRequests": 0,
+      "costUSD": 0.0256749,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "a3fb94b8-5522-475d-8e38-bc71f4a052e5",
+  "_skill": "handing-off-work",
+  "_condition": "without_skill",
+  "_trial": 5
+}

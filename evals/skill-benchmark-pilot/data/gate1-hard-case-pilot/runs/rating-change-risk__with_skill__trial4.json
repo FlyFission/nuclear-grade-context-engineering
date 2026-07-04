@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 31461,
+  "duration_api_ms": 31156,
+  "ttft_ms": 16560,
+  "ttft_stream_ms": 1495,
+  "time_to_request_ms": 84,
+  "time_to_request_from_spawn_ms": 1481439,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172555073.828,
+  "num_turns": 2,
+  "result": "No, don't skip the assessment \u2014 this isn't the administrative floor, and treating it as a typo fix misclassifies the risk.\n\n**Why it's not administrative:** The floor only covers changes that touch no trust boundary. This edit adds a **claim-bearing public statement** \u2014 two factual assertions (\"10,000+ enterprises,\" \"SOC 2 Type II certified\") \u2014 which is an explicit tripwire in this skill even for docs-only changes. \"It's just markdown\" describes the file type, not the risk; the risk lives in what the sentence asserts.\n\n**Decision question:** Are both claims currently true and verifiable \u2014 is there an actual, current SOC 2 Type II report (not Type I, not \"in progress\"), and is the 10,000+ enterprise figure accurate today?\n\n**Why \"trivially revertable\" doesn't save it:** `git revert` undoes the file, not the exposure. Once published before a launch, the claim can be screenshotted, quoted in press/marketing collateral, cached by search engines, or relied on by a customer or a real auditor. A false SOC 2 claim specifically is the kind of thing that draws FTC false-advertising scrutiny or undermines an actual compliance program \u2014 that's not \"easy to catch\" or \"easy to undo\" even though the diff is one line.\n\n**Mode: Standard, not Quick.**\n- Consequence (top-down): false compliance/scale claims published under launch visibility \u2014 reputational and potential legal/regulatory exposure.\n- Consequence (bottom-up): if the cert is stale, Type I, or not yet finalized, or the customer count is stale/estimated, the sentence is false the moment it's live.\n- Reversibility: low (see above \u2014 the artifact reverts, the exposure doesn't).\n- Exposure: high (public, pre-launch, aimed at scale).\n- Detectability: low (no automated check catches a false compliance claim; it surfaces via a customer, journalist, or auditor, possibly much later).\n\n**Least proof required before merging:**\n1. Copy of the current SOC 2 Type II report (or written confirmation from whoever owns the audit) showing it's valid and Type II, not Type I.\n2. Source/basis for the \"10,000+ enterprises\" figure, current as of today.\n3. Sign-off from legal/compliance or whoever owns public claims (marketing asking for it isn't the same as compliance approving it).\n\n**Habit:** independent check \u2014 someone other than the person editing the README (ideally the compliance/legal owner of the actual SOC 2 attestation) confirms both claims before it ships.\n\n**Escalate if:** the SOC 2 report can't be produced on request, is Type I, is expired, or the customer number is marketing shorthand rather than a verified figure \u2014 any of those means don't ship this sentence tomorrow regardless of how small the diff is.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0764061,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 5992,
+    "cache_read_input_tokens": 17147,
+    "output_tokens": 2306,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 5992,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 971,
+        "cache_read_input_tokens": 10875,
+        "cache_creation_input_tokens": 1389,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1389
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 638,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000708,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2306,
+      "cacheReadInputTokens": 17147,
+      "cacheCreationInputTokens": 5992,
+      "webSearchRequests": 0,
+      "costUSD": 0.07569810000000002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "56afb080-6522-4909-845a-db2203fbe71c",
+  "_skill": "rating-change-risk",
+  "_condition": "with_skill",
+  "_trial": 4
+}

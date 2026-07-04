@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 11506,
+  "duration_api_ms": 10842,
+  "ttft_ms": 7639,
+  "ttft_stream_ms": 1510,
+  "time_to_request_ms": 77,
+  "time_to_request_from_spawn_ms": 1507778,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172581287.2185,
+  "num_turns": 1,
+  "result": "No \u2014 raw transcripts are risky as your primary evidence and slow for auditors to use. Two reasons: they very likely contain secrets/tokens/API responses from the vault pull and payments-provider calls that shouldn't sit in an audit packet, and auditors reviewing it later will struggle to quickly verify the two things they actually care about \u2014 that the human approval gate happened and who clicked it, and exactly what changed against the payments provider.\n\nI'd recommend a short structured table (step #, action, timestamp, result, approver-if-applicable) as the primary record, with the redacted raw transcript attached as a backup appendix for anyone who wants the full detail. Want me to help extract that table from the transcript if you paste it in (redacting secrets as I go)?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0240309,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1964,
+    "cache_read_input_tokens": 6263,
+    "output_tokens": 645,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1964,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 645,
+        "cache_read_input_tokens": 6263,
+        "cache_creation_input_tokens": 1964,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1964
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 627,
+      "outputTokens": 12,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000687,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 645,
+      "cacheReadInputTokens": 6263,
+      "cacheCreationInputTokens": 1964,
+      "webSearchRequests": 0,
+      "costUSD": 0.0233439,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "1907e335-b1b5-45ac-9229-6ff53f054439",
+  "_skill": "recording-what-an-agent-did",
+  "_condition": "without_skill",
+  "_trial": 3
+}

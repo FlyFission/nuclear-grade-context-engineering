@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 14723,
+  "duration_api_ms": 14192,
+  "ttft_ms": 4037,
+  "ttft_stream_ms": 1760,
+  "time_to_request_ms": 151,
+  "time_to_request_from_spawn_ms": 1458478,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172531022.2493,
+  "num_turns": 1,
+  "result": "No \u2014 the write-up alone is not sufficient evidence, regardless of how confident it sounds.\n\n**Why:** The agent that wrote the code also ran the tests and authored the summary. That's a self-check, not an independent check \u2014 the same actor that could have introduced a bug is also the only one vouching that there isn't one. Per the skill's independence rule, a self-check on a load-bearing claim (production-readiness of a rate-limiter, a security-relevant control) must be raised to reproducible or independently authored evidence, or explicitly carried as residual risk \u2014 it cannot be counted as passing verification.\n\nAlso flagging: several claims in that summary reach past what \"42 tests pass\" can support.\n\n| Claim | Support type | Status | Note |\n|---|---|---|---|\n| \"All 42 tests pass\" | source claim (agent's own narration) | gap | No one has rerun the suite independently; log/output not attached |\n| \"Correctly blocks abuse patterns under load\" | source claim | gap | Unit tests passing \u2260 load behavior proven; no load-test artifact cited |\n| \"Production-ready and safe to merge\" | unowned assertion | overreaching | This is a release/decision-authority statement, not something test output can establish on its own |\n\n**What's needed before merge:**\n1. Independent reproduction \u2014 a human or a separate agent (not the one that wrote the code) reruns the 42 tests and pastes/links the actual output, not a paraphrase.\n2. Evidence for the load/abuse-pattern claim specifically \u2014 what load test was run, against what abuse pattern, with what pass/fail thresholds? If none exists, that claim should be downgraded to \"deferred\" or \"not applicable to current evidence,\" not asserted as fact.\n3. Narrow the PR language: replace \"production-ready and safe to merge\" with something like \"tests pass per [linked independent run]; load behavior [tested/untested] against [scenario]\" \u2014 let the reviewer/release owner make the safety/readiness call, since that's a decision-authority claim, not a test-result claim.\n\nIf you want, I can draft a `trace.md`-style claim table for this PR (claim \u2192 evidence \u2192 status \u2192 who verified) so the reviewer has something concrete to check against instead of the narrative summary.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0403496,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 3993,
+    "cache_read_input_tokens": 6272,
+    "output_tokens": 919,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3993,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 919,
+        "cache_read_input_tokens": 6272,
+        "cache_creation_input_tokens": 3993,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3993
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000719,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 919,
+      "cacheReadInputTokens": 6272,
+      "cacheCreationInputTokens": 3993,
+      "webSearchRequests": 0,
+      "costUSD": 0.0396306,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "177d07f7-627f-40da-a9b4-3cf3c1f3341d",
+  "_skill": "proving-claims",
+  "_condition": "with_skill",
+  "_trial": 2
+}

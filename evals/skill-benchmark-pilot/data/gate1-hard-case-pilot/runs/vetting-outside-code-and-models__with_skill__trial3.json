@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 17838,
+  "duration_api_ms": 16268,
+  "ttft_ms": 5369,
+  "ttft_stream_ms": 1373,
+  "time_to_request_ms": 52,
+  "time_to_request_from_spawn_ms": 1601932,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172675606.6995,
+  "num_turns": 1,
+  "result": "No \u2014 this isn't a routine bump, and the vendor's own changelog contradicts itself: it claims \"no behavior changes\" while also saying it \"includes improved internal safety filtering.\" A safety filter change *is* a behavior change. That's a vendor-claim red flag, not proof of compatibility.\n\nHere's the trust check:\n\n**Use:** Hosted classifier flags transactions for fraud review. If 2.3.1 silently shifts thresholds/scores, you get more false negatives (fraud slips through) or false positives (legitimate transactions blocked) \u2014 a real financial/customer-facing consequence, not a dev-only risk.\n\n**Critical characteristics your use relies on:**\n1. Score/label distribution on your transaction population stays consistent with 2.3.0\n2. Output format/schema unchanged (fields, ranges, confidence scores your code parses)\n3. Latency/availability unchanged\n4. The \"safety filtering\" change doesn't alter classification behavior on your specific fraud categories\n\n**Acceptance method per characteristic:**\n- (1) and (4): Run a fixed evaluation set of known-labeled transactions (fraud + legitimate, including edge cases) through both 2.3.0 and 2.3.1, diff the outputs. This is the only real proof \u2014 not the changelog.\n- (2): Schema/contract test against a sample of live-shaped requests.\n- (3): Latency/error-rate comparison in staging before prod cutover.\n\n**Gap:** None of this has been done yet \u2014 you have vendor wording only, zero repo-side evidence. That blocks acceptance as-is.\n\n**Recommendation:** Don't merge today as a \"routine dependency update.\" Instead:\n- Pin stays at 2.3.0 until you run the eval diff above (even a few hundred labeled transactions through both versions is enough to catch drift).\n- If diff is clean, bump the pin with that eval result recorded as your evidence (not the changelog).\n- If it's not clean, or you don't have a labeled eval set to test with, that's a gap \u2014 defer the bump, or route to a qualified review if fraud-detection accuracy has compliance/audit implications for your org.\n- Re-check trigger going forward: any future version bump (even patch-level) on this pin re-triggers the same eval, since \"patch\" labeling from this vendor has already proven unreliable as a signal.\n\nWant me to draft a `supplier-trust.md` entry for this and/or a quick eval script to diff 2.3.0 vs 2.3.1 outputs on a sample set?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0441196,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 4142,
+    "cache_read_input_tokens": 6272,
+    "output_tokens": 1110,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4142,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1110,
+        "cache_read_input_tokens": 6272,
+        "cache_creation_input_tokens": 4142,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4142
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 655,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00073,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1110,
+      "cacheReadInputTokens": 6272,
+      "cacheCreationInputTokens": 4142,
+      "webSearchRequests": 0,
+      "costUSD": 0.0433896,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "9648c7d8-e968-4285-8080-023bdca2528e",
+  "_skill": "vetting-outside-code-and-models",
+  "_condition": "with_skill",
+  "_trial": 3
+}

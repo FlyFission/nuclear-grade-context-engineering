@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 21045,
+  "duration_api_ms": 22913,
+  "ttft_ms": 11540,
+  "ttft_stream_ms": 2120,
+  "time_to_request_ms": 53,
+  "time_to_request_from_spawn_ms": 1443775,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172517540.211,
+  "num_turns": 1,
+  "result": "Copying it into both folders is the failure case this pattern is meant to catch: one idea (currency formatting logic) ending up with two homes. The two copies will drift the first time someone fixes a rounding bug in one and not the other, and nothing will tell you they've diverged.\n\nThe dependency concern is legitimate, but the fix isn't duplication \u2014 it's giving the shared logic its own folder that neither module owns, so importing it isn't \"billing depends on reports\" or vice versa, it's \"both depend on a neutral shared location,\" which is normal and not the coupling you're trying to avoid.\n\n**Recommendation:**\n\n```\nshared/\n  format-currency/\n    formatCurrency.js\n    formatCurrency.test.js\n    README.md\n```\n\n(or `common/`/`libs/` if that's already your repo's convention \u2014 match what exists rather than introducing a third term. Avoid a bare `utils/` catch-all; name it after the thing it does.)\n\n- `reports/` and `billing/` both `import` from `shared/format-currency`. Neither team's folder depends on the other's.\n- Ownership: since it's used by two sub-teams, someone needs to own it \u2014 often whichever team is more central, or a platform/shared-libs team if you have one. Note the owner in the README.\n- Disposition: kept, shared source of truth, versioned like any other module.\n- README stub: purpose (currency formatting shared by reports and billing), what belongs (only the currency formatting logic, not module-specific formatting rules), owner, and a note that changes need both consuming teams' sign-off since it's shared.\n\nIf it turns out reports and billing actually need *different* formatting behavior (e.g., PDF needs fixed-width padding, invoices need locale symbols) \u2014 that's not \"same file, tweak independently,\" that's two different functions. In that case, keep the shared core (e.g., number formatting) in `shared/`, and let each module wrap it with its own thin, differently-named function (`formatCurrencyForPdf`, `formatCurrencyForInvoice`) local to that module. That avoids both the fake-shared-file problem and the copy-paste drift problem.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0599276,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 6001,
+    "cache_read_input_tokens": 6272,
+    "output_tokens": 1420,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 6001,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1420,
+        "cache_read_input_tokens": 6272,
+        "cache_creation_input_tokens": 6001,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 6001
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 659,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000734,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1420,
+      "cacheReadInputTokens": 6272,
+      "cacheCreationInputTokens": 6001,
+      "webSearchRequests": 0,
+      "costUSD": 0.0591936,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "297f18ff-ccca-480e-af9b-04e9aaaee7d3",
+  "_skill": "organizing-project-folders",
+  "_condition": "with_skill",
+  "_trial": 5
+}

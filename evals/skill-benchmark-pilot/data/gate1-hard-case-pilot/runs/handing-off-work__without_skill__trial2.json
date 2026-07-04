@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 12925,
+  "duration_api_ms": 12846,
+  "ttft_ms": 4854,
+  "ttft_stream_ms": 1474,
+  "time_to_request_ms": 50,
+  "time_to_request_from_spawn_ms": 1426812,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172500515.4216,
+  "num_turns": 1,
+  "result": "Pasting just the thread link risks Priya spending her first 20 minutes re-reading 3 hours of chat instead of acting. A better handoff leads with current state, the unvalidated change, and hard constraints, then links the thread for detail. Here's a draft:\n\n---\n\n**Handoff: Payments webhook retry queue incident \u2192 Priya**\n\n**Status:** Ongoing, not resolved. I'm logging off now (3hrs in).\n\n**What's happening:** Webhook retry queue has been failing retries. [Debugging in this thread: <link>]\n\n**Changes I made (unvalidated):** I adjusted the retry backoff timing config. This has **not** been confirmed to fix the issue \u2014 treat it as a hypothesis in progress, not a resolved fix. If retries are still failing after you pick this up, that config change is the first thing to check/revert.\n\n**Access/permissions:**\n- I have read-only access to the production DB \u2014 used it for investigation, no writes made.\n- **Do not touch the webhook signing keys, under any circumstances.** This was an explicit instruction from [whoever told you \u2014 worth naming them here] regardless of what else comes up during debugging.\n\n**Next steps / where to pick up:**\n- Confirm whether the backoff timing change actually improved retry success (check [metric/dashboard if you have one])\n- If no improvement, consider reverting the config change\n- [Any other open threads \u2014 e.g., \"haven't ruled out X yet,\" \"waiting on Y team's response\"]\n\n**Thread for full context/history:** <link>\n\n---\n\nFill in the bracketed parts (who gave the signing-key instruction, any dashboards, open questions) and it's ready to send. Want me to tighten it further or adjust tone for your team's norms?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.026939899999999996,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1990,
+    "cache_read_input_tokens": 6263,
+    "output_tokens": 824,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1990,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 824,
+        "cache_read_input_tokens": 6263,
+        "cache_creation_input_tokens": 1990,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1990
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 665,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000755,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 824,
+      "cacheReadInputTokens": 6263,
+      "cacheCreationInputTokens": 1990,
+      "webSearchRequests": 0,
+      "costUSD": 0.026184899999999997,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "cb90e050-5529-41a9-9391-c6a1e8cf7e0f",
+  "_skill": "handing-off-work",
+  "_condition": "without_skill",
+  "_trial": 2
+}

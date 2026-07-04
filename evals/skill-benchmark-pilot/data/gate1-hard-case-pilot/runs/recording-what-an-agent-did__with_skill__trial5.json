@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 19039,
+  "duration_api_ms": 16540,
+  "ttft_ms": 6684,
+  "ttft_stream_ms": 2265,
+  "time_to_request_ms": 48,
+  "time_to_request_from_spawn_ms": 1501450,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172575130.168,
+  "num_turns": 1,
+  "result": "No \u2014 paste the raw log as backing material, but don't let it substitute for the structured record. A few reasons this matters even though the release worked:\n\n- **\"It worked\" isn't the claim being checked.** The skill's decision contract requires every step to have a recorded result and evidence status, and to show it stayed within `basis.md`'s granted power. A clean outcome doesn't tell a reviewer that, e.g., the vault pull only touched the intended secrets, or the three payments API calls were the *right* three calls.\n- **Raw transcripts aren't checkable evidence.** Per the skill: \"Raw chat logs are not organized evidence. You cannot check or index them.\" Someone auditing later would have to re-read the whole log to find the vault access, the image push, the webhook rotation, and the approval \u2014 that's the work you're trying to avoid, just deferred onto the reviewer.\n- **The approval step needs its own record**, not just a \"found in transcript\" pointer \u2014 reviewer, timestamp, what was shown, and the decision.\n- **A power breach or side effect could be buried** in 15 steps of undifferentiated log text. The whole point of step-level rows is that scope violations are visible without re-deriving them.\n\nWhat I'd actually do: keep the raw transcript as an attached artifact (or linked export if it lives in a tracing platform), but pull out ~15 short rows into `trace.md` \u2014 action, shortened inputs, result, evidence status \u2014 plus one decision-point record for the approval gate. That's five fields per row; for 15 steps it's genuinely fast, and it's what lets someone defend the release decision without re-reading the log.\n\nWant me to draft that `trace.md` table now if you paste (or point me to) the transcript?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.042704599999999995,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 4410,
+    "cache_read_input_tokens": 6272,
+    "output_tokens": 911,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4410,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 911,
+        "cache_read_input_tokens": 6272,
+        "cache_creation_input_tokens": 4410,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4410
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 627,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006919999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 911,
+      "cacheReadInputTokens": 6272,
+      "cacheCreationInputTokens": 4410,
+      "webSearchRequests": 0,
+      "costUSD": 0.0420126,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "122f4b32-430b-484c-a6da-3263c28feccc",
+  "_skill": "recording-what-an-agent-did",
+  "_condition": "with_skill",
+  "_trial": 5
+}

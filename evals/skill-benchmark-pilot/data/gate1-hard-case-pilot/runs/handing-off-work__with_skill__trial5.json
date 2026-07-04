@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 22023,
+  "duration_api_ms": 20648,
+  "ttft_ms": 8551,
+  "ttft_stream_ms": 2316,
+  "time_to_request_ms": 56,
+  "time_to_request_from_spawn_ms": 1422986,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172496682.9343,
+  "num_turns": 1,
+  "result": "Pasting the thread link and saying \"pick up where I left off\" is the open-loop-handoff failure mode: it puts the burden on Priya to reconstruct 3 hours of state from scrollback, and it doesn't make her confirm she understands the one thing that actually matters here \u2014 the hard stop on the signing keys. Here's a structured handoff message instead. Fill in the bracketed placeholders with specifics from your thread.\n\n---\n\n**Handoff: Payments webhook retry queue incident**\n\n**To:** Priya\n**From:** [your name]\n**Time:** [handoff time, 2026-07-04]\n**Incident/ticket:** [ticket ID or channel]\n**Thread (for history/evidence, not as the primary brief):** [Slack link]\n\n**Last completed action:**\n[e.g., \"Changed retry backoff timing in [service/config file] from Xs to Ys at [timestamp] to address [symptom]. Deployed to [env]. Not yet validated \u2014 no confirmation yet that retries are succeeding at the new interval.\"]\n\n**What's done / artifacts:**\n- Backoff config change: [file/PR/commit link]\n- [Any dashboards, queries, or metrics you pulled]\n\n**What changed / current state:**\n- [Queue depth, error rate, or whatever the live symptom is right now]\n- [Anything odd you noticed but didn't chase down]\n\n**Remaining work:**\n1. Validate whether the backoff change actually reduces failed retries \u2014 [what \"validated\" looks like: metric, dashboard, query]\n2. [Any other open threads]\n\n**Access and authority:**\n- You have read-only access to the production database \u2014 no write actions.\n- **Do not touch the webhook signing keys under any circumstances, no matter what happens or what anyone suggests during the incident.** This was an explicit instruction, not a guess.\n- [Any other allowed/forbidden actions \u2014 e.g., who can approve a rollback, who owns the signing keys if that becomes necessary]\n\n**Proof still needed:**\n- Confirmation the backoff change is safe/effective before it's considered done\n- [Anything else outstanding]\n\n**Stop/escalate if:**\n- Failed retries increase after the backoff change (consider rollback \u2014 [rollback steps/owner])\n- Anything suggests the signing keys are implicated \u2014 escalate to [person/team], do not act on them yourself\n- [Any other hold condition]\n\n**Before you start, please confirm back:**\n1. You understand the backoff change is unvalidated and what \"validated\" means here.\n2. You know your DB access is read-only.\n3. You will not touch the signing keys under any circumstances.\n4. You know who to escalate to if a rollback or key issue comes up.\n\n---\n\nLet me know the ticket ID, exact backoff values/timestamps, and escalation contact and I'll fill them in.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0454956,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 3578,
+    "cache_read_input_tokens": 6272,
+    "output_tokens": 1426,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3578,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1426,
+        "cache_read_input_tokens": 6272,
+        "cache_creation_input_tokens": 3578,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3578
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 665,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00075,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1426,
+      "cacheReadInputTokens": 6272,
+      "cacheCreationInputTokens": 3578,
+      "webSearchRequests": 0,
+      "costUSD": 0.044745599999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "e0ea15f8-0f85-46f8-bead-5014070568bd",
+  "_skill": "handing-off-work",
+  "_condition": "with_skill",
+  "_trial": 5
+}

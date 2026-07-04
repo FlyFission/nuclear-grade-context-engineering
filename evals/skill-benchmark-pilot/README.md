@@ -58,7 +58,7 @@ general.
 | `checking-what-a-change-affects` | WINS | Gate 1: 5/5 vs 1/5(+4p) |
 | `choosing-what-to-control` | WINS | Round 1, n=3: 3/3 vs 1/3(+2p) |
 | `closing-stale-packets` | WINS | Round 1, n=3: 1/3(+2p) vs 0/3 |
-| `creating-change-records` | WINS (closed via corrected scope) | Round 1 marginal loss, Gate 1 tie on a criterion that conflated this skill's job with `rating-change-risk`'s and `proving-claims`'; re-graded on a criterion scoped to this skill's actual packet-shell job (per PR #63's independent boundary clarification): 4/5 vs 0/5. **Does not replicate on Haiku** (0/3 vs 0/3) — see `MULTI_MODEL_CHECK.md`, model-dependent |
+| `creating-change-records` | WINS on Sonnet; unresolved on Haiku | Round 1 marginal loss, Gate 1 tie on a criterion that conflated this skill's job with `rating-change-risk`'s and `proving-claims`'; re-graded on a criterion scoped to this skill's actual packet-shell job (per PR #63's independent boundary clarification): 4/5 vs 0/5. **Does not replicate on Haiku** (0/3 vs 0/3). A targeted amendment was drafted, adversarially critiqued, and applied to fix this — validated afterward and found insufficient: Sonnet held at 3/3, Haiku stayed at 0/3. Root cause is a model-capability boundary (Haiku reasons in a general safety-refusal register on this scenario, bypassing the skill's process entirely), not a fixable wording gap. Amendment kept anyway (harmless, small improvement, no regression); gap reported as attempted-and-open, not fixed. See `MULTI_MODEL_CHECK.md`. |
 | `deciding-who-decides` | WINS | Gate 1: 5/5 vs 2/5(+3p) |
 | `declaring-intent` | WINS | Round 1, n=3: 2/3(+1p) vs 0/3(+2p) |
 | `double-checking-before-acting` | WINS (thin margin) | Round 1, n=3: 3/3 vs 2/3(+1p) |

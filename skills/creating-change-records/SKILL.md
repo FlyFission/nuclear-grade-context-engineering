@@ -40,11 +40,12 @@ A change record keeps the whole story in Git, together: the scope, what the chan
 ## Process
 
 1. Run `python tools/ng.py new <slug> --mode quick|standard`.
-2. Fill in only the parts of each file that help someone decide.
-3. Add habit records (self-check, handoff, and the like) only when they change a decision or an action.
-4. Link to the files affected, the tests, the reviews, the source-map rows, and the known gaps.
-5. Keep status labels plain: `pass`, `fail`, `gap`, `deferred`, `not applicable`, or `planned`.
-6. Run `python tools/ng.py validate .nuclear/changes/<slug>`.
+2. Say, in your reply, which required files the chosen mode needs, by name -- not only in the files themselves, so a reader without tool access still sees the list. Name only the set for the mode in play: Quick needs `risk.md` and `proof.md`; Standard needs `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, and `ship.md`.
+3. Fill in only the parts of each file that help someone decide.
+4. Add habit records (self-check, handoff, and the like) only when they change a decision or an action.
+5. Link to the files affected, the tests, the reviews, the source-map rows, and the known gaps.
+6. Keep status labels plain: `pass`, `fail`, `gap`, `deferred`, `not applicable`, or `planned`.
+7. Run `python tools/ng.py validate .nuclear/changes/<slug>`.
 
 ## Outputs
 
@@ -93,6 +94,10 @@ Inputs:
 - safety-habit (HPI) records started: <turnover/self-check/opex/supplier-trust/none>
 
 Use the repo templates. Keep the record short. Lean on links, and point at evidence. Include the required links, the conditions for being done, and a note on where the ideas come from. Do not imply formal assurance or compliance.
+
+Return:
+- the required files for the chosen mode, named -- Quick: risk.md, proof.md; OR Standard: risk.md, basis.md, plan.md, trace.md, verification.md, ship.md (name only the set for the mode in play)
+- the filled-in content for those files
 ```
 
 ## Source-lineage note

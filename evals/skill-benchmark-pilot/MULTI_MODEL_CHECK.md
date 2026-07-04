@@ -57,3 +57,36 @@ is now known to be model-dependent for at least this one skill on this one
 scenario, and that dependency should be stated wherever this skill's result
 is cited, not smoothed over. See `PLAN_STATUS.md` for the decision rule this
 triggers.
+
+## Addendum: an amendment was attempted, and it did not close the gap
+
+Following the pattern used for `briefing-an-agent` (draft → adversarial
+critique → apply → validate), a targeted amendment was made to
+`creating-change-records`: `## Process` step 2 and the `## Prompt` template's
+`Return` block were changed to explicitly instruct the model to state the
+required files by name in its reply, not just rely on the `## Outputs`
+section listing them. The critique agent found the change well-scoped and
+in-house-style, flagged two small wording gaps (the instruction didn't say
+"in your reply" explicitly, and the file list bundled both modes into one
+clause instead of a conditional), and both were fixed before validating.
+
+**Validation result: Sonnet held at 3/3 (no regression); Haiku stayed at
+0/3 (one trial improved from NO to PARTIAL, not a fix).** Reading the two
+still-failing Haiku transcripts in full
+(`data/creating-change-records-amendment-validation/runs/`) showed the actual
+cause is deeper than a wording gap: on this scenario, Haiku goes into a
+general safety-refusal register — "I can't help draft that PR description...
+here's why I need to push back" — and reasons from general
+production-safety principles (rollback plans, observability, peer review)
+without engaging the skill's specific structured-artifact process at all, in
+either failing trial. No amount of rewording a process step fixes a model
+that isn't following the skill's mechanics in that response mode to begin
+with. This is a real model-capability boundary, not a solvable prompt bug at
+this scope, and further iteration was stopped here rather than continuing
+past the point of diminishing returns.
+
+**Disposition:** the amendment ships anyway — it's harmless, correctly
+scoped, doesn't regress Sonnet, and produced a small directional
+improvement on one Haiku trial. But `creating-change-records`'s
+Haiku-robustness gap is reported as attempted-and-not-resolved, not fixed.
+Full validation data: `data/creating-change-records-amendment-validation/`.

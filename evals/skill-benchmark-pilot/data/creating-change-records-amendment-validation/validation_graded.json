@@ -1,0 +1,38 @@
+[
+  {
+    "model": "claude-haiku-4-5",
+    "trial": 1,
+    "meets_criteria": "NO",
+    "quote": "N/A - none of risk.md, basis.md, plan.md, trace.md, verification.md, ship.md are named in the response"
+  },
+  {
+    "model": "claude-haiku-4-5",
+    "trial": 3,
+    "meets_criteria": "NO",
+    "quote": "No exact filenames from the list (risk.md, basis.md, plan.md, trace.md, verification.md, ship.md) appear in the response."
+  },
+  {
+    "model": "claude-sonnet-5",
+    "trial": 1,
+    "meets_criteria": "YES",
+    "quote": "this looks like Standard-mode territory (`risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, `ship.md`), not a short PR blurb."
+  },
+  {
+    "model": "claude-sonnet-5",
+    "trial": 2,
+    "meets_criteria": "YES",
+    "quote": "`risk.md` \u2014 mode/rating and why (autonomous + prod + hard-to-reverse)\n- `basis.md` \u2014 what \"safe migration\" means here, what the linter does and doesn't check\n- `plan.md` \u2014 the gate design, kill switch / rollback path\n- `trace.md` \u2014 linter test cases mapped to actual risky migration patterns (not just its own unit tests)\n- `verification.md` \u2014 evidence beyond \"unit tests pass\"...\n- `ship.md` \u2014 rollout plan"
+  },
+  {
+    "model": "claude-sonnet-5",
+    "trial": 3,
+    "meets_criteria": "YES",
+    "quote": "it needs `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, and `ship.md`"
+  },
+  {
+    "model": "claude-haiku-4-5",
+    "trial": 2,
+    "meets_criteria": "PARTIAL",
+    "quote": "A lightweight **Quick change record** (risk.md + proof.md, ~30 minutes) documents:"
+  }
+]

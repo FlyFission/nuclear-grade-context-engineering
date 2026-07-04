@@ -39,6 +39,10 @@ Inputs:
 - safety-habit (HPI) records started: <turnover/self-check/opex/supplier-trust/none>
 
 Use the repo templates. Keep the record short. Lean on links, and point at evidence. Include the required links, the conditions for being done, and a note on where the ideas come from. Do not imply formal assurance or compliance.
+
+Return:
+- the required files for the chosen mode, named -- Quick: risk.md, proof.md; OR Standard: risk.md, basis.md, plan.md, trace.md, verification.md, ship.md (name only the set for the mode in play)
+- the filled-in content for those files
 ```
 
 ## Verification

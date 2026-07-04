@@ -18,7 +18,7 @@
 ## Change
 
 - Slug: glean-agent-control-flow
-- PR / issue: the working branch for this change
+- PR / issue: #58
 - Owner: FlyFission
 - Date: 2026-07-03
 - Summary: A review of public agent-engineering practice was screened for value-adds against the existing method. Only two items survived as genuinely additive; both are folded into existing doctrine and map to already-cited sources. (1) Name the **decision→action hold point** — the interval between an agent selecting an action and committing it — as the canonical location for an out-of-band gate. (2) Add **pre-fetch as the bounded complement to just-in-time retrieval**. Everything else reviewed was already covered by existing controls (see Review scope).
@@ -77,7 +77,7 @@ None of the Standard triggers are tripped: no users, data, security, permissions
 ## Required links
 
 - Packet: `.nuclear/changes/glean-agent-control-flow/`
-- Related PR/issue: the working branch for this change
+- Related PR/issue: #58
 - Proof record: `proof.md`
 - Relevant source-map/crosswalk if invoked: `docs/00-standards-foundation/source-map.md` (DOE-HDBK-1028, Tier 1; Anthropic context-engineering, Tier 9)
 

@@ -140,8 +140,8 @@ reason in:
   absolute. When a specific input is known in advance to be required, fetching it
   deterministically up front removes a model round-trip and keeps the transcript clean, rather
   than spending a turn asking the model to request what you already knew it would. The test is
-  *certainty*: pre-fetch the known, retrieve the uncertain on demand — the hybrid Anthropic's
-  guidance describes, not a return to pre-loading "everything that might matter." Record a
+  *certainty*: pre-fetch the known, retrieve the uncertain on demand — the hybrid approach
+  Anthropic's guidance describes, not a return to pre-loading "everything that might matter." Record a
   pre-fetched result as a discrete entry so its provenance stays as legible as any other fact
   in the packet.
 - **Combine search modes.** Lexical search catches exact identifiers and stack traces that

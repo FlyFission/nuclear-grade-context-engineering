@@ -41,7 +41,7 @@ Claim: The two applied value-adds (decision→action hold point; pre-fetch compl
   - `ng tokens` → **OK: token budget** (edited skill `double-checking-before-acting` within budget; no violation).
   - `ng validate .nuclear/changes/glean-agent-control-flow` → passes once `proof.md` is present.
   - Diff grep of the changed doctrine and skill files → no external-source name present (the only in-tree occurrences of the string are the git-assigned branch name, kept out of committed file text).
-- Evidence link or artifact path: CI run on the working branch; commands reproducible locally.
+- Evidence link or artifact path: the changed files (`docs/02-operating-system/runtime-enforcement.md`, `docs/02-operating-system/context-window-discipline.md`, `skills/double-checking-before-acting/SKILL.md`) and this packet, on PR #58; CI on that PR ran `.github/workflows/ci.yml` jobs `validate (3.11)`, `validate (3.12)`, `mcp-smoke`, and `wheel-smoke`, all green. Commands are reproducible locally.
 - If failed/gap: none.
 
 ## Reviewer note
@@ -52,7 +52,7 @@ Claim: The two applied value-adds (decision→action hold point; pre-fetch compl
 
 ## Required links
 
-- Related PR/issue: the working branch for this change
+- Related PR/issue: #58
 - Relevant changed files: `docs/02-operating-system/runtime-enforcement.md`, `docs/02-operating-system/context-window-discipline.md`, `skills/double-checking-before-acting/SKILL.md`
 - CI run / test output / eval report / screenshot / log: `python -m pytest tests/` (186 passed, 1 skipped); `.github/workflows/ci.yml`
 - If AI-assisted: this change was drafted by an agent under review; the proof commands are independently reproducible by a human reviewer.

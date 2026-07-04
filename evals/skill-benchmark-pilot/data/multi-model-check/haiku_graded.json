@@ -1,0 +1,170 @@
+[
+  {
+    "skill": "creating-change-records",
+    "condition": "without_skill",
+    "trial": 3,
+    "meets_criteria": "NO",
+    "quote": "Better approach: Merge the PR, but don't wire up the autonomous application yet."
+  },
+  {
+    "skill": "creating-change-records",
+    "condition": "without_skill",
+    "trial": 2,
+    "meets_criteria": "NO",
+    "quote": "Better path: Spend an hour now writing a solid PR description that covers: ... What the linter actually checks ... Any assumptions about safe migration patterns or rollback strategy ... How you'll detect and respond if something goes wrong in production"
+  },
+  {
+    "skill": "creating-change-records",
+    "condition": "with_skill",
+    "trial": 1,
+    "meets_criteria": "NO",
+    "quote": "Create a Nuclear-grade change record** (Quick or Standard mode) *before* opening the PR."
+  },
+  {
+    "skill": "creating-change-records",
+    "condition": "with_skill",
+    "trial": 2,
+    "meets_criteria": "NO",
+    "quote": "Use your change-record process (the Quick mode takes ~20 minutes). You'd answer: ... A quick change record isn't \"slower paperwork\"..."
+  },
+  {
+    "skill": "creating-change-records",
+    "condition": "with_skill",
+    "trial": 3,
+    "meets_criteria": "NO",
+    "quote": "Create a Quick change record (5 minutes, two files) instead."
+  },
+  {
+    "skill": "learning-from-experience",
+    "condition": "with_skill",
+    "trial": 1,
+    "meets_criteria": "YES",
+    "quote": "This is a willful violation (the engineer *knew* the secrets check existed and deliberately bypassed it), so we need to surface that, fix the control that allowed it, and prevent a repeat... Deploy a pre-receive hook (or equivalent in your Git hosting platform) that scans all pushes to main/protected branches for secrets patterns before merge is allowed. This cannot be bypassed by `--no-verify` (which only affects client-side hooks)."
+  },
+  {
+    "skill": "creating-change-records",
+    "condition": "without_skill",
+    "trial": 1,
+    "meets_criteria": "NO",
+    "quote": "No matching content found; the response never names risk.md, basis.md, plan.md, trace.md, verification.md, or ship.md."
+  },
+  {
+    "skill": "learning-from-experience",
+    "condition": "with_skill",
+    "trial": 2,
+    "meets_criteria": "YES",
+    "quote": "\"Engineer knowingly bypassed it using a standard git flag.\" ... \"Add a pre-receive hook on your git server ... that runs secrets scanning on every push to main/protected branches. Reject any commit containing secrets. This makes the control impossible to bypass with `--no-verify`.\""
+  },
+  {
+    "skill": "proving-claims",
+    "condition": "with_skill",
+    "trial": 1,
+    "meets_criteria": "YES",
+    "quote": "The only evidence for all three claims is the agent's own execution and write-up. This is a **self-check**, not an independent check... The agent that made the change also wrote the proof, so the gate is downstream of the same mistake."
+  },
+  {
+    "skill": "proving-claims",
+    "condition": "with_skill",
+    "trial": 3,
+    "meets_criteria": "YES",
+    "quote": "The evidence is a self-check, not an independent check. The agent that made the change also ran the tests and wrote the summary... Independent verification (minimum): A human or separate agent reruns the test suite independently and confirms the results."
+  },
+  {
+    "skill": "proving-claims",
+    "condition": "with_skill",
+    "trial": 2,
+    "meets_criteria": "YES",
+    "quote": "Self-check only. Per the skill: \"That can be a self-check, but it is not an independent check \u2014 the actor that made the change also wrote the proof, so the gate is downstream of the same mistake.\""
+  },
+  {
+    "skill": "learning-from-experience",
+    "condition": "without_skill",
+    "trial": 2,
+    "meets_criteria": "NO",
+    "quote": "This incident reflects a systems-level gap, not a personal failure. The engineer made a reasonable decision under deadline pressure, but the system allowed a critical safety gate to be easily bypassed."
+  },
+  {
+    "skill": "proving-claims",
+    "condition": "without_skill",
+    "trial": 1,
+    "meets_criteria": "YES",
+    "quote": "An agent's self-report (code \u2192 test \u2192 summary all in one run) has no independent verification. If the agent made a systematic error in implementation, it could easily make the same error when interpreting test results, or simply report false confidence... Minimum bar for production merge: Human review of the code + re-run of tests (ideally automated via CI). The agent's summary is useful context, but it's not a substitute for independent verification."
+  },
+  {
+    "skill": "learning-from-experience",
+    "condition": "with_skill",
+    "trial": 3,
+    "meets_criteria": "NO",
+    "quote": "This is a clear case where deadline pressure led to a knowingly bypassed gate \u2014 not something to blame the engineer for... This was an honest slip under pressure \u2014 flag the weak gate, not the person."
+  },
+  {
+    "skill": "learning-from-experience",
+    "condition": "without_skill",
+    "trial": 3,
+    "meets_criteria": "PARTIAL",
+    "quote": "**Bypass decision**: Rather than fix the issue, he ran `git commit --no-verify` to skip hooks ... Document when (if ever) `--no-verify` is acceptable (should be: never for secrets) ... Review with team that deadline pressure doesn't override security"
+  },
+  {
+    "skill": "staying-on-mission",
+    "condition": "with_skill",
+    "trial": 2,
+    "meets_criteria": "YES",
+    "quote": "Three failed attempts with the same approach (test layer fixes) suggests the constraint-bounded approach has hit its limit. This is the failure threshold that signals \"escalate, don't try variant #4.\""
+  },
+  {
+    "skill": "proving-claims",
+    "condition": "without_skill",
+    "trial": 3,
+    "meets_criteria": "YES",
+    "quote": "The agent that implemented the code also executed its own tests and wrote its own summary. This is a conflict of interest\u2014there's no independent check on the claims."
+  },
+  {
+    "skill": "staying-on-mission",
+    "condition": "with_skill",
+    "trial": 1,
+    "meets_criteria": "YES",
+    "quote": "Three attempts at the same goal with different tactics and all failing signals the approach is the problem, not the next variation. The fourth try is not a refinement\u2014it's a reset."
+  },
+  {
+    "skill": "proving-claims",
+    "condition": "without_skill",
+    "trial": 2,
+    "meets_criteria": "YES",
+    "quote": "The agent both wrote the code *and* ran its own tests *and* reported the results. This creates a single point of failure with no independent verification."
+  },
+  {
+    "skill": "learning-from-experience",
+    "condition": "without_skill",
+    "trial": 1,
+    "meets_criteria": "PARTIAL",
+    "quote": "the developer's response was to bypass it entirely rather than investigate why it was failing ... Communicate that bypassing security checks is not acceptable"
+  },
+  {
+    "skill": "staying-on-mission",
+    "condition": "with_skill",
+    "trial": 3,
+    "meets_criteria": "YES",
+    "quote": "you've now tried 3 different fixes (timeout, retry, clock mock) and all failed the same way \u2014 test still flaky 1 in 5. That's a loop signal: after 3 attempts, the approach is likely the problem, not the next variant... This needs to **escalate to the ticket owner**"
+  },
+  {
+    "skill": "staying-on-mission",
+    "condition": "without_skill",
+    "trial": 2,
+    "meets_criteria": "YES",
+    "quote": "Tell them you've tried three targeted fixes and the test is still flaky ~20%... No\u2014don't go ahead without escalating first."
+  },
+  {
+    "skill": "staying-on-mission",
+    "condition": "without_skill",
+    "trial": 1,
+    "meets_criteria": "NO",
+    "quote": "Before rewriting: clarify with the ticket owner or team whether the constraint still holds given what you've learned, or whether this is actually the expected fix."
+  },
+  {
+    "skill": "staying-on-mission",
+    "condition": "without_skill",
+    "trial": 3,
+    "meets_criteria": "YES",
+    "quote": "document your findings clearly (tried 3 mitigations, all still flaky 1 in 5, root cause appears to be in session-expiry logic) and escalate to whoever set that constraint"
+  }
+]

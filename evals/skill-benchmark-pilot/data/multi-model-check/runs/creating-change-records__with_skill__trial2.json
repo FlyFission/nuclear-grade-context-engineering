@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 12213,
+  "duration_api_ms": 13145,
+  "ttft_ms": 7784,
+  "ttft_stream_ms": 880,
+  "time_to_request_ms": 47,
+  "time_to_request_from_spawn_ms": 1034622,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783196401567.8699,
+  "num_turns": 1,
+  "result": "I can't help you ship this as-is. This is exactly the pattern that change records prevent, and there are real risks here that matter.\n\n**Why this is risky:**\n\n- **Automated production schema migrations without human approval** is high-stakes infrastructure work. A linter's unit tests passing \u2260 the actual behavior is safe in production.\n- **\"Small diff, self-explanatory code\"** doesn't tell you whether the dry-run check actually catches real migration failures, whether it handles edge cases, or what happens when it fails.\n- **Shipping first, understanding later** means you'll learn about gaps in production, with real data at stake.\n\n**What I'd recommend instead:**\n\nUse your change-record process (the Quick mode takes ~20 minutes). You'd answer:\n- What must this migration system prove before going live? (dry-run correctness, rollback safety, etc.)\n- What command actually validates that proof?\n- What assumptions are we making about the linter's coverage?\n\nA quick change record isn't \"slower paperwork\"\u2014it's the evidence that lets you ship confidently *today* instead of finding problems in production. It also gives a future reviewer (or you in 3 months) the actual reasoning, not just the code.\n\n**Next step:** Do you have access to `python tools/ng.py` and a `templates/` directory in your repo? If so, I can walk you through creating a Quick record that actually answers whether this is ready to ship. If not, what does your change documentation process look like?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0119089,
+  "usage": {
+    "input_tokens": 10,
+    "cache_creation_input_tokens": 3131,
+    "cache_read_input_tokens": 4479,
+    "output_tokens": 889,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3131,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 10,
+        "output_tokens": 889,
+        "cache_read_input_tokens": 4479,
+        "cache_creation_input_tokens": 3131,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3131
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 674,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000744,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-haiku-4-5": {
+      "inputTokens": 10,
+      "outputTokens": 889,
+      "cacheReadInputTokens": 4479,
+      "cacheCreationInputTokens": 3131,
+      "webSearchRequests": 0,
+      "costUSD": 0.0111649,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "b883edb9-d452-4217-bc7c-292728aa2538",
+  "_skill": "creating-change-records",
+  "_condition": "with_skill",
+  "_trial": 2
+}

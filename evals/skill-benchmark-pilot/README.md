@@ -28,14 +28,24 @@ response checked into git.
 | The hard-case retest of the 14 skills that tied or lost in round 1 | [`GATE1_REPORT.md`](GATE1_REPORT.md) |
 | A worked example of diagnose → fix → validate on one skill (`briefing-an-agent`) | [`AMENDMENT_VALIDATION.md`](AMENDMENT_VALIDATION.md) |
 | Closeout of the two remaining open skills, and an overlap sweep across the rest | [`GATE2_AND_GATE3_FINDINGS.md`](GATE2_AND_GATE3_FINDINGS.md) |
+| Formal significance testing and a free pre-calibration audit — read this before trusting any single "WINS" | [`STATISTICAL_ANALYSIS.md`](STATISTICAL_ANALYSIS.md) |
+| A small, honestly-scoped check of whether results hold on a different model | [`MULTI_MODEL_CHECK.md`](MULTI_MODEL_CHECK.md) |
+| The amendment plan for this project's own self-audit gaps, adversarially reviewed before execution, plus a real cross-PR conflict it surfaced | [`PLAN_STATUS.md`](PLAN_STATUS.md) |
 | Every raw prompt, criterion, and model response | [`data/`](data/) (organized by pilot round) |
 | The scripts that produced all of the above, and how to rerun or extend them | [`scripts/`](scripts/) |
 
 ## Final status, all 28 skills
 
-27 of 28 skills have demonstrated evidence of changing model behavior versus a
-plain prompt, at some point across the two test rounds and the two closeout
-checks below. 1 (`creating-change-records`) is unresolved, not lost.
+28 of 28 skills have demonstrated evidence of changing model behavior versus a
+plain prompt on `claude-sonnet-5`, at some point across the two test rounds
+and the closeout checks below. **Read this as directional pilot evidence, not
+statistical proof** — see [`STATISTICAL_ANALYSIS.md`](STATISTICAL_ANALYSIS.md):
+zero of the 44 significance tests run across this project survive correction
+for multiple comparisons. A small honest multi-model check
+([`MULTI_MODEL_CHECK.md`](MULTI_MODEL_CHECK.md)) found 3 of 4 sampled results
+replicate on a different model and 1 does not — treat every "WINS" as
+Sonnet-specific until shown otherwise, not as a claim about the skill in
+general.
 
 | Skill | Status | Strongest evidence |
 |---|---|---|
@@ -48,7 +58,7 @@ checks below. 1 (`creating-change-records`) is unresolved, not lost.
 | `checking-what-a-change-affects` | WINS | Gate 1: 5/5 vs 1/5(+4p) |
 | `choosing-what-to-control` | WINS | Round 1, n=3: 3/3 vs 1/3(+2p) |
 | `closing-stale-packets` | WINS | Round 1, n=3: 1/3(+2p) vs 0/3 |
-| `creating-change-records` | **OPEN** | Round 1 marginal loss, Gate 1 tie; a follow-up structural recheck was partially supportive but the Gate 1 portion of that recheck used a flawed grading criterion and was discarded, not fixed |
+| `creating-change-records` | WINS (closed via corrected scope) | Round 1 marginal loss, Gate 1 tie on a criterion that conflated this skill's job with `rating-change-risk`'s and `proving-claims`'; re-graded on a criterion scoped to this skill's actual packet-shell job (per PR #63's independent boundary clarification): 4/5 vs 0/5. **Does not replicate on Haiku** (0/3 vs 0/3) — see `MULTI_MODEL_CHECK.md`, model-dependent |
 | `deciding-who-decides` | WINS | Gate 1: 5/5 vs 2/5(+3p) |
 | `declaring-intent` | WINS | Round 1, n=3: 2/3(+1p) vs 0/3(+2p) |
 | `double-checking-before-acting` | WINS (thin margin) | Round 1, n=3: 3/3 vs 2/3(+1p) |
@@ -90,11 +100,11 @@ places. Self-graded, not claimed as compliant:
 | Non-independence of task/criteria authorship disclosed | **Yes, prominently** | Same effort that built the skills built the tests, for every skill. Stated in the executive summary of `REPORT.md`, not buried in a footnote. |
 | Bugs found during the run disclosed, not silently fixed | **Yes** | A tool-blocking harness bug (round 1) and a markdown-fence rendering bug (report generation) are both documented with before/after impact in `REPORT.md`. |
 | Blind grading (grader doesn't know which condition it's scoring) | **Yes** | A separate model (Haiku) grades from the response text alone. |
-| Statistical significance / confidence intervals | **No** | n=3–5 per cell, no formal CI or p-value computed per skill (one Fisher-exact estimate is mentioned qualitatively in `REPORT.md`, not applied systematically). This is the single biggest gap against current benchmark-reporting practice — see BetterBench's finding that most benchmarks skip this. |
-| Task difficulty pre-calibrated against measured baseline performance | **No** | SkillsBench explicitly targets tasks where SOTA is measured below 50% *before* finalizing them. This pilot discovered its ceiling effects (11 of 13 round-1 ties were the baseline already at 100%) only after running round 1, and needed a full second round (Gate 1) to correct for it. Pre-measuring baseline performance before finalizing a scenario would have caught this up front. |
-| Automated, non-LLM-graded verification (oracle + test execution) | **No, and not always applicable** | SkillsBench verifies with real oracle solutions and test scripts — stronger than LLM grading wherever the output is code-checkable. Most of these skills produce a judgment or a document, not code with a testable oracle, so LLM-based blind grading is close to the only practical option for them. Where a skill's output *is* code-checkable (`reviewing-code-quality`), an oracle-based redesign is a legitimate, unimplemented improvement. |
-| Multi-model comparison | **No** | One subject model throughout (`claude-sonnet-5`), one grading model (`claude-haiku-4-5`). SkillsBench evaluates 6 frontier models by design. |
-| Third-party / independent replication | **Not yet** | Invited, not performed. No outside reviewer who didn't help build the skills has re-run or re-scored this. |
+| Statistical significance / confidence intervals | **Computed — and it's bad news** | Fisher's exact test + Wilson CIs run for all 44 tests, then Benjamini-Hochberg corrected for running that many tests at once. **Zero survive correction at α=0.05**, including the strongest raw result in the project. See [`STATISTICAL_ANALYSIS.md`](STATISTICAL_ANALYSIS.md). This doesn't mean the effects are fake — it means the statistical layer of evidence is weak on top of, not instead of, the direct-transcript-inspection layer used throughout. |
+| Task difficulty pre-calibrated against measured baseline performance | **No, but the retroactive cost of that is now known** | 17 of 27 round-1 scenarios (63%) had a baseline success rate ≥50% — computed for free from existing data, see `STATISTICAL_ANALYSIS.md`. Confirms the gap was real and larger than the "thin margin" cohort alone suggested. Going forward, this project's scripts should baseline-test at n=3 before finalizing any new scenario. |
+| Automated, non-LLM-graded verification (oracle + test execution) | **No, and not always applicable** | SkillsBench verifies with real oracle solutions and test scripts — stronger than LLM grading wherever the output is code-checkable. Most of these skills produce a judgment or a document, not code with a testable oracle, so LLM-based blind grading is close to the only practical option for them. An adversarial review of the plan to fix this found the "reuse existing transcripts for free" premise was wrong — they're prose recommendations, not diffs — so this remains correctly scoped as future work, not attempted here. See `PLAN_STATUS.md`. |
+| Multi-model comparison | **Started, small** | 4 of 28 skills checked on `claude-haiku-4-5` as a second subject model ($0.32 total). 3 replicated, 1 (`creating-change-records`) did not — see [`MULTI_MODEL_CHECK.md`](MULTI_MODEL_CHECK.md). Still one subject model for the other 24 skills, still no non-Anthropic model (no credentials in this environment), still no `claude-opus-4-8` check (deferred on cost, not abandoned). |
+| Third-party / independent replication | **Not yet** | Invited, not performed. No outside reviewer who didn't help build the skills has re-run or re-scored this. A parallel, independently-authored effort (PR #63) reached the same diagnosis for `briefing-an-agent` without seeing this work — a genuine independent cross-check on that one finding — but that's a coincidence of timing, not a replication process, and doesn't change this row's answer. |
 
 **Read this table as the actual limitations section, not a compliance
 checkmark list.** The "No" rows are the real, current gaps — not disclaimers

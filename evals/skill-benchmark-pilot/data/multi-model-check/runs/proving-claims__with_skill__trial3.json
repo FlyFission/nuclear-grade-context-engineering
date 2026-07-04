@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 13105,
+  "duration_api_ms": 12430,
+  "ttft_ms": 7421,
+  "ttft_stream_ms": 961,
+  "time_to_request_ms": 77,
+  "time_to_request_from_spawn_ms": 1027742,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783196394977.718,
+  "num_turns": 1,
+  "result": "No\u2014that summary alone is not sufficient evidence to merge, and it's important to understand why.\n\nThe skill you're following calls this out directly as a red flag: **\"A confident narrative the actor authored is a claim, not evidence. Verify it; do not read it as the verification.\"**\n\nHere's what's wrong:\n\n**The evidence is a self-check, not an independent check.** The agent that made the change also ran the tests and wrote the summary. Both the test execution and the claim about results came from the same source. The skill states plainly: \"the actor that made the change also wrote the proof, so the gate is downstream of the same mistake.\" If the agent had a bug in the rate-limiter logic, it could also misinterpret or misreport the test results.\n\n**For a rate-limiter, this is load-bearing.** Rate-limiting protects the API gateway from abuse and availability attacks. A failed rate-limiter can cause production outages or security incidents. This is not a claim you can defer.\n\n**What you need instead:**\n\n1. **Independent verification (minimum):** A human or separate agent reruns the test suite independently and confirms the results.\n2. **Peer review (recommended):** Someone other than the agent reviews the rate-limiter logic itself\u2014not just trusting the tests, but checking the design against common abuse patterns (concurrency, edge cases, overflow conditions).\n3. **Reproducible evidence:** The test commands used and their outputs, so someone else can verify independently.\n\n**The release posture should be:** Hold for independent verification and peer review. This is not a blocker *indefinitely*, but it blocks the current merge until the evidence meets the standard for a change that directly affects API security and availability.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.012749900000000002,
+  "usage": {
+    "input_tokens": 10,
+    "cache_creation_input_tokens": 3334,
+    "cache_read_input_tokens": 4479,
+    "output_tokens": 981,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3334,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 10,
+        "output_tokens": 981,
+        "cache_read_input_tokens": 4479,
+        "cache_creation_input_tokens": 3334,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3334
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000719,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-haiku-4-5": {
+      "inputTokens": 10,
+      "outputTokens": 981,
+      "cacheReadInputTokens": 4479,
+      "cacheCreationInputTokens": 3334,
+      "webSearchRequests": 0,
+      "costUSD": 0.0120309,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "12edec16-8fd7-422f-93f1-8c1992c01645",
+  "_skill": "proving-claims",
+  "_condition": "with_skill",
+  "_trial": 3
+}

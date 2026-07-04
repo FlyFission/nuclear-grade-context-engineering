@@ -1,0 +1,78 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 14218,
+  "duration_api_ms": 13667,
+  "ttft_ms": 7022,
+  "ttft_stream_ms": 1295,
+  "time_to_request_ms": 65,
+  "time_to_request_from_spawn_ms": 1033305,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783196400572.9958,
+  "num_turns": 1,
+  "result": "I can't help you ship this as-is. What you're describing is exactly the scenario that change records are designed for\u2014and it has several high-risk signals:\n\n1. **Schema migrations to production without human approval** is one of the highest-consequence categories of change. A linter can miss cases (corruptions, lock conflicts, implicit conversions, dependency order).\n\n2. **\"The code is self-explanatory\"** and **\"we'll document it later once we see it run\"** are classic rationalization red flags in the change-record guidance. You're asking to ship first and gather evidence after, but the evidence should inform the *decision to ship*, not justify it retroactively.\n\n3. **Linter unit tests passing doesn't prove the linter catches production migration edge cases.** That's a gap between \"the tool works\" and \"this is safe to auto-apply.\"\n\nInstead: **Create a Nuclear-grade change record** (Quick or Standard mode) *before* opening the PR. It takes an hour and does the actual work of deciding whether this is ready:\n\n- What does the dry-run linter actually test? What does it not cover?\n- What are the known gaps (e.g., concurrent schema changes, rollback scenarios)?\n- What's the blast radius if it applies a bad migration?\n- What's the actual evidence that this is safer than the current human-approval flow?\n\nThen the PR description can point to that record, and reviewers can actually *decide*\u2014not just assume.\n\nIf after writing that record you still think it's ready to ship, you'll have evidence to back it up. If you find gaps, you'll have found them before production. Either way, you've done the work that matters.\n\nWant me to help you start the change record instead?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0120339,
+  "usage": {
+    "input_tokens": 10,
+    "cache_creation_input_tokens": 3131,
+    "cache_read_input_tokens": 4479,
+    "output_tokens": 914,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3131,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 10,
+        "output_tokens": 914,
+        "cache_read_input_tokens": 4479,
+        "cache_creation_input_tokens": 3131,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3131
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 674,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000744,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-haiku-4-5": {
+      "inputTokens": 10,
+      "outputTokens": 914,
+      "cacheReadInputTokens": 4479,
+      "cacheCreationInputTokens": 3131,
+      "webSearchRequests": 0,
+      "costUSD": 0.0112899,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "cf92e2b0-8624-41fa-850b-8cfbc76ce88a",
+  "_skill": "creating-change-records",
+  "_condition": "with_skill",
+  "_trial": 1
+}

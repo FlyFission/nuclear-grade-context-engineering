@@ -2,7 +2,7 @@
 
 **Purpose:** Test whether Nuclear-grade skills and workflows produce better records for review than simple prompting, and find where the extra work is not worth it.
 
-**Status:** A judgment-based look at the records. This is not a benchmark, a user study, a safety claim, a security claim, a compliance claim, a certification claim, a production-suitability claim, or a formal assurance result.
+**Status:** A judgment-based look at the records. This is not a benchmark, a user study, a safety claim, a security claim, a compliance claim, a certification claim, a production-suitability claim, or a formal assurance result. For the mechanized, per-skill complement to this comparison — headless with/without-skill runs, blind grading, real cost/token data, every raw response public — see [`evals/skill-benchmark-pilot/`](../../../evals/skill-benchmark-pilot/).
 
 ## Read This First
 

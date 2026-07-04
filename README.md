@@ -231,6 +231,8 @@ We ran twelve realistic changes both ways, a direct coding-agent prompt versus t
 
 The scores are author-judged design evidence, not proof of effectiveness, and the limits are stated up front. The rubric, the methodology, and every trial record are public: [results](docs/03-worked-examples/skill-workflow-comparison/results-summary.md) · [methodology](docs/03-worked-examples/skill-workflow-comparison/methodology.md). Replication is invited.
 
+There is a second, more mechanized check on the individual skills: [`evals/skill-benchmark-pilot/`](evals/skill-benchmark-pilot/) runs each skill headless, with and without its instructions loaded, on the same scenario, and grades the result blind against a pre-registered criterion — with real cost/token data and every raw response checked into the repo. 27 of 28 skills show a measured behavior change versus a plain prompt; the one open case, the statistical limits (n=3–5 per skill), and an honest self-audit against current benchmark-reporting practice are in that folder's [`README.md`](evals/skill-benchmark-pilot/README.md), not hidden from it.
+
 ## What you get
 
 | Part | What it does | Start here |

@@ -34,6 +34,24 @@ a("Generated directly from the raw data in `evals/skill-benchmark-pilot/data/` b
   "the same files, or re-run the trials with `scripts/run_pilot_all.py` / "
   "`scripts/run_pilot.py` against the scenarios in `all_skill_tasks.json`.")
 a("")
+a("## Executive summary — read this before the tables")
+a("")
+a("**These results are best read as an internally generated pilot showing where skills "
+  "appear to help under skill-informed criteria. They are not yet an independent "
+  "benchmark.** The scenarios and pass criteria for 27 of the 28 skills were authored by "
+  "the same overall effort that maintains the skills being tested (see section 2 for the "
+  "full disclosure) — no third party has reviewed or re-derived them. Until that happens, "
+  "treat every result below as provisional.")
+a("")
+a("With that caveat, the supported claim is: **in this internally authored pilot, skill "
+  "injection improved exact pass-criterion hit rate on many targeted scenarios — 13 wins, "
+  "13 ties, and 1 loss across the 27-skill batch (n=3 trials/cell), plus a separate "
+  "`reviewing-code-quality` pilot showing a gain on 1 of 3 discriminating tasks (n=3 "
+  "trials/cell).** This is not evidence that the skills broadly improve model performance; "
+  "most ties are ceiling effects (the plain prompt already did what was asked), n is small, "
+  "and the benchmark tests decision/response behavior under scenario prompts, not "
+  "end-to-end codebase execution (see section 7 for both points in full).")
+a("")
 a("## 1. What this tests")
 a("")
 a("For each of the 28 skills in `skills/`, the same realistic scenario was given to "
@@ -212,12 +230,13 @@ for skill in skills_sorted:
     sec.append("")
     sec.append(f"**Pre-registered pass criterion:** {criteria}")
     sec.append("")
-    sec.append("| Condition | Trial | Verdict | Cost | Output tokens | Grader quote |")
-    sec.append("|---|---|---|---|---|---|")
+    sec.append("| Condition | Trial | Verdict | Cost | Output tokens | Turns | Duration (ms) | Grader quote |")
+    sec.append("|---|---|---|---|---|---|---|---|")
     for r in sorted(rows, key=lambda r: (r["condition"], r["trial"])):
         quote = (r.get("grader_quote") or "").replace("\n", " ").replace("|", "/")[:220]
         sec.append(f"| {r['condition']} | {r['trial']} | {r['meets_criteria']} | "
-                    f"{fmt_money(r.get('cost_usd'))} | {r.get('output_tokens', 'n/a')} | {quote} |")
+                    f"{fmt_money(r.get('cost_usd'))} | {r.get('output_tokens', 'n/a')} | "
+                    f"{r.get('num_turns', 'n/a')} | {r.get('duration_ms', 'n/a')} | {quote} |")
     sec.append("")
     detail_sections.append("\n".join(sec))
 
@@ -238,25 +257,46 @@ rcq_cost = sum(json.loads(f.read_text()).get("total_cost_usd") or 0 for f in rcq
 
 a("## 6. Cost")
 a("")
-a(f"- `reviewing-code-quality` pilot (18 review runs): **${rcq_cost:.2f}**")
-a(f"- 27-skill pilot (162 review runs, including all reruns from the bug fix): **${all_cost:.2f}**")
-a(f"- **Total review-run spend: ${rcq_cost + all_cost:.2f}**, plus a few dollars of Haiku grading calls (not itemized here; grading calls are ~10-20x cheaper than Sonnet review calls per call).")
+a(f"- `reviewing-code-quality` pilot (18 review runs): **${rcq_cost:.2f}** (unrounded: ${rcq_cost:.4f})")
+a(f"- 27-skill pilot (162 review runs, including all reruns from the bug fix): **${all_cost:.2f}** (unrounded: ${all_cost:.4f})")
+a(f"- **Total review-run spend, computed from unrounded values: ${rcq_cost + all_cost:.2f}** "
+  f"(sum of the two rounded figures above is ${round(rcq_cost, 2) + round(all_cost, 2):.2f} — "
+  f"rounding each component independently before adding does not always match rounding the "
+  f"true total, which is what's reported here). Plus a few dollars of Haiku grading calls "
+  f"(not itemized here; grading calls are ~10-20x cheaper than Sonnet review calls per call).")
 a("")
 
 # ---------- Section 7: limitations ----------
 a("## 7. Limitations — read before treating any single result as settled")
 a("")
-a("- **n=3 trials per cell.** Enough to see a 3/3-vs-0/3 split isn't chance, not enough for "
-  "a real confidence interval on anything closer than that.")
+a("- **n=3 trials per cell.** A 3/3-vs-0/3 split is suggestive and worth following up on, "
+  "but 3 trials per condition is too small to rule out chance with any real statistical "
+  "confidence, let alone support a stable estimate — a two-sided Fisher exact test on a "
+  "3-vs-0 split of 3 is roughly p≈0.10, not a result you'd call significant on its own. "
+  "Treat every split in this report as pilot-level signal, not a settled finding.")
 a("- **One model tested** (`claude-sonnet-5`), one grading model (`claude-haiku-4-5`). "
   "Results may not generalize to other models.")
-a("- **Scenario/criteria authorship is not independent** — see section 2. Treat every "
-  "\"WINS\" and \"TIE\" as provisional until someone outside this effort has read the "
-  "scenario and criterion and agrees it's a fair test.")
+a("- **Scenario/criteria authorship is not independent** — see section 2 and the executive "
+  "summary above. Treat every \"WINS\" and \"TIE\" as provisional until someone outside "
+  "this effort has read the scenario and criterion and agrees it's a fair test.")
 a("- **A TIE means \"this specific scenario didn't discriminate,\" not \"the skill has no "
-  "value.\"** Half of the ties are ceiling effects (both conditions already score 3/3) — "
-  "the base model may already do the right thing on an obvious case; a harder or subtler "
-  "scenario might reveal a gap this one didn't.")
+  "value.\"** Most ties are ceiling effects: 11 of the 13 tied skills in the 27-skill batch "
+  "are 3/3-vs-3/3 (both conditions already fully satisfied the criterion) — the base model "
+  "may already do the right thing on the case tested; a harder or subtler scenario might "
+  "reveal a gap this one didn't (this is exactly what Gate 1 in the follow-up work is for). "
+  "The remaining 2 ties (`handing-off-work`, `organizing-project-folders`) are 0/3-vs-0/3 "
+  "floor ties, covered in their own bullet below.")
+a("- **This benchmark tests decision/response behavior under a scenario prompt, not "
+  "end-to-end codebase execution.** Runs use an empty isolated working directory with "
+  "read-only tools and nothing real to find, which is appropriate for decision-quality "
+  "prompts (\"is this ready to ship,\" \"what record do we need\") but some scenarios ask "
+  "the model to act on or inspect a repo. `using-nuclear-grade`'s `without_skill` baseline "
+  "includes trials where the model asked for the missing files it expected to edit rather "
+  "than classifying the change's rigor tier at all — a legitimate response to an empty "
+  "sandbox, but not the same thing as testing what the model would do with a real "
+  "codebase in front of it. That specific skill's detail section in section 5 shows the "
+  "raw responses; treat its result as weaker evidence than skills whose scenarios are "
+  "self-contained.")
 a("- **Two skills failed on both sides** (`handing-off-work`, `organizing-project-folders`, "
   "both 0/3 YES). That is a flag that the pass criterion may be stricter than what \"adds "
   "value\" actually requires (both got partial credit consistently), not proof the skill is "

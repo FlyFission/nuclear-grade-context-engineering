@@ -103,7 +103,7 @@ judgment not minutes).
 | Rigor tier | Typical change | Hidden-risk discovery (simple → NG) | Defensible ship-call (simple → NG) | Overhead | Read the tier off |
 |---|---|:---:|:---:|:---:|---|
 | Administrative floor | typo, comment, dead link — no new trust boundary | n/a (no boundary to miss) | n/a | ~0 | (below Quick; commit message is the record) |
-| Quick | local, reversible, obvious proof | 2 → 3 | 3 → 3 | 1–2 | U01, U06, U10 |
+| Quick | local, reversible, obvious proof | 2 → 3 | 3 → 3 | 1–2 | U01 (the one pure-Quick trial) |
 | Standard | touches users / deps / data / permissions / AI authority / release | 1–2 → 4–5 | 1–2 → 4–5 | 3–4 | U02, U03, U05, U07, U08, U11, U12 |
 | Stronger (human-reviewed) | severe, silent, irreversible, external-trust | 1–2 → 5 + independent review | 1–2 → 5 | 4–5 | U04, U08 (upper band) |
 

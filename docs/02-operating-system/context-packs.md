@@ -11,7 +11,7 @@
 A context pack is a small bundle built for one task:
 
 ```text
-role + mode + packet state + affected files + required evidence + approval gates + HPI controls + relevant source lineage
+role + mode + packet state + loaded instruction files + affected files + required evidence + approval gates + HPI controls + relevant source lineage
 ```
 
 It exists because Nuclear-grade is a way to control the raw power of an AI or LLM. Powerful agents should not get endless context and vague authority. They should get a focused packet, clear limits, and a duty to prove their work.
@@ -77,6 +77,7 @@ Basis summary: <what must remain true>
 Critical next action: <action, likely error, control>
 Required evidence: <commands, reviews, evals, links>
 Approval gates: <who/what must approve before next step>
+Loaded instruction files: <AGENTS.md / CLAUDE.md / copilot-instructions.md / tool rules in force, with precedence or "none known">
 Source-lineage excerpts: <only the relevant source-map/crosswalk links>
 Forbidden actions: <scope and authority limits>
 Do-not-touch targets: <files, commands, systems, claims>
@@ -107,6 +108,7 @@ Every AI-facing context pack should state:
 - what files the agent may read;
 - what files the agent may edit;
 - what commands it may run;
+- which persistent instruction files or tool rules are in force, and which one wins on conflict;
 - whether it may use the network or look things up online;
 - what approvals it needs before it changes anything;
 - what claims it must not make;
@@ -147,7 +149,8 @@ A context pack is ready when a competent human or AI agent can answer:
 5. What should I read now, and what should I ignore?
 6. What is the next action?
 7. What changed since the prior owner or context?
-8. What critical action needs self-checking or turnover?
+8. Which standing agent instructions are in force, and do any conflict with this pack?
+9. What critical action needs self-checking or turnover?
 
 Archive or refresh a context pack when it goes stale, when the mode changes, or when the packet's risk or evidence state changes.
 

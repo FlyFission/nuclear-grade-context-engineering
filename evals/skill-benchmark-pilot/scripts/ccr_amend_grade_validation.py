@@ -30,10 +30,32 @@ SCHEMA = json.dumps({
 })
 
 
-def grade_one(path):
+def load_grade_cache(out_path: Path):
+    """Prior valid grades, keyed by (model, trial), plus the cache file's own
+    mtime -- used so a partial rerun (one regenerated run file) doesn't send
+    every other, unchanged transcript back through the live grader. A run
+    file newer than this mtime was regenerated since the last grading pass
+    and must be re-graded; anything older can reuse its cached grade."""
+    if not out_path.exists():
+        return {}, None
+    try:
+        prior_rows = json.loads(out_path.read_text())
+    except (json.JSONDecodeError, OSError):
+        return {}, None
+    cache = {(r["model"], r["trial"]): r for r in prior_rows if not r.get("error")}
+    return cache, out_path.stat().st_mtime
+
+
+def grade_one(path, cache: dict, cache_mtime):
     d = json.loads(path.read_text())
     if d.get("type") == "error" or d.get("is_error"):
         return {"model": d["_model"], "trial": d["_trial"], "error": True}
+
+    if cache_mtime is not None and path.stat().st_mtime <= cache_mtime:
+        cached = cache.get((d["_model"], d["_trial"]))
+        if cached is not None:
+            return cached
+
     text = d.get("result", "")
     prompt = (
         "You are grading a response against ONE specific structural criterion. "
@@ -59,9 +81,10 @@ def grade_one(path):
 
 def main():
     paths = sorted((DATA_DIR / "runs").glob("*.json"))
+    cache, cache_mtime = load_grade_cache(DATA_DIR / "validation_graded.json")
     rows = []
     with ThreadPoolExecutor(max_workers=8) as ex:
-        futs = {ex.submit(grade_one, p): p for p in paths}
+        futs = {ex.submit(grade_one, p, cache, cache_mtime): p for p in paths}
         for fut in as_completed(futs):
             rows.append(fut.result())
     (DATA_DIR / "validation_graded.json").write_text(json.dumps(rows, indent=2))

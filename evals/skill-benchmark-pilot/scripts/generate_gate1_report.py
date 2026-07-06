@@ -53,11 +53,37 @@ if not gate1_summary_path.exists():
     gate1_summary_path = GATE1 / "summary_gate1_FINAL.json"
 gate1_summary = json.loads(gate1_summary_path.read_text())
 
-# Headline counts computed once here (not hard-coded) so the executive summary
-# can never drift from the comparison table below, which is built from this data.
+# Headline counts and the flip/tie/loss breakdown computed once here (not
+# hard-coded) so the executive summary can never drift from the comparison
+# table below, which is built from this same data.
 round1_ties = sum(1 for r in round1_summary if round1_verdict(r["skill"]) == "TIE")
 flips = sum(1 for row in gate1_summary
             if round1_verdict(row["skill"]) == "TIE" and gate1_verdict(row) == "WINS")
+remaining_ties = [row for row in gate1_summary
+                  if round1_verdict(row["skill"]) == "TIE" and gate1_verdict(row) == "TIE"]
+round1_loss_rows = [row for row in gate1_summary if round1_verdict(row["skill"]) == "LOSES"]
+
+if remaining_ties:
+    remaining_ties_names = " and ".join(f"`{r['skill']}`" for r in remaining_ties)
+    unique_patterns = {(r["with_skill"]["catch"], r["without_skill"]["catch"]) for r in remaining_ties}
+    if len(unique_patterns) == 1:
+        w, wo = next(iter(unique_patterns))
+        remaining_ties_detail = f"{w} vs {wo}"
+    else:
+        remaining_ties_detail = "; ".join(
+            f"`{r['skill']}`: {r['with_skill']['catch']} vs {r['without_skill']['catch']}"
+            for r in remaining_ties)
+    remaining_ties_ref = "this one" if len(remaining_ties) == 1 else f"these {len(remaining_ties)}"
+else:
+    remaining_ties_names = "no skills"
+    remaining_ties_detail = "n/a"
+    remaining_ties_ref = "none"
+
+round1_loss_sentence = " ".join(
+    f"`{r['skill']}` — the one round-1 LOSES — improves to a {gate1_verdict(r)} "
+    f"({r['with_skill']['catch']} YES vs {r['without_skill']['catch']} YES for the baseline)."
+    for r in round1_loss_rows
+) or "No round-1 LOSES skill is present in this Gate 1 batch."
 
 lines = []
 a = lines.append
@@ -81,10 +107,9 @@ a(f"Round 1 tested each skill's own \"When to Use\" trigger — the obvious, tex
   f"5 trials per condition instead of 3.")
 a("")
 a(f"**Result: {flips} of the {len(gate1_summary)} skills flip from TIE to WINS on the harder case.** Only "
-  f"`briefing-an-agent` and `proving-claims` remain flat ties (5/5 vs 5/5 — the baseline "
-  f"still nails even the harder version of these two). `creating-change-records` — the one "
-  f"round-1 LOSES — improves to a TIE (0/5 YES both conditions, but the skill earns partial "
-  f"credit on all 5 trials versus 1/5 for the baseline). **This is real support for the "
+  f"{remaining_ties_names} remain flat ties ({remaining_ties_detail} — the baseline "
+  f"still nails even the harder version of {remaining_ties_ref}). {round1_loss_sentence} "
+  f"**This is real support for the "
   f"ceiling-effect hypothesis**: most of round 1's ties were an artifact of testing where the "
   f"skill wasn't needed, not evidence the skill adds nothing.")
 a("")

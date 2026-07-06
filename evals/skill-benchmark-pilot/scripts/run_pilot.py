@@ -27,18 +27,22 @@ TASKS = ["task1_thin_wrapper", "task2_shared_leak", "task3_clever_indirection"]
 CONDITIONS = ["with_skill", "without_skill"]
 TRIALS = 3
 MODEL = "claude-sonnet-5"
+TOOLS = ""
 MAX_BUDGET_USD = "0.50"
 
 
 def input_spec_hash(prompt_text: str, condition: str) -> str:
     """Fingerprint of everything that determines the subject-model call's
     output besides its own randomness: the task prompt, the skill body
-    (with_skill only), the model, and the condition. A persisted run file is
-    only reused if this matches -- an edited task prompt or SKILL.md must
-    force a fresh call even if the old output file is still sitting on disk
-    from before the edit."""
+    (with_skill only), the model, the condition, and the harness settings
+    (--tools, --max-budget-usd) that shape what the model is even allowed to
+    do. A persisted run file is only reused if this matches -- an edited
+    task prompt, SKILL.md, or harness config must force a fresh call even
+    if the old output file is still sitting on disk from before the change."""
     skill_body = SKILL_BODY if condition == "with_skill" else ""
-    return hashlib.sha256(f"{prompt_text}::{skill_body}::{MODEL}::{condition}".encode()).hexdigest()
+    return hashlib.sha256(
+        f"{prompt_text}::{skill_body}::{MODEL}::{condition}::{TOOLS}::{MAX_BUDGET_USD}".encode()
+    ).hexdigest()
 
 
 def run_one(task: str, condition: str, trial: int) -> dict:
@@ -53,7 +57,7 @@ def run_one(task: str, condition: str, trial: int) -> dict:
         "--output-format", "json",
         "--model", MODEL,
         "--safe-mode",
-        "--tools", "",
+        "--tools", TOOLS,
         "--no-session-persistence",
         "--max-budget-usd", MAX_BUDGET_USD,
     ]

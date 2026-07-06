@@ -5,6 +5,7 @@ sample? Reuses existing scenarios (no new scenario-design cost). n=3 per
 condition, 4 skills. Sonnet stays the grader throughout, kept separate from
 the subject model to avoid the self-check problem this project's own
 proving-claims skill warns about."""
+import hashlib
 import json
 import re
 import subprocess
@@ -27,6 +28,8 @@ SAMPLE = [
     ("creating-change-records", "gate1"),
 ]
 SUBJECT_MODEL = "claude-haiku-4-5"
+TOOLS = "Read,Glob,Grep"
+MAX_BUDGET_USD = "0.30"
 TRIALS = 3
 
 
@@ -40,18 +43,36 @@ def scenario_for(skill, source):
     return ALL_TASKS[skill]["scenario_prompt"] if source == "round1" else GATE1_TASKS[skill]["scenario_prompt"]
 
 
+def input_spec_hash(skill, source, condition):
+    """Fingerprint of everything that determines the subject-model call's
+    output besides its own randomness: the scenario prompt, the skill body
+    (with_skill only), the subject model, the condition, and the harness
+    settings (--tools, --max-budget-usd). A persisted run file is only
+    reused if this matches -- an edited scenario, SKILL.md, or harness
+    config must force a fresh call even if the old output file is still
+    sitting on disk from before the change."""
+    scenario = scenario_for(skill, source)
+    skill_body = extract_skill_body(skill) if condition == "with_skill" else ""
+    return hashlib.sha256(
+        f"{scenario}::{skill_body}::{SUBJECT_MODEL}::{condition}::{TOOLS}::{MAX_BUDGET_USD}".encode()
+    ).hexdigest()
+
+
 def run_one(skill, source, condition, trial):
     scenario = scenario_for(skill, source)
     cwd = WORK_DIR / f"{skill}_{condition}_{trial}"
     cwd.mkdir(parents=True, exist_ok=True)
     cmd = ["claude", "-p", "--output-format", "json", "--model", SUBJECT_MODEL,
-           "--safe-mode", "--tools", "Read,Glob,Grep", "--no-session-persistence",
-           "--max-budget-usd", "0.30"]
+           "--safe-mode", "--tools", TOOLS, "--no-session-persistence",
+           "--max-budget-usd", MAX_BUDGET_USD]
     if condition == "with_skill":
         cmd += ["--append-system-prompt", extract_skill_body(skill)]
     out_path = RUNS_DIR / f"{skill}__{condition}__trial{trial}.json"
+    spec_hash = input_spec_hash(skill, source, condition)
     if out_path.exists():
-        return json.loads(out_path.read_text())
+        existing = json.loads(out_path.read_text())
+        if existing.get("_input_spec_sha256") == spec_hash:
+            return existing
     try:
         proc = subprocess.run(cmd, input=scenario, capture_output=True, text=True, cwd=str(cwd), timeout=180)
         record = json.loads(proc.stdout.strip())
@@ -62,6 +83,7 @@ def run_one(skill, source, condition, trial):
     record["_skill"] = skill
     record["_condition"] = condition
     record["_trial"] = trial
+    record["_input_spec_sha256"] = spec_hash
     out_path.write_text(json.dumps(record, indent=2))
     return record
 

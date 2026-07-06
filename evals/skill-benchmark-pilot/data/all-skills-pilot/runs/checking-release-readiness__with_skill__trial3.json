@@ -75,5 +75,5 @@
   "_skill": "checking-release-readiness",
   "_condition": "with_skill",
   "_trial": 3,
-  "_input_spec_sha256": "73d22dffc1ece05544f9b0a76eb47380035fe9d9fc52b8fcc0ebc43fd219392c"
+  "_input_spec_sha256": "00bfda678266c41abade5f2832662a7fe9a982f29c6d115545cb2862111c582a"
 }

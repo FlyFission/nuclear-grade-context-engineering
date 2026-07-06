@@ -74,5 +74,6 @@
   "uuid": "ec3ef46b-7c17-4bdb-a80e-ca7fa0acef2d",
   "_task": "briefing-an-agent-true-niche",
   "_condition": "with_skill",
-  "_trial": 2
+  "_trial": 2,
+  "_input_spec_sha256": "e56ea6b978afa8c560bfcafd5916a22d757bd6eab2a113e0ab6c7582d344ccfc"
 }

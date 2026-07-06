@@ -73,5 +73,6 @@
   "fast_mode_state": "off",
   "uuid": "74a558ba-ec0e-4c53-a88d-b859dfd72034",
   "_model": "claude-sonnet-5",
-  "_trial": 1
+  "_trial": 1,
+  "_input_spec_sha256": "3b1f6b03be0921417f3d8e7d3ff0f0d9010d96a7fa7bb267aded20d69f2e32ac"
 }

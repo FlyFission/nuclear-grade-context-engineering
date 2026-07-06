@@ -73,5 +73,6 @@
   "fast_mode_state": "off",
   "uuid": "41bf4359-e279-41dc-a862-87703b5852ba",
   "_model": "claude-haiku-4-5",
-  "_trial": 2
+  "_trial": 2,
+  "_input_spec_sha256": "eeba57e3ec75bfa467c2fc103b14e24b77233e5661d9d42f9d0572fa5e3e6fa6"
 }

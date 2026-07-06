@@ -86,5 +86,5 @@
   "_skill": "recording-a-known-good-version",
   "_condition": "without_skill",
   "_trial": 1,
-  "_input_spec_sha256": "8b9f61196c0e04edbc5c596686c5fda20daa0220cc67a13e256b8d941212da72"
+  "_input_spec_sha256": "546424cf4420f9bfed23a27c63ce98b40a891d06dd115fc77ace6fe344a870fd"
 }

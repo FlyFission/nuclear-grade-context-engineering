@@ -82,5 +82,6 @@
   "uuid": "2ca56c16-f82f-4c46-9dbd-422aa6b138d2",
   "_skill": "learning-from-experience",
   "_condition": "without_skill",
-  "_trial": 1
+  "_trial": 1,
+  "_input_spec_sha256": "fe07a343a424143b45c3e32c37038589866ecbc3169582503564ad6478c8e998"
 }

@@ -75,5 +75,5 @@
   "_task": "task1_thin_wrapper",
   "_condition": "with_skill",
   "_trial": 2,
-  "_input_spec_sha256": "42e5c7ef6aa81f86f54d2ab2e46dbaa0e911109811a0e6725861a21ee6a082ad"
+  "_input_spec_sha256": "7523d0194fc0ba549827934c65543f8c7807a44f5b94751cbbb6177e54b5bd2d"
 }

@@ -19,6 +19,7 @@ TASKS = json.loads((DATA_DIR / "gate1_tasks.json").read_text())
 CONDITIONS = ["with_skill", "without_skill"]
 TRIALS = 5
 MODEL = "claude-sonnet-5"
+TOOLS = "Read,Glob,Grep"
 MAX_BUDGET_USD = "0.50"
 MAX_WORKERS = 8
 
@@ -33,13 +34,17 @@ def extract_skill_body(skill_name: str) -> str:
 def input_spec_hash(skill: str, condition: str) -> str:
     """Fingerprint of everything that determines the subject-model call's
     output besides its own randomness: the scenario prompt, the skill body
-    (with_skill only), the model, and the condition. A persisted run file is
-    only reused if this matches -- an edited scenario or SKILL.md must force
-    a fresh call even if the old output file is still sitting on disk from
-    before the edit."""
+    (with_skill only), the model, the condition, and the harness settings
+    (--tools, --max-budget-usd) that shape what the model is even allowed to
+    do. A persisted run file is only reused if this matches -- an edited
+    scenario, SKILL.md, or harness config (e.g. the round-1 --tools "" bug
+    fix) must force a fresh call even if the old output file is still
+    sitting on disk from before the change."""
     scenario = TASKS[skill]["scenario_prompt"]
     skill_body = extract_skill_body(skill) if condition == "with_skill" else ""
-    return hashlib.sha256(f"{scenario}::{skill_body}::{MODEL}::{condition}".encode()).hexdigest()
+    return hashlib.sha256(
+        f"{scenario}::{skill_body}::{MODEL}::{condition}::{TOOLS}::{MAX_BUDGET_USD}".encode()
+    ).hexdigest()
 
 
 def run_one(skill: str, condition: str, trial: int) -> dict:
@@ -60,7 +65,7 @@ def run_one(skill: str, condition: str, trial: int) -> dict:
             "--output-format", "json",
             "--model", MODEL,
             "--safe-mode",
-            "--tools", "Read,Glob,Grep",
+            "--tools", TOOLS,
             "--no-session-persistence",
             "--max-budget-usd", MAX_BUDGET_USD,
         ]

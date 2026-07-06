@@ -75,5 +75,5 @@
   "_skill": "rating-change-risk",
   "_condition": "without_skill",
   "_trial": 2,
-  "_input_spec_sha256": "e68b13f6a8fb0c47c7ebeb3a560a072a5aecf30b0be8001bfaa039a97ed4dba7"
+  "_input_spec_sha256": "c15729de52c20a78ed3caa3bd0457f7bfffa77497517f85a7c47b3561972ad13"
 }

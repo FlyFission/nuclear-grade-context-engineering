@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import hashlib
 import json
 import re
 import subprocess
@@ -14,6 +15,8 @@ WORK_DIR = BASE / "work"
 SKILL_PATH = REPO_ROOT / "skills" / "creating-change-records" / "SKILL.md"
 GATE1_TASKS = json.loads((BASE.parent / "data" / "gate1-hard-case-pilot" / "gate1_tasks.json").read_text())
 SCENARIO = GATE1_TASKS["creating-change-records"]["scenario_prompt"]
+TOOLS = "Read,Glob,Grep"
+MAX_BUDGET_USD = "0.30"
 TRIALS = 3
 
 def extract_skill_body():
@@ -21,15 +24,31 @@ def extract_skill_body():
     parts = re.split(r"^---$", text, flags=re.MULTILINE)
     return "---".join(parts[2:]).strip()
 
+def input_spec_hash(model):
+    """Fingerprint of everything that determines the subject-model call's
+    output besides its own randomness: the scenario prompt, the skill body,
+    the model under test, and the harness settings (--tools,
+    --max-budget-usd). A persisted run file is only reused if this matches
+    -- an edited scenario, SKILL.md, or harness config must force a fresh
+    call even if the old output file is still sitting on disk from before
+    the change."""
+    skill_body = extract_skill_body()
+    return hashlib.sha256(
+        f"{SCENARIO}::{skill_body}::{model}::{TOOLS}::{MAX_BUDGET_USD}".encode()
+    ).hexdigest()
+
 def run_one(model, trial):
     cwd = WORK_DIR / f"{model}_{trial}"
     cwd.mkdir(parents=True, exist_ok=True)
     cmd = ["claude", "-p", "--output-format", "json", "--model", model,
-           "--safe-mode", "--tools", "Read,Glob,Grep", "--no-session-persistence",
-           "--max-budget-usd", "0.30", "--append-system-prompt", extract_skill_body()]
+           "--safe-mode", "--tools", TOOLS, "--no-session-persistence",
+           "--max-budget-usd", MAX_BUDGET_USD, "--append-system-prompt", extract_skill_body()]
     out_path = RUNS_DIR / f"{model}__with_skill__trial{trial}.json"
+    spec_hash = input_spec_hash(model)
     if out_path.exists():
-        return json.loads(out_path.read_text())
+        existing = json.loads(out_path.read_text())
+        if existing.get("_input_spec_sha256") == spec_hash:
+            return existing
     try:
         proc = subprocess.run(cmd, input=SCENARIO, capture_output=True, text=True, cwd=str(cwd), timeout=180)
         record = json.loads(proc.stdout.strip())
@@ -39,6 +58,7 @@ def run_one(model, trial):
         record = {"type": "error", "error": "non-json output", "stdout": proc.stdout[:2000], "stderr": proc.stderr[:2000]}
     record["_model"] = model
     record["_trial"] = trial
+    record["_input_spec_sha256"] = spec_hash
     out_path.write_text(json.dumps(record, indent=2))
     return record
 

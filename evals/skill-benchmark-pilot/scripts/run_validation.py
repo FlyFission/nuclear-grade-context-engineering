@@ -56,7 +56,12 @@ def run_one(task_key, skill_name, condition, trial):
     spec_hash = input_spec_hash(task_key, skill_name, condition)
     if out_path.exists():
         existing = json.loads(out_path.read_text())
-        if existing.get("_input_spec_sha256") == spec_hash:
+        # Never treat a cached ERROR record as a hit, even with a matching
+        # hash -- a transient failure must always be retried on the next
+        # invocation, not replayed forever until someone manually deletes
+        # the file.
+        if (existing.get("_input_spec_sha256") == spec_hash
+                and existing.get("type") != "error" and not existing.get("is_error")):
             return existing
     try:
         proc = subprocess.run(cmd, input=scenario, capture_output=True, text=True, cwd=str(cwd), timeout=180)

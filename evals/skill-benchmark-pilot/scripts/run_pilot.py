@@ -74,7 +74,12 @@ def run_one(task: str, condition: str, trial: int) -> dict:
     spec_hash = input_spec_hash(prompt_text, condition)
     if out_path.exists():
         existing = json.loads(out_path.read_text())
-        if existing.get("_input_spec_sha256") == spec_hash:
+        # Never treat a cached ERROR record as a hit, even with a matching
+        # hash -- a transient failure (timeout, proxy hiccup) must always be
+        # retried on the next invocation, not replayed forever until someone
+        # manually deletes the file.
+        if (existing.get("_input_spec_sha256") == spec_hash
+                and existing.get("type") != "error" and not existing.get("is_error")):
             return existing
 
     print(f"Running {task} / {condition} / trial {trial} ...", file=sys.stderr)

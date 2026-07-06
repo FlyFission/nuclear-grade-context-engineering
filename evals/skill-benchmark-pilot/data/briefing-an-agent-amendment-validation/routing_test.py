@@ -109,7 +109,11 @@ def run_one(variant, briefing_desc, trial):
     spec_hash = input_spec_hash(prompt)
     if out_path.exists():
         existing = json.loads(out_path.read_text())
-        if existing.get("_input_spec_sha256") == spec_hash:
+        # Never treat a cached ERROR record as a hit, even with a matching
+        # hash -- a transient failure must always be retried on the next
+        # invocation, not replayed forever until someone manually deletes
+        # the file.
+        if existing.get("_input_spec_sha256") == spec_hash and existing.get("type") != "error":
             return existing
     cmd = ["claude", "-p", prompt, "--output-format", "json", "--model", MODEL,
            "--tools", TOOLS, "--max-budget-usd", MAX_BUDGET_USD, *HARNESS_FLAGS,

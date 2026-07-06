@@ -79,11 +79,20 @@ def run_one(task: str, condition: str, trial: int) -> dict:
 def main():
     RUNS_DIR.mkdir(exist_ok=True)
     WORK_DIR.mkdir(exist_ok=True)
+    failures = 0
+    total = 0
     for task in TASKS:
         for condition in CONDITIONS:
             for trial in range(1, TRIALS + 1):
-                run_one(task, condition, trial)
+                total += 1
+                rec = run_one(task, condition, trial)
+                if rec.get("type") == "error" or rec.get("is_error"):
+                    failures += 1
     print("Done.", file=sys.stderr)
+    if failures:
+        print(f"{failures}/{total} job(s) recorded an error -- see the persisted "
+              f"error rows in {RUNS_DIR}", file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == "__main__":

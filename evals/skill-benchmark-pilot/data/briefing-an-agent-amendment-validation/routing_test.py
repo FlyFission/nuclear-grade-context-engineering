@@ -8,6 +8,7 @@ one for a handoff scenario -- before vs after the briefing-an-agent amendment.
 """
 import json
 import subprocess
+import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
@@ -112,12 +113,17 @@ def main():
         for fut in as_completed(futs):
             results.append(fut.result())
     (BASE / "routing_results.json").write_text(json.dumps(results, indent=2))
+    failures = sum(1 for r in results if r.get("type") == "error")
     for variant in ["old_description", "new_description"]:
         sub = [r for r in results if r["variant"] == variant and not r.get("type") == "error"]
         correct = sum(1 for r in sub if "handing-off-work" in r["chosen_skill"].lower())
         print(f"{variant}: chose handing-off-work {correct}/{len(sub)} times")
         for r in sorted(sub, key=lambda r: r["trial"]):
             print(" ", r["trial"], r["chosen_skill"], "|", r["reasoning"][:150])
+    if failures:
+        print(f"{failures}/{len(results)} job(s) recorded an error -- see the persisted "
+              f"error rows in {RUNS_DIR}", file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == "__main__":

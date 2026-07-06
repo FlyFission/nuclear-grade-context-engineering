@@ -395,7 +395,7 @@ Our fraud-detection agent flags transactions using a hosted classification model
 
 ## 5. Cost
 
-- Gate 1 review runs (140 runs, 14 skills × 2 conditions × 5 trials): **$6.15** (unrounded: $6.1519), plus a few dollars of Haiku grading calls not itemized here. 4 trials hit a transient upstream API/proxy error unrelated to content and were simply retried; that cost is included in the total above.
+- Gate 1 review runs (140 retained final runs, 14 skills × 2 conditions × 5 trials): **$6.15** (unrounded: $6.1519), plus a few dollars of Haiku grading calls not itemized here. This is the cost of the one valid run kept per trial, not total spend including retries: 4 trials hit a transient upstream API/proxy error unrelated to content and were simply retried, and their files were overwritten by the successful retry, so the cost of those discarded attempts is not recoverable from this data and is not included here. Actual total spend on Gate 1's execution was somewhat higher than this figure.
 
 ## 6. Limitations specific to Gate 1
 

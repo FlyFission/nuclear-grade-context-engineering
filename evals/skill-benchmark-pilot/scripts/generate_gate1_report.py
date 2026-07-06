@@ -231,10 +231,14 @@ a("## 5. Cost")
 a("")
 run_files = list((GATE1 / "runs").glob("*.json"))
 gate1_cost = sum(json.loads(f.read_text()).get("total_cost_usd") or 0 for f in run_files)
-a(f"- Gate 1 review runs (140 runs, 14 skills × 2 conditions × 5 trials): "
+a(f"- Gate 1 review runs (140 retained final runs, 14 skills × 2 conditions × 5 trials): "
   f"**${gate1_cost:.2f}** (unrounded: ${gate1_cost:.4f}), plus a few dollars of Haiku "
-  f"grading calls not itemized here. 4 trials hit a transient upstream API/proxy error "
-  f"unrelated to content and were simply retried; that cost is included in the total above.")
+  f"grading calls not itemized here. This is the cost of the one valid run kept per "
+  f"trial, not total spend including retries: 4 trials hit a transient upstream "
+  f"API/proxy error unrelated to content and were simply retried, and their files were "
+  f"overwritten by the successful retry, so the cost of those discarded attempts is not "
+  f"recoverable from this data and is not included here. Actual total spend on Gate 1's "
+  f"execution was somewhat higher than this figure.")
 a("")
 
 a("## 6. Limitations specific to Gate 1")

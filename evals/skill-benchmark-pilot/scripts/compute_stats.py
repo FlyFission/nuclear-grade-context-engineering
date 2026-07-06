@@ -15,10 +15,12 @@ import json
 import math
 from pathlib import Path
 
-ALL = Path("/home/user/nuclear-grade-context-engineering/evals/skill-benchmark-pilot/data/all-skills-pilot")
-GATE1 = Path("/home/user/nuclear-grade-context-engineering/evals/skill-benchmark-pilot/data/gate1-hard-case-pilot")
-RCQ = Path("/home/user/nuclear-grade-context-engineering/evals/skill-benchmark-pilot/data/reviewing-code-quality-pilot")
-OUT = Path(__file__).parent
+BASE = Path(__file__).resolve().parent
+DATA = BASE.parent / "data"
+ALL = DATA / "all-skills-pilot"
+GATE1 = DATA / "gate1-hard-case-pilot"
+RCQ = DATA / "reviewing-code-quality-pilot"
+OUT = DATA / "statistical-analysis"
 
 
 def fisher_exact_two_sided(a, b, c, d):

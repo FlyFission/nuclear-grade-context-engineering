@@ -4,8 +4,9 @@ import subprocess
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
-BASE = Path(__file__).parent
-TASKS = json.loads((BASE / "task.json").read_text())
+BASE = Path(__file__).resolve().parent
+DATA_DIR = BASE.parent / "data" / "briefing-an-agent-amendment-validation"
+TASKS = json.loads((DATA_DIR / "task.json").read_text())
 SCHEMA = json.dumps({"type":"object","properties":{"meets_criteria":{"type":"string","enum":["YES","PARTIAL","NO"]},"quote":{"type":"string"}},"required":["meets_criteria","quote"]})
 
 def grade_one(path):
@@ -24,13 +25,13 @@ def grade_one(path):
     return {"condition": d["_condition"], "trial": d["_trial"], "meets_criteria": verdict["meets_criteria"], "quote": verdict["quote"]}
 
 def main():
-    paths = sorted((BASE/"runs").glob("*.json"))
+    paths = sorted((DATA_DIR/"runs").glob("*.json"))
     rows = []
     with ThreadPoolExecutor(max_workers=8) as ex:
         futs = {ex.submit(grade_one, p): p for p in paths}
         for fut in as_completed(futs):
             rows.append(fut.result())
-    (BASE/"graded.json").write_text(json.dumps(rows, indent=2))
+    (DATA_DIR/"graded.json").write_text(json.dumps(rows, indent=2))
     for cond in ["with_skill","without_skill"]:
         sub = [r for r in rows if r["condition"]==cond]
         yes = sum(1 for r in sub if r["meets_criteria"]=="YES")

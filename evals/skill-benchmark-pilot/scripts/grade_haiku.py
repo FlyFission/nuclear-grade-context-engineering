@@ -4,9 +4,9 @@ import subprocess
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
-BASE = Path(__file__).parent
-ALL_TASKS = json.loads(Path("/home/user/nuclear-grade-context-engineering/evals/skill-benchmark-pilot/data/all-skills-pilot/all_skill_tasks.json").read_text())
-GATE1_TASKS = json.loads(Path("/home/user/nuclear-grade-context-engineering/evals/skill-benchmark-pilot/data/gate1-hard-case-pilot/gate1_tasks.json").read_text())
+BASE = Path(__file__).resolve().parent
+ALL_TASKS = json.loads((BASE.parent / "data" / "all-skills-pilot" / "all_skill_tasks.json").read_text())
+GATE1_TASKS = json.loads((BASE.parent / "data" / "gate1-hard-case-pilot" / "gate1_tasks.json").read_text())
 
 CRITERIA_SOURCE = {
     "learning-from-experience": ("round1", ALL_TASKS),

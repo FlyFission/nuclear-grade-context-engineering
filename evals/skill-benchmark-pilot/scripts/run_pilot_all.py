@@ -7,11 +7,13 @@ import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
-BASE = Path(__file__).parent
-RUNS_DIR = BASE / "runs_all"
+BASE = Path(__file__).resolve().parent
+REPO_ROOT = BASE.parents[2]
+DATA_DIR = BASE.parent / "data" / "all-skills-pilot"
+RUNS_DIR = DATA_DIR / "runs"
 WORK_DIR = BASE / "work_all"
-SKILLS_ROOT = Path("/home/user/nuclear-grade-context-engineering/skills")
-TASKS = json.loads((BASE / "all_skill_tasks.json").read_text())
+SKILLS_ROOT = REPO_ROOT / "skills"
+TASKS = json.loads((DATA_DIR / "all_skill_tasks.json").read_text())
 
 CONDITIONS = ["with_skill", "without_skill"]
 TRIALS = 3

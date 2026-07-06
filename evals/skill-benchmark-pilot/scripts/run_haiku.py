@@ -11,12 +11,13 @@ import subprocess
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
-BASE = Path(__file__).parent
+BASE = Path(__file__).resolve().parent
+REPO_ROOT = BASE.parents[2]
 RUNS_DIR = BASE / "runs"
 WORK_DIR = BASE / "work"
-SKILLS_ROOT = Path("/home/user/nuclear-grade-context-engineering/skills")
-ALL_TASKS = json.loads(Path("/home/user/nuclear-grade-context-engineering/evals/skill-benchmark-pilot/data/all-skills-pilot/all_skill_tasks.json").read_text())
-GATE1_TASKS = json.loads(Path("/home/user/nuclear-grade-context-engineering/evals/skill-benchmark-pilot/data/gate1-hard-case-pilot/gate1_tasks.json").read_text())
+SKILLS_ROOT = REPO_ROOT / "skills"
+ALL_TASKS = json.loads((BASE.parent / "data" / "all-skills-pilot" / "all_skill_tasks.json").read_text())
+GATE1_TASKS = json.loads((BASE.parent / "data" / "gate1-hard-case-pilot" / "gate1_tasks.json").read_text())
 
 SAMPLE = [
     ("learning-from-experience", "round1"),

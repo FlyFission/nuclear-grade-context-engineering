@@ -6,9 +6,10 @@ import subprocess
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
-BASE = Path(__file__).parent
-RUNS_DIR = BASE / "runs"
-TASKS = json.loads((BASE / "gate1_tasks.json").read_text())
+BASE = Path(__file__).resolve().parent
+DATA_DIR = BASE.parent / "data" / "gate1-hard-case-pilot"
+RUNS_DIR = DATA_DIR / "runs"
+TASKS = json.loads((DATA_DIR / "gate1_tasks.json").read_text())
 GRADER_MODEL = "claude-haiku-4-5-20251001"
 MAX_WORKERS = 8
 
@@ -88,7 +89,7 @@ def main():
             rows.append(row)
             print(f"[{i}/{len(paths)}] {row['skill']:32s} {row['condition']:15s} t{row['trial']} -> {row.get('meets_criteria', 'ERR')}")
 
-    (BASE / "graded_results_all.json").write_text(json.dumps(rows, indent=2))
+    (DATA_DIR / "graded_results_gate1.json").write_text(json.dumps(rows, indent=2))
 
     print("\n\n=== SUMMARY (skill | with_skill catch | without_skill catch | cost delta) ===")
     skills = sorted(set(r["skill"] for r in rows))
@@ -116,7 +117,7 @@ def main():
         print(f"{skill:32s} with={w.get('catch','?'):6s} without={wo.get('catch','?'):6s} "
               f"cost ${w.get('mean_cost') or 0:.3f} vs ${wo.get('mean_cost') or 0:.3f}")
 
-    (BASE / "summary_all.json").write_text(json.dumps(summary_rows, indent=2))
+    (DATA_DIR / "summary_gate1.json").write_text(json.dumps(summary_rows, indent=2))
 
 
 if __name__ == "__main__":

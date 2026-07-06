@@ -92,6 +92,19 @@ discarded.
 **Net: `creating-change-records` probably follows the same pattern as
 `proving-claims` (real value on a structural dimension the compound criterion
 under-credits), but this is not confirmed with the same confidence.** No
-amendment is proposed. If this skill's status matters enough to resolve fully,
-the next step is re-running the Gate 1 structural recheck with a corrected,
-tag-specific criterion — not yet done.
+amendment is proposed here. If this skill's status matters enough to resolve
+fully, the next step is re-running the Gate 1 structural recheck with a
+corrected, tag-specific criterion — not yet done as of this section.
+
+**Update — superseded by later work, see `PLAN_STATUS.md` and
+`MULTI_MODEL_CHECK.md`.** The corrected recheck this section calls for was
+run: re-graded against PR #63's independently clarified scope (packet
+shell/file-list only, not mode choice or evidence-adequacy judgment), Round 1
+came back a clean **4/5 YES vs 0/5 YES**. That result held on `claude-sonnet-5`
+but did **not** replicate on `claude-haiku-4-5` (0/3 vs 0/3). A targeted
+amendment was drafted, adversarially critiqued, and applied — validated
+afterward as Sonnet-safe (3/3 held) but insufficient to close the Haiku gap
+(still 0/3). Current status: **WINS on Sonnet, unresolved on Haiku**, kept as
+an honestly-reported open item rather than marked fixed. See the master
+status table in this folder's `README.md` for the authoritative current
+state.

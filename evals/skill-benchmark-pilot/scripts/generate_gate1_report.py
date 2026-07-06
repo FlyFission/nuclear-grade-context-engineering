@@ -165,12 +165,14 @@ for row in gate1_summary:
       f"{fmt_money(row['with_skill']['mean_cost'])} | {fmt_money(row['without_skill']['mean_cost'])} |")
 a("")
 
+audited_flips = 2  # checking-what-a-change-affects and deciding-who-decides, below
 a("## 3. Reading the flips: new decision element vs. stricter phrasing bar")
 a("")
-a("Two of the 11 flips were manually inspected in full (not just the grader's YES/NO) to "
-  "check whether the harder criteria were finding real gaps or just being pedantic about "
-  "wording. Both are reproduced in full below so an independent reader can judge for "
-  "themselves; this is a spot check of 2 of 11, not an audit of all 11.")
+a(f"{audited_flips} of the {flips} flips were manually inspected in full (not just the "
+  f"grader's YES/NO) to check whether the harder criteria were finding real gaps or just "
+  f"being pedantic about wording. Both are reproduced in full below so an independent "
+  f"reader can judge for themselves; this is a spot check of {audited_flips} of {flips}, "
+  f"not an audit of all {flips}.")
 a("")
 a("### `checking-what-a-change-affects` — genuinely new decision element")
 a("")
@@ -251,10 +253,11 @@ a("- **Scenario/criteria authorship is still not independent**, and Gate 1 adds 
   "failure modes (see section 1). A skill catching exactly the shortcut it names about "
   "itself is expected; it does not by itself prove the skill would catch a failure mode "
   "nobody anticipated.")
-a("- **Not every flip was individually audited.** Section 3 manually checked 2 of the 11 "
-  "flips and found both to be legitimate but different in strength (a genuinely new element "
-  "vs. a phrasing-precision bar). The other 9 have not had the same manual read — their "
-  "full transcripts are in section 4 for anyone who wants to check.")
+a(f"- **Not every flip was individually audited.** Section 3 manually checked "
+  f"{audited_flips} of the {flips} flips and found both to be legitimate but different in "
+  f"strength (a genuinely new element vs. a phrasing-precision bar). The other "
+  f"{flips - audited_flips} have not had the same manual read — their full transcripts "
+  f"are in section 4 for anyone who wants to check.")
 a("- **`briefing-an-agent` and `proving-claims` remaining flat ties on the harder case "
   "is itself informative** — it means the ceiling-effect hypothesis doesn't automatically "
   "explain every round-1 tie. For these two specifically, the baseline may be genuinely "

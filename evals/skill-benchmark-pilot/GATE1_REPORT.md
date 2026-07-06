@@ -41,7 +41,7 @@ Same harness, model (`claude-sonnet-5`), grader (`claude-haiku-4-5`), and blind-
 
 ## 3. Reading the flips: new decision element vs. stricter phrasing bar
 
-Two of the 11 flips were manually inspected in full (not just the grader's YES/NO) to check whether the harder criteria were finding real gaps or just being pedantic about wording. Both are reproduced in full below so an independent reader can judge for themselves; this is a spot check of 2 of 11, not an audit of all 11.
+2 of the 11 flips were manually inspected in full (not just the grader's YES/NO) to check whether the harder criteria were finding real gaps or just being pedantic about wording. Both are reproduced in full below so an independent reader can judge for themselves; this is a spot check of 2 of 11, not an audit of all 11.
 
 ### `checking-what-a-change-affects` — genuinely new decision element
 

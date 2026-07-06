@@ -51,8 +51,13 @@ def run_one(skill, source, condition, trial):
     out_path = RUNS_DIR / f"{skill}__{condition}__trial{trial}.json"
     if out_path.exists():
         return json.loads(out_path.read_text())
-    proc = subprocess.run(cmd, input=scenario, capture_output=True, text=True, cwd=str(cwd), timeout=180)
-    record = json.loads(proc.stdout.strip())
+    try:
+        proc = subprocess.run(cmd, input=scenario, capture_output=True, text=True, cwd=str(cwd), timeout=180)
+        record = json.loads(proc.stdout.strip())
+    except subprocess.TimeoutExpired:
+        record = {"type": "error", "error": "timeout"}
+    except json.JSONDecodeError:
+        record = {"type": "error", "error": "non-json output", "stdout": proc.stdout[:2000], "stderr": proc.stderr[:2000]}
     record["_skill"] = skill
     record["_condition"] = condition
     record["_trial"] = trial

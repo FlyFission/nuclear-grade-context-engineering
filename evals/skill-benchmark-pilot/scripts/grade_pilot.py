@@ -9,6 +9,7 @@ import json
 import re
 import statistics as stats
 import subprocess
+import sys
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
@@ -98,6 +99,8 @@ def main():
         })
         print(f"{task:28s} {condition:15s} trial{trial}  meets_criteria={grade.get('meets_criteria')}  cost=${d.get('total_cost_usd'):.4f}")
 
+    failures = sum(1 for r in rows if r.get("error"))
+
     (DATA_DIR / "graded_results.json").write_text(json.dumps(rows, indent=2))
 
     print("\n\n=== SUMMARY ===")
@@ -120,6 +123,11 @@ def main():
             dur = [r["duration_ms"] for r in sub if r["duration_ms"] is not None]
             print(f"  {condition}: caught {catch}/{n} (+{partial} partial), verdict-format {verdict_fmt}/{n}")
             print(f"    cost: mean=${stats.mean(costs):.4f} (n={n})  | output_tok: mean={stats.mean(out_tok):.0f} | input+cache_tok: mean={stats.mean(in_tok):.0f} | turns: mean={stats.mean(turns):.1f} | duration_ms: mean={stats.mean(dur):.0f}")
+
+    if failures:
+        print(f"\n{failures}/{len(rows)} row(s) recorded a subject-run or grader error -- "
+              f"see the excluded rows in graded_results.json", file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == "__main__":

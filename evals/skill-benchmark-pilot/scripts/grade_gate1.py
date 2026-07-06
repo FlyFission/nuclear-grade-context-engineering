@@ -3,6 +3,7 @@
 import json
 import statistics as stats
 import subprocess
+import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
@@ -92,6 +93,8 @@ def main():
             rows.append(row)
             print(f"[{i}/{len(paths)}] {row['skill']:32s} {row['condition']:15s} t{row['trial']} -> {row.get('meets_criteria', 'ERR')}")
 
+    failures = sum(1 for r in rows if r.get("error"))
+
     (DATA_DIR / "graded_results_gate1.json").write_text(json.dumps(rows, indent=2))
 
     print("\n\n=== SUMMARY (skill | with_skill catch | without_skill catch | cost delta) ===")
@@ -121,6 +124,11 @@ def main():
               f"cost ${w.get('mean_cost') or 0:.3f} vs ${wo.get('mean_cost') or 0:.3f}")
 
     (DATA_DIR / "summary_gate1.json").write_text(json.dumps(summary_rows, indent=2))
+
+    if failures:
+        print(f"\n{failures}/{len(rows)} row(s) recorded a subject-run or grader error -- "
+              f"see the excluded rows in graded_results_gate1.json", file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == "__main__":

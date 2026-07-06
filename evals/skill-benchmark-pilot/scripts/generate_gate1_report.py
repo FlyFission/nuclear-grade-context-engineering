@@ -37,6 +37,17 @@ def round1_verdict(skill):
     return "WINS" if d > 0 else ("TIE" if d == 0 else "LOSES")
 
 
+def gate1_verdict(row):
+    """Compute from the 'catch' strings so this works whether row came from the
+    curated summary_gate1_FINAL.json (which also stores a 'verdict' key) or a
+    freshly rerun summary_gate1.json (which doesn't) -- verified to agree with
+    every stored verdict in the checked-in FINAL data."""
+    w = int(row["with_skill"]["catch"].split("/")[0])
+    wo = int(row["without_skill"]["catch"].split("/")[0])
+    d = w - wo
+    return "WINS" if d > 0 else ("TIE" if d == 0 else "LOSES")
+
+
 lines = []
 a = lines.append
 
@@ -107,7 +118,7 @@ if not gate1_summary_path.exists():
     gate1_summary_path = GATE1 / "summary_gate1_FINAL.json"
 gate1_summary = json.loads(gate1_summary_path.read_text())
 for row in gate1_summary:
-    a(f"| {row['skill']} | {round1_verdict(row['skill'])} | {row['verdict']} | "
+    a(f"| {row['skill']} | {round1_verdict(row['skill'])} | {gate1_verdict(row)} | "
       f"{row['with_skill']['catch']} | {row['without_skill']['catch']} | "
       f"{fmt_money(row['with_skill']['mean_cost'])} | {fmt_money(row['without_skill']['mean_cost'])} |")
 a("")

@@ -18,6 +18,20 @@ DATA_DIR = BASE.parent / "data" / "reviewing-code-quality-pilot"
 RUNS_DIR = DATA_DIR / "runs"
 ANSWER_KEYS = json.loads((DATA_DIR / "answer_keys.json").read_text())
 GRADER_MODEL = "claude-haiku-4-5-20251001"
+# Bump whenever the grading prompt's instructional wording changes, so a
+# wording-only edit invalidates the cache the same way a criteria or model
+# change already does automatically (see grading_spec_hash).
+PROMPT_VERSION = "v1"
+
+
+def grading_spec_hash(task: str) -> str:
+    """Fingerprint of everything besides the transcript that can change a
+    verdict: the task's own pass_criteria text, the grader model, and the
+    prompt template version. A cached row is only reused if this ALSO
+    matches -- an answer-key edit or grader-model change must force a
+    re-grade even though the transcript itself hasn't changed."""
+    criteria = ANSWER_KEYS[task]["pass_criteria"]
+    return hashlib.sha256(f"{criteria}::{GRADER_MODEL}::{PROMPT_VERSION}".encode()).hexdigest()
 
 SCHEMA = json.dumps({
     "type": "object",
@@ -70,7 +84,11 @@ def load_grade_cache(out_path: Path) -> dict:
     cached row) against its current hash, NOT by file mtimes: on a fresh
     checkout, git's write order gives run files and the graded-results file
     mtimes that reflect checkout order, not actual regeneration, so an
-    mtime-based gate can miss the cache for most unchanged files."""
+    mtime-based gate can miss the cache for most unchanged files. A cached
+    row also carries a _criteria_sha256 fingerprint of the grading inputs
+    (pass_criteria text, grader model, prompt version) that must still match
+    the live inputs -- an answer-key edit or grader-model change invalidates
+    a row even though the transcript itself hasn't changed."""
     if not out_path.exists():
         return {}
     try:
@@ -95,8 +113,10 @@ def main():
             continue
 
         source_hash = hashlib.sha256(raw).hexdigest()
+        spec_hash = grading_spec_hash(task)
         cached = cache.get((task, condition, trial))
-        if cached is not None and cached.get("_source_sha256") == source_hash:
+        if (cached is not None and cached.get("_source_sha256") == source_hash
+                and cached.get("_criteria_sha256") == spec_hash):
             rows.append(cached)
             continue
 
@@ -125,6 +145,7 @@ def main():
             "num_turns": d.get("num_turns"),
             "duration_ms": d.get("duration_ms"),
             "_source_sha256": source_hash,
+            "_criteria_sha256": spec_hash,
         })
         print(f"{task:28s} {condition:15s} trial{trial}  meets_criteria={grade.get('meets_criteria')}  cost=${d.get('total_cost_usd'):.4f}")
 

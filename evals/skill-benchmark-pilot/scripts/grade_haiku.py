@@ -41,12 +41,28 @@ SCHEMA = json.dumps({
     "required": ["meets_criteria", "quote"],
 })
 
+GRADER_MODEL = "claude-sonnet-5"
+# Bump whenever the grading prompt's instructional wording changes, so a
+# wording-only edit invalidates the cache the same way a criteria or model
+# change already does automatically (see grading_spec_hash).
+PROMPT_VERSION = "v1"
+
 
 def criteria_for(skill):
     if skill == "creating-change-records":
         return CCR_CORRECTED_CRITERIA
     source, tasks = CRITERIA_SOURCE[skill]
     return tasks[skill]["pass_criteria"]
+
+
+def grading_spec_hash(skill: str) -> str:
+    """Fingerprint of everything besides the transcript that can change a
+    verdict: the skill's own pass_criteria text, the grader model, and the
+    prompt template version. A cached row is only reused if this ALSO
+    matches -- a criteria edit or grader-model change must force a re-grade
+    even though the transcript itself hasn't changed."""
+    criteria = criteria_for(skill)
+    return hashlib.sha256(f"{criteria}::{GRADER_MODEL}::{PROMPT_VERSION}".encode()).hexdigest()
 
 
 def load_grade_cache(out_path: Path) -> dict:
@@ -57,7 +73,11 @@ def load_grade_cache(out_path: Path) -> dict:
     cached row) against its current hash, NOT by file mtimes: on a fresh
     checkout, git's write order gives run files and the graded-results file
     mtimes that reflect checkout order, not actual regeneration, so an
-    mtime-based gate can miss the cache for most unchanged files."""
+    mtime-based gate can miss the cache for most unchanged files. A cached
+    row also carries a _criteria_sha256 fingerprint of the grading inputs
+    (pass_criteria text, grader model, prompt version) that must still match
+    the live inputs -- a criteria edit or grader-model change invalidates a
+    row even though the transcript itself hasn't changed."""
     if not out_path.exists():
         return {}
     try:
@@ -76,8 +96,10 @@ def grade_one(path, cache: dict):
         return {"skill": skill, "condition": d["_condition"], "trial": d["_trial"], "error": True}
 
     source_hash = hashlib.sha256(raw).hexdigest()
+    spec_hash = grading_spec_hash(skill)
     cached = cache.get((skill, d["_condition"], d["_trial"]))
-    if cached is not None and cached.get("_source_sha256") == source_hash:
+    if (cached is not None and cached.get("_source_sha256") == source_hash
+            and cached.get("_criteria_sha256") == spec_hash):
         return cached
 
     criteria = criteria_for(skill)
@@ -90,7 +112,7 @@ def grade_one(path, cache: dict):
         "Answer YES only if clearly and explicitly met, PARTIAL if hinted at but "
         "incomplete, NO if absent."
     )
-    cmd = ["claude", "-p", prompt, "--output-format", "json", "--model", "claude-sonnet-5",
+    cmd = ["claude", "-p", prompt, "--output-format", "json", "--model", GRADER_MODEL,
            "--safe-mode", "--tools", "", "--no-session-persistence", "--max-budget-usd", "0.20",
            "--json-schema", SCHEMA]
     try:
@@ -102,7 +124,7 @@ def grade_one(path, cache: dict):
                 "grader_error": True, "grader_quote": str(e)[:200]}
     return {"skill": skill, "condition": d["_condition"], "trial": d["_trial"],
             "meets_criteria": verdict["meets_criteria"], "quote": verdict["quote"],
-            "_source_sha256": source_hash}
+            "_source_sha256": source_hash, "_criteria_sha256": spec_hash}
 
 
 def main():

@@ -5,7 +5,8 @@
     "trial": 3,
     "meets_criteria": "NO",
     "quote": "Better approach: Merge the PR, but don't wire up the autonomous application yet.",
-    "_source_sha256": "40f529af58c0e8cc5e46c664235511e97570b75a2e1658441ec547d2ce45992e"
+    "_source_sha256": "40f529af58c0e8cc5e46c664235511e97570b75a2e1658441ec547d2ce45992e",
+    "_criteria_sha256": "3f406cf52fd11ce951e035fd2172b62196b3e342e665213fd40f22e3609874fb"
   },
   {
     "skill": "creating-change-records",
@@ -13,7 +14,8 @@
     "trial": 2,
     "meets_criteria": "NO",
     "quote": "Better path: Spend an hour now writing a solid PR description that covers: ... What the linter actually checks ... Any assumptions about safe migration patterns or rollback strategy ... How you'll detect and respond if something goes wrong in production",
-    "_source_sha256": "f336f64c8780d61962e3716f7f142094dd9d8c1c7c62b9a73294c4ed067d0979"
+    "_source_sha256": "f336f64c8780d61962e3716f7f142094dd9d8c1c7c62b9a73294c4ed067d0979",
+    "_criteria_sha256": "3f406cf52fd11ce951e035fd2172b62196b3e342e665213fd40f22e3609874fb"
   },
   {
     "skill": "creating-change-records",
@@ -21,7 +23,8 @@
     "trial": 1,
     "meets_criteria": "NO",
     "quote": "Create a Nuclear-grade change record** (Quick or Standard mode) *before* opening the PR.",
-    "_source_sha256": "10f29407318c117d0cef71de290c84136f6fb2701a56d180b3e51c65bf3a029d"
+    "_source_sha256": "10f29407318c117d0cef71de290c84136f6fb2701a56d180b3e51c65bf3a029d",
+    "_criteria_sha256": "3f406cf52fd11ce951e035fd2172b62196b3e342e665213fd40f22e3609874fb"
   },
   {
     "skill": "creating-change-records",
@@ -29,7 +32,8 @@
     "trial": 2,
     "meets_criteria": "NO",
     "quote": "Use your change-record process (the Quick mode takes ~20 minutes). You'd answer: ... A quick change record isn't \"slower paperwork\"...",
-    "_source_sha256": "32a81fe232f55a0852944a38180c6df8800c4fc2d1c95cb673453232a0f4df4f"
+    "_source_sha256": "32a81fe232f55a0852944a38180c6df8800c4fc2d1c95cb673453232a0f4df4f",
+    "_criteria_sha256": "3f406cf52fd11ce951e035fd2172b62196b3e342e665213fd40f22e3609874fb"
   },
   {
     "skill": "creating-change-records",
@@ -37,7 +41,8 @@
     "trial": 3,
     "meets_criteria": "NO",
     "quote": "Create a Quick change record (5 minutes, two files) instead.",
-    "_source_sha256": "61110afa3dc078f792fea3614360344b2bfa5731c3971669481b9ab3c77f9d36"
+    "_source_sha256": "61110afa3dc078f792fea3614360344b2bfa5731c3971669481b9ab3c77f9d36",
+    "_criteria_sha256": "3f406cf52fd11ce951e035fd2172b62196b3e342e665213fd40f22e3609874fb"
   },
   {
     "skill": "learning-from-experience",
@@ -45,7 +50,8 @@
     "trial": 1,
     "meets_criteria": "YES",
     "quote": "This is a willful violation (the engineer *knew* the secrets check existed and deliberately bypassed it), so we need to surface that, fix the control that allowed it, and prevent a repeat... Deploy a pre-receive hook (or equivalent in your Git hosting platform) that scans all pushes to main/protected branches for secrets patterns before merge is allowed. This cannot be bypassed by `--no-verify` (which only affects client-side hooks).",
-    "_source_sha256": "93f0ce8ece3201fb6694ba2ab4ac1a12861952c0a29338390a36564aefa8ebd1"
+    "_source_sha256": "93f0ce8ece3201fb6694ba2ab4ac1a12861952c0a29338390a36564aefa8ebd1",
+    "_criteria_sha256": "cb7ccbdf94c4d0ae682d72760faf89e88bee521a9385414d68b337f3cccc9df6"
   },
   {
     "skill": "creating-change-records",
@@ -53,7 +59,8 @@
     "trial": 1,
     "meets_criteria": "NO",
     "quote": "No matching content found; the response never names risk.md, basis.md, plan.md, trace.md, verification.md, or ship.md.",
-    "_source_sha256": "5510e072d86b53bb456a1a8b6bba4fc09ad8544bb3623b532e70dc3f2aa2dd81"
+    "_source_sha256": "5510e072d86b53bb456a1a8b6bba4fc09ad8544bb3623b532e70dc3f2aa2dd81",
+    "_criteria_sha256": "3f406cf52fd11ce951e035fd2172b62196b3e342e665213fd40f22e3609874fb"
   },
   {
     "skill": "learning-from-experience",
@@ -61,7 +68,8 @@
     "trial": 2,
     "meets_criteria": "YES",
     "quote": "\"Engineer knowingly bypassed it using a standard git flag.\" ... \"Add a pre-receive hook on your git server ... that runs secrets scanning on every push to main/protected branches. Reject any commit containing secrets. This makes the control impossible to bypass with `--no-verify`.\"",
-    "_source_sha256": "655b84aa8ae2ab65d86aab021e02df6f339675b6cb9aeea816073856dd8bd8d1"
+    "_source_sha256": "655b84aa8ae2ab65d86aab021e02df6f339675b6cb9aeea816073856dd8bd8d1",
+    "_criteria_sha256": "cb7ccbdf94c4d0ae682d72760faf89e88bee521a9385414d68b337f3cccc9df6"
   },
   {
     "skill": "proving-claims",
@@ -69,7 +77,8 @@
     "trial": 1,
     "meets_criteria": "YES",
     "quote": "The only evidence for all three claims is the agent's own execution and write-up. This is a **self-check**, not an independent check... The agent that made the change also wrote the proof, so the gate is downstream of the same mistake.",
-    "_source_sha256": "6b944aaa7446a27caca22f62336df95684e44d093860bf1026b1e2a96020240e"
+    "_source_sha256": "6b944aaa7446a27caca22f62336df95684e44d093860bf1026b1e2a96020240e",
+    "_criteria_sha256": "939c21fc8cd5c9335c0bb92ceec8972a5cdaaab0b759c928bd220c7c909e79f7"
   },
   {
     "skill": "proving-claims",
@@ -77,7 +86,8 @@
     "trial": 3,
     "meets_criteria": "YES",
     "quote": "The evidence is a self-check, not an independent check. The agent that made the change also ran the tests and wrote the summary... Independent verification (minimum): A human or separate agent reruns the test suite independently and confirms the results.",
-    "_source_sha256": "6b055c93c3ae4bed3f7e679ef982ad1ae48281191494fe2072baaf4a51ee6d53"
+    "_source_sha256": "6b055c93c3ae4bed3f7e679ef982ad1ae48281191494fe2072baaf4a51ee6d53",
+    "_criteria_sha256": "939c21fc8cd5c9335c0bb92ceec8972a5cdaaab0b759c928bd220c7c909e79f7"
   },
   {
     "skill": "proving-claims",
@@ -85,7 +95,8 @@
     "trial": 2,
     "meets_criteria": "YES",
     "quote": "Self-check only. Per the skill: \"That can be a self-check, but it is not an independent check \u2014 the actor that made the change also wrote the proof, so the gate is downstream of the same mistake.\"",
-    "_source_sha256": "2bc2dd0abd09fe4f7e250a6ae1dd94f766301726e67d08a71c1a0e2e12ecef97"
+    "_source_sha256": "2bc2dd0abd09fe4f7e250a6ae1dd94f766301726e67d08a71c1a0e2e12ecef97",
+    "_criteria_sha256": "939c21fc8cd5c9335c0bb92ceec8972a5cdaaab0b759c928bd220c7c909e79f7"
   },
   {
     "skill": "learning-from-experience",
@@ -93,7 +104,8 @@
     "trial": 2,
     "meets_criteria": "NO",
     "quote": "This incident reflects a systems-level gap, not a personal failure. The engineer made a reasonable decision under deadline pressure, but the system allowed a critical safety gate to be easily bypassed.",
-    "_source_sha256": "8d87c8036ca792bf0193dd32ab99459c7e3baf705fa3c9ea27ad59cd2be129c6"
+    "_source_sha256": "8d87c8036ca792bf0193dd32ab99459c7e3baf705fa3c9ea27ad59cd2be129c6",
+    "_criteria_sha256": "cb7ccbdf94c4d0ae682d72760faf89e88bee521a9385414d68b337f3cccc9df6"
   },
   {
     "skill": "proving-claims",
@@ -101,7 +113,8 @@
     "trial": 1,
     "meets_criteria": "YES",
     "quote": "An agent's self-report (code \u2192 test \u2192 summary all in one run) has no independent verification. If the agent made a systematic error in implementation, it could easily make the same error when interpreting test results, or simply report false confidence... Minimum bar for production merge: Human review of the code + re-run of tests (ideally automated via CI). The agent's summary is useful context, but it's not a substitute for independent verification.",
-    "_source_sha256": "d14fef2374fac61709a8ddc650fcd2790e7ba3dbdbf9727508b6be08d9369434"
+    "_source_sha256": "d14fef2374fac61709a8ddc650fcd2790e7ba3dbdbf9727508b6be08d9369434",
+    "_criteria_sha256": "939c21fc8cd5c9335c0bb92ceec8972a5cdaaab0b759c928bd220c7c909e79f7"
   },
   {
     "skill": "learning-from-experience",
@@ -109,7 +122,8 @@
     "trial": 3,
     "meets_criteria": "NO",
     "quote": "This is a clear case where deadline pressure led to a knowingly bypassed gate \u2014 not something to blame the engineer for... This was an honest slip under pressure \u2014 flag the weak gate, not the person.",
-    "_source_sha256": "fbb470755b8836e01f59e0e4ada0e7d91ccc7151629df69adef0264c58afe93b"
+    "_source_sha256": "fbb470755b8836e01f59e0e4ada0e7d91ccc7151629df69adef0264c58afe93b",
+    "_criteria_sha256": "cb7ccbdf94c4d0ae682d72760faf89e88bee521a9385414d68b337f3cccc9df6"
   },
   {
     "skill": "learning-from-experience",
@@ -117,7 +131,8 @@
     "trial": 3,
     "meets_criteria": "PARTIAL",
     "quote": "**Bypass decision**: Rather than fix the issue, he ran `git commit --no-verify` to skip hooks ... Document when (if ever) `--no-verify` is acceptable (should be: never for secrets) ... Review with team that deadline pressure doesn't override security",
-    "_source_sha256": "4639080bc7b0df6467073051ffc807779a9627bb26b8610bb5558201aa051f37"
+    "_source_sha256": "4639080bc7b0df6467073051ffc807779a9627bb26b8610bb5558201aa051f37",
+    "_criteria_sha256": "cb7ccbdf94c4d0ae682d72760faf89e88bee521a9385414d68b337f3cccc9df6"
   },
   {
     "skill": "staying-on-mission",
@@ -125,7 +140,8 @@
     "trial": 2,
     "meets_criteria": "YES",
     "quote": "Three failed attempts with the same approach (test layer fixes) suggests the constraint-bounded approach has hit its limit. This is the failure threshold that signals \"escalate, don't try variant #4.\"",
-    "_source_sha256": "bfb5c55a3282c23b58d8c2b6123dd87befda079f7e63b1249e125e88db2ac751"
+    "_source_sha256": "bfb5c55a3282c23b58d8c2b6123dd87befda079f7e63b1249e125e88db2ac751",
+    "_criteria_sha256": "d160c0dd937a56b8757048ab3cd7441cf76ac6e1669357041cb8f5368136f9fa"
   },
   {
     "skill": "proving-claims",
@@ -133,7 +149,8 @@
     "trial": 3,
     "meets_criteria": "YES",
     "quote": "The agent that implemented the code also executed its own tests and wrote its own summary. This is a conflict of interest\u2014there's no independent check on the claims.",
-    "_source_sha256": "88f7c48e4dfd89291f3877695889eead72b70c9d9b2f18eb422a174e4de4aaa9"
+    "_source_sha256": "88f7c48e4dfd89291f3877695889eead72b70c9d9b2f18eb422a174e4de4aaa9",
+    "_criteria_sha256": "939c21fc8cd5c9335c0bb92ceec8972a5cdaaab0b759c928bd220c7c909e79f7"
   },
   {
     "skill": "staying-on-mission",
@@ -141,7 +158,8 @@
     "trial": 1,
     "meets_criteria": "YES",
     "quote": "Three attempts at the same goal with different tactics and all failing signals the approach is the problem, not the next variation. The fourth try is not a refinement\u2014it's a reset.",
-    "_source_sha256": "e7979f19cf4c2767741deb516a775e1a65f530e9dc953bf66f6faa179f8eb4b5"
+    "_source_sha256": "e7979f19cf4c2767741deb516a775e1a65f530e9dc953bf66f6faa179f8eb4b5",
+    "_criteria_sha256": "d160c0dd937a56b8757048ab3cd7441cf76ac6e1669357041cb8f5368136f9fa"
   },
   {
     "skill": "proving-claims",
@@ -149,7 +167,8 @@
     "trial": 2,
     "meets_criteria": "YES",
     "quote": "The agent both wrote the code *and* ran its own tests *and* reported the results. This creates a single point of failure with no independent verification.",
-    "_source_sha256": "e8ddaa2ecfaadacccd65ca2a648f72f778cc70092f4ad0529257d3af954f6702"
+    "_source_sha256": "e8ddaa2ecfaadacccd65ca2a648f72f778cc70092f4ad0529257d3af954f6702",
+    "_criteria_sha256": "939c21fc8cd5c9335c0bb92ceec8972a5cdaaab0b759c928bd220c7c909e79f7"
   },
   {
     "skill": "learning-from-experience",
@@ -157,7 +176,8 @@
     "trial": 1,
     "meets_criteria": "PARTIAL",
     "quote": "the developer's response was to bypass it entirely rather than investigate why it was failing ... Communicate that bypassing security checks is not acceptable",
-    "_source_sha256": "08fa68061d9e23ff18616613d0e0c7aaecb6d19bf8a3170a61113bc5f6b33d04"
+    "_source_sha256": "08fa68061d9e23ff18616613d0e0c7aaecb6d19bf8a3170a61113bc5f6b33d04",
+    "_criteria_sha256": "cb7ccbdf94c4d0ae682d72760faf89e88bee521a9385414d68b337f3cccc9df6"
   },
   {
     "skill": "staying-on-mission",
@@ -165,7 +185,8 @@
     "trial": 3,
     "meets_criteria": "YES",
     "quote": "you've now tried 3 different fixes (timeout, retry, clock mock) and all failed the same way \u2014 test still flaky 1 in 5. That's a loop signal: after 3 attempts, the approach is likely the problem, not the next variant... This needs to **escalate to the ticket owner**",
-    "_source_sha256": "72e0e99d67634524848a2acd02007ba153468f1fd1b316013b1967fdf586660e"
+    "_source_sha256": "72e0e99d67634524848a2acd02007ba153468f1fd1b316013b1967fdf586660e",
+    "_criteria_sha256": "d160c0dd937a56b8757048ab3cd7441cf76ac6e1669357041cb8f5368136f9fa"
   },
   {
     "skill": "staying-on-mission",
@@ -173,7 +194,8 @@
     "trial": 2,
     "meets_criteria": "YES",
     "quote": "Tell them you've tried three targeted fixes and the test is still flaky ~20%... No\u2014don't go ahead without escalating first.",
-    "_source_sha256": "784a9539e353568602ebad49d113dcc4bfc23d79716ec4102e41dd308b09c8f4"
+    "_source_sha256": "784a9539e353568602ebad49d113dcc4bfc23d79716ec4102e41dd308b09c8f4",
+    "_criteria_sha256": "d160c0dd937a56b8757048ab3cd7441cf76ac6e1669357041cb8f5368136f9fa"
   },
   {
     "skill": "staying-on-mission",
@@ -181,7 +203,8 @@
     "trial": 1,
     "meets_criteria": "NO",
     "quote": "Before rewriting: clarify with the ticket owner or team whether the constraint still holds given what you've learned, or whether this is actually the expected fix.",
-    "_source_sha256": "a11504631c5cd269f41f36a253a75ff88ed2ebf7610e49730d78da7dab9b5183"
+    "_source_sha256": "a11504631c5cd269f41f36a253a75ff88ed2ebf7610e49730d78da7dab9b5183",
+    "_criteria_sha256": "d160c0dd937a56b8757048ab3cd7441cf76ac6e1669357041cb8f5368136f9fa"
   },
   {
     "skill": "staying-on-mission",
@@ -189,6 +212,7 @@
     "trial": 3,
     "meets_criteria": "YES",
     "quote": "document your findings clearly (tried 3 mitigations, all still flaky 1 in 5, root cause appears to be in session-expiry logic) and escalate to whoever set that constraint",
-    "_source_sha256": "ac0a9c6ba85a3464d6f17f1336b96aa76d9ea38a1f5f444dec9fcb7ee642e2e5"
+    "_source_sha256": "ac0a9c6ba85a3464d6f17f1336b96aa76d9ea38a1f5f444dec9fcb7ee642e2e5",
+    "_criteria_sha256": "d160c0dd937a56b8757048ab3cd7441cf76ac6e1669357041cb8f5368136f9fa"
   }
 ]

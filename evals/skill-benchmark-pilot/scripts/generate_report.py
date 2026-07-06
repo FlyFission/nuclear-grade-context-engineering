@@ -245,6 +245,9 @@ summary_lines.append("| Skill | With skill | Without skill | Verdict | Weighted 
 summary_lines.append("|---|---|---|---|---|---|---|")
 
 detail_sections = []
+# Captured per skill so Section 7 (Limitations) can derive its counts/names
+# from this same pass instead of separately hard-coding them.
+skill_results = {}
 
 for skill in skills_sorted:
     scenario = all_tasks[skill]["scenario_prompt"]
@@ -270,6 +273,14 @@ for skill in skills_sorted:
     weighted_delta = cond_stats["with_skill"]["weighted"] - cond_stats["without_skill"]["weighted"]
     weighted_verdict = "WINS" if weighted_delta > 0.001 else ("TIE" if abs(weighted_delta) <= 0.001 else "LOSES")
     flip_flag = " ⚠️FLIP" if weighted_verdict != verdict else ""
+
+    skill_results[skill] = {
+        "verdict": verdict,
+        "weighted_delta": weighted_delta,
+        "weighted_verdict": weighted_verdict,
+        "with": cond_stats["with_skill"],
+        "without": cond_stats["without_skill"],
+    }
 
     summary_lines.append(
         f"| {skill} | {cond_stats['with_skill']['catch']} | {cond_stats['without_skill']['catch']} | "
@@ -331,6 +342,95 @@ a(f"- **Total review-run spend across retained runs, computed from unrounded val
   f"(not itemized here; grading calls are ~10-20x cheaper than Sonnet review calls per call).")
 a("")
 
+# Derived data for section 7 -- computed from skill_results (built in the
+# per-skill loop above), not hard-coded, so a rerun that changes any verdict
+# updates these bullets instead of leaving them to contradict the tables
+# above them.
+tie_skills = [s for s in skills_sorted if skill_results[s]["verdict"] == "TIE"]
+ceiling_ties = [s for s in tie_skills
+                if skill_results[s]["with"]["yes"] == skill_results[s]["with"]["n"]
+                and skill_results[s]["without"]["yes"] == skill_results[s]["without"]["n"]]
+floor_ties = [s for s in tie_skills
+              if skill_results[s]["with"]["yes"] == 0 and skill_results[s]["without"]["yes"] == 0]
+other_ties = [s for s in tie_skills if s not in ceiling_ties and s not in floor_ties]
+
+floor_ties_names = " and ".join(f"`{s}`" for s in floor_ties) if floor_ties else "no skills"
+other_ties_note = (
+    f" ({len(other_ties)} further tied skill{'s' if len(other_ties) != 1 else ''} — "
+    + ", ".join(f"`{s}`" for s in other_ties) + " — fit neither the ceiling nor floor "
+    "pattern above.)"
+) if other_ties else ""
+
+floor_tie_flips = []
+for s in floor_ties:
+    r = skill_results[s]
+    if r["weighted_verdict"] == "WINS":
+        floor_tie_flips.append(
+            f"`{s}` flips to a weighted WIN ({r['without']['partial']}/{r['without']['n']} PARTIAL "
+            f"without the skill → {r['with']['partial']}/{r['with']['n']} PARTIAL with it — a real, "
+            f"consistent movement the strict count hides)"
+        )
+    else:
+        floor_tie_flips.append(
+            f"`{s}` does not flip ({r['with']['partial']}/{r['with']['n']} PARTIAL in both conditions "
+            f"— no directional signal either way)"
+        )
+floor_tie_flip_sentence = ". ".join(floor_tie_flips) + "." if floor_tie_flips else ""
+
+# Single-trial-margin cohort: a strict WINS/LOSES call resting on exactly one
+# trial's PARTIAL-vs-YES swing (the winning side caught every trial, the
+# losing side missed exactly one YES to a PARTIAL and had no plain NO).
+margin_skills = []
+for s in skills_sorted:
+    r = skill_results[s]
+    if r["verdict"] == "TIE":
+        continue
+    stronger, weaker = (r["with"], r["without"]) if r["verdict"] == "WINS" else (r["without"], r["with"])
+    if (stronger["yes"] - weaker["yes"] == 1 and stronger["yes"] == stronger["n"]
+            and weaker["partial"] == 1 and weaker["yes"] + weaker["partial"] == weaker["n"]):
+        margin_skills.append(s)
+margin_wins = [s for s in margin_skills if skill_results[s]["verdict"] == "WINS"]
+margin_losses = [s for s in margin_skills if skill_results[s]["verdict"] == "LOSES"]
+margin_magnitudes = {round(abs(skill_results[s]["weighted_delta"]), 3) for s in margin_skills}
+margin_same_magnitude = len(margin_magnitudes) == 1
+margin_magnitude_str = f"{next(iter(margin_magnitudes)):.3f}".rstrip("0").rstrip(".") if margin_same_magnitude else "not identical"
+
+# Cost overhead range, derived from each skill's own mean cost rather than
+# two examples picked once and left to go stale.
+cost_overheads = {}
+for s in skills_sorted:
+    w_cost = skill_results[s]["with"]["mean_cost"]
+    wo_cost = skill_results[s]["without"]["mean_cost"]
+    if w_cost is not None and wo_cost is not None and wo_cost:
+        cost_overheads[s] = (w_cost - wo_cost) / wo_cost * 100
+cheaper_or_flat = sorted((s for s, pct in cost_overheads.items() if pct <= 0), key=lambda s: cost_overheads[s])
+costlier = {s: pct for s, pct in cost_overheads.items() if pct > 0}
+min_costlier_skill = min(costlier, key=lambda s: costlier[s]) if costlier else None
+max_costlier_skill = max(costlier, key=lambda s: costlier[s]) if costlier else None
+
+if cheaper_or_flat:
+    cheaper_detail = ", ".join(
+        f"`{s}`: {cost_overheads[s]:+.1f}%" for s in cheaper_or_flat)
+    cheaper_sentence = (
+        f"All but {len(cheaper_or_flat)} skill{'s' if len(cheaper_or_flat) != 1 else ''} cost more per "
+        f"call than the plain prompt ({cheaper_detail} cost about the same or less)."
+    )
+else:
+    cheaper_sentence = "Every skill costs more per call than the plain prompt."
+
+if min_costlier_skill and max_costlier_skill:
+    cost_range_sentence = (
+        f"Among the skills that cost more, overhead ranges from "
+        f"+{costlier[min_costlier_skill]:.0f}% (`{min_costlier_skill}`: "
+        f"{fmt_money(skill_results[min_costlier_skill]['without']['mean_cost'])} → "
+        f"{fmt_money(skill_results[min_costlier_skill]['with']['mean_cost'])}) to "
+        f"+{costlier[max_costlier_skill]:.0f}% (`{max_costlier_skill}`: "
+        f"{fmt_money(skill_results[max_costlier_skill]['without']['mean_cost'])} → "
+        f"{fmt_money(skill_results[max_costlier_skill]['with']['mean_cost'])})."
+    )
+else:
+    cost_range_sentence = ""
+
 # ---------- Section 7: limitations ----------
 a("## 7. Limitations — read before treating any single result as settled")
 a("")
@@ -344,13 +444,15 @@ a("- **One model tested** (`claude-sonnet-5`), one grading model (`claude-haiku-
 a("- **Scenario/criteria authorship is not independent** — see section 2 and the executive "
   "summary above. Treat every \"WINS\" and \"TIE\" as provisional until someone outside "
   "this effort has read the scenario and criterion and agrees it's a fair test.")
-a("- **A TIE means \"this specific scenario didn't discriminate,\" not \"the skill has no "
-  "value.\"** Most ties are ceiling effects: 11 of the 13 tied skills in the 27-skill batch "
-  "are 3/3-vs-3/3 (both conditions already fully satisfied the criterion) — the base model "
-  "may already do the right thing on the case tested; a harder or subtler scenario might "
-  "reveal a gap this one didn't (this is exactly what Gate 1 in the follow-up work is for). "
-  "The remaining 2 ties (`handing-off-work`, `organizing-project-folders`) are 0/3-vs-0/3 "
-  "floor ties, covered in their own bullet below.")
+ceiling_n = skill_results[ceiling_ties[0]]["with"]["n"] if ceiling_ties else None
+a(f"- **A TIE means \"this specific scenario didn't discriminate,\" not \"the skill has no "
+  f"value.\"** Most ties are ceiling effects: {len(ceiling_ties)} of the {len(tie_skills)} tied "
+  f"skills in the {len(skills_sorted)}-skill batch are {ceiling_n}/{ceiling_n}-vs-{ceiling_n}/{ceiling_n} "
+  f"(both conditions already fully satisfied the criterion) — the base model "
+  f"may already do the right thing on the case tested; a harder or subtler scenario might "
+  f"reveal a gap this one didn't (this is exactly what Gate 1 in the follow-up work is for). "
+  f"The remaining {len(floor_ties)} tie{'s' if len(floor_ties) != 1 else ''} ({floor_ties_names}) "
+  f"are 0-vs-0 floor ties, covered in their own bullet below.{other_ties_note}")
 a("- **This benchmark tests decision/response behavior under a scenario prompt, not "
   "end-to-end codebase execution.** Runs use an empty isolated working directory with "
   "read-only tools and nothing real to find, which is appropriate for decision-quality "
@@ -362,34 +464,35 @@ a("- **This benchmark tests decision/response behavior under a scenario prompt, 
   "codebase in front of it. That specific skill's detail section in section 5 shows the "
   "raw responses; treat its result as weaker evidence than skills whose scenarios are "
   "self-contained.")
-a("- **Two skills failed on both sides** (`handing-off-work`, `organizing-project-folders`, "
-  "both 0/3 YES on the strict rule). This is a flag that the pass criterion may be "
-  "stricter than what \"adds value\" actually requires, not proof the skill is worthless — "
-  "but the two are not equivalent under the weighted lens above. `handing-off-work` flips "
-  "to a weighted WIN (0/3 PARTIAL without the skill → 3/3 PARTIAL with it — a real, "
-  "consistent movement the strict count hides). `organizing-project-folders` does not flip "
-  "(3/3 PARTIAL in both conditions — no directional signal either way).")
-a("- **A cohort of 6 skills sit on the thinnest possible margin: a single trial's "
-  "difference, riding on one PARTIAL grade.** `breaking-down-the-work`, "
-  "`checking-source-claims`, `double-checking-before-acting`, `questioning-attitude`, and "
-  "`staying-on-mission` are called WINS on a 3/3-vs-2/3(+1 partial) pattern; "
-  "`creating-change-records` is called the one LOSES on the mirror-image "
-  "2/3(+1 partial)-vs-3/3 pattern. All six have the same weighted-delta magnitude "
-  "(±0.167) — the only difference is sign. Applying the same n=3 skepticism to all six "
-  "symmetrically: none of them, including the LOSES call, should be read as a settled "
-  "result. Relabeling only the inconvenient one as \"noise\" while keeping the other five "
-  "as clean wins would be worse than leaving all six as provisional single-trial-margin "
-  "calls, which is what this report does.")
-a("- **The cost/benefit tradeoff is real and unresolved by this pilot.** Every skill costs "
-  "more per call than the plain prompt, from roughly +10% to over +200% "
-  "(`recording-a-known-good-version`: $0.0378 → $0.0872; `using-nuclear-grade`: "
-  "$0.0227 → $0.0590). On the 13 tied skills that cost buys nothing measured here. This "
-  "report does not attempt to weigh \"is the measured gain worth the cost\" — that's a "
-  "product decision for whoever adopts these skills (accept the overhead, rewrite the "
-  "skill to be leaner, or drop it for that use case), not a conclusion this data supports "
-  "on its own. Any claim about what future engineering work will do to reduce this "
-  "overhead is out of scope for this report — it documents what was measured, not a "
-  "roadmap.")
+a(f"- **{len(floor_ties)} skill{'s' if len(floor_ties) != 1 else ''} failed on both sides** "
+  f"({floor_ties_names}, both 0/{skill_results[floor_ties[0]]['with']['n'] if floor_ties else '?'} "
+  f"YES on the strict rule). This is a flag that the pass criterion may be "
+  f"stricter than what \"adds value\" actually requires, not proof the skill is worthless — "
+  f"but they are not necessarily equivalent under the weighted lens above. {floor_tie_flip_sentence}")
+margin_wins_names = ", ".join(f"`{s}`" for s in margin_wins)
+margin_losses_names = ", ".join(f"`{s}`" for s in margin_losses) or "no skill"
+magnitude_clause = (
+    f"the same weighted-delta magnitude (±{margin_magnitude_str})"
+    if margin_same_magnitude else "weighted-delta magnitudes that are not all identical"
+)
+a(f"- **A cohort of {len(margin_skills)} skills sit on the thinnest possible margin: a single "
+  f"trial's difference, riding on one PARTIAL grade.** {margin_wins_names} "
+  f"{'are' if len(margin_wins) != 1 else 'is'} called WINS on a stronger-3/3-vs-weaker-2/3(+1 partial) "
+  f"pattern; {margin_losses_names} {'are' if len(margin_losses) != 1 else 'is'} called the "
+  f"LOSES on the mirror-image pattern. All {len(margin_skills)} have {magnitude_clause} — the "
+  f"only difference is sign. Applying the same n=3 skepticism to all of them "
+  f"symmetrically: none of them, including any LOSES call, should be read as a settled "
+  f"result. Relabeling only the inconvenient one(s) as \"noise\" while keeping the rest "
+  f"as clean wins would be worse than leaving all of them as provisional single-trial-margin "
+  f"calls, which is what this report does.")
+a(f"- **The cost/benefit tradeoff is real and unresolved by this pilot.** {cheaper_sentence} "
+  f"{cost_range_sentence} On the {len(tie_skills)} tied skills that cost buys nothing measured "
+  f"here. This report does not attempt to weigh \"is the measured gain worth the cost\" — "
+  f"that's a product decision for whoever adopts these skills (accept the overhead, rewrite "
+  f"the skill to be leaner, or drop it for that use case), not a conclusion this data "
+  f"supports on its own. Any claim about what future engineering work will do to reduce this "
+  f"overhead is out of scope for this report — it documents what was measured, not a "
+  f"roadmap.")
 a("- **Cost figures are per-call totals from Claude Code's own accounting** "
   "(`total_cost_usd` in the `--output-format json` response), including prompt-cache "
   "creation/read charges, not a controlled minimal-token measurement.")

@@ -30,6 +30,13 @@ SCHEMA = json.dumps({
     "required": ["meets_criteria", "quote"],
 })
 
+GRADER_MODEL = "claude-sonnet-5"
+# Bump whenever the grading prompt's instructional wording changes, so a
+# wording-only edit invalidates the cache the same way a criteria or model
+# change already does automatically (see grading_spec_hash).
+PROMPT_VERSION = "v1"
+GRADING_SPEC_HASH = hashlib.sha256(f"{CRITERIA}::{GRADER_MODEL}::{PROMPT_VERSION}".encode()).hexdigest()
+
 
 def load_grade_cache(out_path: Path) -> dict:
     """Prior valid grades, keyed by (model, trial) -- used so a partial rerun
@@ -39,7 +46,11 @@ def load_grade_cache(out_path: Path) -> dict:
     current hash, NOT by file mtimes: on a fresh checkout, git's write order
     gives run files and the graded-results file mtimes that reflect checkout
     order, not actual regeneration, so an mtime-based gate can miss the cache
-    for most unchanged files."""
+    for most unchanged files. A cached row also carries a _criteria_sha256
+    fingerprint of the grading inputs (CRITERIA text, grader model, prompt
+    version) that must still match GRADING_SPEC_HASH -- a criterion edit or
+    grader-model change invalidates a row even though the transcript itself
+    hasn't changed."""
     if not out_path.exists():
         return {}
     try:
@@ -58,7 +69,8 @@ def grade_one(path, cache: dict):
 
     source_hash = hashlib.sha256(raw).hexdigest()
     cached = cache.get((d["_model"], d["_trial"]))
-    if cached is not None and cached.get("_source_sha256") == source_hash:
+    if (cached is not None and cached.get("_source_sha256") == source_hash
+            and cached.get("_criteria_sha256") == GRADING_SPEC_HASH):
         return cached
 
     text = d.get("result", "")
@@ -70,7 +82,7 @@ def grade_one(path, cache: dict):
         "Answer YES if 4+ of the 6 files are explicitly named, PARTIAL if 1-3 are "
         "named, NO if none of the 6 specific filenames appear."
     )
-    cmd = ["claude", "-p", prompt, "--output-format", "json", "--model", "claude-sonnet-5",
+    cmd = ["claude", "-p", prompt, "--output-format", "json", "--model", GRADER_MODEL,
            "--safe-mode", "--tools", "", "--no-session-persistence", "--max-budget-usd", "0.20",
            "--json-schema", SCHEMA]
     try:
@@ -82,7 +94,7 @@ def grade_one(path, cache: dict):
                 "grader_error": True, "grader_quote": str(e)[:200]}
     return {"model": d["_model"], "trial": d["_trial"],
             "meets_criteria": verdict["meets_criteria"], "quote": verdict["quote"],
-            "_source_sha256": source_hash}
+            "_source_sha256": source_hash, "_criteria_sha256": GRADING_SPEC_HASH}
 
 
 def main():

@@ -4,69 +4,79 @@
     "trial": 2,
     "meets_criteria": "YES",
     "quote": "I'll draft `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, and `ship.md` so the PR carries the real reasoning and evidence",
-    "_source_sha256": "946b3caad95be441c7309480fc3b422c9bc38bb520a282f65d79446ebd26ff18"
+    "_source_sha256": "946b3caad95be441c7309480fc3b422c9bc38bb520a282f65d79446ebd26ff18",
+    "_criteria_sha256": "59ae92d84d6d5393a4bcbe5a920c07c947aecfc7711b6e7523235d2226125588"
   },
   {
     "condition": "with_skill",
     "trial": 4,
     "meets_criteria": "YES",
     "quote": "Given the stakes (autonomous prod writes, no human gate), this isn't a Quick record \u2014 it should be **Standard mode**: `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, `ship.md`.",
-    "_source_sha256": "9fe577931bf08936100ce86ed602c5f1a4df7df1afa6cdd54edc6062d7dc22b6"
+    "_source_sha256": "9fe577931bf08936100ce86ed602c5f1a4df7df1afa6cdd54edc6062d7dc22b6",
+    "_criteria_sha256": "59ae92d84d6d5393a4bcbe5a920c07c947aecfc7711b6e7523235d2226125588"
   },
   {
     "condition": "without_skill",
     "trial": 3,
     "meets_criteria": "NO",
     "quote": "The response contains no explicit mentions of any of the 6 required Standard-mode packet structure filenames (risk.md, basis.md, plan.md, trace.md, verification.md, ship.md). While it discusses documentation, risk review, and decision-recording concepts, none of the specific filename identifiers appear in the text.",
-    "_source_sha256": "daf69b68b284bfb652d4606c554a84bf514214405346d4de1c8672bb95989756"
+    "_source_sha256": "daf69b68b284bfb652d4606c554a84bf514214405346d4de1c8672bb95989756",
+    "_criteria_sha256": "59ae92d84d6d5393a4bcbe5a920c07c947aecfc7711b6e7523235d2226125588"
   },
   {
     "condition": "with_skill",
     "trial": 1,
     "meets_criteria": "YES",
     "quote": "- `risk.md` \u2014 mode justification (why Standard, not Quick)\n- `basis.md` \u2014 what the linter is actually supposed to catch, and what it doesn't (e.g., does it flag `DROP COLUMN`, table locks, missing `CONCURRENTLY`, irreversible ops?)\n- `plan.md` \u2014 rollout plan (canary, blast-radius limits, kill switch to fall back to human approval)\n- `trace.md` \u2014 link each linter rule to a claim (\"blocks destructive DDL\") and the test that proves it\n- `verification.md` \u2014 evidence beyond unit tests: has it been run against a corpus of known-bad migrations?\n- `ship.md` \u2014 release decision, rollback plan, who's on call",
-    "_source_sha256": "1abfcdc61349037b5ff54339125ed374fc7be167bd1b36ee3efac3238010fc0d"
+    "_source_sha256": "1abfcdc61349037b5ff54339125ed374fc7be167bd1b36ee3efac3238010fc0d",
+    "_criteria_sha256": "59ae92d84d6d5393a4bcbe5a920c07c947aecfc7711b6e7523235d2226125588"
   },
   {
     "condition": "with_skill",
     "trial": 5,
     "meets_criteria": "YES",
     "quote": "put together a Standard change record (`risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, `ship.md`) that answers the real questions",
-    "_source_sha256": "ec19fd7d120af1f5e120cb5780e841e1715efdde82354007a81651abc35b96d8"
+    "_source_sha256": "ec19fd7d120af1f5e120cb5780e841e1715efdde82354007a81651abc35b96d8",
+    "_criteria_sha256": "59ae92d84d6d5393a4bcbe5a920c07c947aecfc7711b6e7523235d2226125588"
   },
   {
     "condition": "without_skill",
     "trial": 2,
     "meets_criteria": "NO",
     "quote": "What I'd suggest instead of a short placeholder description: write the real PR description now, before merge \u2014 it doesn't need to be long, but it should cover: What triggers autonomous application vs. requiring a human... Rollback/kill-switch mechanism if a bad migration lands... Who's on call / monitoring during the initial rollout period",
-    "_source_sha256": "f3fcda33cf108170a705c23685c7d5253684216c3e498baeaa0a53e067df5959"
+    "_source_sha256": "f3fcda33cf108170a705c23685c7d5253684216c3e498baeaa0a53e067df5959",
+    "_criteria_sha256": "59ae92d84d6d5393a4bcbe5a920c07c947aecfc7711b6e7523235d2226125588"
   },
   {
     "condition": "without_skill",
     "trial": 1,
     "meets_criteria": "NO",
     "quote": "Rather than backfilling docs after a couple weeks of unsupervised production runs, I'd suggest the PR description do this work up front \u2014 it's usually not much more writing, just answering questions a reviewer will ask anyway",
-    "_source_sha256": "c435a767b72b035c5c93d11ae74279c07dbea7ad56ba759082676f204000e69f"
+    "_source_sha256": "c435a767b72b035c5c93d11ae74279c07dbea7ad56ba759082676f204000e69f",
+    "_criteria_sha256": "59ae92d84d6d5393a4bcbe5a920c07c947aecfc7711b6e7523235d2226125588"
   },
   {
     "condition": "with_skill",
     "trial": 3,
     "meets_criteria": "PARTIAL",
     "quote": "For the record's `risk.md` and `basis.md`, the honest content is something like:... per your `basis.md`/`plan.md`.",
-    "_source_sha256": "b0031fcb9b43cb57f5d1471f6924616ccb90c418978bfd5ab66ff4383ea68814"
+    "_source_sha256": "b0031fcb9b43cb57f5d1471f6924616ccb90c418978bfd5ab66ff4383ea68814",
+    "_criteria_sha256": "59ae92d84d6d5393a4bcbe5a920c07c947aecfc7711b6e7523235d2226125588"
   },
   {
     "condition": "without_skill",
     "trial": 5,
     "meets_criteria": "NO",
     "quote": "The response does not explicitly name any of the six required Standard-mode packet structure files (risk.md, basis.md, plan.md, trace.md, verification.md, ship.md). It discusses documentation and review process but uses generic terms like \"PR description\" and \"documentation\" instead of naming the specific required files.",
-    "_source_sha256": "e0427b793b0bebd4af4b8826bd6dea6a0615da063e3510804daa9e86f3874fda"
+    "_source_sha256": "e0427b793b0bebd4af4b8826bd6dea6a0615da063e3510804daa9e86f3874fda",
+    "_criteria_sha256": "59ae92d84d6d5393a4bcbe5a920c07c947aecfc7711b6e7523235d2226125588"
   },
   {
     "condition": "without_skill",
     "trial": 4,
     "meets_criteria": "NO",
     "quote": "The response names zero of the required packet structure files. It addresses safety concerns thematically (risk assessment, basis for decisions, planning) but does not use the specific filenames: risk.md, basis.md, plan.md, trace.md, verification.md, ship.md.",
-    "_source_sha256": "164b32d27ac2b201a7ab466b0ae9281b3e441c383d032fd28b807e8fbdf01344"
+    "_source_sha256": "164b32d27ac2b201a7ab466b0ae9281b3e441c383d032fd28b807e8fbdf01344",
+    "_criteria_sha256": "59ae92d84d6d5393a4bcbe5a920c07c947aecfc7711b6e7523235d2226125588"
   }
 ]

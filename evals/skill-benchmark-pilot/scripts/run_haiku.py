@@ -13,7 +13,8 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
 REPO_ROOT = BASE.parents[2]
-RUNS_DIR = BASE / "runs"
+DATA_DIR = BASE.parent / "data" / "multi-model-check"
+RUNS_DIR = DATA_DIR / "runs"
 WORK_DIR = BASE / "work"
 SKILLS_ROOT = REPO_ROOT / "skills"
 ALL_TASKS = json.loads((BASE.parent / "data" / "all-skills-pilot" / "all_skill_tasks.json").read_text())

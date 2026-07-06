@@ -9,9 +9,10 @@ import subprocess
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
-ROUND1_RUNS = Path("/home/user/nuclear-grade-context-engineering/evals/skill-benchmark-pilot/data/all-skills-pilot/runs")
-GATE1_RUNS = Path("/home/user/nuclear-grade-context-engineering/evals/skill-benchmark-pilot/data/gate1-hard-case-pilot/runs")
-OUT = Path(__file__).parent
+DATA_DIR = Path(__file__).resolve().parents[1]
+ROUND1_RUNS = DATA_DIR / "all-skills-pilot" / "runs"
+GATE1_RUNS = DATA_DIR / "gate1-hard-case-pilot" / "runs"
+OUT = Path(__file__).resolve().parent
 OUT.mkdir(exist_ok=True, parents=True)
 
 CRITERIA = (

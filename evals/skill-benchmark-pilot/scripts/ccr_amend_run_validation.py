@@ -7,7 +7,8 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
 REPO_ROOT = BASE.parents[2]
-RUNS_DIR = BASE / "runs"
+DATA_DIR = BASE.parent / "data" / "creating-change-records-amendment-validation"
+RUNS_DIR = DATA_DIR / "runs"
 WORK_DIR = BASE / "work"
 SKILL_PATH = REPO_ROOT / "skills" / "creating-change-records" / "SKILL.md"
 GATE1_TASKS = json.loads((BASE.parent / "data" / "gate1-hard-case-pilot" / "gate1_tasks.json").read_text())

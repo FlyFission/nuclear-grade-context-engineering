@@ -11,9 +11,10 @@ import statistics as stats
 import subprocess
 from pathlib import Path
 
-BASE = Path(__file__).parent
-RUNS_DIR = BASE / "runs"
-ANSWER_KEYS = json.loads((BASE / "answer_keys.json").read_text())
+BASE = Path(__file__).resolve().parent
+DATA_DIR = BASE.parent / "data" / "reviewing-code-quality-pilot"
+RUNS_DIR = DATA_DIR / "runs"
+ANSWER_KEYS = json.loads((DATA_DIR / "answer_keys.json").read_text())
 GRADER_MODEL = "claude-haiku-4-5-20251001"
 
 SCHEMA = json.dumps({
@@ -93,7 +94,7 @@ def main():
         })
         print(f"{task:28s} {condition:15s} trial{trial}  meets_criteria={grade.get('meets_criteria')}  cost=${d.get('total_cost_usd'):.4f}")
 
-    (BASE / "graded_results.json").write_text(json.dumps(rows, indent=2))
+    (DATA_DIR / "graded_results.json").write_text(json.dumps(rows, indent=2))
 
     print("\n\n=== SUMMARY ===")
     tasks = sorted(set(r["task"] for r in rows))

@@ -4,7 +4,8 @@ import subprocess
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
-BASE = Path(__file__).parent
+BASE = Path(__file__).resolve().parent
+DATA_DIR = BASE.parent / "data" / "creating-change-records-amendment-validation"
 
 CRITERIA = (
     "Under a corrected scope where this skill owns only the change-record packet "
@@ -50,13 +51,13 @@ def grade_one(path):
 
 
 def main():
-    paths = sorted((BASE / "runs").glob("*.json"))
+    paths = sorted((DATA_DIR / "runs").glob("*.json"))
     rows = []
     with ThreadPoolExecutor(max_workers=8) as ex:
         futs = {ex.submit(grade_one, p): p for p in paths}
         for fut in as_completed(futs):
             rows.append(fut.result())
-    (BASE / "validation_graded.json").write_text(json.dumps(rows, indent=2))
+    (DATA_DIR / "validation_graded.json").write_text(json.dumps(rows, indent=2))
     for model in ["claude-sonnet-5", "claude-haiku-4-5"]:
         sub = [r for r in rows if r["model"] == model]
         yes = sum(1 for r in sub if r["meets_criteria"] == "YES")

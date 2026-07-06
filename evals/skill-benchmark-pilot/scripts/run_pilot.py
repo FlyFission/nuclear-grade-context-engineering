@@ -1,15 +1,26 @@
 #!/usr/bin/env python3
 """Run with-skill vs without-skill trials for reviewing-code-quality and save raw JSON."""
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
 
-BASE = Path(__file__).parent
-TASKS_DIR = BASE / "tasks"
-RUNS_DIR = BASE / "runs"
+BASE = Path(__file__).resolve().parent
+REPO_ROOT = BASE.parents[2]
+DATA_DIR = BASE.parent / "data" / "reviewing-code-quality-pilot"
+TASKS_DIR = DATA_DIR / "tasks"
+RUNS_DIR = DATA_DIR / "runs"
 WORK_DIR = BASE / "work"
-SKILL_BODY = (BASE / "skill_body.txt").read_text()
+
+
+def extract_skill_body() -> str:
+    text = (REPO_ROOT / "skills" / "reviewing-code-quality" / "SKILL.md").read_text()
+    parts = re.split(r"^---$", text, flags=re.MULTILINE)
+    return "---".join(parts[2:]).strip()
+
+
+SKILL_BODY = extract_skill_body()
 
 TASKS = ["task1_thin_wrapper", "task2_shared_leak", "task3_clever_indirection"]
 CONDITIONS = ["with_skill", "without_skill"]

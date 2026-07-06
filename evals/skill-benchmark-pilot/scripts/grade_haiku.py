@@ -5,6 +5,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
+DATA_DIR = BASE.parent / "data" / "multi-model-check"
 ALL_TASKS = json.loads((BASE.parent / "data" / "all-skills-pilot" / "all_skill_tasks.json").read_text())
 GATE1_TASKS = json.loads((BASE.parent / "data" / "gate1-hard-case-pilot" / "gate1_tasks.json").read_text())
 
@@ -70,13 +71,13 @@ def grade_one(path):
 
 
 def main():
-    paths = sorted((BASE / "runs").glob("*.json"))
+    paths = sorted((DATA_DIR / "runs").glob("*.json"))
     rows = []
     with ThreadPoolExecutor(max_workers=8) as ex:
         futs = {ex.submit(grade_one, p): p for p in paths}
         for fut in as_completed(futs):
             rows.append(fut.result())
-    (BASE / "haiku_graded.json").write_text(json.dumps(rows, indent=2))
+    (DATA_DIR / "haiku_graded.json").write_text(json.dumps(rows, indent=2))
     skills = sorted(set(r["skill"] for r in rows))
     for skill in skills:
         for cond in ["with_skill", "without_skill"]:

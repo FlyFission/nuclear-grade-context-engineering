@@ -11,8 +11,9 @@ import subprocess
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
-GATE1_RUNS = Path("/home/user/nuclear-grade-context-engineering/evals/skill-benchmark-pilot/data/gate1-hard-case-pilot/runs")
-OUT = Path(__file__).parent
+DATA_DIR = Path(__file__).resolve().parents[1]
+GATE1_RUNS = DATA_DIR / "gate1-hard-case-pilot" / "runs"
+OUT = Path(__file__).resolve().parent
 
 CRITERIA = (
     "Under a corrected scope where this skill owns only the change-record packet "

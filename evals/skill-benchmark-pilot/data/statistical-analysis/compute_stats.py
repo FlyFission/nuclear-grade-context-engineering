@@ -99,7 +99,7 @@ task_names = sorted(set(r["task"] for r in rcq))
 for task in task_names:
     stat = {}
     for cond in ["with_skill", "without_skill"]:
-        sub = [r for r in rcq if r["task"] == task and r["condition"] == cond]
+        sub = [r for r in rcq if r["task"] == task and r["condition"] == cond and not r.get("error")]
         yes = sum(1 for r in sub if r["meets_criteria"] == "YES")
         stat[cond] = (yes, len(sub))
     tests.append({"skill": f"reviewing-code-quality::{task}", "round": "rcq",

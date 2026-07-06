@@ -51,13 +51,13 @@ def grade_review(task: str, review_text: str) -> dict:
         "--max-budget-usd", "0.20",
         "--json-schema", SCHEMA,
     ]
-    proc = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
     try:
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
         record = json.loads(proc.stdout.strip())
         verdict = json.loads(record["result"])
         return verdict
     except Exception as e:
-        return {"meets_criteria": "ERROR", "quote": f"{e}: {proc.stdout[:300]}"}
+        return {"meets_criteria": "ERROR", "quote": str(e)[:300]}
 
 
 def main():

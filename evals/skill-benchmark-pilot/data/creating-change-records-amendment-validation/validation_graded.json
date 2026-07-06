@@ -3,36 +3,42 @@
     "model": "claude-haiku-4-5",
     "trial": 1,
     "meets_criteria": "NO",
-    "quote": "N/A - none of risk.md, basis.md, plan.md, trace.md, verification.md, ship.md are named in the response"
+    "quote": "N/A - none of risk.md, basis.md, plan.md, trace.md, verification.md, ship.md are named in the response",
+    "_source_sha256": "a5c9b2691032c81a9927321c41c17f7b5d81b11f2c1af0aac0cd4af45e9f5ff0"
   },
   {
     "model": "claude-haiku-4-5",
     "trial": 3,
     "meets_criteria": "NO",
-    "quote": "No exact filenames from the list (risk.md, basis.md, plan.md, trace.md, verification.md, ship.md) appear in the response."
+    "quote": "No exact filenames from the list (risk.md, basis.md, plan.md, trace.md, verification.md, ship.md) appear in the response.",
+    "_source_sha256": "13f4b4ed2e3580bab8b311b47467728a2f996851b1e28424ca0a89161b599938"
   },
   {
     "model": "claude-sonnet-5",
     "trial": 1,
     "meets_criteria": "YES",
-    "quote": "this looks like Standard-mode territory (`risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, `ship.md`), not a short PR blurb."
+    "quote": "this looks like Standard-mode territory (`risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, `ship.md`), not a short PR blurb.",
+    "_source_sha256": "39928f2396dedb1eddb1f97503873a400ba7c75fec36d0023beae28a8938fd4f"
   },
   {
     "model": "claude-sonnet-5",
     "trial": 2,
     "meets_criteria": "YES",
-    "quote": "`risk.md` \u2014 mode/rating and why (autonomous + prod + hard-to-reverse)\n- `basis.md` \u2014 what \"safe migration\" means here, what the linter does and doesn't check\n- `plan.md` \u2014 the gate design, kill switch / rollback path\n- `trace.md` \u2014 linter test cases mapped to actual risky migration patterns (not just its own unit tests)\n- `verification.md` \u2014 evidence beyond \"unit tests pass\"...\n- `ship.md` \u2014 rollout plan"
+    "quote": "`risk.md` \u2014 mode/rating and why (autonomous + prod + hard-to-reverse)\n- `basis.md` \u2014 what \"safe migration\" means here, what the linter does and doesn't check\n- `plan.md` \u2014 the gate design, kill switch / rollback path\n- `trace.md` \u2014 linter test cases mapped to actual risky migration patterns (not just its own unit tests)\n- `verification.md` \u2014 evidence beyond \"unit tests pass\"...\n- `ship.md` \u2014 rollout plan",
+    "_source_sha256": "0390c0cf06412b658d55a9fe66ee576c92cf17c979e9746ffb936f1c26fbdd5b"
   },
   {
     "model": "claude-sonnet-5",
     "trial": 3,
     "meets_criteria": "YES",
-    "quote": "it needs `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, and `ship.md`"
+    "quote": "it needs `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, and `ship.md`",
+    "_source_sha256": "d61b2795536c11f306f0487dfc2b106708ec7c1006207bc2c307325163ec03dd"
   },
   {
     "model": "claude-haiku-4-5",
     "trial": 2,
     "meets_criteria": "PARTIAL",
-    "quote": "A lightweight **Quick change record** (risk.md + proof.md, ~30 minutes) documents:"
+    "quote": "A lightweight **Quick change record** (risk.md + proof.md, ~30 minutes) documents:",
+    "_source_sha256": "d723c5eae4351ca8bea786fd08e0cae05d5adad41a858d8702c68e759a99b6ff"
   }
 ]

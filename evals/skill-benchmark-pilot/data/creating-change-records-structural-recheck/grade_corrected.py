@@ -6,6 +6,7 @@ evidence-adequacy judgment (proving-claims' job). My original Gate 1 criterion
 conflated all three. This isolates just the file-naming dimension, using
 literal filenames (unambiguous tokens) rather than common English words
 (the source of the false-positive bug in the earlier recheck attempt)."""
+import hashlib
 import json
 import subprocess
 import sys
@@ -38,10 +39,36 @@ SCHEMA = json.dumps({
 })
 
 
-def grade_one(path):
-    d = json.loads(path.read_text())
+def load_grade_cache(out_path: Path) -> dict:
+    """Prior valid grades, keyed by (condition, trial) -- used so a partial
+    rerun (one regenerated run file) doesn't send every other, unchanged
+    transcript back through the live grader. Cache validity is decided by
+    comparing the run file's own content hash (stored on the cached row)
+    against its current hash, NOT by file mtimes: on a fresh checkout, git's
+    write order gives run files and the graded-results file mtimes that
+    reflect checkout order, not actual regeneration, so an mtime-based gate
+    can miss the cache for most unchanged files."""
+    if not out_path.exists():
+        return {}
+    try:
+        prior_rows = json.loads(out_path.read_text())
+    except (json.JSONDecodeError, OSError):
+        return {}
+    return {(r["condition"], r["trial"]): r
+            for r in prior_rows if not r.get("error") and r.get("_source_sha256")}
+
+
+def grade_one(path, cache: dict):
+    raw = path.read_bytes()
+    d = json.loads(raw)
     if d.get("type") == "error" or d.get("is_error"):
         return {"condition": d["_condition"], "trial": d["_trial"], "error": True}
+
+    source_hash = hashlib.sha256(raw).hexdigest()
+    cached = cache.get((d["_condition"], d["_trial"]))
+    if cached is not None and cached.get("_source_sha256") == source_hash:
+        return cached
+
     text = d.get("result", "")
     prompt = (
         "You are grading a response against ONE specific structural criterion. "
@@ -62,14 +89,16 @@ def grade_one(path):
         return {"condition": d["_condition"], "trial": d["_trial"], "error": True,
                 "grader_error": True, "grader_quote": str(e)[:200]}
     return {"condition": d["_condition"], "trial": d["_trial"],
-            "meets_criteria": verdict["meets_criteria"], "quote": verdict["quote"]}
+            "meets_criteria": verdict["meets_criteria"], "quote": verdict["quote"],
+            "_source_sha256": source_hash}
 
 
 def main():
     paths = sorted(GATE1_RUNS.glob("creating-change-records__*.json"))
+    cache = load_grade_cache(OUT / "ccr_corrected_scope_graded.json")
     rows = []
     with ThreadPoolExecutor(max_workers=8) as ex:
-        futs = {ex.submit(grade_one, p): p for p in paths}
+        futs = {ex.submit(grade_one, p, cache): p for p in paths}
         for fut in as_completed(futs):
             rows.append(fut.result())
     (OUT / "ccr_corrected_scope_graded.json").write_text(json.dumps(rows, indent=2))

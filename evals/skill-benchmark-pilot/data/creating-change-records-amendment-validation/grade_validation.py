@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import hashlib
 import json
 import subprocess
 import sys
@@ -29,31 +30,35 @@ SCHEMA = json.dumps({
 })
 
 
-def load_grade_cache(out_path: Path):
-    """Prior valid grades, keyed by (model, trial), plus the cache file's own
-    mtime -- used so a partial rerun (one regenerated run file) doesn't send
-    every other, unchanged transcript back through the live grader. A run
-    file newer than this mtime was regenerated since the last grading pass
-    and must be re-graded; anything older can reuse its cached grade."""
+def load_grade_cache(out_path: Path) -> dict:
+    """Prior valid grades, keyed by (model, trial) -- used so a partial rerun
+    (one regenerated run file) doesn't send every other, unchanged transcript
+    back through the live grader. Cache validity is decided by comparing the
+    run file's own content hash (stored on the cached row) against its
+    current hash, NOT by file mtimes: on a fresh checkout, git's write order
+    gives run files and the graded-results file mtimes that reflect checkout
+    order, not actual regeneration, so an mtime-based gate can miss the cache
+    for most unchanged files."""
     if not out_path.exists():
-        return {}, None
+        return {}
     try:
         prior_rows = json.loads(out_path.read_text())
     except (json.JSONDecodeError, OSError):
-        return {}, None
-    cache = {(r["model"], r["trial"]): r for r in prior_rows if not r.get("error")}
-    return cache, out_path.stat().st_mtime
+        return {}
+    return {(r["model"], r["trial"]): r
+            for r in prior_rows if not r.get("error") and r.get("_source_sha256")}
 
 
-def grade_one(path, cache: dict, cache_mtime):
-    d = json.loads(path.read_text())
+def grade_one(path, cache: dict):
+    raw = path.read_bytes()
+    d = json.loads(raw)
     if d.get("type") == "error" or d.get("is_error"):
         return {"model": d["_model"], "trial": d["_trial"], "error": True}
 
-    if cache_mtime is not None and path.stat().st_mtime <= cache_mtime:
-        cached = cache.get((d["_model"], d["_trial"]))
-        if cached is not None:
-            return cached
+    source_hash = hashlib.sha256(raw).hexdigest()
+    cached = cache.get((d["_model"], d["_trial"]))
+    if cached is not None and cached.get("_source_sha256") == source_hash:
+        return cached
 
     text = d.get("result", "")
     prompt = (
@@ -75,15 +80,16 @@ def grade_one(path, cache: dict, cache_mtime):
         return {"model": d["_model"], "trial": d["_trial"], "error": True,
                 "grader_error": True, "grader_quote": str(e)[:200]}
     return {"model": d["_model"], "trial": d["_trial"],
-            "meets_criteria": verdict["meets_criteria"], "quote": verdict["quote"]}
+            "meets_criteria": verdict["meets_criteria"], "quote": verdict["quote"],
+            "_source_sha256": source_hash}
 
 
 def main():
     paths = sorted((BASE / "runs").glob("*.json"))
-    cache, cache_mtime = load_grade_cache(BASE / "validation_graded.json")
+    cache = load_grade_cache(BASE / "validation_graded.json")
     rows = []
     with ThreadPoolExecutor(max_workers=8) as ex:
-        futs = {ex.submit(grade_one, p, cache, cache_mtime): p for p in paths}
+        futs = {ex.submit(grade_one, p, cache): p for p in paths}
         for fut in as_completed(futs):
             rows.append(fut.result())
     (BASE / "validation_graded.json").write_text(json.dumps(rows, indent=2))

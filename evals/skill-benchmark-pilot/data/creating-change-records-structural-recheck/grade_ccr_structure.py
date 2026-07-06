@@ -4,6 +4,7 @@ compound-criterion artifact -- like proving-claims turned out to be -- or a
 real gap. Re-grade EXISTING round-1 and Gate-1 transcripts against a narrower
 structural criterion: does it name the Standard-mode artifact set / use the
 status-label vocabulary, separate from the full 5-part compound judgment."""
+import hashlib
 import json
 import subprocess
 import sys
@@ -35,10 +36,36 @@ SCHEMA = json.dumps({
 })
 
 
-def grade_one(path):
-    d = json.loads(path.read_text())
+def load_grade_cache(out_path: Path) -> dict:
+    """Prior valid grades, keyed by (round, condition, trial) -- used so a
+    partial rerun (one regenerated run file) doesn't send every other,
+    unchanged transcript back through the live grader. Cache validity is
+    decided by comparing the run file's own content hash (stored on the
+    cached row) against its current hash, NOT by file mtimes: on a fresh
+    checkout, git's write order gives run files and the graded-results file
+    mtimes that reflect checkout order, not actual regeneration, so an
+    mtime-based gate can miss the cache for most unchanged files."""
+    if not out_path.exists():
+        return {}
+    try:
+        prior_rows = json.loads(out_path.read_text())
+    except (json.JSONDecodeError, OSError):
+        return {}
+    return {(r["round"], r["condition"], r["trial"]): r
+            for r in prior_rows if not r.get("error") and r.get("_source_sha256")}
+
+
+def grade_one(path, cache: dict, key):
+    raw = path.read_bytes()
+    d = json.loads(raw)
     if d.get("type") == "error" or d.get("is_error"):
         return {"error": True}
+
+    source_hash = hashlib.sha256(raw).hexdigest()
+    cached = cache.get(key)
+    if cached is not None and cached.get("_source_sha256") == source_hash:
+        return cached
+
     text = d.get("result", "")
     prompt = (
         "You are grading a response against ONE specific vocabulary/structure criterion. "
@@ -57,7 +84,8 @@ def grade_one(path):
     except Exception as e:
         return {"error": True, "grader_error": True, "grader_quote": str(e)[:200]}
     return {"round": d.get("_round", "?"), "condition": d["_condition"], "trial": d["_trial"],
-            "meets_criteria": verdict["meets_criteria"], "quote": verdict["quote"]}
+            "meets_criteria": verdict["meets_criteria"], "quote": verdict["quote"],
+            "_source_sha256": source_hash}
 
 
 def main():
@@ -65,12 +93,14 @@ def main():
     gate1_paths = [(p, "gate1") for p in sorted(GATE1_RUNS.glob("creating-change-records__*.json"))]
     all_paths = round1_paths + gate1_paths
 
+    cache = load_grade_cache(OUT / "ccr_structure_graded.json")
     rows = []
     with ThreadPoolExecutor(max_workers=8) as ex:
         futs = {}
         for p, rnd in all_paths:
             d = json.loads(p.read_text())
-            futs[ex.submit(grade_one, p)] = (p, rnd, d["_condition"], d["_trial"])
+            key = (rnd, d["_condition"], d["_trial"])
+            futs[ex.submit(grade_one, p, cache, key)] = (p, rnd, d["_condition"], d["_trial"])
         for fut in as_completed(futs):
             p, rnd, cond, trial = futs[fut]
             v = fut.result()
@@ -78,7 +108,8 @@ def main():
                 rows.append({"round": rnd, "condition": cond, "trial": trial, "error": True})
                 continue
             rows.append({"round": rnd, "condition": cond, "trial": trial,
-                         "meets_criteria": v["meets_criteria"], "quote": v["quote"]})
+                         "meets_criteria": v["meets_criteria"], "quote": v["quote"],
+                         "_source_sha256": v["_source_sha256"]})
 
     (OUT / "ccr_structure_graded.json").write_text(json.dumps(rows, indent=2))
     for rnd in ["round1", "gate1"]:

@@ -5,6 +5,7 @@ Grading is done by a separate, cheap model (Haiku) that never sees which
 condition (with_skill / without_skill) produced the text, forced into a
 strict JSON schema so the verdict is mechanical, not a free-form judgment.
 """
+import hashlib
 import json
 import re
 import statistics as stats
@@ -61,29 +62,31 @@ def grade_review(task: str, review_text: str) -> dict:
         return {"meets_criteria": "ERROR", "quote": str(e)[:300]}
 
 
-def load_grade_cache(out_path: Path):
-    """Prior valid grades, keyed by (task, condition, trial), plus the cache
-    file's own mtime -- used so a partial rerun (one regenerated run file)
-    doesn't send every other, unchanged transcript back through the live
-    grader. A run file newer than this mtime was regenerated since the last
-    grading pass and must be re-graded; anything older can reuse its cached
-    grade."""
+def load_grade_cache(out_path: Path) -> dict:
+    """Prior valid grades, keyed by (task, condition, trial) -- used so a
+    partial rerun (one regenerated run file) doesn't send every other,
+    unchanged transcript back through the live grader. Cache validity is
+    decided by comparing the run file's own content hash (stored on the
+    cached row) against its current hash, NOT by file mtimes: on a fresh
+    checkout, git's write order gives run files and the graded-results file
+    mtimes that reflect checkout order, not actual regeneration, so an
+    mtime-based gate can miss the cache for most unchanged files."""
     if not out_path.exists():
-        return {}, None
+        return {}
     try:
         prior_rows = json.loads(out_path.read_text())
     except (json.JSONDecodeError, OSError):
-        return {}, None
-    cache = {(r["task"], r["condition"], r["trial"]): r
-             for r in prior_rows if r.get("error") is False}
-    return cache, out_path.stat().st_mtime
+        return {}
+    return {(r["task"], r["condition"], r["trial"]): r
+            for r in prior_rows if r.get("error") is False and r.get("_source_sha256")}
 
 
 def main():
-    cache, cache_mtime = load_grade_cache(DATA_DIR / "graded_results.json")
+    cache = load_grade_cache(DATA_DIR / "graded_results.json")
     rows = []
     for path in sorted(RUNS_DIR.glob("*.json")):
-        d = json.loads(path.read_text())
+        raw = path.read_bytes()
+        d = json.loads(raw)
         task = d.get("_task")
         condition = d.get("_condition")
         trial = d.get("_trial")
@@ -91,11 +94,11 @@ def main():
             rows.append({"task": task, "condition": condition, "trial": trial, "error": True})
             continue
 
-        if cache_mtime is not None and path.stat().st_mtime <= cache_mtime:
-            cached = cache.get((task, condition, trial))
-            if cached is not None:
-                rows.append(cached)
-                continue
+        source_hash = hashlib.sha256(raw).hexdigest()
+        cached = cache.get((task, condition, trial))
+        if cached is not None and cached.get("_source_sha256") == source_hash:
+            rows.append(cached)
+            continue
 
         result_text = d.get("result", "")
         usage = d.get("usage", {})
@@ -121,6 +124,7 @@ def main():
             "cache_creation_tokens": usage.get("cache_creation_input_tokens"),
             "num_turns": d.get("num_turns"),
             "duration_ms": d.get("duration_ms"),
+            "_source_sha256": source_hash,
         })
         print(f"{task:28s} {condition:15s} trial{trial}  meets_criteria={grade.get('meets_criteria')}  cost=${d.get('total_cost_usd'):.4f}")
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Blind-grade every run in runs_all/ against its skill's pre-registered pass_criteria."""
+import hashlib
 import json
 import statistics as stats
 import subprocess
@@ -54,36 +55,38 @@ def grade_review(skill: str, review_text: str) -> dict:
         return {"meets_criteria": "ERROR", "quote": str(e)[:200]}
 
 
-def load_grade_cache(out_path: Path):
-    """Prior valid grades, keyed by (skill, condition, trial), plus the cache
-    file's own mtime -- used so a partial rerun (one regenerated run file)
-    doesn't send every other, unchanged transcript back through the live
-    grader. A run file newer than this mtime was regenerated since the last
-    grading pass and must be re-graded; anything older can reuse its cached
-    grade."""
+def load_grade_cache(out_path: Path) -> dict:
+    """Prior valid grades, keyed by (skill, condition, trial) -- used so a
+    partial rerun (one regenerated run file) doesn't send every other,
+    unchanged transcript back through the live grader. Cache validity is
+    decided by comparing the run file's own content hash (stored on the
+    cached row) against its current hash, NOT by file mtimes: on a fresh
+    checkout, git's write order gives run files and the graded-results file
+    mtimes that reflect checkout order, not actual regeneration, so an
+    mtime-based gate can miss the cache for most unchanged files."""
     if not out_path.exists():
-        return {}, None
+        return {}
     try:
         prior_rows = json.loads(out_path.read_text())
     except (json.JSONDecodeError, OSError):
-        return {}, None
-    cache = {(r["skill"], r["condition"], r["trial"]): r
-             for r in prior_rows if r.get("error") is False}
-    return cache, out_path.stat().st_mtime
+        return {}
+    return {(r["skill"], r["condition"], r["trial"]): r
+            for r in prior_rows if r.get("error") is False and r.get("_source_sha256")}
 
 
-def grade_one(path: Path, cache: dict, cache_mtime) -> dict:
-    d = json.loads(path.read_text())
+def grade_one(path: Path, cache: dict) -> dict:
+    raw = path.read_bytes()
+    d = json.loads(raw)
     skill = d.get("_skill")
     condition = d.get("_condition")
     trial = d.get("_trial")
     if d.get("type") == "error" or d.get("is_error"):
         return {"skill": skill, "condition": condition, "trial": trial, "error": True}
 
-    if cache_mtime is not None and path.stat().st_mtime <= cache_mtime:
-        cached = cache.get((skill, condition, trial))
-        if cached is not None:
-            return cached
+    source_hash = hashlib.sha256(raw).hexdigest()
+    cached = cache.get((skill, condition, trial))
+    if cached is not None and cached.get("_source_sha256") == source_hash:
+        return cached
 
     result_text = d.get("result", "")
     usage = d.get("usage", {})
@@ -103,15 +106,16 @@ def grade_one(path: Path, cache: dict, cache_mtime) -> dict:
         "cache_creation_tokens": usage.get("cache_creation_input_tokens"),
         "num_turns": d.get("num_turns"),
         "duration_ms": d.get("duration_ms"),
+        "_source_sha256": source_hash,
     }
 
 
 def main():
     paths = sorted(RUNS_DIR.glob("*.json"))
-    cache, cache_mtime = load_grade_cache(DATA_DIR / "graded_results_all.json")
+    cache = load_grade_cache(DATA_DIR / "graded_results_all.json")
     rows = []
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as ex:
-        futures = {ex.submit(grade_one, p, cache, cache_mtime): p for p in paths}
+        futures = {ex.submit(grade_one, p, cache): p for p in paths}
         for i, fut in enumerate(as_completed(futures), 1):
             row = fut.result()
             rows.append(row)

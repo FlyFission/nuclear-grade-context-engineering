@@ -15,6 +15,7 @@ Portable command prompt generated from `skills/creating-change-records/SKILL.md`
 
 - The work leaves no lasting artifact and no need for review.
 - The request is only to browse or explain existing docs.
+- You only need to pick the mode / grade the change's risk, not author the record yet -- use `rating-change-risk` instead.
 
 ## Inputs
 

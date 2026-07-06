@@ -89,6 +89,33 @@ stand in for the independent check. The full treatment — the three coupled gat
 subagents encode the seam, and the honest limits — is in
 [`../02-operating-system/actor-evidence-independence.md`](../02-operating-system/actor-evidence-independence.md).
 
+## Surface classification
+
+The enforcement and independence rungs both turn on one prior question: *of everything the agent
+can touch, which surfaces may it change, and how?* Answer it once, up front, by sorting every
+artifact the agent can reach into four classes. This is the concrete inventory the rungs act on —
+"where the gate lives relative to the writable set" is just asking which class the gate is in.
+
+| Surface class | The agent may... | Examples | Bound by |
+|---|---|---|---|
+| **Locked** | not modify at all | tests, CI config, the approval policy, the gate that grades the work | Self-modification boundary; keep at enforcement rung 4–5 |
+| **Editable-under-review** | change, but only through the normal change flow | product code, drafts, the packet it is filling | plan-phase/build-phase gate; independence rung on the load-bearing claim |
+| **Append-only** | extend, never rewrite | logs, lessons/OPEX, the deficiency register, baselines grown by delta | the append-only-delta rule in [`../02-operating-system/durable-memory.md`](../02-operating-system/durable-memory.md) and [`../02-operating-system/context-window-discipline.md`](../02-operating-system/context-window-discipline.md) §3 |
+| **Human-controlled** | not touch; only a human mutates it | the charter, the release/ship decision, credentials and secrets | denial rule; independence rung 5 |
+
+Two rules make the classes load-bearing rather than decorative:
+
+- **A gate must never sit in an editable or append-only surface the actor controls.** If the thing
+  that grades the work is in the agent's writable set, it is a suggestion, not a gate — promote it
+  to *locked* (rung 4–5). This is the self-modification boundary, stated as a placement rule.
+- **Append-only is not a soft lock.** "Grow by appended, dated entries; never rewrite" is what keeps
+  durable memory from [context collapse](../02-operating-system/context-window-discipline.md). An
+  agent that rewrites a lesson log to "clean it up" has defeated the class.
+
+State the class of each reachable surface in the context pack, next to the authority dimensions
+above. An agent that cannot name which surfaces are locked, append-only, and human-controlled does
+not yet have a bounded authority.
+
 ## Plan-phase vs build-phase authority
 
 Planning and building are different authority phases, and naming the line keeps a

@@ -225,6 +225,8 @@ promises about any workload. No compliance claim is made.
 | LLMLingua family (LLMLingua / LongLLMLingua / LLMLingua-2) | https://github.com/microsoft/LLMLingua | Supporting | supporting-context | Prompt compression up to ~20x on benchmarks with small accuracy loss; query-aware reordering for long contexts. | High | Evidence that prose compresses well; caveat lineage for compress-with-care; no tooling dependency. |
 | cAST: structural chunking via Abstract Syntax Tree (arXiv 2506.15655) | https://arxiv.org/abs/2506.15655 | Supporting | verified-public | AST-aligned chunking (one function/class per retrieval unit) improves code retrieval and generation. | High | Lineage for retrieve-code-by-structure guidance; no indexing-stack requirement. |
 | LongCodeZip (arXiv 2510.00446) | https://arxiv.org/abs/2510.00446 | Supporting | verified-public | Function/block-boundary code compression; much lower safe compression ratios for code than for prose. | High | Caveat lineage: code and exact logic are loss-sensitive under compression; no compliance claim. |
+| Awesome-Context-Engineering (Meirtz), survey + arXiv paper | https://github.com/Meirtz/Awesome-Context-Engineering | Supporting | verified-public | Public survey/taxonomy: a context payload decomposed into instructions, knowledge, tools, memory, state, and query; curated memory-system, retrieval, context-scaling, and observability literature. | Medium-high | Concept lineage for the payload-component lens in `context-packs.md` and the production-memory pointer in `durable-memory.md`; named as a peer project in `../01-field-guide/context-engineering-literature-crosswalk.md`; no endorsement or compliance claim. |
+| context-engineering-intro (coleam00), PRP template | https://github.com/coleam00/context-engineering-intro | Supporting | verified-public | MIT-licensed template: the Product Requirements Prompt (PRP) loop — research the codebase into a complete blueprint, then execute it against runnable validation gates with self-correction. | Medium | Concept lineage for the "Blueprint and execute" workflow-catalog entry in `../../WORKFLOWS.md`; named as a peer project in `../01-field-guide/context-engineering-literature-crosswalk.md`; no endorsement or compliance claim. |
 
 These sources shape how an agent's working context is budgeted and kept honest. Nothing more.
 They add no framework, vendor, or database dependency, and no governance or compliance machinery.
@@ -244,6 +246,28 @@ Template Lineage" below.
 |---|---|---:|---|---|---:|---|
 | PMBOK® Guide (6th/7th/8th editions) | https://www.pmi.org/standards/pmbok | Context-only | excluded-direct | Public framing of principles, performance domains, tailoring, and logs/registers that this repo's independent practice rhymes with. | Medium | Named background only in the crosswalk doc; no template lineage, no compliance claim. |
 | PMI Standard for AI in Portfolio, Program, and Project Management (2026) | https://www.pmi.org/standards/artificial-intelligence | Context-only | excluded-direct | Public framing of human-in-the-loop AI governance, risk, ethics, data quality, stakeholders, and value for AI project work. | Medium | Named background only in the crosswalk + enterprise-rollout docs; no compliance/conformance claim. |
+
+---
+
+## Tier 11 — Practitioner Context-Engineering Collections
+
+These are public, community-maintained collections and curricula on prompt and context engineering.
+They are **secondary / aggregator sources**: useful for orienting in the field and for the ideas
+they surface, but **not direct template lineage**. This repo derives no template or wording from
+them and claims no lineage to any standard *they* cite. They inform
+[`../01-field-guide/context-engineering-landscape.md`](../01-field-guide/context-engineering-landscape.md),
+[`../05-reference/reasoning-techniques.md`](../05-reference/reasoning-techniques.md), and
+[`../02-operating-system/evaluation-integrity.md`](../02-operating-system/evaluation-integrity.md).
+Where they name specific tools or frameworks, those stay **landscape only** (see the tool-posture
+rule in the landscape doc). No compliance claim is made.
+
+| Source | Public link | Classification | Status | Role in Nuclear-grade | Confidence | Direct repo use |
+|---|---|---:|---|---|---:|---|
+| dair-ai, Prompt Engineering Guide | https://github.com/dair-ai/Prompt-Engineering-Guide | Supporting | supporting-context | Public prompting-technique taxonomy (zero/few-shot, CoT, self-consistency, generated-knowledge, ReAct, PAL) and judge/bias-mitigation findings (distribution balance, exemplar ordering). | Medium-high | Concept lineage for `reasoning-techniques.md` and the judge-bias taxonomy in `evaluation-integrity.md`; secondary source, no template lineage. |
+| Meirtz, Awesome-Context-Engineering (arXiv 2507.13334) | https://github.com/Meirtz/Awesome-Context-Engineering | Supporting | supporting-context | Survey framing: context-as-optimization definition, "context failures are the bottleneck," RAG/memory taxonomies, agent-interop protocols (MCP/A2A/AG-UI). | Medium | Background framing for the landscape doc; survey/aggregator, no template lineage. |
+| muratcankoylan, Agent-Skills-for-Context-Engineering | https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering | Supporting | supporting-context | Skill anti-overlap routing; harness surface classification (locked/editable/append-only/human-controlled); LLM-judge bias taxonomy and process-reward framing. | Medium-high | Concept lineage for surface classification in `agent-authority-model.md`, judge biases in `evaluation-integrity.md`, and skill routing in `../05-reference/skill-authoring-contract.md`; no template lineage. |
+| NeoLabHQ, context-engineering-kit | https://github.com/NeoLabHQ/context-engineering-kit | Supporting | supporting-context | Quantified reliability×token-cost tiers; spec-driven / subagent-driven development; reflexion, meta-judge, process-reward patterns. | Medium | Illustrative external evidence for the reliability/cost framing in the comparison study; reflexion caveat in `reasoning-techniques.md`; benchmark numbers are theirs, not restated as ours. |
+| jasontang-ai, Context-Engineering | https://github.com/jasontang-ai/Context-Engineering | Context-only | supporting-context | Progressive curriculum (atoms→molecules→cells→organs) plus speculative "field-physics" framing (neural fields, attractor dynamics, quantum semantics). | Low-medium | Named as landscape; the speculative framing is **explicitly declined** in the landscape doc §3. No template lineage. |
 
 ---
 

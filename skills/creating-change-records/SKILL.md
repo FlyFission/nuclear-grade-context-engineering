@@ -28,6 +28,7 @@ A change record keeps the whole story in Git, together: the scope, what the chan
 
 - The work leaves no lasting artifact and no need for review.
 - The request is only to browse or explain existing docs.
+- You only need to pick the mode / grade the change's risk, not author the record yet -- use `rating-change-risk` instead.
 
 ## Inputs
 

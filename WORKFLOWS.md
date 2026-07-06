@@ -55,6 +55,7 @@ The workflow has two speeds. While you explore and try ideas you can throw away,
 | Administrative floor | screen tripwires -> commit with a clear message | Purely administrative, instantly reversible work that crosses no trust boundary | the commit message (no packet) |
 | Quick change | question -> classify -> prove -> validate | Local, easy-to-undo work that is easy to prove | `risk.md`, `proof.md` |
 | Standard change | specify -> plan -> trace -> verify -> decide | The change touches users, dependencies, security, AI behavior, operations, or a release | Standard packet |
+| Blueprint and execute | question -> discover/plan into a complete blueprint -> execute against verification gates | An agent should research the codebase, produce a self-contained implementation plan, then build it in one focused pass | Context pack + `plan.md`, checked by `verification.md` |
 | Controlled configuration | identify items -> impact screen -> baseline -> operate | Prompts, models, tools, dependencies, docs, releases, or agent authority need to stay under control | CM records (keeping the approved version under control) |
 | Agent authority change | question -> context pack -> boundary proof -> release review | Agents can write files, call tools, use APIs, or affect releases | Packet plus context pack |
 | Agent turnover | state -> changed conditions -> remaining work -> authority -> closed-loop acceptance | Work moves to another agent, reviewer, checker, releaser, support owner, or a resumed thread | `turnover.md` |
@@ -101,6 +102,20 @@ python tools/ng.py validate .nuclear/changes/add-agent-boundary
 ```
 
 Use Standard when reviewers need the spec (what the change must do and why), the plan, the trace, the verification and validation (V&V), and the release decision saved in the repo.
+
+## Blueprint and execute
+
+Sometimes you want the agent to do the research up front — read the codebase, gather the patterns and constraints, and write a *complete* plan — and only then build, in one focused pass, against gates it must pass. This is the shape the PRP (Product Requirements Prompt) template popularized (`docs/01-field-guide/context-engineering-literature-crosswalk.md`), expressed in Nuclear-grade's beats:
+
+```text
+question -> discover + plan into a self-contained blueprint -> execute -> verify against the gates
+```
+
+- Build the blueprint with `commands/ng-context-pack.md` plus `templates/standard/plan.md`: the affected files, the approach, the patterns to emulate, and the acceptance evidence, all in one place so the executing pass needs nothing more.
+- Put the gates *in* the blueprint. The verification commands and pass/fail criteria live in `templates/standard/verification.md`, so "done" means "the named gates pass," not "the agent says so."
+- On trust-bearing work, keep the actor from grading itself: the gate evidence must be reproducible by a reviewer or authored independently (`docs/02-operating-system/actor-evidence-independence.md`). This is the discipline the two-command template does not carry, and the reason a blueprint-and-execute pass is still a Standard packet when the stakes are real.
+
+This is a way to run the existing loop, not a new mode. Scale the ceremony by consequence like any other change.
 
 ## Controlled configuration
 

@@ -38,7 +38,7 @@ A self-check turns a high-stakes action into a careful one. Before you claim suc
 
 ## Process
 
-1. Stop at the key moment and name the exact action and target.
+1. Stop at the key moment — the interval after you have chosen the action and before you commit it — and name the exact action and target.
 2. Think through the result you expect, the likely error, and what would make the action wrong.
 3. Act only inside the authority you were given.
 4. Compare the real result against the result you expected, before you make any claim.

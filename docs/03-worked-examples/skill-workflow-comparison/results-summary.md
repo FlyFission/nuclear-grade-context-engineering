@@ -92,6 +92,33 @@
 6. **HPI microtools add value at transfer and critical action points.** U06, U09, U10, and U11 show that turnover prevents lost state; U04, U07, U08, and U11 show that self-checking is useful before public claims, irreversible data work, payment paths, and API permissions.
 7. **The cost is real.** Nuclear-grade should be framed as consequence-scaled. It is not a universal replacement for good direct prompting.
 
+## Rigor tier vs. what it buys
+
+The per-trial scores above answer "did Nuclear-grade help *here*." Read across the tiers, they also
+answer the planning question an adopter actually asks: *what does each rigor tier buy, and at what
+overhead?* This table reframes the same 1–5 scores by tier — it introduces no new measurement, and
+the honesty caveat at the top of this file applies unchanged (author-judged, no A/B, overhead is
+judgment not minutes).
+
+| Rigor tier | Typical change | Hidden-risk discovery (simple → NG) | Defensible ship-call (simple → NG) | Overhead | Read the tier off |
+|---|---|:---:|:---:|:---:|---|
+| Administrative floor | typo, comment, dead link — no new trust boundary | n/a (no boundary to miss) | n/a | ~0 | (below Quick; commit message is the record) |
+| Quick | local, reversible, obvious proof | 2 → 3 | 3 → 3 | 1–2 | U01 (the one pure-Quick trial) |
+| Standard | touches users / deps / data / permissions / AI authority / release | 1–2 → 4–5 | 1–2 → 4–5 | 3–4 | U02, U03, U05, U07, U08, U11, U12 |
+| Stronger (human-reviewed) | severe, silent, irreversible, external-trust | 1–2 → 5 + independent review | 1–2 → 5 | 4–5 | U04, U08 (upper band) |
+
+The shape matches the one idea: **the payoff is concentrated where consequence is**, and so is the
+cost. On Quick-tier work the two paths land within a point and the overhead is not worth it; on
+Standard-and-above the hidden-risk-discovery gap is the whole story. Spend rigor where the
+consequence lives, not uniformly.
+
+As **illustrative external evidence** for the same "reliability rises with rigor, and so does token
+cost" shape, the NeoLabHQ context-engineering-kit publishes success-rate-by-scope tiers (basic
+prompt vs. reflexion vs. plan-then-implement), reporting large reliability gains at 5–20× token cost
+for its heaviest tier. Those are that project's numbers on its own tasks, cited here for the shape
+of the trade-off — they are **not** restated as Nuclear-grade results. See
+[`../../00-standards-foundation/source-map.md`](../../00-standards-foundation/source-map.md) (Tier 11).
+
 ## Repo Implications
 
 - Keep Quick mode highly visible and legitimate.

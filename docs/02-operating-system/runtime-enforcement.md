@@ -35,6 +35,27 @@ Push advisory wording up the rungs only when the stakes warrant it. Quick mode s
 advisory on purpose; a reversible, low-blast-radius change does not earn a runtime gate.
 Rigor scales with consequence ([`risk-tiers-and-modes.md`](risk-tiers-and-modes.md)).
 
+## The hold point: between selecting an action and committing it
+
+The rungs above answer *what* enforces; this answers *where* the highest-value hold sits. An
+agent's most consequential moment is the interval between **selecting** an action and
+**committing** it — after the model has decided to run a command, write a file, or call a
+tool, and before the effect lands. A hold placed there can still stop a wrong action cheaply.
+A check that runs only after the effect is a report, not a gate.
+
+Two rules follow from the enforcement test above:
+
+- **The hold must sit outside what the action can reach.** A pause the same agent can skip,
+  shorten, or rewrite in that interval is advice, not a gate — the same failure mode as a
+  guard inside the agent's writable set.
+- **The hold scales with consequence.** A reversible, low-blast-radius action earns no hold;
+  an irreversible, trust-bearing, or thinly-evidenced one earns a blocking one — placed by
+  [`deciding-who-decides`](../../skills/deciding-who-decides/SKILL.md) and prepared by
+  [`double-checking-before-acting`](../../skills/double-checking-before-acting/SKILL.md).
+
+This is the software reading of a hold point: a planned stop before an irreversible step where
+the actor confirms target, expected result, and authority before proceeding.
+
 ## Where each control already lives
 
 Read the table as: a contemporary enforcement concept, the Nuclear-grade control that
@@ -50,6 +71,7 @@ covers this ground — this page only makes it legible in one place.
 | Zone boundaries for file access | Authority dimensions (which files the agent may touch); workspace-boundary example | [`agent-authority-model.md`](../04-adoption/agent-authority-model.md), [`../03-worked-examples/ai-agent-tool-permissions/`](../03-worked-examples/ai-agent-tool-permissions/) |
 | Blast-radius / change budgets | Risk screen plus the change-impact record | [`risk-tiers-and-modes.md`](risk-tiers-and-modes.md), [`../../templates/cm/change-impact.md`](../../templates/cm/change-impact.md) |
 | Session hooks and gates | Validator activation thresholds; double-check at cut points | [`validators.md`](validators.md), [`double-checking-before-acting`](../../skills/double-checking-before-acting/SKILL.md) |
+| Hold point before an irreversible step | A blocking check at the decision→action interval, gated out-of-band when stakes are high | [`double-checking-before-acting`](../../skills/double-checking-before-acting/SKILL.md), [`declaring-intent`](../../skills/declaring-intent/SKILL.md) |
 | Completion receipt / handoff | Completion standard; the enforced `ship.md` fields; the handoff record | [`../../AGENTS.md`](../../AGENTS.md), [`../../templates/standard/ship.md`](../../templates/standard/ship.md), [`handing-off-work`](../../skills/handing-off-work/SKILL.md) |
 | Rising tide / no-new-debt | Recorded baseline; every surprise updates a control | [`configuration-management.md`](configuration-management.md), [`MAXIMS.md`](../../MAXIMS.md) |
 | Production-readiness gate | Release-readiness decision; CI passing is not a release decision | [`checking-release-readiness`](../../skills/checking-release-readiness/SKILL.md), [`MAXIMS.md`](../../MAXIMS.md) |
@@ -65,7 +87,7 @@ is to move that control up a rung in the file that owns it — not to add ceremo
 ## Source-lineage note
 
 Original Nuclear-grade synthesis. It reads public practice on enforceable engineering
-controls — secure-development guidance, supply-chain provenance, and configuration
-discipline — mapped in
+controls — secure-development guidance, supply-chain provenance, configuration discipline,
+and the hold-point and self-checking habits in DOE-HDBK-1028-2009 — mapped in
 [`../00-standards-foundation/source-map.md`](../00-standards-foundation/source-map.md). It
 does not create assurance, certification, or compliance.

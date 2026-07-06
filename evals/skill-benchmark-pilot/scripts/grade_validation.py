@@ -81,7 +81,32 @@ def grade_one(path, cache: dict):
     return {"condition": d["_condition"], "trial": d["_trial"], "meets_criteria": verdict["meets_criteria"],
             "quote": verdict["quote"], "_source_sha256": source_hash, "_criteria_sha256": spec_hash}
 
+TRIALS = (1, 2, 3, 4, 5)
+
+
+def check_complete():
+    """Refuse to grade (and overwrite the checked-in graded-results file) on a
+    partial batch -- e.g. a rerun interrupted after deleting one trial -- since
+    downstream reports/statistics derive their denominators from whatever this
+    writes, with no way to tell a genuinely complete batch from a truncated one."""
+    runs_dir = DATA_DIR / "runs"
+    expected = {
+        runs_dir / f"{task}__{condition}__trial{trial}.json"
+        for task in TASKS
+        for condition in ("with_skill", "without_skill")
+        for trial in TRIALS
+    }
+    missing = sorted(p.name for p in expected if not p.exists())
+    if missing:
+        print(f"ERROR: {len(missing)} expected run file(s) missing from {runs_dir} -- "
+              f"refusing to grade a partial batch:", file=sys.stderr)
+        for name in missing:
+            print(f"  missing: {name}", file=sys.stderr)
+        sys.exit(1)
+
+
 def main():
+    check_complete()
     paths = sorted((DATA_DIR/"runs").glob("*.json"))
     cache = load_grade_cache(DATA_DIR / "graded.json")
     rows = []

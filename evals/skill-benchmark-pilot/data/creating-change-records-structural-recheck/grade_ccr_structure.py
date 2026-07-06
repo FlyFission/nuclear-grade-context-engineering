@@ -101,7 +101,35 @@ def grade_one(path, cache: dict, key):
             "_source_sha256": source_hash, "_criteria_sha256": GRADING_SPEC_HASH}
 
 
+ROUND1_TRIALS = (1, 2, 3)
+GATE1_TRIALS = (1, 2, 3, 4, 5)
+
+
+def check_complete():
+    """Refuse to grade (and overwrite the checked-in graded-results file) on a
+    partial batch -- e.g. a rerun interrupted after deleting one trial -- since
+    downstream reports/statistics derive their denominators from whatever this
+    writes, with no way to tell a genuinely complete batch from a truncated one."""
+    expected = {
+        ROUND1_RUNS / f"creating-change-records__{condition}__trial{trial}.json"
+        for condition in ("with_skill", "without_skill")
+        for trial in ROUND1_TRIALS
+    } | {
+        GATE1_RUNS / f"creating-change-records__{condition}__trial{trial}.json"
+        for condition in ("with_skill", "without_skill")
+        for trial in GATE1_TRIALS
+    }
+    missing = sorted(str(p) for p in expected if not p.exists())
+    if missing:
+        print(f"ERROR: {len(missing)} expected run file(s) missing -- "
+              f"refusing to grade a partial batch:", file=sys.stderr)
+        for name in missing:
+            print(f"  missing: {name}", file=sys.stderr)
+        sys.exit(1)
+
+
 def main():
+    check_complete()
     round1_paths = [(p, "round1") for p in sorted(ROUND1_RUNS.glob("creating-change-records__*.json"))]
     gate1_paths = [(p, "gate1") for p in sorted(GATE1_RUNS.glob("creating-change-records__*.json"))]
     all_paths = round1_paths + gate1_paths

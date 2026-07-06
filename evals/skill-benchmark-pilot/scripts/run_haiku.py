@@ -8,6 +8,7 @@ proving-claims skill warns about."""
 import json
 import re
 import subprocess
+import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
@@ -72,12 +73,20 @@ def main():
         for cond in ["with_skill", "without_skill"]:
             for trial in range(1, TRIALS + 1):
                 jobs.append((skill, source, cond, trial))
+    failures = 0
     with ThreadPoolExecutor(max_workers=8) as ex:
         futs = {ex.submit(run_one, *j): j for j in jobs}
         for fut in as_completed(futs):
             j = futs[fut]
             rec = fut.result()
-            print(j, "->", "ERR" if rec.get("is_error") else "ok", rec.get("total_cost_usd"))
+            is_error = rec.get("type") == "error" or rec.get("is_error")
+            if is_error:
+                failures += 1
+            print(j, "->", "ERR" if is_error else "ok", rec.get("total_cost_usd"))
+    if failures:
+        print(f"{failures}/{len(jobs)} job(s) recorded an error -- see the persisted "
+              f"error rows in {RUNS_DIR}", file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == "__main__":

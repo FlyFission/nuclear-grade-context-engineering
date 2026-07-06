@@ -213,11 +213,16 @@ def main():
                 line[condition] = None
                 continue
             yes = sum(1 for r in sub if r["meets_criteria"] == "YES")
+            partial = sum(1 for r in sub if r["meets_criteria"] == "PARTIAL")
             n = len(sub)
             costs = [r["cost_usd"] for r in sub if r["cost_usd"] is not None]
             out_tok = [r["output_tokens"] for r in sub if r["output_tokens"] is not None]
             line[condition] = {
-                "catch": f"{yes}/{n}",
+                # Matches generate_report.py's own inline "(+Np)" format, so a
+                # freshly regenerated summary_all.json carries the same
+                # partial-credit signal as the curated summary_all_FINAL.json
+                # it can stand in for.
+                "catch": f"{yes}/{n}" + (f" (+{partial}p)" if partial else ""),
                 "catch_rate": yes / n if n else None,
                 "mean_cost": stats.mean(costs) if costs else None,
                 "mean_output_tokens": stats.mean(out_tok) if out_tok else None,

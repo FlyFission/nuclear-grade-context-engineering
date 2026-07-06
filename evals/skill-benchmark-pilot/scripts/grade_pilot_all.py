@@ -54,13 +54,36 @@ def grade_review(skill: str, review_text: str) -> dict:
         return {"meets_criteria": "ERROR", "quote": str(e)[:200]}
 
 
-def grade_one(path: Path) -> dict:
+def load_grade_cache(out_path: Path):
+    """Prior valid grades, keyed by (skill, condition, trial), plus the cache
+    file's own mtime -- used so a partial rerun (one regenerated run file)
+    doesn't send every other, unchanged transcript back through the live
+    grader. A run file newer than this mtime was regenerated since the last
+    grading pass and must be re-graded; anything older can reuse its cached
+    grade."""
+    if not out_path.exists():
+        return {}, None
+    try:
+        prior_rows = json.loads(out_path.read_text())
+    except (json.JSONDecodeError, OSError):
+        return {}, None
+    cache = {(r["skill"], r["condition"], r["trial"]): r
+             for r in prior_rows if r.get("error") is False}
+    return cache, out_path.stat().st_mtime
+
+
+def grade_one(path: Path, cache: dict, cache_mtime) -> dict:
     d = json.loads(path.read_text())
     skill = d.get("_skill")
     condition = d.get("_condition")
     trial = d.get("_trial")
     if d.get("type") == "error" or d.get("is_error"):
         return {"skill": skill, "condition": condition, "trial": trial, "error": True}
+
+    if cache_mtime is not None and path.stat().st_mtime <= cache_mtime:
+        cached = cache.get((skill, condition, trial))
+        if cached is not None:
+            return cached
 
     result_text = d.get("result", "")
     usage = d.get("usage", {})
@@ -85,9 +108,10 @@ def grade_one(path: Path) -> dict:
 
 def main():
     paths = sorted(RUNS_DIR.glob("*.json"))
+    cache, cache_mtime = load_grade_cache(DATA_DIR / "graded_results_all.json")
     rows = []
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as ex:
-        futures = {ex.submit(grade_one, p): p for p in paths}
+        futures = {ex.submit(grade_one, p, cache, cache_mtime): p for p in paths}
         for i, fut in enumerate(as_completed(futures), 1):
             row = fut.result()
             rows.append(row)

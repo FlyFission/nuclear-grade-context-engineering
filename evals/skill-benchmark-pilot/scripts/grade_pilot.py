@@ -61,7 +61,26 @@ def grade_review(task: str, review_text: str) -> dict:
         return {"meets_criteria": "ERROR", "quote": str(e)[:300]}
 
 
+def load_grade_cache(out_path: Path):
+    """Prior valid grades, keyed by (task, condition, trial), plus the cache
+    file's own mtime -- used so a partial rerun (one regenerated run file)
+    doesn't send every other, unchanged transcript back through the live
+    grader. A run file newer than this mtime was regenerated since the last
+    grading pass and must be re-graded; anything older can reuse its cached
+    grade."""
+    if not out_path.exists():
+        return {}, None
+    try:
+        prior_rows = json.loads(out_path.read_text())
+    except (json.JSONDecodeError, OSError):
+        return {}, None
+    cache = {(r["task"], r["condition"], r["trial"]): r
+             for r in prior_rows if r.get("error") is False}
+    return cache, out_path.stat().st_mtime
+
+
 def main():
+    cache, cache_mtime = load_grade_cache(DATA_DIR / "graded_results.json")
     rows = []
     for path in sorted(RUNS_DIR.glob("*.json")):
         d = json.loads(path.read_text())
@@ -71,6 +90,12 @@ def main():
         if d.get("type") == "error" or d.get("is_error"):
             rows.append({"task": task, "condition": condition, "trial": trial, "error": True})
             continue
+
+        if cache_mtime is not None and path.stat().st_mtime <= cache_mtime:
+            cached = cache.get((task, condition, trial))
+            if cached is not None:
+                rows.append(cached)
+                continue
 
         result_text = d.get("result", "")
         usage = d.get("usage", {})

@@ -5,10 +5,11 @@ import subprocess
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
-BASE = Path(__file__).parent
+BASE = Path(__file__).resolve().parent
+REPO_ROOT = BASE.parents[3]
 RUNS_DIR = BASE / "runs"
 WORK_DIR = BASE / "work"
-SKILLS_ROOT = Path("/home/user/nuclear-grade-context-engineering/skills")
+SKILLS_ROOT = REPO_ROOT / "skills"
 TASKS = json.loads((BASE / "task.json").read_text())
 TRIALS = 5
 MODEL = "claude-sonnet-5"

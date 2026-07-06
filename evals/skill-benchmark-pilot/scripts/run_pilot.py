@@ -49,6 +49,9 @@ def run_one(task: str, condition: str, trial: int) -> dict:
         cmd += ["--append-system-prompt", SKILL_BODY]
 
     out_path = RUNS_DIR / f"{task}__{condition}__trial{trial}.json"
+    if out_path.exists():
+        return json.loads(out_path.read_text())
+
     print(f"Running {task} / {condition} / trial {trial} ...", file=sys.stderr)
     try:
         proc = subprocess.run(

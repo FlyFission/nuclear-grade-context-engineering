@@ -290,8 +290,14 @@ rcq_cost = sum(json.loads(f.read_text()).get("total_cost_usd") or 0 for f in rcq
 a("## 6. Cost")
 a("")
 a(f"- `reviewing-code-quality` pilot (18 review runs): **${rcq_cost:.2f}** (unrounded: ${rcq_cost:.4f})")
-a(f"- 27-skill pilot (162 review runs, including all reruns from the bug fix): **${all_cost:.2f}** (unrounded: ${all_cost:.4f})")
-a(f"- **Total review-run spend, computed from unrounded values: ${rcq_cost + all_cost:.2f}** "
+a(f"- 27-skill pilot (162 retained final runs): **${all_cost:.2f}** (unrounded: ${all_cost:.4f}) — "
+  f"this is the cost of the one valid run kept per trial, not total spend including reruns: "
+  f"the 23 of 162 runs corrupted by the `--tools \"\"` harness bug (see section 3) were rerun "
+  f"and their files overwritten, so the cost of those discarded initial calls is not recoverable "
+  f"from this data and is not included here. Actual total spend on this pilot's execution was "
+  f"somewhat higher than this figure.")
+a(f"- **Total review-run spend across retained runs, computed from unrounded values: "
+  f"${rcq_cost + all_cost:.2f}** "
   f"(sum of the two rounded figures above is ${round(rcq_cost, 2) + round(all_cost, 2):.2f} — "
   f"rounding each component independently before adding does not always match rounding the "
   f"true total, which is what's reported here). Plus a few dollars of Haiku grading calls "

@@ -86,10 +86,17 @@ def run_one(variant, briefing_desc, trial):
     cmd = ["claude", "-p", prompt, "--output-format", "json", "--model", "claude-sonnet-5",
            "--safe-mode", "--tools", "", "--no-session-persistence", "--max-budget-usd", "0.30",
            "--json-schema", SCHEMA]
-    proc = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
-    record = json.loads(proc.stdout.strip())
-    verdict = json.loads(record["result"])
-    result = {"variant": variant, "trial": trial, "chosen_skill": verdict["chosen_skill"], "reasoning": verdict["reasoning"]}
+    try:
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+        record = json.loads(proc.stdout.strip())
+        verdict = json.loads(record["result"])
+        result = {"variant": variant, "trial": trial, "chosen_skill": verdict["chosen_skill"],
+                  "reasoning": verdict["reasoning"]}
+    except subprocess.TimeoutExpired:
+        result = {"variant": variant, "trial": trial, "type": "error", "error": "timeout"}
+    except (json.JSONDecodeError, KeyError) as e:
+        result = {"variant": variant, "trial": trial, "type": "error",
+                  "error": f"non-json or malformed output: {e}"}
     out_path.write_text(json.dumps(result, indent=2))
     return result
 
@@ -106,7 +113,7 @@ def main():
             results.append(fut.result())
     (BASE / "routing_results.json").write_text(json.dumps(results, indent=2))
     for variant in ["old_description", "new_description"]:
-        sub = [r for r in results if r["variant"] == variant]
+        sub = [r for r in results if r["variant"] == variant and not r.get("type") == "error"]
         correct = sum(1 for r in sub if "handing-off-work" in r["chosen_skill"].lower())
         print(f"{variant}: chose handing-off-work {correct}/{len(sub)} times")
         for r in sorted(sub, key=lambda r: r["trial"]):

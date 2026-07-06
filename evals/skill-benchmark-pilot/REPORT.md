@@ -710,8 +710,8 @@ We're considering switching our content-moderation pipeline to a new third-party
 ## 6. Cost
 
 - `reviewing-code-quality` pilot (18 review runs): **$0.80** (unrounded: $0.7973)
-- 27-skill pilot (162 review runs, including all reruns from the bug fix): **$7.07** (unrounded: $7.0673)
-- **Total review-run spend, computed from unrounded values: $7.86** (sum of the two rounded figures above is $7.87 — rounding each component independently before adding does not always match rounding the true total, which is what's reported here). Plus a few dollars of Haiku grading calls (not itemized here; grading calls are ~10-20x cheaper than Sonnet review calls per call).
+- 27-skill pilot (162 retained final runs): **$7.07** (unrounded: $7.0673) — this is the cost of the one valid run kept per trial, not total spend including reruns: the 23 of 162 runs corrupted by the `--tools ""` harness bug (see section 3) were rerun and their files overwritten, so the cost of those discarded initial calls is not recoverable from this data and is not included here. Actual total spend on this pilot's execution was somewhat higher than this figure.
+- **Total review-run spend across retained runs, computed from unrounded values: $7.86** (sum of the two rounded figures above is $7.87 — rounding each component independently before adding does not always match rounding the true total, which is what's reported here). Plus a few dollars of Haiku grading calls (not itemized here; grading calls are ~10-20x cheaper than Sonnet review calls per call).
 
 ## 7. Limitations — read before treating any single result as settled
 

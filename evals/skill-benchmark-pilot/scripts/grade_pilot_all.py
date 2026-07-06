@@ -102,14 +102,19 @@ def grade_one(path: Path, cache: dict) -> dict:
     if d.get("type") == "error" or d.get("is_error"):
         return {"skill": skill, "condition": condition, "trial": trial, "error": True}
 
-    source_hash = hashlib.sha256(raw).hexdigest()
+    result_text = d.get("result", "")
+    # Hash only the substantive transcript text, not the whole file's raw
+    # bytes -- hashing the full file means any unrelated metadata field added
+    # to the run record later (e.g. the harness-settings fingerprint added in
+    # round 33) invalidates every cached grade even though the graded content
+    # never changed.
+    source_hash = hashlib.sha256(result_text.encode()).hexdigest()
     spec_hash = grading_spec_hash(skill)
     cached = cache.get((skill, condition, trial))
     if (cached is not None and cached.get("_source_sha256") == source_hash
             and cached.get("_criteria_sha256") == spec_hash):
         return cached
 
-    result_text = d.get("result", "")
     usage = d.get("usage", {})
     grade = grade_review(skill, result_text)
     if grade.get("meets_criteria") == "ERROR":

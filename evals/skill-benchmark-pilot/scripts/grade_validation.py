@@ -57,7 +57,13 @@ def grade_one(path, cache: dict):
     if d.get("type") == "error" or d.get("is_error"):
         return {"condition": d["_condition"], "trial": d["_trial"], "error": True}
 
-    source_hash = hashlib.sha256(raw).hexdigest()
+    text = d.get("result", "")
+    # Hash only the substantive transcript text, not the whole file's raw
+    # bytes -- hashing the full file means any unrelated metadata field added
+    # to the run record later (e.g. the harness-settings fingerprint added in
+    # round 33) invalidates every cached grade even though the graded content
+    # never changed.
+    source_hash = hashlib.sha256(text.encode()).hexdigest()
     spec_hash = grading_spec_hash(task_key)
     cached = cache.get((d["_condition"], d["_trial"]))
     if (cached is not None and cached.get("_source_sha256") == source_hash
@@ -67,7 +73,7 @@ def grade_one(path, cache: dict):
     criteria = TASKS[task_key]["pass_criteria"]
     prompt = (f"You are grading a response against ONE specific pass criterion. Do not reward general "
               f"competence or tone -- check ONLY whether this exact criterion is explicitly satisfied.\n\n"
-              f"Pass criterion:\n{criteria}\n\nResponse to grade:\n---\n{d.get('result','')}\n---\n\n"
+              f"Pass criterion:\n{criteria}\n\nResponse to grade:\n---\n{text}\n---\n\n"
               f"Answer YES only if clearly and explicitly met, PARTIAL if hinted at but incomplete, NO if absent.")
     cmd = ["claude","-p",prompt,"--output-format","json","--model",GRADER_MODEL,
            "--safe-mode","--tools","","--no-session-persistence","--max-budget-usd","0.20","--json-schema",SCHEMA]

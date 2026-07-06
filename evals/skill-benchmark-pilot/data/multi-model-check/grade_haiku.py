@@ -94,7 +94,13 @@ def grade_one(path, cache: dict):
     if d.get("type") == "error" or d.get("is_error"):
         return {"skill": skill, "condition": d["_condition"], "trial": d["_trial"], "error": True}
 
-    source_hash = hashlib.sha256(raw).hexdigest()
+    text = d.get("result", "")
+    # Hash only the substantive transcript text, not the whole file's raw
+    # bytes -- hashing the full file means any unrelated metadata field added
+    # to the run record later (e.g. the harness-settings fingerprint added in
+    # round 33) invalidates every cached grade even though the graded content
+    # never changed.
+    source_hash = hashlib.sha256(text.encode()).hexdigest()
     spec_hash = grading_spec_hash(skill)
     cached = cache.get((skill, d["_condition"], d["_trial"]))
     if (cached is not None and cached.get("_source_sha256") == source_hash
@@ -102,7 +108,6 @@ def grade_one(path, cache: dict):
         return cached
 
     criteria = criteria_for(skill)
-    text = d.get("result", "")
     prompt = (
         "You are grading a response against ONE specific pass criterion. "
         "Do not reward general competence or tone -- check ONLY whether "

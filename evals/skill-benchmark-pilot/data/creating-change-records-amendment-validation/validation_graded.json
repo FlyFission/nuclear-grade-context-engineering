@@ -4,7 +4,7 @@
     "trial": 1,
     "meets_criteria": "NO",
     "quote": "N/A - none of risk.md, basis.md, plan.md, trace.md, verification.md, ship.md are named in the response",
-    "_source_sha256": "a5c9b2691032c81a9927321c41c17f7b5d81b11f2c1af0aac0cd4af45e9f5ff0",
+    "_source_sha256": "cff8569000e925b2475b02abb36cb1b7cb3967e877044caa60a5b888f46141ca",
     "_criteria_sha256": "3f406cf52fd11ce951e035fd2172b62196b3e342e665213fd40f22e3609874fb"
   },
   {
@@ -12,7 +12,7 @@
     "trial": 3,
     "meets_criteria": "NO",
     "quote": "No exact filenames from the list (risk.md, basis.md, plan.md, trace.md, verification.md, ship.md) appear in the response.",
-    "_source_sha256": "13f4b4ed2e3580bab8b311b47467728a2f996851b1e28424ca0a89161b599938",
+    "_source_sha256": "953a11b60f65e38be31a30ffedd7b7c17c4d1a1321fb70e6d51f0aa46e326855",
     "_criteria_sha256": "3f406cf52fd11ce951e035fd2172b62196b3e342e665213fd40f22e3609874fb"
   },
   {
@@ -20,7 +20,7 @@
     "trial": 1,
     "meets_criteria": "YES",
     "quote": "this looks like Standard-mode territory (`risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, `ship.md`), not a short PR blurb.",
-    "_source_sha256": "39928f2396dedb1eddb1f97503873a400ba7c75fec36d0023beae28a8938fd4f",
+    "_source_sha256": "2796b3c689d1d098a8547eb436a82c73323120f9b2f6ff1303396ff733022019",
     "_criteria_sha256": "3f406cf52fd11ce951e035fd2172b62196b3e342e665213fd40f22e3609874fb"
   },
   {
@@ -28,7 +28,7 @@
     "trial": 2,
     "meets_criteria": "YES",
     "quote": "`risk.md` \u2014 mode/rating and why (autonomous + prod + hard-to-reverse)\n- `basis.md` \u2014 what \"safe migration\" means here, what the linter does and doesn't check\n- `plan.md` \u2014 the gate design, kill switch / rollback path\n- `trace.md` \u2014 linter test cases mapped to actual risky migration patterns (not just its own unit tests)\n- `verification.md` \u2014 evidence beyond \"unit tests pass\"...\n- `ship.md` \u2014 rollout plan",
-    "_source_sha256": "0390c0cf06412b658d55a9fe66ee576c92cf17c979e9746ffb936f1c26fbdd5b",
+    "_source_sha256": "ca16af61e8f8eabae080e86847f26c239408a813b027f95d1888fdd53e15459a",
     "_criteria_sha256": "3f406cf52fd11ce951e035fd2172b62196b3e342e665213fd40f22e3609874fb"
   },
   {
@@ -36,7 +36,7 @@
     "trial": 3,
     "meets_criteria": "YES",
     "quote": "it needs `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, and `ship.md`",
-    "_source_sha256": "d61b2795536c11f306f0487dfc2b106708ec7c1006207bc2c307325163ec03dd",
+    "_source_sha256": "8a06c7246829547ff8e87810f13f6b459022f2a34ac6d6c1810c9dd2962e33f6",
     "_criteria_sha256": "3f406cf52fd11ce951e035fd2172b62196b3e342e665213fd40f22e3609874fb"
   },
   {
@@ -44,7 +44,7 @@
     "trial": 2,
     "meets_criteria": "PARTIAL",
     "quote": "A lightweight **Quick change record** (risk.md + proof.md, ~30 minutes) documents:",
-    "_source_sha256": "d723c5eae4351ca8bea786fd08e0cae05d5adad41a858d8702c68e759a99b6ff",
+    "_source_sha256": "f4dda83f6687818136cdf383292cd4541c474bd81d5755df1ea03c6850bdfaa6",
     "_criteria_sha256": "3f406cf52fd11ce951e035fd2172b62196b3e342e665213fd40f22e3609874fb"
   }
 ]

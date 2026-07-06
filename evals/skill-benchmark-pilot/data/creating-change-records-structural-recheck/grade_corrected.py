@@ -113,18 +113,30 @@ def check_complete():
     """Refuse to grade (and overwrite the checked-in graded-results file) on a
     partial batch -- e.g. a rerun interrupted after deleting one trial -- since
     downstream reports/statistics derive their denominators from whatever this
-    writes, with no way to tell a genuinely complete batch from a truncated one."""
+    writes, with no way to tell a genuinely complete batch from a truncated one.
+    Also refuse if the same creating-change-records__*.json glob this script's
+    own main() uses turns up files OUTSIDE the expected set (a stray extra
+    trial) -- GATE1_RUNS holds every skill's files, so "actual" is scoped to
+    the identical glob pattern main() grades, not the whole directory."""
     expected = {
         GATE1_RUNS / f"creating-change-records__{condition}__trial{trial}.json"
         for condition in ("with_skill", "without_skill")
         for trial in TRIALS
     }
+    actual = set(GATE1_RUNS.glob("creating-change-records__*.json"))
     missing = sorted(p.name for p in expected if not p.exists())
+    extra = sorted(p.name for p in actual - expected)
     if missing:
         print(f"ERROR: {len(missing)} expected run file(s) missing from {GATE1_RUNS} -- "
               f"refusing to grade a partial batch:", file=sys.stderr)
         for name in missing:
             print(f"  missing: {name}", file=sys.stderr)
+    if extra:
+        print(f"ERROR: {len(extra)} unexpected creating-change-records run file(s) in "
+              f"{GATE1_RUNS} -- refusing to grade with an extra trial present:", file=sys.stderr)
+        for name in extra:
+            print(f"  extra: {name}", file=sys.stderr)
+    if missing or extra:
         sys.exit(1)
 
 

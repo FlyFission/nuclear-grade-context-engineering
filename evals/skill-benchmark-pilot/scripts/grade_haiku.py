@@ -134,7 +134,12 @@ def check_complete():
     """Refuse to grade (and overwrite the checked-in graded-results file) on a
     partial batch -- e.g. a rerun interrupted after deleting one trial -- since
     downstream reports/statistics derive their denominators from whatever this
-    writes, with no way to tell a genuinely complete batch from a truncated one."""
+    writes, with no way to tell a genuinely complete batch from a truncated one.
+    Also refuse if the directory holds files OUTSIDE the expected set (a stale
+    experiment leftover, or a renamed/removed task's orphaned file) -- the
+    grading loop below globs the whole directory, so an unexpected extra would
+    otherwise silently ride along into haiku_graded.json with no signal
+    anything was wrong."""
     runs_dir = DATA_DIR / "runs"
     expected = {
         runs_dir / f"{skill}__{condition}__trial{trial}.json"
@@ -142,12 +147,20 @@ def check_complete():
         for condition in ("with_skill", "without_skill")
         for trial in TRIALS
     }
+    actual = set(runs_dir.glob("*.json"))
     missing = sorted(p.name for p in expected if not p.exists())
+    extra = sorted(p.name for p in actual - expected)
     if missing:
         print(f"ERROR: {len(missing)} expected run file(s) missing from {runs_dir} -- "
               f"refusing to grade a partial batch:", file=sys.stderr)
         for name in missing:
             print(f"  missing: {name}", file=sys.stderr)
+    if extra:
+        print(f"ERROR: {len(extra)} unexpected run file(s) in {runs_dir} -- "
+              f"refusing to grade with a stale/renamed task's file present:", file=sys.stderr)
+        for name in extra:
+            print(f"  extra: {name}", file=sys.stderr)
+    if missing or extra:
         sys.exit(1)
 
 

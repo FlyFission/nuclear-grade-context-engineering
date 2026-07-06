@@ -67,6 +67,11 @@ gate1_summary = json.loads(gate1_summary_path.read_text())
 # hard-coded) so the executive summary can never drift from the comparison
 # table below, which is built from this same data.
 round1_ties = sum(1 for r in round1_summary if round1_verdict(r["skill"]) == "TIE")
+# Scoped to the Gate 1 batch itself (not the full round-1 population above) --
+# a fresh round-1 regrade could change some other, untested skill from WINS to
+# TIE without adding a Gate 1 row for it, and the flip-headline denominator
+# must not inflate with a skill that has no hard-case retest at all.
+round1_ties_in_gate1 = sum(1 for row in gate1_summary if round1_verdict(row["skill"]) == "TIE")
 flips = sum(1 for row in gate1_summary
             if round1_verdict(row["skill"]) == "TIE" and gate1_verdict(row) == "WINS")
 remaining_ties = [row for row in gate1_summary
@@ -116,7 +121,7 @@ a(f"Round 1 tested each skill's own \"When to Use\" trigger — the obvious, tex
   f"Rationalizations\" / \"Escalation\" / \"Red Flags\" text — not the trigger condition. "
   f"5 trials per condition instead of 3.")
 a("")
-a(f"**Result: {flips} of the {round1_ties} round-1-tied skills flip from TIE to WINS on the harder case.** Only "
+a(f"**Result: {flips} of the {round1_ties_in_gate1} round-1-tied skills flip from TIE to WINS on the harder case.** Only "
   f"{remaining_ties_names} remain flat ties ({remaining_ties_detail} — the baseline "
   f"still nails even the harder version of {remaining_ties_ref}). {round1_loss_sentence} "
   f"**This is real support for the "

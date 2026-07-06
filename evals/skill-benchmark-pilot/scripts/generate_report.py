@@ -69,11 +69,16 @@ a = lines.append
 a("# Nuclear-Grade Skills: With-Skill vs. Without-Skill Benchmark Report")
 a("")
 a("Generated directly from the raw data in `evals/skill-benchmark-pilot/data/` by "
-  "`scripts/generate_report.py`. Every number in this report is computed from the JSON "
-  "files checked in alongside it — nothing here is hand-typed or summarized from memory. "
-  "An independent reviewer (human or another model) can re-derive every table by reading "
-  "the same files, or re-run the trials with `scripts/run_pilot_all.py` / "
-  "`scripts/run_pilot.py` against the scenarios in `all_skill_tasks.json`.")
+  "`scripts/generate_report.py`. Every number in the tables and headline statistics below "
+  "is computed live from the JSON files checked in alongside it — nothing there is "
+  "hand-typed or summarized from memory. Section 3's specific historical counts (e.g. "
+  "\"23 of 162\", the sweep-by-sweep tallies) and section 6's discarded-run cost figure "
+  "are a preserved narrative record of the original debugging session, not live-recomputed "
+  "here — the pre-fix run files they describe were overwritten by their corrected reruns "
+  "and no longer exist to re-derive from. An independent reviewer (human or another model) "
+  "can re-derive every table and headline number by reading the same files, or re-run the "
+  "trials with `scripts/run_pilot_all.py` / `scripts/run_pilot.py` against the scenarios in "
+  "`all_skill_tasks.json`.")
 a("")
 a("## Executive summary — read this before the tables")
 a("")

@@ -113,18 +113,25 @@ def grade_one(path: Path, cache: dict) -> dict:
     cached = cache.get((skill, condition, trial))
     if (cached is not None and cached.get("_source_sha256") == source_hash
             and cached.get("_criteria_sha256") == spec_hash):
-        return cached
+        meets_criteria = cached["meets_criteria"]
+        grader_quote = cached["grader_quote"]
+    else:
+        grade = grade_review(skill, result_text)
+        if grade.get("meets_criteria") == "ERROR":
+            return {"skill": skill, "condition": condition, "trial": trial, "error": True,
+                    "grader_error": True, "grader_quote": grade.get("quote")}
+        meets_criteria = grade.get("meets_criteria")
+        grader_quote = grade.get("quote")
 
+    # Run-metadata fields are always rebuilt from the CURRENT run file, cache
+    # hit or not -- a regenerated run with identical result text but corrected
+    # cost/token/duration data (e.g. a retried transient failure) must not
+    # silently keep serving the old run's now-stale metadata forever.
     usage = d.get("usage", {})
-    grade = grade_review(skill, result_text)
-    if grade.get("meets_criteria") == "ERROR":
-        return {"skill": skill, "condition": condition, "trial": trial, "error": True,
-                "grader_error": True, "grader_quote": grade.get("quote")}
-
     return {
         "skill": skill, "condition": condition, "trial": trial, "error": False,
-        "meets_criteria": grade.get("meets_criteria"),
-        "grader_quote": grade.get("quote"),
+        "meets_criteria": meets_criteria,
+        "grader_quote": grader_quote,
         "cost_usd": d.get("total_cost_usd"),
         "input_tokens": usage.get("input_tokens"),
         "output_tokens": usage.get("output_tokens"),

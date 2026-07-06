@@ -160,15 +160,22 @@ def main():
         cached = cache.get((task, condition, trial))
         if (cached is not None and cached.get("_source_sha256") == source_hash
                 and cached.get("_criteria_sha256") == spec_hash):
-            rows.append(cached)
-            continue
+            meets_criteria = cached["meets_criteria"]
+            grader_quote = cached["grader_quote"]
+        else:
+            grade = grade_review(task, result_text)
+            if grade.get("meets_criteria") == "ERROR":
+                rows.append({"task": task, "condition": condition, "trial": trial, "error": True,
+                             "grader_error": True, "grader_quote": grade.get("quote")})
+                continue
+            meets_criteria = grade.get("meets_criteria")
+            grader_quote = grade.get("quote")
 
+        # Run-metadata fields are always rebuilt from the CURRENT run file,
+        # cache hit or not -- a regenerated run with identical result text but
+        # corrected cost/token/duration data must not silently keep serving
+        # the old run's now-stale metadata forever.
         usage = d.get("usage", {})
-        grade = grade_review(task, result_text)
-        if grade.get("meets_criteria") == "ERROR":
-            rows.append({"task": task, "condition": condition, "trial": trial, "error": True,
-                         "grader_error": True, "grader_quote": grade.get("quote")})
-            continue
         verdict_format_present = bool(VERDICT_RE.search(result_text))
 
         rows.append({
@@ -176,8 +183,8 @@ def main():
             "condition": condition,
             "trial": trial,
             "error": False,
-            "meets_criteria": grade.get("meets_criteria"),
-            "grader_quote": grade.get("quote"),
+            "meets_criteria": meets_criteria,
+            "grader_quote": grader_quote,
             "verdict_format_present": verdict_format_present,
             "cost_usd": d.get("total_cost_usd"),
             "input_tokens": usage.get("input_tokens"),
@@ -189,7 +196,7 @@ def main():
             "_source_sha256": source_hash,
             "_criteria_sha256": spec_hash,
         })
-        print(f"{task:28s} {condition:15s} trial{trial}  meets_criteria={grade.get('meets_criteria')}  cost=${d.get('total_cost_usd'):.4f}")
+        print(f"{task:28s} {condition:15s} trial{trial}  meets_criteria={meets_criteria}  cost=${d.get('total_cost_usd'):.4f}")
 
     failures = sum(1 for r in rows if r.get("error"))
 

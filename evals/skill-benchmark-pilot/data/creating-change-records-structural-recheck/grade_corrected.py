@@ -8,6 +8,7 @@ literal filenames (unambiguous tokens) rather than common English words
 (the source of the false-positive bug in the earlier recheck attempt)."""
 import json
 import subprocess
+import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
@@ -79,6 +80,12 @@ def main():
         print(f"{cond}: {yes}/{len(sub)} YES (+{partial} partial)")
     for r in sorted((r for r in rows if not r.get("error")), key=lambda r: (r["condition"], r["trial"])):
         print(r["condition"], r["trial"], r["meets_criteria"], "|", r["quote"][:180])
+
+    failures = sum(1 for r in rows if r.get("error"))
+    if failures:
+        print(f"\n{failures}/{len(rows)} row(s) recorded a subject-run or grader error -- "
+              f"see the excluded rows in ccr_corrected_scope_graded.json", file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == "__main__":

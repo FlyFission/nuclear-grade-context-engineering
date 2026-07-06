@@ -262,7 +262,7 @@
       0.0,
       0.5615060804490177
     ],
-    "p_value_bh_adjusted": 0.48888888888888893,
+    "p_value_bh_adjusted": 0.39166666666666666,
     "significant_at_bh_0.05": false
   },
   {
@@ -357,7 +357,7 @@
       0.0,
       0.5615060804490177
     ],
-    "p_value_bh_adjusted": 0.48888888888888893,
+    "p_value_bh_adjusted": 0.39166666666666666,
     "significant_at_bh_0.05": false
   },
   {
@@ -395,7 +395,7 @@
       0.0,
       0.5615060804490177
     ],
-    "p_value_bh_adjusted": 0.48888888888888893,
+    "p_value_bh_adjusted": 0.39166666666666666,
     "significant_at_bh_0.05": false
   },
   {
@@ -471,7 +471,7 @@
       0.0,
       0.5615060804490177
     ],
-    "p_value_bh_adjusted": 0.48888888888888893,
+    "p_value_bh_adjusted": 0.39166666666666666,
     "significant_at_bh_0.05": false
   },
   {
@@ -585,7 +585,7 @@
       0.03622316096978745,
       0.6244717358814613
     ],
-    "p_value_bh_adjusted": 0.48888888888888893,
+    "p_value_bh_adjusted": 0.3197278911564626,
     "significant_at_bh_0.05": false
   },
   {
@@ -623,7 +623,7 @@
       0.1176182311592533,
       0.769280067791163
     ],
-    "p_value_bh_adjusted": 0.6666666666666666,
+    "p_value_bh_adjusted": 0.5595238095238095,
     "significant_at_bh_0.05": false
   },
   {
@@ -642,7 +642,7 @@
       0.0,
       0.43449149475208104
     ],
-    "p_value_bh_adjusted": 0.3492063492063492,
+    "p_value_bh_adjusted": 0.12433862433862435,
     "significant_at_bh_0.05": false
   },
   {
@@ -699,7 +699,7 @@
       0.0,
       0.43449149475208104
     ],
-    "p_value_bh_adjusted": 0.48888888888888893,
+    "p_value_bh_adjusted": 0.3197278911564626,
     "significant_at_bh_0.05": false
   },
   {
@@ -718,7 +718,7 @@
       0.0,
       0.43449149475208104
     ],
-    "p_value_bh_adjusted": 0.48888888888888893,
+    "p_value_bh_adjusted": 0.3197278911564626,
     "significant_at_bh_0.05": false
   },
   {
@@ -756,7 +756,7 @@
       0.0,
       0.43449149475208104
     ],
-    "p_value_bh_adjusted": 0.6666666666666666,
+    "p_value_bh_adjusted": 0.5595238095238095,
     "significant_at_bh_0.05": false
   },
   {
@@ -832,7 +832,64 @@
       0.0,
       0.5615060804490177
     ],
-    "p_value_bh_adjusted": 0.48888888888888893,
+    "p_value_bh_adjusted": 0.39166666666666666,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "briefing-an-agent::true-niche-regression-check",
+    "round": "closeout",
+    "with_yes": 5,
+    "with_n": 5,
+    "without_yes": 0,
+    "without_n": 5,
+    "p_value": 0.007936507936507936,
+    "with_ci": [
+      0.5655085052479191,
+      1.0
+    ],
+    "without_ci": [
+      0.0,
+      0.43449149475208104
+    ],
+    "p_value_bh_adjusted": 0.12433862433862435,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "proving-claims::structural-recheck",
+    "round": "closeout",
+    "with_yes": 5,
+    "with_n": 5,
+    "without_yes": 0,
+    "without_n": 5,
+    "p_value": 0.007936507936507936,
+    "with_ci": [
+      0.5655085052479191,
+      1.0
+    ],
+    "without_ci": [
+      0.0,
+      0.43449149475208104
+    ],
+    "p_value_bh_adjusted": 0.12433862433862435,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "creating-change-records::corrected-scope-recheck",
+    "round": "closeout",
+    "with_yes": 4,
+    "with_n": 5,
+    "without_yes": 0,
+    "without_n": 5,
+    "p_value": 0.047619047619047616,
+    "with_ci": [
+      0.3755282641185388,
+      0.9637768390302125
+    ],
+    "without_ci": [
+      0.0,
+      0.43449149475208104
+    ],
+    "p_value_bh_adjusted": 0.3197278911564626,
     "significant_at_bh_0.05": false
   }
 ]

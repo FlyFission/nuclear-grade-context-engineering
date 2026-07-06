@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """Compute Fisher's exact test p-values (two-sided) and Wilson score confidence
 intervals for every skill's with-vs-without comparison, across round 1, Gate 1,
-and the reviewing-code-quality pilot -- then apply a Benjamini-Hochberg FDR
-correction across all tests together, since running ~45 independent
-significance tests at alpha=0.05 with no correction would produce roughly
-1-2 spurious "significant" hits by chance alone even under a true null
-everywhere (flagged by adversarial review before this was computed).
+the reviewing-code-quality pilot, and the closeout rechecks that decided a
+final WINS status for briefing-an-agent, proving-claims, and
+creating-change-records -- then apply a Benjamini-Hochberg FDR correction
+across all tests together, since running ~47 independent significance tests
+at alpha=0.05 with no correction would produce roughly 2 spurious
+"significant" hits by chance alone even under a true null everywhere
+(flagged by adversarial review before this was computed).
 
 No scipy in this environment -- Fisher's exact test implemented directly via
 the hypergeometric distribution using math.comb (pure stdlib, exact, not an
@@ -103,6 +105,28 @@ for task in task_names:
         yes = sum(1 for r in sub if r["meets_criteria"] == "YES")
         stat[cond] = (yes, len(sub))
     tests.append({"skill": f"reviewing-code-quality::{task}", "round": "rcq",
+                  "with_yes": stat["with_skill"][0], "with_n": stat["with_skill"][1],
+                  "without_yes": stat["without_skill"][0], "without_n": stat["without_skill"][1]})
+
+# Closeout checks that decided a final WINS status for 3 skills but were never
+# run through this correction family until Codex flagged the omission.
+# briefing-an-agent's is a fresh scenario (true-niche regression check);
+# proving-claims's and creating-change-records's are re-gradings of the SAME
+# Gate 1 transcripts already counted above, scored against a corrected
+# criterion -- not independent new samples, disclosed here rather than hidden.
+CLOSEOUT = [
+    ("briefing-an-agent::true-niche-regression-check", DATA / "briefing-an-agent-amendment-validation" / "graded.json"),
+    ("proving-claims::structural-recheck", DATA / "proving-claims-structural-recheck" / "structure_graded.json"),
+    ("creating-change-records::corrected-scope-recheck", DATA / "creating-change-records-structural-recheck" / "ccr_corrected_scope_graded.json"),
+]
+for skill_label, path in CLOSEOUT:
+    closeout_rows = json.loads(path.read_text())
+    stat = {}
+    for cond in ["with_skill", "without_skill"]:
+        sub = [r for r in closeout_rows if r["condition"] == cond and not r.get("error")]
+        yes = sum(1 for r in sub if r["meets_criteria"] == "YES")
+        stat[cond] = (yes, len(sub))
+    tests.append({"skill": skill_label, "round": "closeout",
                   "with_yes": stat["with_skill"][0], "with_n": stat["with_skill"][1],
                   "without_yes": stat["without_skill"][0], "without_n": stat["without_skill"][1]})
 

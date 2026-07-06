@@ -39,13 +39,16 @@ diagnosed or amended: `briefing-an-agent`, `proving-claims`,
 
 ## 1. Statistical significance — done, with a result stronger than expected
 
-See `STATISTICAL_ANALYSIS.md` in full. Headline: **0 of 44 tests survive
-Benjamini-Hochberg correction at α=0.05**, including the single strongest
-raw result in the project (`handing-off-work`, raw p=0.0079, BH-adjusted
-p=0.349). The critique predicted this before the number existed and warned
-specifically against letting a p-value column look more rigorous than the
-evidence supports — the table in that document states the non-significance
-in the table itself, not just in surrounding prose, per that warning.
+See `STATISTICAL_ANALYSIS.md` in full. Headline: **0 of 47 tests survive
+Benjamini-Hochberg correction at α=0.05** (updated from an original 44 after
+a later Codex review caught 3 closeout rechecks missing from the family),
+including the single strongest raw results in the project (`handing-off-work`,
+`briefing-an-agent`'s and `proving-claims`'s closeout rechecks, each raw
+p=0.0079, BH-adjusted p=0.124). The critique predicted this before the number
+existed and warned specifically against letting a p-value column look more
+rigorous than the evidence supports — the table in that document states the
+non-significance in the table itself, not just in surrounding prose, per that
+warning.
 
 ## 2. Pre-calibration — resolved for free, exactly as the critique predicted
 

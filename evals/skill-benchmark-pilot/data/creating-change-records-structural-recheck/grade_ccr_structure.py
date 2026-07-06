@@ -36,6 +36,8 @@ SCHEMA = json.dumps({
 
 def grade_one(path):
     d = json.loads(path.read_text())
+    if d.get("type") == "error" or d.get("is_error"):
+        return {"error": True}
     text = d.get("result", "")
     prompt = (
         "You are grading a response against ONE specific vocabulary/structure criterion. "
@@ -47,9 +49,12 @@ def grade_one(path):
     cmd = ["claude", "-p", prompt, "--output-format", "json", "--model", "claude-haiku-4-5",
            "--safe-mode", "--tools", "", "--no-session-persistence", "--max-budget-usd", "0.20",
            "--json-schema", SCHEMA]
-    proc = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
-    record = json.loads(proc.stdout.strip())
-    verdict = json.loads(record["result"])
+    try:
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+        record = json.loads(proc.stdout.strip())
+        verdict = json.loads(record["result"])
+    except Exception as e:
+        return {"error": True, "grader_error": True, "grader_quote": str(e)[:200]}
     return {"round": d.get("_round", "?"), "condition": d["_condition"], "trial": d["_trial"],
             "meets_criteria": verdict["meets_criteria"], "quote": verdict["quote"]}
 
@@ -68,13 +73,16 @@ def main():
         for fut in as_completed(futs):
             p, rnd, cond, trial = futs[fut]
             v = fut.result()
+            if v.get("error"):
+                rows.append({"round": rnd, "condition": cond, "trial": trial, "error": True})
+                continue
             rows.append({"round": rnd, "condition": cond, "trial": trial,
                          "meets_criteria": v["meets_criteria"], "quote": v["quote"]})
 
     (OUT / "ccr_structure_graded.json").write_text(json.dumps(rows, indent=2))
     for rnd in ["round1", "gate1"]:
         for cond in ["with_skill", "without_skill"]:
-            sub = [r for r in rows if r["round"] == rnd and r["condition"] == cond]
+            sub = [r for r in rows if r["round"] == rnd and r["condition"] == cond and not r.get("error")]
             yes = sum(1 for r in sub if r["meets_criteria"] == "YES")
             partial = sum(1 for r in sub if r["meets_criteria"] == "PARTIAL")
             print(f"{rnd} {cond}: {yes}/{len(sub)} YES (+{partial} partial)")

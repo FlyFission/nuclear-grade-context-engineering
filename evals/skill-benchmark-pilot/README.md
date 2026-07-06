@@ -40,7 +40,7 @@ response checked into git.
 plain prompt on `claude-sonnet-5`, at some point across the two test rounds
 and the closeout checks below. **Read this as directional pilot evidence, not
 statistical proof** — see [`STATISTICAL_ANALYSIS.md`](STATISTICAL_ANALYSIS.md):
-zero of the 44 significance tests run across this project survive correction
+zero of the 47 significance tests run across this project survive correction
 for multiple comparisons. A small honest multi-model check
 ([`MULTI_MODEL_CHECK.md`](MULTI_MODEL_CHECK.md)) found 3 of 4 sampled results
 replicate on a different model and 1 does not — treat every "WINS" as

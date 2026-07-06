@@ -59,7 +59,7 @@ def run_one(task: str, condition: str, trial: int) -> dict:
             cwd=str(cwd), timeout=180,
         )
     except subprocess.TimeoutExpired:
-        record = {"type": "error", "error": "timeout", "task": task, "condition": condition, "trial": trial}
+        record = {"type": "error", "error": "timeout", "_task": task, "_condition": condition, "_trial": trial}
         out_path.write_text(json.dumps(record, indent=2))
         return record
 

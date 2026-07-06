@@ -165,7 +165,7 @@ task_names = {"task1_thin_wrapper": "Thin pass-through wrapper",
 for task_id, label in task_names.items():
     row = {}
     for cond in ["with_skill", "without_skill"]:
-        sub = [r for r in rcq_graded if r["task"] == task_id and r["condition"] == cond]
+        sub = [r for r in rcq_graded if r["task"] == task_id and r["condition"] == cond and not r.get("error")]
         yes = sum(1 for r in sub if r["meets_criteria"] == "YES")
         row[cond] = f"{yes}/{len(sub)}"
     a(f"| {label} | {rcq_answer_keys[task_id]['planted_defect']} | {row['with_skill']} | {row['without_skill']} |")
@@ -188,7 +188,7 @@ for task_id, label in task_names.items():
     a("")
     a("| Condition | Trial | Verdict | Grader quote |")
     a("|---|---|---|---|")
-    for r in [r for r in rcq_graded if r["task"] == task_id]:
+    for r in [r for r in rcq_graded if r["task"] == task_id and not r.get("error")]:
         quote = (r.get("grader_quote") or "").replace("\n", " ").replace("|", "/")[:200]
         a(f"| {r['condition']} | {r['trial']} | {r['meets_criteria']} | {quote} |")
     a("")

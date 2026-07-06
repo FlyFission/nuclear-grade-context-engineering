@@ -133,6 +133,10 @@ def main():
         futs = {ex.submit(grade_one, p, cache): p for p in paths}
         for fut in as_completed(futs):
             rows.append(fut.result())
+    # Sort before writing -- ThreadPoolExecutor's as_completed() order is
+    # scheduler-dependent, so a no-op cached rerun would otherwise still
+    # reorder the checked-in evidence file with no real change.
+    rows.sort(key=lambda r: (r["condition"], r["trial"]))
     (DATA_DIR/"graded.json").write_text(json.dumps(rows, indent=2))
     for cond in ["with_skill","without_skill"]:
         sub = [r for r in rows if r["condition"]==cond and not r.get("error")]

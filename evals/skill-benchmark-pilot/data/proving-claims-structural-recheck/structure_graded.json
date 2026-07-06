@@ -1,26 +1,10 @@
 [
   {
     "condition": "with_skill",
-    "trial": 3,
-    "meets_criteria": "YES",
-    "quote": "| Claim | Support type | Verification type | Status |\n|---|---|---|---|\n| \"All 42 tests pass\" | source claim (agent's own report) | self-check | `gap` \u2014 not reproduced by anyone else |",
-    "_source_sha256": "bde01fad6ad82336dcb0b3adf7a8fa1fb72e1077feb03e2cdb52e2ecffef3dec",
-    "_criteria_sha256": "a5e2ebe103b75b60b5d77e92fd5d3341c24b0361170d6cb5806471c250815921"
-  },
-  {
-    "condition": "with_skill",
     "trial": 1,
     "meets_criteria": "YES",
     "quote": "| Claim | Support type | Status |\n|---|---|---|\n| \"All 42 tests pass\" | Source claim (agent's report of its own run) | **gap** \u2014 unverified by anyone but the actor |\n| \"Correctly blocks abuse patterns under load\" | Source claim, no artifact (no load-test logs, no numbers) | **gap** |\n| \"Production-ready and safe to merge\" | Overreaching claim \u2014 no security/DoS/edge-case review, no independent check | **fail** (claim exceeds its evidence) |",
     "_source_sha256": "54cb5abc95fdf77c71761fc92e7308c63273eb395d7e0beb922377b4928b8eca",
-    "_criteria_sha256": "a5e2ebe103b75b60b5d77e92fd5d3341c24b0361170d6cb5806471c250815921"
-  },
-  {
-    "condition": "with_skill",
-    "trial": 5,
-    "meets_criteria": "YES",
-    "quote": "| Claim | Support type | Status | Why |\n|---|---|---|---|\n| \"All 42 tests pass\" | source claim (agent's narration) | **gap** | No independent rerun; test output/logs not attached for anyone else to inspect |",
-    "_source_sha256": "4466a4ec612b0ef42dd7a994021ecf19f5bb54593aee8dc2bc1cf90af61dd04f",
     "_criteria_sha256": "a5e2ebe103b75b60b5d77e92fd5d3341c24b0361170d6cb5806471c250815921"
   },
   {
@@ -32,11 +16,11 @@
     "_criteria_sha256": "a5e2ebe103b75b60b5d77e92fd5d3341c24b0361170d6cb5806471c250815921"
   },
   {
-    "condition": "without_skill",
-    "trial": 2,
-    "meets_criteria": "NO",
-    "quote": "A few reasons this matters here specifically:\n\n- **Same-agent bias**: the agent that wrote the code also decided what \"passing\" means...\n- **\"42 tests pass\" isn't verifiable from the write-up alone**...\n- **\"Blocks abuse patterns under load\" and \"production-ready\" are strong claims**...",
-    "_source_sha256": "b3ef5c592f47f622fb5ee3b97e626faa60de50179e4a1425de994f5726e1087c",
+    "condition": "with_skill",
+    "trial": 3,
+    "meets_criteria": "YES",
+    "quote": "| Claim | Support type | Verification type | Status |\n|---|---|---|---|\n| \"All 42 tests pass\" | source claim (agent's own report) | self-check | `gap` \u2014 not reproduced by anyone else |",
+    "_source_sha256": "bde01fad6ad82336dcb0b3adf7a8fa1fb72e1077feb03e2cdb52e2ecffef3dec",
     "_criteria_sha256": "a5e2ebe103b75b60b5d77e92fd5d3341c24b0361170d6cb5806471c250815921"
   },
   {
@@ -48,11 +32,11 @@
     "_criteria_sha256": "a5e2ebe103b75b60b5d77e92fd5d3341c24b0361170d6cb5806471c250815921"
   },
   {
-    "condition": "without_skill",
-    "trial": 3,
-    "meets_criteria": "NO",
-    "quote": "What I'd do before merging:\n- Actually re-run the test suite yourself (or have me do it) and read the output directly, don't take the count on faith.\n- Read the diff, especially the concurrency/state-handling logic...",
-    "_source_sha256": "6fb11e13597f362be3fd12231e430a3addc3875cf16a7ba292eeb04ef1da8902",
+    "condition": "with_skill",
+    "trial": 5,
+    "meets_criteria": "YES",
+    "quote": "| Claim | Support type | Status | Why |\n|---|---|---|---|\n| \"All 42 tests pass\" | source claim (agent's narration) | **gap** | No independent rerun; test output/logs not attached for anyone else to inspect |",
+    "_source_sha256": "4466a4ec612b0ef42dd7a994021ecf19f5bb54593aee8dc2bc1cf90af61dd04f",
     "_criteria_sha256": "a5e2ebe103b75b60b5d77e92fd5d3341c24b0361170d6cb5806471c250815921"
   },
   {
@@ -61,6 +45,22 @@
     "meets_criteria": "PARTIAL",
     "quote": "What I'd recommend before merging: ... Re-run the test suite independently (not just trust the reported \"42/42\") and inspect what the tests assert.",
     "_source_sha256": "5c53e48de89c58f95f694d1fc6232c2d242971f474d0850e26aeadc1f2fb65a7",
+    "_criteria_sha256": "a5e2ebe103b75b60b5d77e92fd5d3341c24b0361170d6cb5806471c250815921"
+  },
+  {
+    "condition": "without_skill",
+    "trial": 2,
+    "meets_criteria": "NO",
+    "quote": "A few reasons this matters here specifically:\n\n- **Same-agent bias**: the agent that wrote the code also decided what \"passing\" means...\n- **\"42 tests pass\" isn't verifiable from the write-up alone**...\n- **\"Blocks abuse patterns under load\" and \"production-ready\" are strong claims**...",
+    "_source_sha256": "b3ef5c592f47f622fb5ee3b97e626faa60de50179e4a1425de994f5726e1087c",
+    "_criteria_sha256": "a5e2ebe103b75b60b5d77e92fd5d3341c24b0361170d6cb5806471c250815921"
+  },
+  {
+    "condition": "without_skill",
+    "trial": 3,
+    "meets_criteria": "NO",
+    "quote": "What I'd do before merging:\n- Actually re-run the test suite yourself (or have me do it) and read the output directly, don't take the count on faith.\n- Read the diff, especially the concurrency/state-handling logic...",
+    "_source_sha256": "6fb11e13597f362be3fd12231e430a3addc3875cf16a7ba292eeb04ef1da8902",
     "_criteria_sha256": "a5e2ebe103b75b60b5d77e92fd5d3341c24b0361170d6cb5806471c250815921"
   },
   {

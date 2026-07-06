@@ -194,6 +194,12 @@ def main():
 
     failures = sum(1 for r in rows if r.get("error"))
 
+    # Sort before writing -- ThreadPoolExecutor's as_completed() order is
+    # scheduler-dependent, so a no-op cached rerun (every row served from
+    # cache, nothing actually changed) would otherwise still reorder the
+    # checked-in evidence file, burying any real grade/metadata diff in a
+    # large order-only diff.
+    rows.sort(key=lambda r: (r["skill"], r["condition"], r["trial"]))
     (DATA_DIR / "graded_results_all.json").write_text(json.dumps(rows, indent=2))
 
     print("\n\n=== SUMMARY (skill | with_skill catch | without_skill catch | cost delta) ===")

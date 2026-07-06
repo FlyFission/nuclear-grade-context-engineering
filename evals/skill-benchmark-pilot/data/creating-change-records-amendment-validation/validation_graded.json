@@ -9,6 +9,14 @@
   },
   {
     "model": "claude-haiku-4-5",
+    "trial": 2,
+    "meets_criteria": "PARTIAL",
+    "quote": "A lightweight **Quick change record** (risk.md + proof.md, ~30 minutes) documents:",
+    "_source_sha256": "f4dda83f6687818136cdf383292cd4541c474bd81d5755df1ea03c6850bdfaa6",
+    "_criteria_sha256": "3f406cf52fd11ce951e035fd2172b62196b3e342e665213fd40f22e3609874fb"
+  },
+  {
+    "model": "claude-haiku-4-5",
     "trial": 3,
     "meets_criteria": "NO",
     "quote": "No exact filenames from the list (risk.md, basis.md, plan.md, trace.md, verification.md, ship.md) appear in the response.",
@@ -37,14 +45,6 @@
     "meets_criteria": "YES",
     "quote": "it needs `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, and `ship.md`",
     "_source_sha256": "8a06c7246829547ff8e87810f13f6b459022f2a34ac6d6c1810c9dd2962e33f6",
-    "_criteria_sha256": "3f406cf52fd11ce951e035fd2172b62196b3e342e665213fd40f22e3609874fb"
-  },
-  {
-    "model": "claude-haiku-4-5",
-    "trial": 2,
-    "meets_criteria": "PARTIAL",
-    "quote": "A lightweight **Quick change record** (risk.md + proof.md, ~30 minutes) documents:",
-    "_source_sha256": "f4dda83f6687818136cdf383292cd4541c474bd81d5755df1ea03c6850bdfaa6",
     "_criteria_sha256": "3f406cf52fd11ce951e035fd2172b62196b3e342e665213fd40f22e3609874fb"
   }
 ]

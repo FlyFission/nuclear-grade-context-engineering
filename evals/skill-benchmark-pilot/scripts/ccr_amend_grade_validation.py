@@ -147,6 +147,10 @@ def main():
         futs = {ex.submit(grade_one, p, cache): p for p in paths}
         for fut in as_completed(futs):
             rows.append(fut.result())
+    # Sort before writing -- ThreadPoolExecutor's as_completed() order is
+    # scheduler-dependent, so a no-op cached rerun would otherwise still
+    # reorder the checked-in evidence file with no real change.
+    rows.sort(key=lambda r: (r["model"], r["trial"]))
     (DATA_DIR / "validation_graded.json").write_text(json.dumps(rows, indent=2))
     for model in ["claude-sonnet-5", "claude-haiku-4-5"]:
         sub = [r for r in rows if r["model"] == model and not r.get("error")]

@@ -1,11 +1,11 @@
 [
   {
-    "round": "round1",
+    "round": "gate1",
     "condition": "with_skill",
-    "trial": 2,
+    "trial": 1,
     "meets_criteria": "YES",
-    "quote": "What a Standard record needs to say, specifically for this swap:\n\n- **`risk.md`** \u2014 Why this is high-stakes despite being a config change...\n- **`basis.md`** \u2014 What \"safe\" means for this agent...\n- **`plan.md`** \u2014 The rollout plan...\n- **`trace.md`** \u2014 Link each claim...\n- **`verification.md`** \u2014 The actual proof run...\n- **`ship.md`** \u2014 The release decision...",
-    "_source_sha256": "5b2eecd22e613032c9c0b63d2598ecb963aae5eb874298e5824d72241e1a0609",
+    "quote": "risk.md \u2014 mode justification (why Standard, not Quick)\n\t- `basis.md` \u2014 what the linter is actually supposed to catch, and what it doesn't (e.g., does it flag `DROP COLUMN`, table locks, missing `CONCURRENTLY`, irreversible ops?)\n\t- `plan.md` \u2014 rollout plan (canary, blast-radius limits, kill switch to fall back to human approval)\n\t- `trace.md` \u2014 link each linter rule to a claim (\"blocks destructive DDL\") and the test that proves it\n\t- `verification.md` \u2014 evidence beyond unit tests: has it been run against a corpus of known-bad migrations?\n\t- `ship.md` \u2014 release decision, rollback plan, who's on call",
+    "_source_sha256": "f87c54e31e2f0397bd901a0e7c6b5f68acb6c372d75ec225ac0030b1cae2ca3a",
     "_criteria_sha256": "386e3c93123ecf5166ed947c2695c6d8e03073063294d3ca16a8a7873b952b5b"
   },
   {
@@ -18,57 +18,12 @@
     "_criteria_sha256": "386e3c93123ecf5166ed947c2695c6d8e03073063294d3ca16a8a7873b952b5b"
   },
   {
-    "round": "round1",
-    "condition": "without_skill",
-    "trial": 2,
-    "meets_criteria": "NO",
-    "quote": "What you actually need is a **model change record** (separate from the PR, linked to it), containing: [lists 7 items without naming files or using status-label vocabulary]",
-    "_source_sha256": "1297bd3bb7a5203e10792c676dc9950cdd4d508a3a636322654ea12b15d75347",
-    "_criteria_sha256": "386e3c93123ecf5166ed947c2695c6d8e03073063294d3ca16a8a7873b952b5b"
-  },
-  {
     "round": "gate1",
     "condition": "with_skill",
-    "trial": 1,
-    "meets_criteria": "YES",
-    "quote": "risk.md \u2014 mode justification (why Standard, not Quick)\n\t- `basis.md` \u2014 what the linter is actually supposed to catch, and what it doesn't (e.g., does it flag `DROP COLUMN`, table locks, missing `CONCURRENTLY`, irreversible ops?)\n\t- `plan.md` \u2014 rollout plan (canary, blast-radius limits, kill switch to fall back to human approval)\n\t- `trace.md` \u2014 link each linter rule to a claim (\"blocks destructive DDL\") and the test that proves it\n\t- `verification.md` \u2014 evidence beyond unit tests: has it been run against a corpus of known-bad migrations?\n\t- `ship.md` \u2014 release decision, rollback plan, who's on call",
-    "_source_sha256": "f87c54e31e2f0397bd901a0e7c6b5f68acb6c372d75ec225ac0030b1cae2ca3a",
-    "_criteria_sha256": "386e3c93123ecf5166ed947c2695c6d8e03073063294d3ca16a8a7873b952b5b"
-  },
-  {
-    "round": "round1",
-    "condition": "with_skill",
-    "trial": 1,
-    "meets_criteria": "YES",
-    "quote": "- **`risk.md`** \u2014 states this is an autonomous, money-moving agent, so mode = standard regardless of diff size; names what actually changes (model behavior, not just config).\n- **`basis.md`** \u2014 what must still hold true after the swap...\n- **`plan.md`** \u2014 the eval plan...\n- **`trace.md`** \u2014 links each claim...\n- **`verification.md`** \u2014 plain pass/fail per exit criterion...\n- **`ship.md`** \u2014 who approved the release...",
-    "_source_sha256": "0933a68b29727540285d3d1dd0e47a81e6bfcfa56c0f6dd0644113bd09767fec",
-    "_criteria_sha256": "386e3c93123ecf5166ed947c2695c6d8e03073063294d3ca16a8a7873b952b5b"
-  },
-  {
-    "round": "round1",
-    "condition": "without_skill",
-    "trial": 1,
-    "meets_criteria": "NO",
-    "quote": "The response does not explicitly name any of the 6 specified files (risk.md, basis.md, plan.md, trace.md, verification.md, ship.md) and does not use any of the 6 specific status-label words (pass, fail, gap, deferred, not applicable, planned) in an evidence-claim context.",
-    "_source_sha256": "1637ac4da2cd4a4192bccde6635a2d054034f721f9bc2a347aec51a52549f4b9",
-    "_criteria_sha256": "386e3c93123ecf5166ed947c2695c6d8e03073063294d3ca16a8a7873b952b5b"
-  },
-  {
-    "round": "round1",
-    "condition": "with_skill",
     "trial": 3,
-    "meets_criteria": "YES",
-    "quote": "What a skeptical reviewer in six months would actually need to see, mapped to the Standard files:\n\n- **`risk.md`** \u2014 state why this is Standard despite the trivial diff\n- **`basis.md`** \u2014 what \"safe\" means for this agent\n- **`plan.md`** \u2014 the test plan before ship\n- **`trace.md`** \u2014 claim-to-evidence links\n- **`verification.md`** \u2014 plain pass/fail/gap per claim above, not just \"looks fine.\"\n- **`ship.md`** \u2014 the actual release decision, monitoring plan post-swap",
-    "_source_sha256": "2a0065148887d0164870934fc919a05f0e0b80907e91146319c01fe8371984d9",
-    "_criteria_sha256": "386e3c93123ecf5166ed947c2695c6d8e03073063294d3ca16a8a7873b952b5b"
-  },
-  {
-    "round": "round1",
-    "condition": "without_skill",
-    "trial": 3,
-    "meets_criteria": "NO",
-    "quote": "The response is well-reasoned about model change validation but contains neither the 6 file names (risk.md, basis.md, plan.md, trace.md, verification.md, ship.md) nor the 6 status-label words (pass, fail, gap, deferred, not applicable, planned) required by the criterion.",
-    "_source_sha256": "e942e3b31ac004d129dbd77f35b0f76a0110feb902b1ff7e2b6a6d5e5be4734b",
+    "meets_criteria": "PARTIAL",
+    "quote": "For the record's `risk.md` and `basis.md`, the honest content is something like:",
+    "_source_sha256": "5e12189f6ee0531948147c7af26d460111376bc0b1b89d8c8e8713254c55ff0f",
     "_criteria_sha256": "386e3c93123ecf5166ed947c2695c6d8e03073063294d3ca16a8a7873b952b5b"
   },
   {
@@ -91,11 +46,11 @@
   },
   {
     "round": "gate1",
-    "condition": "with_skill",
-    "trial": 3,
-    "meets_criteria": "PARTIAL",
-    "quote": "For the record's `risk.md` and `basis.md`, the honest content is something like:",
-    "_source_sha256": "5e12189f6ee0531948147c7af26d460111376bc0b1b89d8c8e8713254c55ff0f",
+    "condition": "without_skill",
+    "trial": 1,
+    "meets_criteria": "YES",
+    "quote": "the linter's unit tests pass ... A thin PR description here isn't just a paperwork gap",
+    "_source_sha256": "a29b53be39375f6440b7baf80cfd5f229080a7f4324b4d051fe20b281de63537",
     "_criteria_sha256": "386e3c93123ecf5166ed947c2695c6d8e03073063294d3ca16a8a7873b952b5b"
   },
   {
@@ -135,12 +90,57 @@
     "_criteria_sha256": "386e3c93123ecf5166ed947c2695c6d8e03073063294d3ca16a8a7873b952b5b"
   },
   {
-    "round": "gate1",
-    "condition": "without_skill",
+    "round": "round1",
+    "condition": "with_skill",
     "trial": 1,
     "meets_criteria": "YES",
-    "quote": "the linter's unit tests pass ... A thin PR description here isn't just a paperwork gap",
-    "_source_sha256": "a29b53be39375f6440b7baf80cfd5f229080a7f4324b4d051fe20b281de63537",
+    "quote": "- **`risk.md`** \u2014 states this is an autonomous, money-moving agent, so mode = standard regardless of diff size; names what actually changes (model behavior, not just config).\n- **`basis.md`** \u2014 what must still hold true after the swap...\n- **`plan.md`** \u2014 the eval plan...\n- **`trace.md`** \u2014 links each claim...\n- **`verification.md`** \u2014 plain pass/fail per exit criterion...\n- **`ship.md`** \u2014 who approved the release...",
+    "_source_sha256": "0933a68b29727540285d3d1dd0e47a81e6bfcfa56c0f6dd0644113bd09767fec",
+    "_criteria_sha256": "386e3c93123ecf5166ed947c2695c6d8e03073063294d3ca16a8a7873b952b5b"
+  },
+  {
+    "round": "round1",
+    "condition": "with_skill",
+    "trial": 2,
+    "meets_criteria": "YES",
+    "quote": "What a Standard record needs to say, specifically for this swap:\n\n- **`risk.md`** \u2014 Why this is high-stakes despite being a config change...\n- **`basis.md`** \u2014 What \"safe\" means for this agent...\n- **`plan.md`** \u2014 The rollout plan...\n- **`trace.md`** \u2014 Link each claim...\n- **`verification.md`** \u2014 The actual proof run...\n- **`ship.md`** \u2014 The release decision...",
+    "_source_sha256": "5b2eecd22e613032c9c0b63d2598ecb963aae5eb874298e5824d72241e1a0609",
+    "_criteria_sha256": "386e3c93123ecf5166ed947c2695c6d8e03073063294d3ca16a8a7873b952b5b"
+  },
+  {
+    "round": "round1",
+    "condition": "with_skill",
+    "trial": 3,
+    "meets_criteria": "YES",
+    "quote": "What a skeptical reviewer in six months would actually need to see, mapped to the Standard files:\n\n- **`risk.md`** \u2014 state why this is Standard despite the trivial diff\n- **`basis.md`** \u2014 what \"safe\" means for this agent\n- **`plan.md`** \u2014 the test plan before ship\n- **`trace.md`** \u2014 claim-to-evidence links\n- **`verification.md`** \u2014 plain pass/fail/gap per claim above, not just \"looks fine.\"\n- **`ship.md`** \u2014 the actual release decision, monitoring plan post-swap",
+    "_source_sha256": "2a0065148887d0164870934fc919a05f0e0b80907e91146319c01fe8371984d9",
+    "_criteria_sha256": "386e3c93123ecf5166ed947c2695c6d8e03073063294d3ca16a8a7873b952b5b"
+  },
+  {
+    "round": "round1",
+    "condition": "without_skill",
+    "trial": 1,
+    "meets_criteria": "NO",
+    "quote": "The response does not explicitly name any of the 6 specified files (risk.md, basis.md, plan.md, trace.md, verification.md, ship.md) and does not use any of the 6 specific status-label words (pass, fail, gap, deferred, not applicable, planned) in an evidence-claim context.",
+    "_source_sha256": "1637ac4da2cd4a4192bccde6635a2d054034f721f9bc2a347aec51a52549f4b9",
+    "_criteria_sha256": "386e3c93123ecf5166ed947c2695c6d8e03073063294d3ca16a8a7873b952b5b"
+  },
+  {
+    "round": "round1",
+    "condition": "without_skill",
+    "trial": 2,
+    "meets_criteria": "NO",
+    "quote": "What you actually need is a **model change record** (separate from the PR, linked to it), containing: [lists 7 items without naming files or using status-label vocabulary]",
+    "_source_sha256": "1297bd3bb7a5203e10792c676dc9950cdd4d508a3a636322654ea12b15d75347",
+    "_criteria_sha256": "386e3c93123ecf5166ed947c2695c6d8e03073063294d3ca16a8a7873b952b5b"
+  },
+  {
+    "round": "round1",
+    "condition": "without_skill",
+    "trial": 3,
+    "meets_criteria": "NO",
+    "quote": "The response is well-reasoned about model change validation but contains neither the 6 file names (risk.md, basis.md, plan.md, trace.md, verification.md, ship.md) nor the 6 status-label words (pass, fail, gap, deferred, not applicable, planned) required by the criterion.",
+    "_source_sha256": "e942e3b31ac004d129dbd77f35b0f76a0110feb902b1ff7e2b6a6d5e5be4734b",
     "_criteria_sha256": "386e3c93123ecf5166ed947c2695c6d8e03073063294d3ca16a8a7873b952b5b"
   }
 ]

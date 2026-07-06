@@ -178,6 +178,10 @@ def main():
         futs = {ex.submit(grade_one, p, cache): p for p in paths}
         for fut in as_completed(futs):
             rows.append(fut.result())
+    # Sort before writing -- ThreadPoolExecutor's as_completed() order is
+    # scheduler-dependent, so a no-op cached rerun would otherwise still
+    # reorder the checked-in evidence file with no real change.
+    rows.sort(key=lambda r: (r["skill"], r["condition"], r["trial"]))
     (DATA_DIR / "haiku_graded.json").write_text(json.dumps(rows, indent=2))
     skills = sorted(set(r["skill"] for r in rows))
     for skill in skills:

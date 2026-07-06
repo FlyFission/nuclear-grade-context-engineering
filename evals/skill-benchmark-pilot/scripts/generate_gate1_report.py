@@ -9,7 +9,11 @@ ALL = BASE / "data" / "all-skills-pilot"
 
 gate1_tasks = json.loads((GATE1 / "gate1_tasks.json").read_text())
 gate1_graded = json.loads((GATE1 / "graded_results_gate1.json").read_text())
-round1_summary = json.loads((ALL / "summary_all_FINAL.json").read_text())
+
+round1_summary_path = ALL / "summary_all.json"
+if not round1_summary_path.exists():
+    round1_summary_path = ALL / "summary_all_FINAL.json"
+round1_summary = json.loads(round1_summary_path.read_text())
 round1_by_skill = {r["skill"]: r for r in round1_summary}
 
 
@@ -30,10 +34,16 @@ def fence_for(text):
 
 
 def round1_verdict(skill):
+    """Compute from the 'catch' strings (present in both the curated
+    summary_all_FINAL.json and a freshly regenerated summary_all.json) rather
+    than the 'yes' key, which only the curated FINAL file has -- a fresh
+    rerun's summary_all.json would KeyError otherwise."""
     r = round1_by_skill.get(skill)
     if not r:
         return "n/a"
-    d = r["with_skill"]["yes"] - r["without_skill"]["yes"]
+    w = int(r["with_skill"]["catch"].split("/")[0])
+    wo = int(r["without_skill"]["catch"].split("/")[0])
+    d = w - wo
     return "WINS" if d > 0 else ("TIE" if d == 0 else "LOSES")
 
 

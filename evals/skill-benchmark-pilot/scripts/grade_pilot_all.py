@@ -64,6 +64,9 @@ def grade_one(path: Path) -> dict:
     result_text = d.get("result", "")
     usage = d.get("usage", {})
     grade = grade_review(skill, result_text)
+    if grade.get("meets_criteria") == "ERROR":
+        return {"skill": skill, "condition": condition, "trial": trial, "error": True,
+                "grader_error": True, "grader_quote": grade.get("quote")}
 
     return {
         "skill": skill, "condition": condition, "trial": trial, "error": False,

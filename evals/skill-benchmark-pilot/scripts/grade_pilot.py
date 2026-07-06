@@ -74,6 +74,10 @@ def main():
         result_text = d.get("result", "")
         usage = d.get("usage", {})
         grade = grade_review(task, result_text)
+        if grade.get("meets_criteria") == "ERROR":
+            rows.append({"task": task, "condition": condition, "trial": trial, "error": True,
+                         "grader_error": True, "grader_quote": grade.get("quote")})
+            continue
         verdict_format_present = bool(VERDICT_RE.search(result_text))
 
         rows.append({

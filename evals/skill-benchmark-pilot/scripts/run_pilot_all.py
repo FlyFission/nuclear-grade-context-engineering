@@ -39,7 +39,7 @@ def run_one(skill: str, condition: str, trial: int) -> dict:
         "--output-format", "json",
         "--model", MODEL,
         "--safe-mode",
-        "--tools", "",
+        "--tools", "Read,Glob,Grep",
         "--no-session-persistence",
         "--max-budget-usd", MAX_BUDGET_USD,
     ]

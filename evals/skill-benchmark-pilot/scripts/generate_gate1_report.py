@@ -102,7 +102,10 @@ a("## 2. Full comparison table")
 a("")
 a("| Skill | Round 1 | Gate 1 | With skill (Gate 1) | Without skill (Gate 1) | Cost with | Cost without |")
 a("|---|---|---|---|---|---|---|")
-gate1_summary = json.loads((GATE1 / "summary_gate1_FINAL.json").read_text())
+gate1_summary_path = GATE1 / "summary_gate1.json"
+if not gate1_summary_path.exists():
+    gate1_summary_path = GATE1 / "summary_gate1_FINAL.json"
+gate1_summary = json.loads(gate1_summary_path.read_text())
 for row in gate1_summary:
     a(f"| {row['skill']} | {round1_verdict(row['skill'])} | {row['verdict']} | "
       f"{row['with_skill']['catch']} | {row['without_skill']['catch']} | "

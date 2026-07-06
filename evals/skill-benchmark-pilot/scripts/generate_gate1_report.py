@@ -116,7 +116,7 @@ a(f"Round 1 tested each skill's own \"When to Use\" trigger — the obvious, tex
   f"Rationalizations\" / \"Escalation\" / \"Red Flags\" text — not the trigger condition. "
   f"5 trials per condition instead of 3.")
 a("")
-a(f"**Result: {flips} of the {len(gate1_summary)} skills flip from TIE to WINS on the harder case.** Only "
+a(f"**Result: {flips} of the {round1_ties} round-1-tied skills flip from TIE to WINS on the harder case.** Only "
   f"{remaining_ties_names} remain flat ties ({remaining_ties_detail} — the baseline "
   f"still nails even the harder version of {remaining_ties_ref}). {round1_loss_sentence} "
   f"**This is real support for the "

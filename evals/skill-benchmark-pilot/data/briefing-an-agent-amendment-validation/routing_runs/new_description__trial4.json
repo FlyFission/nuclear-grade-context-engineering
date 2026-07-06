@@ -2,5 +2,6 @@
   "variant": "new_description",
   "trial": 4,
   "chosen_skill": "handing-off-work",
-  "reasoning": "This is a mid-task transfer of unfinished work from a cut-off session to a new agent instance, requiring state, what's done/changed/remaining, and authority limits \u2014 exactly what handing-off-work is for, whereas briefing-an-agent is for starting fresh work rather than continuing interrupted work."
+  "reasoning": "This is a mid-task transfer of unfinished work from a cut-off session to a new agent instance, requiring state, what's done/changed/remaining, and authority limits \u2014 exactly what handing-off-work is for, whereas briefing-an-agent is for starting fresh work rather than continuing interrupted work.",
+  "_input_spec_sha256": "d24b63d2eec16b88472cfafd24c17f213aedeb45977cb00ef9fb6efc9a0e6197"
 }

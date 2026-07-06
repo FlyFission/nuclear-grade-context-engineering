@@ -6,6 +6,7 @@ everything else force-loads a skill's content directly. This tests whether a
 model, given only name+description for a small set of skills, picks the right
 one for a handoff scenario -- before vs after the briefing-an-agent amendment.
 """
+import hashlib
 import json
 import subprocess
 import sys
@@ -15,6 +16,10 @@ from pathlib import Path
 BASE = Path(__file__).parent
 RUNS_DIR = BASE / "routing_runs"
 RUNS_DIR.mkdir(exist_ok=True)
+
+MODEL = "claude-sonnet-5"
+TOOLS = ""
+MAX_BUDGET_USD = "0.30"
 
 OLD_BRIEFING_DESC = (
     "briefing-an-agent: Prepares focused context for an AI agent, reviewer, verifier, or "
@@ -79,13 +84,28 @@ def build_prompt(briefing_desc):
     )
 
 
+def input_spec_hash(prompt):
+    """Fingerprint of everything that determines the subject-model call's
+    output besides its own randomness: the fully-built prompt (which already
+    captures SCENARIO, the variant's briefing description, and the fixed
+    skill descriptions it's compared against) plus the harness settings
+    (model, tools, budget). A persisted run file is only reused if this
+    matches -- editing SCENARIO or any skill description must force a fresh
+    call even if the old routing_runs/ file is still on disk from before
+    the edit."""
+    return hashlib.sha256(f"{prompt}::{MODEL}::{TOOLS}::{MAX_BUDGET_USD}".encode()).hexdigest()
+
+
 def run_one(variant, briefing_desc, trial):
     prompt = build_prompt(briefing_desc)
     out_path = RUNS_DIR / f"{variant}__trial{trial}.json"
+    spec_hash = input_spec_hash(prompt)
     if out_path.exists():
-        return json.loads(out_path.read_text())
-    cmd = ["claude", "-p", prompt, "--output-format", "json", "--model", "claude-sonnet-5",
-           "--safe-mode", "--tools", "", "--no-session-persistence", "--max-budget-usd", "0.30",
+        existing = json.loads(out_path.read_text())
+        if existing.get("_input_spec_sha256") == spec_hash:
+            return existing
+    cmd = ["claude", "-p", prompt, "--output-format", "json", "--model", MODEL,
+           "--safe-mode", "--tools", TOOLS, "--no-session-persistence", "--max-budget-usd", MAX_BUDGET_USD,
            "--json-schema", SCHEMA]
     try:
         proc = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
@@ -98,6 +118,7 @@ def run_one(variant, briefing_desc, trial):
     except (json.JSONDecodeError, KeyError) as e:
         result = {"variant": variant, "trial": trial, "type": "error",
                   "error": f"non-json or malformed output: {e}"}
+    result["_input_spec_sha256"] = spec_hash
     out_path.write_text(json.dumps(result, indent=2))
     return result
 

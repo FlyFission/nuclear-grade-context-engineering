@@ -49,6 +49,8 @@ def criteria_for(skill):
 def grade_one(path):
     d = json.loads(path.read_text())
     skill = d["_skill"]
+    if d.get("type") == "error" or d.get("is_error"):
+        return {"skill": skill, "condition": d["_condition"], "trial": d["_trial"], "error": True}
     criteria = criteria_for(skill)
     text = d.get("result", "")
     prompt = (
@@ -62,9 +64,13 @@ def grade_one(path):
     cmd = ["claude", "-p", prompt, "--output-format", "json", "--model", "claude-sonnet-5",
            "--safe-mode", "--tools", "", "--no-session-persistence", "--max-budget-usd", "0.20",
            "--json-schema", SCHEMA]
-    proc = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
-    record = json.loads(proc.stdout.strip())
-    verdict = json.loads(record["result"])
+    try:
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+        record = json.loads(proc.stdout.strip())
+        verdict = json.loads(record["result"])
+    except Exception as e:
+        return {"skill": skill, "condition": d["_condition"], "trial": d["_trial"], "error": True,
+                "grader_error": True, "grader_quote": str(e)[:200]}
     return {"skill": skill, "condition": d["_condition"], "trial": d["_trial"],
             "meets_criteria": verdict["meets_criteria"], "quote": verdict["quote"]}
 
@@ -80,7 +86,7 @@ def main():
     skills = sorted(set(r["skill"] for r in rows))
     for skill in skills:
         for cond in ["with_skill", "without_skill"]:
-            sub = [r for r in rows if r["skill"] == skill and r["condition"] == cond]
+            sub = [r for r in rows if r["skill"] == skill and r["condition"] == cond and not r.get("error")]
             yes = sum(1 for r in sub if r["meets_criteria"] == "YES")
             partial = sum(1 for r in sub if r["meets_criteria"] == "PARTIAL")
             print(f"{skill:28s} {cond:15s} {yes}/{len(sub)} YES (+{partial}p)")

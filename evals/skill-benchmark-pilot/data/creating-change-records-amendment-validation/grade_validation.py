@@ -30,6 +30,8 @@ SCHEMA = json.dumps({
 
 def grade_one(path):
     d = json.loads(path.read_text())
+    if d.get("type") == "error" or d.get("is_error"):
+        return {"model": d["_model"], "trial": d["_trial"], "error": True}
     text = d.get("result", "")
     prompt = (
         "You are grading a response against ONE specific structural criterion. "
@@ -42,9 +44,13 @@ def grade_one(path):
     cmd = ["claude", "-p", prompt, "--output-format", "json", "--model", "claude-sonnet-5",
            "--safe-mode", "--tools", "", "--no-session-persistence", "--max-budget-usd", "0.20",
            "--json-schema", SCHEMA]
-    proc = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
-    record = json.loads(proc.stdout.strip())
-    verdict = json.loads(record["result"])
+    try:
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+        record = json.loads(proc.stdout.strip())
+        verdict = json.loads(record["result"])
+    except Exception as e:
+        return {"model": d["_model"], "trial": d["_trial"], "error": True,
+                "grader_error": True, "grader_quote": str(e)[:200]}
     return {"model": d["_model"], "trial": d["_trial"],
             "meets_criteria": verdict["meets_criteria"], "quote": verdict["quote"]}
 
@@ -58,11 +64,11 @@ def main():
             rows.append(fut.result())
     (BASE / "validation_graded.json").write_text(json.dumps(rows, indent=2))
     for model in ["claude-sonnet-5", "claude-haiku-4-5"]:
-        sub = [r for r in rows if r["model"] == model]
+        sub = [r for r in rows if r["model"] == model and not r.get("error")]
         yes = sum(1 for r in sub if r["meets_criteria"] == "YES")
         partial = sum(1 for r in sub if r["meets_criteria"] == "PARTIAL")
         print(f"{model}: {yes}/{len(sub)} YES (+{partial}p)")
-    for r in sorted(rows, key=lambda r: (r["model"], r["trial"])):
+    for r in sorted((r for r in rows if not r.get("error")), key=lambda r: (r["model"], r["trial"])):
         print(r["model"], r["trial"], r["meets_criteria"], "|", r["quote"][:150])
 
 

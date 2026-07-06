@@ -70,6 +70,16 @@ def benjamini_hochberg(pvalues, alpha=0.05):
     return adjusted, significant
 
 
+def _self_check():
+    """Verify fisher_exact_two_sided against a known reference value before
+    trusting it on real data: a 3-vs-0-of-3 split ([[3,0],[0,3]]) has a
+    textbook two-sided p-value of 0.1."""
+    ref = fisher_exact_two_sided(3, 0, 0, 3)
+    assert abs(ref - 0.1) < 1e-9, f"Fisher's exact self-check failed: expected 0.1, got {ref}"
+
+
+_self_check()
+
 tests = []  # list of dicts: skill, round, with_yes, with_n, without_yes, without_n
 
 round1 = json.loads((ALL / "graded_results_all.json").read_text())

@@ -48,6 +48,17 @@ def gate1_verdict(row):
     return "WINS" if d > 0 else ("TIE" if d == 0 else "LOSES")
 
 
+gate1_summary_path = GATE1 / "summary_gate1.json"
+if not gate1_summary_path.exists():
+    gate1_summary_path = GATE1 / "summary_gate1_FINAL.json"
+gate1_summary = json.loads(gate1_summary_path.read_text())
+
+# Headline counts computed once here (not hard-coded) so the executive summary
+# can never drift from the comparison table below, which is built from this data.
+round1_ties = sum(1 for r in round1_summary if round1_verdict(r["skill"]) == "TIE")
+flips = sum(1 for row in gate1_summary
+            if round1_verdict(row["skill"]) == "TIE" and gate1_verdict(row) == "WINS")
+
 lines = []
 a = lines.append
 
@@ -60,30 +71,30 @@ a("Generated directly from the raw data in `evals/skill-benchmark-pilot/data/gat
 a("")
 a("## Executive summary")
 a("")
-a("Round 1 tested each skill's own \"When to Use\" trigger — the obvious, textbook case. "
-  "13 of 27 skills tied there (plain Sonnet 5 already satisfied the pass criterion with no "
-  "skill loaded), which round 1's own limitations section flagged as likely ceiling effects "
-  "rather than proof the skills add nothing. Gate 1 tests that hypothesis directly: for "
-  "those same skills (plus the 1 that lost), a new scenario was built to target the "
-  "specific rationalization, shortcut, or edge case named in that skill's own \"Common "
-  "Rationalizations\" / \"Escalation\" / \"Red Flags\" text — not the trigger condition. "
-  "5 trials per condition instead of 3.")
+a(f"Round 1 tested each skill's own \"When to Use\" trigger — the obvious, textbook case. "
+  f"{round1_ties} of {len(round1_summary)} skills tied there (plain Sonnet 5 already satisfied the pass criterion with no "
+  f"skill loaded), which round 1's own limitations section flagged as likely ceiling effects "
+  f"rather than proof the skills add nothing. Gate 1 tests that hypothesis directly: for "
+  f"those same skills (plus the 1 that lost), a new scenario was built to target the "
+  f"specific rationalization, shortcut, or edge case named in that skill's own \"Common "
+  f"Rationalizations\" / \"Escalation\" / \"Red Flags\" text — not the trigger condition. "
+  f"5 trials per condition instead of 3.")
 a("")
-a("**Result: 11 of the 14 skills flip from TIE to WINS on the harder case.** Only "
-  "`briefing-an-agent` and `proving-claims` remain flat ties (5/5 vs 5/5 — the baseline "
-  "still nails even the harder version of these two). `creating-change-records` — the one "
-  "round-1 LOSES — improves to a TIE (0/5 YES both conditions, but the skill earns partial "
-  "credit on all 5 trials versus 1/5 for the baseline). **This is real support for the "
-  "ceiling-effect hypothesis**: most of round 1's ties were an artifact of testing where the "
-  "skill wasn't needed, not evidence the skill adds nothing.")
+a(f"**Result: {flips} of the {len(gate1_summary)} skills flip from TIE to WINS on the harder case.** Only "
+  f"`briefing-an-agent` and `proving-claims` remain flat ties (5/5 vs 5/5 — the baseline "
+  f"still nails even the harder version of these two). `creating-change-records` — the one "
+  f"round-1 LOSES — improves to a TIE (0/5 YES both conditions, but the skill earns partial "
+  f"credit on all 5 trials versus 1/5 for the baseline). **This is real support for the "
+  f"ceiling-effect hypothesis**: most of round 1's ties were an artifact of testing where the "
+  f"skill wasn't needed, not evidence the skill adds nothing.")
 a("")
-a("**But not all 11 flips are the same kind of finding — read section 2 before treating "
-  "them as uniform.** Some flips reflect the skill surfacing a genuinely new, distinct "
-  "decision element the baseline never mentions unprompted. Others reflect the baseline "
-  "getting the substance right but missing a specific, stricter phrasing bar the grading "
-  "criterion demanded (e.g. requiring the literal words \"escalate to a named human\" "
-  "rather than crediting a substantively equivalent \"get explicit human sign-off\"). Both "
-  "are legitimate results, but they support different strength of claim.")
+a(f"**But not all {flips} flips are the same kind of finding — read section 2 before treating "
+  f"them as uniform.** Some flips reflect the skill surfacing a genuinely new, distinct "
+  f"decision element the baseline never mentions unprompted. Others reflect the baseline "
+  f"getting the substance right but missing a specific, stricter phrasing bar the grading "
+  f"criterion demanded (e.g. requiring the literal words \"escalate to a named human\" "
+  f"rather than crediting a substantively equivalent \"get explicit human sign-off\"). Both "
+  f"are legitimate results, but they support different strength of claim.")
 a("")
 
 a("## 1. Method — what's different from round 1")
@@ -113,10 +124,6 @@ a("## 2. Full comparison table")
 a("")
 a("| Skill | Round 1 | Gate 1 | With skill (Gate 1) | Without skill (Gate 1) | Cost with | Cost without |")
 a("|---|---|---|---|---|---|---|")
-gate1_summary_path = GATE1 / "summary_gate1.json"
-if not gate1_summary_path.exists():
-    gate1_summary_path = GATE1 / "summary_gate1_FINAL.json"
-gate1_summary = json.loads(gate1_summary_path.read_text())
 for row in gate1_summary:
     a(f"| {row['skill']} | {round1_verdict(row['skill'])} | {gate1_verdict(row)} | "
       f"{row['with_skill']['catch']} | {row['without_skill']['catch']} | "

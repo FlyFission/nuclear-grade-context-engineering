@@ -35,6 +35,34 @@ def fence_for(text):
     return "`" * max(3, longest + 1)
 
 
+# Headline counts computed once here (not hard-coded) so the executive summary
+# can never drift from the tables below, which are built from this same data.
+RCQ_TASK_IDS = ["task1_thin_wrapper", "task2_shared_leak", "task3_clever_indirection"]
+rcq_gains = 0
+for _task_id in RCQ_TASK_IDS:
+    _yes = {}
+    for _cond in ["with_skill", "without_skill"]:
+        _sub = [r for r in rcq_graded if r["task"] == _task_id and r["condition"] == _cond and not r.get("error")]
+        _yes[_cond] = sum(1 for r in _sub if r["meets_criteria"] == "YES")
+    if _yes["with_skill"] > _yes["without_skill"]:
+        rcq_gains += 1
+
+skills_sorted = sorted(all_tasks.keys())
+wins = ties = losses = 0
+for _skill in skills_sorted:
+    _rows = [r for r in all_graded if r["skill"] == _skill and not r.get("error")]
+    _yes = {}
+    for _cond in ["with_skill", "without_skill"]:
+        _sub = [r for r in _rows if r["condition"] == _cond]
+        _yes[_cond] = sum(1 for r in _sub if r["meets_criteria"] == "YES")
+    _delta = _yes["with_skill"] - _yes["without_skill"]
+    if _delta > 0:
+        wins += 1
+    elif _delta == 0:
+        ties += 1
+    else:
+        losses += 1
+
 lines = []
 a = lines.append
 
@@ -56,14 +84,14 @@ a("**These results are best read as an internally generated pilot showing where 
   "full disclosure) — no third party has reviewed or re-derived them. Until that happens, "
   "treat every result below as provisional.")
 a("")
-a("With that caveat, the supported claim is: **in this internally authored pilot, skill "
-  "injection improved exact pass-criterion hit rate on many targeted scenarios — 13 wins, "
-  "13 ties, and 1 loss across the 27-skill batch (n=3 trials/cell), plus a separate "
-  "`reviewing-code-quality` pilot showing a gain on 1 of 3 discriminating tasks (n=3 "
-  "trials/cell).** This is not evidence that the skills broadly improve model performance; "
-  "most ties are ceiling effects (the plain prompt already did what was asked), n is small, "
-  "and the benchmark tests decision/response behavior under scenario prompts, not "
-  "end-to-end codebase execution (see section 7 for both points in full).")
+a(f"With that caveat, the supported claim is: **in this internally authored pilot, skill "
+  f"injection improved exact pass-criterion hit rate on many targeted scenarios — {wins} wins, "
+  f"{ties} ties, and {losses} loss{'es' if losses != 1 else ''} across the {len(skills_sorted)}-skill batch (n=3 trials/cell), plus a separate "
+  f"`reviewing-code-quality` pilot showing a gain on {rcq_gains} of {len(RCQ_TASK_IDS)} discriminating tasks (n=3 "
+  f"trials/cell).** This is not evidence that the skills broadly improve model performance; "
+  f"most ties are ceiling effects (the plain prompt already did what was asked), n is small, "
+  f"and the benchmark tests decision/response behavior under scenario prompts, not "
+  f"end-to-end codebase execution (see section 7 for both points in full).")
 a("")
 a("## 1. What this tests")
 a("")
@@ -212,7 +240,6 @@ a("**Two verdict columns, on purpose.** `Verdict` is the primary, pre-registered
   "better.")
 a("")
 
-skills_sorted = sorted(all_tasks.keys())
 summary_lines = []
 summary_lines.append("| Skill | With skill | Without skill | Verdict | Weighted Δ | Mean cost (with) | Mean cost (without) |")
 summary_lines.append("|---|---|---|---|---|---|---|")

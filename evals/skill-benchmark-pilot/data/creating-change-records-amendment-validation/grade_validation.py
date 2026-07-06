@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import json
 import subprocess
+import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
@@ -70,6 +71,12 @@ def main():
         print(f"{model}: {yes}/{len(sub)} YES (+{partial}p)")
     for r in sorted((r for r in rows if not r.get("error")), key=lambda r: (r["model"], r["trial"])):
         print(r["model"], r["trial"], r["meets_criteria"], "|", r["quote"][:150])
+
+    failures = sum(1 for r in rows if r.get("error"))
+    if failures:
+        print(f"\n{failures}/{len(rows)} row(s) recorded a subject-run or grader error -- "
+              f"see the excluded rows in validation_graded.json", file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == "__main__":

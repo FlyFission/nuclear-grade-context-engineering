@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import json
 import subprocess
+import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
@@ -91,6 +92,12 @@ def main():
             yes = sum(1 for r in sub if r["meets_criteria"] == "YES")
             partial = sum(1 for r in sub if r["meets_criteria"] == "PARTIAL")
             print(f"{skill:28s} {cond:15s} {yes}/{len(sub)} YES (+{partial}p)")
+
+    failures = sum(1 for r in rows if r.get("error"))
+    if failures:
+        print(f"\n{failures}/{len(rows)} row(s) recorded a subject-run or grader error -- "
+              f"see the excluded rows in haiku_graded.json", file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == "__main__":

@@ -74,5 +74,6 @@
   "uuid": "989bc194-d4e1-4907-864c-b95c78f2f013",
   "_skill": "using-nuclear-grade",
   "_condition": "without_skill",
-  "_trial": 1
+  "_trial": 1,
+  "_input_spec_sha256": "03eabfee87312a7f0a16f0b721850870f88c9999632bce75a689f9a67bb7469d"
 }

@@ -74,5 +74,6 @@
   "uuid": "53258d13-0402-41f6-9505-372552f36d3f",
   "_skill": "stress-testing-agent-changes",
   "_condition": "with_skill",
-  "_trial": 5
+  "_trial": 5,
+  "_input_spec_sha256": "fe72493847d4b7e3fc6ed3f7b9540098e2f843a11cdaeaa8385f5a5ca891e18a"
 }

@@ -74,5 +74,6 @@
   "uuid": "12464eb4-dceb-412c-83cc-d00980a876be",
   "_skill": "tracking-deficiencies",
   "_condition": "without_skill",
-  "_trial": 3
+  "_trial": 3,
+  "_input_spec_sha256": "04cc5b7d5b277c2bdb0b835049721eb3122b49860e2ec0c9fe19abac7bfb473e"
 }

@@ -74,5 +74,6 @@
   "uuid": "97ab0f31-0d95-4c77-8f2a-43cdfea76577",
   "_skill": "recording-a-known-good-version",
   "_condition": "with_skill",
-  "_trial": 1
+  "_trial": 1,
+  "_input_spec_sha256": "f2fed3b269771e938ad753079cc4cdca3bcc3247cc5c30c1a886a5786d257557"
 }

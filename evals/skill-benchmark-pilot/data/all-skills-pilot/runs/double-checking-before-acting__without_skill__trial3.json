@@ -74,5 +74,6 @@
   "uuid": "b0cded27-49fc-4c24-b00a-2e246ba3bc0c",
   "_skill": "double-checking-before-acting",
   "_condition": "without_skill",
-  "_trial": 3
+  "_trial": 3,
+  "_input_spec_sha256": "f84e509e741202ef516a3a2d3e21edcacd58ce258561e3d5d7d9350ca467a2af"
 }

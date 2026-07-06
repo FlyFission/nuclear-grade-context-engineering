@@ -74,5 +74,6 @@
   "uuid": "9798c715-f673-4ecf-b612-920340808806",
   "_skill": "vetting-outside-code-and-models",
   "_condition": "without_skill",
-  "_trial": 4
+  "_trial": 4,
+  "_input_spec_sha256": "462b093b2458aa318586c011c6968c1bea16beacebbf46b38869da95adcf8aba"
 }

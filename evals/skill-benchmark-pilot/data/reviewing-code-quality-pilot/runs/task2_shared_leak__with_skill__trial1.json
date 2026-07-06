@@ -74,5 +74,6 @@
   "uuid": "9f4b54fa-86fe-4114-ba59-dfe834f7741a",
   "_task": "task2_shared_leak",
   "_condition": "with_skill",
-  "_trial": 1
+  "_trial": 1,
+  "_input_spec_sha256": "f27ee27a78f470bd3faced29298dac0f9dcad8ca1d70ea376487c47a7289de3d"
 }

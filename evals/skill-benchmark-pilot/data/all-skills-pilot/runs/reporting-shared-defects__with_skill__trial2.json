@@ -74,5 +74,6 @@
   "uuid": "2d2a73b3-6900-4e7b-8ac0-ea0b89a9ff88",
   "_skill": "reporting-shared-defects",
   "_condition": "with_skill",
-  "_trial": 2
+  "_trial": 2,
+  "_input_spec_sha256": "0e84d8cc482773c446b41dccdb8813d61a7dc49c008b9e6f6f8b2b888dedde0e"
 }

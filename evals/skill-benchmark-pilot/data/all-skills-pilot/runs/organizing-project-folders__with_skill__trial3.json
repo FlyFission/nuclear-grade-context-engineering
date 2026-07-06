@@ -74,5 +74,6 @@
   "uuid": "1432385c-d6d6-4dc8-badb-1be9c545097c",
   "_skill": "organizing-project-folders",
   "_condition": "with_skill",
-  "_trial": 3
+  "_trial": 3,
+  "_input_spec_sha256": "66555c0d02460c494f879d5aa521bc74e1b3105f0ee215b31beeba7c7186ecd5"
 }

@@ -74,5 +74,6 @@
   "uuid": "1a0dfabc-c5f5-4d4e-93bd-4834f273d348",
   "_skill": "checking-source-claims",
   "_condition": "without_skill",
-  "_trial": 3
+  "_trial": 3,
+  "_input_spec_sha256": "4463533c64e6974789416ea16d23d0daae2cb46b1e41aca43434ff5f779ec626"
 }

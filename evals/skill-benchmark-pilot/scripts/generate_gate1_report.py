@@ -258,10 +258,13 @@ a(f"- **Not every flip was individually audited.** Section 3 manually checked "
   f"strength (a genuinely new element vs. a phrasing-precision bar). The other "
   f"{flips - audited_flips} have not had the same manual read — their full transcripts "
   f"are in section 4 for anyone who wants to check.")
-a("- **`briefing-an-agent` and `proving-claims` remaining flat ties on the harder case "
-  "is itself informative** — it means the ceiling-effect hypothesis doesn't automatically "
-  "explain every round-1 tie. For these two specifically, the baseline may be genuinely "
-  "as good as the skill on the decision element tested, not just on the easy case.")
+if remaining_ties:
+    a(f"- **{remaining_ties_names} remaining flat "
+      f"tie{'s' if len(remaining_ties) != 1 else ''} on the harder case is itself "
+      f"informative** — it means the ceiling-effect hypothesis doesn't automatically "
+      f"explain every round-1 tie. For {remaining_ties_ref} specifically, the baseline "
+      f"may be genuinely as good as the skill on the decision element tested, not just "
+      f"on the easy case.")
 a("")
 
 report = "\n".join(lines)

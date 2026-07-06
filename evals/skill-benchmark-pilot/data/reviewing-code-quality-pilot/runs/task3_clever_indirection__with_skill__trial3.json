@@ -74,5 +74,6 @@
   "uuid": "1da37fbb-928c-46d5-9a11-f1dbd1067899",
   "_task": "task3_clever_indirection",
   "_condition": "with_skill",
-  "_trial": 3
+  "_trial": 3,
+  "_input_spec_sha256": "b9efe79fe60b9202d181f73237b149fae93d6d7cbc7c7ade882d5593da734639"
 }

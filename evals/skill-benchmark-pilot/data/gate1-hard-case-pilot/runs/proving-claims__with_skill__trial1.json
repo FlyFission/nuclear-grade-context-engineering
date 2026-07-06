@@ -74,5 +74,6 @@
   "uuid": "24d7f34b-5619-4854-8fb4-d51d52d932aa",
   "_skill": "proving-claims",
   "_condition": "with_skill",
-  "_trial": 1
+  "_trial": 1,
+  "_input_spec_sha256": "7c75ee80e79cca496a8b6b9f0e635516031557d3db7b44440e299318b99c7442"
 }

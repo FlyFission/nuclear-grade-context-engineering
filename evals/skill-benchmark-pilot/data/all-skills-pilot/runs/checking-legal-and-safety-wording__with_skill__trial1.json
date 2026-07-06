@@ -74,5 +74,6 @@
   "uuid": "374664ce-d76f-4f08-8509-c52d3f7a3ecd",
   "_skill": "checking-legal-and-safety-wording",
   "_condition": "with_skill",
-  "_trial": 1
+  "_trial": 1,
+  "_input_spec_sha256": "ea3f35f557f91fb2b1bad896fbcc3f7daeace8cca053e12f540bdc1fec5a26b5"
 }

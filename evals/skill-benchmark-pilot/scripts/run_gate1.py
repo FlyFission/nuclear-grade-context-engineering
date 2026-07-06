@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Run with-skill vs without-skill trials for every skill in all_skill_tasks.json."""
+import hashlib
 import json
 import re
 import subprocess
@@ -29,10 +30,25 @@ def extract_skill_body(skill_name: str) -> str:
     return "---".join(parts[2:]).strip()
 
 
+def input_spec_hash(skill: str, condition: str) -> str:
+    """Fingerprint of everything that determines the subject-model call's
+    output besides its own randomness: the scenario prompt, the skill body
+    (with_skill only), the model, and the condition. A persisted run file is
+    only reused if this matches -- an edited scenario or SKILL.md must force
+    a fresh call even if the old output file is still sitting on disk from
+    before the edit."""
+    scenario = TASKS[skill]["scenario_prompt"]
+    skill_body = extract_skill_body(skill) if condition == "with_skill" else ""
+    return hashlib.sha256(f"{scenario}::{skill_body}::{MODEL}::{condition}".encode()).hexdigest()
+
+
 def run_one(skill: str, condition: str, trial: int) -> dict:
     out_path = RUNS_DIR / f"{skill}__{condition}__trial{trial}.json"
+    spec_hash = input_spec_hash(skill, condition)
     if out_path.exists():
-        return json.loads(out_path.read_text())
+        existing = json.loads(out_path.read_text())
+        if existing.get("_input_spec_sha256") == spec_hash:
+            return existing
 
     try:
         scenario = TASKS[skill]["scenario_prompt"]
@@ -67,6 +83,7 @@ def run_one(skill: str, condition: str, trial: int) -> dict:
     record["_skill"] = skill
     record["_condition"] = condition
     record["_trial"] = trial
+    record["_input_spec_sha256"] = spec_hash
     out_path.write_text(json.dumps(record, indent=2))
     return record
 

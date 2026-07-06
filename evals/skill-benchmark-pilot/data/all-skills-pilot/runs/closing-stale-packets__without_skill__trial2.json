@@ -84,5 +84,6 @@
   "uuid": "b6b4e9e2-2d78-4328-9fa1-0d9ca6108649",
   "_skill": "closing-stale-packets",
   "_condition": "without_skill",
-  "_trial": 2
+  "_trial": 2,
+  "_input_spec_sha256": "03092bd5af3a9ba9f81f1ab1077d8c899e00191a5609d14af9df4c90088f05df"
 }

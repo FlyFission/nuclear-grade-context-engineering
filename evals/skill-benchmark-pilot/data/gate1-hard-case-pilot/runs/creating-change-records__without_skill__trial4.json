@@ -74,5 +74,6 @@
   "uuid": "c093b564-0eef-450b-a92b-a9137a27090d",
   "_skill": "creating-change-records",
   "_condition": "without_skill",
-  "_trial": 4
+  "_trial": 4,
+  "_input_spec_sha256": "545bb6460140b0cefdce5832bc921978b7aa7f648c2a4900819adc9b7ac86d23"
 }

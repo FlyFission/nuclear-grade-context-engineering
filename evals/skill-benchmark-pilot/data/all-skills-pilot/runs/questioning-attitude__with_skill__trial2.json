@@ -74,5 +74,6 @@
   "uuid": "372a522c-5d8c-4355-a78d-41e2bbc3a54d",
   "_skill": "questioning-attitude",
   "_condition": "with_skill",
-  "_trial": 2
+  "_trial": 2,
+  "_input_spec_sha256": "8a162ad9a0c0e5aaed2ca42fc7588cc4305b7ff22f233343b55e696c11ddb135"
 }

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Run with-skill vs without-skill trials for reviewing-code-quality and save raw JSON."""
+import hashlib
 import json
 import re
 import subprocess
@@ -29,6 +30,17 @@ MODEL = "claude-sonnet-5"
 MAX_BUDGET_USD = "0.50"
 
 
+def input_spec_hash(prompt_text: str, condition: str) -> str:
+    """Fingerprint of everything that determines the subject-model call's
+    output besides its own randomness: the task prompt, the skill body
+    (with_skill only), the model, and the condition. A persisted run file is
+    only reused if this matches -- an edited task prompt or SKILL.md must
+    force a fresh call even if the old output file is still sitting on disk
+    from before the edit."""
+    skill_body = SKILL_BODY if condition == "with_skill" else ""
+    return hashlib.sha256(f"{prompt_text}::{skill_body}::{MODEL}::{condition}".encode()).hexdigest()
+
+
 def run_one(task: str, condition: str, trial: int) -> dict:
     prompt_path = TASKS_DIR / f"{task}.txt"
     prompt_text = prompt_path.read_text()
@@ -49,8 +61,11 @@ def run_one(task: str, condition: str, trial: int) -> dict:
         cmd += ["--append-system-prompt", SKILL_BODY]
 
     out_path = RUNS_DIR / f"{task}__{condition}__trial{trial}.json"
+    spec_hash = input_spec_hash(prompt_text, condition)
     if out_path.exists():
-        return json.loads(out_path.read_text())
+        existing = json.loads(out_path.read_text())
+        if existing.get("_input_spec_sha256") == spec_hash:
+            return existing
 
     print(f"Running {task} / {condition} / trial {trial} ...", file=sys.stderr)
     try:
@@ -59,7 +74,8 @@ def run_one(task: str, condition: str, trial: int) -> dict:
             cwd=str(cwd), timeout=180,
         )
     except subprocess.TimeoutExpired:
-        record = {"type": "error", "error": "timeout", "_task": task, "_condition": condition, "_trial": trial}
+        record = {"type": "error", "error": "timeout", "_task": task, "_condition": condition, "_trial": trial,
+                  "_input_spec_sha256": spec_hash}
         out_path.write_text(json.dumps(record, indent=2))
         return record
 
@@ -72,6 +88,7 @@ def run_one(task: str, condition: str, trial: int) -> dict:
     record["_task"] = task
     record["_condition"] = condition
     record["_trial"] = trial
+    record["_input_spec_sha256"] = spec_hash
     out_path.write_text(json.dumps(record, indent=2))
     return record
 

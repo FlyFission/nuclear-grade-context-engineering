@@ -74,5 +74,6 @@
   "uuid": "d868a9e9-a4d3-4d64-8a56-7f091c345dd5",
   "_skill": "breaking-down-the-work",
   "_condition": "with_skill",
-  "_trial": 2
+  "_trial": 2,
+  "_input_spec_sha256": "ff1c7e3b082de369521a0ad888c60a1e799c71fd8364712f3140ee494f8f9811"
 }

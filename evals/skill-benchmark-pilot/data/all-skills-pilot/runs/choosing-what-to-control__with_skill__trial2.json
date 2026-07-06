@@ -74,5 +74,6 @@
   "uuid": "2e68810d-141f-43c4-9e1e-f9cc8b27cbf2",
   "_skill": "choosing-what-to-control",
   "_condition": "with_skill",
-  "_trial": 2
+  "_trial": 2,
+  "_input_spec_sha256": "10162f6a0f8b73464c0eaabfb46f3108de063cf604ebe100bc0718bb360201a9"
 }

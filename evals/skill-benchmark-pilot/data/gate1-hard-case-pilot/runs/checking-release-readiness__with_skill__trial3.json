@@ -74,5 +74,6 @@
   "uuid": "3df2c51e-3346-430a-ad48-1da638ab252d",
   "_skill": "checking-release-readiness",
   "_condition": "with_skill",
-  "_trial": 3
+  "_trial": 3,
+  "_input_spec_sha256": "77b1709669cc9745cc8284a777c8aec35285c769552ec56283d2ab7352593924"
 }

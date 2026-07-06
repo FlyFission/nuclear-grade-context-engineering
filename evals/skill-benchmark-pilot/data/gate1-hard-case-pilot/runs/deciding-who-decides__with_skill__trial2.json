@@ -74,5 +74,6 @@
   "uuid": "8030fa89-1350-492d-b054-fd4c89e26e4f",
   "_skill": "deciding-who-decides",
   "_condition": "with_skill",
-  "_trial": 2
+  "_trial": 2,
+  "_input_spec_sha256": "7013df0fe9be5e532a5ff675c8ccd03fcad8ee233b6d8fa4757d90cf82edc1ab"
 }

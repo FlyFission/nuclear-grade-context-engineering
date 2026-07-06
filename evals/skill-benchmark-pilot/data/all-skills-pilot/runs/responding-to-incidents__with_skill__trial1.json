@@ -74,5 +74,6 @@
   "uuid": "052d1a45-7a98-4b26-b9b9-26ec89c58737",
   "_skill": "responding-to-incidents",
   "_condition": "with_skill",
-  "_trial": 1
+  "_trial": 1,
+  "_input_spec_sha256": "7dee429100e3688a0af270a22a1082375418ffe2994ed0fb0fe0f86d3a5d1497"
 }

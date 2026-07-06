@@ -74,5 +74,6 @@
   "uuid": "7efdee32-e7d9-4b6f-8f86-2adac89a62a2",
   "_skill": "briefing-an-agent",
   "_condition": "without_skill",
-  "_trial": 1
+  "_trial": 1,
+  "_input_spec_sha256": "9b88e246b3e945e07affdeda75584aef524510da8641845d171ca2d1423af47e"
 }

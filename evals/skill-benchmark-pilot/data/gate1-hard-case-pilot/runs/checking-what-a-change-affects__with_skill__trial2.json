@@ -74,5 +74,6 @@
   "uuid": "fd8882a4-ac2f-4bf1-913a-3fba465e2169",
   "_skill": "checking-what-a-change-affects",
   "_condition": "with_skill",
-  "_trial": 2
+  "_trial": 2,
+  "_input_spec_sha256": "c27dc3b08e9f2dbcd5b7b4b9891edba13238ee54d0e9c9e53dc0225310027621"
 }

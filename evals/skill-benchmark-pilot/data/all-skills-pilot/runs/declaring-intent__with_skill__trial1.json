@@ -74,5 +74,6 @@
   "uuid": "c4666ba7-fad9-4e1a-b06c-feefa12ec67d",
   "_skill": "declaring-intent",
   "_condition": "with_skill",
-  "_trial": 1
+  "_trial": 1,
+  "_input_spec_sha256": "cc107dbb03c6eb39e2b28fa5b8b63542e1e5e444d03c066ba1f86759a5b3c66f"
 }

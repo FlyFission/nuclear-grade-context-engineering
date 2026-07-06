@@ -74,5 +74,6 @@
   "uuid": "74dd50b2-42b1-4cb7-a2e4-5ecb7048179b",
   "_skill": "staying-on-mission",
   "_condition": "without_skill",
-  "_trial": 2
+  "_trial": 2,
+  "_input_spec_sha256": "1eae97e964d3f3bec283e48144af8d30ce9cf760cceb04bf04983ee9941ae184"
 }

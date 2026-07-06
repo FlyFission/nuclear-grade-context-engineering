@@ -74,5 +74,6 @@
   "uuid": "aa648aae-d1ea-4d02-a478-804270857db7",
   "_skill": "handing-off-work",
   "_condition": "without_skill",
-  "_trial": 2
+  "_trial": 2,
+  "_input_spec_sha256": "83cf344b69277a87f256a0c73f54aa24da822c8a313245f8a27013d13baafc71"
 }

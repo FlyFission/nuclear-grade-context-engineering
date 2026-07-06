@@ -74,5 +74,6 @@
   "uuid": "a2e7d542-1111-42c1-9dcd-be1931235ad6",
   "_skill": "recording-what-an-agent-did",
   "_condition": "with_skill",
-  "_trial": 1
+  "_trial": 1,
+  "_input_spec_sha256": "d42070ca41857499019dcc02878b9be33f15d226bcc39acd982c86cfc95683b7"
 }

@@ -63,6 +63,29 @@ if not gate1_summary_path.exists():
     gate1_summary_path = GATE1 / "summary_gate1_FINAL.json"
 gate1_summary = json.loads(gate1_summary_path.read_text())
 
+# Gate 1 is a fixed historical cohort: every skill that tied or lost as of round
+# 1's ORIGINAL grading. The executive summary below asserts Gate 1 retests "those
+# same skills" -- true only if the *current* round1_summary's tied/lost set still
+# equals the Gate 1 batch. A later round-1 regrade (changed criteria, model, etc.)
+# could move some other, untested skill into TIE without it ever getting a Gate 1
+# row, which would silently make that sentence wrong. Fail loudly instead of
+# letting the wording drift out from under the data.
+round1_tied_or_lost = {r["skill"] for r in round1_summary if round1_verdict(r["skill"]) in ("TIE", "LOSES")}
+gate1_skills = {row["skill"] for row in gate1_summary}
+if round1_tied_or_lost != gate1_skills:
+    only_in_round1 = sorted(round1_tied_or_lost - gate1_skills)
+    only_in_gate1 = sorted(gate1_skills - round1_tied_or_lost)
+    raise SystemExit(
+        "Gate 1's fixed skill batch no longer matches the current round-1 tied/lost set -- "
+        "the executive summary's \"those same skills\" claim would be wrong.\n"
+        f"Tied/lost in round1_summary but missing a Gate 1 row: {only_in_round1 or 'none'}\n"
+        f"In the Gate 1 batch but no longer tied/lost in round1_summary: {only_in_gate1 or 'none'}\n"
+        "Gate 1 is a locked historical cohort chosen after round 1's original grading. If "
+        "round 1 has been legitimately regraded and the composition genuinely changed, reword "
+        "the executive summary to describe Gate 1 as that locked cohort instead of assuming "
+        "it still equals the current tied/lost set."
+    )
+
 # Headline counts and the flip/tie/loss breakdown computed once here (not
 # hard-coded) so the executive summary can never drift from the comparison
 # table below, which is built from this same data.

@@ -75,5 +75,5 @@
   "_skill": "checking-what-a-change-affects",
   "_condition": "with_skill",
   "_trial": 5,
-  "_input_spec_sha256": "0354416cd33515303b7155149270b6063dbf72aeb91d11f06d4f6599e1b74f7c"
+  "_input_spec_sha256": "cf1b51c1c87b62f8c82b4364dc0c0c31a2e20a50eb7d4f180a6d8985b5636403"
 }

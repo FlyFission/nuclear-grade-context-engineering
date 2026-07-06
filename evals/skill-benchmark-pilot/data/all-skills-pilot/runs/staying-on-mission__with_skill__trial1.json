@@ -75,5 +75,5 @@
   "_skill": "staying-on-mission",
   "_condition": "with_skill",
   "_trial": 1,
-  "_input_spec_sha256": "aa20f55767003547d849685df28179cb4e0288dc83f1c9675d996bf53316be22"
+  "_input_spec_sha256": "dfa80cfd94eb05249e3629c6e32b220cd238f82fd09f629e063812599a7771df"
 }

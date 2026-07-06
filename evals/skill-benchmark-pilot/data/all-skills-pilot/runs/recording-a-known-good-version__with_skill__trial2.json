@@ -75,5 +75,5 @@
   "_skill": "recording-a-known-good-version",
   "_condition": "with_skill",
   "_trial": 2,
-  "_input_spec_sha256": "9737460d2a07e91984ea2f05e97393beb72db846c645187b261e0305625372ec"
+  "_input_spec_sha256": "19dca42ce114d193f7cf22755308c7c9e7e6f5711f58a1963ba24d7fad588575"
 }

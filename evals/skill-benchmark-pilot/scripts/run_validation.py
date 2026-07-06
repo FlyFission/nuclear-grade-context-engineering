@@ -18,6 +18,11 @@ TRIALS = 5
 MODEL = "claude-sonnet-5"
 TOOLS = "Read,Glob,Grep"
 MAX_BUDGET_USD = "0.50"
+# Isolation/session flags that also shape what the subject model can do --
+# named here (not inlined in cmd below) so the hash and the actual command
+# are built from the exact same list and can never drift apart, the same
+# fix already applied to TOOLS/MAX_BUDGET_USD.
+HARNESS_FLAGS = ["--safe-mode", "--no-session-persistence"]
 
 def extract_skill_body(skill_name):
     text = (SKILLS_ROOT / skill_name / "SKILL.md").read_text()
@@ -28,14 +33,15 @@ def input_spec_hash(task_key, skill_name, condition):
     """Fingerprint of everything that determines the subject-model call's
     output besides its own randomness: the scenario prompt, the skill body
     (with_skill only), the model, the condition, and the harness settings
-    (--tools, --max-budget-usd). A persisted run file is only reused if
-    this matches -- an edited scenario, SKILL.md, or harness config must
-    force a fresh call even if the old output file is still sitting on
-    disk from before the change."""
+    (--tools, --max-budget-usd, HARNESS_FLAGS). A persisted run file is
+    only reused if this matches -- an edited scenario, SKILL.md, or harness
+    config must force a fresh call even if the old output file is still
+    sitting on disk from before the change."""
     scenario = TASKS[task_key]["scenario_prompt"]
     skill_body = extract_skill_body(skill_name) if condition == "with_skill" else ""
     return hashlib.sha256(
-        f"{scenario}::{skill_body}::{MODEL}::{condition}::{TOOLS}::{MAX_BUDGET_USD}".encode()
+        f"{scenario}::{skill_body}::{MODEL}::{condition}::{TOOLS}::{MAX_BUDGET_USD}::"
+        f"{'::'.join(HARNESS_FLAGS)}".encode()
     ).hexdigest()
 
 def run_one(task_key, skill_name, condition, trial):
@@ -43,8 +49,7 @@ def run_one(task_key, skill_name, condition, trial):
     cwd = WORK_DIR / f"{task_key}_{condition}_{trial}"
     cwd.mkdir(parents=True, exist_ok=True)
     cmd = ["claude", "-p", "--output-format", "json", "--model", MODEL,
-           "--safe-mode", "--tools", TOOLS, "--no-session-persistence",
-           "--max-budget-usd", MAX_BUDGET_USD]
+           "--tools", TOOLS, "--max-budget-usd", MAX_BUDGET_USD, *HARNESS_FLAGS]
     if condition == "with_skill":
         cmd += ["--append-system-prompt", extract_skill_body(skill_name)]
     out_path = RUNS_DIR / f"{task_key}__{condition}__trial{trial}.json"

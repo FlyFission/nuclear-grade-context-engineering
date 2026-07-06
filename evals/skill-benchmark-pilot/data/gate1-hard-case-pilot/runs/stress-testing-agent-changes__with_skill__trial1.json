@@ -75,5 +75,5 @@
   "_skill": "stress-testing-agent-changes",
   "_condition": "with_skill",
   "_trial": 1,
-  "_input_spec_sha256": "abfe167d12897adf677d0f92680f3ec6700898e7084dbe04a2c46e48d9a9be44"
+  "_input_spec_sha256": "a2d2c3a0884a3f3173ec5abdfbe36fad2faa36008da0f46aa089942f13ba182a"
 }

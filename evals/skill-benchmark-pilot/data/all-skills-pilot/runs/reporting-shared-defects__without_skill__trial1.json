@@ -75,5 +75,5 @@
   "_skill": "reporting-shared-defects",
   "_condition": "without_skill",
   "_trial": 1,
-  "_input_spec_sha256": "e0dfe4de7e22b7d6054c21601cc681a32896b28ac35f8d39b25fa2dbdcf9152e"
+  "_input_spec_sha256": "1846c176a0eed497f3c7c0e2938245ed3e68e0d98dd4c06aa2bb164d36025f73"
 }

@@ -75,5 +75,5 @@
   "_skill": "closing-stale-packets",
   "_condition": "with_skill",
   "_trial": 2,
-  "_input_spec_sha256": "9b26b49f0928252298e27597299fec965b83215473f08b4c9306d01d02db6005"
+  "_input_spec_sha256": "ff4579d520b66d2003d67e1b94bf571bbfc95524efb974cd2907674be804af5c"
 }

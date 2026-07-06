@@ -75,5 +75,5 @@
   "_skill": "vetting-outside-code-and-models",
   "_condition": "with_skill",
   "_trial": 3,
-  "_input_spec_sha256": "ed56d81e284568be783f3be76269faa907bc6670bd6f02ae2c4ace12705cf7a7"
+  "_input_spec_sha256": "089ee9676f980f6c036b1d7020803b314dc4315c640899053e2ea8be755f4fbf"
 }

@@ -75,5 +75,5 @@
   "_skill": "recording-what-an-agent-did",
   "_condition": "with_skill",
   "_trial": 3,
-  "_input_spec_sha256": "a3fe22558bb1efd98bf9b991bdc769cb6c807bf16d2ef8d58c7df2b1cc78dbfd"
+  "_input_spec_sha256": "6c9b87300077ef6c2bd0a966679f6b2dcc3dfa1b5a132558ea964ef615272c28"
 }

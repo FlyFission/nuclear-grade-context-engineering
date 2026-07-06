@@ -17,6 +17,11 @@ GATE1_TASKS = json.loads((BASE.parent / "data" / "gate1-hard-case-pilot" / "gate
 SCENARIO = GATE1_TASKS["creating-change-records"]["scenario_prompt"]
 TOOLS = "Read,Glob,Grep"
 MAX_BUDGET_USD = "0.30"
+# Isolation/session flags that also shape what the subject model can do --
+# named here (not inlined in cmd below) so the hash and the actual command
+# are built from the exact same list and can never drift apart, the same
+# fix already applied to TOOLS/MAX_BUDGET_USD.
+HARNESS_FLAGS = ["--safe-mode", "--no-session-persistence"]
 TRIALS = 3
 
 def extract_skill_body():
@@ -28,21 +33,22 @@ def input_spec_hash(model):
     """Fingerprint of everything that determines the subject-model call's
     output besides its own randomness: the scenario prompt, the skill body,
     the model under test, and the harness settings (--tools,
-    --max-budget-usd). A persisted run file is only reused if this matches
-    -- an edited scenario, SKILL.md, or harness config must force a fresh
-    call even if the old output file is still sitting on disk from before
-    the change."""
+    --max-budget-usd, HARNESS_FLAGS). A persisted run file is only reused
+    if this matches -- an edited scenario, SKILL.md, or harness config
+    must force a fresh call even if the old output file is still sitting
+    on disk from before the change."""
     skill_body = extract_skill_body()
     return hashlib.sha256(
-        f"{SCENARIO}::{skill_body}::{model}::{TOOLS}::{MAX_BUDGET_USD}".encode()
+        f"{SCENARIO}::{skill_body}::{model}::{TOOLS}::{MAX_BUDGET_USD}::"
+        f"{'::'.join(HARNESS_FLAGS)}".encode()
     ).hexdigest()
 
 def run_one(model, trial):
     cwd = WORK_DIR / f"{model}_{trial}"
     cwd.mkdir(parents=True, exist_ok=True)
     cmd = ["claude", "-p", "--output-format", "json", "--model", model,
-           "--safe-mode", "--tools", TOOLS, "--no-session-persistence",
-           "--max-budget-usd", MAX_BUDGET_USD, "--append-system-prompt", extract_skill_body()]
+           "--tools", TOOLS, "--max-budget-usd", MAX_BUDGET_USD, *HARNESS_FLAGS,
+           "--append-system-prompt", extract_skill_body()]
     out_path = RUNS_DIR / f"{model}__with_skill__trial{trial}.json"
     spec_hash = input_spec_hash(model)
     if out_path.exists():

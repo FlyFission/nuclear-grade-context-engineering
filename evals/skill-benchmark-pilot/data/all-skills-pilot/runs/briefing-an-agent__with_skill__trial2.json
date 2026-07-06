@@ -75,5 +75,5 @@
   "_skill": "briefing-an-agent",
   "_condition": "with_skill",
   "_trial": 2,
-  "_input_spec_sha256": "df11886a925dc19be8d476b56e05ac755a4bc41c465152597c6594049b018f6e"
+  "_input_spec_sha256": "97f4dcd84c271c3a9d6fc3087ced7845ad585ba64c7bc7f5c3319f14df92152d"
 }

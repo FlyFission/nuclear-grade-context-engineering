@@ -75,5 +75,5 @@
   "_task": "briefing-an-agent-true-niche",
   "_condition": "with_skill",
   "_trial": 3,
-  "_input_spec_sha256": "e56ea6b978afa8c560bfcafd5916a22d757bd6eab2a113e0ab6c7582d344ccfc"
+  "_input_spec_sha256": "0f43fdcf80d32a8bbcb2bfd32b448fce99b397e3ec288787b113fe2e7df9aba0"
 }

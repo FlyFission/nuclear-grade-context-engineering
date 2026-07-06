@@ -20,6 +20,11 @@ RUNS_DIR.mkdir(exist_ok=True)
 MODEL = "claude-sonnet-5"
 TOOLS = ""
 MAX_BUDGET_USD = "0.30"
+# Isolation/session flags that also shape what the subject model can do --
+# named here (not inlined in cmd below) so the hash and the actual command
+# are built from the exact same list and can never drift apart, the same
+# fix already applied to TOOLS/MAX_BUDGET_USD.
+HARNESS_FLAGS = ["--safe-mode", "--no-session-persistence"]
 
 OLD_BRIEFING_DESC = (
     "briefing-an-agent: Prepares focused context for an AI agent, reviewer, verifier, or "
@@ -89,11 +94,13 @@ def input_spec_hash(prompt):
     output besides its own randomness: the fully-built prompt (which already
     captures SCENARIO, the variant's briefing description, and the fixed
     skill descriptions it's compared against) plus the harness settings
-    (model, tools, budget). A persisted run file is only reused if this
-    matches -- editing SCENARIO or any skill description must force a fresh
-    call even if the old routing_runs/ file is still on disk from before
-    the edit."""
-    return hashlib.sha256(f"{prompt}::{MODEL}::{TOOLS}::{MAX_BUDGET_USD}".encode()).hexdigest()
+    (model, tools, budget, HARNESS_FLAGS). A persisted run file is only
+    reused if this matches -- editing SCENARIO or any skill description
+    must force a fresh call even if the old routing_runs/ file is still on
+    disk from before the edit."""
+    return hashlib.sha256(
+        f"{prompt}::{MODEL}::{TOOLS}::{MAX_BUDGET_USD}::{'::'.join(HARNESS_FLAGS)}".encode()
+    ).hexdigest()
 
 
 def run_one(variant, briefing_desc, trial):
@@ -105,7 +112,7 @@ def run_one(variant, briefing_desc, trial):
         if existing.get("_input_spec_sha256") == spec_hash:
             return existing
     cmd = ["claude", "-p", prompt, "--output-format", "json", "--model", MODEL,
-           "--safe-mode", "--tools", TOOLS, "--no-session-persistence", "--max-budget-usd", MAX_BUDGET_USD,
+           "--tools", TOOLS, "--max-budget-usd", MAX_BUDGET_USD, *HARNESS_FLAGS,
            "--json-schema", SCHEMA]
     try:
         proc = subprocess.run(cmd, capture_output=True, text=True, timeout=120)

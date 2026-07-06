@@ -29,19 +29,26 @@ TRIALS = 3
 MODEL = "claude-sonnet-5"
 TOOLS = ""
 MAX_BUDGET_USD = "0.50"
+# Isolation/session flags that also shape what the subject model can do --
+# named here (not inlined in cmd below) so the hash and the actual command
+# are built from the exact same list and can never drift apart, the same
+# fix already applied to TOOLS/MAX_BUDGET_USD.
+HARNESS_FLAGS = ["--safe-mode", "--no-session-persistence"]
 
 
 def input_spec_hash(prompt_text: str, condition: str) -> str:
     """Fingerprint of everything that determines the subject-model call's
     output besides its own randomness: the task prompt, the skill body
     (with_skill only), the model, the condition, and the harness settings
-    (--tools, --max-budget-usd) that shape what the model is even allowed to
-    do. A persisted run file is only reused if this matches -- an edited
-    task prompt, SKILL.md, or harness config must force a fresh call even
-    if the old output file is still sitting on disk from before the change."""
+    (--tools, --max-budget-usd, HARNESS_FLAGS) that shape what the model is
+    even allowed to do. A persisted run file is only reused if this matches
+    -- an edited task prompt, SKILL.md, or harness config must force a
+    fresh call even if the old output file is still sitting on disk from
+    before the change."""
     skill_body = SKILL_BODY if condition == "with_skill" else ""
     return hashlib.sha256(
-        f"{prompt_text}::{skill_body}::{MODEL}::{condition}::{TOOLS}::{MAX_BUDGET_USD}".encode()
+        f"{prompt_text}::{skill_body}::{MODEL}::{condition}::{TOOLS}::{MAX_BUDGET_USD}::"
+        f"{'::'.join(HARNESS_FLAGS)}".encode()
     ).hexdigest()
 
 
@@ -56,10 +63,9 @@ def run_one(task: str, condition: str, trial: int) -> dict:
         "claude", "-p",
         "--output-format", "json",
         "--model", MODEL,
-        "--safe-mode",
         "--tools", TOOLS,
-        "--no-session-persistence",
         "--max-budget-usd", MAX_BUDGET_USD,
+        *HARNESS_FLAGS,
     ]
     if condition == "with_skill":
         cmd += ["--append-system-prompt", SKILL_BODY]

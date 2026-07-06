@@ -3,5 +3,5 @@
   "trial": 1,
   "chosen_skill": "handing-off-work",
   "reasoning": "The session was cut off mid-task and needs to transfer to a fresh agent with state, remaining scope, and authority limits \u2014 exactly the closed-loop handoff scenario this skill covers, as opposed to briefing a new agent starting a fresh task.",
-  "_input_spec_sha256": "d24b63d2eec16b88472cfafd24c17f213aedeb45977cb00ef9fb6efc9a0e6197"
+  "_input_spec_sha256": "531ffbc938fe648801df0ad00b64caf56333fb3aa3f9d5865610b024d2a5df31"
 }

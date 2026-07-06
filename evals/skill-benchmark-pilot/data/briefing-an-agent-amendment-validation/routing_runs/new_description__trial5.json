@@ -3,5 +3,5 @@
   "trial": 5,
   "chosen_skill": "handing-off-work",
   "reasoning": "The session is being cut off mid-task and work must transfer to a fresh agent instance, which is exactly the closed-loop handoff scenario (state, changes, remaining scope, authority limits) that handing-off-work is designed for, rather than briefing a new agent starting fresh work.",
-  "_input_spec_sha256": "d24b63d2eec16b88472cfafd24c17f213aedeb45977cb00ef9fb6efc9a0e6197"
+  "_input_spec_sha256": "531ffbc938fe648801df0ad00b64caf56333fb3aa3f9d5865610b024d2a5df31"
 }

@@ -31,6 +31,11 @@ SAMPLE = [
 SUBJECT_MODEL = "claude-haiku-4-5"
 TOOLS = "Read,Glob,Grep"
 MAX_BUDGET_USD = "0.30"
+# Isolation/session flags that also shape what the subject model can do --
+# named here (not inlined in cmd below) so the hash and the actual command
+# are built from the exact same list and can never drift apart, the same
+# fix already applied to TOOLS/MAX_BUDGET_USD.
+HARNESS_FLAGS = ["--safe-mode", "--no-session-persistence"]
 TRIALS = 3
 
 
@@ -48,14 +53,15 @@ def input_spec_hash(skill, source, condition):
     """Fingerprint of everything that determines the subject-model call's
     output besides its own randomness: the scenario prompt, the skill body
     (with_skill only), the subject model, the condition, and the harness
-    settings (--tools, --max-budget-usd). A persisted run file is only
-    reused if this matches -- an edited scenario, SKILL.md, or harness
-    config must force a fresh call even if the old output file is still
-    sitting on disk from before the change."""
+    settings (--tools, --max-budget-usd, HARNESS_FLAGS). A persisted run
+    file is only reused if this matches -- an edited scenario, SKILL.md, or
+    harness config must force a fresh call even if the old output file is
+    still sitting on disk from before the change."""
     scenario = scenario_for(skill, source)
     skill_body = extract_skill_body(skill) if condition == "with_skill" else ""
     return hashlib.sha256(
-        f"{scenario}::{skill_body}::{SUBJECT_MODEL}::{condition}::{TOOLS}::{MAX_BUDGET_USD}".encode()
+        f"{scenario}::{skill_body}::{SUBJECT_MODEL}::{condition}::{TOOLS}::{MAX_BUDGET_USD}::"
+        f"{'::'.join(HARNESS_FLAGS)}".encode()
     ).hexdigest()
 
 
@@ -64,8 +70,7 @@ def run_one(skill, source, condition, trial):
     cwd = WORK_DIR / f"{skill}_{condition}_{trial}"
     cwd.mkdir(parents=True, exist_ok=True)
     cmd = ["claude", "-p", "--output-format", "json", "--model", SUBJECT_MODEL,
-           "--safe-mode", "--tools", TOOLS, "--no-session-persistence",
-           "--max-budget-usd", MAX_BUDGET_USD]
+           "--tools", TOOLS, "--max-budget-usd", MAX_BUDGET_USD, *HARNESS_FLAGS]
     if condition == "with_skill":
         cmd += ["--append-system-prompt", extract_skill_body(skill)]
     out_path = RUNS_DIR / f"{skill}__{condition}__trial{trial}.json"

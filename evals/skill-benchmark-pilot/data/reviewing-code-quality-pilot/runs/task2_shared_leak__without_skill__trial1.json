@@ -75,5 +75,5 @@
   "_task": "task2_shared_leak",
   "_condition": "without_skill",
   "_trial": 1,
-  "_input_spec_sha256": "e15780b1f2dbcf51c57925f8bfd64b991827f4dccba9ad8ec3a9807908d6343c"
+  "_input_spec_sha256": "6812c57d2603354d86e8730309f7ae0cfffff83efd40fcf6da9333ea72ad03d9"
 }

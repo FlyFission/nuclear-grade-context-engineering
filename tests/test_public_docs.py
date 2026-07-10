@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -237,3 +238,25 @@ def test_prove_handle_uses_educate_and_stays_consistent():
         text = (ROOT / rel).read_text(encoding="utf-8")
         for token in stale:
             assert token not in text, f"{rel} still contains stale PROVE beat '{token}'"
+
+
+def test_starter_kit_copy_commands_reference_existing_assets():
+    """Starter-kit README snippets are executable adoption paths, not illustrative
+    prose. Guard copied skill and doc paths so an adopter does not learn about a
+    drifted reference only after pasting the command into their repo."""
+
+    starter_readmes = sorted((ROOT / "starter-kit").glob("*/README.md"))
+    assert starter_readmes, "expected starter-kit README files"
+
+    for readme in starter_readmes:
+        text = readme.read_text(encoding="utf-8")
+
+        for skill in re.findall(r"\b([a-z][a-z0-9-]+)\b/SKILL\.md", text):
+            assert (ROOT / "skills" / skill / "SKILL.md").exists(), (
+                f"{readme.relative_to(ROOT)} references missing skill {skill}"
+            )
+
+        for doc in re.findall(r"docs/[A-Za-z0-9_./-]+\.md", text):
+            assert (ROOT / doc).exists(), (
+                f"{readme.relative_to(ROOT)} references missing doc {doc}"
+            )

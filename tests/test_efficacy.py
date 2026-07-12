@@ -149,10 +149,13 @@ def test_eval_command_reports_malformed_case_clearly(tmp_path):
 
 
 def test_eval_command_reports_full_coverage():
+    cases = efficacy.load_cases(CASES_DIR)
+    expected_signals = sum(len(case.signals) for case in cases)
+
     result = run_ng("eval", str(ROOT))
 
     assert result.returncode == 0, result.stderr
-    assert "Decision-signal coverage: 15/15" in result.stdout
+    assert f"Decision-signal coverage: {expected_signals}/{expected_signals}" in result.stdout
     assert "[ok]" in result.stdout
 
 

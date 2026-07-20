@@ -27,7 +27,7 @@ smaller than a full run:
 
 - docs-only wording: `git diff --check` plus the nearest public-doc or token test;
 - template, skill, command, or checker behavior: the targeted pytest file plus `python tools/ng.py doctor .`;
-- worked-example evidence: re-run the example validator or example test named in the changed record.
+- worked-example evidence: re-run the example validator or example test named in the change record.
 
 If you skip a full pre-PR run, say why the narrower proof still covers the files you changed.
 

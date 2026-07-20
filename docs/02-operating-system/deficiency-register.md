@@ -2,7 +2,7 @@
 
 **Purpose:** Keep known problems aged, owned, and either fixed or formally risk-accepted, so deviations are not quietly normalized into the new standard. This is the operating mechanics behind the `tracking-deficiencies` skill, `ng-deficiency`, and `templates/golden-path/deficiency.md`. It implements the standing half of Charter Art. 19 and supports Art. 3 (rising standards).
 
-**Boundary:** Original software-workflow translation. It does not create formal assurance, compliance, certification, safety, or regulatory adequacy.
+**Boundary:** Bounded software-workflow translation. It does not create formal assurance, compliance, certification, safety, or regulatory adequacy.
 
 ---
 

@@ -22,7 +22,8 @@ These docs have two parts. First, learn how to use the workflow. Second, look up
 | Lead people and agents the high-reliability way | [`01-field-guide/leadership-and-high-reliability.md`](01-field-guide/leadership-and-high-reliability.md) |
 | See how Nuclear-grade relates to the context-engineering literature and PRP template | [`01-field-guide/context-engineering-literature-crosswalk.md`](01-field-guide/context-engineering-literature-crosswalk.md) |
 | Place authority and declare intent | [`02-operating-system/authority-and-intent.md`](02-operating-system/authority-and-intent.md) |
-| Keep the actor from grading its own work | [`02-operating-system/actor-evidence-independence.md`](02-operating-system/actor-evidence-independence.md) |
+| Expose evidence custody and actor–evidence coupling | [`02-operating-system/actor-evidence-independence.md`](02-operating-system/actor-evidence-independence.md) |
+| Inspect the optional acceptance graph/domain model | [`02-operating-system/acceptance-graph-domain-model.md`](02-operating-system/acceptance-graph-domain-model.md) |
 | Keep an LLM judge honest (guard against judge bias) | [`02-operating-system/evaluation-integrity.md`](02-operating-system/evaluation-integrity.md) |
 | Scale rigor by risk tier | [`02-operating-system/risk-tiers-and-modes.md`](02-operating-system/risk-tiers-and-modes.md) |
 | Make a second check genuinely independent | [`02-operating-system/independence-architecture.md`](02-operating-system/independence-architecture.md) |

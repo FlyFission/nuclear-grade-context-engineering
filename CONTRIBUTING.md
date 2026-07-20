@@ -2,7 +2,7 @@
 
 Thank you for thinking about helping with Nuclear-grade.
 
-Nuclear-grade is an original way to do software engineering, drawn from public sources. Your changes should make evidence easier to produce, review, and keep current, without faking compliance.
+Nuclear-grade is an open, software-native synthesis and reference implementation drawn from public engineering, professional self-review, provenance, AI-governance, and assurance sources. Its differentiated center is evidence custody and actor–evidence coupling in AI-assisted software acceptance. Your changes should make those relationships easier to expose, review, and keep current without inventing novelty, efficacy, or compliance claims.
 
 By taking part, you agree to follow the [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
 
@@ -13,7 +13,7 @@ By taking part, you agree to follow the [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.m
 - Do not build templates from paywalled, proprietary, or controlled standards or manuals.
 - Prefer small, focused evidence packets over large generic templates.
 - Use clear evidence statuses: `pass`, `fail`, `gap`, `deferred`, `not applicable`, or `planned`.
-- Keep AI-assisted work tightly scoped and checked by someone else.
+- Keep AI-assisted work tightly scoped; disclose who controlled decisive evidence and reduce coupling according to consequence. A different role label alone is not independence.
 
 ## Before opening a PR
 
@@ -24,7 +24,7 @@ python -m pytest -q
 python -m ruff check .
 python tools/ng.py doctor .
 python tools/ng.py tokens .
-python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions
+python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions --strict-custody
 ```
 
 These are the fast local checks shared with CI; the workflow remains the source of truth.
@@ -33,7 +33,7 @@ Also scan new public docs for overclaiming. Lean on phrases like:
 
 - public-source-inspired;
 - evidence-oriented;
-- original software workflow;
+- open, software-native synthesis/reference workflow;
 - non-compliance-claiming.
 
 Avoid phrases like:

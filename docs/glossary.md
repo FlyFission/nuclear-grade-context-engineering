@@ -31,9 +31,16 @@ Plain-language decoding of Nuclear-grade terms and idioms. The skills and docs u
 | Stage contract | An explicit interface for one workflow stage or delegable slice: its Inputs (exact sections), Process, Outputs, the gate that accepts it, and what is deterministic vs model-mediated. Minimal form is a stage `CONTEXT.md`; full form is `templates/standard/stage-contract.md`. |
 | Control plane vs execution plane | The control plane is the interpretable, reviewable layer (Git, markdown, stage contracts, baselines); the execution plane is where work and side effects happen (tools, agents, CI, durable runtimes). Stage contracts live in the control plane; the gate that enforces them sits in the execution plane. |
 | Determinism posture | A disclosure of what a stage can reproduce and what it cannot: the model id, prompt, and temperature/seed for model-mediated steps, and which steps are replayable vs human-judgment. A disclosure, not a guarantee that a model step repeats. |
-| Actor-evidence independence | At a trust-bearing gate, the evidence must have an author independent of the actor, or be reproducible by an independent party. The dual of the self-modification boundary: that one stops the agent editing its gate; this one stops it being the sole author of the gate's input. |
+| Evidence custody | Who generated, selected, transformed, summarized, executed or captured, retained, and presented the evidence admitted at a gate. Provenance records origin and process; custody records control of the evidence path. |
+| Actor–evidence coupling | How much the change actor also controls the evidence path used to accept the change. A protected gate can still be coupled when the actor supplies everything it knows. |
+| Coupling profile | Five separate axes — actor, context, mechanism, authority, and resource — recorded as coupled, partially separated, or separated. The axes form a partial order, not one score or rung. |
 | Self-authored evidence | Evidence, a narrative, or a decision the actor produced about its own work. It is a claim to be verified, not the verification — a confident error produces it just as readily as a sound change does. |
-| Independence rung | How independent the author of a gate's input is from the actor, on a 1–5 ladder (1 = the actor narrates; 5 = an independent human authors or witnesses it). Match the rung to the consequence, like the enforcement rungs. |
+| Decisive evidence | An evidence item on which the verdict materially depends. If removing the item could change acceptance, its custody, coupling, validity, and admissibility must be explicit. |
+| Evidence admissibility | The consequence-dependent decision that an evidence item may support a particular claim. Presence, provenance, or a passing status does not automatically make evidence admissible. |
+| Consequence-dependent admissibility | The rule that acceptable coupling depends on what is being accepted. A reversible teaching example can admit disclosed self-check evidence that would be inadequate for a security, production, or external-trust claim. |
+| Provenance versus custody | Provenance records where an artifact came from and how it was produced; custody records who controlled generation, selection, transformation, capture, retention, and presentation. Neither alone establishes truth or adequacy. |
+| Protected gate versus uncoupled evidence path | A gate can be protected from editing while still consuming only evidence selected and narrated by the change actor. Gate integrity and evidence-path coupling are separate control questions. |
+| Verdict / apply-clearance | An implementation primitive that separates an evidentiary acceptance decision from present authorization to apply it in a specific operational context. It is useful but not claimed as a standalone invention. |
 
 ## Idioms used in the skills
 
@@ -54,4 +61,4 @@ Plain-language decoding of Nuclear-grade terms and idioms. The skills and docs u
 
 ## Source-lineage note
 
-This glossary is an original plain-language aid for the Nuclear-grade workflow. It does not create formal V&V, compliance, certification, safety, security, or regulatory adequacy.
+This glossary is an authored plain-language aid for the Nuclear-grade workflow. It does not create formal V&V, compliance, certification, safety, security, or regulatory adequacy.

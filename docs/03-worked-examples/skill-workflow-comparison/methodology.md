@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This evaluation asks one practical question: when a user follows Nuclear-grade skills and workflows, do the records they make help a reviewer decide better than a direct prompt would?
+This formative inspection asks one practical design question: when the same author constructs simple-prompt and Nuclear-grade records from matched scenario facts, which decision signals become visible in each artifact?
 
 It does not ask whether Nuclear-grade makes code safer, secure, compliant, certified, production-ready, or formally verified.
 
@@ -58,4 +58,4 @@ This methodology does not create formal assurance, compliance, certification, sa
 
 ## Source-Lineage Note
 
-This method is an original way to evaluate the workflow. It is based on the Nuclear-grade operating model and the public source-lineage limits in `docs/00-standards-foundation/source-map.md`.
+This is an authored formative-inspection method based on the Nuclear-grade operating model and the public source-lineage limits in `docs/00-standards-foundation/source-map.md`. It is not claimed as a novel evaluation method.

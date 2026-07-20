@@ -33,5 +33,12 @@ Thumbs.db
 # Nuclear-grade private research scratch space
 .research/
 
+# Generated LaTeX build products (keep paper.bbl as an arXiv source input)
+docs/06-publications/arxiv/paper.aux
+docs/06-publications/arxiv/paper.blg
+docs/06-publications/arxiv/paper.log
+docs/06-publications/arxiv/paper.out
+docs/06-publications/arxiv/paper.pdf
+
 # Claude Code working directory (local settings, agent worktrees)
 .claude/

@@ -1,0 +1,386 @@
+\begin{thebibliography}{49}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[{agentsmd project}(2025)]{agentsmd2025}
+{agentsmd project}.
+\newblock {AGENTS.md}: A simple, open format for guiding coding agents.
+\newblock Git repository, README commit 557da8b, December 2025.
+\newblock URL
+  \url{https://github.com/agentsmd/agents.md/tree/557da8b39c6f5b4dee2239df09a6ab97a82ff4df}.
+
+\bibitem[{Anthropic}(2025)]{anthropic2025context}
+{Anthropic}.
+\newblock Effective context engineering for {AI} agents.
+\newblock Anthropic Engineering, September 2025.
+\newblock URL
+  \url{https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents}.
+\newblock Accessed 2026-07-19.
+
+\bibitem[Buhl et~al.(2024)Buhl, Sett, Koessler, Schuett, and
+  Anderljung]{buhl2024safetycases}
+Marie~Davidsen Buhl, Gaurav Sett, Leonie Koessler, Jonas Schuett, and Markus
+  Anderljung.
+\newblock Safety cases for frontier {AI}.
+\newblock \emph{arXiv preprint arXiv:2410.21572}, 2024.
+\newblock URL \url{https://arxiv.org/abs/2410.21572}.
+
+\bibitem[{GitHub}(2026)]{github2026speckit}
+{GitHub}.
+\newblock Spec kit: Spec-driven development toolkit.
+\newblock Git repository, release v0.13.0, July 2026.
+\newblock URL \url{https://github.com/github/spec-kit/tree/v0.13.0}.
+
+\bibitem[Gloaguen et~al.(2026)Gloaguen, M{\"u}ndler, M{\"u}ller, Raychev, and
+  Vechev]{gloaguen2026agents}
+Thibaud Gloaguen, Niels M{\"u}ndler, Mark M{\"u}ller, Veselin Raychev, and
+  Martin Vechev.
+\newblock Evaluating {AGENTS.md}: Are repository-level context files helpful
+  for coding agents?
+\newblock \emph{arXiv preprint arXiv:2602.11988}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2602.11988}.
+\newblock Version 2, revised June 23, 2026.
+
+\bibitem[Gohar et~al.(2024)Gohar, Hunter, Lutz, and Cohen]{gohar2024codefeater}
+Usman Gohar, Michael~C. Hunter, Robyn~R. Lutz, and Myra~B. Cohen.
+\newblock {CoDefeater}: Using {LLM}s to find defeaters in assurance cases.
+\newblock \emph{arXiv preprint arXiv:2407.13717}, 2024.
+\newblock URL \url{https://arxiv.org/abs/2407.13717}.
+\newblock Version 2.
+
+\bibitem[Huffer(2026)]{flyfission2026repo}
+Ben Huffer.
+\newblock Nuclear-grade context engineering.
+\newblock Public software repository, assessed at commit
+  92357cd2654cde6d4655699a04305b793207d120, 2026.
+\newblock URL
+  \url{https://github.com/FlyFission/nuclear-grade-context-engineering/tree/92357cd2654cde6d4655699a04305b793207d120}.
+
+\bibitem[{in-toto project}(2026)]{intoto2026}
+{in-toto project}.
+\newblock in-toto: A framework to secure the integrity of software supply
+  chains.
+\newblock Official project documentation, 2026.
+\newblock URL \url{https://in-toto.io/}.
+\newblock Accessed 2026-07-19.
+
+\bibitem[{International Ethics Standards Board for
+  Accountants}(2026)]{iesba2026code}
+{International Ethics Standards Board for Accountants}.
+\newblock International code of ethics for professional accountants.
+\newblock Official code and explanatory material, 2026.
+\newblock URL \url{https://www.ethicsboard.org/iesba-code}.
+\newblock Accessed 2026-07-19.
+
+\bibitem[{Joint Task Force}(2022)]{nist2022assessment}
+{Joint Task Force}.
+\newblock Assessing security and privacy controls in information systems and
+  organizations.
+\newblock Technical Report NIST SP 800-53A Revision 5, National Institute of
+  Standards and Technology, January 2022.
+\newblock URL \url{https://doi.org/10.6028/NIST.SP.800-53Ar5}.
+
+\bibitem[Kang(2026)]{kang2026gaie}
+Richard Kang.
+\newblock Governed {AI}-assisted engineering: Graduated human oversight for
+  agentic code generation in regulated domains.
+\newblock \emph{arXiv preprint arXiv:2606.22484}, June 2026.
+\newblock URL \url{https://arxiv.org/abs/2606.22484}.
+\newblock Version 2.
+
+\bibitem[Kaptein et~al.(2026)Kaptein, Khan, and
+  Podstavnychy]{kaptein2026runtime}
+Maurits Kaptein, Vassilis-Javed Khan, and Andriy Podstavnychy.
+\newblock Runtime governance for {AI} agents: Policies on paths.
+\newblock \emph{arXiv preprint arXiv:2603.16586}, March 2026.
+\newblock URL \url{https://arxiv.org/abs/2603.16586}.
+
+\bibitem[Kaul et~al.(2026)Kaul, Lan, and Gupta]{kaul2026agentbound}
+Anuj Kaul, Qianlong Lan, and Pranay Gupta.
+\newblock Behavioral governance for autonomous {AI} agents: The {AgentBound}
+  framework.
+\newblock \emph{arXiv preprint arXiv:2606.30970}, June 2026.
+\newblock URL \url{https://arxiv.org/abs/2606.30970}.
+\newblock Version 2.
+
+\bibitem[Kawas(2026)]{kawas2026decision}
+Eman Kawas.
+\newblock Decision assurance for {AI}-enabled mission systems: From test
+  evidence to operational authority.
+\newblock \emph{The ITEA Journal of Test and Evaluation}, June 2026.
+\newblock \doi{10.61278/itea.47.2.1005}.
+\newblock URL \url{https://doi.org/10.61278/itea.47.2.1005}.
+
+\bibitem[Li et~al.(2025)Li, Sun, Huang, Zhong, Jiang, Han, Zhang, Wang, and
+  Liu]{li2025preference}
+Dawei Li, Renliang Sun, Yue Huang, Ming Zhong, Bohan Jiang, Jiawei Han,
+  Xiangliang Zhang, Wei Wang, and Huan Liu.
+\newblock Preference leakage: A contamination problem in {LLM}-as-a-judge.
+\newblock \emph{arXiv preprint arXiv:2502.01534}, February 2025.
+\newblock URL \url{https://arxiv.org/abs/2502.01534}.
+\newblock Version 3.
+
+\bibitem[Lopopolo(2026)]{openai2026harness}
+Ryan Lopopolo.
+\newblock Harness engineering: Leveraging {Codex} in an agent-first world.
+\newblock OpenAI, February 2026.
+\newblock URL \url{https://openai.com/index/harness-engineering/}.
+
+\bibitem[Medin(2025)]{medin2025context}
+Cole Medin.
+\newblock Context engineering intro.
+\newblock Git repository, 2025.
+\newblock URL \url{https://github.com/coleam00/context-engineering-intro}.
+\newblock Accessed 2026-07-19.
+
+\bibitem[Mei et~al.(2025)Mei, Yao, Ge, Wang, Bi, Cai, Liu, Li, Li, Zhang, Zhou,
+  Mao, Xia, Guo, and Liu]{mei2025context}
+Lingrui Mei, Jiayu Yao, Yuyao Ge, Yiwei Wang, Baolong Bi, Yujun Cai, Jiazhi
+  Liu, Mingyu Li, Zhong-Zhi Li, Duzhen Zhang, Chenlin Zhou, Jiayi Mao, Tianze
+  Xia, Jiafeng Guo, and Shenghua Liu.
+\newblock A survey of context engineering for large language models.
+\newblock \emph{arXiv preprint arXiv:2507.13334}, 2025.
+\newblock URL \url{https://arxiv.org/abs/2507.13334}.
+\newblock Version 2.
+
+\bibitem[Ming et~al.(2026)Ming, He, Zhao, and Jiang]{ming2026reviewability}
+Shijie Ming, Ziqiang He, Ning Zhao, and Ke~Jiang.
+\newblock From traceability to reviewability: Intent-anchored claim review for
+  agentic {AI} design handoffs.
+\newblock \emph{SSRN preprint}, 2026.
+\newblock \doi{10.2139/ssrn.7030983}.
+\newblock URL \url{https://doi.org/10.2139/ssrn.7030983}.
+
+\bibitem[{National Aeronautics and Space
+  Administration}(2022{\natexlab{a}})]{nasa2022assurance}
+{National Aeronautics and Space Administration}.
+\newblock Software assurance and software safety standard.
+\newblock Technical Report NASA-STD-8739.8B, National Aeronautics and Space
+  Administration, September 2022{\natexlab{a}}.
+\newblock URL \url{https://standards.nasa.gov/standard/NASA/NASA-STD-87398}.
+
+\bibitem[{National Aeronautics and Space
+  Administration}(2022{\natexlab{b}})]{nasa2022swe136}
+{National Aeronautics and Space Administration}.
+\newblock {SWE-136}: Software tool accreditation.
+\newblock NASA Software Engineering Handbook, aligned to NPR 7150.2D,
+  2022{\natexlab{b}}.
+\newblock URL
+  \url{https://swehb.nasa.gov/spaces/SWEHBVD/pages/102695495/SWE-136+-+Software+Tool+Accreditation}.
+\newblock Accessed 2026-07-19.
+
+\bibitem[{National Aeronautics and Space
+  Administration}(2022{\natexlab{c}})]{nasa2022swe141}
+{National Aeronautics and Space Administration}.
+\newblock {SWE-141}: Software independent verification and validation.
+\newblock NASA Software Engineering Handbook, aligned to NPR 7150.2D,
+  2022{\natexlab{c}}.
+\newblock URL
+  \url{https://swehb.nasa.gov/spaces/SWEHBVD/pages/102695499/SWE-141+-+Software+Independent+Verification+and+Validation}.
+\newblock Accessed 2026-07-19.
+
+\bibitem[{National Aeronautics and Space Administration}(2024)]{nasa2024models}
+{National Aeronautics and Space Administration}.
+\newblock Standard for models and simulations.
+\newblock Technical Report NASA-STD-7009B, National Aeronautics and Space
+  Administration, March 2024.
+\newblock URL \url{https://standards.nasa.gov/standard/nasa/nasa-std-7009}.
+
+\bibitem[{National Institute of Standards and Technology}(2023)]{nist2023airmf}
+{National Institute of Standards and Technology}.
+\newblock Artificial intelligence risk management framework ({AI RMF 1.0}).
+\newblock Technical Report NIST AI 100-1, National Institute of Standards and
+  Technology, January 2023.
+\newblock URL \url{https://doi.org/10.6028/NIST.AI.100-1}.
+
+\bibitem[{Object Management Group}(2023)]{omg2023sacm}
+{Object Management Group}.
+\newblock Structured assurance case metamodel, version 2.3, October 2023.
+\newblock URL \url{https://www.omg.org/spec/SACM/}.
+
+\bibitem[{OpenAI}(2026)]{openai2026noswebench}
+{OpenAI}.
+\newblock Why we no longer evaluate {SWE-bench Verified}.
+\newblock OpenAI, February 2026.
+\newblock URL
+  \url{https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified}.
+
+\bibitem[{OpenAI and the SWE-bench collaboration}(2024)]{openai2024swebench}
+{OpenAI and the SWE-bench collaboration}.
+\newblock Introducing {SWE-bench Verified}.
+\newblock OpenAI, August 2024.
+\newblock URL \url{https://openai.com/index/introducing-swe-bench-verified/}.
+\newblock Updated February 24, 2025.
+
+\bibitem[{Palantir Technologies}(2026{\natexlab{a}})]{palantir2026ontology}
+{Palantir Technologies}.
+\newblock Ontology building: Overview.
+\newblock Official product documentation, 2026{\natexlab{a}}.
+\newblock URL \url{https://www.palantir.com/docs/foundry/ontology/overview}.
+\newblock Accessed 2026-07-19.
+
+\bibitem[{Palantir Technologies}(2026{\natexlab{b}})]{palantir2026proposals}
+{Palantir Technologies}.
+\newblock Review ontology proposals.
+\newblock Official product documentation, 2026{\natexlab{b}}.
+\newblock URL
+  \url{https://www.palantir.com/docs/foundry/ontologies/review-ontology-proposals}.
+\newblock Accessed 2026-07-19.
+
+\bibitem[{Palantir Technologies}(2026{\natexlab{c}})]{palantir2026scenarios}
+{Palantir Technologies}.
+\newblock Workshop: Apply scenarios.
+\newblock Official product documentation, 2026{\natexlab{c}}.
+\newblock URL
+  \url{https://www.palantir.com/docs/foundry/workshop/scenarios-apply}.
+\newblock Accessed 2026-07-19.
+
+\bibitem[Panickssery et~al.(2024)Panickssery, Bowman, and
+  Feng]{panickssery2024evaluators}
+Arjun Panickssery, Samuel~R. Bowman, and Shi Feng.
+\newblock {LLM} evaluators recognize and favor their own generations.
+\newblock \emph{arXiv preprint arXiv:2404.13076}, April 2024.
+\newblock URL \url{https://arxiv.org/abs/2404.13076}.
+
+\bibitem[Parasuraman and Riley(1997)]{parasuraman1997automation}
+Raja Parasuraman and Victor Riley.
+\newblock Humans and automation: Use, misuse, disuse, abuse.
+\newblock \emph{Human Factors}, 39\penalty0 (2):\penalty0 230--253, 1997.
+\newblock \doi{10.1518/001872097778543886}.
+\newblock URL \url{https://doi.org/10.1518/001872097778543886}.
+
+\bibitem[Pollner(2026)]{pollner2026oversight}
+Andrew Pollner.
+\newblock Human oversight for {AI}-generated test artifacts.
+\newblock \emph{The ITEA Journal of Test and Evaluation}, June 2026.
+\newblock \doi{10.61278/itea.47.2.1008}.
+\newblock URL \url{https://doi.org/10.61278/itea.47.2.1008}.
+
+\bibitem[Ravuru(2026)]{ravuru2026artifact}
+Amith~Reddy Ravuru.
+\newblock Artifact gate evaluation for {AI}-assisted software delivery: A
+  controlled study of lifecycle evidence.
+\newblock \emph{SSRN preprint}, 2026.
+\newblock \doi{10.2139/ssrn.6940958}.
+\newblock URL \url{https://doi.org/10.2139/ssrn.6940958}.
+
+\bibitem[Ross et~al.(2022)Ross, McEvilley, and Oren]{nist2022systems}
+Ron Ross, Michael McEvilley, and Janet Oren.
+\newblock Engineering trustworthy secure systems.
+\newblock Technical Report NIST SP 800-160 Volume 1 Revision 1, National
+  Institute of Standards and Technology, November 2022.
+\newblock URL \url{https://doi.org/10.6028/NIST.SP.800-160v1r1}.
+
+\bibitem[Schmalbach(2026)]{schmalbach2026contracts}
+Vincent Schmalbach.
+\newblock Software delegation contracts: Measuring reviewability in {AI}
+  coding-agent work.
+\newblock \emph{arXiv preprint arXiv:2606.17099}, June 2026.
+\newblock URL \url{https://arxiv.org/abs/2606.17099}.
+
+\bibitem[Skitka et~al.(1999)Skitka, Mosier, and Burdick]{skitka1999automation}
+Linda~J. Skitka, Kathleen~L. Mosier, and Mark Burdick.
+\newblock Does automation bias decision-making?
+\newblock \emph{International Journal of Human-Computer Studies}, 51\penalty0
+  (5):\penalty0 991--1006, 1999.
+\newblock \doi{10.1006/ijhc.1999.0252}.
+\newblock URL \url{https://doi.org/10.1006/ijhc.1999.0252}.
+
+\bibitem[Souppaya et~al.(2022)Souppaya, Scarfone, and Dodson]{nist2022ssdf}
+Murugiah Souppaya, Karen Scarfone, and Donna Dodson.
+\newblock Secure software development framework ({SSDF}) version 1.1.
+\newblock Technical Report NIST SP 800-218, National Institute of Standards and
+  Technology, 2022.
+\newblock URL \url{https://doi.org/10.6028/NIST.SP.800-218}.
+
+\bibitem[Sulpovar et~al.(2026)Sulpovar, Konsynski, Kanchwala, and
+  Goodhart]{sulpovar2026contextnest}
+Misha Sulpovar, Benn~R. Konsynski, Qaish Kanchwala, and Gabe Goodhart.
+\newblock {ContextNest}: Verifiable context governance for autonomous {AI}
+  agent.
+\newblock \emph{arXiv preprint arXiv:2607.02116}, July 2026.
+\newblock URL \url{https://arxiv.org/abs/2607.02116}.
+\newblock Version 2.
+
+\bibitem[{Supply-chain Levels for Software Artifacts project}(2026)]{slsa2026}
+{Supply-chain Levels for Software Artifacts project}.
+\newblock {SLSA} specification, version 1.2: Build track and provenance.
+\newblock Official specification, 2026.
+\newblock URL \url{https://slsa.dev/spec/v1.2/}.
+\newblock Accessed 2026-07-19.
+
+\bibitem[{U.S. Department of Energy}(2009)]{doe2009hpi}
+{U.S. Department of Energy}.
+\newblock Human performance improvement handbook.
+\newblock Technical Report DOE-HDBK-1028-2009, U.S. Department of Energy, 2009.
+\newblock URL \url{https://www.energy.gov/ehss/articles/doe-hdbk-1028-2009}.
+
+\bibitem[{U.S. Department of Energy}(2016)]{doe2016cm}
+{U.S. Department of Energy}.
+\newblock Configuration management.
+\newblock Technical Report DOE-STD-1073-2016, U.S. Department of Energy,
+  December 2016.
+\newblock URL \url{https://www.energy.gov/ehss/articles/doe-std-1073-2016}.
+
+\bibitem[{U.S. Nuclear Regulatory
+  Commission}(2013{\natexlab{a}})]{nrc2013rg168}
+{U.S. Nuclear Regulatory Commission}.
+\newblock Verification, validation, reviews, and audits for digital computer
+  software used in safety systems of nuclear power plants.
+\newblock Technical Report Regulatory Guide 1.168, Revision 2, U.S. Nuclear
+  Regulatory Commission, July 2013{\natexlab{a}}.
+\newblock URL \url{https://www.nrc.gov/docs/ML1307/ML13073A210.pdf}.
+
+\bibitem[{U.S. Nuclear Regulatory
+  Commission}(2013{\natexlab{b}})]{nrc2013rg169}
+{U.S. Nuclear Regulatory Commission}.
+\newblock Configuration management plans for digital computer software used in
+  safety systems of nuclear power plants.
+\newblock Technical Report Regulatory Guide 1.169, Revision 1, U.S. Nuclear
+  Regulatory Commission, July 2013{\natexlab{b}}.
+\newblock URL \url{https://www.nrc.gov/docs/ML1235/ML12355A642.pdf}.
+
+\bibitem[Wang et~al.(2026)Wang, Zhang, Cai, Liu, Sun, Sun, Wu, Dong, Zheng,
+  Yin, and Zhu]{wang2026traces}
+Yiqi Wang, Jiaqi Zhang, Taotao Cai, Zirui Liu, Qingqiang Sun, Zequn Sun,
+  Zhangkai Wu, Manqing Dong, Mingkai Zheng, Xuefei Yin, and Yanming Zhu.
+\newblock From agent traces to trust: A survey of evidence tracing and
+  execution provenance in {LLM} agents.
+\newblock \emph{arXiv preprint arXiv:2606.04990}, June 2026.
+\newblock URL \url{https://arxiv.org/abs/2606.04990}.
+\newblock Version 4.
+
+\bibitem[Xu et~al.(2025)Xu, Mao, Bai, Gu, Li, and Zhu]{xu2025everything}
+Xiwei Xu, Robert Mao, Quan Bai, Xuewu Gu, Yechao Li, and Liming Zhu.
+\newblock Everything is context: Agentic file system abstraction for context
+  engineering.
+\newblock \emph{arXiv preprint arXiv:2512.05470}, 2025.
+\newblock URL \url{https://arxiv.org/abs/2512.05470}.
+
+\bibitem[Yang et~al.(2024)Yang, Jimenez, Wettig, Lieret, Yao, Narasimhan, and
+  Press]{yang2024sweagent}
+John Yang, Carlos~E. Jimenez, Alexander Wettig, Kilian Lieret, Shunyu Yao,
+  Karthik Narasimhan, and Ofir Press.
+\newblock {SWE-agent}: Agent-computer interfaces enable automated software
+  engineering.
+\newblock \emph{Advances in Neural Information Processing Systems}, 37, 2024.
+\newblock URL \url{https://arxiv.org/abs/2405.15793v3}.
+
+\bibitem[Young(2025)]{anthropic2025harness}
+Justin Young.
+\newblock Effective harnesses for long-running agents.
+\newblock Anthropic Engineering, November 2025.
+\newblock URL
+  \url{https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents}.
+
+\bibitem[Zhang and Sun(2026)]{zhang2026kpr}
+Xinyu Zhang and Weiwei Sun.
+\newblock Knowledge-based pull requests: A trusted workflow for agent-mediated
+  knowledge collaboration.
+\newblock \emph{arXiv preprint arXiv:2606.26721}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2606.26721}.
+
+\end{thebibliography}

@@ -226,12 +226,12 @@ MISSION_TEMPLATE = (
 )
 
 CI_WORKFLOW_TEMPLATE = """\
-# Nuclear-grade change-record gate (rung 4 -- only with branch protection).
+# Nuclear-grade out-of-band change-record gate (only with branch protection).
 #
 # The OUT-OF-BAND gate: it runs in CI and checks that change records are
 # STRUCTURALLY complete. It does not decide engineering adequacy, safety,
-# security, or compliance. The in-session skills (and any hooks) are rungs 1-3
-# and advisory by doctrine; this workflow is the control that bites -- but only
+# security, or compliance. In-session skills and local hooks remain actor-controlled
+# or advisory; this workflow is the external control that bites -- but only
 # when branch protection makes it bite (see below).
 #
 # IMPORTANT: on a `pull_request` run this workflow executes from the PR's own
@@ -347,6 +347,11 @@ def build_parser() -> argparse.ArgumentParser:
 
     validate_parser = subcommands.add_parser("validate", help="Validate a change packet.")
     validate_parser.add_argument("packet", type=Path)
+    validate_parser.add_argument(
+        "--strict-custody",
+        action="store_true",
+        help="Require evidence-custody and five-axis coupling disclosure for Standard packets.",
+    )
     validate_parser.set_defaults(handler=handle_validate)
 
     doctor_parser = subcommands.add_parser("doctor", help="Check repo installation health.")
@@ -375,7 +380,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     scaffold_parser = subcommands.add_parser(
         "scaffold-ci",
-        help="Write a hardened GitHub Actions workflow that validates change records (the rung-4 out-of-band gate).",
+        help="Write a hardened GitHub Actions workflow that validates change records as an out-of-band gate.",
     )
     scaffold_parser.add_argument("repo", nargs="?", default=".", type=Path)
     scaffold_parser.add_argument("--dry-run", action="store_true")
@@ -691,7 +696,7 @@ def handle_new(args: argparse.Namespace) -> int:
 
 
 def handle_validate(args: argparse.Namespace) -> int:
-    result = validate_packet(args.packet)
+    result = validate_packet(args.packet, require_custody=args.strict_custody)
     if result.ok:
         print(f"OK: {args.packet}")
         return 0

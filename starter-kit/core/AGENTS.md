@@ -38,6 +38,8 @@ An agent is not done until it can name:
 - the files it changed;
 - the change record or reasoning it used;
 - the evidence it ran;
+- who generated, selected, transformed, captured, retained, and presented any load-bearing evidence;
+- the actor/context/mechanism/authority/resource coupling profile and any residual gap;
 - the handoff, self-check, OPEX, or trust record it used, or why it did not need one;
 - the intent it declared and the decision rights or escalation it used for any critical action;
 - the gaps still open;
@@ -54,4 +56,4 @@ doc>`.
 ## Source-lineage note
 
 This file is derived from the public Nuclear-grade adopter template. It does not create
-assurance. Original Nuclear-grade source-lineage discipline applies.
+assurance. Nuclear-grade source-lineage and claims-boundary discipline applies.

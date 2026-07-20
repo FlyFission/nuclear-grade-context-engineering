@@ -1,0 +1,52 @@
+[
+  {
+    "query": "all:\"AI agent\" AND all:governance",
+    "status": "ok",
+    "count": 50
+  },
+  {
+    "query": "all:\"coding agent\" AND (all:review OR all:evidence)",
+    "status": "ok",
+    "count": 50
+  },
+  {
+    "query": "all:\"AI generated test\" AND (all:review OR all:verification)",
+    "status": "ok",
+    "count": 1
+  },
+  {
+    "query": "all:\"agent trace\" AND (all:trust OR all:provenance)",
+    "status": "ok",
+    "count": 10
+  },
+  {
+    "query": "all:verifier AND all:generator AND all:LLM",
+    "status": "ok",
+    "count": 50
+  },
+  {
+    "query": "all:\"reward hacking\" AND (all:evaluator OR all:grader)",
+    "status": "ok",
+    "count": 50
+  },
+  {
+    "query": "all:\"assurance case\" AND (all:AI OR all:agent)",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "query": "all:\"operational authority\" AND all:evidence",
+    "status": "ok",
+    "count": 1
+  },
+  {
+    "query": "all:\"context engineering\" AND (all:governance OR all:provenance)",
+    "status": "ok",
+    "count": 15
+  },
+  {
+    "query": "all:\"software delegation\"",
+    "status": "ok",
+    "count": 1
+  }
+]

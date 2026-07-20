@@ -4,7 +4,7 @@
 
 ## Baseline rule
 
-A baseline is the version everyone agreed is correct: the approved state of the controlled items at a decision point. Git history helps you find the state, but the baseline record explains why it is acceptable and when you must look at it again.
+A baseline is the identified state accepted for reliance under a recorded decision, evidence set, residual risks, and revalidation triggers. Agreement records the accepted state and decision basis; it does not establish that the state is objectively correct. Git history helps locate the state, while the baseline record explains why reliance was authorized and when that reliance must be reconsidered.
 
 ## Minimum useful baseline
 
@@ -26,4 +26,4 @@ Record:
 
 ## Source-lineage note
 
-This baseline model is an original Git-native translation of public configuration-management and lifecycle concepts mapped in `../00-standards-foundation/source-map.md`. It does not create formal assurance or compliance.
+This baseline model is an open Git-native translation of public configuration-management and lifecycle concepts mapped in `../00-standards-foundation/source-map.md`. It does not create formal assurance or compliance.

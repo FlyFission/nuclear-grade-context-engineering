@@ -32,7 +32,8 @@ Acceptable language:
 - “inspired by public high-consequence engineering practices”;
 - “influenced by public nuclear and federal software assurance guidance”;
 - “software-native translation of design basis, configuration discipline, traceability, verification, and release readiness concepts”;
-- “original workflows using public-source lineage”;
+- “open, software-native synthesis/reference workflow with explicit public-source lineage”;
+- “authored repository artifacts” when referring specifically to this project's code or prose rather than conceptual priority;
 - “risk-scaled rigor without unnecessary overhead.”
 
 ---
@@ -57,6 +58,8 @@ Do not claim or imply:
 - procurement suitability;
 - formal QA program approval;
 - regulatory approval or endorsement.
+- first/original/unique/novel conceptual priority without a scoped prior-art basis;
+- improved correctness, safety, defect detection, reviewer accuracy, or organizational outcomes without appropriate empirical evidence.
 
 ---
 

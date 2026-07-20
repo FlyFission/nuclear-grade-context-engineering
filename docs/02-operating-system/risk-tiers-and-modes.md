@@ -2,7 +2,7 @@
 
 **Purpose:** Give risk-tiered rigor a single taxonomy. The repo already grades work by **mode** — `quick`, `standard`, and the activated high-stakes mode named **Nuclear** (see [`modes.md`](modes.md)); this doc maps the familiar Tier 0–3 language onto those modes so there is one axis, not two. This honors Charter Art. 9 (graded rigor) and Art. 12 (operational unambiguity).
 
-**Boundary:** Original software-workflow translation. It does not create formal assurance, compliance, certification, safety, or regulatory adequacy.
+**Boundary:** Bounded software-workflow translation. It does not create formal assurance, compliance, certification, safety, or regulatory adequacy.
 
 ---
 

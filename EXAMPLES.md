@@ -4,9 +4,9 @@ Public v0 ships one fully worked example that is checked by tests, plus one hand
 
 ## Included and validated
 
-| Example | What it proves | Start here |
+| Example | What it demonstrates | Start here |
 |---|---|---|
-| AI agent tool permissions | The agent's file-write power is kept under control and proven to stay inside an approved workspace root | `docs/03-worked-examples/ai-agent-tool-permissions/README.md` |
+| AI agent tool permissions | Under the recorded Python/WSL setup, the sample `WorkspaceGuard` rejected the four tested escape classes; the packet discloses that the evidence path remains mostly coupled | `docs/03-worked-examples/ai-agent-tool-permissions/README.md` |
 
 ## Included comparison
 
@@ -18,7 +18,7 @@ Run it:
 
 ```bash
 python -m pytest docs/03-worked-examples/ai-agent-tool-permissions/tests/test_workspace_guard.py -q
-python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions
+python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions --strict-custody
 ```
 
 ## Roadmap examples

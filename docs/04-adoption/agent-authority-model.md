@@ -65,43 +65,43 @@ change produces the proof, the story, and the risk call that say the change is r
 never sees anything the actor did not author, so it cannot tell a sound change from a confident
 hallucination. This is persuasive documentation, manufactured by the loop.
 
-The rule: **at a trust-bearing gate, the input must have an author independent of the actor, or be
-reproducible by an independent party.** The actor's narration of its own evidence is a claim, not
-evidence — it is the thing to verify, not the verification.
+The rule: **at a trust-bearing gate, expose who controlled the evidence path and require a
+consequence-appropriate reduction in actor–evidence coupling.** The actor's narration of its own
+evidence is a claim, not the verification.
 
-### Independence rungs (weak to strong)
+### Actor–evidence coupling profile
 
-The dual of the enforcement rungs. Where enforcement rungs ask *where the gate lives* relative to
-the writable set, independence rungs ask *who authored the input the gate reads* relative to the
-actor.
+Evidence independence is not a linear ladder. Record five axes separately as `coupled`,
+`partially separated`, or `separated`, with a concrete basis:
 
-| Rung | Who authored the gate's input | Agent can defeat by | Use when |
-|---|---|---|---|
-| 1 | The actor narrates ("tests pass, change is correct") | being wrong, fluently | drafting only |
-| 2 | The actor shows primary artifacts it selected (raw output, diff) | selective or fabricated artifacts | reversible local work |
-| 3 | An independent party re-runs the actor's deterministic check | a check that does not address the claim; non-reproducible evidence | low stakes, reproducible evidence |
-| 4 | An independent verifier authors the evidence — a separate agent with no stake, or out-of-band CI | a shared brief that biases both actor and verifier | authority over its own working set |
-| 5 | An independent human authors or witnesses the decisive evidence and owns the decision | nothing in-loop | irreversible or trust-bearing |
+| Axis | Question |
+|---|---|
+| Actor | Who generated or witnessed the decisive evidence relative to the change actor? |
+| Context | Did the verifier reconstruct the case, or inherit the actor's framing and omissions? |
+| Mechanism | Do actor and verifier share tests, oracle, model family, prompts, tools, or execution path? |
+| Authority | Who controls scope, thresholds, sufficiency, verdict, and apply decision? |
+| Resource | Who controls verifier budget, runtime, credentials, storage, and publication of adverse results? |
 
-Match the rung to the consequence, exactly as with enforcement rungs. Anything below the rung the
-stakes call for is a self-check: label it as one and carry the gap as residual risk; do not let it
-stand in for the independent check. The full treatment — the three coupled gates, how the PROVE
-subagents encode the seam, and the honest limits — is in
+The profiles form a partial order; do not add or average the axes, and do not assume human
+witnessing always dominates diverse deterministic verification. Match the minimum acceptable
+profile to consequence. Anything below it is a self-check or a named residual coupling: carry the
+gap into the release decision rather than silently counting it as independent. The full treatment
+— evidence custody, named evidence patterns, the three coupled gates, and honest limits — is in
 [`../02-operating-system/actor-evidence-independence.md`](../02-operating-system/actor-evidence-independence.md).
 
 ## Surface classification
 
-The enforcement and independence rungs both turn on one prior question: *of everything the agent
+The enforcement boundary and coupling profile both turn on one prior question: *of everything the agent
 can touch, which surfaces may it change, and how?* Answer it once, up front, by sorting every
-artifact the agent can reach into four classes. This is the concrete inventory the rungs act on —
-"where the gate lives relative to the writable set" is just asking which class the gate is in.
+artifact the agent can reach into four classes. This inventory exposes where the gate lives and
+which parts of the evidence path the actor controls.
 
 | Surface class | The agent may... | Examples | Bound by |
 |---|---|---|---|
 | **Locked** | not modify at all | tests, CI config, the approval policy, the gate that grades the work | Self-modification boundary; keep at enforcement rung 4–5 |
-| **Editable-under-review** | change, but only through the normal change flow | product code, drafts, the packet it is filling | plan-phase/build-phase gate; independence rung on the load-bearing claim |
+| **Editable-under-review** | change, but only through the normal change flow | product code, drafts, the packet it is filling | plan-phase/build-phase gate; coupling profile on the load-bearing claim |
 | **Append-only** | extend, never rewrite | logs, lessons/OPEX, the deficiency register, baselines grown by delta | the append-only-delta rule in [`../02-operating-system/durable-memory.md`](../02-operating-system/durable-memory.md) and [`../02-operating-system/context-window-discipline.md`](../02-operating-system/context-window-discipline.md) §3 |
-| **Human-controlled** | not touch; only a human mutates it | the charter, the release/ship decision, credentials and secrets | denial rule; independence rung 5 |
+| **Human-controlled** | not touch; only a human mutates it | the charter, the release/ship decision, credentials and secrets | denial rule; separated authority axis |
 
 Two rules make the classes load-bearing rather than decorative:
 
@@ -130,7 +130,7 @@ agent-drafts-spec workflow in `CORE.md`.
 
 ## Exit criteria
 
-Agent authority is acceptable when a reviewer can see six things: what the agent was allowed to do, what it actually changed, what evidence it produced, what it was forbidden to claim, **where the controls that gate its work live relative to its writable set** (rung 4 or higher when the agent has authority over its own tests, prompts, or CI), and **who authored that evidence relative to the actor** (independence rung 4 or higher on the load-bearing claim when the work is trust-bearing — the actor's own narrative is not the independent check).
+Agent authority is acceptable when a reviewer can see six things: what the agent was allowed to do, what it actually changed, what evidence it produced, what it was forbidden to claim, **where the controls that gate its work live relative to its writable set** (enforcement rung 4 or higher when the agent has authority over its own tests, prompts, or CI), and **who controlled the evidence path relative to the actor** (custody plus all five coupling axes on each load-bearing claim; the actor's own narrative is not the independent check).
 
 ## Source-lineage note
 

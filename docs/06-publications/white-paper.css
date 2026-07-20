@@ -1,0 +1,235 @@
+@page {
+  size: Letter;
+  margin: 0.72in 0.72in 0.78in 0.72in;
+  @bottom-left {
+    content: "FlyFission  •  Nuclear-grade Context Engineering  •  Discussion Draft v0.1";
+    color: #66716f;
+    font-family: "DejaVu Sans", sans-serif;
+    font-size: 7.5pt;
+    letter-spacing: 0.02em;
+  }
+  @bottom-right {
+    content: counter(page);
+    color: #66716f;
+    font-family: "DejaVu Sans", sans-serif;
+    font-size: 8pt;
+  }
+}
+
+@page:first {
+  margin: 0.78in;
+  background: #f5f2ea;
+  @bottom-left { content: none; }
+  @bottom-right { content: none; }
+}
+
+:root {
+  --paper: #fbfaf6;
+  --ink: #182523;
+  --muted: #5f6e6b;
+  --line: #d5dad5;
+  --teal: #2d6f68;
+  --teal-soft: #e4efeb;
+  --navy: #263b55;
+  --gold: #b88a3b;
+  --warn: #8a5a2b;
+}
+
+html { background: white; }
+body {
+  color: var(--ink);
+  background: white;
+  font-family: "DejaVu Sans", Arial, sans-serif;
+  font-size: 9.15pt;
+  line-height: 1.48;
+  hyphens: auto;
+  text-rendering: optimizeLegibility;
+}
+
+#title-block-header {
+  min-height: 8.25in;
+  box-sizing: border-box;
+  padding: 0.45in 0.25in 0.25in 0.25in;
+  border-top: 8px solid var(--teal);
+  border-bottom: 2px solid var(--gold);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  page-break-after: always;
+  break-after: page;
+}
+
+#title-block-header .title {
+  color: var(--navy);
+  font-family: "DejaVu Serif", Georgia, serif;
+  font-size: 31pt;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  margin: 0 0 0.18in 0;
+  max-width: 6.4in;
+}
+
+#title-block-header .subtitle {
+  color: var(--teal);
+  font-size: 14pt;
+  line-height: 1.3;
+  margin: 0 0 0.55in 0;
+  max-width: 6.25in;
+}
+
+#title-block-header .author {
+  color: var(--ink);
+  font-size: 11pt;
+  font-weight: 700;
+  margin: 0 0 0.08in 0;
+}
+
+#title-block-header .date {
+  color: var(--muted);
+  font-size: 9.5pt;
+  margin: 0;
+}
+
+nav#TOC {
+  page-break-after: always;
+  break-after: page;
+  padding-top: 0.12in;
+}
+
+nav#TOC::before {
+  content: "Contents";
+  display: block;
+  color: var(--navy);
+  font-family: "DejaVu Serif", Georgia, serif;
+  font-size: 22pt;
+  font-weight: 700;
+  margin-bottom: 0.2in;
+  padding-bottom: 0.1in;
+  border-bottom: 2px solid var(--teal);
+}
+
+nav#TOC ul { list-style: none; margin: 0; padding-left: 0; }
+nav#TOC ul ul { padding-left: 0.22in; margin-top: 0.03in; }
+nav#TOC li { margin: 0.06in 0; }
+nav#TOC a { color: var(--ink); text-decoration: none; }
+nav#TOC > ul > li > a { color: var(--navy); font-weight: 700; }
+
+h1, h2, h3 {
+  font-family: "DejaVu Serif", Georgia, serif;
+  color: var(--navy);
+  line-height: 1.18;
+  page-break-after: avoid;
+  break-after: avoid;
+}
+
+h1 {
+  font-size: 20pt;
+  margin: 0.28in 0 0.2in 0;
+  padding-bottom: 0.09in;
+  border-bottom: 2px solid var(--teal);
+  page-break-before: auto;
+  break-before: auto;
+}
+
+section.level1#the-accountability-gap,
+section.level1#the-nuclear-grade-method,
+section.level1#actor-evidence-independence,
+section.level1#worked-example-agent-tool-permissions,
+section.level1#limitations-and-threats-to-validity,
+section.level1#references {
+  page-break-before: always;
+  break-before: page;
+}
+
+h2 {
+  font-size: 13.5pt;
+  margin: 0.27in 0 0.09in 0;
+}
+
+h3 {
+  font-size: 10.5pt;
+  margin: 0.2in 0 0.06in 0;
+}
+
+p { margin: 0 0 0.11in 0; }
+strong { color: #142d2a; }
+
+blockquote {
+  margin: 0.18in 0;
+  padding: 0.14in 0.18in;
+  border-left: 4px solid var(--teal);
+  background: var(--teal-soft);
+  color: #193a36;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+blockquote p:last-child { margin-bottom: 0; }
+
+code {
+  font-family: "DejaVu Sans Mono", Consolas, monospace;
+  font-size: 0.91em;
+  color: #203d3a;
+  background: #edf2ef;
+  padding: 0.02em 0.2em;
+  border-radius: 2px;
+}
+
+pre {
+  color: #edf6f2;
+  background: #18312f;
+  border-left: 4px solid #5b9a90;
+  padding: 0.13in 0.16in;
+  border-radius: 4px;
+  line-height: 1.35;
+  white-space: pre-wrap;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+pre code { color: inherit; background: transparent; padding: 0; }
+
+ul, ol { margin: 0.05in 0 0.12in 0.24in; padding-left: 0.08in; }
+li { margin: 0.025in 0; }
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 0.24in 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.14in 0 0.2in 0;
+  font-size: 7.55pt;
+  line-height: 1.32;
+  page-break-inside: auto;
+}
+thead { display: table-header-group; }
+tr { page-break-inside: avoid; break-inside: avoid; }
+th {
+  color: white;
+  background: var(--navy);
+  text-align: left;
+  vertical-align: bottom;
+  padding: 0.07in 0.065in;
+  border: 1px solid #3f5269;
+}
+td {
+  vertical-align: top;
+  padding: 0.065in;
+  border: 1px solid var(--line);
+}
+tbody tr:nth-child(even) { background: #f2f5f2; }
+
+a { color: #1f6d68; text-decoration: underline; text-decoration-thickness: 0.6px; }
+
+body > p:first-of-type,
+body > blockquote:first-of-type { page-break-before: avoid; }
+
+#references + ol,
+.references { font-size: 8pt; }
+
+@media print {
+  a { color: #1f5f5b; }
+}

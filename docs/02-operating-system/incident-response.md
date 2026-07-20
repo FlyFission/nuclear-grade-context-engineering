@@ -2,7 +2,7 @@
 
 **Purpose:** Run a live incident the way a submarine runs a casualty — stabilize first, analyze second. This is the operating mechanics behind the `responding-to-incidents` skill, `ng-incident`, and `templates/standard/incident.md`.
 
-**Boundary:** Original software-workflow translation. It does not create formal assurance, compliance, certification, safety, or regulatory adequacy.
+**Boundary:** Bounded software-workflow translation. It does not create formal assurance, compliance, certification, safety, or regulatory adequacy.
 
 ---
 

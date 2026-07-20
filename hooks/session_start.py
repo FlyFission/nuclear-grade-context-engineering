@@ -3,7 +3,7 @@
 
 Injects a static routing preamble at session start. Pure standard library,
 zero network, static output: it reads stdin only to drain it, never reads
-project files, and never echoes any untrusted text. Advisory only (rung 1) --
+project files, and never echoes any untrusted text. Advisory and actor-controlled --
 it injects guidance and cannot block anything. See HOOKS.md.
 """
 

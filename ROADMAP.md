@@ -35,6 +35,37 @@ Nuclear-grade Public v0 is a workflow you can use today, not a finished platform
 - Checks for release mode and incident mode once those patterns settle.
 - Optional repeatable checking for HPI records, once real use proves the templates.
 
+## Research-driven next steps
+
+The 2026-07-19 novelty review narrowed the product center from a broad governance workflow to an
+open implementation of **evidence custody and actor–evidence coupling in software acceptance**.
+The next work should deepen that seam rather than add another generic approval framework.
+
+1. **Finish the custody migration.** Keep `--strict-custody` opt-in while existing Standard packets
+   migrate, then make the disclosure the default in the next breaking validator release.
+2. **Protect raw evidence.** Add adapters for out-of-band CI, attestations, immutable or append-only
+   result retention, and independent rerun receipts. Preserve the boundary: integrity and
+   provenance do not prove adequacy or independence.
+3. **Add a derived acceptance graph.** Build an optional local index over existing packet records:
+   candidate → claim → evidence → custody → verifier → verdict → clearance → baseline → revalidation
+   trigger. Markdown and Git remain the source of truth; the graph is a query and policy surface,
+   not a Palantir clone or mandatory database.
+4. **Make consequence policy executable.** Let teams declare minimum acceptable coupling profiles
+   for named claim classes, then report dominance, incomparability, gaps, and required escalation
+   without reducing the profile to one score.
+5. **Run the blinded study.** Compare ordinary prompting, structured actor-authored evidence, and
+   independently generated or witnessed evidence. Measure false acceptance, defect detection,
+   reviewer calibration, evidence sufficiency, disagreement, decision time, and cost.
+6. **Obtain external review.** Recruit software-assurance, empirical-SE, provenance, and AI-agent
+   governance reviewers before making efficacy or venue-strength claims.
+
+### Deliberate non-goals
+
+- Competing with Palantir, Foundry, or AIP on enterprise ontology or platform breadth.
+- Claiming that ontology, provenance, authorization, workflow gates, human approval, or audit logs
+  are novel.
+- Replacing qualified engineering judgment with an automated coupling score.
+
 ## Not on the current roadmap
 
 - We do not claim formal V&V, compliance, certification, safety, security, or regulatory adequacy.

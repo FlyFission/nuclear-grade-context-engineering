@@ -22,8 +22,8 @@ party reproduces it (see [`../02-operating-system/actor-evidence-independence.md
 | Self-consistency | Sample several reasoning paths, take the consensus answer. | Run / Observe — raises confidence on reasoning-heavy tasks. | Consensus of one model is not independence; correlated errors survive the vote. |
 | Generated-knowledge | Have the model surface relevant facts before answering. | Discover / Plan — priming the working set. | Generated "facts" are unverified until cited — treat as hypotheses, not evidence (context-poisoning guard). |
 | **ReAct** (reason + act) | Interleave reasoning with tool actions and read the results back in. | **Run / Observe** — the native shape of grounding a claim against real sources. | Grounds claims in tool output the reviewer can rerun — but only if the tool call and its raw result are captured, not paraphrased. |
-| **PAL** (program-aided) | Offload quantitative, temporal, or logical steps to *executed code* instead of prose reasoning. | **Verify** — a deterministic, rerunnable check. | The strongest fit for this repo: a run of code is reproducible evidence (independence rung 3+), where model arithmetic is narration. See below. |
-| Reflexion / self-refine | The agent critiques its own output and revises. | Run — cheap error reduction within a draft. | A self-refine loop is a **self-check** (independence rung 1–2), *not* an independent gate. Label it as one; it does not clear a trust-bearing claim. |
+| **PAL** (program-aided) | Offload quantitative, temporal, or logical steps to *executed code* instead of prose reasoning. | **Verify** — a deterministic, rerunnable check. | The strongest fit for this repo: a run of code is reproducible evidence, but mechanism and oracle coupling remain if the actor authored the program and check. See below. |
+| Reflexion / self-refine | The agent critiques its own output and revises. | Run — cheap error reduction within a draft. | A self-refine loop is an actor-coupled **self-check**, not an independent gate. Label it as one; it does not clear a trust-bearing claim. |
 | LLM-as-judge | A model scores or decides on output. | Review / Verdict. | Subject to judge bias — must follow [`evaluation-integrity.md`](../02-operating-system/evaluation-integrity.md). |
 
 ---
@@ -32,9 +32,10 @@ party reproduces it (see [`../02-operating-system/actor-evidence-independence.md
 
 **PAL / program-aided reasoning strengthens `proving-claims`.** When a claim rests on arithmetic, a
 date calculation, a count, a unit conversion, or any deterministic logic, do not trust the model's
-in-prose answer — have it emit code and run it. The run is reproducible: an independent party reruns
-the same input and reads the same output, which is independence rung 3 by construction, where "the
-model said the total is 4,812" is rung 1. This is the concrete mechanism behind the
+in-prose answer — have it emit code and run it. The run is reproducible: an independent party can
+rerun the same input and read the same output. That improves actor separation when the rerun is
+actually independent, but context, mechanism, authority, and resource coupling must still be
+recorded; "the model said the total is 4,812" remains narration. This is the concrete mechanism behind the
 [`proving-claims`](../../skills/proving-claims/SKILL.md) rule that a load-bearing claim needs
 reproducible evidence, applied to the class of claims models are *most* likely to get confidently
 wrong.

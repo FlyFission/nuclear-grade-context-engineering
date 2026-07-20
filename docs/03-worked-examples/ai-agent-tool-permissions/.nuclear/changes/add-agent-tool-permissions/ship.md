@@ -29,6 +29,7 @@
 | Verification | pass | `verification.md` | Four C-001 tests pass. |
 | Dependency / supply-chain evidence | not applicable | `basis.md` | The sample code uses the standard library only; tests use pytest. |
 | AI-assisted work checks | pass | `verification.md` | The scope and the tool actions are recorded. |
+| Evidence custody / coupling | gap | `verification.md` | The evidence path is disclosed but remains mostly coupled; accepted only for the reversible teaching scope. |
 | Review / approval | pass | `adversarial-review.md` | A light attack review was done for teaching v0. |
 | Validator | pass | `tools/ng_validate.py` | The packet passes the v0 validator. |
 
@@ -41,6 +42,7 @@
 | TOCTOU and concurrent filesystem attacks not covered. | A production attacker could abuse timing or filesystem rules. | defer; clearly out of v0. | Maintainer | Production or multi-user deployment. |
 | C-002 and C-003 not built. | The tool, API, and approval claims stay unproven. | defer and mark them in trace. | Maintainer | Any work beyond C-001. |
 | No lasting audit log yet. | Operational review would be weak in a real service. | defer; the in-memory audit only proves the idea. | Maintainer | Any real runtime or incident workflow. |
+| The change actor also controlled evidence generation, selection, framing, authority, and resources. | A shared mistake could produce both the defect and its persuasive proof. | accept only for this reversible teaching artifact; require independent reproduction or diverse verification before any production or security claim. | Maintainer | Any production reuse, external-trust claim, or broader authority. |
 
 ## Rollback / restore plan
 

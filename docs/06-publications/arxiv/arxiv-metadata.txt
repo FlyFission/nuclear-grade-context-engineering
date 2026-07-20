@@ -1,0 +1,20 @@
+Title: Who Authored the Evidence? Actor–Evidence Coupling in AI-Assisted Software Acceptance
+
+Authors: Ben Huffer
+
+Primary category candidate: cs.SE (Software Engineering)
+
+Abstract:
+AI coding agents can implement changes, select tests, summarize evidence, and write the review narratives used to accept those changes within one coupled process. Existing controls address self-modification: an actor editing the gate intended to constrain it. They do not necessarily address evidence self-authorship: an actor that leaves the gate untouched while authoring the evidence the gate consumes. A confident hallucination can clear every gate for which it also wrote the input.
+
+This paper formulates acceptance of agent-assisted changes as a problem distinct from agent task performance. It contributes an agent-specific formulation of evidence self-authorship and a multidimensional profile for actor–evidence coupling across actor, context, mechanism, authority, and resource. A consequence-graded admissibility proposal uses that profile to constrain decisive evidence through externally versioned policy rather than a universal score. The formulation adapts established self-review, configuration-management, independent-verification, and assurance practice rather than claiming to replace them. A Git-native reference implementation shows that custody labels, coupling profiles, and decision state can be represented, exercised, and structurally linted. A twelve-scenario formative inspection supports iteration, not efficacy claims. The paper states a falsifiable prediction and proposes a preregistered comparison of actor-controlled evidence with a specifically defined separated-evidence condition.
+
+Comments: 19 pages, two figures, and five tables. v0.3 RC2 discussion preprint. Repository implementation and replication artifacts are linked in the paper.
+
+Journal-ref: Leave blank unless and until the paper is published by a venue.
+
+DOI: Leave blank unless and until assigned.
+
+License: Human author must select during submission.
+
+Submission note: Category selection, metadata, license, and final submission remain human decisions. Preparing this package does not imply arXiv endorsement or acceptance.

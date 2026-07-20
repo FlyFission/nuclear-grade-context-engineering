@@ -29,9 +29,9 @@ chain reads end to end (`C-NNN` is an accepted alias for an older record). The
 `Task / code ref` column reaches the `plan.md` build step and the code path that
 delivers the claim, closing requirement → task → code → evidence.
 
-| ID | Claim | Basis link | Task / code ref | Control / design feature | Support type | Verification evidence | Ship posture | Status |
+| ID | Claim | Basis link | Task / code ref | Control / design feature | Support type | Evidence ID / link | Ship posture | Status |
 |---|---|---|---|---|---|---|---|---|
-| REQ-001 | | `basis.md` | `plan.md` step 1 / `path/to/file` | | fact / assumption / unknown / source claim / local proof / decision authority | `verification.md` | | planned |
+| REQ-001 | | `basis.md` | `plan.md` step 1 / `path/to/file` | | fact / assumption / unknown / source claim / local proof / decision authority | `verification.md` E-001 | | planned |
 
 ## Evidence chain
 
@@ -42,6 +42,7 @@ Risk / need
   → Basis / requirement
   → Control / design feature
   → Verification evidence
+  → Custody / coupling profile and admission decision
   → Release decision / rollback / monitoring / baseline trigger
 ```
 
@@ -66,6 +67,7 @@ Risk / need
 - Each important claim names its support type.
 - Every shipped claim has evidence or an accepted leftover risk.
 - Deferred or gap claims are not used as release evidence.
+- Every decisive evidence link resolves to a custody/profile disclosure in `verification.md`; traceability alone does not make the item admissible.
 - A reviewer can move quickly from claim → specification/basis → evidence → release decision.
 
 ## Source-lineage note

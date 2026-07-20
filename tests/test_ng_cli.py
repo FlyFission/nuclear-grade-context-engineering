@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 from nuclear_grade.ng_validate import CLOSURE_MARKER
-from tests.test_ng_validate import minimal_quick_packet
+from tests.test_ng_validate import COMMON_TAIL, minimal_quick_packet, minimal_standard_packet
 from tools import ng as ng_cli
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -213,6 +213,21 @@ def test_validate_delegates_to_packet_validator(tmp_path):
 
     assert result.returncode == 0, result.stderr
     assert "OK:" in result.stdout
+
+
+def test_validate_strict_custody_flag_changes_legacy_packet_exit(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    (packet / "verification.md").write_text(
+        "# Verification\n\n## Result\n\n- Status: pass\n- Evidence: test\n" + COMMON_TAIL,
+        encoding="utf-8",
+    )
+
+    compatible = run_ng("validate", str(packet))
+    strict = run_ng("validate", str(packet), "--strict-custody")
+
+    assert compatible.returncode == 0, compatible.stdout
+    assert strict.returncode != 0
+    assert "missing required section: Evidence custody and coupling" in strict.stdout
 
 
 def test_doctor_passes_on_this_repo():
@@ -450,8 +465,9 @@ def test_scaffold_ci_writes_hardened_workflow(tmp_path):
     assert "\n  pull_request_target:" not in text
     assert "secrets." not in text
     assert "nuclear-grade validate" in text
-    assert "rung 4" in text  # the out-of-band-gate honesty banner
-    assert "branch protection" in text  # honest that rung-4 needs rung-5 (Codex P1)
+    assert "OUT-OF-BAND gate" in text
+    assert "actor-controlled" in text
+    assert "branch protection" in text  # honest that the gate requires external enforcement
     assert "nuclear-grade==" in text  # the validator is version-pinned for a reproducible gate (Codex P2)
 
 

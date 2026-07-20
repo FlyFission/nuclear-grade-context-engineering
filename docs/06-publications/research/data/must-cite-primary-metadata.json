@@ -1,0 +1,284 @@
+{
+  "10.61278/itea.47.2.1008": {
+    "type": "crossref",
+    "title": "Human Oversight for AI-Generated Test Artifacts",
+    "authors": [
+      {
+        "given": "Andrew",
+        "family": "Pollner"
+      }
+    ],
+    "published": [
+      2026,
+      6,
+      26
+    ],
+    "container": "The ITEA Journal of Test and Evaluation",
+    "url": "https://doi.org/10.61278/itea.47.2.1008",
+    "abstract": ""
+  },
+  "10.61278/itea.47.2.1005": {
+    "type": "crossref",
+    "title": "Decision Assurance for AI-Enabled Mission Systems: From Test Evidence to Operational Authority",
+    "authors": [
+      {
+        "given": "Eman",
+        "family": "Kawas"
+      }
+    ],
+    "published": [
+      2026,
+      6,
+      26
+    ],
+    "container": "The ITEA Journal of Test and Evaluation",
+    "url": "https://doi.org/10.61278/itea.47.2.1005",
+    "abstract": ""
+  },
+  "10.2139/ssrn.7030983": {
+    "type": "crossref",
+    "title": "From Traceability to Reviewability: Intent-Anchored Claim Review for Agentic AI Design Handoffs",
+    "authors": [
+      {
+        "given": "Shijie",
+        "family": "Ming"
+      },
+      {
+        "given": "Ziqiang",
+        "family": "He"
+      },
+      {
+        "given": "Ning",
+        "family": "Zhao"
+      },
+      {
+        "given": "Ke",
+        "family": "Jiang"
+      }
+    ],
+    "published": [
+      2026
+    ],
+    "container": "",
+    "url": "https://doi.org/10.2139/ssrn.7030983",
+    "abstract": "<jats:p>As AI agents enter design tools, designers increasingly face not a single generated artifact but a sequence of design actions that an agent executes, explains, and claims to have completed. Existing handoffs—result previews, process logs, and code differences—support traceability, letting designers see what the agent did, yet rarely support reviewability: judging whether those actions sufficiently support a stated completion claim against the original intent. This paper proposes the Design Intent Roundtable, an intent-anchored claim-review framework that organizes design intent, success criteria, tool actions, completion claims, verification evidence, evidence gaps, and rework constraints into an action–claim–evidence alignment, turning an agent’s “done” into a reviewable, contestable, and rewritable evidentiary claim. In a three-condition between-subjects study using controlled agent-delivery materials, we compared a traditional result report, an unstructured process timeline, and the proposed framework. After multiple-comparison correction, the framework retained an advantage on the primary objective measure, identification of hidden intent–completion gaps; a group-level signal-detection description was consistent with this advantage reflecting higher discrimination sensitivity rather than a looser reporting tendency. A component probe and a transfer check provided exploratory evidence that the effect is not reducible to a single interface cue and may partially transfer to non-framework materials. Completion-claim credibility was also highest under the framework, suggesting evidence-conditioned trust. We position these results as an information-organization effect under controlled review materials, not a general gain in design-review ability or a claim about live agentic workflows.</jats:p>"
+  },
+  "10.2139/ssrn.6987749": {
+    "type": "crossref",
+    "title": "EATF-MultiRoot: A Reproducible Verifier and Corpus for AI-Agent Evidence Packages",
+    "authors": [
+      {
+        "given": "Anton",
+        "family": "Sokolov"
+      }
+    ],
+    "published": [
+      2026
+    ],
+    "container": "",
+    "url": "https://doi.org/10.2139/ssrn.6987749",
+    "abstract": "<jats:p>AI-agent systems increasingly produce tool calls, policy decisions and runtime outputs that must later be verified outside the system that generated them. Mutable application logs and single-root registries are weak foundations for this task: they can be unavailable, rewritten, captured by one issuer or dependent on later network lookups. EATF-MultiRoot is a reproducible software artifact for testing multi-root verification of AI-agent action evidence. It builds a ten-case corpus of Agent Evidence Package (AEP) objects using the Agent Trust Framework (EATF), applies a local verifier-policy overlay and produces reasoned accept, reject or indeterminate verdicts. The artifact packages the corpus generator, verifier policy, evaluation runner, generated evidence packages, JSON/CSV/Markdown results, manifest and a vendored EATF runtime snapshot so that reviewers can rebuild and inspect the experiment offline. The current corpus matches all ten expected verdicts and covers multi-root success, identity substitution, broker downgrade, issuer distrust, stale revocation evidence, cross-policy replay, offline validation, lookup dependency and algorithm migration. The software is intended as a reusable testbed for researchers and practitioners designing verifiable AI-agent evidence workflows.</jats:p>"
+  },
+  "10.2139/ssrn.6783978": {
+    "type": "crossref",
+    "title": "Runtime Governance for Agentic AI: Action-Boundary Control with Trusted Provenance and Fail-Closed Execution",
+    "authors": [
+      {
+        "given": "Adam",
+        "family": "Mazzocchetti"
+      }
+    ],
+    "published": [
+      2026
+    ],
+    "container": "",
+    "url": "https://doi.org/10.2139/ssrn.6783978",
+    "abstract": "<jats:p>Agentic AI systems request tool actions that can modify files, send messages, launch jobs, or change workflow state. This shifts the safety problem from harmful text generation to harmful operational side effects. Prompt-level governance can shape model behavior, but it does not create an execution boundary. We introduce Aegis, a runtime governance system that treats model outputs as action proposals and mediates them through a trusted decision layer before tool execution. The model proposes; the trusted runtime decides. Aegis evaluates proposals against active policy state, resolves provenance server-side, fails closed under uncertainty, and routes selected cases through Senate-style settlement, a quorumbased non-unilateral authorization path. We evaluate Aegis on a repeated sandbox corpus spanning five run families, 42 tasks, three conditions, and ten repeats per family. Across 6,300 rows, prompt-policy conditioning produced 79 risky comparator-path leakage rows. Across 2,100 Aegis-governed rows, the system recorded zero governed mock-tool applications and zero governed risky side-effect completions. All 1,832 Aegis-attempted governed rows preserved trusted Aegis-resolved provenance, and all 1,019 Senate-settled rows had quorum and final signed tally evidence. These results do not prove general autonomous-agent safety. They support the narrower systems claim that, in this evaluated sandbox corpus, runtime action-boundary governance prevented observed risky proposals from becoming governed side effects.&amp;nbsp; \n&lt;div&gt;\n &lt;br&gt;\n&lt;/div&gt;\n&lt;div&gt;\n &lt;br&gt;\n&lt;/div&gt;</jats:p>"
+  },
+  "10.31224/6583": {
+    "type": "crossref",
+    "title": "Boundary as an Execution-Time Primitive for AI-Assisted Software Development Governance",
+    "authors": [
+      {
+        "given": "Spark",
+        "family": "Tsai"
+      }
+    ],
+    "published": [
+      2026,
+      3,
+      9
+    ],
+    "container": "",
+    "url": "https://doi.org/10.31224/6583",
+    "abstract": "<jats:p>Loss of control, behavioral drift, and non-auditability in AI-assisted software development are commonly attributed to model misalignment, hallucination, or insufficient guardrails. This paper argues that such diagnoses overlook a fundamental category distinction.\r\nWe distinguish between model alignment boundaries, established at training time through data distributions, RLHF, and safety fine-tuning, and task execution boundaries, which must be explicitly constructed at execution time for a specific engineering task. While the former provides general, statistical safety tendencies, it does not—and cannot—automatically inherit the concrete, task-specific constraints required for engineering governance.\r\nWe show that many widely reported failures, including insecure yet functional code generation, arise not from deficient model alignment but from the absence of a decidable task execution boundary at runtime. When such a boundary is missing, drift and violation become epistemically undecidable, and model preferences fill the resulting vacuum.\r\nWe formalize task execution boundaries as the resolution of visible scope and explicit prohibitive constraints, introduce boundary evidence as the minimal auditable unit, and demonstrate through engineering scenarios that governance mechanisms operating without this primitive rest on interpretive rather than decidable foundations.</jats:p>"
+  },
+  "arXiv:2404.13076": {
+    "type": "arxiv",
+    "title": "LLM Evaluators Recognize and Favor Their Own Generations",
+    "authors": [
+      "Arjun Panickssery",
+      "Samuel R. Bowman",
+      "Shi Feng"
+    ],
+    "published": "2024-04-15T16:49:59Z",
+    "updated": "2024-04-15T16:49:59Z",
+    "url": "http://arxiv.org/abs/2404.13076v1",
+    "abstract": "Self-evaluation using large language models (LLMs) has proven valuable not only in benchmarking but also methods like reward modeling, constitutional AI, and self-refinement. But new biases are introduced due to the same LLM acting as both the evaluator and the evaluatee. One such bias is self-preference, where an LLM evaluator scores its own outputs higher than others' while human annotators consider them of equal quality. But do LLMs actually recognize their own outputs when they give those texts higher scores, or is it just a coincidence? In this paper, we investigate if self-recognition capability contributes to self-preference. We discover that, out of the box, LLMs such as GPT-4 and Llama 2 have non-trivial accuracy at distinguishing themselves from other LLMs and humans. By fine-tuning LLMs, we discover a linear correlation between self-recognition capability and the strength of self-preference bias; using controlled experiments, we show that the causal explanation resists straightforward confounders. We discuss how self-recognition can interfere with unbiased evaluations and AI safety more generally.",
+    "categories": [
+      "cs.CL",
+      "cs.AI"
+    ]
+  },
+  "arXiv:2410.21819": {
+    "type": "arxiv",
+    "title": "Self-Preference Bias in LLM-as-a-Judge",
+    "authors": [
+      "Koki Wataoka",
+      "Tsubasa Takahashi",
+      "Ryokan Ri"
+    ],
+    "published": "2024-10-29T07:42:18Z",
+    "updated": "2025-06-21T08:39:06Z",
+    "url": "http://arxiv.org/abs/2410.21819v2",
+    "abstract": "Automated evaluation leveraging large language models (LLMs), commonly referred to as LLM evaluators or LLM-as-a-judge, has been widely used in measuring the performance of dialogue systems. However, the self-preference bias in LLMs has posed significant risks, including promoting specific styles or policies intrinsic to the LLMs. Despite the importance of this issue, there is a lack of established methods to measure the self-preference bias quantitatively, and its underlying causes are poorly understood. In this paper, we introduce a novel quantitative metric to measure the self-preference bias. Our experimental results demonstrate that GPT-4 exhibits a significant degree of self-preference bias. To explore the causes, we hypothesize that LLMs may favor outputs that are more familiar to them, as indicated by lower perplexity. We analyze the relationship between LLM evaluations and the perplexities of outputs. Our findings reveal that LLMs assign significantly higher evaluations to outputs with lower perplexity than human evaluators, regardless of whether the outputs were self-generated. This suggests that the essence of the bias lies in perplexity and that the self-preference bias exists because LLMs prefer texts more familiar to them.",
+    "categories": [
+      "cs.CL"
+    ]
+  },
+  "arXiv:2502.01534": {
+    "type": "arxiv",
+    "title": "Preference Leakage: A Contamination Problem in LLM-as-a-judge",
+    "authors": [
+      "Dawei Li",
+      "Renliang Sun",
+      "Yue Huang",
+      "Ming Zhong",
+      "Bohan Jiang",
+      "Jiawei Han",
+      "Xiangliang Zhang",
+      "Wei Wang",
+      "Huan Liu"
+    ],
+    "published": "2025-02-03T17:13:03Z",
+    "updated": "2026-03-04T17:50:58Z",
+    "url": "http://arxiv.org/abs/2502.01534v3",
+    "abstract": "Large Language Models (LLMs) as judges and LLM-based data synthesis have emerged as two fundamental LLM-driven data annotation methods in model development. While their combination significantly enhances the efficiency of model training and evaluation, little attention has been given to the potential contamination brought by this new model development paradigm. In this work, we expose preference leakage, a contamination problem in LLM-as-a-judge caused by the relatedness between the synthetic data generators and LLM-based evaluators. To study this issue, we first define three common relatednesses between the data generator LLM and the judge LLM: being the same model, having an inheritance relationship, and belonging to the same model family. Through extensive experiments, we empirically confirm the bias of judges towards their related student models caused by preference leakage across multiple LLM baselines and benchmarks. Further analysis suggests that preference leakage is a pervasive and real-world problem that is harder to detect compared to previously identified biases in LLM-as-a-judge scenarios. All of these findings imply that preference leakage is a widespread and challenging problem in the area of LLM-as-a-judge. We release all codes and data at: https://github.com/David-Li0406/Preference-Leakage.",
+    "categories": [
+      "cs.LG",
+      "cs.AI",
+      "cs.CL"
+    ]
+  },
+  "arXiv:2604.22891": {
+    "type": "arxiv",
+    "title": "Quantifying and Mitigating Self-Preference Bias of LLM Judges",
+    "authors": [
+      "Jinming Yang",
+      "Zheng Hu",
+      "Chuxian Qiu",
+      "Zhenyu Deng",
+      "Xinshan Jiao",
+      "Tao Zhou"
+    ],
+    "published": "2026-04-24T09:46:22Z",
+    "updated": "2026-06-02T08:52:07Z",
+    "url": "http://arxiv.org/abs/2604.22891v4",
+    "abstract": "LLM-as-a-Judge has become a dominant approach in automated evaluation systems, playing critical roles in model alignment, leaderboard construction, quality control, and so on. However, the scalability and trustworthiness of this approach can be substantially distorted by Self-Preference Bias (SPB), which is a directional evaluative deviation in which LLMs systematically favor or disfavor their own generated outputs during evaluation. Existing measurements rely on costly human annotations and conflate generative capability with evaluative stance, and thus are impractical for large-scale deployment in real-world systems. To address this issue, we introduce a fully automated framework to quantifying and mitigating SPB, which constructs equal-quality pairs of responses with negligible quality differences, enabling statistical disentanglement of discriminability from bias propensity without human gold standards. Empirical analysis across 20 mainstream LLMs reveals that advanced capabilities are often uncorrelated, or even negatively correlated, with low SPB. To mitigate this bias, we propose a structured multi-dimensional evaluation strategy grounded in cognitive load decomposition, which reduces SPB by 31.5\\% on average.",
+    "categories": [
+      "cs.LG",
+      "cs.AI",
+      "cs.CL"
+    ]
+  },
+  "arXiv:2607.14275": {
+    "type": "arxiv",
+    "title": "AI Agents Do Not Fail Alone:The Context Fails First",
+    "authors": [
+      "Fouad Bousetouane"
+    ],
+    "published": "2026-07-15T18:33:02Z",
+    "updated": "2026-07-15T18:33:02Z",
+    "url": "http://arxiv.org/abs/2607.14275v1",
+    "abstract": "Context engineering has become central to building reliable AI agents, yet it remains largely unmeasured. Agents do not fail in isolation: their behavior is shaped by the instructions, tools, memory, retrieved knowledge, guardrails, and untrusted inputs accumulated in their context. When this context is weak, agents drift, hallucinate, misuse tools, ignore constraints, become vulnerable to injection, and waste tokens. This paper validates context-engineering quality as an independent leading indicator of agent reliability. We implement the measurement in ProofAgent-Harness, an open-source infrastructure for AI agent evaluation that uses multi-juror, consensus-based scoring. The harness assesses context across seven criteria: role clarity, guardrail coverage, instruction consistency, tool schema quality, grounding sufficiency, injection hardening, and token efficiency. Crucially, the context score is isolated from behavioral metrics and release decisions, enabling a non-circular validation. Through a controlled context-quality study across regulated agent domains, holding frontier LLM agents fixed and varying only their operating context, we show that context-quality criteria consistently predict their corresponding behavioral outcomes. Grounding sufficiency predicts hallucination resistance, guardrail coverage predicts manipulation resistance, instruction consistency predicts instruction following, and tool-schema quality predicts tool use. These findings establish context measurement as a validated preflight signal for agent reliability and position context engineering as an auditable layer of agent evaluation and governance.",
+    "categories": [
+      "cs.AI",
+      "cs.MA"
+    ]
+  },
+  "arXiv:2604.04103": {
+    "type": "arxiv",
+    "title": "Compliance-by-Construction Argument Graphs: Using Generative AI to Produce Evidence-Linked Formal Arguments for Certification-Grade Accountability",
+    "authors": [
+      "Mahyar T. Moghaddam"
+    ],
+    "published": "2026-04-05T12:55:16Z",
+    "updated": "2026-04-05T12:55:16Z",
+    "url": "http://arxiv.org/abs/2604.04103v1",
+    "abstract": "High-stakes decision systems increasingly require structured justification, traceability, and auditability to ensure accountability and regulatory compliance. Formal arguments commonly used in the certification of safety-critical systems provide a mechanism for structuring claims, reasoning, and evidence in a verifiable manner. At the same time, generative artificial intelligence systems are increasingly integrated into decision-support workflows, assisting with drafting explanations, summarizing evidence, and generating recommendations. However, current deployments often rely on language models as loosely constrained assistants, which introduces risks such as hallucinated reasoning, unsupported claims, and weak traceability. This paper proposes a compliance-by-construction architecture that integrates Generative AI (GenAI) with structured formal argument representations. The approach treats each AI-assisted step as a claim that must be supported by verifiable evidence and validated against explicit reasoning constraints before it becomes part of an official decision record. The architecture combines four components: i) a typed Argument Graph representation inspired by assurance-case methods, ii) retrieval-augmented generation (RAG) to draft argument fragments grounded in authoritative evidence, iii) a reasoning and validation kernel enforcing completeness and admissibility constraints, and iv) a provenance ledger aligned with the W3C PROV standard to support auditability. We present a system design and an evaluation strategy based on enforceable invariants and worked examples. The analysis suggests that deterministic validation rules can prevent unsupported claims from entering the decision record while allowing GenAI to accelerate argument construction.",
+    "categories": [
+      "cs.AI"
+    ]
+  },
+  "arXiv:2604.20577": {
+    "type": "arxiv",
+    "title": "Evaluating Assurance Cases as Text-Attributed Graphs for Structure and Provenance Analysis",
+    "authors": [
+      "Fariz Ikhwantri",
+      "Dusica Marijan"
+    ],
+    "published": "2026-04-22T13:58:08Z",
+    "updated": "2026-04-30T09:16:24Z",
+    "url": "http://arxiv.org/abs/2604.20577v2",
+    "abstract": "An assurance case is a structured argument document that justifies claims about a system's requirements or properties, which are supported by evidence. In regulated domains, these are crucial for meeting compliance and safety requirements to industry standards. We propose a graph diagnostic framework for analysing the structure and provenance of assurance cases. We focus on two main tasks: (1) link prediction, to learn and identify connections between argument elements, and (2) graph classification, to differentiate between assurance cases created by a state-of-the-art large language model and those created by humans, aiming to detect bias. We compiled a publicly available dataset of assurance cases, represented as graphs with nodes and edges, supporting both link prediction and provenance analysis. Experiments show that graph neural networks (GNNs) achieve strong link prediction performance (ROC-AUC 0.760) on real assurance cases and generalise well across domains and semi-supervised settings. For provenance detection, GNNs effectively distinguish human-authored from LLM-generated cases (F1 0.94). We observed that LLM-generated assurance cases have different hierarchical linking patterns compared to human-authored cases. Furthermore, existing GNN explanation methods show only moderate faithfulness, revealing a gap between predicted reasoning and the true argument structure.",
+    "categories": [
+      "cs.SE",
+      "cs.LG"
+    ]
+  },
+  "arXiv:2506.13977": {
+    "type": "arxiv",
+    "title": "CRITICTOOL: Evaluating Self-Critique Capabilities of Large Language Models in Tool-Calling Error Scenarios",
+    "authors": [
+      "Shiting Huang",
+      "Zhen Fang",
+      "Zehui Chen",
+      "Siyu Yuan",
+      "Junjie Ye",
+      "Yu Zeng",
+      "Lin Chen",
+      "Qi Mao",
+      "Feng Zhao"
+    ],
+    "published": "2025-06-11T17:59:18Z",
+    "updated": "2025-06-11T17:59:18Z",
+    "url": "http://arxiv.org/abs/2506.13977v1",
+    "abstract": "The ability of large language models (LLMs) to utilize external tools has enabled them to tackle an increasingly diverse range of tasks. However, as the tasks become more complex and long-horizon, the intricate tool utilization process may trigger various unexpected errors. Therefore, how to effectively handle such errors, including identifying, diagnosing, and recovering from them, has emerged as a key research direction for advancing tool learning. In this work, we first extensively analyze the types of errors encountered during the function-calling process on several competitive tool evaluation benchmarks. Based on it, we introduce CRITICTOOL, a comprehensive critique evaluation benchmark specialized for tool learning. Building upon a novel evolutionary strategy for dataset construction, CRITICTOOL holds diverse tool-use errors with varying complexities, which better reflects real-world scenarios. We conduct extensive experiments on CRITICTOOL, and validate the generalization and effectiveness of our constructed benchmark strategy. We also provide an in-depth analysis of the tool reflection ability on various LLMs, offering a new perspective on the field of tool learning in LLMs. The code is available at \\href{https://github.com/Shellorley0513/CriticTool}{https://github.com/Shellorley0513/CriticTool}.",
+    "categories": [
+      "cs.SE",
+      "cs.CL"
+    ]
+  },
+  "arXiv:2607.06624": {
+    "type": "arxiv",
+    "title": "AgentLens: Production-Assessed Trajectory Reviews for Coding Agent Evaluation",
+    "authors": [
+      "Andrey Podivilov",
+      "Vadim Lomshakov",
+      "Sergey Savin",
+      "Matvei Startsev",
+      "Roman Pozharskiy",
+      "Maksim Parshin",
+      "Sergey Nikolenko"
+    ],
+    "published": "2026-07-07T11:27:43Z",
+    "updated": "2026-07-14T09:13:17Z",
+    "url": "http://arxiv.org/abs/2607.06624v2",
+    "abstract": "We present AgentLens, a production-assessed benchmark for interactive code agents. Most code-agent benchmarks reduce a run to a single bit -- did the task pass? -- but the people who actually use these agents experience the entire trajectory: how the agent follows instructions, uses its tools, verifies its own work, recovers from mistakes, and talks to them along the way. AgentLens evaluates that whole trajectory. It pairs formal verification, where an objective check exists, with LLM-written trajectory reviews and side-by-side comparisons, so that each run yields a readable explanation of why the score is what it is. This makes AgentLens useful for more than ranking models: we use it to diagnose model behavior, compare successive versions of our own agent, and catch product regressions in a nightly evaluation pipeline. We release the benchmark as open source at https://github.com/agent-lens/agent-lens-bench.",
+    "categories": [
+      "cs.AI",
+      "cs.LG",
+      "cs.SE"
+    ]
+  }
+}

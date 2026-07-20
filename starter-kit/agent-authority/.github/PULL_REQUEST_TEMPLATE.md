@@ -23,6 +23,17 @@
      5 branch protection / human review. Rung 4+ is required when the agent has authority
      over its own tests, prompts, or CI. -->
 
+## Evidence custody and coupling
+
+<!-- For each load-bearing claim, link the packet's custody record and state the profile:
+     actor / context / mechanism / authority / resource = coupled, partially separated, or separated.
+     Name the evidence pattern, the consequence-specific minimum, and any residual gap. -->
+
+- Decisive evidence IDs / links:
+- Custody/profile record:
+- Verdict owner:
+- Minimum profile met? yes / no; gap:
+
 ## Verification
 
 - [ ] Tests and validator pass locally.
@@ -35,6 +46,7 @@
 - [ ] New source-lineage entries use public, open, linkable sources or are explicitly marked
       unresolved.
 - [ ] Boundary wording was checked; residual risks are stated below.
+- [ ] Decisive evidence custody and all five coupling axes are disclosed; strict-custody validation passes for migrated Standard packets.
 
 ## Residual risks or gaps
 

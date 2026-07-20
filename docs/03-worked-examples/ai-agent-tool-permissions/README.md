@@ -105,7 +105,7 @@ Minimum content:
 | C-003 | Human approval is required for high-impact actions. | Keep humans in the loop when agent authority crosses consequence threshold. | Future approval policy engine and immutable approval record. | Future scenario eval: blocked without approval, allowed with approval, denied approval remains blocked. | Deferred |
 | C-004 | Denied actions are observable. | Silent denial bypass attempts are operational signals. | Structured audit log with event type, tool, actor, path/API, reason, correlation ID. | C-001 denied-write tests assert `write_denied` audit events; broader API/approval audit deferred. | Partial pass |
 
-The first build proves C-001 in full before the example grows. One narrow chain that is complete beats a wide table that is made up.
+The first build exercises C-001 against four recorded escape classes in the stated Python/WSL environment. It does not prove that an agent or production sandbox is confined in every environment. One narrow, inspectable chain with explicit limits beats a wide table that is made up.
 
 ---
 
@@ -156,7 +156,7 @@ The example v0 is done when:
 
 ## 9. Source-lineage note
 
-This example is an original Git-native workflow inspired by public sources already mapped in the Nuclear-grade source foundation:
+This example is an open Git-native teaching workflow assembled from public practices already mapped in the Nuclear-grade source foundation:
 
 - DOE-STD-1073-2016: keeping changes and the approved version under control;
 - DOE-STD-1189-2016 and DOE-STD-3024-2011: building up the design basis and the design description;

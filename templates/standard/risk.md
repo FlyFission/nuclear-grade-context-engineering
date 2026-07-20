@@ -95,7 +95,11 @@ List the affected code, docs, infrastructure, dependencies, prompts, models, dat
 
 - Minimum evidence before build:
 - Minimum evidence before merge/release:
-- Independent review needed? yes/no; why:
+- Candidate load-bearing / decisive claim IDs:
+- Minimum actor/context/mechanism/authority/resource profile for those claims:
+- Prohibited coupling paths (for example actor may not control threshold, retention, and verdict):
+- Who owns evidence admissibility and residual-risk disposition:
+- Independent reproduction, diverse verification, or direct witnessing needed? yes/no; why:
 
 ## Required links
 

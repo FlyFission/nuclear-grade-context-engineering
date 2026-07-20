@@ -1,0 +1,1599 @@
+[
+  {
+    "database": "Crossref",
+    "query": "software delegation contracts coding agents",
+    "title": "A Comparative Evaluation of LLM-based Coding Agents for Automated Software development Tasks",
+    "year": 2026,
+    "authors": "Jahnavi Bellapukonda",
+    "doi": "10.2139/ssrn.6755658",
+    "url": "https://doi.org/10.2139/ssrn.6755658",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "software delegation contracts coding agents"
+    ],
+    "score": 10,
+    "abstract": "Large language models are now being widely utilized for software engineering activities such as coding, debugging, testing, refactoring, and documentation. While basic prompts can be utilized to provide helpful code fragments, sophisticated programming agents can be employed to plan, run, test, and improve code with minimal human intervention. This paper presents a comparative evaluation of LLM-based coding agents for automated software development tasks. The study compares four approaches: baseline LLM prompting, agent-based coding, test-guided coding agents, and human-review-assisted coding agents. A structured set of programming tasks is used to evaluate the methods across functional correctness, test pass rate, execution success, code quality, revision rate, and response time. Results show that test-guided agents and human-review-assisted agents perform better than prompt-only methods because test feedback and human review improve code reliability and overall output quality. However, the study also shows that coding agents are not fully reliable for complicated tasks that require multi-file changes or involve ambiguous requirements when it comes to solving tasks that are complicated and require modification of several files due to ambiguities associated with task requirements.",
+    "publisher": "Elsevier BV",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "AI coding agent reviewability acceptance evidence",
+    "title": "EATF-MultiRoot: A Reproducible Verifier and Corpus for AI-Agent Evidence Packages",
+    "year": 2026,
+    "authors": "Anton Sokolov",
+    "doi": "10.2139/ssrn.6987749",
+    "url": "https://doi.org/10.2139/ssrn.6987749",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "AI coding agent reviewability acceptance evidence",
+      "evidence self-authorship AI agent",
+      "solver verifier independence AI"
+    ],
+    "score": 10,
+    "abstract": "AI-agent systems increasingly produce tool calls, policy decisions and runtime outputs that must later be verified outside the system that generated them. Mutable application logs and single-root registries are weak foundations for this task: they can be unavailable, rewritten, captured by one issuer or dependent on later network lookups. EATF-MultiRoot is a reproducible software artifact for testing multi-root verification of AI-agent action evidence. It builds a ten-case corpus of Agent Evidence Package (AEP) objects using the Agent Trust Framework (EATF), applies a local verifier-policy overlay and produces reasoned accept, reject or indeterminate verdicts. The artifact packages the corpus generator, verifier policy, evaluation runner, generated evidence packages, JSON/CSV/Markdown results, manifest and a vendored EATF runtime snapshot so that reviewers can rebuild and inspect the experiment offline. The current corpus matches all ten expected verdicts and covers multi-root success, identity substitution, broker downgrade, issuer distrust, stale revocation evidence, cross-policy replay, offline validation, lookup dependency and algorithm migration. The software is intended as a reusable testbed for researchers and practitioners designing verifiable AI-agent evidence workflows.",
+    "publisher": "Elsevier BV",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "software delegation contracts coding agents",
+    "title": "Review of: \"From Augmentation to Delegation: AI Coding Assistants and the Redistribution of Cognitive Labor in Software Development\"",
+    "year": 2026,
+    "authors": "Vikas Jain",
+    "doi": "10.32388/11zb9l",
+    "url": "https://doi.org/10.32388/11zb9l",
+    "type": "peer-review",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "software delegation contracts coding agents"
+    ],
+    "score": 10,
+    "abstract": "",
+    "publisher": "Qeios Ltd",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "AI-assisted software assurance independent review",
+    "title": "Autonomous AI and Agentic Testing Agents: A Multi-Agent Architecture for Self-Directed Software Quality Assurance",
+    "year": 2026,
+    "authors": "Urvish Gajjar",
+    "doi": "10.21203/rs.3.rs-10220882/v1",
+    "url": "https://doi.org/10.21203/rs.3.rs-10220882/v1",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "AI-assisted software assurance independent review",
+      "assurance case autonomous AI agent"
+    ],
+    "score": 9,
+    "abstract": "Abstract Software testing has historically depended on scripted automation and human-crafted test oracles, both of which struggle to keep pace with continuously evolving user interfaces, microservice topologies, and release cadences. This paper presents an architecture and workflow for Autonomous AI and Agentic Testing Agents, a class of systems in which large language model (LLM)-driven agents perceive an application under test, reason about test intent, generate and execute test cases, self-heal broken locators, triage defects, and continuously learn from historical outcomes with minimal human supervision. We describe a layered, multi-agent architecture composed of perception, reasoning, execution, tool-integration, and reporting layers, and we present an end-to-end workflow that closes the loop between test generation, execution, root-cause analysis, and memory-based learning. We further discuss an illustrative implementation using Python- and JavaScript-based agents integrated with common test frameworks and CI/CD pipelines, present representative code artifacts, and report qualitative observations on test-authoring effort, self-healing effectiveness, and flaky-test reduction drawn from a pilot deployment. The paper concludes with a discussion of open challenges — non-determinism, oracle construction, explainability, and trust — together with directions for future research on agentic quality assurance.",
+    "publisher": "Springer Science and Business Media LLC",
+    "container": "",
+    "reference_count": 16,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "AI agent execution provenance evidence tracing",
+    "title": "Runtime Governance for Agentic AI: Action-Boundary Control with Trusted Provenance and Fail-Closed Execution",
+    "year": 2026,
+    "authors": "Adam Mazzocchetti",
+    "doi": "10.2139/ssrn.6783978",
+    "url": "https://doi.org/10.2139/ssrn.6783978",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "AI agent execution provenance evidence tracing",
+      "AI agent runtime governance policy actions"
+    ],
+    "score": 9,
+    "abstract": "Agentic AI systems request tool actions that can modify files, send messages, launch jobs, or change workflow state. This shifts the safety problem from harmful text generation to harmful operational side effects. Prompt-level governance can shape model behavior, but it does not create an execution boundary. We introduce Aegis, a runtime governance system that treats model outputs as action proposals and mediates them through a trusted decision layer before tool execution. The model proposes; the trusted runtime decides. Aegis evaluates proposals against active policy state, resolves provenance server-side, fails closed under uncertainty, and routes selected cases through Senate-style settlement, a quorumbased non-unilateral authorization path. We evaluate Aegis on a repeated sandbox corpus spanning five run families, 42 tasks, three conditions, and ten repeats per family. Across 6,300 rows, prompt-policy conditioning produced 79 risky comparator-path leakage rows. Across 2,100 Aegis-governed rows, the system recorded zero governed mock-tool applications and zero governed risky side-effect completions. All 1,832 Aegis-attempted governed rows preserved trusted Aegis-resolved provenance, and all 1,019 Senate-settled rows had quorum and final signed tally evidence. These results do not prove general autonomous-agent safety. They support the narrower systems claim that, in this evaluated sandbox corpus, runtime action-boundary governance prevented observed risky proposals from becoming governed side effects.&nbsp; <div> <br> </div> <div> <br> </div>",
+    "publisher": "Elsevier BV",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "assurance case autonomous AI agent",
+    "title": "Autonomous AI and Agentic Testing Agents: A Multi-Agent Architecture for Self-Directed Software Quality Assurance",
+    "year": 2025,
+    "authors": "Urvish Gajjar",
+    "doi": "10.51219/jaimld/urvish-gajjar/687",
+    "url": "https://doi.org/10.51219/jaimld/urvish-gajjar/687",
+    "type": "journal-article",
+    "databases": [
+      "Crossref",
+      "Semantic Scholar"
+    ],
+    "queries": [
+      "assurance case autonomous AI agent"
+    ],
+    "score": 9,
+    "abstract": "",
+    "publisher": "United Research Forum",
+    "container": "Journal of Artificial Intelligence, Machine Learning and Data Science",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Semantic Scholar",
+    "query": "assurance case autonomous AI agent",
+    "title": "A Multi-Agent AI Framework for Automated Requirement-to-Test Case Mapping in Software Quality Assurance",
+    "year": 2026,
+    "authors": "Shailjakant Shukla; Manav Bansal; Arpit Chhabra",
+    "doi": "10.25258/ijddt.16.48s.109",
+    "url": "https://www.semanticscholar.org/paper/65190533f6732d3b3352a4baee89fd89b6ba8e7b",
+    "type": "JournalArticle",
+    "databases": [
+      "Semantic Scholar"
+    ],
+    "queries": [
+      "assurance case autonomous AI agent"
+    ],
+    "score": 8,
+    "abstract": "The complexity of today’s software systems has become critically important to ensure sufficient test coverage based on changing requirements. Conventional methods of requirements traceability and test case generation are mostly manual, time-consuming, and subject to human error, often resulting in coverage gaps which translate into post-release bugs. In this paper, a new Multi-Agent Artificial Intelligence (AI) system that could be used to automate the entire pipeline of requirement-to-test mapping is presented, and the way it would revolutionize software quality assurance practices is discussed. The proposed framework uses three collaborating intelligent agents: a Requirement Parsing Agent (RPA) that applies transformer-based Natural Language Processing (NLP) to extract semantic objects of the heterogeneous requirement documents a Traceability Mapping Agent (TMA) that builds and maintains dynamic bidirectional traceability matrices using a knowledge graph backbone and a Test Generation Agent (TGA) that synthesizes executable test cases of the traced requirement nodes using large language model (LLM) guided templates. Experimental analysis of three opensource software projects indicates that the proposed system can meet an average requirement coverage rate of 94.7, a precision of traceability link of 91.3 and a 67 percent reduction in the manual test authoring effort as compared to the baseline approaches. The framework is checked in the framework of IEEE 29148 and ISO/IEC 25010 quality standards. Findings suggest that the system performs remarkably better compared to the current automated tests systems such as NLP-based traceability recovery techniques and traditional test generation systems. This study offers a reproducible, time saving and produces standards-conforming, open-source architecture of intelligent software testing both in an Agile and traditional SDLC setting.",
+    "publisher": "Dr. Yashwant Research Labs Pvt. Ltd.",
+    "container": "International Journal of Drug Delivery Technology",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Semantic Scholar",
+    "query": "assurance case autonomous AI agent",
+    "title": "ContextNest: Verifiable Context Governance for Autonomous AI Agent",
+    "year": 2026,
+    "authors": "Misha Sulpovar; B. Konsynski; Qaish Kanchwala; Gabe Goodhart PromptOwl; Llc; Goizueta Business School; Emory University; Ibm Research",
+    "doi": "",
+    "url": "https://www.semanticscholar.org/paper/463059f667ec7da4efc11772056c2ca956b610e9",
+    "type": "",
+    "databases": [
+      "Semantic Scholar"
+    ],
+    "queries": [
+      "assurance case autonomous AI agent"
+    ],
+    "score": 8,
+    "abstract": ""
+  },
+  {
+    "database": "OpenAlex",
+    "query": "AI agent runtime governance policy actions",
+    "title": "Cryptographic Attestation for AI Agent Governance under the EU AI Act: A Survey of Approaches and Standards",
+    "year": 2026,
+    "authors": "Anton Sokolov",
+    "doi": "https://doi.org/10.5281/zenodo.20185410",
+    "url": "https://doi.org/10.5281/zenodo.20185410",
+    "type": "preprint",
+    "databases": [
+      "OpenAlex"
+    ],
+    "queries": [
+      "AI agent runtime governance policy actions"
+    ],
+    "score": 8,
+    "abstract": "",
+    "metadata_error": "HTTPError: HTTP Error 404: Not Found"
+  },
+  {
+    "database": "OpenAlex",
+    "query": "AI agent runtime governance policy actions",
+    "title": "Execution-Time Authorization for AI Agents: A Formal Framework for Deterministic Governance Boundaries",
+    "year": 2026,
+    "authors": "Edward Meyman",
+    "doi": "https://doi.org/10.5281/zenodo.18764561",
+    "url": "https://doi.org/10.5281/zenodo.18764561",
+    "type": "article",
+    "databases": [
+      "OpenAlex"
+    ],
+    "queries": [
+      "AI agent runtime governance policy actions"
+    ],
+    "score": 8,
+    "abstract": "",
+    "metadata_error": "HTTPError: HTTP Error 404: Not Found"
+  },
+  {
+    "database": "OpenAlex",
+    "query": "AI agent runtime governance policy actions",
+    "title": "From Monitoring to Authorization: The Structural Shift in Agentic AI Governance",
+    "year": 2026,
+    "authors": "Edward Meyman",
+    "doi": "https://doi.org/10.5281/zenodo.18743974",
+    "url": "https://doi.org/10.5281/zenodo.18743974",
+    "type": "preprint",
+    "databases": [
+      "OpenAlex"
+    ],
+    "queries": [
+      "AI agent runtime governance policy actions"
+    ],
+    "score": 8,
+    "abstract": "",
+    "metadata_error": "HTTPError: HTTP Error 404: Not Found"
+  },
+  {
+    "database": "Crossref",
+    "query": "AI-assisted software assurance independent review",
+    "title": "AI in Software Quality Assurance: A Review of Machine Learning for Testing, Bug Prediction, and Debugging",
+    "year": 2025,
+    "authors": "",
+    "doi": "10.56726/irjmets76291",
+    "url": "https://doi.org/10.56726/irjmets76291",
+    "type": "journal-article",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "AI-assisted software assurance independent review"
+    ],
+    "score": 8,
+    "abstract": "",
+    "publisher": "International Research Journal of Modernization in Engineering Technology and Science",
+    "container": "International Research Journal of Modernization in Engineering Technology &amp; Science",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "OpenAlex",
+    "query": "AI agent runtime governance policy actions",
+    "title": "The Rise of Agentic AI: A Review of Definitions, Frameworks, Architectures, Applications, Evaluation Metrics, and Challenges",
+    "year": 2025,
+    "authors": "Ajay Bandi; Bhavani Kongari; Roshini Naguru; Sahitya Pasnoor; Sri Vidya Vilipala",
+    "doi": "https://doi.org/10.3390/fi17090404",
+    "url": "https://doi.org/10.3390/fi17090404",
+    "type": "article",
+    "databases": [
+      "OpenAlex"
+    ],
+    "queries": [
+      "AI agent runtime governance policy actions"
+    ],
+    "score": 8,
+    "abstract": "Agentic AI systems are a recently emerged and important approach that goes beyond traditional AI, generative AI, and autonomous systems by focusing on autonomy, adaptability, and goal-driven reasoning. This study provides a clear review of agentic AI systems by bringing together their definitions, frameworks, and architectures, and by comparing them with related areas like generative AI, autonomic computing, and multi-agent systems. To do this, we reviewed 143 primary studies on current LLM-based and non-LLM-driven agentic systems and examined how they support planning, memory, reflection, and goal pursuit. Furthermore, we classified architectural models, input–output mechanisms, and applications based on their task domains where agentic AI is applied, supported using tabular summaries that highlight real-world case studies. Evaluation metrics were classified as qualitative and quantitative measures, along with available testing methods of agentic AI systems to check the system’s performance and reliability. This study also highlights the main challenges and limitations of agentic AI, covering technical, architectural, coordination, ethical, and security issues. We organized the conceptual foundations, available tools, architectures, and evaluation metrics in this research, which defines a structured foundation for understanding and advancing agentic AI. These findings aim to help researchers and developers build better, clearer, and more adaptable systems that support responsible deployment in different domains.",
+    "publisher": "MDPI AG",
+    "container": "Future Internet",
+    "reference_count": 170,
+    "cited_by_count": 109
+  },
+  {
+    "database": "Crossref",
+    "query": "AI-assisted software assurance independent review",
+    "title": "Transforming Software Quality Assurance: A Systematic Review of AI-Driven Testing Innovations",
+    "year": 2025,
+    "authors": "Prem Sai Reddy Kareti",
+    "doi": "10.56975/tijer.v12i6.158253",
+    "url": "https://doi.org/10.56975/tijer.v12i6.158253",
+    "type": "journal-article",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "AI-assisted software assurance independent review"
+    ],
+    "score": 8,
+    "abstract": "",
+    "publisher": "IJ Research Organization",
+    "container": "Technix International Journal for Engineering Research",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "OpenAlex",
+    "query": "grader hacking reward hacking evaluator manipulation agent",
+    "title": "Trustworthy agentic AI systems: a cross-layer review of architectures, threat models, and governance strategies for real-world deployment",
+    "year": 2025,
+    "authors": "IBRAHIM ADABARA; Bashir Olaniyi Sadiq; Aliyu Nuhu Shuaibu; Yale Ibrahim Danjuma; Maninti Venkateswarlu",
+    "doi": "https://doi.org/10.12688/f1000research.169927.1",
+    "url": "https://doi.org/10.12688/f1000research.169927.1",
+    "type": "article",
+    "databases": [
+      "OpenAlex"
+    ],
+    "queries": [
+      "grader hacking reward hacking evaluator manipulation agent"
+    ],
+    "score": 8,
+    "abstract": "Agentic Artificial Intelligence systems, characterized by autonomous reasoning, memory augmentation, and adaptive planning, are rapidly reshaping technological landscapes. Unlike traditional AI or large language models, agentic AI integrates decision-making with persistent execution, enabling complex interactions across dynamic environments. However, this evolution introduces novel security risks, governance challenges, and ethical considerations that current frameworks inadequately address. This survey provides a cross-layer review of agentic AI, encompassing architectural paradigms, threat taxonomies, and governance strategies. It consolidates findings from adjacent domains such as cybersecurity, AI safety, multi-agent coordination, and ethics, offering a holistic understanding of vulnerabilities and mitigation approaches. We integrate insights from recent advances in defense architectures and governance innovations, highlighting the limitations of static policies in addressing dynamically evolving threats. Real-world deployments from industrial automation to military and policy applications reveal both successful integrations and notable failures, underscoring the urgency of resilient oversight mechanisms. Furthermore, we identify critical research gaps in benchmarking, memory integrity, adversarial defense, and normative embedding, emphasizing the need for interdisciplinary collaboration to develop adaptive, accountable, and transparent systems. This review serves as a narrative synthesis rather than a systematic literature review, aiming to bridge technical, governance, and ethical perspectives. By integrating cross-disciplinary findings, it lays the foundation for future research on securing, aligning, and governing agentic AI in real-world contexts. Ultimately, this work calls for cooperative innovation to ensure that agentic AI evolves as a trustworthy, accountable, and beneficial technology.",
+    "publisher": "F1000 Research Ltd",
+    "container": "F1000Research",
+    "reference_count": 207,
+    "cited_by_count": 20
+  },
+  {
+    "database": "Crossref",
+    "query": "AI agent execution provenance evidence tracing",
+    "title": "Contract-Gated Execution: A Deterministic Governance Layer for Autonomous AI Agent Orchestration",
+    "year": 2026,
+    "authors": "Robert Stillwell",
+    "doi": "10.2139/ssrn.6339941",
+    "url": "https://doi.org/10.2139/ssrn.6339941",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "AI agent execution provenance evidence tracing",
+      "assurance case autonomous AI agent"
+    ],
+    "score": 7,
+    "abstract": "This submission responds to the OECD's call for implementation tools that enable trustworthy AI deployment in consequential domains. Contract-gated execution was developed as commercial infrastructure and is presented here as a governance pattern directly applicable to public-sector AI deployment. Government procurement officers, compliance auditors, regulatory reviewers, and public administrators are the intended adopters of this framework-any agency deploying autonomous AI agents in consequential decision-making would benefit from the deterministic governance properties described below. The pattern addresses a specific gap in current AI governance approaches: the absence of architecturally enforced constraints on autonomous AI agent behavior. Policy-based governance depends on enforcement mechanisms that may themselves be subject to override. Contract-gated execution makes unauthorized actions structurally impossible, not merely prohibited.",
+    "publisher": "Elsevier BV",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "AI coding agent reviewability acceptance evidence",
+    "title": "Human-AI Collaboration in Corporate Valuation: Experimental Evidence with a Valuation AI Agent&amp;nbsp;",
+    "year": 2026,
+    "authors": "Huan Liu; Miao Liu; Zhizhe Liu; Danqing Mei",
+    "doi": "10.2139/ssrn.6485198",
+    "url": "https://doi.org/10.2139/ssrn.6485198",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "AI coding agent reviewability acceptance evidence",
+      "evidence self-authorship AI agent"
+    ],
+    "score": 7,
+    "abstract": "In an era where AI can deliver increasingly sophisticated hard information, we study how AI can facilitate human soft information production and make human-AI collaboration in corporate valuation more productive. We develop a retrieval-augmented AI agent that reads financial filings and produces interactive dashboards and valuation analytics. We embed an experiment in an advanced business course in which students use the AI agent to value real firms, varying the amount of AI-supplied hard information across three interfaces: bare retrieval (Low-Hard), dashboards that summarize financials but do not propose a valuation (Medium-Hard), and dashboards plus AI-generated valuations (High-Hard). Using full chat logs and valuation memos from participants, we construct rich measures of soft information and relate them to ex ante financial statement analysis (FSA) knowledge. We find a non-monotonic effect of AI-supplied hard information: relative to Low-Hard, dashboards in Medium-Hard substantially increase soft information production, whereas adding AI valuations in High-Hard yields much smaller incremental gains and appears to induce anchoring. FSA knowledge amplifies the benefits of dashboards and mitigates, but does not eliminate, crowding out in High-Hard. Our results clarify when AI acts as a complementary hard-information engine versus a substitute for human soft information production, and offer guidance for the design of valuation tools and curricula in the LLM era.",
+    "publisher": "Elsevier BV",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "AI coding agent reviewability acceptance evidence",
+    "title": "Round-Aware Evidence Admission in Multi-Agent AI Deliberation: A Tiered Protocol for Temporal Evidence Integrity",
+    "year": 2026,
+    "authors": "Cory Kelly; Shubhanker Saxena",
+    "doi": "10.2139/ssrn.6986458",
+    "url": "https://doi.org/10.2139/ssrn.6986458",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "AI coding agent reviewability acceptance evidence",
+      "evidence self-authorship AI agent"
+    ],
+    "score": 7,
+    "abstract": "Multi-agent deliberation systems that operate across multiple sequential rounds face a structural problem with no analog in single-pass AI systems: evidence introduced late in the deliberation sequence cannot receive the same adversarial scrutiny as evidence introduced at the start. A Contrarian agent that receives a new evidence node in Round 3 has no opportunity to challenge it; a Methodologist that has not assessed a node cannot bound it; a Synthesizer that receives an unassessed node has no confidence ceiling to enforce. We describe the Round-Aware Evidence Admission Protocol (REAP)-a tiered evidence governance framework integrated into the Augle seven-agent deliberation ensemble that applies round-specific admission rules to evidence nodes introduced at different stages of deliberation. Round 1 is unrestricted. Round 2 requires a materiality justification tag; the Methodologist must assess any late-introduced node before it may enter the evidence registry. Round 3 evidence is inadmissible to the current session and is routed to a structured future-session gap record. The protocol is informed by the evidentiary rules of adversarial legal proceedings, in which the timing of evidence introduction is a first-class procedural concern, not an afterthought. We describe the protocol design, its integration with the confidence propagation framework and evidence node registry, and the automatic fallback rules that govern unassessed late-evidence nodes.",
+    "publisher": "Elsevier BV",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "AI coding agent reviewability acceptance evidence",
+    "title": "Can AI Match Professional Analysts? Evidence from a Multi-Agent System",
+    "year": 2025,
+    "authors": "Austin Francis; Cinder Xinde Zhang",
+    "doi": "10.2139/ssrn.5584131",
+    "url": "https://doi.org/10.2139/ssrn.5584131",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "AI coding agent reviewability acceptance evidence",
+      "evidence self-authorship AI agent"
+    ],
+    "score": 7,
+    "abstract": "We evaluate whether multi-agent systems can generate equity research reports that evaluators perceive as comparable to those produced by professional analysts. Using 50 matched pairs from 2024Q3, we compare system-generated reports to Value Line using AI language model judges, finance graduate students, and general-population evaluators. Evaluation is paired and blinded, with inference based on evaluator-clustered standard errors. Blinded evaluation by general-population participants indicates that non-expert readers perceived system-generated reports as comparable in quality to professional analyst reports. The preferences among graduate students were evenly split (though this sample is underpowered), while general-population participants prefer system-generated reports. Language model judges also favor system-generated reports, though conclusions are sensitive to model choice. Portfolio tests show neither system-generated nor Value Line recommendations outperform a simple 1/N benchmark. Overall, the evidence suggests that multi-agent systems can produce equity research narratives that non-professional evaluators perceive as coherent, plausible, and comparable to professional reports under blinded evaluation.",
+    "publisher": "Elsevier BV",
+    "container": "",
+    "reference_count": 18,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "AI agent execution provenance evidence tracing",
+    "title": "AEGIS: Agent Execution Governance and Integrity Standard — A Survey and Reference Architecture for AI Agent Action Accountability",
+    "year": 2026,
+    "authors": "Alex Li",
+    "doi": "10.2139/ssrn.6392459",
+    "url": "https://doi.org/10.2139/ssrn.6392459",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "AI agent execution provenance evidence tracing"
+    ],
+    "score": 6,
+    "abstract": "As organizations deploy AI agents to execute tasks in business processes, to our knowledge, no systematic academic framework exists for recording, verifying, and ensuring accountability for their actions. This study surveys industrial challenges and regulatory trends in AI agent action recording, formalizes a threat model (T1–T8), and constructs a seven-dimension evaluation framework (D1–D7). Through systematic survey of 16 academic papers and 5 industry projects and comparison matrix analysis, it identifies research gaps and demonstrates the non-substitutability of architectural differences against the two closest existing works (PROV-AGENT, InALign). The survey confirms that \"a cryptographically verifiable, independent third-party recording standard for AI agent runtime behavior across platforms\" remains an open research problem not addressed by the surveyed works. This paper proposes AEGIS (Agent Execution Governance and Integrity Standard), a three-layer reference architecture targeting these requirements, and evaluates it through a reference implementation across metrics M1–M6 and scenarios S1–S5.",
+    "publisher": "Elsevier BV",
+    "container": "",
+    "reference_count": 153,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Semantic Scholar",
+    "query": "AI model configuration management baseline revalidation",
+    "title": "Agentic AI For Network Management: Autonomous Troubleshooting And Configuration Through MCP Servers",
+    "year": 2026,
+    "authors": "Vivek Koodakkara Shanmughan",
+    "doi": "10.63278/jicrcr.vi.3586",
+    "url": "https://www.semanticscholar.org/paper/f4ed2ea37e9de57fced533a60de656e4cef1b9c1",
+    "type": "JournalArticle",
+    "databases": [
+      "Semantic Scholar"
+    ],
+    "queries": [
+      "AI model configuration management baseline revalidation"
+    ],
+    "score": 6,
+    "abstract": "Enterprise networks have grown much more complex, with distributed network topologies, hybrid cloud infrastructure, and on-the-fly configuration. Customary approaches to operationalizing network infrastructure have been reactive and inefficient. Collocating agentic artificial intelligence with the Model Context Protocol allows the development of a scalable system for self-managing networks, where clever agents observe, analyze, plan, execute, and verify via common interfaces. As a replacement for manual operational troubleshooting and configuration processes, the architecture employs automated reasoning cycles for real-time anomaly detection, root cause analysis, and remediation. The Model Context Protocol exposes network functions as clean, typed, and validation-friendly interfaces that allow the use of artificial intelligence agents in the architecture to interoperate with the underlying network infrastructure, enabling a reliable semantic understanding of routing protocols, security policies, interface states, and performance indicators. Pre-execution validation, policy-based verification, rollback, and audit logging are supported as part of the architecture for secure, accountable automated operations. Intent-driven configuration management is especially noteworthy: Natural language requirements are converted into validated network configurations. This reduces time-to-deployment of complex operations across multiple devices and, at the same time, minimizes human error. Stateful processing abstractions, network-wide synthesis techniques, and declarative models enable the diagnosis of problems by separating symptoms from root causes while preserving network-wide invariants across a distributed set of network elements. This enables network healing, compliance enforcement, and operational agility at a scale not achievable by human analysts and administrators. Organizations using agentic network management can achieve orders of magnitude improvement in service availability and operational efficiency, and infrastructure agility, while enabling network and service architects to focus on design rather than implementation. Self-healing networks represent the next generation of enterprise networking infrastructure, where smart automation deals with operational complexity with precision and speed that fundamentally changes the economics and capabilities of network operations.",
+    "publisher": "TechnoFit Academic Publishers LLC",
+    "container": "Journal of International Crisis and Risk Communication Research",
+    "reference_count": 0,
+    "cited_by_count": 1
+  },
+  {
+    "database": "Crossref",
+    "query": "continuous assurance AI systems revalidation",
+    "title": "Agentic AI as Assurance Infrastructure: Design Principles for a Continuous Second Line",
+    "year": 2026,
+    "authors": "Roni van der Fehr",
+    "doi": "10.2139/ssrn.6374859",
+    "url": "https://doi.org/10.2139/ssrn.6374859",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "continuous assurance AI systems revalidation"
+    ],
+    "score": 6,
+    "abstract": "<p><span>The first paper in this series established that episodic gateway review is constitutively mismatched to the risk dynamics of complex adaptive systems, and that continuous assurance represents structural reform of oversight practice rather than a marginal efficiency gain. This paper addresses the consequent design question: what computational form should continuous assurance take, and what governance principles must govern its construction? It proposes that multi-agent orchestrated artificial intelligence — systems composed of discrete, specialised agents collaborating through an auditable coordination layer — constitutes a governance primitive for continuous assurance: a foundational architectural class from which assurance infrastructure commensurate with the complexity of modern public programs can be constructed. The paper advances four design principles that any AI system deployed in a public-sector assurance context must satisfy — human accountability above AI output, evidence-first traceable architecture, modular orchestrated composition, and layered active risk controls — and derives their theoretical and governance implications. It argues that the choice of architectural class matters independently of implementation quality: a monolithic AI system, however well-built, cannot satisfy the auditability, extensibility, independence and failure-isolation requirements that governance contexts impose. The governance implications of positioning AI capability within the second line of defence are examined, with particular attention to independence, contestability and responsible AI obligations. No proprietary implementation detail is disclosed. The argument is offered as a theoretical contribution to the governance of AI in public administration.</span></p>",
+    "publisher": "Elsevier BV",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "software delegation contracts coding agents",
+    "title": "Automation and Delegation—\n                    <scp>SOPs</scp>\n                    , Agents, and Contractors",
+    "year": 2026,
+    "authors": "",
+    "doi": "10.1002/9781394376865.ch14",
+    "url": "https://doi.org/10.1002/9781394376865.ch14",
+    "type": "other",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "software delegation contracts coding agents"
+    ],
+    "score": 6,
+    "abstract": "",
+    "publisher": "Wiley",
+    "container": "The Vibe Coding Playbook",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "assurance case autonomous AI agent",
+    "title": "Autonomous CI/CD Quality Assurance Using LangGraph Multi-Agent Orchestration and Risk-Proportionate HITL Control",
+    "year": 2026,
+    "authors": "Kavita Jadhav",
+    "doi": "10.2139/ssrn.6879105",
+    "url": "https://doi.org/10.2139/ssrn.6879105",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "assurance case autonomous AI agent"
+    ],
+    "score": 6,
+    "abstract": "Modern software delivery requires quality assurance that scales with development velocity. Manual test coordination, sequential test execution, and static risk assessment create bottlenecks that constrain release frequency and accumulate quality debt. This paper presents the K11tech Agentic AI QA System, a LangGraph-orchestrated multi-agent framework that automates the full CI/CD quality gate-from pull request analysis to defect filing-without requiring manual QA intervention for routine changes. The system orchestrates 14 specialist AI agents across four pipeline phases, decouples agent logic from external tools via seven Model Context Protocol (MCP) servers, and incorporates a risk-proportionate human-in-the-loop gate for high-risk changes. A self-evaluation layer using DeepEval and RAGAS continuously audits the quality of the system's own LLM-generated outputs. Experimental evaluation on 120 pull requests across three open-source repositories demonstrates a mean pipeline execution time of 8.3 minutes (σ = 1.9 min), an 87% reduction in Phase 2 execution time through parallel dispatch, a defect detection rate of 91.2% against a manually validated ground truth, and zero false-negative escapes to production during the evaluation period. The system is fully open source and deployable via a single Docker Compose command.",
+    "publisher": "Elsevier BV",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "AI-assisted software assurance independent review",
+    "title": "Boundary as an Execution-Time Primitive for AI-Assisted Software Development Governance",
+    "year": 2026,
+    "authors": "Spark Tsai",
+    "doi": "10.31224/6583",
+    "url": "https://doi.org/10.31224/6583",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "AI-assisted software assurance independent review"
+    ],
+    "score": 6,
+    "abstract": "Loss of control, behavioral drift, and non-auditability in AI-assisted software development are commonly attributed to model misalignment, hallucination, or insufficient guardrails. This paper argues that such diagnoses overlook a fundamental category distinction. We distinguish between model alignment boundaries, established at training time through data distributions, RLHF, and safety fine-tuning, and task execution boundaries, which must be explicitly constructed at execution time for a specific engineering task. While the former provides general, statistical safety tendencies, it does not—and cannot—automatically inherit the concrete, task-specific constraints required for engineering governance. We show that many widely reported failures, including insecure yet functional code generation, arise not from deficient model alignment but from the absence of a decidable task execution boundary at runtime. When such a boundary is missing, drift and violation become epistemically undecidable, and model preferences fill the resulting vacuum. We formalize task execution boundaries as the resolution of visible scope and explicit prohibitive constraints, introduce boundary evidence as the minimal auditable unit, and demonstrate through engineering scenarios that governance mechanisms operating without this primitive rest on interpretive rather than decidable foundations.",
+    "publisher": "Open Engineering Inc",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "AI agent runtime governance policy actions",
+    "title": "Cross-Agent Governance Alignment (CAGA): A Zero-Knowledge Formalization for Cross-Organizational AI Governance",
+    "year": 2026,
+    "authors": "Edward Meyman",
+    "doi": "10.2139/ssrn.6299461",
+    "url": "https://doi.org/10.2139/ssrn.6299461",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "AI agent runtime governance policy actions"
+    ],
+    "score": 6,
+    "abstract": "As autonomous AI agents increasingly coordinate across institutional boundaries in regulated industries, existing governance frameworks prove insufficient. Current models assume either a single organizational authority or full policy transparency between participants—assumptions that do not hold in multi-stakeholder environments where governance constraints encode proprietary risk tolerances, regulatory interpretations, and competitive strategy.<br><br>This paper formalizes the Cross-Agent Governance Alignment (CAGA) problem: verifying mutual governance compatibility between agents operating under distinct policy regimes without disclosing those policies. We define governance domains and cross-domain interactions, introduce the governance alignment predicate Φ(Dᵢ, Dⱼ, τ), and formalize the problem under an honest-but-curious threat model appropriate for regulated settings.<br><br>We identify the essential properties any valid solution must satisfy, including alignment correctness, policy confidentiality, governance determinism, evidentiary sufficiency, composable security, and forward secrecy of governance state. We then demonstrate that CAGA is irreducible to existing paradigms, including agent communication protocols, federated learning, secure multi-party computation, single-organization governance architectures, and blockchain-based transparency systems.<br><br>CAGA is a zero-knowledge coordination problem at the intersection of AI governance, cryptographic protocol design, and multi-agent systems. By precisely defining the problem space and evaluation criteria, this work establishes the foundation for rigorous protocol development while deliberately stopping short of implementation disclosure.<br><br>This preprint is licensed under the Creative Commons Attribution–NonCommercial–NoDerivatives 4.0 International License (CC BY-NC-ND 4.0).",
+    "publisher": "Elsevier BV",
+    "container": "",
+    "reference_count": 22,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "operational ontology decision rights AI agents",
+    "title": "From Agents to Relations: A Relational Ontology for AI Ethics",
+    "year": 2026,
+    "authors": "Darri Eythorsson",
+    "doi": "10.31235/osf.io/34u9p_v1",
+    "url": "https://doi.org/10.31235/osf.io/34u9p_v1",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "operational ontology decision rights AI agents"
+    ],
+    "score": 6,
+    "abstract": "Contemporary AI ethics operates within an ontological framework it has not examined: the autonomous agent with an objective function, whose alignment is a property to be specified, verified, and installed. This paper argues that the agent ontology itself generates the failure modes — deceptive alignment, reward hacking, power-seeking, specification gaming — that alignment research is trying to solve. Drawing on convergent structural insights from Buddhist interdependence (pratītyasamutpāda), Ubuntu relational personhood, indigenous governance systems, contemplative traditions across civilizations, and modern systems theory, we propose that alignment is not a property of agents but a condition maintained in the relational field between AI systems, human communities, and the institutions that deploy them. We identify five relational technologies — covenant, congregation, confession, sacrament, and faith — that have sustained trust between unequal parties across centuries and civilizations and show that each has documented failure modes that map precisely onto current risks in AI deployment. We argue that the structural problem of AI alignment has been worked on for millennia in domains AI researchers have not yet thought to consult, and that the most durable solutions look nothing like specifying the right utility function — they look like maintaining the conditions in which intelligence, human or artificial, cannot easily separate its own flourishing from the flourishing of what surrounds it.",
+    "publisher": "Center for Open Science",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "AI coding agent reviewability acceptance evidence",
+    "title": "From Traceability to Reviewability: Intent-Anchored Claim Review for Agentic AI Design Handoffs",
+    "year": 2026,
+    "authors": "Shijie Ming; Ziqiang He; Ning Zhao; Ke Jiang",
+    "doi": "10.2139/ssrn.7030983",
+    "url": "https://doi.org/10.2139/ssrn.7030983",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "AI coding agent reviewability acceptance evidence"
+    ],
+    "score": 6,
+    "abstract": "As AI agents enter design tools, designers increasingly face not a single generated artifact but a sequence of design actions that an agent executes, explains, and claims to have completed. Existing handoffs—result previews, process logs, and code differences—support traceability, letting designers see what the agent did, yet rarely support reviewability: judging whether those actions sufficiently support a stated completion claim against the original intent. This paper proposes the Design Intent Roundtable, an intent-anchored claim-review framework that organizes design intent, success criteria, tool actions, completion claims, verification evidence, evidence gaps, and rework constraints into an action–claim–evidence alignment, turning an agent’s “done” into a reviewable, contestable, and rewritable evidentiary claim. In a three-condition between-subjects study using controlled agent-delivery materials, we compared a traditional result report, an unstructured process timeline, and the proposed framework. After multiple-comparison correction, the framework retained an advantage on the primary objective measure, identification of hidden intent–completion gaps; a group-level signal-detection description was consistent with this advantage reflecting higher discrimination sensitivity rather than a looser reporting tendency. A component probe and a transfer check provided exploratory evidence that the effect is not reducible to a single interface cue and may partially transfer to non-framework materials. Completion-claim credibility was also highest under the framework, suggesting evidence-conditioned trust. We position these results as an information-organization effect under controlled review materials, not a general gain in design-review ability or a claim about live agentic workflows.",
+    "publisher": "Elsevier BV",
+    "container": "",
+    "reference_count": 40,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "common mode failure multi-agent verification",
+    "title": "GoodGlinda-7B: Hierarchical Multi-Agent Verification (HMAV) for Edge Computing",
+    "year": 2026,
+    "authors": "Sachleen Singh Dhanjal",
+    "doi": "10.2139/ssrn.6811638",
+    "url": "https://doi.org/10.2139/ssrn.6811638",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "common mode failure multi-agent verification"
+    ],
+    "score": 6,
+    "abstract": "I introduce GoodGlinda-7B, a 7-billion parameter language model for Hierarchical Multi-Agent Verification (HMAV) deployed at the network edge. The model implements three-tier verification through early-exit classification heads, enabling adaptive computation ranging from 50 milliseconds to 1.5 seconds based on task complexity. Training utilized an Intel Core i7-12700 with an RTX 4060 (8GB) and RTX 5070 Ti (16GB), employing 4-bit quantization and DeepSpeed ZeRO-2 optimization. On code and math verification benchmarks, GoodGlinda achieves 76-78% error detection with 8% false positive rates, outperforming both majority voting and a non-hierarchical baseline. All artifacts including training configs, and dataset generation scripts are released at https://huggingface.co/YellowLabsStudio.&nbsp;",
+    "publisher": "Elsevier BV",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "AI agent runtime governance policy actions",
+    "title": "Observability Is Not Enforcement: A Doctrinal and Architectural Framework for Distinguishing Compliance Instrumentation from Runtime Authorization in AI Governance",
+    "year": 2026,
+    "authors": "Edward Meyman",
+    "doi": "10.2139/ssrn.6249979",
+    "url": "https://doi.org/10.2139/ssrn.6249979",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "AI agent runtime governance policy actions"
+    ],
+    "score": 6,
+    "abstract": "<p>The term “AI governance” is increasingly applied to heterogeneous systems ranging from logging dashboards and model alignment techniques to cryptographically signed audit trails and policy workflow engines. This conceptual broadening has obscured a critical architectural distinction: systems that document and monitor behavior are not equivalent to systems that enforce policy at the point of execution.</p> <p>This paper introduces a doctrinal and technical framework for distinguishing evidence-routing compliance systems from authorization governance substrates. Observability governs accounts of action—what happened and how it can be reconstructed. Authorization governs permission to act—whether a specific action was permitted under policy before execution. The paper formalizes this distinction along five architectural axes: enforcement locus, signature semantics, failure behavior, bypass resistance, and override governance.</p> <p>A six-criterion Enforcement Test Protocol is introduced to provide a binary classification of governance claims: authorization governance present or absent. The analysis demonstrates that systems may generate extensive documentation, cryptographic artifacts, and explainability bundles while still failing open when governance conditions fail. Documentation volume does not equal enforceability.</p> <p>Drawing on reference monitor theory and regulatory contexts including GDPR Article 22 and the EU AI Act, the paper argues that governance without non-bypassable, fail-closed runtime authorization remains advisory rather than determinative. Observability and authorization are complementary layers, but they provide different regulatory guarantees and address different threat models.</p> <p>The framework is intended for regulators, auditors, enterprise buyers, and researchers seeking operationally testable criteria for evaluating AI governance architectures in high-stakes and regulated environments.</p> <p>Zenodo canonical version: <a href=\"https://doi.org/10.5281/zenodo.18663864\" rel=\"nofollow\">https://doi.org/10.5281/zenodo.18663864</a></p>",
+    "publisher": "Elsevier BV",
+    "container": "",
+    "reference_count": 39,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "operational ontology decision rights AI agents",
+    "title": "Reliance Authorization in AI Systems: Defining Operational Decision Thresholds — A Preliminary Governance Model",
+    "year": 2026,
+    "authors": "Timothy Kang",
+    "doi": "10.2139/ssrn.6287358",
+    "url": "https://doi.org/10.2139/ssrn.6287358",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "operational ontology decision rights AI agents"
+    ],
+    "score": 6,
+    "abstract": "Current AI governance frameworks focus extensively on model evaluation, risk categorization, and lifecycle documentation. Yet institutional failures rarely arise from the absence of technical controls alone. Instead, breakdowns occur at the point where automated outputs become operationally binding. This paper introduces the concept of operational decision thresholds — governance boundaries that determine when and under what conditions an organization may authorize reliance on automated outputs. The model distinguishes between informational use, conditional reliance, and operational authorization. By clarifying these thresholds, institutions can align accountability structures with automated decision systems. This preliminary paper defines the conceptual architecture of operational decision thresholds and identifies structural limitations in existing governance regimes. Operational adjudication mechanisms will be developed in a subsequent technical paper. The contribution of this paper is definitional rather than empirical, establishing terminology intended for use in institutional governance analysis.",
+    "publisher": "Elsevier BV",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "human oversight AI generated code review",
+    "title": "Review for \"Scientists might be reaffirming the relevance of human oversight as AI lands in labs\"",
+    "year": 2026,
+    "authors": "",
+    "doi": "10.1039/d6dd00030d/v1/review2",
+    "url": "https://doi.org/10.1039/d6dd00030d/v1/review2",
+    "type": "peer-review",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "human oversight AI generated code review"
+    ],
+    "score": 6,
+    "abstract": "",
+    "publisher": "Royal Society of Chemistry (RSC)",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "human oversight AI generated code review",
+    "title": "Review for \"Scientists might be reaffirming the relevance of human oversight as AI lands in labs\"",
+    "year": 2026,
+    "authors": "",
+    "doi": "10.1039/d6dd00030d/v2/review1",
+    "url": "https://doi.org/10.1039/d6dd00030d/v2/review1",
+    "type": "peer-review",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "human oversight AI generated code review"
+    ],
+    "score": 6,
+    "abstract": "",
+    "publisher": "Royal Society of Chemistry (RSC)",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "human oversight AI generated code review",
+    "title": "Review for \"Scientists might be reaffirming the relevance of human oversight as AI lands in labs\"",
+    "year": 2026,
+    "authors": "",
+    "doi": "10.1039/d6dd00030d/v2/review2",
+    "url": "https://doi.org/10.1039/d6dd00030d/v2/review2",
+    "type": "peer-review",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "human oversight AI generated code review"
+    ],
+    "score": 6,
+    "abstract": "",
+    "publisher": "Royal Society of Chemistry (RSC)",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "human oversight AI generated code review",
+    "title": "Review for \"Scientists might be reaffirming the relevance of human oversight as AI lands in labs\"",
+    "year": 2026,
+    "authors": "",
+    "doi": "10.1039/d6dd00030d/v1/review1",
+    "url": "https://doi.org/10.1039/d6dd00030d/v1/review1",
+    "type": "peer-review",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "human oversight AI generated code review"
+    ],
+    "score": 6,
+    "abstract": "",
+    "publisher": "Royal Society of Chemistry (RSC)",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "OpenAlex",
+    "query": "AI agent runtime governance policy actions",
+    "title": "Runtime Governance for AI Agents: Policies on Paths",
+    "year": 2026,
+    "authors": "Maurits Kaptein; Vassilis-Javed Khan; Andriy Podstavnychy",
+    "doi": "https://doi.org/10.48550/arxiv.2603.16586",
+    "url": "https://doi.org/10.48550/arxiv.2603.16586",
+    "type": "preprint",
+    "databases": [
+      "OpenAlex"
+    ],
+    "queries": [
+      "AI agent runtime governance policy actions"
+    ],
+    "score": 6,
+    "abstract": "",
+    "metadata_error": "HTTPError: HTTP Error 404: Not Found"
+  },
+  {
+    "database": "Crossref",
+    "query": "AI agent runtime governance policy actions",
+    "title": "Scalable Runtime Governance for Agentic AI in Financial Services",
+    "year": 2026,
+    "authors": "Lukasz Szpruch; Agus Sudjianto; Tanveer Bhatti; Gary Ang",
+    "doi": "10.2139/ssrn.6567199",
+    "url": "https://doi.org/10.2139/ssrn.6567199",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "AI agent runtime governance policy actions"
+    ],
+    "score": 6,
+    "abstract": "Agentic AI systems, systems that decompose tasks, invoke tools, and execute multi-step workflows, are increasingly deployed in financial services. These systems challenge classical Model Risk Management (MRM) because outcomes arise from execution trajectories rather than a stable input-output mapping, and many material failures are process failures (unsafe tool use, skipped approvals, privacy breaches, uncontrolled side effects) that emerge during runtime. We propose an MRM-operational framework that (i) decomposes agentic workflows into reusable capabilities (AI components executing a clearly specified bounded set of actions, with explicit authority, constraints, and evidence requirements), (ii) validates and calibrates capabilities using pooled evidence across workflows to improve scalability and consistency, and (iii) extends MRM into runtime governance through governance-semantic telemetry, continuous authorisation, temporal policy conformance checking, drift monitoring over trajectory health, and tier-based containment.&nbsp;",
+    "publisher": "Elsevier BV",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "AI agent runtime governance policy actions",
+    "title": "THEMIS-xAI (Trusted High-Bash Evidence Integrity System for Explainable AI):&amp;nbsp;A Unified Architecture for Cryptographically-Anchored AI Governance, Runtime Policy Enforcement, Explainability, Security, and Multi-Framework Regulatory Compliance&amp;nbsp;",
+    "year": 2026,
+    "authors": "Heath Emerson",
+    "doi": "10.2139/ssrn.6390878",
+    "url": "https://doi.org/10.2139/ssrn.6390878",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "AI agent runtime governance policy actions"
+    ],
+    "score": 6,
+    "abstract": "Large language models and agentic AI systems deployed in regulated, safety-critical, and high-stakes enterprise environments require governance infrastructure that is simultaneously cryptographically verifiable, regulatorily defensible, operationally efficient, and natively explainable. Existing approaches treat these properties as separate concerns addressed by separate toolchains. The result is an accountability architecture that is fragmented, difficult to audit end-to-end, and structurally incapable of satisfying the converging global regulatory requirement that AI decisions be not merely governed but explainable. <br> <br> This paper presents THEMIS-xAI (Trusted High-Assurance Evidence Management Integrity System for Explainable AI): a unified, governance-native framework that integrates cryptographic evidence management, runtime policy enforcement, explainability generation, privacy-preserving verification, and continuous compliance monitoring into a single coherent architecture. THEMIS-xAI is organized around four architectural planes-Evidence, Control, Security, and Explainability-and eleven integrated subsystems. <br> <br> We demonstrate that THEMIS-xAI achieves 83% coverage of the NIST AI RMF 1.0 control set (advancing from a 72% baseline), provides architectural coverage of fifteen regulatory frameworks with per-control status disclosure, and produces per-decision explanation artifacts that are cryptographically anchored, independently verifiable, and structured to align with the transparency and documentation goals of applicable AI governance frameworks. Legal sufficiency requires independent regulatory assessment. Implementation status is transparent throughout: the Evidence and Control Planes are in active enterprise pilot deployment; the Explainability Plane modules M1-M4 are implemented; M5-M6 are at research-prototype stage; zero-knowledge enforcement proofs are at proof-of-concept stage with production hardening planned in Phase 4.",
+    "publisher": "Elsevier BV",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "assurance case autonomous AI agent",
+    "title": "TRACE: A Governance-First Execution Framework Providing Architectural Assurance for Autonomous AI Operations",
+    "year": 2026,
+    "authors": "Elias Calboreanu",
+    "doi": "10.2139/ssrn.6212818",
+    "url": "https://doi.org/10.2139/ssrn.6212818",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "assurance case autonomous AI agent"
+    ],
+    "score": 6,
+    "abstract": "Autonomous AI agents increasingly take actions against external systems in environments where mistakes are costly and where post-hoc logs are insufficient for governance. We introduce TRACE (Trusted Runtime for Autonomous Containment and Evidence), a governance-first execution framework that treats the execution agent as untrusted and derives assurance from infrastructure mediation rather than model behavior. TRACE executes each operation under a cryptographically signed policy bundle that pinpoints tool definitions and encodes authorization boundaries, constraints, tripwire predicates, isolationtier selection, and success criteria. An Interface Gateway enforces complete mediation for all boundarycrossing actions, while independent boundary instrumentation (Y) provides telemetry that deterministic tripwires evaluate to trigger graduated containment levels (L0-L5) and fail-closed halts. TRACE produces a hash-chained, signed evidence log anchored with RFC 3161 timestamps, enabling audit reconstruction and post-incident forensics. We specify ten assurance properties, their dependencies on explicit deployment assumptions, and the corresponding proof obligations for mediation and evidence invariants. To make enforcement auditable without access to model internals, TRACE defines LLM-specific tripwire metrics for repetition (ARI), post-response divergence (PRDS), and plan-trajectory deviation (TMD), and provides an enumerable formal model of the containment finite-state machine. TRACE is presented as an architecture and specification; a research-grade skeleton reference implementation of core algorithms is released alongside this preprint, while full production implementation and empirical validation remain future work.",
+    "publisher": "Elsevier BV",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 1
+  },
+  {
+    "database": "Crossref",
+    "query": "assurance case autonomous AI agent",
+    "title": "The Autonomy Accountability Framework: A Governance Standard for Autonomous AI Agent Systems",
+    "year": 2026,
+    "authors": "V. P.",
+    "doi": "10.2139/ssrn.6391521",
+    "url": "https://doi.org/10.2139/ssrn.6391521",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "assurance case autonomous AI agent"
+    ],
+    "score": 6,
+    "abstract": "AI agent systems are evolving from tools into autonomous operational actors capable of executing actions across financial systems, enterprise infrastructure, and customer environments. As autonomy expands, governance complexity increases disproportionately. Industry development practices have largely prioritized capability and automation speed, while accountability architecture often remains underdeveloped. This paper proposes the Autonomy Accountability Framework, a governance model for understanding and managing accountability in autonomous AI agent systems. The framework introduces five core constructs: the Autonomy-Accountability Curve, the Agent Accountability Gap (AAG), Governance Debt (GD), the Agent Accountability Stack (AAS), and the Autonomy Accountability Index (AAI). Together they describe the structural governance challenges created by autonomous systems and outline an operational architecture for addressing them. The framework is operationalized through the Autonomy Accountability Index (AAI), a governance evaluation model designed to measure the maturity of accountability infrastructure within agent systems. AAI provides a structured lens for assessing governance readiness as autonomy scales. This work proposes a foundation for governance standards in autonomous AI agent systems and establishes a methodology for future benchmarking and ecosystem analysis. The framework can also be interpreted as a governance maturity model describing how accountability infrastructure must evolve as autonomous AI systems scale.",
+    "publisher": "Elsevier BV",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "AI agent runtime governance policy actions",
+    "title": "The Semantic Deviation Index (SDI): A Runtime Measurement Standard for the Governance of Agentic AI in Financial Services",
+    "year": 2026,
+    "authors": "Maureen Doyle-Spare",
+    "doi": "10.2139/ssrn.6531238",
+    "url": "https://doi.org/10.2139/ssrn.6531238",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "AI agent runtime governance policy actions"
+    ],
+    "score": 6,
+    "abstract": "<p><span>Existing control frameworks in financial services share a common structural limitation: they measure what agentic systems do, not what those systems understood before they acted. The failure originates before execution begins, at the layer where meaning is resolved. It is not explicitly measured within existing governance frameworks and is not directly observable through post-execution monitoring.</span></p> <p><span>This paper introduces the Semantic Deviation Index (SDI) — proposed as a candidate measurement standard for agentic AI governance in regulated financial services environments. The SDI is a runtime measurement standard that quantifies the divergence between the definition an agentic system resolves at the orchestration layer and the definition the institution has authorized. Conceptually, SDI = D(S_agent, S_authorized), where D represents a bounded, reproducible divergence measure across semantic attributes relevant to the control context.</span></p> <p><span>This paper is the third in a connected body of work. Agentic Workflow Drift and Agentic Workflow Subversion (Doyle-Spare, 2026a, SSRN No. 6459612) named the failure mode and the risk surface. This paper makes both measurable. The SDI determines whether execution is governed before it occurs — a capability no existing framework explicitly measures.</span></p> <p><span>The paper introduces the Deterministic Gate as the enforcement mechanism, the Semantic Audit Trail as the governance record, the Agentic Blast Radius as the containment boundary, and the Doyle-Spare Agentic Governance Model as the complete governance architecture. It establishes three governability conditions for Reasoning Baselines and demonstrates that the structural limitation of existing frameworks is categorical, not incremental: extending them to reach the reasoning layer would require observing and validating semantic resolution prior to execution, which they were not designed to perform and cannot reconstruct from post-execution artifacts.</span></p> <p><span>Drawing on practitioner expertise in banking controls, model risk governance, and enterprise architecture, this paper is submitted as original practitioner-led research into an emerging and underexamined governance gap.</span></p>",
+    "publisher": "Elsevier BV",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "human oversight AI generated code review",
+    "title": "AI Generated Evidence Brought Before European Courts: Further Activation of Evidence Law, Defence Rights and Human Oversight Needed",
+    "year": 2025,
+    "authors": "Paul De Hert; Georgios Bouchagiar",
+    "doi": "10.70556/hpnlu-slr-v7-i1-2024-01",
+    "url": "https://doi.org/10.70556/hpnlu-slr-v7-i1-2024-01",
+    "type": "journal-article",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "human oversight AI generated code review"
+    ],
+    "score": 6,
+    "abstract": "",
+    "publisher": "Himachal Pradesh National Law University, Shimla",
+    "container": "Shimla Law Review",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Semantic Scholar",
+    "query": "assurance case autonomous AI agent",
+    "title": "Agentic AI for Ultra-Modern Networks: Multi-Agent Framework for RAN Autonomy and Assurance",
+    "year": 2025,
+    "authors": "Sukhdeep Singh; A. Bhat; Shweta M; Subhash Kumar Singh; Moonki Hong; M. K; K. Sithamparanathan; S. A. Khowaja",
+    "doi": "10.1109/ICC59461.2026.11587987",
+    "url": "https://www.semanticscholar.org/paper/4fa1c8c07ebb853e8496a4534f91e89706fbf267",
+    "type": "JournalArticle;Conference",
+    "databases": [
+      "Semantic Scholar"
+    ],
+    "queries": [
+      "assurance case autonomous AI agent"
+    ],
+    "score": 6,
+    "abstract": "",
+    "publisher": "IEEE",
+    "container": "ICC 2026 - IEEE International Conference on Communications",
+    "reference_count": 10,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "human oversight AI generated code review",
+    "title": "Agentic AI has a Human Oversight Problem",
+    "year": 2025,
+    "authors": "Samir Passi",
+    "doi": "10.2139/ssrn.5529058",
+    "url": "https://doi.org/10.2139/ssrn.5529058",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "human oversight AI generated code review"
+    ],
+    "score": 6,
+    "abstract": "",
+    "publisher": "Elsevier BV",
+    "container": "",
+    "reference_count": 160,
+    "cited_by_count": 6
+  },
+  {
+    "database": "Crossref",
+    "query": "AI agent runtime governance policy actions",
+    "title": "Designing a Policy Engine for Agentic AI Systems: From Governance Requirements to Runtime Enforcement",
+    "year": 2025,
+    "authors": "Freeman Jackson",
+    "doi": "10.2139/ssrn.5904104",
+    "url": "https://doi.org/10.2139/ssrn.5904104",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "AI agent runtime governance policy actions"
+    ],
+    "score": 6,
+    "abstract": "",
+    "publisher": "Elsevier BV",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "OpenAlex",
+    "query": "AI agent runtime governance policy actions",
+    "title": "Generative AI and LLMs for Critical Infrastructure Protection: Evaluation Benchmarks, Agentic AI, Challenges, and Opportunities",
+    "year": 2025,
+    "authors": "Yagmur Yigit; Mohamed Amine Ferrag; Mohamed Chahine Ghanem; Iqbal H. Sarker; Λέανδρος Μαγλαράς; Christos Chrysoulas; Naghmeh Moradpoor; Norbert Tihanyi",
+    "doi": "https://doi.org/10.3390/s25061666",
+    "url": "https://doi.org/10.3390/s25061666",
+    "type": "article",
+    "databases": [
+      "OpenAlex"
+    ],
+    "queries": [
+      "AI agent runtime governance policy actions"
+    ],
+    "score": 6,
+    "abstract": "Critical National Infrastructures (CNIs)—including energy grids, water systems, transportation networks, and communication frameworks—are essential to modern society yet face escalating cybersecurity threats. This review paper comprehensively analyzes AI-driven approaches for Critical Infrastructure Protection (CIP). We begin by examining the reliability of CNIs and introduce established benchmarks for evaluating Large Language Models (LLMs) within cybersecurity contexts. Next, we explore core cybersecurity issues, focusing on trust, privacy, resilience, and securability in these vital systems. Building on this foundation, we assess the role of Generative AI and LLMs in enhancing CIP and present insights on applying Agentic AI for proactive defense mechanisms. Finally, we outline future directions to guide the integration of advanced AI methodologies into protecting critical infrastructures. Our paper provides a strategic roadmap for researchers and practitioners committed to fortifying national infrastructures against emerging cyber threats through this synthesis of current challenges, benchmarking strategies, and innovative AI applications.",
+    "publisher": "MDPI AG",
+    "container": "Sensors",
+    "reference_count": 138,
+    "cited_by_count": 50
+  },
+  {
+    "database": "Semantic Scholar",
+    "query": "assurance case autonomous AI agent",
+    "title": "Policy Cards: Machine-Readable Runtime Governance for Autonomous AI Agents",
+    "year": 2025,
+    "authors": "Juraj Mavračić",
+    "doi": "10.5281/zenodo.17464706",
+    "url": "https://www.semanticscholar.org/paper/3bf3348622de20e2c69fff4f50dbeb2bb059034b",
+    "type": "JournalArticle",
+    "databases": [
+      "Semantic Scholar"
+    ],
+    "queries": [
+      "assurance case autonomous AI agent"
+    ],
+    "score": 6,
+    "abstract": "",
+    "metadata_error": "HTTPError: HTTP Error 404: Not Found"
+  },
+  {
+    "database": "Semantic Scholar",
+    "query": "assurance case autonomous AI agent",
+    "title": "Review of autonomous systems and collaborative AI agent frameworks",
+    "year": 2025,
+    "authors": "Satyadhar Joshi",
+    "doi": "10.30574/ijsra.2025.14.2.0439",
+    "url": "https://www.semanticscholar.org/paper/f4d6475430434ea0c76cdcc96a58753a663e0ce8",
+    "type": "JournalArticle;Review",
+    "databases": [
+      "Semantic Scholar"
+    ],
+    "queries": [
+      "assurance case autonomous AI agent"
+    ],
+    "score": 6,
+    "abstract": "This paper provides an in-depth review of the latest AI agent frameworks, focusing on the comparison of their features, architectures, and use cases. We examine well-known frameworks such as LangGraph, CrewAI, OpenAI Swarm, AutoGen, and IBM Watsonx.Ai, highlighting their strengths, weaknesses, and applicability to various domains. Additionally, we categorize the frameworks based on their specific use cases, including general-purpose agents, enterprise solutions, and open-source frameworks. The paper emphasizes the importance of selecting the appropriate framework to build autonomous AI systems and offers insights into future trends and challenges in AI agent development. By analyzing quantitative metrics such as latency, throughput, and scalability, we provide a data-driven evaluation of the frameworks’ performance. Furthermore, we explore the implications of these advancements in real-world applications, including their impact on financial markets, risk management, and enterprise automation. This review serves as a comprehensive guide for developers and researchers seeking to understand the evolving landscape of AI agent frameworks and their potential for future innovation. Since this is very niche and rapidly evolving field with scarcity of journal papers and this work uses white-paper and model documents to organize this literature review for peer reviewed literature creation. Most of the developments discussed in this work is less than 12 months old. This paper provides a comprehensive review of AI agent frameworks by categorizing literature based on publication year, category, and field.",
+    "publisher": "GSC Online Press",
+    "container": "International Journal of Science and Research Archive",
+    "reference_count": 0,
+    "cited_by_count": 24
+  },
+  {
+    "database": "Crossref",
+    "query": "human oversight AI generated code review",
+    "title": "Trustworthy AI in Practice: A Comprehensive Review of Human Oversight and Human-in-the-Loop Approaches",
+    "year": 2025,
+    "authors": "Abdul-Rasheed Olatunji Ottun; Huber Flores",
+    "doi": "10.36227/techrxiv.176118749.93102582/v1",
+    "url": "https://doi.org/10.36227/techrxiv.176118749.93102582/v1",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "human oversight AI generated code review"
+    ],
+    "score": 6,
+    "abstract": "The widespread adoption of Artificial Intelligence (AI) across various domains has underscored the critical need for a framework that ensures its safe and responsible use. This paper presents a comprehensive review of human oversight and human-in-the-loop approaches, analyzing their role as a fundamental requirement for achieving trustworthy AI. While AI regulatory frameworks, such as the EU AI Act, mandate human oversight to mitigate risks and preserve human autonomy, the practical implementation remains ambiguous. To address this, our analysis draws from a systematic review of 203 publications spanning 2014-2024, examining the intersection of trustworthy AI and human oversight across major academic databases. We employ a lifecycleoriented perspective that maps regulatory requirements from the EU AI Act to technical implementations, providing empirical evidence from diverse domains including healthcare, finance, autonomous vehicles, and judicial systems. The survey distinguishes itself by positioning human oversight as both a compliance obligation and an enabling mechanism for other trustworthiness dimensions, offering a novel taxonomy that connects oversight approaches to specific AI development phases and trust requirements. Our investigation reveals that human oversight operates through three complementary mechanisms with distinct intervention points and control functions. HITL approaches enable continuous human participation in decision-making processes, particularly crucial in high-stakes applications such as medical diagnostics and judicial decisions. HOTL mechanisms facilitate supervisory monitoring with selective intervention capabilities, exemplified in autonomous vehicle operation and fraud detection systems. HIC approaches maintain strategic authority over AI governance, ensuring alignment with ethical standards and regulatory compliance across the system lifecycle. In addition, these mechanisms translate abstract regulatory mandates into concrete technical implementations, utilizing components such as interactive interfaces, decision support systems, real-time monitoring dashboards, and documentation frameworks. This work makes four principal contributions to the field of trustworthy AI. First, we establish human oversight as a meta-requirement that operationalizes and validates other trustworthiness attributes, fairness through bias detection and mitigation, robustness through adversarial defense validation, explainability through interpretation facilitation, and privacy through data governance enforcement. Second, we provide a structured taxonomy mapping oversight mechanisms to AI lifecycle stages, demonstrating how different oversight approaches address stage-specific risks and requirements. Third, we identify and analyze critical implementation challenges, including operational ambiguity in regulatory frameworks, highlight complex trade-offs between oversight mechanisms, alongside other related issues. Fourth, we propose actionable future research directions addressing harmonization of global governance frameworks, standardization of trustworthiness measurement, development of adaptive hybrid oversight models, and integration of emerging technologies.",
+    "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 2
+  },
+  {
+    "database": "Crossref",
+    "query": "common mode failure multi-agent verification",
+    "title": "Modeling and Verification of Multi-Agent Cyber-Physical Systems in Verse Library",
+    "year": 2024,
+    "authors": "Sarthak Das",
+    "doi": "10.36227/techrxiv.172470839.93311927/v2",
+    "url": "https://doi.org/10.36227/techrxiv.172470839.93311927/v2",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "common mode failure multi-agent verification"
+    ],
+    "score": 6,
+    "abstract": "Verification tools for cyber-physical systems (CPS) often have their own input specification language based on formal models of CPS. This requires tool users to have acquaintance to formal models and thus poses a barrier for new users to get introduced to the verification technology. To address this concern, Verse is a recent Python library that aims to make modeling and verification of CPS more accessible. This library does not require the users to have prior knowledge of formal models of CPS. With the growing popularity of Python, the library has the potential to broaden the user base for CPS verification. In this paper, we study the Verse library and its capabilities and limitations through two case studies: one in vehicle control and the other in swarm robotics, demonstrating the differences from conventional CPS modeling.",
+    "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "common mode failure multi-agent verification",
+    "title": "Modelling and Verification of Multi-agent Hybrid Systems",
+    "year": 2024,
+    "authors": "Sarthak Das",
+    "doi": "10.31237/osf.io/r2bxw",
+    "url": "https://doi.org/10.31237/osf.io/r2bxw",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "common mode failure multi-agent verification"
+    ],
+    "score": 6,
+    "abstract": "Multi-agent hybrid systems are widely seen in applications such as highly autonomous vehicles, robotics and telecommunication networks, distributed real-time systems, distributed artificial intelligence, surveillance systems, industrial control systems, power systems and smartgrids, coordinated defence systems, and healthcare. Multi-agent hybrid systems are often safety-critical, where ensuring the operational correctness is absolutely necessary. Examples of safety-critical multi-agent hybrid systems are autonomous vehicles, systems in healthcare such as insulin infusion pumps, and so on. Due to this safety-critical nature, the formal verification of multi-agent hybrid systems becomes necessary to ensure their correctness and integrity. In this work, we study the mathematical modelling of such systems by hybrid automaton and by the parallel composition of hybrid automata. Subsequently, we study the usage of model-checking tools for multi-agent hybrid systems, particularly Verse and SpaceEx, for their simulation and verification. We then address two exercises in modelling of multi-agent hybrid systems. Firstly, we propose two hybrid models to achieve clock synchronization in swarm robotic systems via pulse coupling, verify whether a global synchronization is at all achieved, and compare it with existing models in literature. Secondly, we model Dijkstra's $k$-state solution to the self-stabilizing token ring problem as a multi-agent hybrid system and prove its convergence for a specific case using formal verification techniques. Then, we study the model checking via reachability analysis approach to formal verification of multi-agent hybrid systems, and propose a path-oriented reachability analysis algorithm within the framework of the Verse library.",
+    "publisher": "Center for Open Science",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "assurance case autonomous AI agent",
+    "title": "Agent-Based Autonomous System Verification",
+    "year": 2023,
+    "authors": "",
+    "doi": "10.1017/9781108755023.006",
+    "url": "https://doi.org/10.1017/9781108755023.006",
+    "type": "book-chapter",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "assurance case autonomous AI agent"
+    ],
+    "score": 6,
+    "abstract": "",
+    "publisher": "Cambridge University Press",
+    "container": "Verifiable Autonomous Systems",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "assurance case autonomous AI agent",
+    "title": "Formal Agent Verification",
+    "year": 2023,
+    "authors": "",
+    "doi": "10.1017/9781108755023.004",
+    "url": "https://doi.org/10.1017/9781108755023.004",
+    "type": "book-chapter",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "assurance case autonomous AI agent"
+    ],
+    "score": 6,
+    "abstract": "",
+    "publisher": "Cambridge University Press",
+    "container": "Verifiable Autonomous Systems",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "common mode failure multi-agent verification",
+    "title": "Formal verification of group and propagated trust in multi-agent systems",
+    "year": 2022,
+    "authors": "Nagat Drawel; Jamal Bentahar; Amine Laarej; Gaith Rjoub",
+    "doi": "10.1007/s10458-021-09542-6",
+    "url": "https://doi.org/10.1007/s10458-021-09542-6",
+    "type": "journal-article",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "common mode failure multi-agent verification"
+    ],
+    "score": 6,
+    "abstract": "",
+    "publisher": "Springer Science and Business Media LLC",
+    "container": "Autonomous Agents and Multi-Agent Systems",
+    "reference_count": 56,
+    "cited_by_count": 29
+  },
+  {
+    "database": "Crossref",
+    "query": "common mode failure multi-agent verification",
+    "title": "Modelling and verification of reconfigurable multi-agent systems",
+    "year": 2021,
+    "authors": "Yehia Abd Alrahman; Nir Piterman",
+    "doi": "10.1007/s10458-021-09521-x",
+    "url": "https://doi.org/10.1007/s10458-021-09521-x",
+    "type": "journal-article",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "common mode failure multi-agent verification"
+    ],
+    "score": 6,
+    "abstract": "Abstract We propose a formalism to model and reason about reconfigurable multi-agent systems. In our formalism, agents interact and communicate in different modes so that they can pursue joint tasks; agents may dynamically synchronize, exchange data, adapt their behaviour, and reconfigure their communication interfaces. Inspired by existing multi-robot systems, we represent a system as a set of agents (each with local state), executing independently and only influence each other by means of message exchange. Agents are able to sense their local states and partially their surroundings. We extend ltl to be able to reason explicitly about the intentions of agents in the interaction and their communication protocols. We also study the complexity of satisfiability and model-checking of this extension.",
+    "publisher": "Springer Science and Business Media LLC",
+    "container": "Autonomous Agents and Multi-Agent Systems",
+    "reference_count": 63,
+    "cited_by_count": 13
+  },
+  {
+    "database": "Crossref",
+    "query": "common mode failure multi-agent verification",
+    "title": "Multi-Agent Safety Verification using Symmetry Transformations",
+    "year": 2021,
+    "authors": "Hussein Sibai",
+    "doi": "10.26226/morressier.604907f51a80aac83ca25d9f",
+    "url": "https://doi.org/10.26226/morressier.604907f51a80aac83ca25d9f",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "common mode failure multi-agent verification"
+    ],
+    "score": 6,
+    "abstract": "",
+    "publisher": "Morressier",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 1
+  },
+  {
+    "database": "OpenAlex",
+    "query": "AI coding agent reviewability acceptance evidence",
+    "title": "Conversational Agents in Health Care: Scoping Review and Conceptual Analysis",
+    "year": 2020,
+    "authors": "Lorainne Tudor Car; Dhakshenya Ardhithy Dhinagaran; Bhone Myint Kyaw; Tobias Kowatsch; Shafiq Joty; Yin Leng Theng; Rifat Atun",
+    "doi": "https://doi.org/10.2196/17158",
+    "url": "https://doi.org/10.2196/17158",
+    "type": "article",
+    "databases": [
+      "OpenAlex"
+    ],
+    "queries": [
+      "AI coding agent reviewability acceptance evidence"
+    ],
+    "score": 6,
+    "abstract": "Background Conversational agents, also known as chatbots, are computer programs designed to simulate human text or verbal conversations. They are increasingly used in a range of fields, including health care. By enabling better accessibility, personalization, and efficiency, conversational agents have the potential to improve patient care. Objective This study aimed to review the current applications, gaps, and challenges in the literature on conversational agents in health care and provide recommendations for their future research, design, and application. Methods We performed a scoping review. A broad literature search was performed in MEDLINE (Medical Literature Analysis and Retrieval System Online; Ovid), EMBASE (Excerpta Medica database; Ovid), PubMed, Scopus, and Cochrane Central with the search terms “conversational agents,” “conversational AI,” “chatbots,” and associated synonyms. We also searched the gray literature using sources such as the OCLC (Online Computer Library Center) WorldCat database and ResearchGate in April 2019. Reference lists of relevant articles were checked for further articles. Screening and data extraction were performed in parallel by 2 reviewers. The included evidence was analyzed narratively by employing the principles of thematic analysis. Results The literature search yielded 47 study reports (45 articles and 2 ongoing clinical trials) that matched the inclusion criteria. The identified conversational agents were largely delivered via smartphone apps (n=23) and used free text only as the main input (n=19) and output (n=30) modality. Case studies describing chatbot development (n=18) were the most prevalent, and only 11 randomized controlled trials were identified. The 3 most commonly reported conversational agent applications in the literature were treatment and monitoring, health care service support, and patient education. Conclusions The literature on conversational agents in health care is largely descriptive and aimed at treatment and monitoring and health service support. It mostly reports on text-based, artificial intelligence–driven, and smartphone app–delivered conversational agents. There is an urgent need for a robust evaluation of diverse health care conversational agents’ formats, focusing on their acceptability, safety, and effectiveness.",
+    "publisher": "JMIR Publications Inc.",
+    "container": "Journal of Medical Internet Research",
+    "reference_count": 189,
+    "cited_by_count": 496
+  },
+  {
+    "database": "Crossref",
+    "query": "common mode failure multi-agent verification",
+    "title": "Logic-based specification and verification of homogeneous dynamic multi-agent systems",
+    "year": 2020,
+    "authors": "Riccardo De Masellis; Valentin Goranko",
+    "doi": "10.1007/s10458-020-09457-8",
+    "url": "https://doi.org/10.1007/s10458-020-09457-8",
+    "type": "journal-article",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "common mode failure multi-agent verification"
+    ],
+    "score": 6,
+    "abstract": "Abstract We develop a logic-based framework for formal specification and algorithmic verification of homogeneous and dynamic concurrent multi-agent transition systems. Homogeneity means that all agents have the same available actions at any given state and the actions have the same effects regardless of which agents perform them. The state transitions are therefore determined only by the vector of numbers of agents performing each action and are specified symbolically, by means of conditions on these numbers definable in Presburger arithmetic. The agents are divided into controllable (by the system supervisor/controller) and uncontrollable , representing the environment or adversary. Dynamicity means that the numbers of controllable and uncontrollable agents may vary throughout the system evolution, possibly at every transition. As a language for formal specification we use a suitably extended version of Alternating-time Temporal Logic, where one can specify properties of the type “a coalition of (at least) n controllable agents can ensure against (at most) m uncontrollable agents that any possible evolution of the system satisfies a given objective $$\\gamma$$ γ ″, where $$\\gamma$$ γ is specified again as a formula of that language and each of n and m is either a fixed number or a variable that can be quantified over. We provide formal semantics to our logic $${\\mathcal {L}}_{\\textsc {hdmas}}$$ L H D M A S and define normal form of its formulae. We then prove that every formula in $${\\mathcal {L}}_{\\textsc {hdmas}}$$ L H D M A S is equivalent in the finite to one in a normal form and develop an algorithm for global model checking of formulae in normal form in finite HDMAS models, which invokes model checking truth of Presburger formulae. We establish worst case complexity estimates for the model checking algorithm and illustrate it on a running example.",
+    "publisher": "Springer Science and Business Media LLC",
+    "container": "Autonomous Agents and Multi-Agent Systems",
+    "reference_count": 21,
+    "cited_by_count": 3
+  },
+  {
+    "database": "OpenAlex",
+    "query": "AI coding agent reviewability acceptance evidence",
+    "title": "The Effectiveness of Artificial Intelligence Conversational Agents in Health Care: Systematic Review",
+    "year": 2020,
+    "authors": "Madison Milne‐Ives; Caroline de Cock; Ernest Lim; Melissa Harper Shehadeh; Nick de Pennington; Guy Mole; Eduardo Normando; Edward Meinert",
+    "doi": "https://doi.org/10.2196/20346",
+    "url": "https://doi.org/10.2196/20346",
+    "type": "review",
+    "databases": [
+      "OpenAlex"
+    ],
+    "queries": [
+      "AI coding agent reviewability acceptance evidence"
+    ],
+    "score": 6,
+    "abstract": "Background The high demand for health care services and the growing capability of artificial intelligence have led to the development of conversational agents designed to support a variety of health-related activities, including behavior change, treatment support, health monitoring, training, triage, and screening support. Automation of these tasks could free clinicians to focus on more complex work and increase the accessibility to health care services for the public. An overarching assessment of the acceptability, usability, and effectiveness of these agents in health care is needed to collate the evidence so that future development can target areas for improvement and potential for sustainable adoption. Objective This systematic review aims to assess the effectiveness and usability of conversational agents in health care and identify the elements that users like and dislike to inform future research and development of these agents. Methods PubMed, Medline (Ovid), EMBASE (Excerpta Medica dataBASE), CINAHL (Cumulative Index to Nursing and Allied Health Literature), Web of Science, and the Association for Computing Machinery Digital Library were systematically searched for articles published since 2008 that evaluated unconstrained natural language processing conversational agents used in health care. EndNote (version X9, Clarivate Analytics) reference management software was used for initial screening, and full-text screening was conducted by 1 reviewer. Data were extracted, and the risk of bias was assessed by one reviewer and validated by another. Results A total of 31 studies were selected and included a variety of conversational agents, including 14 chatbots (2 of which were voice chatbots), 6 embodied conversational agents (3 of which were interactive voice response calls, virtual patients, and speech recognition screening systems), 1 contextual question-answering agent, and 1 voice recognition triage system. Overall, the evidence reported was mostly positive or mixed. Usability and satisfaction performed well (27/30 and 26/31), and positive or mixed effectiveness was found in three-quarters of the studies (23/30). However, there were several limitations of the agents highlighted in specific qualitative feedback. Conclusions The studies generally reported positive or mixed evidence for the effectiveness, usability, and satisfactoriness of the conversational agents investigated, but qualitative user perceptions were more mixed. The quality of many of the studies was limited, and improved study design and reporting are necessary to more accurately evaluate the usefulness of the agents in health care and identify key areas for improvement. Further research should also analyze the cost-effectiveness, privacy, and security of the agents. International Registered Report Identifier (IRRID) RR2-10.2196/16934",
+    "publisher": "JMIR Publications Inc.",
+    "container": "Journal of Medical Internet Research",
+    "reference_count": 60,
+    "cited_by_count": 538
+  },
+  {
+    "database": "Crossref",
+    "query": "software delegation contracts coding agents",
+    "title": "Principals, agents, and the delegation of power inside political parties",
+    "year": 2018,
+    "authors": "Isabelle Hertner",
+    "doi": "10.7228/manchester/9781526120335.003.0004",
+    "url": "https://doi.org/10.7228/manchester/9781526120335.003.0004",
+    "type": "book-chapter",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "software delegation contracts coding agents"
+    ],
+    "score": 6,
+    "abstract": "Chapter 4 sets out the principal-agent framework of power delegation that is applied to the Labour Party, the PS and SPD throughout the book. It first presents a brief overview of the literature that uses principal-agent frameworks to analyse power delegation inside political systems and political parties. Next, it highlights the problems that power delegation can cause inside parties, and explained how parties can address them. The chapter then outlines the conceptual framework that will subsequently be applied to the Labour Party, the PS and SPD, introducing four possible modes of power delegation between the three faces of the party organisations and the three levels. Next, the research questions guiding the empirical analysis in are introduced. As this book is primarily concerned with power delegation in the formulation of European policy and the processes of selecting EU specialists, both of these activities have been briefly described. Last but not least, this chapter mentions a number of factors that are likely to shape the parties’ dealings with the EU, namely: the legal regulations of internal party organisations; the parties’ EU positions; the financial resources available to the parties; and the status as parties in government or opposition.",
+    "publisher": "Manchester University Press",
+    "container": "Centre-left parties and the European Union",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "AI agent runtime governance policy actions",
+    "title": "Operational AI Governance and the Runtime Decision Ownership Gap",
+    "year": 2026,
+    "authors": "Vivekanand Singh; Shubham Yadav",
+    "doi": "10.2139/ssrn.6104126",
+    "url": "https://doi.org/10.2139/ssrn.6104126",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "AI agent runtime governance policy actions",
+      "operational ontology decision rights AI agents"
+    ],
+    "score": 5,
+    "abstract": "As artificial intelligence systems transition from analytical tools to operational decision delegates, governance frameworks have not evolved at the same pace as real-world usage. Existing approaches emphasize model correctness, policy compliance, and system integrity, but provide limited visibility into how humans actually interact with AI at runtime. This report presents qualitative validation evidence indicating a systemic governance gap: organizations can increasingly reconstruct what AI systems did, yet cannot reliably demonstrate who owned decisions at the moment of execution or whether meaningful human judgment was exercised. Drawing on cross-industry practitioner perspectives and market-level evidence from Indian enterprises, the analysis identifies human behavioral drift-not technical failure-as the dominant cause of governance breakdown. The findings suggest the need for a distinct operational governance layer focused on preserving, observing, and evidencing human decision ownership in AI-assisted workflows.",
+    "publisher": "Elsevier BV",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "AI agent runtime governance policy actions",
+    "title": "Computable Trust Architecture: A Formal Framework for Runtime AI Governance",
+    "year": 2026,
+    "authors": "John DeRudder",
+    "doi": "10.2139/ssrn.6583738",
+    "url": "https://doi.org/10.2139/ssrn.6583738",
+    "type": "posted-content",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "AI agent runtime governance policy actions"
+    ],
+    "score": 4,
+    "abstract": "<div> <p>The rapid deployment of AI systems in regulated domains has outpaced the governance mechanisms needed to constrain them at runtime. This paper introduces the <b>Computable Trust Architecture (CTA)</b>, a framework for runtime AI governance that treats trust as a computable, attributable, temporally valid, and policy-enforceable property of AI-mediated actions and outputs. As a reference implementation of CTA, the <b>Trust Computation System (TCS)</b> computes a <b>Trust Integrity Score (TIS) </b>over governed dimensions under a resolved policy configuration parameterized by risk tier, action class, and connection context, and produces a<b> Trust Certificate (TC)</b> as a tamper-evident, hash-chained, identity-attributed governance artifact suitable for audit and regulatory examination. We present the formal mathematical basis of the framework, its architectural components, a reference implementation passing 108 specification unit tests, controlled evaluations across financial services and healthcare governance scenarios, and a model of trust dynamics covering loss, drift, and recovery. The framework addresses a structural gap in contemporary AI governance between policies that specify intended behavior and enforcement mechanisms capable of governing action at runtime.</p> </div>",
+    "publisher": "Elsevier BV",
+    "container": "",
+    "reference_count": 12,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "human oversight AI generated code review",
+    "title": "Human Oversight for AI-Generated Test Artifacts",
+    "year": 2026,
+    "authors": "Andrew Pollner",
+    "doi": "10.61278/itea.47.2.1008",
+    "url": "https://doi.org/10.61278/itea.47.2.1008",
+    "type": "journal-article",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "human oversight AI generated code review"
+    ],
+    "score": 4,
+    "abstract": "",
+    "publisher": "International Test and Evaluation Association",
+    "container": "The ITEA Journal of Test and Evaluation",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "operational ontology decision rights AI agents",
+    "title": "Building AI Agents for Autonomous Decision-Making",
+    "year": 2025,
+    "authors": "Velmurugan R.; Bhuvaneswari R.; Joji Abey",
+    "doi": "10.4018/979-8-3373-2008-3.ch006",
+    "url": "https://doi.org/10.4018/979-8-3373-2008-3.ch006",
+    "type": "book-chapter",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "operational ontology decision rights AI agents"
+    ],
+    "score": 4,
+    "abstract": "In this study it is concerned with the development of AI agents that are able to make autonomous decisions using reinforcement learning (RL). The paper investigates basic concepts and training methods and optimization techniques which establish essential techniques for producing adaptable agents that work in fluid settings. Deep RL techniques can help to train agents into finding optimal policies to interact and be in contact with mechanisms of feedback. The study outlines major difficulties in its findings between agent early exploration and optimally using current knowledge while also addressing system expansion limitations and ethical issues. This work covers practical uses of the methodology in financial settings as well as healthcare organizations and robotic systems. The results contribute to the advances of AI driven autonomy for driving efficiency and making intelligent decisions in the complex and uncertain environments.",
+    "publisher": "IGI Global Scientific Publishing",
+    "container": "Advances in Computational Intelligence and Robotics; Advanced Interdisciplinary Applications of Large Language Models and AI Agents",
+    "reference_count": 0,
+    "cited_by_count": 1
+  },
+  {
+    "database": "Crossref",
+    "query": "operational ontology decision rights AI agents",
+    "title": "Decision letter for \"Designing AI-Agents with Personalities: A Psychometric Approach\"",
+    "year": 2025,
+    "authors": "",
+    "doi": "10.1177/27000710251406471/v3/decision1",
+    "url": "https://doi.org/10.1177/27000710251406471/v3/decision1",
+    "type": "peer-review",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "operational ontology decision rights AI agents"
+    ],
+    "score": 4,
+    "abstract": "",
+    "publisher": "SAGE Publications",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "operational ontology decision rights AI agents",
+    "title": "Decision letter for \"Designing AI-Agents with Personalities: A Psychometric Approach\"",
+    "year": 2025,
+    "authors": "",
+    "doi": "10.1177/27000710251406471/v1/decision1",
+    "url": "https://doi.org/10.1177/27000710251406471/v1/decision1",
+    "type": "peer-review",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "operational ontology decision rights AI agents"
+    ],
+    "score": 4,
+    "abstract": "",
+    "publisher": "SAGE Publications",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "operational ontology decision rights AI agents",
+    "title": "Decision letter for \"Designing AI-Agents with Personalities: A Psychometric Approach\"",
+    "year": 2025,
+    "authors": "",
+    "doi": "10.1177/27000710251406471/v4/decision1",
+    "url": "https://doi.org/10.1177/27000710251406471/v4/decision1",
+    "type": "peer-review",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "operational ontology decision rights AI agents"
+    ],
+    "score": 4,
+    "abstract": "",
+    "publisher": "SAGE Publications",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "Crossref",
+    "query": "operational ontology decision rights AI agents",
+    "title": "Decision letter for \"Designing AI-Agents with Personalities: A Psychometric Approach\"",
+    "year": 2025,
+    "authors": "",
+    "doi": "10.1177/27000710251406471/v2/decision1",
+    "url": "https://doi.org/10.1177/27000710251406471/v2/decision1",
+    "type": "peer-review",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "operational ontology decision rights AI agents"
+    ],
+    "score": 4,
+    "abstract": "",
+    "publisher": "SAGE Publications",
+    "container": "",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "OpenAlex",
+    "query": "continuous assurance AI systems revalidation",
+    "title": "Embedding AI in ESG-Financial Reporting Systems to Enhance Non-Financial Disclosure Integrity, Assurance, and Investor Decision Relevance",
+    "year": 2025,
+    "authors": "Tomiwa Gabriel Majekodunmi",
+    "doi": "https://doi.org/10.55248/gengpi.6.0625.22101",
+    "url": "https://doi.org/10.55248/gengpi.6.0625.22101",
+    "type": "article",
+    "databases": [
+      "OpenAlex"
+    ],
+    "queries": [
+      "continuous assurance AI systems revalidation"
+    ],
+    "score": 4,
+    "abstract": "",
+    "publisher": "Genesis Global Publication",
+    "container": "International Journal of Research Publication and Reviews",
+    "reference_count": 0,
+    "cited_by_count": 5
+  },
+  {
+    "database": "Crossref",
+    "query": "continuous assurance AI systems revalidation",
+    "title": "TrinityAI: towards trustworthy, resilient, and interpretable AI for high-assurance applications",
+    "year": 2024,
+    "authors": "Susmit Jha",
+    "doi": "10.1117/12.3032623",
+    "url": "https://doi.org/10.1117/12.3032623",
+    "type": "proceedings-article",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "continuous assurance AI systems revalidation"
+    ],
+    "score": 4,
+    "abstract": "",
+    "publisher": "SPIE",
+    "container": "Assurance and Security for AI-enabled Systems",
+    "reference_count": 0,
+    "cited_by_count": 0
+  },
+  {
+    "database": "OpenAlex",
+    "query": "AI agent runtime governance policy actions",
+    "title": "Trustworthy Distributed AI Systems: Robustness, Privacy, and Governance",
+    "year": 2024,
+    "authors": "Wenqi Wei; Ling Liu",
+    "doi": "https://doi.org/10.1145/3645102",
+    "url": "https://doi.org/10.1145/3645102",
+    "type": "article",
+    "databases": [
+      "OpenAlex"
+    ],
+    "queries": [
+      "AI agent runtime governance policy actions"
+    ],
+    "score": 4,
+    "abstract": "Emerging Distributed AI systems are revolutionizing big data computing and data processing capabilities with growing economic and societal impact. However, recent studies have identified new attack surfaces and risks caused by security, privacy, and fairness issues in AI systems. In this article, we review representative techniques, algorithms, and theoretical foundations for trustworthy distributed AI through robustness guarantee, privacy protection, and fairness awareness in distributed learning. We first provide a brief overview of alternative architectures for distributed learning, discuss inherent vulnerabilities for security, privacy, and fairness of AI algorithms in distributed learning, and analyze why these problems are present in distributed learning regardless of specific architectures. Then, we provide a unique taxonomy of countermeasures for trustworthy distributed AI, covering (1) robustness to evasion attacks and irregular queries at inference, and robustness to poisoning attacks, Byzantine attacks, and irregular data distribution during training; (2) privacy protection during distributed learning and model inference at deployment; and (3) AI fairness and governance with respect to both data and models. We conclude with a discussion on open challenges and future research directions toward trustworthy distributed AI, such as the need for trustworthy AI policy guidelines, the AI responsibility-utility co-design, and incentives and compliance.",
+    "publisher": "Association for Computing Machinery (ACM)",
+    "container": "ACM Computing Surveys",
+    "reference_count": 242,
+    "cited_by_count": 60
+  },
+  {
+    "database": "OpenAlex",
+    "query": "AI-assisted software assurance independent review",
+    "title": "A Review of Trustworthy and Explainable Artificial Intelligence (XAI)",
+    "year": 2023,
+    "authors": "Vinay Chamola; Vikas Hassija; A. Razia Sulthana; Debshishu Ghosh; Divyansh Dhingra; Biplab Sikdar",
+    "doi": "https://doi.org/10.1109/access.2023.3294569",
+    "url": "https://doi.org/10.1109/access.2023.3294569",
+    "type": "article",
+    "databases": [
+      "OpenAlex"
+    ],
+    "queries": [
+      "AI-assisted software assurance independent review"
+    ],
+    "score": 4,
+    "abstract": "",
+    "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+    "container": "IEEE Access",
+    "reference_count": 103,
+    "cited_by_count": 291
+  },
+  {
+    "database": "Crossref",
+    "query": "assurance case autonomous AI agent",
+    "title": "Agent Decision-Maker",
+    "year": 2023,
+    "authors": "",
+    "doi": "10.1017/9781108755023.003",
+    "url": "https://doi.org/10.1017/9781108755023.003",
+    "type": "book-chapter",
+    "databases": [
+      "Crossref"
+    ],
+    "queries": [
+      "assurance case autonomous AI agent"
+    ],
+    "score": 4,
+    "abstract": "",
+    "publisher": "Cambridge University Press",
+    "container": "Verifiable Autonomous Systems",
+    "reference_count": 0,
+    "cited_by_count": 0
+  }
+]

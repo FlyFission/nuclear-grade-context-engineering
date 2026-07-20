@@ -1,0 +1,542 @@
+[
+  {
+    "database": "OpenAlex",
+    "query": "AI coding agent reviewability acceptance evidence",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "Crossref",
+    "query": "AI coding agent reviewability acceptance evidence",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "arXiv",
+    "query": "AI coding agent reviewability acceptance evidence",
+    "status": "HTTPError: HTTP Error 429: Unknown Error",
+    "count": 0
+  },
+  {
+    "database": "DBLP",
+    "query": "AI coding agent reviewability acceptance evidence",
+    "status": "ok",
+    "count": 0
+  },
+  {
+    "database": "Semantic Scholar",
+    "query": "AI coding agent reviewability acceptance evidence",
+    "status": "HTTPError: HTTP Error 429: ",
+    "count": 0
+  },
+  {
+    "database": "OpenAlex",
+    "query": "software delegation contracts coding agents",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "Crossref",
+    "query": "software delegation contracts coding agents",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "arXiv",
+    "query": "software delegation contracts coding agents",
+    "status": "TimeoutError: The read operation timed out",
+    "count": 0
+  },
+  {
+    "database": "DBLP",
+    "query": "software delegation contracts coding agents",
+    "status": "ok",
+    "count": 0
+  },
+  {
+    "database": "Semantic Scholar",
+    "query": "software delegation contracts coding agents",
+    "status": "HTTPError: HTTP Error 429: ",
+    "count": 0
+  },
+  {
+    "database": "OpenAlex",
+    "query": "AI-assisted software assurance independent review",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "Crossref",
+    "query": "AI-assisted software assurance independent review",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "arXiv",
+    "query": "AI-assisted software assurance independent review",
+    "status": "HTTPError: HTTP Error 429: Too Many Requests",
+    "count": 0
+  },
+  {
+    "database": "DBLP",
+    "query": "AI-assisted software assurance independent review",
+    "status": "ok",
+    "count": 0
+  },
+  {
+    "database": "Semantic Scholar",
+    "query": "AI-assisted software assurance independent review",
+    "status": "HTTPError: HTTP Error 429: ",
+    "count": 0
+  },
+  {
+    "database": "OpenAlex",
+    "query": "evidence self-authorship AI agent",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "Crossref",
+    "query": "evidence self-authorship AI agent",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "arXiv",
+    "query": "evidence self-authorship AI agent",
+    "status": "HTTPError: HTTP Error 429: Too Many Requests",
+    "count": 0
+  },
+  {
+    "database": "DBLP",
+    "query": "evidence self-authorship AI agent",
+    "status": "ok",
+    "count": 0
+  },
+  {
+    "database": "Semantic Scholar",
+    "query": "evidence self-authorship AI agent",
+    "status": "HTTPError: HTTP Error 429: ",
+    "count": 0
+  },
+  {
+    "database": "OpenAlex",
+    "query": "actor authored evidence acceptance gate",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "Crossref",
+    "query": "actor authored evidence acceptance gate",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "arXiv",
+    "query": "actor authored evidence acceptance gate",
+    "status": "HTTPError: HTTP Error 429: Unknown Error",
+    "count": 0
+  },
+  {
+    "database": "DBLP",
+    "query": "actor authored evidence acceptance gate",
+    "status": "ok",
+    "count": 0
+  },
+  {
+    "database": "Semantic Scholar",
+    "query": "actor authored evidence acceptance gate",
+    "status": "HTTPError: HTTP Error 429: ",
+    "count": 0
+  },
+  {
+    "database": "OpenAlex",
+    "query": "solver verifier independence AI",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "Crossref",
+    "query": "solver verifier independence AI",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "arXiv",
+    "query": "solver verifier independence AI",
+    "status": "TimeoutError: The read operation timed out",
+    "count": 0
+  },
+  {
+    "database": "DBLP",
+    "query": "solver verifier independence AI",
+    "status": "ok",
+    "count": 0
+  },
+  {
+    "database": "Semantic Scholar",
+    "query": "solver verifier independence AI",
+    "status": "HTTPError: HTTP Error 429: ",
+    "count": 0
+  },
+  {
+    "database": "OpenAlex",
+    "query": "generator evaluator collusion language model",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "Crossref",
+    "query": "generator evaluator collusion language model",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "arXiv",
+    "query": "generator evaluator collusion language model",
+    "status": "HTTPError: HTTP Error 429: Unknown Error",
+    "count": 0
+  },
+  {
+    "database": "DBLP",
+    "query": "generator evaluator collusion language model",
+    "status": "ok",
+    "count": 0
+  },
+  {
+    "database": "Semantic Scholar",
+    "query": "generator evaluator collusion language model",
+    "status": "HTTPError: HTTP Error 429: ",
+    "count": 0
+  },
+  {
+    "database": "OpenAlex",
+    "query": "grader hacking reward hacking evaluator manipulation agent",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "Crossref",
+    "query": "grader hacking reward hacking evaluator manipulation agent",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "arXiv",
+    "query": "grader hacking reward hacking evaluator manipulation agent",
+    "status": "TimeoutError: The read operation timed out",
+    "count": 0
+  },
+  {
+    "database": "DBLP",
+    "query": "grader hacking reward hacking evaluator manipulation agent",
+    "status": "ok",
+    "count": 0
+  },
+  {
+    "database": "Semantic Scholar",
+    "query": "grader hacking reward hacking evaluator manipulation agent",
+    "status": "HTTPError: HTTP Error 429: ",
+    "count": 0
+  },
+  {
+    "database": "OpenAlex",
+    "query": "common mode failure multi-agent verification",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "Crossref",
+    "query": "common mode failure multi-agent verification",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "arXiv",
+    "query": "common mode failure multi-agent verification",
+    "status": "TimeoutError: The read operation timed out",
+    "count": 0
+  },
+  {
+    "database": "DBLP",
+    "query": "common mode failure multi-agent verification",
+    "status": "ok",
+    "count": 0
+  },
+  {
+    "database": "Semantic Scholar",
+    "query": "common mode failure multi-agent verification",
+    "status": "HTTPError: HTTP Error 429: ",
+    "count": 0
+  },
+  {
+    "database": "OpenAlex",
+    "query": "AI agent execution provenance evidence tracing",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "Crossref",
+    "query": "AI agent execution provenance evidence tracing",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "arXiv",
+    "query": "AI agent execution provenance evidence tracing",
+    "status": "HTTPError: HTTP Error 429: Unknown Error",
+    "count": 0
+  },
+  {
+    "database": "DBLP",
+    "query": "AI agent execution provenance evidence tracing",
+    "status": "ok",
+    "count": 0
+  },
+  {
+    "database": "Semantic Scholar",
+    "query": "AI agent execution provenance evidence tracing",
+    "status": "HTTPError: HTTP Error 429: ",
+    "count": 0
+  },
+  {
+    "database": "OpenAlex",
+    "query": "assurance case autonomous AI agent",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "Crossref",
+    "query": "assurance case autonomous AI agent",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "arXiv",
+    "query": "assurance case autonomous AI agent",
+    "status": "TimeoutError: The read operation timed out",
+    "count": 0
+  },
+  {
+    "database": "DBLP",
+    "query": "assurance case autonomous AI agent",
+    "status": "ok",
+    "count": 2
+  },
+  {
+    "database": "Semantic Scholar",
+    "query": "assurance case autonomous AI agent",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "OpenAlex",
+    "query": "AI agent runtime governance policy actions",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "Crossref",
+    "query": "AI agent runtime governance policy actions",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "arXiv",
+    "query": "AI agent runtime governance policy actions",
+    "status": "TimeoutError: The read operation timed out",
+    "count": 0
+  },
+  {
+    "database": "DBLP",
+    "query": "AI agent runtime governance policy actions",
+    "status": "ok",
+    "count": 0
+  },
+  {
+    "database": "Semantic Scholar",
+    "query": "AI agent runtime governance policy actions",
+    "status": "HTTPError: HTTP Error 429: ",
+    "count": 0
+  },
+  {
+    "database": "OpenAlex",
+    "query": "separation of duties AI engineering agents",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "Crossref",
+    "query": "separation of duties AI engineering agents",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "arXiv",
+    "query": "separation of duties AI engineering agents",
+    "status": "TimeoutError: The read operation timed out",
+    "count": 0
+  },
+  {
+    "database": "DBLP",
+    "query": "separation of duties AI engineering agents",
+    "status": "ok",
+    "count": 0
+  },
+  {
+    "database": "Semantic Scholar",
+    "query": "separation of duties AI engineering agents",
+    "status": "HTTPError: HTTP Error 429: ",
+    "count": 0
+  },
+  {
+    "database": "OpenAlex",
+    "query": "AI model configuration management baseline revalidation",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "Crossref",
+    "query": "AI model configuration management baseline revalidation",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "arXiv",
+    "query": "AI model configuration management baseline revalidation",
+    "status": "HTTPError: HTTP Error 429: Unknown Error",
+    "count": 0
+  },
+  {
+    "database": "DBLP",
+    "query": "AI model configuration management baseline revalidation",
+    "status": "ok",
+    "count": 0
+  },
+  {
+    "database": "Semantic Scholar",
+    "query": "AI model configuration management baseline revalidation",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "OpenAlex",
+    "query": "continuous assurance AI systems revalidation",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "Crossref",
+    "query": "continuous assurance AI systems revalidation",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "arXiv",
+    "query": "continuous assurance AI systems revalidation",
+    "status": "HTTPError: HTTP Error 429: Unknown Error",
+    "count": 0
+  },
+  {
+    "database": "DBLP",
+    "query": "continuous assurance AI systems revalidation",
+    "status": "ok",
+    "count": 0
+  },
+  {
+    "database": "Semantic Scholar",
+    "query": "continuous assurance AI systems revalidation",
+    "status": "HTTPError: HTTP Error 429: ",
+    "count": 0
+  },
+  {
+    "database": "OpenAlex",
+    "query": "consequence graded software change control",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "Crossref",
+    "query": "consequence graded software change control",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "arXiv",
+    "query": "consequence graded software change control",
+    "status": "HTTPError: HTTP Error 429: Unknown Error",
+    "count": 0
+  },
+  {
+    "database": "DBLP",
+    "query": "consequence graded software change control",
+    "status": "ok",
+    "count": 0
+  },
+  {
+    "database": "Semantic Scholar",
+    "query": "consequence graded software change control",
+    "status": "HTTPError: HTTP Error 429: ",
+    "count": 0
+  },
+  {
+    "database": "OpenAlex",
+    "query": "operational ontology decision rights AI agents",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "Crossref",
+    "query": "operational ontology decision rights AI agents",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "arXiv",
+    "query": "operational ontology decision rights AI agents",
+    "status": "HTTPError: HTTP Error 429: Unknown Error",
+    "count": 0
+  },
+  {
+    "database": "DBLP",
+    "query": "operational ontology decision rights AI agents",
+    "status": "ok",
+    "count": 0
+  },
+  {
+    "database": "Semantic Scholar",
+    "query": "operational ontology decision rights AI agents",
+    "status": "HTTPError: HTTP Error 429: ",
+    "count": 0
+  },
+  {
+    "database": "OpenAlex",
+    "query": "human oversight AI generated code review",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "Crossref",
+    "query": "human oversight AI generated code review",
+    "status": "ok",
+    "count": 20
+  },
+  {
+    "database": "arXiv",
+    "query": "human oversight AI generated code review",
+    "status": "HTTPError: HTTP Error 429: Unknown Error",
+    "count": 0
+  },
+  {
+    "database": "DBLP",
+    "query": "human oversight AI generated code review",
+    "status": "ok",
+    "count": 0
+  },
+  {
+    "database": "Semantic Scholar",
+    "query": "human oversight AI generated code review",
+    "status": "HTTPError: HTTP Error 429: ",
+    "count": 0
+  }
+]

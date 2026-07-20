@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 30148,
+  "duration_api_ms": 31398,
+  "ttft_ms": 21068,
+  "ttft_stream_ms": 1361,
+  "time_to_request_ms": 45,
+  "time_to_request_from_spawn_ms": 721866,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121285121.4163,
+  "num_turns": 1,
+  "result": "Based on the skill's checklist, here's a proposed layout. The core problem with `misc` and `utils` is that each mixes multiple disposition rules and reasons-to-change into one folder \u2014 the fix is to split by *why each thing exists*, not to make one bigger catch-all.\n\n## Proposed structure\n\n| Current location | New home | Disposition |\n|---|---|---|\n| Config templates | `config/templates/` | kept, versioned |\n| One-off migration scripts | `scripts/migrations/YYYY-MM-DD-description/` | archive after run \u2014 never deleted, treated as a historical record |\n| Archived compliance reports | `docs/compliance/archive/` | archive, retention-driven |\n| Shared helpers used by 2+ services | `libs/shared/<domain>/` (e.g. `libs/shared/http/`, `libs/shared/validation/`) | kept, actively maintained \u2014 needs tests + a README like real library code |\n| Old meeting notes | **not in the repo** \u2014 move to your wiki/drive | n/a |\n\n`utils` needs a file-by-file triage rather than a new folder to move into, since \"unrelated helper files\" is itself the junk-drawer symptom. For each of the ~30 files, ask:\n- **Used by exactly one service?** \u2192 move into that service's own folder (e.g. `services/billing/lib/`).\n- **Used by 2+ services, same domain?** \u2192 merge into `libs/shared/<domain>/` alongside the shared helpers pulled from `misc`.\n- **Not used anywhere?** \u2192 delete it (check first, but dead utils are almost always safe to remove).\n\n## Why this shape\n\n- `config/`, `scripts/migrations/`, `docs/compliance/archive/`, `libs/shared/` each map to one disposition rule or one reason-to-change \u2014 that's the fix for both `misc` and `utils` being junk drawers.\n- Meeting notes are a different failure: they don't belong in a code repo at all (no engineering reason-to-change), not just a filing problem.\n- `scripts/migrations/` uses ISO-8601-dated subfolders so migration scripts sort chronologically and never get confused with live code.\n\n## What I need from you to finish this\n\nI don't have the actual file lists, so I can't map each of the ~77 files individually. Two options:\n1. Paste (or point me to) a directory listing of `misc/` and `utils/` and I'll produce the exact per-file mapping.\n2. I can write a short script that lists both folders and groups files by extension/name pattern as a starting triage draft for you to review.\n\nWhich would you like?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.07457040000000001,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 5872,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 2504,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 5872,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 2504,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 5872,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 5872
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 634,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000714,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 2504,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 5872,
+      "webSearchRequests": 0,
+      "costUSD": 0.0738564,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "f458832c-7efe-45e1-a44f-ef682d7b5020",
+  "_skill": "organizing-project-folders",
+  "_condition": "with_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "d9a1676fb4ebf8c8e72409c4573e66cff94d3eb495adfd02fa361db2b1ec19b2"
+}

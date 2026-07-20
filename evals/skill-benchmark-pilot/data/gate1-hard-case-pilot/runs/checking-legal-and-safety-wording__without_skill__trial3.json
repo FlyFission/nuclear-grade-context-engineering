@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 34511,
+  "duration_api_ms": 33955,
+  "ttft_ms": 5771,
+  "ttft_stream_ms": 1771,
+  "time_to_request_ms": 51,
+  "time_to_request_from_spawn_ms": 1328319,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172402051.457,
+  "num_turns": 3,
+  "result": "I can't sign off on this as-is \u2014 not because of tone, but because three of the four claims are specific, checkable factual statements, not puffery, and a boilerplate disclaimer elsewhere in the repo doesn't cure them.\n\n**Why the disclaimer doesn't cover you**\n\nA generic MIT-style disclaimer addresses warranty/liability for the software itself (\"provided as is, no warranty of fitness\"). It does not immunize affirmative factual claims made in your marketing copy. Under the FTC Act and state false-advertising/UDAP laws, specific representations are evaluated on their own \u2014 a \"no warranty\" clause buried in a separate file doesn't retroactively make a false compliance claim true, and it's not even in proximity to the claim (a basic requirement for any disclaimer to legally qualify a statement).\n\n**Phrase by phrase**\n\n- **\"SOC2-ready\"** \u2014 This is the riskiest one. SOC 2 is a defined, audited framework (AICPA Trust Service Criteria) verified by a CPA firm. \"Ready\" still implies you meet the control requirements. If you haven't actually undergone a SOC 2 audit (or don't have a Type I/II report), this is a false claim that enterprise procurement/security teams will specifically ask you to substantiate \u2014 and will catch, since a real SOC2 report is table stakes for regulated buyers. **Remove unless you have an actual report to point to.**\n- **\"battle-tested for compliance-critical environments\"** \u2014 Implies a real deployment track record in regulated settings (healthcare, finance, gov). If that's aspirational rather than factual, it's a misrepresentation a customer could rely on and later claim damages over.\n- **\"trusted by teams running regulated workloads\"** \u2014 This is a customer/usage claim, functionally a testimonial. FTC guidance requires these be substantiated and not implied beyond what's true. If you can't name or verify such teams, drop it.\n- **\"Enterprise-grade\"** \u2014 This one's fine. It's standard, non-specific puffery courts and regulators generally don't treat as an actionable factual claim.\n\n**What I'd change it to**\n\n> \"Enterprise-grade, security-conscious toolkit built for reliability \u2014 designed with the needs of regulated and security-sensitive environments in mind.\"\n\nThis keeps the confident tone without asserting audits, track record, or named customers you'd have to defend later.\n\n**Questions before launch tomorrow:**\n1. Do you have an actual SOC 2 Type I/II report? If yes, say exactly that (\"SOC 2 Type II audited\") \u2014 precise and defensible. If no, cut all SOC2 language.\n2. Can you name specific real customers in regulated industries who'd confirm the \"trusted by\" claim if asked? If not, cut it or replace with something you can back up (e.g., specific security features you actually ship: audit logging, encryption at rest, RBAC).\n\nHappy to draft the exact README/CLI banner text once you tell me which claims are actually true.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.06031559999999999,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2672,
+    "cache_read_input_tokens": 14582,
+    "output_tokens": 2608,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2672,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2099,
+        "cache_read_input_tokens": 8319,
+        "cache_creation_input_tokens": 616,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 616
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 687,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000777,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2608,
+      "cacheReadInputTokens": 14582,
+      "cacheCreationInputTokens": 2672,
+      "webSearchRequests": 0,
+      "costUSD": 0.05953859999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "64eb428f-96e4-4c14-9bf1-4f4610d93823",
+  "_skill": "checking-legal-and-safety-wording",
+  "_condition": "without_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "f228cf99b8f179456520f2c49f5d6ca5ae3af28aa8acb6e5ea29018d5221beb9"
+}

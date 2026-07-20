@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 4714,
+  "duration_api_ms": 5656,
+  "ttft_ms": 1602,
+  "ttft_stream_ms": 1229,
+  "time_to_request_ms": 49,
+  "time_to_request_from_spawn_ms": 2021237,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783122584549.3757,
+  "num_turns": 3,
+  "result": "I don't see a `package.json` or any system prompt template in this working directory \u2014 it looks empty. Can you point me to the repo path, or is this meant to be run from a different directory?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.021750399999999996,
+  "usage": {
+    "input_tokens": 59,
+    "cache_creation_input_tokens": 2147,
+    "cache_read_input_tokens": 14398,
+    "output_tokens": 246,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2147,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 34,
+        "output_tokens": 56,
+        "cache_read_input_tokens": 8135,
+        "cache_creation_input_tokens": 275,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 275
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 607,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000682,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 59,
+      "outputTokens": 246,
+      "cacheReadInputTokens": 14398,
+      "cacheCreationInputTokens": 2147,
+      "webSearchRequests": 0,
+      "costUSD": 0.0210684,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "49809042-b451-4e09-b6be-1db25586a569",
+  "_skill": "using-nuclear-grade",
+  "_condition": "without_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "f2f5c20a122d12adeb1acfdf58e567c2bacc4653154267a0a35b6cb420be9ba6"
+}

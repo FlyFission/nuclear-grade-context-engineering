@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 20077,
+  "duration_api_ms": 15501,
+  "ttft_ms": 4009,
+  "ttft_stream_ms": 1766,
+  "time_to_request_ms": 98,
+  "time_to_request_from_spawn_ms": 1434473,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172508123.2407,
+  "num_turns": 1,
+  "result": "A link alone risks Priya spending her first 15 minutes re-deriving context you already have \u2014 especially the three things that could bite her: your unvalidated config change, your DB access, and the signing-key constraint. Worth writing a short structured summary above the link. Here's a draft:\n\n---\n\n**Handoff: Payments webhook retry queue incident \u2192 Priya**\n\n**Status:** Ongoing, ~3hrs in. Not resolved yet.\n\n**What's happening:** Webhook retry queue failures. [Brief 1-2 line description of the actual symptom \u2014 fill in, e.g. \"retries backing up / failing silently on X provider\"]\n\n**Changes I made (unvalidated):**\n- Adjusted retry backoff timing config \u2014 **not yet confirmed to have fixed anything**. Need to watch queue behavior for [X mins/next batch] before trusting it. Rollback: [describe or link to how, if known].\n\n**Constraints \u2014 please read:**\n- \ud83d\udeab **Do not touch webhook signing keys**, under any circumstances. Explicit instruction from earlier in the incident. [Add why if known \u2014 helps her not second-guess it later.]\n- I have prod DB **read** access (no write). [Note if she needs it too / how to request it.]\n\n**Next steps / what I'd do next:**\n- [e.g., \"Confirm backoff change is holding after next retry cycle\"]\n- [e.g., \"If it's not resolved, look at X\"]\n\n**Full context:** [Slack thread link] \u2014 has the debugging history if you need to dig deeper.\n\n---\n\nFill in the bracketed parts (I don't have the actual symptom/root-cause details from our conversation). Want me to adjust tone or trim it down further?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0250499,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1990,
+    "cache_read_input_tokens": 6263,
+    "output_tokens": 698,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1990,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 698,
+        "cache_read_input_tokens": 6263,
+        "cache_creation_input_tokens": 1990,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1990
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 665,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000755,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 698,
+      "cacheReadInputTokens": 6263,
+      "cacheCreationInputTokens": 1990,
+      "webSearchRequests": 0,
+      "costUSD": 0.0242949,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "278c93da-9f1a-4e73-a5c8-da6e7473bad3",
+  "_skill": "handing-off-work",
+  "_condition": "without_skill",
+  "_trial": 4,
+  "_input_spec_sha256": "017749e2ac7300feadf3df145bd06eb10f1967d46753d39767873871a11e4d3f"
+}

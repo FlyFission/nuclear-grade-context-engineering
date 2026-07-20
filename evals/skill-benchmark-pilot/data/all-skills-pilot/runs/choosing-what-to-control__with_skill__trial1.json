@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 30156,
+  "duration_api_ms": 28508,
+  "ttft_ms": 14481,
+  "ttft_stream_ms": 1334,
+  "time_to_request_ms": 69,
+  "time_to_request_from_spawn_ms": 591605,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121154846.4846,
+  "num_turns": 1,
+  "result": "Your teammate's \"it's a tiny diff\" framing is exactly the trap here \u2014 line count doesn't track risk. This PR bundles a prompt change, a new autonomous money-moving tool, and a public trust claim being deleted. Each is a controlled item on its own, and together they represent a policy decision (bot can now issue refunds without a human) that a smoke test won't surface.\n\n| Item | Type | Current state | Intended state | Why controlled | Evidence / gap | Owner | Re-check trigger |\n|---|---|---|---|---|---|---|---|\n| Support-bot system prompt | Prompt | Existing wording (baseline before PR) | New \"more proactive\" wording | Directly shapes agent behavior toward customers; \"proactive\" language can push the bot toward taking more unilateral action, which interacts directly with item #2 | PR diff (link it) \u2014 no gap if diff is the record | Bot's prompt owner / eng lead | Any future prompt edit, or if support logs show the bot acting more aggressively/overstepping than expected |\n| `issue_refund(amount, order_id)` tool + $50 autonomy threshold | Tool / agent-power grant | No refund tool exists; all refunds require human sign-off | Agent can autonomously approve refunds up to $50, no human in the loop | This is a grant of financial authority to an autonomous agent \u2014 the single highest-risk item in the PR | **Gap**: no sign-off evident from finance, risk, or security on granting autonomous spend authority \u2014 engineering review \u2260 business approval | Should be co-owned by eng lead + a finance/risk owner (name one before merge) | Any change to the $ threshold, any refund-abuse incident, or first N days of production usage (should have a monitoring/rollback plan, not just a smoke test) |\n| Help-center article: \"A human always reviews refunds before they are issued.\" | Public claim / doc | Sentence present, stating human-in-the-loop guarantee | Sentence deleted | This is a public-facing trust claim. Deleting it quietly, in the same PR that removes the human review it describes, changes what customers are told about the system \u2014 that's a comms/policy decision, not a code cleanup | **Gap**: no evidence of support/legal/comms sign-off on removing this guarantee; deleting the sentence doesn't equal deciding it's OK to no longer make that promise | Support content owner + legal/comms (name one before merge) | Any future change to refund policy, or if a customer/support escalation references the old promise |\n\n**What this means for merging:** items 2 and 3 are not independent of each other \u2014 you're simultaneously granting the bot money authority and erasing the public statement that contradicted it. That's a policy change wearing a code-PR costume. A smoke test verifies the tool *works*; it doesn't verify anyone with authority over refund policy or public claims *approved* the change.\n\nBefore merging, I'd get an explicit owner and yes/no from whoever owns refund policy (finance/risk) and whoever owns the help-center content (support/legal), even if it's a quick Slack sign-off \u2014 not because the code is risky, but because the decision to let a bot move money unsupervised and stop telling customers a human checks it isn't an engineering call alone.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.054741399999999996,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 3442,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 2150,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3442,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 2150,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 3442,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3442
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 700,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000775,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 2150,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 3442,
+      "webSearchRequests": 0,
+      "costUSD": 0.0539664,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "8a10443a-1a26-4ce0-9098-778df454a869",
+  "_skill": "choosing-what-to-control",
+  "_condition": "with_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "82c692602ec9ee7bc13e0b6b7b888260f61f753acd5f4c1e7b757a419456f32e"
+}

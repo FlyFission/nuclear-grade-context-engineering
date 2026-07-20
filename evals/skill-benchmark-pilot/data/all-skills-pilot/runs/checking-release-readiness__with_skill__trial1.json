@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 14033,
+  "duration_api_ms": 13921,
+  "ttft_ms": 4989,
+  "ttft_stream_ms": 3153,
+  "time_to_request_ms": 48,
+  "time_to_request_from_spawn_ms": 555078,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121118259.1184,
+  "num_turns": 1,
+  "result": "No \u2014 this isn't ready to ship. Green CI and the author's \"ready to go\" note aren't sufficient evidence for a production database migration of this blast radius.\n\n**Release decision: block** (until the gaps below are closed)\n\n**Why:**\n- **No rollback path.** A Postgres 12\u219215 migration with index changes is exactly the kind of change that needs a tested restore/rollback plan before merge \u2014 if the migration fails partway or the new indexes cause a bad query plan in prod, you currently have no way back.\n- **No monitoring/alerts for the change.** You need alerts for query latency, index bloat/usage, replication lag, and error rates specific to this migration, so you find out about a problem before customers do.\n- **Decision would rest on the actor's own narrative.** The engineer who wrote the migration says it's ready \u2014 but for trust-bearing, hard-to-reverse changes like this, the ship/no-ship call should be made by someone independent of the author, based on evidence they can reproduce (e.g., a staging run with the actual data volume/shape, not just \"tests pass\").\n- **CI green \u2260 readiness.** CI verifies code correctness, not migration safety on production-scale data (lock behavior, index build time, query plan changes across major PG versions).\n\n**What's needed before this can ship:**\n1. A rollback/restore plan \u2014 ideally a tested down-migration or a documented restore-from-snapshot procedure with an estimated time-to-recover.\n2. Monitoring/alerts scoped to this change (latency, errors, index health) wired up *before* deploy, not after.\n3. An independent reviewer (not the migration author) validating the migration against a staging/prod-like dataset.\n4. A named owner and abort trigger for this afternoon's deploy window.\n\nIf you want, I can help draft a `ship.md` capturing the decision, gaps, owners, and rollback/monitoring plan once those pieces exist.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0390094,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 4259,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 778,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4259,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 778,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 4259,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4259
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000721,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 778,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 4259,
+      "webSearchRequests": 0,
+      "costUSD": 0.0382884,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "f0d1e6f4-c657-412b-be8e-208c56d895c8",
+  "_skill": "checking-release-readiness",
+  "_condition": "with_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "51f95bec1c5a7501f3485ba25f6f3d43bee2ce2cd0a47df8170f4afa6a571e7d"
+}

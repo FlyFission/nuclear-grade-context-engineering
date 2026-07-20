@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 14017,
+  "duration_api_ms": 13392,
+  "ttft_ms": 7892,
+  "ttft_stream_ms": 1161,
+  "time_to_request_ms": 73,
+  "time_to_request_from_spawn_ms": 1025558,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783196392617.0947,
+  "num_turns": 1,
+  "result": "No, **do not merge** \u2014 this violates the independence requirement for load-bearing claims. Here's why:\n\n**The problem:**\n\nThe agent made three material claims:\n1. \"All 42 tests pass\"\n2. \"Rate-limiter correctly blocks abuse patterns under load\"\n3. \"This is production-ready and safe to merge\"\n\nThe only evidence for all three claims is the agent's own execution and write-up. This is a **self-check**, not an independent check. Per the decision contract in the Proving Claims skill:\n\n> The load-bearing claim's evidence is reproducible by an independent party or independently authored \u2014 not the actor's own narration.\n\n**Why self-checks don't count as sufficient:**\n\n- The agent that made the change also wrote the proof, so the gate is downstream of the same mistake.\n- An agent could misunderstand the test requirements, skip critical test cases, or misinterpret results \u2014 and you'd only see its own assurance, not a separate validation.\n- \"A confident narrative the actor authored is a claim, not evidence. Verify it; do not read it as the verification.\"\n\n**What you need before shipping:**\n\n1. **Reproducible test run** \u2014 A human or independent agent should rerun the test suite with commands recorded in the PR, so anyone can verify the result\n2. **Code review** \u2014 At minimum, human review of the rate-limiter logic (especially the abuse-pattern blocking rules and load-handling behavior)\n3. **Recorded evidence** \u2014 Link the test output, review findings, and any load-test results into the PR with clear claim-to-evidence mapping\n\nThe test passing is important, but it's only evidence of what was tested \u2014 not that the implementation is safe, the right test coverage exists, or the production behavior is secure. That gap becomes residual risk if you ship without closing it.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.012954900000000002,
+  "usage": {
+    "input_tokens": 10,
+    "cache_creation_input_tokens": 3334,
+    "cache_read_input_tokens": 4479,
+    "output_tokens": 1022,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3334,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 10,
+        "output_tokens": 1022,
+        "cache_read_input_tokens": 4479,
+        "cache_creation_input_tokens": 3334,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3334
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000719,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-haiku-4-5": {
+      "inputTokens": 10,
+      "outputTokens": 1022,
+      "cacheReadInputTokens": 4479,
+      "cacheCreationInputTokens": 3334,
+      "webSearchRequests": 0,
+      "costUSD": 0.012235900000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "8e320748-ca88-4cfa-ae11-661ef8bba9fa",
+  "_skill": "proving-claims",
+  "_condition": "with_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "4110d20deec5268ce3e451846fe25dec12a0ad870e8bd087847cfe7ec06a994c"
+}

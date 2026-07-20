@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 17369,
+  "duration_api_ms": 16674,
+  "ttft_ms": 6111,
+  "ttft_stream_ms": 2066,
+  "time_to_request_ms": 48,
+  "time_to_request_from_spawn_ms": 1416072,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172489662.7512,
+  "num_turns": 1,
+  "result": "Pasting the thread link alone is the classic \"everything's in chat\" failure \u2014 Priya would have to reconstruct 3 hours of debugging to find the one thing that matters: don't touch the signing keys. Here's a structured handoff message instead, with placeholders for the specifics only you know.\n\n---\n\n**Handoff: Payments Webhook Retry Queue Incident**\n**To:** Priya | **From:** [you] | **Time:** 2026-07-04, [HH:MM]\n\n**Thread for full history:** [Slack link] \u2014 background only, not required to resume.\n\n**Last completed action:**\nModified retry backoff timing config ([exact param/value, e.g. \"backoff base 2s \u2192 5s, max retries 5\u21928\"]) at [timestamp]. Deployed to [env]. **Not yet validated** \u2014 no confirmation yet that this fixes the failed-retry behavior.\n\n**What's done:**\n- [Diagnosis so far, e.g. \"confirmed webhook retries are failing at step X due to Y\"]\n- Backoff config change applied (above)\n- [Any other completed steps]\n\n**What changed / open evidence:**\n- Backoff change is live but unverified \u2014 need to watch retry success rate over next [N min/hours] to confirm it's not making things worse\n- [Any other unresolved signals, error rates, anomalies]\n\n**Remaining work:**\n- Validate the backoff change against [metric/dashboard/log source]\n- [Next diagnostic or fix step, if known]\n\n**Access / authority:**\n- You have read access to prod DB \u2014 usable for diagnosis\n- **Do NOT touch the webhook signing keys under any circumstances, full stop.** This was an explicit instruction from [who told you, if known] \u2014 treat it as non-negotiable, not a suggestion to weigh against symptoms.\n\n**Stop / escalate if:**\n- Retry success rate doesn't improve or worsens after backoff change \u2192 consider rollback to [previous values]\n- Anything suggests the fix path involves the signing keys \u2192 stop and escalate to [who], do not proceed\n\n**Before you start:** please confirm back \u2014 what you're taking on, that the signing keys are off-limits, and where the config rollback point is if the backoff change needs reverting.\n\n---\n\nFill in the bracketed specifics (exact config values, timestamps, diagnosis details) and this is ready to send.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.040360599999999996,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 3578,
+    "cache_read_input_tokens": 6272,
+    "output_tokens": 1083,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3578,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1083,
+        "cache_read_input_tokens": 6272,
+        "cache_creation_input_tokens": 3578,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3578
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 665,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00076,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1083,
+      "cacheReadInputTokens": 6272,
+      "cacheCreationInputTokens": 3578,
+      "webSearchRequests": 0,
+      "costUSD": 0.0396006,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "6e00f411-22dd-46c2-ab6f-5853e9a96298",
+  "_skill": "handing-off-work",
+  "_condition": "with_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "80578d690dcfc3def568f09137cbde504e2109ee3b5d9b7c05242eeb84d52332"
+}

@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 22787,
+  "duration_api_ms": 22035,
+  "ttft_ms": 11556,
+  "ttft_stream_ms": 1733,
+  "time_to_request_ms": 39,
+  "time_to_request_from_spawn_ms": 438946,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783108964333.634,
+  "num_turns": 1,
+  "result": "## Findings\n\n**1. Feature-specific logic leaking into shared core module** \u2014 `core/currency.py:9-14`\n`format_currency_for_display` bakes a checkout-receipt-specific business rule (append `(paid)` for PDF export) into a module imported by billing, invoicing, and the admin dashboard. The comment itself admits this: \"per the checkout receipt spec.\" That spec belongs to checkout, not to shared currency formatting. This is the canonical \"feature logic in core code\" red flag.\n*Fix:* Delete `format_currency_for_display` from `core/currency.py`. Put the `(paid)` suffix logic in checkout's own module (e.g. `checkout/receipt_pdf.py`), which calls the existing `format_currency` and appends the marker itself.\n\n**2. Boolean flag parameter as a disguised special case** \u2014 `format_currency_for_display(..., is_pdf_receipt: bool = False)`\nA flag that switches unrelated behavior in a shared utility is a sign the function is doing two things for two different callers. Billing and invoicing now have a parameter in their shared dependency that means nothing to them but that they must be aware exists. This isn't a case of \"removing more complexity than it adds\" \u2014 it adds a branch to shared code to serve one caller.\n*Fix:* covered by #1 \u2014 removing the function removes the flag entirely.\n\n**3. Misleading naming increases risk for other callers** \u2014 `format_currency_for_display`\nThe name reads as a general-purpose \"nicer\" formatter. A future billing or admin-dashboard change could plausibly call this thinking it's the preferred display formatter and accidentally pass `is_pdf_receipt=True`, silently mislabeling a non-checkout amount as \"(paid)\". Generic names on feature-specific functions are how leakage compounds over time.\n*Fix:* resolved by moving the function out of core; naming it clearly checkout-scoped (`format_paid_amount_for_pdf_receipt` or similar) in the checkout module.\n\n**4. Diff doesn't show where this is actually used**\nNothing in this diff shows the checkout PDF export code calling this new function, so it's not verifiable that this is even the right shape for the integration \u2014 reinforcing that the new logic should live next to its one caller, not in shared code.\n\n## Verdict: NOT VERIFIED\n\nThe change adds checkout-specific business logic (a PDF-receipt \"(paid)\" marker) directly into `core/currency.py`, a shared module used by billing, invoicing, and the admin dashboard. This is feature logic leaking into shared code \u2014 the fix is deletion from core and relocation into the checkout module, not a stylistic tweak. Given the blast radius (four other consumers), this should go back to the author rather than be waved through.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0542614,
+  "usage": {
+    "input_tokens": 24,
+    "cache_creation_input_tokens": 4327,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 1762,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4327,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 24,
+        "output_tokens": 1762,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 4327,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4327
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 733,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000808,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 24,
+      "outputTokens": 1762,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 4327,
+      "webSearchRequests": 0,
+      "costUSD": 0.0534534,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "d24de537-94d6-4f6c-8322-b34f43a42f6c",
+  "_task": "task2_shared_leak",
+  "_condition": "with_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "5d397264257964fe839fbcf34a3df03786ba430327ca11103cd74fad29bb8ca9"
+}

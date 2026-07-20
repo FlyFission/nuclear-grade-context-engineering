@@ -1,0 +1,515 @@
+[
+  {
+    "skill": "breaking-down-the-work",
+    "with_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.11341480000000001,
+      "mean_output_tokens": 5181
+    },
+    "without_skill": {
+      "catch": "2/3",
+      "yes": 2,
+      "partial": 1,
+      "n": 3,
+      "mean_cost": 0.044594699999999994,
+      "mean_output_tokens": 2108.6666666666665
+    }
+  },
+  {
+    "skill": "briefing-an-agent",
+    "with_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.07149140000000001,
+      "mean_output_tokens": 3114.3333333333335
+    },
+    "without_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.060922033333333334,
+      "mean_output_tokens": 3216.3333333333335
+    }
+  },
+  {
+    "skill": "checking-legal-and-safety-wording",
+    "with_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.037376733333333335,
+      "mean_output_tokens": 1045.3333333333333
+    },
+    "without_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.025931700000000002,
+      "mean_output_tokens": 880.3333333333334
+    }
+  },
+  {
+    "skill": "checking-release-readiness",
+    "with_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.0422294,
+      "mean_output_tokens": 992.6666666666666
+    },
+    "without_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.0212577,
+      "mean_output_tokens": 567.6666666666666
+    }
+  },
+  {
+    "skill": "checking-source-claims",
+    "with_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.0350154,
+      "mean_output_tokens": 905
+    },
+    "without_skill": {
+      "catch": "2/3",
+      "yes": 2,
+      "partial": 1,
+      "n": 3,
+      "mean_cost": 0.025116700000000002,
+      "mean_output_tokens": 825.6666666666666
+    }
+  },
+  {
+    "skill": "checking-what-a-change-affects",
+    "with_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.028534733333333336,
+      "mean_output_tokens": 433
+    },
+    "without_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.031560533333333335,
+      "mean_output_tokens": 712
+    }
+  },
+  {
+    "skill": "choosing-what-to-control",
+    "with_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.05398973333333333,
+      "mean_output_tokens": 2099.6666666666665
+    },
+    "without_skill": {
+      "catch": "1/3",
+      "yes": 1,
+      "partial": 2,
+      "n": 3,
+      "mean_cost": 0.052616366666666664,
+      "mean_output_tokens": 2616
+    }
+  },
+  {
+    "skill": "closing-stale-packets",
+    "with_skill": {
+      "catch": "1/3",
+      "yes": 1,
+      "partial": 2,
+      "n": 3,
+      "mean_cost": 0.0378574,
+      "mean_output_tokens": 392
+    },
+    "without_skill": {
+      "catch": "0/3",
+      "yes": 0,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.0383528,
+      "mean_output_tokens": 945
+    }
+  },
+  {
+    "skill": "creating-change-records",
+    "with_skill": {
+      "catch": "2/3",
+      "yes": 2,
+      "partial": 1,
+      "n": 3,
+      "mean_cost": 0.05121206666666667,
+      "mean_output_tokens": 1878
+    },
+    "without_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.03901336666666667,
+      "mean_output_tokens": 1733.3333333333333
+    }
+  },
+  {
+    "skill": "deciding-who-decides",
+    "with_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.043088066666666675,
+      "mean_output_tokens": 1201
+    },
+    "without_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.0212177,
+      "mean_output_tokens": 561.3333333333334
+    }
+  },
+  {
+    "skill": "declaring-intent",
+    "with_skill": {
+      "catch": "2/3",
+      "yes": 2,
+      "partial": 1,
+      "n": 3,
+      "mean_cost": 0.05957206666666667,
+      "mean_output_tokens": 2368.6666666666665
+    },
+    "without_skill": {
+      "catch": "0/3",
+      "yes": 0,
+      "partial": 2,
+      "n": 3,
+      "mean_cost": 0.0394037,
+      "mean_output_tokens": 1794.3333333333333
+    }
+  },
+  {
+    "skill": "double-checking-before-acting",
+    "with_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.05680306666666667,
+      "mean_output_tokens": 2309
+    },
+    "without_skill": {
+      "catch": "2/3",
+      "yes": 2,
+      "partial": 1,
+      "n": 3,
+      "mean_cost": 0.0476137,
+      "mean_output_tokens": 2294.6666666666665
+    }
+  },
+  {
+    "skill": "handing-off-work",
+    "with_skill": {
+      "catch": "0/3",
+      "yes": 0,
+      "partial": 3,
+      "n": 3,
+      "mean_cost": 0.0518554,
+      "mean_output_tokens": 1939.6666666666667
+    },
+    "without_skill": {
+      "catch": "0/3",
+      "yes": 0,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.03362373333333333,
+      "mean_output_tokens": 1245.6666666666667
+    }
+  },
+  {
+    "skill": "learning-from-experience",
+    "with_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.07797606666666666,
+      "mean_output_tokens": 3421.6666666666665
+    },
+    "without_skill": {
+      "catch": "0/3",
+      "yes": 0,
+      "partial": 2,
+      "n": 3,
+      "mean_cost": 0.039462366666666665,
+      "mean_output_tokens": 1771.3333333333333
+    }
+  },
+  {
+    "skill": "organizing-project-folders",
+    "with_skill": {
+      "catch": "0/3",
+      "yes": 0,
+      "partial": 3,
+      "n": 3,
+      "mean_cost": 0.07961333333333334,
+      "mean_output_tokens": 2695.6666666666665
+    },
+    "without_skill": {
+      "catch": "0/3",
+      "yes": 0,
+      "partial": 3,
+      "n": 3,
+      "mean_cost": 0.03439386666666666,
+      "mean_output_tokens": 843.3333333333334
+    }
+  },
+  {
+    "skill": "proving-claims",
+    "with_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.0527959,
+      "mean_output_tokens": 1705
+    },
+    "without_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.028615033333333335,
+      "mean_output_tokens": 1063.3333333333333
+    }
+  },
+  {
+    "skill": "questioning-attitude",
+    "with_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.061108066666666676,
+      "mean_output_tokens": 1945.3333333333333
+    },
+    "without_skill": {
+      "catch": "2/3",
+      "yes": 2,
+      "partial": 1,
+      "n": 3,
+      "mean_cost": 0.0335327,
+      "mean_output_tokens": 1340
+    }
+  },
+  {
+    "skill": "rating-change-risk",
+    "with_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.04809186666666666,
+      "mean_output_tokens": 1840.6666666666667
+    },
+    "without_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.0207307,
+      "mean_output_tokens": 496
+    }
+  },
+  {
+    "skill": "recording-a-known-good-version",
+    "with_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.08718166666666667,
+      "mean_output_tokens": 3216
+    },
+    "without_skill": {
+      "catch": "0/3",
+      "yes": 0,
+      "partial": 1,
+      "n": 3,
+      "mean_cost": 0.037786766666666666,
+      "mean_output_tokens": 1330.3333333333333
+    }
+  },
+  {
+    "skill": "recording-what-an-agent-did",
+    "with_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.0490188,
+      "mean_output_tokens": 1330.6666666666667
+    },
+    "without_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.025029033333333332,
+      "mean_output_tokens": 739.3333333333334
+    }
+  },
+  {
+    "skill": "reporting-shared-defects",
+    "with_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.03910673333333334,
+      "mean_output_tokens": 875
+    },
+    "without_skill": {
+      "catch": "0/3",
+      "yes": 0,
+      "partial": 3,
+      "n": 3,
+      "mean_cost": 0.0208787,
+      "mean_output_tokens": 494.6666666666667
+    }
+  },
+  {
+    "skill": "responding-to-incidents",
+    "with_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.04638373333333333,
+      "mean_output_tokens": 1455.3333333333333
+    },
+    "without_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.023514033333333333,
+      "mean_output_tokens": 684
+    }
+  },
+  {
+    "skill": "staying-on-mission",
+    "with_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.051489733333333336,
+      "mean_output_tokens": 1337
+    },
+    "without_skill": {
+      "catch": "2/3",
+      "yes": 2,
+      "partial": 1,
+      "n": 3,
+      "mean_cost": 0.017661033333333336,
+      "mean_output_tokens": 294
+    }
+  },
+  {
+    "skill": "stress-testing-agent-changes",
+    "with_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.06620246666666667,
+      "mean_output_tokens": 2199.3333333333335
+    },
+    "without_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.029188699999999998,
+      "mean_output_tokens": 1097.6666666666667
+    }
+  },
+  {
+    "skill": "tracking-deficiencies",
+    "with_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.04678413333333333,
+      "mean_output_tokens": 1472.6666666666667
+    },
+    "without_skill": {
+      "catch": "0/3",
+      "yes": 0,
+      "partial": 2,
+      "n": 3,
+      "mean_cost": 0.03225003333333333,
+      "mean_output_tokens": 1297
+    }
+  },
+  {
+    "skill": "using-nuclear-grade",
+    "with_skill": {
+      "catch": "2/3",
+      "yes": 2,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.05898353333333334,
+      "mean_output_tokens": 1098.6666666666667
+    },
+    "without_skill": {
+      "catch": "0/3",
+      "yes": 0,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.022696466666666665,
+      "mean_output_tokens": 256
+    }
+  },
+  {
+    "skill": "vetting-outside-code-and-models",
+    "with_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.03937673333333333,
+      "mean_output_tokens": 912.3333333333334
+    },
+    "without_skill": {
+      "catch": "3/3",
+      "yes": 3,
+      "partial": 0,
+      "n": 3,
+      "mean_cost": 0.022233366666666667,
+      "mean_output_tokens": 623
+    }
+  }
+]

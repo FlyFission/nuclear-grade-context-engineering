@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 17738,
+  "duration_api_ms": 17107,
+  "ttft_ms": 11882,
+  "ttft_stream_ms": 1977,
+  "time_to_request_ms": 76,
+  "time_to_request_from_spawn_ms": 1438435,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172511858.0305,
+  "num_turns": 1,
+  "result": "Don't copy it \u2014 that creates two homes for one idea, which is a duplication trap: the two copies will drift (rounding fix in one, not the other) and you'll get inconsistent currency formatting between invoices and reports, which is worse than any cross-team coupling.\n\nPut it in a shared folder instead, e.g. `shared/formatting/formatCurrency.js` (or `common/`), as a sibling to `reports/` and `billing/`. Both modules import from there. This isn't the cross-module dependency you're worried about \u2014 neither team ends up depending on the other's domain folder, they both depend on a small neutral utility. Assign `shared/` a real (even if lightweight) owner and add a short README noting it holds cross-team, low-level utilities with a stable-contract expectation, since two teams rely on it and breaking changes need coordination.\n\nThe actual tradeoff: a shared folder means both teams now share one dependency surface, so changes to `formatCurrency.js` need to stay backward-compatible or be coordinated \u2014 but that's a much smaller cost than silent drift between two copies of business-critical formatting logic.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.054827600000000004,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 6001,
+    "cache_read_input_tokens": 6272,
+    "output_tokens": 1080,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 6001,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1080,
+        "cache_read_input_tokens": 6272,
+        "cache_creation_input_tokens": 6001,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 6001
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 659,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000734,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1080,
+      "cacheReadInputTokens": 6272,
+      "cacheCreationInputTokens": 6001,
+      "webSearchRequests": 0,
+      "costUSD": 0.054093600000000006,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "82b68ab2-b2b3-4d9d-8dff-d0ea4b6d7705",
+  "_skill": "organizing-project-folders",
+  "_condition": "with_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "271dc5c3139ca0461def52b1203f69222d3745058bc7167f4341e7738ef3ad35"
+}

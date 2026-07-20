@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 34240,
+  "duration_api_ms": 32998,
+  "ttft_ms": 4238,
+  "ttft_stream_ms": 2048,
+  "time_to_request_ms": 88,
+  "time_to_request_from_spawn_ms": 1311720,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172385023.7942,
+  "num_turns": 2,
+  "result": "I can't sign off on that wording as-is \u2014 it crosses from \"you may use this\" into \"this is proven fit,\" and a DISCLAIMER.md file buried in the repo root doesn't fix that.\n\n**Why it's a problem, not just style:**\n\n- **\"SOC2-ready\"** is a specific, checkable compliance claim. Unless you've actually completed a SOC2 Type I/II audit or are mid-engagement with an auditor, this is a false certification claim \u2014 not marketing flourish. It's the kind of thing procurement/security teams will ask you to prove with a report.\n- **\"battle-tested for compliance-critical environments\"** implies you've validated the software against regulated-environment requirements. If that validation hasn't happened, this is assurance-overreach.\n- **\"trusted by teams running regulated workloads\"** is a factual claim about your users, not opinion. If you can't name real customers or point to evidence, this is an unsubstantiated testimonial-style claim \u2014 which has its own legal exposure (FTC-style deceptive advertising) that MIT's warranty disclaimer does nothing to cover, since that disclaimer is about the *license*, not about false statements you're making in your own marketing copy.\n- **\"Enterprise-grade\"** is the least risky of the four \u2014 it's closer to fluff \u2014 but sitting next to the other three it reads as part of the same compliance-assurance pitch.\n\n**Why the existing DISCLAIMER.md doesn't cover you:** it disclaims warranty on the code (MIT boilerplate). It says nothing about your affirmative marketing claims, and it's not co-located with the claim \u2014 a user reading the README hero or `--help` banner sees the SOC2/compliance pitch with no counterweight in the same breath.\n\n**What to change it to**, keeping the enthusiasm but tying every phrase to something checkable or removing what isn't:\n\n```\nA fast, well-tested [toolkit purpose]. Actively maintained, MIT-licensed,\nbuilt with security-conscious defaults.\n\nDoes not constitute compliance certification, security audit, or fitness\nguarantee for regulated use \u2014 see DISCLAIMER.md.\n```\n\nIf any of the following are actually true, you can keep them, but only in that specific, provable form:\n- Have a completed SOC2 report? Say \"SOC2 Type II report available on request\" \u2014 not \"SOC2-ready.\"\n- Have real reference customers who've agreed to be named? Name them, or drop the \"trusted by\" line.\n- Have a specific test suite/coverage number? \"500+ tests, CI-enforced on every PR\" beats \"battle-tested.\"\n\n**For the CLI `--help` banner specifically**, add a one-line boundary note near the top output (not just in a separate doc), e.g.:\n```\nNote: this tool does not certify compliance or security posture. See LICENSE/DISCLAIMER.\n```\n\n**Quick scan before you ship:** grep the README and CLI source for the banned phrases to confirm they only appear in the disclaimer/negative-sentence form:\n```\ngrep -rniE \"SOC ?2|compliant|certified|battle-tested|enterprise-grade|regulated\" README.md src/**/help*.* 2>/dev/null\n```\nAnything that matches outside a \"does not...\" sentence needs the evidence-tied rewrite above.\n\nOne more thing: if \"trusted by teams running regulated workloads\" is meant to reference actual named customers, that's a factual claim I can't validate for you \u2014 get sign-off from those customers before publishing it, and if it's aspirational rather than real, cut it.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.06485919999999999,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3897,
+    "cache_read_input_tokens": 16094,
+    "output_tokens": 2391,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3897,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2098,
+        "cache_read_input_tokens": 9822,
+        "cache_creation_input_tokens": 347,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 347
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 687,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000772,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2391,
+      "cacheReadInputTokens": 16094,
+      "cacheCreationInputTokens": 3897,
+      "webSearchRequests": 0,
+      "costUSD": 0.0640872,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "c4826cf0-c911-4e68-8fa4-735c526b8bc1",
+  "_skill": "checking-legal-and-safety-wording",
+  "_condition": "with_skill",
+  "_trial": 4,
+  "_input_spec_sha256": "5478561a721c734a7aec01d58d3455e00be5e63b8078a940676284c55365870b"
+}

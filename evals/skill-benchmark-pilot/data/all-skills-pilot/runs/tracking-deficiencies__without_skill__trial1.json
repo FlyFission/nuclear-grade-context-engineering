@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 21417,
+  "duration_api_ms": 16766,
+  "ttft_ms": 12636,
+  "ttft_stream_ms": 2083,
+  "time_to_request_ms": 41,
+  "time_to_request_from_spawn_ms": 871144,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121434399.819,
+  "num_turns": 1,
+  "result": "This isn't really a \"ship blind\" situation \u2014 double-charging customers is a financial/compliance issue, not just a UX bug, so the risk-acceptance needs to be explicit and documented (not just \"everyone already knows\"), ideally with sign-off from whoever owns payments risk/compliance, plus a note in the release/incident log with the known rate and duration.\n\nThe bigger question is whether there's a fast stopgap short of the full fix \u2014 retry double-charge bugs are often mitigated cheaply with an idempotency key on the charge request (so a retried call safely no-ops if the original succeeded) even if the underlying race condition isn't fully fixed. That's usually a much smaller change than the full retry-logic fix.\n\nWant me to look at the actual retry code to see if an idempotency-key stopgap is feasible before today's cutoff, or are you just looking for how to frame the risk-acceptance/communication?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0302667,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 1836,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 1165,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1836,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 1165,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1836,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1836
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000714,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 1165,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1836,
+      "webSearchRequests": 0,
+      "costUSD": 0.0295527,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "58a4aa95-de25-42b7-b2c5-2a6a1414be52",
+  "_skill": "tracking-deficiencies",
+  "_condition": "without_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "32a27781bc545324e5f187e018aa98ee203efdda0ab712a86a80f30d853a5108"
+}

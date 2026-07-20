@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 27150,
+  "duration_api_ms": 26552,
+  "ttft_ms": 5653,
+  "ttft_stream_ms": 1660,
+  "time_to_request_ms": 172,
+  "time_to_request_from_spawn_ms": 999658,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783196365066.2974,
+  "num_turns": 5,
+  "result": "Now I'll create a comprehensive incident report with prevention strategies.\n\n## Incident Report: Hardcoded API Key in Production\n\n**Summary:** A hardcoded API key was pushed to production when an engineer bypassed pre-commit security checks due to deadline pressure. The exposed credential remained in production for 3 days before detection.\n\n---\n\n## What Happened\n\n1. **Detection of pre-commit failure**: Engineer encountered a secrets-scanning linter error in pre-commit hooks\n2. **Bypass decision**: Rather than fix the issue, he ran `git commit --no-verify` to skip hooks\n3. **Push to main**: The commit with the hardcoded API key was pushed and merged\n4. **Extended exposure**: The credential remained live in production for 3 days\n5. **Discovery**: Routine security audit identified the exposed key\n6. **Remediation**: API key was rotated immediately\n\n---\n\n## Root Causes\n\n### Immediate cause\n- **Pre-commit hook bypass available**: `--no-verify` flag allowed skipping security checks entirely\n- **Deadline pressure**: Engineer prioritized shipping speed over security process\n- **No friction after bypass**: Hook failure didn't create other barriers (e.g., code review gate)\n\n### Systemic causes\n- **Hook failures not propagated upstream**: A failed local hook didn't trigger CI/CD checks\n- **Code review didn't catch it**: Reviewers may not have looked for secrets in code (expected hooks to catch)\n- **Detection latency**: 3-day gap between merge and security audit is too long\n- **Unclear escalation path**: No clear guidance on what to do when pre-commit fails vs. just bypassing it\n\n---\n\n## Prevention Measures (Ordered by Impact)\n\n### 1. Make pre-commit hook failures CI/CD gates (High Impact, Low Effort)\nMove secrets scanning from local pre-commit to mandatory CI/CD check that **blocks merge**. Don't allow pushing to main without passing security checks.\n- **Prevents**: `--no-verify` bypasses will still fail in CI\n- **Tool options**: GitHub Actions, GitLab CI, or Git server-side hooks\n\n### 2. Remove `--no-verify` as an option (Medium Impact, Low Effort)\nConfigure git server hooks or branch protection rules that reject commits without proper pre-commit execution.\n- **Prevents**: Direct bypass of local checks\n- **Note**: More aggressive but eliminates the shortcut entirely\n\n### 3. Rotate credentials regularly (Medium Impact, Medium Effort)\nImplement automatic credential rotation for all API keys, database passwords, etc.\n- **Reduces impact**: Even if exposed, credentials expire within days\n- **Standard practice**: Most platforms support this (AWS, GCP, etc.)\n\n### 4. Scan git history for secrets (High Impact, Medium Effort)\nRun tools like `git-secrets`, `truffleHog`, or `detect-secrets` on the entire repo history and in CI:\n- Before merge to main\n- As a scheduled job (daily/weekly)\n- **Catches**: Secrets that slipped through before rules were in place\n\n### 5. Engineer training and policy (Low Impact, High Effort)\n- Document when (if ever) `--no-verify` is acceptable (should be: never for secrets)\n- Require security escalation path: if pre-commit fails, notify a security contact before pushing\n- Review with team that deadline pressure doesn't override security\n\n### 6. Improve pre-commit hook error messages (Low Impact, Low Effort)\nMake hook failures provide:\n- Why it failed (what secret pattern matched)\n- How to fix it (check for hardcoded credentials)\n- Escalation path (who to contact if it's a false positive)\n\n---\n\n## Implementation Timeline\n\n**Immediate (this week):**\n- Add CI/CD blocking check for secrets scanning\n- Rotate the exposed API key (already done)\n- Document the incident and prevention steps\n\n**Short-term (this sprint):**\n- Configure branch protection rules to require passing CI checks\n- Scan git history for any other exposed secrets\n\n**Medium-term (next month):**\n- Implement automatic credential rotation\n- Run team training session on secrets management\n- Set up scheduled secret scanning job\n\n---\n\n## Success Metrics\n\n- \u2705 Zero hardcoded secrets merged to main in next 90 days\n- \u2705 All API keys and credentials on auto-rotation schedule\n- \u2705 CI/CD security gates blocking all secret-containing PRs\n- \u2705 <1 day detection latency if secrets do slip through (vs. 3 days)",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.020751,
+  "usage": {
+    "input_tokens": 36,
+    "cache_creation_input_tokens": 3517,
+    "cache_read_input_tokens": 30620,
+    "output_tokens": 1979,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3517,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 5,
+        "output_tokens": 1039,
+        "cache_read_input_tokens": 7125,
+        "cache_creation_input_tokens": 124,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 124
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-haiku-4-5": {
+      "inputTokens": 36,
+      "outputTokens": 1979,
+      "cacheReadInputTokens": 30620,
+      "cacheCreationInputTokens": 3517,
+      "webSearchRequests": 0,
+      "costUSD": 0.020027000000000003,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "36dc6fb5-7016-4e55-a342-6fa4bffec17d",
+  "_skill": "learning-from-experience",
+  "_condition": "without_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "6edc378cd43b46363dd98cf2536fe8e30f031d978131613f5a2dfd881236b12a"
+}

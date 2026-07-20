@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 22034,
+  "duration_api_ms": 22962,
+  "ttft_ms": 9641,
+  "ttft_stream_ms": 1242,
+  "time_to_request_ms": 103,
+  "time_to_request_from_spawn_ms": 750884,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121313979.6335,
+  "num_turns": 1,
+  "result": "Before drafting this, one issue: \"safe and fully backward compatible\" is a broad claim, but your evidence (your own test run + your own diff review) is entirely self-check \u2014 the same person made the change and vouches for it. For a payment-processing module, that's a real gap reviewers should see, not paper over. I'd narrow the claim to what the evidence actually shows and let the PR review itself serve as the independent check.\n\nHere's a claim-to-evidence breakdown, then a PR-ready evidence section.\n\n| Claim | Support type | Verification type | Evidence | Status |\n|---|---|---|---|---|\n| Existing test suite passes on the refactored code | local proof | self-check (test run) | test command + output/link | pass |\n| Diff was reviewed for obvious errors before pushing | local proof | self-check (author review) | \u2014 | pass, but not independent |\n| Refactor is \"safe\" | \u2014 | none yet | no security/edge-case review by anyone but the author | gap |\n| Refactor is \"fully backward compatible\" | \u2014 | none yet | depends on whether the existing suite covers *all* previously-supported behavior (old API shapes, error codes, idempotency, retries, currency edge cases, etc.) | gap unless you can show test coverage maps to prior behavior |\n\nIndependence rung: both pieces of evidence were authored by you, the same actor who wrote the diff. That's a self-check, not a peer or independent verification. It shouldn't be dropped \u2014 just labeled honestly, with the PR review itself as the independent check that closes the gap.\n\nSuggested evidence section for the PR:\n\n```markdown\n## Evidence\n\n**Test suite**\n- Ran the existing payment-processing test suite locally against the refactored code: `<command>` \u2014 all tests pass (`<link/log>`).\n- Note: this confirms no regression in *covered* behavior. It does not by itself prove full backward compatibility \u2014 see gap below.\n\n**Self-review**\n- Reviewed the full diff line-by-line before pushing. This is a self-check by the author, not an independent review.\n\n**Known gaps**\n- No independent reviewer has verified this change yet \u2014 that's what this PR review is for.\n- Backward compatibility has not been checked against behaviors the test suite doesn't cover (e.g. [list anything you know is untested: legacy request formats, error codes, retry/idempotency semantics, currency rounding edge cases]).\n- No explicit safety/security review beyond the author's own read of the diff.\n\n**Ask of reviewers**\n- Please treat this as the independent check on the backward-compatibility and safety claims. Flagging anywhere the diff could break existing callers or introduce new failure modes would close the main gap here.\n```\n\nAnd for the summary line, I'd swap:\n\n> ~~This refactor is safe and fully backward compatible.~~\n\nfor something the evidence actually backs:\n\n> This refactor passes the existing test suite with no changes to observable behavior that I could find in review. Backward compatibility and safety are not yet independently verified \u2014 that's the ask of this review.\n\nWant me to also check whether your test suite actually covers the legacy behaviors that \"backward compatible\" implies (e.g. grep for tests on old API shapes/error codes), so the gap statement is specific instead of generic?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.05133940000000001,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 3843,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 1768,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3843,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 1768,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 3843,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3843
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 617,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000697,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 1768,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 3843,
+      "webSearchRequests": 0,
+      "costUSD": 0.050642400000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "5ed80f9a-1865-4c11-905b-47beefbda36d",
+  "_skill": "proving-claims",
+  "_condition": "with_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "b789e80be9b258618af621455de9a38325a84c96b2b5846a9f68bcda4d1d6631"
+}

@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 33517,
+  "duration_api_ms": 32936,
+  "ttft_ms": 2812,
+  "ttft_stream_ms": 1361,
+  "time_to_request_ms": 67,
+  "time_to_request_from_spawn_ms": 1309983,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172383669.3765,
+  "num_turns": 4,
+  "result": "I can't sign off on that wording as-is \u2014 it's a clear case of the exact problem this check exists for. (Note: this workspace has no files, so I can't verify against your actual LICENSE/DISCLAIMER.md/SECURITY.md \u2014 the assessment below is on the wording alone.)\n\n**Why it fails**\n\n- **\"SOC2-ready\"** is a specific compliance claim. SOC2 involves an actual third-party audit against defined controls. Unless you have completed or are actively undergoing that audit, this is a factual claim you can't support \u2014 it's the kind of statement that invites false-advertising exposure, not just \"marketing flavor.\"\n- **\"Battle-tested for compliance-critical environments\"** and **\"trusted by teams running regulated workloads\"** assert real-world validation and adoption in regulated settings. If you can't point to specific evidence (named customers, audit results, incident history), this is an unsupported fitness claim.\n- **\"Enterprise-grade\"** alone is fine as puffery, but stacked with the above it reads as one bundled assurance claim, not separate marketing color.\n- **The disclaimer-elsewhere argument doesn't hold.** MIT's warranty disclaimer protects you legally for warranty purposes, but it doesn't retroactively neutralize an affirmative claim made in the hero section or `--help` banner. Users form their trust expectations from the first thing they read \u2014 that's exactly where the boundary needs to live, not buried in a separate file they may never open. A permission-to-use statement (\"you may use this\") and a fitness claim (\"it's proven for regulated use\") are two different things; your current wording collapses them.\n\n**What to change it to**\n\nREADME hero section:\n```\nA [describe: fast/lightweight/modular] toolkit for [actual purpose].\nActively maintained and tested \u2014 see [CI badge / test coverage] for details.\n\nThis project does not carry SOC2, ISO, or other third-party certification,\nand use of it does not itself constitute compliance, security, or\nregulatory approval. See DISCLAIMER.md.\n```\n\nCLI `--help` banner (short form, since space is tight):\n```\n<toolname> vX.Y \u2014 [one-line purpose]\nNo compliance/security certification implied. Use does not constitute\nregulatory approval. See LICENSE / DISCLAIMER.md.\n```\n\n**Concrete swaps**\n\n| Remove | Replace with (only if true and evidence exists) |\n|---|---|\n| \"SOC2-ready\" | Drop entirely, or state actual audit status factually |\n| \"battle-tested for compliance-critical environments\" | \"tested with [X]% coverage\" / \"in production use at [named org]\" if verifiable |\n| \"trusted by teams running regulated workloads\" | Drop unless you can name/cite it, or link real case studies |\n| \"Enterprise-grade\" (standalone) | Keep only if paired with something concrete, e.g. \"designed for scale: [feature]\" |\n\n**Before publishing tomorrow**\n\n1. Grep the final README and `--help` output for: `SOC2`, `certified`, `compliant`, `battle-tested`, `guaranteed`, `enterprise-grade`, `trusted` \u2014 anything left should be in a disclaiming sentence, not an asserting one.\n2. Add the boundary line to both the README hero and the CLI banner, not just `DISCLAIMER.md`.\n3. If your repo has `tools/ng.py`, run `python tools/ng.py doctor .` as a final check.\n\nIf any of \"SOC2-ready\" or \"regulated workloads trust\" is actually true (audit completed, named customers), tell me the specifics and I'll help you word it as a defensible, evidence-tied claim instead of cutting it outright.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.07092280000000001,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 4229,
+    "cache_read_input_tokens": 26396,
+    "output_tokens": 2457,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4229,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1937,
+        "cache_read_input_tokens": 10302,
+        "cache_creation_input_tokens": 199,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 199
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 687,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000757,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2457,
+      "cacheReadInputTokens": 26396,
+      "cacheCreationInputTokens": 4229,
+      "webSearchRequests": 0,
+      "costUSD": 0.0701658,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "5ddcfd52-2893-4af9-b6ac-4529e8011b6b",
+  "_skill": "checking-legal-and-safety-wording",
+  "_condition": "with_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "5478561a721c734a7aec01d58d3455e00be5e63b8078a940676284c55365870b"
+}

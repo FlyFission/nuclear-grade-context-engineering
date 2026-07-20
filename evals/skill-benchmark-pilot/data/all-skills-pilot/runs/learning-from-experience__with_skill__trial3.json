@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 56016,
+  "duration_api_ms": 56945,
+  "ttft_ms": 30135,
+  "ttft_stream_ms": 9036,
+  "time_to_request_ms": 50,
+  "time_to_request_from_spawn_ms": 717067,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121280343.0117,
+  "num_turns": 1,
+  "result": "# OPEX Record \u2014 Secrets-Scanning Hook Bypass, Hardcoded API Key Merged to Main\n\n**Date of event:** ~2026-06-26 (per \"last week\")\n**Date recorded:** 2026-07-03\n**Recorded by:** [fill in \u2014 you/security lead]\n\n## Actual vs. Standard\n- **Standard:** No secret ever reaches `main` or production; the secrets-scanning check is a required gate before merge.\n- **Actual:** An engineer's pre-commit secrets-scan hook failed, he ran `git commit --no-verify` and pushed anyway, the change merged to `main`, and a hardcoded API key ran live in production for 3 days until a routine audit caught it.\n\n## Classification \u2014 be direct about this\nRunning `--no-verify` to push around a **known-failing security check under deadline pressure** is a **willful bypass of a control**, not an honest slip like a typo or a missed edge case. Per no-blame policy, that distinction matters:\n- No-blame still applies to the person \u2014 the goal is fixing the control, not punishing the engineer.\n- But it should **not** be filed as \"he just made a mistake.\" The record should say plainly: a required security gate was knowingly skipped. The real finding here is that skipping it was *possible and consequence-free* at the time \u2014 that's the control failure to fix.\n\n## Root Cause (not just the symptom)\nThe proximate cause is the bypass command. The root cause is architectural: **secrets scanning was enforced only client-side, in a hook that any developer can disable with one flag.** There was:\n- No server-side/CI-enforced check on the PR or push to `main` that would catch the secret regardless of local hook state.\n- No visibility/alerting when `--no-verify` is used, so the bypass was silent.\n- No fast path for a developer under time pressure to get a false positive reviewed/waived instead of just skipping the check entirely (worth confirming: was this a true positive or a flaky/false positive? If the linter is noisy, that's a contributing factor pushing people to bypass it).\n- Detection relied on a periodic manual audit rather than continuous scanning, so time-to-detection was days, not minutes.\n\n## Impact\n- Hardcoded API key live in production and in git history on `main` for 3 days.\n- Key rotated immediately upon discovery (immediate correction already taken \u2014 good).\n- Unconfirmed / worth checking: was the key used maliciously during the exposure window (check access/usage logs for the credential)? Does it also need purging from git history, build artifacts, or logs where it may have been copied?\n\n## Weak/Missing Controls Identified\n1. Secrets scanning only exists as a bypassable local pre-commit hook \u2014 no equivalent server-side gate.\n2. No monitoring/alerting on `--no-verify` usage for security-critical hooks.\n3. Detection cadence for secrets in `main`/production is \"routine audit,\" not continuous.\n4. No documented exception process for a developer who hits a failing security check under deadline pressure (so bypass is the only visible option).\n\n## Durable Control Fixes (recommended)\n| # | Fix | Type | Owner | Verify |\n|---|---|---|---|---|\n| 1 | Add secrets scanning as a **required CI status check** on PRs to `main` (blocks merge regardless of local `--no-verify`) | New gate | [security/platform lead] | Confirm branch protection rule requires the check; test with a deliberately planted dummy secret in a PR |\n| 2 | Enable host-level push protection / secret scanning (e.g., GitHub Advanced Security secret scanning + push protection, if available on your plan) | New gate | [platform/repo admin] | Confirm setting enabled on the repo; test with a dummy secret |\n| 3 | Alert (Slack/email/security channel) whenever `--no-verify` or `HUSKY_SKIP_HOOKS`-equivalent is used on a push, especially for security hooks | Monitoring | [platform/DevEx] | Trigger a test bypass, confirm alert fires |\n| 4 | Write and communicate an explicit policy: bypassing a security hook requires either fixing the failure or getting written sign-off from security/lead before pushing; document this in the contributing guide | Policy/doc | [eng manager] | Policy merged to repo docs; team acknowledgment |\n| 5 | Investigate whether the original hook failure was a true or false positive; if the linter is flaky, fix it \u2014 flakiness is what creates pressure to bypass | Root-cause fix | [linter owner] | Re-run linter against the original branch/commit, confirm behavior |\n| 6 | Move from periodic manual audit to continuous automated secret scanning of `main` (and ideally deployed configs), so detection time drops from days to minutes | Monitoring | [security] | Confirm scanner runs on every merge to `main`, not just on schedule |\n| 7 | Confirm the exposed key's usage logs for the 3-day window, and check if it (or copies of it) exist elsewhere (git history other branches, logs, build artifacts) | Cleanup/verify | [security] | Sign-off that no other exposure remains |\n\n**#1 is the fix that actually closes the gap** \u2014 it's the only one that removes the ability of a local bypass to reach `main` at all. The rest reduce the *chance* of a bypass being attempted or shorten the *time* to catch it if one slips through.\n\n## Outward Notice\nSince the pre-commit hook pattern (client-side-only enforcement) is likely used for other checks/repos beyond this one, flag this to whoever owns your shared hook/CI templates \u2014 other teams relying on the same pattern have the same gap and should get the server-side gate too, not just this repo.\n\n## Escalation\nThis touched credentials, security, and production \u2014 treat this as escalated by default (already true since a rotation happened). If this is the first known instance of this failure mode, standard follow-up is fine. If a `--no-verify` bypass on a security hook has happened before, that repeat pattern should get a second, independent reviewer on the fix (e.g., security review of the new CI gate, not just self-attested by the team that owns it).\n\n## Close-out Criteria\nDo not close this record until:\n- Fix #1 (server-side required check) is merged and verified with a live test.\n- Owner and due date are assigned to each item above.\n- Credential-usage check (#7) confirms no misuse during the exposure window.\n\n---\n\nWant me to fill in specific owners/dates if you tell me who owns CI config and security tooling, or turn this into a file in your repo (e.g. `docs/opex/2026-07-secrets-bypass.md`)?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0841894,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 4141,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 3837,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4141,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 3837,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 4141,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4141
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 3837,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 4141,
+      "webSearchRequests": 0,
+      "costUSD": 0.0834654,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "2a9e3b7c-fd46-48d0-b0be-3808f96dace8",
+  "_skill": "learning-from-experience",
+  "_condition": "with_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "bc95b6f2687a799c56ccd640131c1d1d97dab6607ca4025e594a783972554543"
+}

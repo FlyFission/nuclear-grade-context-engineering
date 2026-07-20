@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 13445,
+  "duration_api_ms": 14695,
+  "ttft_ms": 10123,
+  "ttft_stream_ms": 2741,
+  "time_to_request_ms": 53,
+  "time_to_request_from_spawn_ms": 1513860,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172587548.3672,
+  "num_turns": 1,
+  "result": "I'd recommend against pasting the raw transcript as your primary evidence, for two reasons: it likely contains actual secret values and payments API tokens/credentials in the tool-call parameters or outputs (a compliance liability if that packet gets stored or shared), and auditors generally need to scan for accountability (who approved, when, what changed) rather than reconstruct it from a log dump.\n\nA quick middle ground: extract a structured table (step #, action, actor/agent, timestamp, approval status, outcome) from the transcript \u2014 this is usually mechanical, not a big time sink \u2014 and attach the redacted raw transcript as a backup appendix if your auditors want full fidelity.\n\nWant help drafting a script or template to pull that structured table out of the transcript?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.026695899999999998,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1964,
+    "cache_read_input_tokens": 6263,
+    "output_tokens": 822,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1964,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 822,
+        "cache_read_input_tokens": 6263,
+        "cache_creation_input_tokens": 1964,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1964
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 627,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006969999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 822,
+      "cacheReadInputTokens": 6263,
+      "cacheCreationInputTokens": 1964,
+      "webSearchRequests": 0,
+      "costUSD": 0.0259989,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "102ee1e2-0fab-4ec9-92a5-026ce9ff264e",
+  "_skill": "recording-what-an-agent-did",
+  "_condition": "without_skill",
+  "_trial": 5,
+  "_input_spec_sha256": "e723d256b9e608d5031e9efb27099bd9dc93b3067995be4a877e813d41558eb2"
+}

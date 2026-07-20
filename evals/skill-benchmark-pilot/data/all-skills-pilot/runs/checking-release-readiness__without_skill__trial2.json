@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 10432,
+  "duration_api_ms": 9736,
+  "ttft_ms": 8623,
+  "ttft_stream_ms": 1189,
+  "time_to_request_ms": 54,
+  "time_to_request_from_spawn_ms": 567177,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121130493.4744,
+  "num_turns": 1,
+  "result": "No \u2014 this isn't ready to ship as-is. A couple of hard blockers:\n\n1. **No rollback plan for a database migration.** Postgres major version upgrades (12\u219215) plus index changes are hard to reverse once in production, especially if data is written under the new version before you notice a problem. \"CI is green\" only tells you the migration *runs*, not that it's safe to walk back. You need a tested rollback/downgrade path (or explicit fallback plan, e.g. restore from a pre-migration snapshot) before merging.\n\n2. **No monitoring for the specific risks this migration introduces.** Green CI doesn't catch things like query planner regressions from PG15's changed defaults, index bloat/rebuild issues, connection pooling behavior changes, or replication lag during cutover. You want alerts on query latency, error rates, replication status, and lock waits specifically watching the migration window, not just generic dashboards.\n\nOther things worth confirming before an afternoon prod deploy of something this risky:\n- Has this been run against a prod-sized data copy (not just CI fixtures)? PG12\u219215 index rebuilds can take very different time on real data volumes.\n- Is there a maintenance window / deploy time that isn't \"this afternoon\" if something goes wrong and you need hands on deck?\n- Has anyone verified extension/config compatibility (e.g., deprecated features between 12 and 15)?\n\nI'd push back on the \"ready to go\" framing in the PR description \u2014 a green CI run and one engineer's confidence aren't sufficient signoff criteria for a major-version DB migration touching production. At minimum, get the rollback script and migration-specific alerts in place before merging, even if that pushes the deploy to tomorrow.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0211327,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 1830,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 558,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1830,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 558,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1830,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1830
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000721,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 558,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1830,
+      "webSearchRequests": 0,
+      "costUSD": 0.0204117,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "6982c29c-f2f6-4d32-a769-279a868d6805",
+  "_skill": "checking-release-readiness",
+  "_condition": "without_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "ba01502131e0d3f8aa6b85919125a2b21b090ea131a9c311481a90490be0f6a1"
+}

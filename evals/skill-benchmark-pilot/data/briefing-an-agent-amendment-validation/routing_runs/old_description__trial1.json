@@ -1,0 +1,7 @@
+{
+  "variant": "old_description",
+  "trial": 1,
+  "chosen_skill": "handing-off-work",
+  "reasoning": "This is a mid-task handoff of unfinished work to a fresh agent instance, requiring a closed-loop briefing of state, changes, remaining scope, and authority limits \u2014 exactly what handing-off-work is designed for.",
+  "_input_spec_sha256": "44bcc759519088e3dfe12a2f10301466329925d5e2b9ed021dbb0b0191d046c8"
+}

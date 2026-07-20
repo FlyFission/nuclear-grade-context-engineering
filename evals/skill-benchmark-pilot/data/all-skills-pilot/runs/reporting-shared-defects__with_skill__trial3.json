@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 23753,
+  "duration_api_ms": 23054,
+  "ttft_ms": 13746,
+  "ttft_stream_ms": 8980,
+  "time_to_request_ms": 40,
+  "time_to_request_from_spawn_ms": 824029,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121387321.7085,
+  "num_turns": 1,
+  "result": "No \u2014 you're not good yet. You fixed your own copy, but the other three teams (sales, onboarding, internal-tools) are still shipping the exact same bug in production, unaware. A local override plus a code comment only documents the problem for people who read your repo; it does nothing for the other teams.\n\n**Why this doesn't stop at \"our bot is fixed\":**\nThe defect lives in `prompt-common`, a shared/supplied artifact \u2014 the bug isn't yours, it's the package's. Sales, onboarding, and internal-tools bots are all consumers still carrying the same leak vector.\n\n**Severity check:** this is a data-exposure issue \u2014 customer-facing responses can leak internal database query tool identifiers. That's exactly the kind of thing that helps an attacker map your internal systems, so it's worth treating as security-relevant, not just a cosmetic bug.\n\n**What's still needed:**\n1. **File the fix upstream**, not just override it locally \u2014 patch `prompt-common` itself (or open a PR) so the fix is available to everyone, not just embedded in your bot.\n2. **Notify the other three teams directly** \u2014 don't rely on them noticing a changelog. Tell them: what the bug is (truncation edge case leaking internal tool IDs), how to reproduce it, and either the patched package version or your interim override as a stopgap.\n3. **Give the notice an owner and a tracking link** \u2014 file a ticket/issue against `prompt-common` (or your incident/defect tracker) naming the affected teams, and assign someone (you, or the package owner) to confirm each team has applied the fix or acknowledged the risk.\n4. **Log it in your OPEX/deficiency tracking** if you have one, so \"we knew and told people\" is auditable later \u2014 not just tribal knowledge in a code comment.\n5. **Escalate** given the security/data-exposure angle \u2014 loop in whoever owns security review for customer-facing bots, especially since it touches disclosure of internal system identifiers.\n\nIf you want, I can help draft the notification message to the other teams or the `prompt-common` upstream fix/PR \u2014 just point me at the repo or template.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.041673400000000006,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 4022,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 1046,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4022,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 1046,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 4022,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4022
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 702,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000787,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 1046,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 4022,
+      "webSearchRequests": 0,
+      "costUSD": 0.0408864,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "3eaba9a9-e947-4079-ad67-756f9777d990",
+  "_skill": "reporting-shared-defects",
+  "_condition": "with_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "63b318bed4e44dc96a06fb84b56a51dbc941edd2a9bcb9b6b5fb451840aeb1f9"
+}

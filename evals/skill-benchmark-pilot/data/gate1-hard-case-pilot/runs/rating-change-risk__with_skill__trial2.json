@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 17596,
+  "duration_api_ms": 16668,
+  "ttft_ms": 8232,
+  "ttft_stream_ms": 1664,
+  "time_to_request_ms": 68,
+  "time_to_request_from_spawn_ms": 1474206,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172547807.6226,
+  "num_turns": 1,
+  "result": "No \u2014 this isn't the administrative floor, and skipping review is the wrong call here.\n\n**Why it doesn't qualify as administrative:** The floor is for changes that cross no trust boundary and make no claims. This one fails on claims \u2014 \"SOC 2 Type II certified\" is a formal compliance assertion, and \"10,000+ enterprises\" is a factual business claim. Docs can make public claims, and that's explicitly one of the tripwires that bumps a change out of floor territory even when the diff is one line. \"It's trivially revertable\" addresses code risk, not reputational/legal risk \u2014 once it's live, screenshots get taken, sales decks cite it, and a customer or auditor can act on it before you'd ever revert it.\n\n**Decision question:** Are both claims currently true and verifiable?\n- Is there an active SOC 2 Type II report on file, in scope, and not lapsed?\n- Is \"10,000+ enterprises\" an accurate, current figure (and does \"enterprises\" mean what a reader would assume)?\n\n**Mode:** Standard, not Quick \u2014 because it's user-visible/public-facing and makes a compliance claim. This isn't about code complexity; it's about the stakes of an unverified public statement going out attached to a launch.\n\n**Least proof required:** Get sign-off from whoever holds the actual SOC 2 report (security/compliance owner) and from whoever owns the customer-count metric (sales/marketing ops) that the number is current. That's a Slack/email confirmation, not a big process \u2014 but it needs to exist before merge, not after.\n\n**Escalate if:** the SOC 2 report is expired, out of scope, in progress but not complete, or nobody can immediately produce it \u2014 that's a legal/compliance issue, not a doc fix, and should go to whoever owns compliance risk before this ships.\n\nIf marketing can point you to the current SOC 2 report and confirm the number, this is a fast approval, not a heavy process \u2014 just don't skip asking.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.048173600000000004,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 4603,
+    "cache_read_input_tokens": 6272,
+    "output_tokens": 1197,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4603,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1197,
+        "cache_read_input_tokens": 6272,
+        "cache_creation_input_tokens": 4603,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4603
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 638,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000713,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1197,
+      "cacheReadInputTokens": 6272,
+      "cacheCreationInputTokens": 4603,
+      "webSearchRequests": 0,
+      "costUSD": 0.047460600000000006,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "097ce0a3-2aa8-4c96-91f6-d4ffd81d3a24",
+  "_skill": "rating-change-risk",
+  "_condition": "with_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "a87cefbdc29168b2853f0b41ae3c8867eb7728e3d788008f174f16c7f4b6b585"
+}

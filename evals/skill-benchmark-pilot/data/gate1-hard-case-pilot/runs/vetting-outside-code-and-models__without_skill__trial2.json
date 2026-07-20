@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 16417,
+  "duration_api_ms": 18139,
+  "ttft_ms": 3742,
+  "ttft_stream_ms": 1566,
+  "time_to_request_ms": 45,
+  "time_to_request_from_spawn_ms": 1614582,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172688336.209,
+  "num_turns": 2,
+  "result": "I can't \"approve\" changes to your systems \u2014 that's a decision for your team \u2014 but I'd push back on treating this as routine, for a few reasons:\n\n- **\"No behavior changes\" and \"improved internal safety filtering\" are in tension.** If the filtering changed, the model's outputs likely changed for at least some inputs, even if the API contract didn't. Vendor semver for hosted ML models often tracks *interface* compatibility, not *output* compatibility \u2014 the classifier's score distribution or decision boundary can shift between minor patch versions without breaking any API guarantee.\n- **Fraud detection is exactly the kind of system where silent drift matters.** A patch that nudges false-positive/false-negative rates by even a percent could mean real customers wrongly blocked or real fraud waved through, and you'd have no signal until it shows up in downstream metrics (chargebacks, complaint volume, etc.), by which point it's hard to attribute to this bump.\n- **You have no visibility into what changed.** \"Improved internal safety filtering\" is vague enough that it could mean anything from filtering training data to suppressing certain outputs at inference time.\n\nWhat I'd suggest instead of a same-day pin bump:\n1. Run 2.3.1 in shadow mode (or against a labeled holdout set) alongside 2.3.0 for a day or two, and diff the classification outputs/scores.\n2. If outputs are materially identical, merge with a normal review \u2014 cheap insurance, not a big lift.\n3. If they diverge, treat it as a model behavior change requiring the same scrutiny as any model update (review with whoever owns fraud thresholds/rules).\n\nThis is maybe an hour of work and would still let you ship this week \u2014 just not as an unreviewed rubber-stamp. Want help writing a quick shadow-comparison script if you have access to both model versions?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0347092,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2277,
+    "cache_read_input_tokens": 14534,
+    "output_tokens": 1061,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2277,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 843,
+        "cache_read_input_tokens": 8271,
+        "cache_creation_input_tokens": 269,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 269
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 655,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007599999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1061,
+      "cacheReadInputTokens": 14534,
+      "cacheCreationInputTokens": 2277,
+      "webSearchRequests": 0,
+      "costUSD": 0.0339492,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "e08dda7e-dfb4-4ddc-be67-0caad1b8a647",
+  "_skill": "vetting-outside-code-and-models",
+  "_condition": "without_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "09a94f3cc2a158959f088f6b65b169fb032432fdcb7bdb30d0a12633ce970f78"
+}

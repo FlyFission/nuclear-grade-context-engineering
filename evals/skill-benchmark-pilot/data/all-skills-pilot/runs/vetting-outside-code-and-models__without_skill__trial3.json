@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 9760,
+  "duration_api_ms": 10715,
+  "ttft_ms": 9725,
+  "ttft_stream_ms": 1134,
+  "time_to_request_ms": 50,
+  "time_to_request_from_spawn_ms": 894485,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121456918.4697,
+  "num_turns": 1,
+  "result": "No \u2014 don't cut production over this week based on marketing claims alone. A few concrete concerns and what I'd do instead:\n\n**Why not yet:**\n- \"99.9% accuracy\" is meaningless without knowing the test set, definition of accuracy (precision vs recall vs F1), and whether it matches your content distribution. Moderation is often heavily class-imbalanced, so a vendor can hit 99.9% while missing most true violations.\n- \"SOC2 compliant\" \u2014 confirm which type (Type I vs Type II) and ask for the actual report (under NDA), not just the badge. Type I just means controls exist on paper at a point in time.\n- Case studies are marketing-selected best cases, not evidence for your use case (different content types, languages, adversarial patterns).\n- No internal testing means you have zero data on false negative rate for the specific harm categories you care about (CSAM, self-harm, hate speech, etc.) \u2014 this is the metric that actually matters for a moderation pipeline, and it's exactly what vendors don't advertise.\n\n**What I'd suggest instead:**\n1. Shadow-test it against your current pipeline on real (or representative) production traffic for 1-2 weeks \u2014 run both in parallel, log disagreements, and manually review a sample of them.\n2. Build a small labeled eval set covering your worst-case/edge-case content (the stuff that's actually hard), and measure recall on that specifically \u2014 not just overall accuracy.\n3. Ask the vendor directly for: per-category precision/recall, latency/uptime SLAs, appeal/override mechanisms, and their SOC2 report.\n4. If results look good, do a staged rollout (e.g., route a % of traffic, or run it as a secondary check before removing your current provider) rather than a hard cutover.\n\nGiven the stakes of moderation failures (legal, safety, reputational), the pricing savings aren't worth the risk of switching untested this week. Want help designing the shadow-test harness or the eval set?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0225217,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 1851,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 642,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1851,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 642,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1851,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1851
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 642,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1851,
+      "webSearchRequests": 0,
+      "costUSD": 0.0217977,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "3f6ec974-89b8-4126-8c18-2b4e665eb548",
+  "_skill": "vetting-outside-code-and-models",
+  "_condition": "without_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "8b7d09da037ae5aa9659dc71101e540e0ddf0c2d764259f5b8c7787d28705d4b"
+}

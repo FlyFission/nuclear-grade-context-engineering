@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 15101,
+  "duration_api_ms": 14533,
+  "ttft_ms": 3608,
+  "ttft_stream_ms": 2200,
+  "time_to_request_ms": 41,
+  "time_to_request_from_spawn_ms": 890686,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121453808.386,
+  "num_turns": 1,
+  "result": "No \u2014 don't cut production over yet. Right now you have zero repo-side evidence, only vendor marketing, and content moderation is exactly the kind of safety/trust-critical function where marketing claims can't substitute for your own verification.\n\n**Why the vendor's claims don't count as evidence:**\n- \"99.9% accuracy\" \u2014 accuracy on whose test set, against what harm categories? Doesn't tell you how it performs on *your* content distribution.\n- \"SOC2 compliant\" \u2014 verify this by requesting the actual SOC2 report (Type I vs II, scope, exceptions noted), not the badge on their site.\n- \"Enterprise-grade safety\" \u2014 marketing language, not a measurable characteristic.\n- Customer case studies \u2014 selected by the vendor to look good; not independent verification.\n\n**Critical characteristics your use actually relies on** (name these before accepting):\n1. Accuracy on your specific content types and harm categories (false negative rate matters most for moderation)\n2. Latency/throughput under your production load\n3. Uptime/availability and behavior on API failure (does it fail open or closed?)\n4. Data handling \u2014 what happens to the content you send them (retention, training use, subprocessors)\n5. Actual SOC2 report scope, not just the claim\n\n**Acceptance method per characteristic:**\n- Accuracy \u2192 run your own eval: a labeled sample of your real (or representative) content through both old and new API, compare precision/recall against your current baseline\n- Latency/uptime \u2192 load test, check their status page history / SLA terms\n- Data handling \u2192 read the DPA/ToS yourself, don't take \"enterprise-grade\" as proof\n- SOC2 \u2192 request the actual report, check scope and date\n\n**Gate:** any of these you can't verify yourself blocks switching production traffic to them for that purpose. A characteristic you can't check (e.g., they won't share the SOC2 report) blocks acceptance until resolved \u2014 don't ship around it.\n\n**Recommendation:** Run a shadow/parallel test this week \u2014 route production traffic to both providers, compare moderation decisions against your current provider or ground truth, without cutting over user-facing traffic yet. That's realistic to do in a week and gives you actual evidence instead of vendor claims. Pricing being much better is a good reason to evaluate faster, not a reason to skip evaluation.\n\nIf you want, I can help draft a `supplier-trust.md` for this vendor with the decision, gaps, and re-check trigger, or help design the shadow-test harness.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.039283399999999996,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 3985,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 906,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3985,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 906,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 3985,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3985
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000719,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 906,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 3985,
+      "webSearchRequests": 0,
+      "costUSD": 0.0385644,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "c554df07-5fa0-4cc1-993f-97471dfd141d",
+  "_skill": "vetting-outside-code-and-models",
+  "_condition": "with_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "089ee9676f980f6c036b1d7020803b314dc4315c640899053e2ea8be755f4fbf"
+}

@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 17406,
+  "duration_api_ms": 16839,
+  "ttft_ms": 5124,
+  "ttft_stream_ms": 3360,
+  "time_to_request_ms": 42,
+  "time_to_request_from_spawn_ms": 889573,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121452842.5425,
+  "num_turns": 1,
+  "result": "No \u2014 don't cut production over this week on vendor claims alone. Here's why, using the trust framework:\n\n**The core problem:** \"99.9% accuracy, SOC2 compliant, enterprise-grade safety\" and case studies are all vendor claims, not evidence from your repo/pipeline. Marketing copy is input, never acceptance proof. You've said explicitly you haven't tested it \u2014 that's a gate, not a formality.\n\n**Critical characteristics for a moderation API** (the few things your use actually depends on):\n- **Accuracy/recall on your content types** \u2014 their 99.9% is almost certainly on their benchmark, not your traffic (different content mix, languages, edge cases, adversarial inputs).\n- **False positive/negative behavior** \u2014 what gets over-blocked (user harm) vs under-blocked (liability/safety harm) matters more than a single accuracy number.\n- **Latency/availability** under your production load.\n- **SOC2 scope** \u2014 \"SOC2 compliant\" could mean Type I (design only) vs Type II (operating effectiveness over time), and covers *their* controls, not your data flow into/out of their API.\n- **API/output-format stability** \u2014 will their classification schema change under you without notice?\n\n**Acceptance method for each** \u2014 before cutover, not after:\n- Shadow-test the new API against real (anonymized) traffic in parallel with your current pipeline for at least a couple weeks, comparing decisions on the same content.\n- Request the actual SOC2 report (ask for Type II, request the report itself, not the badge) and read the scope/exceptions section.\n- Check their incident history / status page track record.\n- Get the customer references and actually ask them about accuracy on similar content types, not just read the published case study quotes.\n\n**Gate:** if you can't get the SOC2 report or run a shadow test before switching, that blocks full production cutover \u2014 not a \"ship with risk\" situation, since moderation failures have real safety/legal/reputational consequences.\n\n**Recommendation:** Run a parallel/shadow deployment against production traffic (no cutover) for a couple weeks, pull the real SOC2 report, and set a re-check trigger for any model/version change on their side (these are often auto-updating hosted models, so \"SOC2 compliant\" today doesn't cover tomorrow's model swap). If cost pressure is high, that's a real factor \u2014 but it belongs in the ship/defer decision alongside the verification, not as a reason to skip it.\n\nWant me to help draft a `supplier-trust.md` for this vendor, or set up the shadow-test comparison harness against your current pipeline?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0403334,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 3985,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 976,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3985,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 976,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 3985,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3985
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000719,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 976,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 3985,
+      "webSearchRequests": 0,
+      "costUSD": 0.0396144,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "863b3bc4-3bce-440e-a066-da2f8c5d4c1b",
+  "_skill": "vetting-outside-code-and-models",
+  "_condition": "with_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "089ee9676f980f6c036b1d7020803b314dc4315c640899053e2ea8be755f4fbf"
+}

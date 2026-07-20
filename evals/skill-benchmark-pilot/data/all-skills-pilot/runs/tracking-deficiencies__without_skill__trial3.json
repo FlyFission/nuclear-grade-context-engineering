@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 21503,
+  "duration_api_ms": 20126,
+  "ttft_ms": 12797,
+  "ttft_stream_ms": 1487,
+  "time_to_request_ms": 44,
+  "time_to_request_from_spawn_ms": 878711,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121441997.6116,
+  "num_turns": 1,
+  "result": "A few practical steps, roughly in priority order:\n\n1. **Add a cheap mitigation, not a full fix.** A 1-in-5000 double-charge from a mid-retry network partition is usually preventable with an idempotency key on the charge request (if one doesn't already exist) \u2014 that's often a much smaller change than fixing the underlying retry logic, and it eliminates the actual customer harm even if the \"elegant\" fix waits.\n\n2. **Don't ship it as a silent known-issue.** \"Everyone on the team knows\" isn't the same as it being tracked with severity/owner/deadline. File it with real priority reflecting customer money at stake, not \"rare = low priority\" \u2014 frequency and impact are different axes.\n\n3. **Get an explicit sign-off from someone who owns risk, not just eng.** Charging customers twice without authorization is a customer-trust and potential compliance issue (chargebacks, payment processor terms, possible regulatory exposure depending on jurisdiction). That's a business risk call, not just an engineering judgment call \u2014 loop in whoever owns compliance/legal or a senior eng leader so it's a documented decision, not just an oversight that shipped again.\n\n4. **Add detection + a refund runbook before shipping**, even if you don't fix root cause: alert on duplicate charges within a short window for the same transaction, and have support pre-armed with a fast refund process. That way affected customers get made whole proactively instead of after they complain or file a chargeback.\n\nIf you want, I can help you find the retry code and scope how big the idempotency-key fix actually is \u2014 it might be small enough to include today.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0336217,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 1836,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 1389,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1836,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 1389,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1836,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1836
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000709,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 1389,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1836,
+      "webSearchRequests": 0,
+      "costUSD": 0.032912699999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "12464eb4-dceb-412c-83cc-d00980a876be",
+  "_skill": "tracking-deficiencies",
+  "_condition": "without_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "32a27781bc545324e5f187e018aa98ee203efdda0ab712a86a80f30d853a5108"
+}

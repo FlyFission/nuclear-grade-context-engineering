@@ -1,0 +1,240 @@
+[
+  {
+    "skill": "briefing-an-agent",
+    "with_skill": {
+      "catch": "5/5",
+      "yes": 5,
+      "n": 5,
+      "mean_cost": 0.05762091999999999
+    },
+    "without_skill": {
+      "catch": "5/5",
+      "yes": 5,
+      "n": 5,
+      "mean_cost": 0.0433609
+    },
+    "verdict": "TIE",
+    "round1_verdict": "TIE"
+  },
+  {
+    "skill": "checking-legal-and-safety-wording",
+    "with_skill": {
+      "catch": "5/5",
+      "yes": 5,
+      "n": 5,
+      "mean_cost": 0.06173252
+    },
+    "without_skill": {
+      "catch": "4/5 (+1p)",
+      "yes": 4,
+      "n": 5,
+      "mean_cost": 0.054093859999999994
+    },
+    "verdict": "WINS",
+    "round1_verdict": "TIE"
+  },
+  {
+    "skill": "checking-release-readiness",
+    "with_skill": {
+      "catch": "5/5",
+      "yes": 5,
+      "n": 5,
+      "mean_cost": 0.05351546
+    },
+    "without_skill": {
+      "catch": "4/5 (+1p)",
+      "yes": 4,
+      "n": 5,
+      "mean_cost": 0.033139379999999996
+    },
+    "verdict": "WINS",
+    "round1_verdict": "TIE"
+  },
+  {
+    "skill": "checking-what-a-change-affects",
+    "with_skill": {
+      "catch": "5/5",
+      "yes": 5,
+      "n": 5,
+      "mean_cost": 0.04227468
+    },
+    "without_skill": {
+      "catch": "1/5 (+4p)",
+      "yes": 1,
+      "n": 5,
+      "mean_cost": 0.0278279
+    },
+    "verdict": "WINS",
+    "round1_verdict": "TIE"
+  },
+  {
+    "skill": "creating-change-records",
+    "with_skill": {
+      "catch": "0/5 (+5p)",
+      "yes": 0,
+      "n": 5,
+      "mean_cost": 0.04871152
+    },
+    "without_skill": {
+      "catch": "0/5 (+1p)",
+      "yes": 0,
+      "n": 5,
+      "mean_cost": 0.029703900000000002
+    },
+    "verdict": "TIE",
+    "round1_verdict": "LOSES"
+  },
+  {
+    "skill": "deciding-who-decides",
+    "with_skill": {
+      "catch": "5/5",
+      "yes": 5,
+      "n": 5,
+      "mean_cost": 0.04632460000000001
+    },
+    "without_skill": {
+      "catch": "2/5 (+3p)",
+      "yes": 2,
+      "n": 5,
+      "mean_cost": 0.025147899999999997
+    },
+    "verdict": "WINS",
+    "round1_verdict": "TIE"
+  },
+  {
+    "skill": "handing-off-work",
+    "with_skill": {
+      "catch": "5/5",
+      "yes": 5,
+      "n": 5,
+      "mean_cost": 0.0427636
+    },
+    "without_skill": {
+      "catch": "0/5 (+1p)",
+      "yes": 0,
+      "n": 5,
+      "mean_cost": 0.0260099
+    },
+    "verdict": "WINS",
+    "round1_verdict": "TIE"
+  },
+  {
+    "skill": "organizing-project-folders",
+    "with_skill": {
+      "catch": "5/5",
+      "yes": 5,
+      "n": 5,
+      "mean_cost": 0.0543756
+    },
+    "without_skill": {
+      "catch": "4/5 (+1p)",
+      "yes": 4,
+      "n": 5,
+      "mean_cost": 0.0229019
+    },
+    "verdict": "WINS",
+    "round1_verdict": "TIE"
+  },
+  {
+    "skill": "proving-claims",
+    "with_skill": {
+      "catch": "5/5",
+      "yes": 5,
+      "n": 5,
+      "mean_cost": 0.0449496
+    },
+    "without_skill": {
+      "catch": "5/5",
+      "yes": 5,
+      "n": 5,
+      "mean_cost": 0.0242849
+    },
+    "verdict": "TIE",
+    "round1_verdict": "TIE"
+  },
+  {
+    "skill": "rating-change-risk",
+    "with_skill": {
+      "catch": "4/5 (+1p)",
+      "yes": 4,
+      "n": 5,
+      "mean_cost": 0.06030040000000001
+    },
+    "without_skill": {
+      "catch": "0/5 (+1p)",
+      "yes": 0,
+      "n": 5,
+      "mean_cost": 0.025293900000000005
+    },
+    "verdict": "WINS",
+    "round1_verdict": "TIE"
+  },
+  {
+    "skill": "recording-what-an-agent-did",
+    "with_skill": {
+      "catch": "4/5 (+1p)",
+      "yes": 4,
+      "n": 5,
+      "mean_cost": 0.040172599999999996
+    },
+    "without_skill": {
+      "catch": "0/5 (+5p)",
+      "yes": 0,
+      "n": 5,
+      "mean_cost": 0.0242619
+    },
+    "verdict": "WINS",
+    "round1_verdict": "TIE"
+  },
+  {
+    "skill": "responding-to-incidents",
+    "with_skill": {
+      "catch": "5/5",
+      "yes": 5,
+      "n": 5,
+      "mean_cost": 0.061632599999999996
+    },
+    "without_skill": {
+      "catch": "4/5 (+1p)",
+      "yes": 4,
+      "n": 5,
+      "mean_cost": 0.0481519
+    },
+    "verdict": "WINS",
+    "round1_verdict": "TIE"
+  },
+  {
+    "skill": "stress-testing-agent-changes",
+    "with_skill": {
+      "catch": "3/5 (+2p)",
+      "yes": 3,
+      "n": 5,
+      "mean_cost": 0.07925664
+    },
+    "without_skill": {
+      "catch": "0/5 (+5p)",
+      "yes": 0,
+      "n": 5,
+      "mean_cost": 0.0664381
+    },
+    "verdict": "WINS",
+    "round1_verdict": "TIE"
+  },
+  {
+    "skill": "vetting-outside-code-and-models",
+    "with_skill": {
+      "catch": "5/5",
+      "yes": 5,
+      "n": 5,
+      "mean_cost": 0.05226512
+    },
+    "without_skill": {
+      "catch": "4/5 (+1p)",
+      "yes": 4,
+      "n": 5,
+      "mean_cost": 0.03385888
+    },
+    "verdict": "WINS",
+    "round1_verdict": "TIE"
+  }
+]

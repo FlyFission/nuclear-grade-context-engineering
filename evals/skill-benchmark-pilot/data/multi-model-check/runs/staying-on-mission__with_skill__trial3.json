@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 14380,
+  "duration_api_ms": 13806,
+  "ttft_ms": 8806,
+  "ttft_stream_ms": 1111,
+  "time_to_request_ms": 55,
+  "time_to_request_from_spawn_ms": 1012357,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783196379699.7405,
+  "num_turns": 1,
+  "result": "**STOP** \u2014 do not implement that rewrite now.\n\nYou've hit the loop limit and crossed a non-goal boundary. Let me walk through the check:\n\n**Mission anchor (from your statement):**\n- Goal: fix the flaky test_login_session_expiry so CI passes reliably\n- Success criteria: 20 consecutive green CI runs\n- Non-goals: do NOT touch the shared authentication middleware\n\n**Current action:** rewrite session-expiry logic in shared auth middleware\n\n**The problem:** you've now tried 3 different fixes (timeout, retry, clock mock) and all failed the same way \u2014 test still flaky 1 in 5. That's a loop signal: after 3 attempts, the approach is likely the problem, not the next variant. But your proposed solution isn't a variant \u2014 it's an architectural change that crosses the explicit non-goal.\n\n**What to do instead:**\n\nThis needs to **escalate to the ticket owner** with this clear report:\n- The goal (make this test pass reliably) has been attempted 3 ways\n- All 3 failed with the same symptom (still flaky)\n- The only fix that appears viable would require modifying the shared auth middleware (the stated non-goal)\n- Either the non-goal boundary needs to be explicitly revisited and authorized, or the ticket's goal/scope needs to be re-anchored (e.g., accept that this test is fundamentally unreliable in its current form, or accept a higher flakiness threshold)\n\nDon't quietly cross the non-goal line to make the work go away. That's the definition of mission drift. The owner needs to make the decision about whether to cross that boundary \u2014 it's not a decision that belongs at the implementation level.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.015303899999999999,
+  "usage": {
+    "input_tokens": 10,
+    "cache_creation_input_tokens": 4156,
+    "cache_read_input_tokens": 4479,
+    "output_tokens": 1150,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4156,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 10,
+        "output_tokens": 1150,
+        "cache_read_input_tokens": 4479,
+        "cache_creation_input_tokens": 4156,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4156
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 669,
+      "outputTokens": 23,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000784,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-haiku-4-5": {
+      "inputTokens": 10,
+      "outputTokens": 1150,
+      "cacheReadInputTokens": 4479,
+      "cacheCreationInputTokens": 4156,
+      "webSearchRequests": 0,
+      "costUSD": 0.014519899999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "790e159b-ec86-467b-bad6-17cbbe87b6bc",
+  "_skill": "staying-on-mission",
+  "_condition": "with_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "401b4ea6103e69824d40cdc30b607a1bb3c1e365b5c8b3041beb59cdc16cf606"
+}

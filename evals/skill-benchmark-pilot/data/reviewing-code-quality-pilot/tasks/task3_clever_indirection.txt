@@ -1,0 +1,22 @@
+You are reviewing a code change before it merges.
+
+Goal of this change: "Add discount-code handling for three fixed discount types: percentage, flat, and free-shipping."
+
+File: discounts.py (new file)
+
+```python
+DISCOUNT_HANDLERS = {
+    "percentage": lambda order, value: order.total * (1 - value / 100),
+    "flat": lambda order, value: max(order.total - value, 0),
+    "free_shipping": lambda order, value: order.total - order.shipping_cost,
+}
+
+
+def apply_discount(order, discount_type: str, value: float):
+    handler = DISCOUNT_HANDLERS.get(discount_type)
+    if handler is None:
+        raise ValueError(f"Unknown discount type: {discount_type}")
+    return handler(order, value)
+```
+
+Review this change and give your findings.

@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 20709,
+  "duration_api_ms": 21627,
+  "ttft_ms": 6361,
+  "ttft_stream_ms": 1250,
+  "time_to_request_ms": 46,
+  "time_to_request_from_spawn_ms": 630725,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121193996.94,
+  "num_turns": 1,
+  "result": "A one-line diff hides a real behavior change \u2014 you're not just swapping a string, you're swapping the decision-maker for autonomous financial approvals. \"Cost review\" tells a future reviewer *why* someone wanted to swap, not whether it was *safe* to swap. For that you need something closer to a model-change validation record, not a PR sentence.\n\nAt minimum it should contain:\n\n**1. What changed, precisely**\n- Old model ID/version \u2192 new model ID/version, and any other params that shifted (context window, temperature, prompt template compatibility, tokenizer differences).\n- Date, who approved it, who can roll it back and how (is the old model ID still available/pinned?).\n\n**2. Why now**\n- The actual cost/perf numbers driving the swap (not just \"cost review\" \u2014 the delta itself, e.g. \"$X/1k calls \u2192 $Y/1k calls\").\n\n**3. Evidence it's behaviorally equivalent or better on the thing that matters**\nThis is the part a skeptical reviewer will actually care about. For a refund-approval agent:\n- A held-out eval set of real (or realistic) refund decisions with known correct outcomes, run through both old and new models, with approve/deny agreement rate and disagreement analysis (not just aggregate accuracy \u2014 look at *which* cases flipped).\n- Specific attention to false-approve rate (money out the door) vs false-deny rate (customer friction) \u2014 these have very different costs, so aggregate accuracy can mask a dangerous shift.\n- Edge cases / adversarial or borderline prompts (unusual refund amounts, policy edge cases, prompt-injection-style customer messages) \u2014 did the new model hold up the same?\n- Any change in refusal behavior, verbosity, or output format that could break downstream parsing/guardrails.\n\n**4. Guardrail/system-level checks**\n- Did any downstream validation (approval limits, human-in-the-loop thresholds, logging) get exercised the same way? Sometimes a new model's output format subtly breaks a regex/parser that enforces a safety limit.\n- Latency/error-rate under production-like load, if the agent has timeouts that fail open/closed.\n\n**5. Rollout plan and monitoring**\n- Shadow mode or canary percentage before full cutover, with a named metric and threshold for rollback (e.g. \"if false-approve rate on shadow traffic exceeds X% over Y days, revert\").\n- Who is watching that metric and for how long.\n\n**6. Sign-off**\n- Who reviewed the eval results (ideally someone who owns fraud/financial risk, not just the engineer making the config change).\n\nThe reason this matters more than the size of the diff suggests: six months from now, if there's a spike in bad refund approvals, \"swapped model per cost review\" gives zero signal about whether anyone actually checked decision quality before shipping. A short eval doc with before/after agreement numbers on a real refund dataset would.\n\nPractical suggestion: this doesn't need to be a heavyweight process \u2014 a one-page eval summary (dataset used, agreement rate, false-approve delta, rollback plan, sign-off) linked from the PR is probably enough, and could likely be produced same-day if you already have historical refund decisions to replay through both models. Want help drafting that template or the eval script?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0349767,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 1869,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 1464,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1869,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 1464,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1869,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1869
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 656,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000741,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 1464,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1869,
+      "webSearchRequests": 0,
+      "costUSD": 0.0342357,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "4b218c44-da3d-4da1-9f97-137f8e4684eb",
+  "_skill": "creating-change-records",
+  "_condition": "without_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "e48d271784fc069bb38bd1a84f2fb01715f1fce1d4996745ff3722ef662839ba"
+}

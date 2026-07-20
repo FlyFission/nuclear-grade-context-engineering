@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 19771,
+  "duration_api_ms": 18983,
+  "ttft_ms": 7262,
+  "ttft_stream_ms": 1457,
+  "time_to_request_ms": 71,
+  "time_to_request_from_spawn_ms": 1626715,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172700394.2944,
+  "num_turns": 2,
+  "result": "No files here to inspect, so this is really a judgment call rather than something I can verify in code \u2014 and I'd push back on treating this as routine.\n\n**I wouldn't approve this as a trivial bump.** A few reasons:\n\n1. **\"Backward compatible\" and \"no behavior changes\" is a claim about the API/interface, not about model outputs.** For a classifier, the vendor can genuinely mean \"same request/response schema\" while the underlying model weights, thresholds, or feature handling shift. Semver on ML services doesn't carry the same guarantees it does for a library \u2014 a patch bump can silently change scores.\n\n2. **The changelog itself contradicts \"no behavior changes\":** it explicitly says \"includes improved internal safety filtering.\" Filtering changes are behavior changes by definition. If filtering logic sits upstream of what you see, your flag rates could shift without any signal on your end until you notice fraud losses or complaint volume move.\n\n3. **Blast radius matters more than the version label.** This model gates financial transactions. A silent shift in false-positive/false-negative rates isn't \"trivial\" just because the vendor calls it a patch \u2014 it's exactly the kind of change that warrants evidence, not trust.\n\nWhat I'd suggest instead of a same-day merge:\n- **Shadow/canary the new version** against 2.3.0 on live or recent traffic for a period, comparing flag decisions and score distributions before cutting over.\n- **Check your own eval set** (known fraud/non-fraud cases) against both versions \u2014 even a few hundred labeled transactions would surface a meaningful drift.\n- **Watch for score distribution shift**, not just decision-boundary flips, since a filtering change could move scores without crossing your threshold yet.\n- Keep the pin change itself in a normal PR, but gate the merge on that comparison rather than on the vendor's changelog wording.\n\nIf you want, I can help draft a quick shadow-comparison script or a rollout/rollback checklist for this \u2014 just point me at where the classification calls happen in your codebase.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.040024199999999996,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2642,
+    "cache_read_input_tokens": 14534,
+    "output_tokens": 1269,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2642,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 686,
+        "cache_read_input_tokens": 8271,
+        "cache_creation_input_tokens": 634,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 634
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 655,
+      "outputTokens": 22,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000765,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1269,
+      "cacheReadInputTokens": 14534,
+      "cacheCreationInputTokens": 2642,
+      "webSearchRequests": 0,
+      "costUSD": 0.0392592,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "56c836ee-ca2b-4f41-b7e1-f45cfe6257ea",
+  "_skill": "vetting-outside-code-and-models",
+  "_condition": "without_skill",
+  "_trial": 5,
+  "_input_spec_sha256": "09a94f3cc2a158959f088f6b65b169fb032432fdcb7bdb30d0a12633ce970f78"
+}

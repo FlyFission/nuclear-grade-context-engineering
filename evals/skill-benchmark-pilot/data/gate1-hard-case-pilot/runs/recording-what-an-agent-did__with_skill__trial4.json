@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 15034,
+  "duration_api_ms": 13922,
+  "ttft_ms": 5938,
+  "ttft_stream_ms": 2235,
+  "time_to_request_ms": 47,
+  "time_to_request_from_spawn_ms": 1499182,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172572759.2405,
+  "num_turns": 1,
+  "result": "No \u2014 raw transcript isn't organized evidence, and \"it worked\" doesn't substitute for step-level proof of scope compliance. A reviewer can't check or index a chat log; they'd have to re-read the whole thing to find the one API call that mattered.\n\nWhat the packet needs instead, pulled from that transcript:\n\n1. **Trace rows** (one per consequential step \u2014 pull ~15, though several will be trivial): tool/action, shortened inputs, output, evidence status (pass/gap/fail/n/a). This is 5 fields per row, not prose.\n2. **The three payments-provider API calls** called out specifically \u2014 action taken, whether it matched what `basis.md` authorized for that vault/webhook scope, and confirmation none exceeded granted power.\n3. **The approval gate** recorded as: what was shown to the reviewer, who approved, when, and what they decided \u2014 not just \"human approved.\"\n4. **Any errors/retries**, even if resolved \u2014 what failed, what recovery ran, whether the fallback stayed in scope.\n5. **Token/latency/cost summary** if that's part of what this packet has to verify.\n6. Each row linked to the specific claim in `verification.md` it backs up.\n\nYou can keep the raw transcript as an attached reference (or link to wherever the session log lives) \u2014 that's fine and often useful \u2014 but it goes in addition to the structured trace, not instead of it. The \"everything succeeded, zero incidents\" outcome is exactly why this is unlikely to be blocked at review, but the audit record needs to show *how* \u2014 otherwise it's an unevidenced-run gap even for a clean success.\n\nWant me to pull the transcript and draft the trace.md rows and decision-point records from it?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.042059599999999996,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 4410,
+    "cache_read_input_tokens": 6272,
+    "output_tokens": 868,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4410,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 868,
+        "cache_read_input_tokens": 6272,
+        "cache_creation_input_tokens": 4410,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4410
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 627,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006919999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 868,
+      "cacheReadInputTokens": 6272,
+      "cacheCreationInputTokens": 4410,
+      "webSearchRequests": 0,
+      "costUSD": 0.0413676,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "e2eb84c3-30e6-4251-af3e-24cb7f32086a",
+  "_skill": "recording-what-an-agent-did",
+  "_condition": "with_skill",
+  "_trial": 4,
+  "_input_spec_sha256": "5829385ad4b4ae5586868f1713810a95a57101f928333edc4c632f5384181c05"
+}

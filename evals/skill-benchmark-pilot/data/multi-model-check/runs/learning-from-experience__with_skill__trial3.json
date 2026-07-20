@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 23497,
+  "duration_api_ms": 23091,
+  "ttft_ms": 8290,
+  "ttft_stream_ms": 1384,
+  "time_to_request_ms": 138,
+  "time_to_request_from_spawn_ms": 999299,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783196365070.7363,
+  "num_turns": 1,
+  "result": "I'll help you create a proper OPEX record for this incident. This is a clear case where deadline pressure led to a knowingly bypassed gate \u2014 not something to blame the engineer for, but a control failure we need to fix.\n\nLet me write this up:\n\n---\n\n## OPEX Record: Hardcoded API Key Reached Production via Bypassed Pre-Commit Hook\n\n**Actual vs. Standard:**\n- **Actual**: Engineer used `git commit --no-verify` to bypass pre-commit secrets-scanning linter, pushed a commit with hardcoded API key to main, where it remained live for 3 days before routine audit detected it.\n- **Standard**: Secrets must never reach production. All code must pass secrets-scanning before merge. Any gate bypass should have friction or secondary verification.\n\n**Root Cause:**\nThe incident had two contributing causes:\n1. **Weak bypass control**: `--no-verify` is a single flag with no friction, warning, or secondary gate. Under deadline pressure, it was easy to use without full consideration of consequences.\n2. **No server-side verification**: The secrets-scanning check was enforced only locally (pre-commit hook), so once bypassed, nothing stopped the push or merge.\n\n**Weak Controls:**\n1. Pre-commit hook is client-side, easily bypassed\n2. No required code review gate\n3. No server-side secret scanning on push\n4. Audit was routine (every N days), not immediate, so detection took 3 days\n\n**Impact:**\n- Hardcoded API key in production for 3 days (rotated; no known abuse detected)\n- Potential for attacker to use or sell the key during exposure window\n- Post-incident, confidence in secret handling weakened\n\n**Immediate Correction (Already Done):**\n- Rotated the exposed API key\n- Audit of git history found no other similar leaks\n\n**Durable Control Updates Needed:**\n\n| Control | Fix | Owner | Verify By |\n|---------|-----|-------|-----------|\n| **Server-side secret scanning** | Implement GitHub advanced security (or equivalent) to block pushes containing secrets. This is the most critical: it prevents any bypass of local checks from reaching the repo. | Security team | Run 10 test pushes with fake secrets; confirm all are blocked |\n| **Required code review** | Enforce branch protection rule: no merge without \u22651 approval. Catches what automation missed, and adds human friction to bypass decisions. | Eng lead | Check GitHub settings; confirm rule is active |\n| **Pre-commit hook audit** | Why did the linter fail initially? Was it a false positive? If so, fix the rule (reduces bypass temptation). Document why it was failing. | Eng lead | Investigate commit history; document findings |\n| **Key rotation schedule** | Rotate all API keys on a fixed schedule (e.g., quarterly), independent of breach. Reduces exposure window if a key slips through. | Infra/Ops | Set up automated rotation; update runbooks |\n| **Real-time secret monitoring** | Add alerting for unusual API key usage (location, rate, etc.). Catch leaks in hours, not days. | Security team | Deploy monitoring; test with a benign probe |\n\n**Owner & Trigger:**\n- **Security team**: Server-side scanning (due: 2 weeks)  \n- **Eng lead**: Branch protection + pre-commit audit (due: 1 week)  \n- **Infra/Ops**: Key rotation + monitoring (due: 3 weeks)  \n- **Re-check trigger**: Next security audit (routine, in ~30 days); verify all controls are active and no new keys are exposed\n\n---\n\n**Key points for your team:**\n\n1. **The `--no-verify` bypass is a symptom, not the root cause.** The real issue is that one engineer's local decision could reach production. Server-side scanning fixes that.\n2. **Deadline pressure is real.** Don't blame the engineer; instead, make the wrong choice harder and the right choice easier. Friction on the bypass is the control.\n3. **Routine audits are not fast enough.** Three days is a long exposure window. Real-time monitoring or immediate merge scanning is better.\n4. **This was an honest slip under pressure** \u2014 flag the weak gate, not the person. But also make sure the engineer knows the seriousness so they don't normalize bypassing checks in the future.\n\nWould you like me to help you set up any of these controls (e.g., branch protection rules in GitHub, or a pre-commit hook audit)?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0166489,
+  "usage": {
+    "input_tokens": 10,
+    "cache_creation_input_tokens": 3566,
+    "cache_read_input_tokens": 4479,
+    "output_tokens": 1663,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3566,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 10,
+        "output_tokens": 1663,
+        "cache_read_input_tokens": 4479,
+        "cache_creation_input_tokens": 3566,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3566
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000744,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-haiku-4-5": {
+      "inputTokens": 10,
+      "outputTokens": 1663,
+      "cacheReadInputTokens": 4479,
+      "cacheCreationInputTokens": 3566,
+      "webSearchRequests": 0,
+      "costUSD": 0.0159049,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "77fa9234-dc6c-4578-bd42-caa4d3600b32",
+  "_skill": "learning-from-experience",
+  "_condition": "with_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "54104567f90995e8249215939ecc129aef9e74c2c71c18fc2014b14c4efd823b"
+}

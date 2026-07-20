@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 11824,
+  "duration_api_ms": 10085,
+  "ttft_ms": 3957,
+  "ttft_stream_ms": 1397,
+  "time_to_request_ms": 62,
+  "time_to_request_from_spawn_ms": 1494609,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172568289.7004,
+  "num_turns": 1,
+  "result": "No \u2014 pasting the raw transcript doesn't satisfy this. Per the skill's own rationalization list: *\"the chat log is the trace... Raw chat logs are not organized evidence. You cannot check or index them.\"* A reviewer can't scan a raw log to verify each step stayed in scope, check the approval gate, or confirm token/cost anomalies \u2014 that's the whole point of the structured record.\n\nThe good news: \"it all worked\" doesn't reduce the work much, since the value of `trace.md` is auditability, not doubt about success. What you actually need, given your 15 steps:\n\n- A trace row per consequential step (vault pulls, image push, each of the 3 payment-provider API calls, the approval pause, etc.) \u2014 tool/action, shortened inputs, output, evidence status (`pass`/`gap`/`fail`).\n- One decision-point record for the human approval: what was reviewed, who approved, when, and whether it was within the power granted in `basis.md`.\n- A token/latency/cost summary if that's something you're expected to verify.\n- A short run summary linking the trace to the `ship.md` release decision.\n\nThis is usually mechanical if the transcript already has clean tool-call boundaries \u2014 five fields per row, not prose.\n\nIf you share the transcript (or point me to the log file and `basis.md`/`plan.md`), I can extract the steps and draft `trace.md` for you.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0384596,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 4410,
+    "cache_read_input_tokens": 6272,
+    "output_tokens": 628,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4410,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 628,
+        "cache_read_input_tokens": 6272,
+        "cache_creation_input_tokens": 4410,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4410
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 627,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006919999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 628,
+      "cacheReadInputTokens": 6272,
+      "cacheCreationInputTokens": 4410,
+      "webSearchRequests": 0,
+      "costUSD": 0.0377676,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "93df543b-c778-46f3-aebc-eb7e18460d4f",
+  "_skill": "recording-what-an-agent-did",
+  "_condition": "with_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "5829385ad4b4ae5586868f1713810a95a57101f928333edc4c632f5384181c05"
+}

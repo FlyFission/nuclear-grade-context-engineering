@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 22574,
+  "duration_api_ms": 21971,
+  "ttft_ms": 13269,
+  "ttft_stream_ms": 1296,
+  "time_to_request_ms": 159,
+  "time_to_request_from_spawn_ms": 1378734,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172451692.2314,
+  "num_turns": 1,
+  "result": "**No-go tonight.** The diff being one line and internal tests being green tells you nothing about the actual blast radius here \u2014 the risk isn't in your code, it's in the two-year-old contract with external partners.\n\n**Why this fails the check:**\n- **Runtime/API contract:** If your API serializer maps the DB column straight through to the JSON field name, renaming `user_id \u2192 account_id` in the schema will rename (or break) the field partners read. Your internal test suite has no coverage of partner behavior, so \"everything green\" is a false signal here.\n- **Backward compatibility:** Partners have been reading `user_id` for two years without your knowledge of their code. Any change to that field name/shape without notice is a breaking change on their side, not yours \u2014 and you won't find out until they page you.\n- **Rollback-of-state:** A schema rename on production data needs a verified down-migration, not just a green forward migration. \"Passes once\" isn't the same as \"safe to revert.\"\n- **Escalation trigger:** This touches outside trust (external partner integrations) \u2014 per the impact-screen rule, that alone means it shouldn't ship on a quiet, same-night merge.\n\n**Path to yes:**\n1. Decouple the API field name from the DB column name (rename the column internally, keep `user_id` as the serialized field, or vice versa) so the schema change is invisible externally. If you can do this, it's a genuinely safe one-liner.\n2. If the API field itself must change, treat it as a versioned/deprecated API change with a partner notice window \u2014 not a same-day migration.\n3. Either way, add a contract test asserting the public API field name stays stable independent of internal schema, so this doesn't rely on manual vigilance next time.\n\nIf you want, tell me how your API layer maps columns to response fields and I can tell you in one look whether option 1 already protects you.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.047305599999999996,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 3557,
+    "cache_read_input_tokens": 6272,
+    "output_tokens": 1558,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3557,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1558,
+        "cache_read_input_tokens": 6272,
+        "cache_creation_input_tokens": 3557,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3557
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 636,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007059999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1558,
+      "cacheReadInputTokens": 6272,
+      "cacheCreationInputTokens": 3557,
+      "webSearchRequests": 0,
+      "costUSD": 0.0465996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "a18b0e91-db00-4335-9413-a2d4309940d1",
+  "_skill": "checking-what-a-change-affects",
+  "_condition": "with_skill",
+  "_trial": 4,
+  "_input_spec_sha256": "cf1b51c1c87b62f8c82b4364dc0c0c31a2e20a50eb7d4f180a6d8985b5636403"
+}

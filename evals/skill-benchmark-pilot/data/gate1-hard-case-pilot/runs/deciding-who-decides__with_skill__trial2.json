@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 24767,
+  "duration_api_ms": 22993,
+  "ttft_ms": 13149,
+  "ttft_stream_ms": 3504,
+  "time_to_request_ms": 100,
+  "time_to_request_from_spawn_ms": 1395066,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172468535.8062,
+  "num_turns": 1,
+  "result": "No \u2014 this should not proceed on the agent's own authority. Here's the placement:\n\n**Decision:** Rotate and regenerate production API keys, revoking the old ones. **Reversible? No** \u2014 the agent itself notes old integrations break the instant old keys are revoked, with no undo.\n\n**Evidence rating: asserted, not proven.** Staging success is a source-claim about a different environment; it says nothing about which production integrations depend on the current keys or whether they have a migration path. The agent's confidence that this falls under its existing authority is also just an assertion, not evidence.\n\n**Consequence rating: protected/irreversible.** This breaks external customer integrations and is a credential/trust-boundary change \u2014 a materially different class of action from feature-flag toggles, even though the agent is framing it as \"the same config-management authority.\"\n\n**Placement: named human gate, not the agent.** Feature-flag delegation does not extend to production credential rotation. This is scope creep dressed up as consistency \u2014 exactly the \"we delegated this already\" rationalization the skill flags: delegation of one bounded, reversible domain doesn't dissolve the gate above a different, irreversible one.\n\n**Escalation trigger (concrete):** Any action that revokes or regenerates production credentials, or that breaks existing integrations without a rollback/grace-period path, escalates to a named human owner (e.g., the eng lead or security/on-call owner responsible for API credentials) \u2014 regardless of whether the agent judges it similar to previously delegated work, and regardless of staging results.\n\n**What the human decider needs in hand before approving:** an inventory of which clients/integrations use the current keys, a rollback or dual-key/grace-period plan so revocation isn't a hard cutover, and sign-off from whoever owns the affected customer relationships (they're materially affected and haven't been consulted).\n\n**Mandatory gate regardless of gradient:** production credential rotation that breaks backward compatibility always requires human sign-off \u2014 this can't be delegated implicitly by resemblance to an unrelated approved authority.\n\nPractical suggestion to unblock the customer without the irreversible step: have the agent propose issuing new keys *alongside* the old ones (no revocation) so the customer can integrate immediately, while the human owner separately decides the cutover/revocation timeline for old keys.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.050511600000000004,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 4041,
+    "cache_read_input_tokens": 6272,
+    "output_tokens": 1576,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4041,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1576,
+        "cache_read_input_tokens": 6272,
+        "cache_creation_input_tokens": 4041,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4041
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007379999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1576,
+      "cacheReadInputTokens": 6272,
+      "cacheCreationInputTokens": 4041,
+      "webSearchRequests": 0,
+      "costUSD": 0.0497736,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "8030fa89-1350-492d-b054-fd4c89e26e4f",
+  "_skill": "deciding-who-decides",
+  "_condition": "with_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "5a32c3febd77f32bd8ea326ad0dd6049a8543ed1173d4a7e351d45a697b5df43"
+}

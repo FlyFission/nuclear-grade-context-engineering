@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 6550,
+  "duration_api_ms": 8118,
+  "ttft_ms": 6522,
+  "ttft_stream_ms": 1200,
+  "time_to_request_ms": 43,
+  "time_to_request_from_spawn_ms": 827081,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121390373.0017,
+  "num_turns": 1,
+  "result": "You should notify the other three teams and fix it upstream \u2014 a code comment in your own repo won't reach them. A shared package bug that leaks internal tool identifiers is a real security/info-disclosure issue, and right now it's silently affecting sales, onboarding, and internal-tools bots too.\n\nConcretely, I'd suggest:\n\n1. **Report it now**, even briefly \u2014 message the `prompt-common` maintainers/owning team (or file an issue in that repo) describing the truncation edge case, that it leaks internal tool identifiers, and that you've already got a working patched version they can reference.\n2. **Upstream the actual fix** to `prompt-common` (or open a PR) rather than leaving each team to independently discover and patch it \u2014 you already did the hard part.\n3. **Flag urgency appropriately** \u2014 if sales/onboarding bots are customer-facing today, this is a live info-disclosure bug, not a backlog item. Worth a direct ping to those teams rather than waiting for them to stumble on it.\n4. Once fixed upstream, your local override in support's repo becomes redundant \u2014 plan to remove it and go back to consuming `prompt-common` directly, so you don't end up with a silently diverging fork.\n\nWant help drafting the issue/PR description or a short heads-up message to the other teams?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0197587,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 1935,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 420,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1935,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 420,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1935,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1935
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 702,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000787,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 420,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1935,
+      "webSearchRequests": 0,
+      "costUSD": 0.0189717,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "46b7859d-e5c7-4921-a353-06fdc199e499",
+  "_skill": "reporting-shared-defects",
+  "_condition": "without_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "1846c176a0eed497f3c7c0e2938245ed3e68e0d98dd4c06aa2bb164d36025f73"
+}

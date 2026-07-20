@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 12969,
+  "duration_api_ms": 12326,
+  "ttft_ms": 8467,
+  "ttft_stream_ms": 1525,
+  "time_to_request_ms": 53,
+  "time_to_request_from_spawn_ms": 1440849,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172514496.5974,
+  "num_turns": 1,
+  "result": "Copying it creates two homes for the same idea, which is the failure mode this pattern is meant to catch \u2014 currency formatting is a single reason-to-change (rounding rules, currency symbols, locale), so bugs fixed in one copy silently persist in the other. Put it in a shared, neutral location (e.g. `shared/formatCurrency.js` or `common/`) that both `reports/` and `billing/` import \u2014 this avoids the cross-team dependency you're worried about (neither team owns the other's folder), since `shared/` is owned by neither/both, not by whichever team's tree it'd otherwise live in.\n\nIf what you actually want is for billing and reports to diverge in behavior over time (different rounding for invoices vs. PDFs), that's a legitimate reason to fork \u2014 but then don't call both copies `formatCurrency.js`; rename them (e.g. `formatInvoiceAmount.js`) so it's clear they're now separate ideas, not accidental duplicates of one.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0511976,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 6001,
+    "cache_read_input_tokens": 6272,
+    "output_tokens": 838,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 6001,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 838,
+        "cache_read_input_tokens": 6272,
+        "cache_creation_input_tokens": 6001,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 6001
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 659,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000734,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 838,
+      "cacheReadInputTokens": 6272,
+      "cacheCreationInputTokens": 6001,
+      "webSearchRequests": 0,
+      "costUSD": 0.050463600000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "df52525f-dfd7-4476-a1fb-418b29ff5dc5",
+  "_skill": "organizing-project-folders",
+  "_condition": "with_skill",
+  "_trial": 4,
+  "_input_spec_sha256": "271dc5c3139ca0461def52b1203f69222d3745058bc7167f4341e7738ef3ad35"
+}

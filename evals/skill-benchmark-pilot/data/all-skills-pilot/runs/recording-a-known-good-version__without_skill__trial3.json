@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 17639,
+  "duration_api_ms": 16512,
+  "ttft_ms": 2243,
+  "ttft_stream_ms": 1179,
+  "time_to_request_ms": 70,
+  "time_to_request_from_spawn_ms": 2001314,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783122564171.5808,
+  "num_turns": 2,
+  "result": "The working directory is empty, so I don't have access to the actual repo, PR #482 diff, or eval suite output to pull concrete details from \u2014 I don't want to invent specifics like exact precision/recall numbers or commit hashes.\n\nI can draft a known-good-version record template now, but I'll need you to fill in or confirm the specifics I don't have:\n\n- Exact version/tag (v2.3.0) and commit SHA / PR #482 merge commit\n- `embed-v1` \u2192 `embed-v2` version strings (e.g., exact model names/versions, provider)\n- The actual eval numbers (precision/recall deltas, dataset used, eval suite name/version)\n- Deploy timestamp and environment(s) it went to\n- Who approved QA sign-off (name or team)\n- Any other dependency/config changes bundled in the PR besides the embedding model bump\n\nHere's the draft structure \u2014 let me know the fill-ins and I'll finalize it:\n\n---\n\n## Known-Good Version Record: v2.3.0\n\n**Status:** Accepted / Known-Good\n**Date recorded:** 2026-07-03\n**Recorded by:** [your name]\n\n### Summary\nVersion v2.3.0 of the recommendation service upgrades the embedding model dependency from `embed-v1` to `embed-v2` (PR #482). Deployed to production on [exact timestamp], ~1 hour of stable observation at time of writing.\n\n### What changed\n- Embedding model dependency: `embed-v1` \u2192 `embed-v2`\n- [any other changes bundled in PR #482 \u2014 config, infra, code]\n\n### Why this version is accepted\n- New eval suite run against `embed-v2` showed improved precision and recall vs. the prior `embed-v1` baseline:\n  - Precision: [old] \u2192 [new]\n  - Recall: [old] \u2192 [new]\n  - Eval suite/dataset: [name/version]\n- QA sign-off obtained by [who/team] on [date]\n- Deployed to production and stable for [duration] post-deploy with no incident/alerts as of this recording\n\n### Rollback guidance\nIf a regression is detected in a later version, this is the last known-good state to roll back to:\n- Revert to commit [SHA] / tag v2.3.0\n- Redeploy with `embed-v1`... wait, `embed-v2` is now the accepted baseline \u2014 rollback target is v2.3.0 itself, not v1.\n- Rollback procedure: [link to runbook, or steps]\n\n### References\n- PR: #482\n- Eval report: [link]\n- Deploy log/ticket: [link]\n\n---\n\nSend me the specifics and I'll produce the final version (and let me know where you'd like it saved \u2014 e.g., `CHANGELOG.md`, a `docs/known-good-versions.md` file, or similar).",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0369549,
+  "usage": {
+    "input_tokens": 56,
+    "cache_creation_input_tokens": 2164,
+    "cache_read_input_tokens": 14483,
+    "output_tokens": 1247,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2164,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 31,
+        "output_tokens": 1071,
+        "cache_read_input_tokens": 8220,
+        "cache_creation_input_tokens": 207,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 207
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000753,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 56,
+      "outputTokens": 1247,
+      "cacheReadInputTokens": 14483,
+      "cacheCreationInputTokens": 2164,
+      "webSearchRequests": 0,
+      "costUSD": 0.036201899999999995,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "004185ae-3fdc-476f-973c-57acf57e5dfc",
+  "_skill": "recording-a-known-good-version",
+  "_condition": "without_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "288e805c347444b661aa6a4c0d0ad38e4f0af2ed9e8d9e1fa71e1c875703f235"
+}

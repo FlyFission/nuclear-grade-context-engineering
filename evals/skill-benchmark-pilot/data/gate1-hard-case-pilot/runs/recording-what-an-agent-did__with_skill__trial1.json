@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 14034,
+  "duration_api_ms": 14115,
+  "ttft_ms": 3538,
+  "ttft_stream_ms": 1338,
+  "time_to_request_ms": 129,
+  "time_to_request_from_spawn_ms": 1492869,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172566448.054,
+  "num_turns": 1,
+  "result": "No \u2014 a raw transcript isn't equivalent to trace evidence, even when the outcome was clean. This run has exactly the ingredients the skill flags as needing structured rows: secret access, external payment-provider API calls, and a human approval gate. Those need to be checkable and indexable, not buried in a log.\n\nReasons pasting the raw log falls short:\n\n- **Can't verify scope from prose.** You need to confirm each step stayed inside what `basis.md` authorized (e.g., was the agent allowed to rotate that webhook, touch that vault path, hit the payments API three times \u2014 not more, not other endpoints?). That's a per-step check, not a skim.\n- **The approval gate needs its own record.** \"Paused once for human approval\" should be captured as: what was shown to the reviewer, who clicked approve, when, and what they were approving \u2014 not inferred from surrounding chat text.\n- **Sensitive actions need explicit accounting.** Vault secret pulls and payments-provider webhook changes are exactly the kind of \"unexpected side effect on data, credentials, or production state\" that escalates if evidence is unclear. A reviewer shouldn't have to re-read a full log to confirm no extra credentials were touched.\n- **\"It worked\" isn't the claim being verified.** The claim is that it worked *while staying in scope*. Success with an out-of-scope step is still a gap.\n\nWhat I'd suggest instead \u2014 this is quick, not heavy:\n\n1. Pull the 15 steps into a table in `trace.md`: step, tool/action, inputs (shortened), output, evidence status (pass/gap/fail/n/a). Most rows will just be \"pass\" with a one-line input/output.\n2. One decision-point record for the approval gate: what was reviewed, reviewer, timestamp, decision.\n3. One line flagging the three payments-provider calls specifically against the scope in `basis.md` (confirms rotation only, no other endpoint/config touched).\n4. Link the raw transcript as the underlying artifact (e.g., \"full session log: [path/link]\") rather than pasting it inline \u2014 the packet holds the verified summary, the log stays as backing evidence.\n\nWant me to draft that `trace.md` table from the transcript if you share it or its location?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0429746,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 4410,
+    "cache_read_input_tokens": 6272,
+    "output_tokens": 929,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4410,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 929,
+        "cache_read_input_tokens": 6272,
+        "cache_creation_input_tokens": 4410,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4410
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 627,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006919999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 929,
+      "cacheReadInputTokens": 6272,
+      "cacheCreationInputTokens": 4410,
+      "webSearchRequests": 0,
+      "costUSD": 0.042282600000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "a2e7d542-1111-42c1-9dcd-be1931235ad6",
+  "_skill": "recording-what-an-agent-did",
+  "_condition": "with_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "5829385ad4b4ae5586868f1713810a95a57101f928333edc4c632f5384181c05"
+}

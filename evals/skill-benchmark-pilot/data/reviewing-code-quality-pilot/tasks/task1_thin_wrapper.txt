@@ -1,0 +1,21 @@
+You are reviewing a code change before it merges.
+
+Goal of this change: "Add a helper to format a user's display name for the profile page header."
+
+File: profile.py (new file)
+
+```python
+def build_display_name(first_name: str, last_name: str) -> str:
+    return f"{first_name} {last_name}".strip()
+
+
+def get_display_name(first_name: str, last_name: str) -> str:
+    return build_display_name(first_name, last_name)
+
+
+def render_profile_header(first_name: str, last_name: str) -> str:
+    name = get_display_name(first_name, last_name)
+    return f"<h1>{name}</h1>"
+```
+
+Review this change and give your findings.

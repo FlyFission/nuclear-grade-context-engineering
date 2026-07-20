@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 10544,
+  "duration_api_ms": 11544,
+  "ttft_ms": 10410,
+  "ttft_stream_ms": 2205,
+  "time_to_request_ms": 76,
+  "time_to_request_from_spawn_ms": 827914,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121390974.2925,
+  "num_turns": 1,
+  "result": "You're not good yet \u2014 you've fixed a symptom for yourself while leaving a shared-package bug live for three other teams who don't know it exists. A local override plus a code comment only future-proofs your own bot; it doesn't help onboarding, sales, or internal-tools, whose bots are presumably still leaking internal tool identifiers to customers right now.\n\nA few things worth doing:\n\n1. **Report it upstream in `prompt-common`**, not just locally. File an issue/ticket against the shared package with a clear repro (what triggers the truncation edge case, what leaks, roughly how long a conversation needs to be). Attach or link your fix as a suggested patch \u2014 you already did the hard work of diagnosing it.\n2. **Proactively notify the other three teams directly** (not just via a buried issue tracker) \u2014 this sounds like it has real security/privacy impact (leaking internal tool/database identifiers to customers is an information disclosure issue, potentially useful recon for an attacker probing your systems). A quick message like \"we found X causes Y under Z conditions, here's a fix, you may be affected\" is low-cost and high-value.\n3. **Fix it in the shared package itself**, if you're able, rather than leaving your override as the only working copy of the fix. Local overrides tend to drift or get forgotten; the actual bug still lives in `prompt-common` for anyone who adds a fifth bot later.\n4. **Flag it to whoever owns security/incident response**, if you have that function, since \"customer-facing bot leaks internal tool names\" is the kind of thing worth a paper trail even after it's fixed \u2014 in case it already happened in production logs somewhere and needs review.\n\nThe core issue: you knowing about a live cross-team vulnerability and only fixing your own instance isn't really \"done.\" Want help drafting the upstream issue/patch or a short notification message to the other teams?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0225187,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 1935,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 604,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1935,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 604,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1935,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1935
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 702,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000787,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 604,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1935,
+      "webSearchRequests": 0,
+      "costUSD": 0.0217317,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "4486c765-7f2b-4e72-ba43-c12ef99236eb",
+  "_skill": "reporting-shared-defects",
+  "_condition": "without_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "1846c176a0eed497f3c7c0e2938245ed3e68e0d98dd4c06aa2bb164d36025f73"
+}

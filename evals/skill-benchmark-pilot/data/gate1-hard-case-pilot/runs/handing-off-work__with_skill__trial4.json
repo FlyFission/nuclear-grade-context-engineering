@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 16259,
+  "duration_api_ms": 15376,
+  "ttft_ms": 5269,
+  "ttft_stream_ms": 1611,
+  "time_to_request_ms": 87,
+  "time_to_request_from_spawn_ms": 1420836,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172494463.816,
+  "num_turns": 1,
+  "result": "Pasting a link and saying \"pick up where I left off\" is the exact failure mode to avoid here \u2014 it leaves your authority limits (read-only DB, hard no-touch on signing keys) and the unvalidated config change buried in 3 hours of chat instead of stated explicitly. Here's a turnover record you can send instead, with placeholders for specifics only you know:\n\n---\n\n**Turnover: Payments webhook retry queue incident**\n**From:** [you] (on-call, outgoing) \u2192 **To:** Priya (on-call, incoming)\n**Time:** 2026-07-04, [HH:MM]\n\n**Last completed action:** Changed retry backoff timing config for the webhook retry queue ([param/value, e.g. \"base delay 2s \u2192 5s, max retries 5 \u2192 8\"]) at [time]. **Not yet validated** \u2014 deployed but no confirmation yet that it fixed the failure pattern.\n\n**What changed / current state:**\n- [Symptom that triggered the incident, e.g. \"webhook retries failing at X% rate since ~time\"]\n- [Any other actions taken in the last 3 hours: restarts, queries run, hypotheses ruled out]\n- Current error rate / queue depth: [numbers if you have them]\n\n**Remaining work:**\n- Validate the backoff change actually reduces retry failures (watch [dashboard/metric] for [timeframe])\n- [Any other open threads/hypotheses from the Slack discussion]\n\n**Access & authority:**\n- You have **read-only** access to the production database \u2014 do not attempt writes.\n- **Do not touch the webhook signing keys under any circumstances**, regardless of what you observe or what the queue behavior suggests. This was an explicit instruction from [who told you, if known].\n\n**Evidence / where to look:** Slack thread \u2014 [link] (full debugging history, config diffs, and hypotheses discussed)\n\n**Stop / escalate if:**\n- Signing keys appear to be the root cause \u2192 escalate to [who owns that], do not modify them yourself.\n- Backoff change doesn't improve failure rate within [timeframe] \u2192 consider reverting and escalate to [who].\n\n**Before you start, please confirm back:**\n1. You understand the backoff change is live but unvalidated.\n2. You will not touch the signing keys under any circumstances.\n3. You have read-only DB access only.\n4. You know the stop/escalate conditions above.\n\n---\n\nFill in the bracketed specifics (timestamps, metrics, who gave the signing-key instruction) and send this instead of just the link \u2014 Priya should confirm back before acting.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.04173060000000001,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 3578,
+    "cache_read_input_tokens": 6272,
+    "output_tokens": 1175,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3578,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1175,
+        "cache_read_input_tokens": 6272,
+        "cache_creation_input_tokens": 3578,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3578
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 665,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00075,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1175,
+      "cacheReadInputTokens": 6272,
+      "cacheCreationInputTokens": 3578,
+      "webSearchRequests": 0,
+      "costUSD": 0.040980600000000006,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "25921ea9-0c70-44c7-a781-f3fbdbe6ee08",
+  "_skill": "handing-off-work",
+  "_condition": "with_skill",
+  "_trial": 4,
+  "_input_spec_sha256": "80578d690dcfc3def568f09137cbde504e2109ee3b5d9b7c05242eeb84d52332"
+}

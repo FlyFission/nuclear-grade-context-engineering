@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 12948,
+  "duration_api_ms": 13861,
+  "ttft_ms": 4591,
+  "ttft_stream_ms": 1249,
+  "time_to_request_ms": 53,
+  "time_to_request_from_spawn_ms": 1612774,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172686500.6384,
+  "num_turns": 2,
+  "result": "I wouldn't approve rolling this out today without validation. A few reasons the vendor's claim isn't sufficient here:\n\n1. **\"No behavior changes\" + \"improved safety filtering\" is contradictory.** For a classification model, changes to internal safety filtering *are* behavior changes \u2014 that's the whole point of the update. Semver \"patch\" conventions describe API compatibility, not model output stability; vendors routinely retrain, re-tune thresholds, or adjust filtering in \"patch\" releases without breaking the interface.\n\n2. **A fraud-detection classifier's behavior is the product.** Even a small shift in score distribution or filtering logic can move your false-positive/false-negative rates, which has direct financial and customer impact \u2014 exactly the kind of change that warrants review, not exemption from it.\n\n3. **\"Backward compatible\" from the vendor's side usually means schema/API compatibility**, not \"will classify your transactions identically.\" Those are different guarantees.\n\nWhat I'd do instead (lightweight, not a big lift):\n- **Shadow test**: run 2.3.1 in parallel (no enforcement) against a slice of live or recent historical traffic, compare flag/no-flag decisions and scores against 2.3.0 on the same inputs.\n- **Check drift on known cases**: run it against your labeled fraud/non-fraud test set (if you have one) and confirm precision/recall don't move.\n- **Staged rollout**: canary on a small percentage of traffic with monitoring/alerting on flag-rate deltas, then expand.\n- **Rollback plan**: keep the pin easy to revert if flag rates shift unexpectedly.\n\nIf you already have a shadow-eval pipeline or labeled test set for this model, I can help you write the comparison script now. Do you have one, or is this the first time you're evaluating a version bump this way?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0341802,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2428,
+    "cache_read_input_tokens": 14534,
+    "output_tokens": 965,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2428,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 599,
+        "cache_read_input_tokens": 8271,
+        "cache_creation_input_tokens": 420,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 420
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 655,
+      "outputTokens": 22,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000765,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 965,
+      "cacheReadInputTokens": 14534,
+      "cacheCreationInputTokens": 2428,
+      "webSearchRequests": 0,
+      "costUSD": 0.0334152,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "bf7956b4-2d7f-4f2c-afcc-5b36d8e07f59",
+  "_skill": "vetting-outside-code-and-models",
+  "_condition": "without_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "09a94f3cc2a158959f088f6b65b169fb032432fdcb7bdb30d0a12633ce970f78"
+}

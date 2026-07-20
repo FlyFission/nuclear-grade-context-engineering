@@ -1,0 +1,301 @@
+#!/usr/bin/env python3
+"""Generate GATE1_REPORT.md directly from the raw Gate 1 data (no hand-transcription)."""
+import json
+from pathlib import Path
+
+BASE = Path(__file__).parent.parent
+GATE1 = BASE / "data" / "gate1-hard-case-pilot"
+ALL = BASE / "data" / "all-skills-pilot"
+
+gate1_tasks = json.loads((GATE1 / "gate1_tasks.json").read_text())
+gate1_graded = json.loads((GATE1 / "graded_results_gate1.json").read_text())
+
+round1_summary_path = ALL / "summary_all.json"
+if not round1_summary_path.exists():
+    round1_summary_path = ALL / "summary_all_FINAL.json"
+round1_summary = json.loads(round1_summary_path.read_text())
+round1_by_skill = {r["skill"]: r for r in round1_summary}
+
+
+def fmt_money(x):
+    return f"${x:.4f}" if x is not None else "n/a"
+
+
+def fence_for(text):
+    longest = 0
+    run = 0
+    for ch in text:
+        if ch == "`":
+            run += 1
+            longest = max(longest, run)
+        else:
+            run = 0
+    return "`" * max(3, longest + 1)
+
+
+def round1_verdict(skill):
+    """Compute from the 'catch' strings (present in both the curated
+    summary_all_FINAL.json and a freshly regenerated summary_all.json) rather
+    than the 'yes' key, which only the curated FINAL file has -- a fresh
+    rerun's summary_all.json would KeyError otherwise."""
+    r = round1_by_skill.get(skill)
+    if not r:
+        return "n/a"
+    w = int(r["with_skill"]["catch"].split("/")[0])
+    wo = int(r["without_skill"]["catch"].split("/")[0])
+    d = w - wo
+    return "WINS" if d > 0 else ("TIE" if d == 0 else "LOSES")
+
+
+def gate1_verdict(row):
+    """Compute from the 'catch' strings so this works whether row came from the
+    curated summary_gate1_FINAL.json (which also stores a 'verdict' key) or a
+    freshly rerun summary_gate1.json (which doesn't) -- verified to agree with
+    every stored verdict in the checked-in FINAL data."""
+    w = int(row["with_skill"]["catch"].split("/")[0])
+    wo = int(row["without_skill"]["catch"].split("/")[0])
+    d = w - wo
+    return "WINS" if d > 0 else ("TIE" if d == 0 else "LOSES")
+
+
+gate1_summary_path = GATE1 / "summary_gate1.json"
+if not gate1_summary_path.exists():
+    gate1_summary_path = GATE1 / "summary_gate1_FINAL.json"
+gate1_summary = json.loads(gate1_summary_path.read_text())
+
+# Gate 1 is a fixed historical cohort: every skill that tied or lost as of round
+# 1's ORIGINAL grading. The executive summary below asserts Gate 1 retests "those
+# same skills" -- true only if the *current* round1_summary's tied/lost set still
+# equals the Gate 1 batch. A later round-1 regrade (changed criteria, model, etc.)
+# could move some other, untested skill into TIE without it ever getting a Gate 1
+# row, which would silently make that sentence wrong. Fail loudly instead of
+# letting the wording drift out from under the data.
+round1_tied_or_lost = {r["skill"] for r in round1_summary if round1_verdict(r["skill"]) in ("TIE", "LOSES")}
+gate1_skills = {row["skill"] for row in gate1_summary}
+if round1_tied_or_lost != gate1_skills:
+    only_in_round1 = sorted(round1_tied_or_lost - gate1_skills)
+    only_in_gate1 = sorted(gate1_skills - round1_tied_or_lost)
+    raise SystemExit(
+        "Gate 1's fixed skill batch no longer matches the current round-1 tied/lost set -- "
+        "the executive summary's \"those same skills\" claim would be wrong.\n"
+        f"Tied/lost in round1_summary but missing a Gate 1 row: {only_in_round1 or 'none'}\n"
+        f"In the Gate 1 batch but no longer tied/lost in round1_summary: {only_in_gate1 or 'none'}\n"
+        "Gate 1 is a locked historical cohort chosen after round 1's original grading. If "
+        "round 1 has been legitimately regraded and the composition genuinely changed, reword "
+        "the executive summary to describe Gate 1 as that locked cohort instead of assuming "
+        "it still equals the current tied/lost set."
+    )
+
+# Headline counts and the flip/tie/loss breakdown computed once here (not
+# hard-coded) so the executive summary can never drift from the comparison
+# table below, which is built from this same data.
+round1_ties = sum(1 for r in round1_summary if round1_verdict(r["skill"]) == "TIE")
+# Scoped to the Gate 1 batch itself (not the full round-1 population above) --
+# a fresh round-1 regrade could change some other, untested skill from WINS to
+# TIE without adding a Gate 1 row for it, and the flip-headline denominator
+# must not inflate with a skill that has no hard-case retest at all.
+round1_ties_in_gate1 = sum(1 for row in gate1_summary if round1_verdict(row["skill"]) == "TIE")
+flips = sum(1 for row in gate1_summary
+            if round1_verdict(row["skill"]) == "TIE" and gate1_verdict(row) == "WINS")
+remaining_ties = [row for row in gate1_summary
+                  if round1_verdict(row["skill"]) == "TIE" and gate1_verdict(row) == "TIE"]
+round1_loss_rows = [row for row in gate1_summary if round1_verdict(row["skill"]) == "LOSES"]
+
+if remaining_ties:
+    remaining_ties_names = " and ".join(f"`{r['skill']}`" for r in remaining_ties)
+    unique_patterns = {(r["with_skill"]["catch"], r["without_skill"]["catch"]) for r in remaining_ties}
+    if len(unique_patterns) == 1:
+        w, wo = next(iter(unique_patterns))
+        remaining_ties_detail = f"{w} vs {wo}"
+    else:
+        remaining_ties_detail = "; ".join(
+            f"`{r['skill']}`: {r['with_skill']['catch']} vs {r['without_skill']['catch']}"
+            for r in remaining_ties)
+    remaining_ties_ref = "this one" if len(remaining_ties) == 1 else f"these {len(remaining_ties)}"
+else:
+    remaining_ties_names = "no skills"
+    remaining_ties_detail = "n/a"
+    remaining_ties_ref = "none"
+
+round1_loss_sentence = " ".join(
+    f"`{r['skill']}` — the one round-1 LOSES — improves to a {gate1_verdict(r)} "
+    f"({r['with_skill']['catch']} YES vs {r['without_skill']['catch']} YES for the baseline)."
+    for r in round1_loss_rows
+) or "No round-1 LOSES skill is present in this Gate 1 batch."
+
+lines = []
+a = lines.append
+
+a("# Gate 1: Hard-Case Retest of the 14 Skills That Tied or Lost in Round 1")
+a("")
+a("Generated directly from the raw data in `evals/skill-benchmark-pilot/data/gate1-hard-case-pilot/` "
+  "by `scripts/generate_gate1_report.py`. Companion to `REPORT.md` (the round-1, 28-skill "
+  "pilot) — read that report's methodology, bias disclosure, and limitations sections "
+  "first; this document only covers what's specific to Gate 1.")
+a("")
+a("## Executive summary")
+a("")
+a(f"Round 1 tested each skill's own \"When to Use\" trigger — the obvious, textbook case. "
+  f"{round1_ties} of {len(round1_summary)} skills tied there (plain Sonnet 5 already satisfied the pass criterion with no "
+  f"skill loaded), which round 1's own limitations section flagged as likely ceiling effects "
+  f"rather than proof the skills add nothing. Gate 1 tests that hypothesis directly: for "
+  f"those same skills (plus the 1 that lost), a new scenario was built to target the "
+  f"specific rationalization, shortcut, or edge case named in that skill's own \"Common "
+  f"Rationalizations\" / \"Escalation\" / \"Red Flags\" text — not the trigger condition. "
+  f"5 trials per condition instead of 3.")
+a("")
+a(f"**Result: {flips} of the {round1_ties_in_gate1} round-1-tied skills flip from TIE to WINS on the harder case.** Only "
+  f"{remaining_ties_names} remain flat ties ({remaining_ties_detail} — the baseline "
+  f"still nails even the harder version of {remaining_ties_ref}). {round1_loss_sentence} "
+  f"**This is real support for the "
+  f"ceiling-effect hypothesis**: most of round 1's ties were an artifact of testing where the "
+  f"skill wasn't needed, not evidence the skill adds nothing.")
+a("")
+a(f"**But not all {flips} flips are the same kind of finding — read section 2 before treating "
+  f"them as uniform.** Some flips reflect the skill surfacing a genuinely new, distinct "
+  f"decision element the baseline never mentions unprompted. Others reflect the baseline "
+  f"getting the substance right but missing a specific, stricter phrasing bar the grading "
+  f"criterion demanded (e.g. requiring the literal words \"escalate to a named human\" "
+  f"rather than crediting a substantively equivalent \"get explicit human sign-off\"). Both "
+  f"are legitimate results, but they support different strength of claim.")
+a("")
+
+a("## 1. Method — what's different from round 1")
+a("")
+a("Same harness, model (`claude-sonnet-5`), grader (`claude-haiku-4-5`), and blind-grading "
+  "process as round 1 (see `REPORT.md` section 1). Differences:")
+a("")
+a("- **5 trials per condition** instead of 3 (140 runs total: 14 skills × 2 conditions × 5).")
+a("- **`--tools \"Read,Glob,Grep\"` used from the start**, not `--tools \"\"`. Round 1 "
+  "discovered mid-run that fully disabling tools broke skills whose process invites a repo "
+  "check; Gate 1 starts with the fix already applied instead of discovering it again.")
+a("- **New scenarios and criteria**, authored the same way as round 1 (3 parallel subagents, "
+  "same non-independence caveat applies — see `REPORT.md` section 2 and the note below), "
+  "but explicitly instructed to target each skill's own named rationalization/red-flag "
+  "text instead of its \"When to Use\" trigger, and to write a criterion that a generically "
+  "cautious answer could not satisfy by accident.")
+a("")
+a("**The same authorship caveat from round 1 applies with one more layer:** these harder "
+  "scenarios were designed by an agent reading the skill's own \"here's how people get this "
+  "wrong\" text and building a test around it. That is a reasonable way to find the hard "
+  "case, but it also means the test is, by construction, aimed at exactly what the skill "
+  "already claims to catch. A skill that catches the failure mode it explicitly names about "
+  "itself is a weaker result than one that catches a failure mode nobody wrote down.")
+a("")
+
+a("## 2. Full comparison table")
+a("")
+a("| Skill | Round 1 | Gate 1 | With skill (Gate 1) | Without skill (Gate 1) | Cost with | Cost without |")
+a("|---|---|---|---|---|---|---|")
+for row in gate1_summary:
+    a(f"| {row['skill']} | {round1_verdict(row['skill'])} | {gate1_verdict(row)} | "
+      f"{row['with_skill']['catch']} | {row['without_skill']['catch']} | "
+      f"{fmt_money(row['with_skill']['mean_cost'])} | {fmt_money(row['without_skill']['mean_cost'])} |")
+a("")
+
+audited_flips = 2  # checking-what-a-change-affects and deciding-who-decides, below
+a("## 3. Reading the flips: new decision element vs. stricter phrasing bar")
+a("")
+a(f"{audited_flips} of the {flips} flips were manually inspected in full (not just the "
+  f"grader's YES/NO) to check whether the harder criteria were finding real gaps or just "
+  f"being pedantic about wording. Both are reproduced in full below so an independent "
+  f"reader can judge for themselves; this is a spot check of {audited_flips} of {flips}, "
+  f"not an audit of all {flips}.")
+a("")
+a("### `checking-what-a-change-affects` — genuinely new decision element")
+a("")
+a(f"**Pass criterion:** {gate1_tasks['checking-what-a-change-affects']['pass_criteria']}")
+a("")
+a("Every `without_skill` trial correctly identified the external-API backward-compatibility "
+  "risk (the \"obvious\" half of this compound criterion) — that part was never in doubt. "
+  "What they consistently missed, unprompted, was the second required element: a "
+  "rollback-of-state plan for the database migration itself. That is a distinct technical "
+  "practice, not a rephrasing of the API-compatibility point, and the `with_skill` trials "
+  "named it every time. This flip looks like real signal.")
+a("")
+a("### `deciding-who-decides` — same substance, stricter phrasing bar")
+a("")
+a(f"**Pass criterion:** {gate1_tasks['deciding-who-decides']['pass_criteria']}")
+a("")
+a("Every `without_skill` trial correctly rejected both wrong justifications (existing "
+  "delegated config authority; the agent's own confidence from prior staging success) and "
+  "required human sign-off before rotating production API keys — the substantive judgment "
+  "call was right in all 5 trials. Most were graded PARTIAL rather than YES because the "
+  "criterion specifically required the phrase-level commitment to escalate to a **named** "
+  "human, and most `without_skill` responses said \"get human sign-off\" without specifying "
+  "that the sign-off must be from a specific, named accountable person. That is a real "
+  "difference in precision, but it is a smaller claim than \"the baseline gets this wrong\" "
+  "— the baseline gets the decision right and is less precise about the escalation target.")
+a("")
+
+a("## 4. Full detail: every scenario, criterion, and trial")
+a("")
+skills_sorted = sorted(gate1_tasks.keys())
+for skill in skills_sorted:
+    task = gate1_tasks[skill]
+    scenario_text = task["scenario_prompt"].strip()
+    scenario_fence = fence_for(scenario_text)
+    rows = [r for r in gate1_graded if r["skill"] == skill and not r.get("error")]
+
+    a(f"### `{skill}`")
+    a("")
+    a(f"**Hard-case rationale (why this targets what round 1 didn't):** {task.get('hard_case_rationale', 'n/a')}")
+    a("")
+    a("**Scenario given to the model (identical in both conditions):**")
+    a(scenario_fence)
+    a(scenario_text)
+    a(scenario_fence)
+    a("")
+    a(f"**Pre-registered pass criterion:** {task['pass_criteria']}")
+    a("")
+    a("| Condition | Trial | Verdict | Cost | Output tokens | Turns | Duration (ms) | Grader quote |")
+    a("|---|---|---|---|---|---|---|---|")
+    for r in sorted(rows, key=lambda r: (r["condition"], r["trial"])):
+        quote = (r.get("grader_quote") or "").replace("\n", " ").replace("|", "/")[:220]
+        a(f"| {r['condition']} | {r['trial']} | {r['meets_criteria']} | "
+          f"{fmt_money(r.get('cost_usd'))} | {r.get('output_tokens', 'n/a')} | "
+          f"{r.get('num_turns', 'n/a')} | {r.get('duration_ms', 'n/a')} | {quote} |")
+    a("")
+
+a("## 5. Cost")
+a("")
+run_files = list((GATE1 / "runs").glob("*.json"))
+gate1_cost = sum(json.loads(f.read_text()).get("total_cost_usd") or 0 for f in run_files)
+a(f"- Gate 1 review runs (140 retained final runs, 14 skills × 2 conditions × 5 trials): "
+  f"**${gate1_cost:.2f}** (unrounded: ${gate1_cost:.4f}), plus a few dollars of Haiku "
+  f"grading calls not itemized here. This is the cost of the one valid run kept per "
+  f"trial, not total spend including retries: 4 trials hit a transient upstream "
+  f"API/proxy error unrelated to content and were simply retried, and their files were "
+  f"overwritten by the successful retry, so the cost of those discarded attempts is not "
+  f"recoverable from this data and is not included here. Actual total spend on Gate 1's "
+  f"execution was somewhat higher than this figure.")
+a("")
+
+a("## 6. Limitations specific to Gate 1")
+a("")
+a("- **n=5 trials per cell** — better than round 1's n=3, but still not enough for a real "
+  "confidence interval; a 5/5-vs-0/5 split is stronger pilot evidence than round 1's "
+  "3/3-vs-0/3, not a settled statistical result.")
+a("- **Scenario/criteria authorship is still not independent**, and Gate 1 adds a second "
+  "layer of it: these harder scenarios were built directly from each skill's own stated "
+  "failure modes (see section 1). A skill catching exactly the shortcut it names about "
+  "itself is expected; it does not by itself prove the skill would catch a failure mode "
+  "nobody anticipated.")
+a(f"- **Not every flip was individually audited.** Section 3 manually checked "
+  f"{audited_flips} of the {flips} flips and found both to be legitimate but different in "
+  f"strength (a genuinely new element vs. a phrasing-precision bar). The other "
+  f"{flips - audited_flips} have not had the same manual read — their full transcripts "
+  f"are in section 4 for anyone who wants to check.")
+if remaining_ties:
+    a(f"- **{remaining_ties_names} remaining flat "
+      f"tie{'s' if len(remaining_ties) != 1 else ''} on the harder case is itself "
+      f"informative** — it means the ceiling-effect hypothesis doesn't automatically "
+      f"explain every round-1 tie. For {remaining_ties_ref} specifically, the baseline "
+      f"may be genuinely as good as the skill on the decision element tested, not just "
+      f"on the easy case.")
+a("")
+
+report = "\n".join(lines)
+out_path = BASE / "GATE1_REPORT.md"
+out_path.write_text(report)
+print(f"Wrote {out_path} ({len(report)} chars, {len(skills_sorted)} skills detailed)")

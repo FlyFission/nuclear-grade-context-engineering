@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 19147,
+  "duration_api_ms": 18503,
+  "ttft_ms": 16885,
+  "ttft_stream_ms": 1285,
+  "time_to_request_ms": 75,
+  "time_to_request_from_spawn_ms": 564348,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121127495.0142,
+  "num_turns": 1,
+  "result": "No \u2014 this isn't ready to ship. Here's the release-readiness review.\n\n## Release decision: **BLOCK**\n\n## Does the evidence answer the decision question?\n\nNo. Green CI answers \"does the code work as tested\" \u2014 it doesn't answer \"is it safe to run this migration against production data with no way back.\" The actual decision question here is: *if this migration fails partway, corrupts an index, or degrades production under real load, can we detect it and recover quickly?* Nothing in the inputs answers that.\n\n## Is the decider independent of the actor?\n\nAlso no, as described. The engineer who wrote the migration says it's ready \u2014 that's the actor's own narrative, not independent evidence. For a database migration touching the primary user DB (high blast radius, hard to reverse), the merge/ship decision should be made by someone other than the author, based on evidence they can reproduce themselves (e.g., they can watch the migration run in staging, see the rollback actually work, see the alerts fire on a synthetic failure) \u2014 not just take the author's word.\n\n## Evidence summary\n\n| Item | Status |\n|---|---|\n| CI | Green |\n| Author sign-off | Present (not independent) |\n| Rollback/restore path | **Missing** |\n| Monitoring/alerts for this change | **Missing** |\n| Index migration tested under prod-like load/data volume | Not stated |\n| Backup verified immediately pre-migration | Not stated |\n\n## Leftover risks (unowned)\n\n1. **No rollback path** \u2014 if the PG15 migration or index changes fail mid-way or cause query regressions in prod, there's no defined way back. This alone is a blocker per the escalation rule (\"Escalate if rollback is impossible\").\n2. **No migration-specific monitoring** \u2014 a major version upgrade + index changes can cause query plan regressions, lock contention, or replication issues that generic dashboards may not surface quickly.\n3. **Data integrity risk** \u2014 major version DB migrations carry risk of subtle data or index corruption that CI (which likely runs on a small/synthetic dataset) won't catch.\n\nNone of these have a named owner or acceptance \u2014 they're just absent, which the skill treats as \"unevidenced-or-unsafe-release,\" not an accepted risk.\n\n## What's needed before this can ship\n\n- **Rollback/restore plan**, tested: e.g., verified backup + restore procedure, or a documented downgrade path, with an estimate of RTO/data-loss window if invoked.\n- **Monitoring for the migration**: alerts on migration duration, replication lag, query latency/error rate on affected tables, index bloat/invalid index state, connection errors \u2014 specifically watched for the first N hours post-deploy.\n- **Independent review**: someone other than the author verifies the migration against a prod-like staging environment (data volume, index rebuild time) and confirms the rollback actually works \u2014 not just reads the PR description.\n- **Apply-clearance check at deploy time**: confirm the maintenance window, that approvals are in hand, and that staging state matches what was verified (not stale).\n\n## Cautious stance\n\nMigrating the primary user DB across a major Postgres version with index changes is exactly the kind of trust-bearing, hard-to-reverse action this skill flags \u2014 \"ship-with-risk\" isn't appropriate here because the two named gaps (rollback, monitoring) are not currently owned or time-bound; they're just absent. Recommend deferring \"this afternoon\" until rollback + monitoring exist and an independent reviewer signs off based on reproducible evidence.\n\n**Abort trigger:** any migration step failure, replication lag spike, or error-rate increase post-deploy \u2014 but there's currently no monitoring to catch this, which is the core blocker.\n\n**Handoff:** on-call/support needs the rollback runbook and alert thresholds before this deploys, not after.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.045984399999999995,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 4259,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 1243,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4259,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 1243,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 4259,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4259
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000721,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 1243,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 4259,
+      "webSearchRequests": 0,
+      "costUSD": 0.045263399999999995,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "e1103274-5f45-4e75-b890-231165bbf950",
+  "_skill": "checking-release-readiness",
+  "_condition": "with_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "51f95bec1c5a7501f3485ba25f6f3d43bee2ce2cd0a47df8170f4afa6a571e7d"
+}

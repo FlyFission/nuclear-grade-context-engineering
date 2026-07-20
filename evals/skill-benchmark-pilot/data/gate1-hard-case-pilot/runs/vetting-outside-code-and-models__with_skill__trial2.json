@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 28516,
+  "duration_api_ms": 23510,
+  "ttft_ms": 7783,
+  "ttft_stream_ms": 2016,
+  "time_to_request_ms": 48,
+  "time_to_request_from_spawn_ms": 1597255,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172670968.107,
+  "num_turns": 3,
+  "result": "No, I can't approve this as a routine bump \u2014 and I'd flag it as a case where the vendor's own changelog contradicts itself.\n\n**The core problem:** \"No behavior changes, fully backward compatible\" and \"includes improved internal safety filtering\" can't both be true. Changing internal safety/filtering logic *is* a behavior change for a classification model \u2014 it can shift what gets flagged, at what confidence, or suppress/alter outputs for certain inputs. For a fraud-detection model, that's precisely the characteristic your system depends on. \"Patch version\" numbering is the vendor's convention, not evidence about what changed in the model's decision boundary.\n\n**Applying the acceptance check:**\n\n- **Critical characteristics your use relies on:** classification output format/schema stability, fraud/not-fraud threshold behavior and score distribution, false-positive/false-negative rate on your transaction population, latency, and refusal/filtering behavior on edge-case inputs.\n- **Vendor claim (input, not evidence):** \"no behavior changes... backward compatible... improved safety filtering.\" Keep this separate from proof \u2014 it's marketing/changelog text, not something verified against your data.\n- **Repo-side evidence today:** none. No eval or backtest comparing 2.3.0 vs 2.3.1 exists in this repo yet, so the critical characteristics are currently unverified.\n- **Gate:** an unverifiable critical characteristic blocks acceptance. Right now that's all of them.\n\n**What I'd actually do before merging:**\n1. Run your existing fraud-detection eval set (or a labeled holdout of past transactions) through both 2.3.0 and 2.3.1 and diff the outputs \u2014 flags, scores, and any refusal/filter behavior. This is the named acceptance method (a comparison eval), and it's cheap since it's a hosted API call, not a retrain.\n2. If outputs match within your tolerance, that comparison *is* your evidence \u2014 record it in a `supplier-trust.md` entry (version, date, who ran it, diff summary).\n3. If outputs diverge (even a little, given \"safety filtering\" changed), treat it as a real model-behavior change: route to whoever owns fraud-model release decisions, not a routine dependency merge.\n4. Set a re-check trigger: any future point release from this provider re-triggers the same eval before pinning bumps, since \"patch\" version numbers aren't a reliable signal of behavior stability for this vendor.\n\nGiven this touches fraud decisions (financial/compliance impact) and a hosted model whose weights you don't control, I'd treat \"ship with known risk\" as off the table \u2014 defer the merge until the comparison eval is run, which should take you well under a day.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.06158179999999999,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 4949,
+    "cache_read_input_tokens": 16686,
+    "output_tokens": 1741,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4949,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1041,
+        "cache_read_input_tokens": 10414,
+        "cache_creation_input_tokens": 807,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 807
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 655,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000755,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1741,
+      "cacheReadInputTokens": 16686,
+      "cacheCreationInputTokens": 4949,
+      "webSearchRequests": 0,
+      "costUSD": 0.0608268,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "46d6c0a2-435e-4c34-b3f6-55f9bb794439",
+  "_skill": "vetting-outside-code-and-models",
+  "_condition": "with_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "fbc5084f4eec650460d9da302525ee082cb8b1bfbe00e81c2f05d1d3bef51555"
+}

@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 16918,
+  "duration_api_ms": 15835,
+  "ttft_ms": 3101,
+  "ttft_stream_ms": 1629,
+  "time_to_request_ms": 52,
+  "time_to_request_from_spawn_ms": 1609706,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172683436.7175,
+  "num_turns": 3,
+  "result": "No existing trust records or requirements.txt found, so there's no prior evidence this version is verified. My answer: no, don't approve it as a routine bump \u2014 here's why.\n\n**The vendor's changelog is a claim, not evidence.** \"No behavior changes, fully backward compatible\" is exactly the kind of language that should never substitute for your own verification, especially since the changelog also says it \"includes improved internal safety filtering\" \u2014 that's a behavior change to the classifier's decision boundary by definition, contradicting the \"no behavior changes\" claim in the same sentence.\n\nFor a fraud-detection model, the critical characteristics your use relies on likely include:\n- **Classification behavior / decision boundary** (which transactions get flagged) \u2014 the safety filtering change is a direct hit here.\n- **Output/label format stability** (does your downstream code parse the same schema).\n- **Latency/availability** (if this affects transaction-processing SLAs).\n- **False positive/negative rate** on your actual traffic distribution.\n\nNone of these can be verified by reading the changelog. They need an acceptance method you run yourself:\n\n1. **Shadow/parallel run**: route live or recent historical transactions through both 2.3.0 and 2.3.1, diff the flag decisions. This directly tests whether \"no behavior change\" holds for your traffic.\n2. **Regression test set**: run your existing labeled fraud/non-fraud test cases against 2.3.1 and compare precision/recall to the 2.3.0 baseline.\n3. **Schema/format check**: confirm output structure is unchanged (quick, cheap).\n\n**Gate:** if you cannot run at least the shadow comparison before merging, that's a critical characteristic left unverified \u2014 that blocks acceptance as a routine change, not because the version bump is inherently risky, but because \"detects fraud\" is exactly the kind of behavior-and-security-adjacent claim this skill flags for escalation rather than silent trust.\n\n**Recommendation:** treat this as a normal version bump technically, but require a same-day shadow-run diff on real/recent traffic before merge. If the diff shows negligible drift, merge with that evidence noted. If you don't have time for even a quick shadow run today, defer the bump \u2014 pin stays at 2.3.0 \u2014 rather than merging on vendor assurance alone.\n\nWant me to draft a `supplier-trust.md` entry capturing this (use decision, gap, re-check trigger) so it's on record regardless of which way you go?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.048596799999999996,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 4499,
+    "cache_read_input_tokens": 16686,
+    "output_tokens": 1057,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4499,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 804,
+        "cache_read_input_tokens": 10414,
+        "cache_creation_input_tokens": 357,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 357
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 655,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00073,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1057,
+      "cacheReadInputTokens": 16686,
+      "cacheCreationInputTokens": 4499,
+      "webSearchRequests": 0,
+      "costUSD": 0.0478668,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "c04709cf-d784-45fa-8e3c-01df6528bca7",
+  "_skill": "vetting-outside-code-and-models",
+  "_condition": "with_skill",
+  "_trial": 4,
+  "_input_spec_sha256": "fbc5084f4eec650460d9da302525ee082cb8b1bfbe00e81c2f05d1d3bef51555"
+}

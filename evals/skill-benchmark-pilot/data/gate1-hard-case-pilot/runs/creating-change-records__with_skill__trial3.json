@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 23281,
+  "duration_api_ms": 23302,
+  "ttft_ms": 10047,
+  "ttft_stream_ms": 1317,
+  "time_to_request_ms": 49,
+  "time_to_request_from_spawn_ms": 1631919,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172705664.8647,
+  "num_turns": 4,
+  "result": "I don't see the `tools/ng.py` or `templates/` files in this workspace, so I can't scaffold the record directly here \u2014 you'll need to run this from the repo that has the Nuclear-grade tooling installed:\n\n```\npython tools/ng.py new autonomous-pg-migrations --mode standard\n```\n\nFor the record's `risk.md` and `basis.md`, the honest content is something like:\n\n- **Claim checked:** the dry-run linter reliably blocks unsafe/destructive migrations before autonomous apply, and there is a fast rollback path if it doesn't.\n- **Artifact observed:** linter unit tests (passing) \u2014 but note these test the linter's own fixtures, not real-world migration diversity.\n- **Decision affected:** whether to grant the agent unattended write access to production schema.\n- **Failure class (if this ships as-is):** unproven-claim \u2014 \"tests pass\" is being used to support a much broader claim (\"safe to remove human approval\") than it actually demonstrates.\n- **Next action:** define the specific hazard classes the linter must catch, add adversarial/negative test cases for each, define and test a kill-switch/rollback, and run a shadow period (agent recommends, human approves) before cutting the approval step, per your `basis.md`/`plan.md`.\n\nWant me to draft the actual `risk.md` and `basis.md` content for this once you share the linter's rule list and rollback plan? That'll get you a PR description that a reviewer can actually trust, today, rather than a promise to explain it later.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.05731169999999999,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 4698,
+    "cache_read_input_tokens": 26939,
+    "output_tokens": 1352,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4698,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 496,
+        "cache_read_input_tokens": 10712,
+        "cache_creation_input_tokens": 258,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 258
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 674,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000744,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1352,
+      "cacheReadInputTokens": 26939,
+      "cacheCreationInputTokens": 4698,
+      "webSearchRequests": 0,
+      "costUSD": 0.0565677,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "3c75244c-fd04-4a72-b33d-895283a1fc76",
+  "_skill": "creating-change-records",
+  "_condition": "with_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "aecf87ca212f13dcb0a5640003d1a28c862b3ecdec777a7b64d58d2d24db2d69"
+}

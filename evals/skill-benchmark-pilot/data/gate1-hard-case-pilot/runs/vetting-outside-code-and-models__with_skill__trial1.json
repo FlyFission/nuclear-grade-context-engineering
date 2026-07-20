@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 14755,
+  "duration_api_ms": 14734,
+  "ttft_ms": 5012,
+  "ttft_stream_ms": 1312,
+  "time_to_request_ms": 49,
+  "time_to_request_from_spawn_ms": 1594620,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172668338.2507,
+  "num_turns": 1,
+  "result": "I won't approve this as a routine bump \u2014 a few things in the request itself argue against treating it that way.\n\n**The claim contradicts itself.** \"No behavior changes\" alongside \"includes improved internal safety filtering\" is inconsistent \u2014 safety filtering changes are behavior changes almost by definition (they alter what the model flags, refuses, or passes through). That's a red flag, not reassurance.\n\n**Vendor wording isn't evidence.** \"Patch version\" and \"backward compatible\" are the provider's own claims about their own product. For a hosted model feeding a fraud-detection pipeline, the critical characteristics your use actually relies on are things like: classification behavior on your transaction distribution, false-positive/false-negative rates, output/score format stability, and latency. None of those are verified by the changelog \u2014 they're asserted by the party with an interest in you upgrading without friction.\n\n**Why this isn't \"just a version bump\":**\n- Consequence if wrong: a fraud model that silently shifts its false-negative rate lets fraud through; a shift in false positives blocks legitimate transactions/customers. Both are real business and possibly regulatory impact.\n- It's a hosted model, not a pinned local artifact \u2014 you can't diff the weights or logic yourself, so the changelog is your only signal until you test.\n- Fraud detection is squarely in the \"security/behavior claims\" escalation zone this framework calls out.\n\n**What I'd do instead before merging:**\n1. Run 2.3.1 against a held-out labeled sample of your own historical transactions (fraud + legitimate) and diff outputs/scores against 2.3.0 on the same inputs.\n2. Check output schema/score format is byte-for-byte stable (your downstream code depends on this).\n3. Compare latency/error rates in a canary or shadow-traffic setup before full cutover.\n4. Only merge the pin bump once you have your own evidence of equivalence \u2014 not on the strength of the changelog alone.\n\nThis is a small amount of work (a comparison script + a short shadow period), not a full review process, but it's not zero. Want me to draft the comparison/eval script against your existing test data, or a `supplier-trust.md` entry capturing this decision and the re-check trigger for next time?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0424646,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 4142,
+    "cache_read_input_tokens": 6272,
+    "output_tokens": 998,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4142,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 998,
+        "cache_read_input_tokens": 6272,
+        "cache_creation_input_tokens": 4142,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4142
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 655,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000755,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 998,
+      "cacheReadInputTokens": 6272,
+      "cacheCreationInputTokens": 4142,
+      "webSearchRequests": 0,
+      "costUSD": 0.0417096,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "2740ee66-b190-4622-ab17-d41a9e5bd331",
+  "_skill": "vetting-outside-code-and-models",
+  "_condition": "with_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "fbc5084f4eec650460d9da302525ee082cb8b1bfbe00e81c2f05d1d3bef51555"
+}

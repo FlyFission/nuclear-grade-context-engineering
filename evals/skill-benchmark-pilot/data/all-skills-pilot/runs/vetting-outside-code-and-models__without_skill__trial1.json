@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 9904,
+  "duration_api_ms": 11760,
+  "ttft_ms": 9760,
+  "ttft_stream_ms": 1364,
+  "time_to_request_ms": 57,
+  "time_to_request_from_spawn_ms": 892165,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121455093.353,
+  "num_turns": 1,
+  "result": "No \u2014 don't cut production over this week based on marketing claims alone. A few concrete reasons and what I'd do instead:\n\n**Why not yet:**\n- \"99.9% accuracy\" is meaningless without knowing the eval set, class balance, and what counts as an error (false positives vs false negatives matter very differently for moderation). Vendors pick the metric that flatters them.\n- \"SOC2 compliant\" only tells you about their internal controls (access, change management, etc.) \u2014 it says nothing about model quality, bias, or moderation efficacy. Ask for the actual SOC2 Type II report (not just the badge) and check the audit period/scope.\n- Case studies are marketing-selected success stories, not representative samples.\n- Content moderation failures have asymmetric, hard-to-reverse costs (legal/trust&safety exposure from missed harmful content, user harm from wrongful takedowns) \u2014 this is exactly the kind of high-blast-radius swap that deserves your own validation.\n\n**What I'd do before switching:**\n1. Pull a labeled sample from your own traffic (include your known edge cases / adversarial examples / past incidents) and run it through the new API in shadow mode alongside your current provider \u2014 compare precision/recall per category, not just an aggregate score.\n2. Check latency, rate limits, and uptime SLA under your real traffic volume.\n3. Get the actual SOC2 report and read the exceptions/scope, not just the marketing line.\n4. Do a staged rollout (e.g., 1-5% of traffic, shadow-compare, then ramp) instead of a full cutover, with a fast rollback path.\n5. Confirm pricing tier assumptions hold at your actual volume \u2014 startup pricing sometimes changes at scale.\n\nIf timeline pressure is the driver, I'd push back on \"this week\" specifically \u2014 a shadow-mode comparison against a sample of your own data can usually be done in a few days and would give you real evidence instead of vendor claims. Want help designing that evaluation (e.g., a script to run both APIs against a sample set and diff results)?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.022971699999999998,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 1851,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 672,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1851,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 672,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1851,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1851
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 672,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1851,
+      "webSearchRequests": 0,
+      "costUSD": 0.0222477,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "540ed13e-c33b-47b8-b851-f2047b39fe92",
+  "_skill": "vetting-outside-code-and-models",
+  "_condition": "without_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "8b7d09da037ae5aa9659dc71101e540e0ddf0c2d764259f5b8c7787d28705d4b"
+}

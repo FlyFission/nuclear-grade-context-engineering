@@ -1,0 +1,895 @@
+[
+  {
+    "skill": "breaking-down-the-work",
+    "round": "round1",
+    "with_yes": 3,
+    "with_n": 3,
+    "without_yes": 2,
+    "without_n": 3,
+    "p_value": 1.0,
+    "with_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "without_ci": [
+      0.2076549551264879,
+      0.9385096847238394
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "briefing-an-agent",
+    "round": "round1",
+    "with_yes": 3,
+    "with_n": 3,
+    "without_yes": 3,
+    "without_n": 3,
+    "p_value": 1.0,
+    "with_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "without_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "checking-legal-and-safety-wording",
+    "round": "round1",
+    "with_yes": 3,
+    "with_n": 3,
+    "without_yes": 3,
+    "without_n": 3,
+    "p_value": 1.0,
+    "with_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "without_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "checking-release-readiness",
+    "round": "round1",
+    "with_yes": 3,
+    "with_n": 3,
+    "without_yes": 3,
+    "without_n": 3,
+    "p_value": 1.0,
+    "with_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "without_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "checking-source-claims",
+    "round": "round1",
+    "with_yes": 3,
+    "with_n": 3,
+    "without_yes": 2,
+    "without_n": 3,
+    "p_value": 1.0,
+    "with_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "without_ci": [
+      0.2076549551264879,
+      0.9385096847238394
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "checking-what-a-change-affects",
+    "round": "round1",
+    "with_yes": 3,
+    "with_n": 3,
+    "without_yes": 3,
+    "without_n": 3,
+    "p_value": 1.0,
+    "with_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "without_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "choosing-what-to-control",
+    "round": "round1",
+    "with_yes": 3,
+    "with_n": 3,
+    "without_yes": 1,
+    "without_n": 3,
+    "p_value": 0.4,
+    "with_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "without_ci": [
+      0.0614903152761605,
+      0.7923450448735121
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "closing-stale-packets",
+    "round": "round1",
+    "with_yes": 1,
+    "with_n": 3,
+    "without_yes": 0,
+    "without_n": 3,
+    "p_value": 1.0,
+    "with_ci": [
+      0.0614903152761605,
+      0.7923450448735121
+    ],
+    "without_ci": [
+      0.0,
+      0.5615060804490177
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "creating-change-records",
+    "round": "round1",
+    "with_yes": 2,
+    "with_n": 3,
+    "without_yes": 3,
+    "without_n": 3,
+    "p_value": 1.0,
+    "with_ci": [
+      0.2076549551264879,
+      0.9385096847238394
+    ],
+    "without_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "deciding-who-decides",
+    "round": "round1",
+    "with_yes": 3,
+    "with_n": 3,
+    "without_yes": 3,
+    "without_n": 3,
+    "p_value": 1.0,
+    "with_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "without_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "declaring-intent",
+    "round": "round1",
+    "with_yes": 2,
+    "with_n": 3,
+    "without_yes": 0,
+    "without_n": 3,
+    "p_value": 0.4,
+    "with_ci": [
+      0.2076549551264879,
+      0.9385096847238394
+    ],
+    "without_ci": [
+      0.0,
+      0.5615060804490177
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "double-checking-before-acting",
+    "round": "round1",
+    "with_yes": 3,
+    "with_n": 3,
+    "without_yes": 2,
+    "without_n": 3,
+    "p_value": 1.0,
+    "with_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "without_ci": [
+      0.2076549551264879,
+      0.9385096847238394
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "handing-off-work",
+    "round": "round1",
+    "with_yes": 0,
+    "with_n": 3,
+    "without_yes": 0,
+    "without_n": 3,
+    "p_value": 1.0,
+    "with_ci": [
+      0.0,
+      0.5615060804490177
+    ],
+    "without_ci": [
+      0.0,
+      0.5615060804490177
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "learning-from-experience",
+    "round": "round1",
+    "with_yes": 3,
+    "with_n": 3,
+    "without_yes": 0,
+    "without_n": 3,
+    "p_value": 0.1,
+    "with_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "without_ci": [
+      0.0,
+      0.5615060804490177
+    ],
+    "p_value_bh_adjusted": 0.39166666666666666,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "organizing-project-folders",
+    "round": "round1",
+    "with_yes": 0,
+    "with_n": 3,
+    "without_yes": 0,
+    "without_n": 3,
+    "p_value": 1.0,
+    "with_ci": [
+      0.0,
+      0.5615060804490177
+    ],
+    "without_ci": [
+      0.0,
+      0.5615060804490177
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "proving-claims",
+    "round": "round1",
+    "with_yes": 3,
+    "with_n": 3,
+    "without_yes": 3,
+    "without_n": 3,
+    "p_value": 1.0,
+    "with_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "without_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "questioning-attitude",
+    "round": "round1",
+    "with_yes": 3,
+    "with_n": 3,
+    "without_yes": 2,
+    "without_n": 3,
+    "p_value": 1.0,
+    "with_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "without_ci": [
+      0.2076549551264879,
+      0.9385096847238394
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "rating-change-risk",
+    "round": "round1",
+    "with_yes": 3,
+    "with_n": 3,
+    "without_yes": 3,
+    "without_n": 3,
+    "p_value": 1.0,
+    "with_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "without_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "recording-a-known-good-version",
+    "round": "round1",
+    "with_yes": 3,
+    "with_n": 3,
+    "without_yes": 0,
+    "without_n": 3,
+    "p_value": 0.1,
+    "with_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "without_ci": [
+      0.0,
+      0.5615060804490177
+    ],
+    "p_value_bh_adjusted": 0.39166666666666666,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "recording-what-an-agent-did",
+    "round": "round1",
+    "with_yes": 3,
+    "with_n": 3,
+    "without_yes": 3,
+    "without_n": 3,
+    "p_value": 1.0,
+    "with_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "without_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "reporting-shared-defects",
+    "round": "round1",
+    "with_yes": 3,
+    "with_n": 3,
+    "without_yes": 0,
+    "without_n": 3,
+    "p_value": 0.1,
+    "with_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "without_ci": [
+      0.0,
+      0.5615060804490177
+    ],
+    "p_value_bh_adjusted": 0.39166666666666666,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "responding-to-incidents",
+    "round": "round1",
+    "with_yes": 3,
+    "with_n": 3,
+    "without_yes": 3,
+    "without_n": 3,
+    "p_value": 1.0,
+    "with_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "without_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "staying-on-mission",
+    "round": "round1",
+    "with_yes": 3,
+    "with_n": 3,
+    "without_yes": 2,
+    "without_n": 3,
+    "p_value": 1.0,
+    "with_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "without_ci": [
+      0.2076549551264879,
+      0.9385096847238394
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "stress-testing-agent-changes",
+    "round": "round1",
+    "with_yes": 3,
+    "with_n": 3,
+    "without_yes": 3,
+    "without_n": 3,
+    "p_value": 1.0,
+    "with_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "without_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "tracking-deficiencies",
+    "round": "round1",
+    "with_yes": 3,
+    "with_n": 3,
+    "without_yes": 0,
+    "without_n": 3,
+    "p_value": 0.1,
+    "with_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "without_ci": [
+      0.0,
+      0.5615060804490177
+    ],
+    "p_value_bh_adjusted": 0.39166666666666666,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "using-nuclear-grade",
+    "round": "round1",
+    "with_yes": 2,
+    "with_n": 3,
+    "without_yes": 0,
+    "without_n": 3,
+    "p_value": 0.4,
+    "with_ci": [
+      0.2076549551264879,
+      0.9385096847238394
+    ],
+    "without_ci": [
+      0.0,
+      0.5615060804490177
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "vetting-outside-code-and-models",
+    "round": "round1",
+    "with_yes": 3,
+    "with_n": 3,
+    "without_yes": 3,
+    "without_n": 3,
+    "p_value": 1.0,
+    "with_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "without_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "briefing-an-agent",
+    "round": "gate1",
+    "with_yes": 5,
+    "with_n": 5,
+    "without_yes": 5,
+    "without_n": 5,
+    "p_value": 1.0,
+    "with_ci": [
+      0.5655085052479191,
+      1.0
+    ],
+    "without_ci": [
+      0.5655085052479191,
+      1.0
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "checking-legal-and-safety-wording",
+    "round": "gate1",
+    "with_yes": 5,
+    "with_n": 5,
+    "without_yes": 4,
+    "without_n": 5,
+    "p_value": 1.0,
+    "with_ci": [
+      0.5655085052479191,
+      1.0
+    ],
+    "without_ci": [
+      0.3755282641185388,
+      0.9637768390302125
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "checking-release-readiness",
+    "round": "gate1",
+    "with_yes": 5,
+    "with_n": 5,
+    "without_yes": 4,
+    "without_n": 5,
+    "p_value": 1.0,
+    "with_ci": [
+      0.5655085052479191,
+      1.0
+    ],
+    "without_ci": [
+      0.3755282641185388,
+      0.9637768390302125
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "checking-what-a-change-affects",
+    "round": "gate1",
+    "with_yes": 5,
+    "with_n": 5,
+    "without_yes": 1,
+    "without_n": 5,
+    "p_value": 0.047619047619047616,
+    "with_ci": [
+      0.5655085052479191,
+      1.0
+    ],
+    "without_ci": [
+      0.03622316096978745,
+      0.6244717358814613
+    ],
+    "p_value_bh_adjusted": 0.3197278911564626,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "creating-change-records",
+    "round": "gate1",
+    "with_yes": 0,
+    "with_n": 5,
+    "without_yes": 0,
+    "without_n": 5,
+    "p_value": 1.0,
+    "with_ci": [
+      0.0,
+      0.43449149475208104
+    ],
+    "without_ci": [
+      0.0,
+      0.43449149475208104
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "deciding-who-decides",
+    "round": "gate1",
+    "with_yes": 5,
+    "with_n": 5,
+    "without_yes": 2,
+    "without_n": 5,
+    "p_value": 0.16666666666666666,
+    "with_ci": [
+      0.5655085052479191,
+      1.0
+    ],
+    "without_ci": [
+      0.1176182311592533,
+      0.769280067791163
+    ],
+    "p_value_bh_adjusted": 0.5595238095238095,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "handing-off-work",
+    "round": "gate1",
+    "with_yes": 5,
+    "with_n": 5,
+    "without_yes": 0,
+    "without_n": 5,
+    "p_value": 0.007936507936507936,
+    "with_ci": [
+      0.5655085052479191,
+      1.0
+    ],
+    "without_ci": [
+      0.0,
+      0.43449149475208104
+    ],
+    "p_value_bh_adjusted": 0.12433862433862435,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "organizing-project-folders",
+    "round": "gate1",
+    "with_yes": 5,
+    "with_n": 5,
+    "without_yes": 4,
+    "without_n": 5,
+    "p_value": 1.0,
+    "with_ci": [
+      0.5655085052479191,
+      1.0
+    ],
+    "without_ci": [
+      0.3755282641185388,
+      0.9637768390302125
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "proving-claims",
+    "round": "gate1",
+    "with_yes": 5,
+    "with_n": 5,
+    "without_yes": 5,
+    "without_n": 5,
+    "p_value": 1.0,
+    "with_ci": [
+      0.5655085052479191,
+      1.0
+    ],
+    "without_ci": [
+      0.5655085052479191,
+      1.0
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "rating-change-risk",
+    "round": "gate1",
+    "with_yes": 4,
+    "with_n": 5,
+    "without_yes": 0,
+    "without_n": 5,
+    "p_value": 0.047619047619047616,
+    "with_ci": [
+      0.3755282641185388,
+      0.9637768390302125
+    ],
+    "without_ci": [
+      0.0,
+      0.43449149475208104
+    ],
+    "p_value_bh_adjusted": 0.3197278911564626,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "recording-what-an-agent-did",
+    "round": "gate1",
+    "with_yes": 4,
+    "with_n": 5,
+    "without_yes": 0,
+    "without_n": 5,
+    "p_value": 0.047619047619047616,
+    "with_ci": [
+      0.3755282641185388,
+      0.9637768390302125
+    ],
+    "without_ci": [
+      0.0,
+      0.43449149475208104
+    ],
+    "p_value_bh_adjusted": 0.3197278911564626,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "responding-to-incidents",
+    "round": "gate1",
+    "with_yes": 5,
+    "with_n": 5,
+    "without_yes": 4,
+    "without_n": 5,
+    "p_value": 1.0,
+    "with_ci": [
+      0.5655085052479191,
+      1.0
+    ],
+    "without_ci": [
+      0.3755282641185388,
+      0.9637768390302125
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "stress-testing-agent-changes",
+    "round": "gate1",
+    "with_yes": 3,
+    "with_n": 5,
+    "without_yes": 0,
+    "without_n": 5,
+    "p_value": 0.16666666666666666,
+    "with_ci": [
+      0.23071993220883708,
+      0.8823817688407467
+    ],
+    "without_ci": [
+      0.0,
+      0.43449149475208104
+    ],
+    "p_value_bh_adjusted": 0.5595238095238095,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "vetting-outside-code-and-models",
+    "round": "gate1",
+    "with_yes": 5,
+    "with_n": 5,
+    "without_yes": 4,
+    "without_n": 5,
+    "p_value": 1.0,
+    "with_ci": [
+      0.5655085052479191,
+      1.0
+    ],
+    "without_ci": [
+      0.3755282641185388,
+      0.9637768390302125
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "reviewing-code-quality::task1_thin_wrapper",
+    "round": "rcq",
+    "with_yes": 3,
+    "with_n": 3,
+    "without_yes": 3,
+    "without_n": 3,
+    "p_value": 1.0,
+    "with_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "without_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "reviewing-code-quality::task2_shared_leak",
+    "round": "rcq",
+    "with_yes": 3,
+    "with_n": 3,
+    "without_yes": 3,
+    "without_n": 3,
+    "p_value": 1.0,
+    "with_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "without_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "p_value_bh_adjusted": 1.0,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "reviewing-code-quality::task3_clever_indirection",
+    "round": "rcq",
+    "with_yes": 3,
+    "with_n": 3,
+    "without_yes": 0,
+    "without_n": 3,
+    "p_value": 0.1,
+    "with_ci": [
+      0.43849391955098227,
+      1.0
+    ],
+    "without_ci": [
+      0.0,
+      0.5615060804490177
+    ],
+    "p_value_bh_adjusted": 0.39166666666666666,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "briefing-an-agent::true-niche-regression-check",
+    "round": "closeout",
+    "with_yes": 5,
+    "with_n": 5,
+    "without_yes": 0,
+    "without_n": 5,
+    "p_value": 0.007936507936507936,
+    "with_ci": [
+      0.5655085052479191,
+      1.0
+    ],
+    "without_ci": [
+      0.0,
+      0.43449149475208104
+    ],
+    "p_value_bh_adjusted": 0.12433862433862435,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "proving-claims::structural-recheck",
+    "round": "closeout",
+    "with_yes": 5,
+    "with_n": 5,
+    "without_yes": 0,
+    "without_n": 5,
+    "p_value": 0.007936507936507936,
+    "with_ci": [
+      0.5655085052479191,
+      1.0
+    ],
+    "without_ci": [
+      0.0,
+      0.43449149475208104
+    ],
+    "p_value_bh_adjusted": 0.12433862433862435,
+    "significant_at_bh_0.05": false
+  },
+  {
+    "skill": "creating-change-records::corrected-scope-recheck",
+    "round": "closeout",
+    "with_yes": 4,
+    "with_n": 5,
+    "without_yes": 0,
+    "without_n": 5,
+    "p_value": 0.047619047619047616,
+    "with_ci": [
+      0.3755282641185388,
+      0.9637768390302125
+    ],
+    "without_ci": [
+      0.0,
+      0.43449149475208104
+    ],
+    "p_value_bh_adjusted": 0.3197278911564626,
+    "significant_at_bh_0.05": false
+  }
+]

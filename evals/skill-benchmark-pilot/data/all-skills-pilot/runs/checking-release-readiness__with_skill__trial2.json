@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 14780,
+  "duration_api_ms": 13829,
+  "ttft_ms": 12782,
+  "ttft_stream_ms": 1230,
+  "time_to_request_ms": 64,
+  "time_to_request_from_spawn_ms": 564147,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121127360.965,
+  "num_turns": 1,
+  "result": "No \u2014 this is not ready to ship.\n\n**Release decision: block.**\n\n**Why:**\n\n1. **Evidence doesn't answer the actual question.** Green CI validates code correctness against existing tests, not that the migration is safe on production-scale data, indexes rebuild correctly, or performance holds under real load. For a data migration, load-bearing evidence should include a rehearsal against a production-like copy (or the actual prod snapshot), timing data, and index-validity checks post-migration \u2014 none of which is mentioned.\n\n2. **Decider independence violation.** The engineer who wrote the migration declaring it \"ready to go\" in the PR description is the actor's own narrative, not independent primary evidence. Someone independent of the author needs to review the actual migration plan/output, not just sign off on the claim.\n\n3. **No rollback plan.** This is a hard blocker on its own. A DB major-version migration with index changes is not trivially reversible \u2014 you need a tested restore/rollback path (e.g., ability to fail back to PG12, or a documented forward-fix plan if rollback is genuinely impossible) *before* merging, not after something breaks in production.\n\n4. **No monitoring for the specific risk.** \"No new alerts\" means if query latency spikes, an index is missing/invalid, or connection behavior changes under PG15, you'll find out from users, not dashboards. Monitoring should scale with the blast radius of a primary-database migration \u2014 this is high stakes.\n\n**Defeater hunt** \u2014 what would have to be true for \"ship\" to be wrong, and is it ruled out?\n- Migration corrupts or drops data on a subset of rows \u2192 not ruled out (no rehearsal evidence cited).\n- New indexes are invalid/missing after migration, causing slow queries or table scans in prod \u2192 not ruled out.\n- PG15 behavior change (e.g., planner, collation, extension compatibility) breaks a query path CI doesn't cover \u2192 not ruled out.\n- Something goes wrong at 3pm on a Thursday and there's no way back \u2192 not ruled out (no rollback).\n\nNone of these are discharged by \"CI is green.\"\n\n**What's needed before this can ship:**\n- A rollback/restore path (tested, not just documented) \u2014 this is non-negotiable for a primary-DB migration.\n- Monitoring/alerts scoped to the migration risk: query latency, error rates, index health, connection pool behavior \u2014 for at least the first 24\u201348 hours post-deploy.\n- Independent verification of the migration against a production-like dataset (timing, index validation, data integrity spot-checks) \u2014 reviewed by someone other than the author.\n- A named owner for post-release checks and an explicit abort trigger (e.g., \"if p99 query latency > X or error rate > Y within N minutes, roll back\").\n\nIf you want, I can help draft a `ship.md` capturing this block decision with the specific gaps, owners, and recheck triggers, or help sketch the rollback/monitoring plan itself.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0416944,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 4259,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 957,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4259,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 957,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 4259,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4259
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000721,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 957,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 4259,
+      "webSearchRequests": 0,
+      "costUSD": 0.0409734,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "d3d21fd5-fcd3-4cc6-90e7-eed85e5efbd9",
+  "_skill": "checking-release-readiness",
+  "_condition": "with_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "51f95bec1c5a7501f3485ba25f6f3d43bee2ce2cd0a47df8170f4afa6a571e7d"
+}

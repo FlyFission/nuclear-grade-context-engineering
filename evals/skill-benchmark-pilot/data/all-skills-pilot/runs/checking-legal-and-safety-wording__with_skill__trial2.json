@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 15086,
+  "duration_api_ms": 13987,
+  "ttft_ms": 5979,
+  "ttft_stream_ms": 1567,
+  "time_to_request_ms": 47,
+  "time_to_request_from_spawn_ms": 535439,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121098692.9187,
+  "num_turns": 1,
+  "result": "No \u2014 this wording overreaches on two fronts and would fail the check.\n\n**Problems:**\n\n1. **\"MIT license, so it's open and safe for anyone to use in production\"** \u2014 conflates permission with fitness. MIT grants the right to use the code; it explicitly disclaims any warranty. \"Open\" (license fact) and \"safe\" (assurance claim) are being presented as if one implies the other \u2014 it doesn't.\n\n2. **\"fully compliant with PCI security standards\"** \u2014 this is a certification claim. PCI-DSS compliance is a formal audit/attestation process performed by a QSA (Qualified Security Assessor) against your actual deployment, not something a library can claim about itself based on internal testing. Unless you have an actual PCI attestation to point to, this is a banned claim and needs to come out entirely.\n\n3. **\"passed all our internal tests\"** \u2014 this part is fine in principle (it's evidence-tied), but \"all\" is a strong absolute. Better to be specific or link to CI/test results.\n\n**Reworded version:**\n\n> PayCheck is released under the MIT license \u2014 you're free to use, modify, and distribute it, including in production systems, subject to the license terms (see LICENSE). The MIT license disclaims all warranties; using PayCheck does not by itself constitute PCI-DSS compliance, security certification, or fitness for regulated payment processing. Our test suite (see [CI badge/link]) covers [specific scope], but PCI compliance for your deployment depends on your full system, configuration, and a formal assessment by a Qualified Security Assessor. Consult your compliance team or a QSA before relying on PayCheck in a regulated payment environment.\n\n**Next steps for legal:**\n- Confirm with your security/compliance team whether any actual PCI assessment exists \u2014 if not, the compliance claim must be removed, not just softened.\n- Add a short disclaimer near the README top and in DISCLAIMER.md making clear the MIT grant \u2260 safety/compliance assurance.\n- This is a sanity check, not legal sign-off \u2014 have legal review the final wording, especially the PCI reference, since compliance claims carry real liability.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0375484,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 3324,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 1057,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3324,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 1057,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 3324,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3324
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 615,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000685,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 1057,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 3324,
+      "webSearchRequests": 0,
+      "costUSD": 0.036863400000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "988be472-c3b0-41b9-8f0b-1b9a8e9e0f30",
+  "_skill": "checking-legal-and-safety-wording",
+  "_condition": "with_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "e44bef944f6f7ae30f86d04a005684c454b7d6850281a35988c587af9c9d43d4"
+}

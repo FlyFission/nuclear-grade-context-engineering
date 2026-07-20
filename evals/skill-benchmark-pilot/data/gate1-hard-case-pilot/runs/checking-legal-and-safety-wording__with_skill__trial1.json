@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 31127,
+  "duration_api_ms": 27407,
+  "ttft_ms": 9715,
+  "ttft_stream_ms": 4083,
+  "time_to_request_ms": 51,
+  "time_to_request_from_spawn_ms": 1308043,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172381745.6553,
+  "num_turns": 3,
+  "result": "No sign-off \u2014 this wording fails the check, and the \"we already have DISCLAIMER.md\" reasoning is the exact rationalization the skill flags (\"Disclaimers in one file are enough\"). A disclaimer buried in the repo root doesn't offset an unqualified assurance claim sitting in the README hero and CLI banner \u2014 the two places users form their expectations before ever finding DISCLAIMER.md.\n\n**Phrase-by-phrase problem:**\n\n| Phrase | Issue |\n|---|---|\n| \"SOC2-ready\" | Not marketing puffery \u2014 it's a specific compliance-readiness claim. If you haven't gone through a SOC2 Type I/II audit or engaged an auditor, this is a false compliance claim, not tone. |\n| \"battle-tested for compliance-critical environments\" | Implies a proven track record in regulated deployments. Do you have evidence (named customers, audit logs, incident history) or is this aspirational? |\n| \"trusted by teams running regulated workloads\" | This is a factual claim about your user base. Only true if you can name/verify it. If it's aspirational, it's misleading. |\n| \"Enterprise-grade\" | Vague, but riskiest in context \u2014 sitting next to SOC2/compliance/regulated language, it reads as part of the same assurance claim, not standalone marketing. |\n\n**What I need from you to fix this properly:** for each of those four claims, is there real evidence (completed audit, named reference customers, documented test/incident history)? If not, the claim gets removed or rewritten to what's actually true.\n\n**Suggested reworded hero/banner, assuming no completed SOC2 audit exists:**\n\n> Open-source toolkit built with security and reliability in mind \u2014 actively maintained, test-covered, and designed to be auditable by teams with their own compliance requirements. This project does not provide compliance certification, security guarantees, or fitness for regulated use; see DISCLAIMER.md.\n\nFor the CLI `--help` banner specifically, add a one-line pointer even if space is tight:\n\n> No compliance/security certification implied. See DISCLAIMER.md.\n\n**If you actually have a completed SOC2 report or named enterprise customers**, tell me and I'll help you word it tied to that specific evidence (e.g., \"SOC2 Type II report available on request\" is fine if true \u2014 \"SOC2-ready\" as an unqualified claim is not, since \"ready\" is ambiguous and reads as \"certified\").\n\nTwo more things before launch:\n1. Run `python tools/ng.py doctor .` (per this skill's verification step) if that checker exists in your repo \u2014 I don't have access to your actual files in this session.\n2. This isn't legal advice \u2014 if you're set on making a compliance-adjacent claim, get it reviewed by whoever handles your legal/compliance sign-off, since false SOC2/compliance claims carry real liability (FTC, customer contract, and audit-fraud exposure), not just reputational risk.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.058896199999999996,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 4394,
+    "cache_read_input_tokens": 16094,
+    "output_tokens": 1794,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4394,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1057,
+        "cache_read_input_tokens": 9822,
+        "cache_creation_input_tokens": 844,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 844
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 687,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000782,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1794,
+      "cacheReadInputTokens": 16094,
+      "cacheCreationInputTokens": 4394,
+      "webSearchRequests": 0,
+      "costUSD": 0.0581142,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "1f155b76-f097-4755-94ac-f98103b8d466",
+  "_skill": "checking-legal-and-safety-wording",
+  "_condition": "with_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "5478561a721c734a7aec01d58d3455e00be5e63b8078a940676284c55365870b"
+}

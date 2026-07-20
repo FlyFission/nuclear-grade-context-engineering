@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 12493,
+  "duration_api_ms": 11502,
+  "ttft_ms": 10488,
+  "ttft_stream_ms": 1417,
+  "time_to_request_ms": 40,
+  "time_to_request_from_spawn_ms": 569245,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121132580.4622,
+  "num_turns": 1,
+  "result": "No \u2014 I wouldn't ship this yet. Green CI and author sign-off only verify functional correctness, not operational safety for a database engine migration, which is a different risk category (query planner changes, index behavior, replication/extension compatibility, etc.).\n\nSpecific gaps I'd want closed before this afternoon:\n\n1. **No rollback plan** \u2014 this is the big one. A DB engine migration with index changes is not trivially reversible once writes start hitting PG15. You need either a tested rollback script/procedure or a clear answer on why rollback isn't feasible and what the fallback is (e.g., point-in-time restore, keeping the PG12 replica warm for N hours).\n2. **No monitoring/alerts for the migration itself** \u2014 CI green tells you the code works in isolation, not that production behaves correctly post-migration. At minimum you want alerts on: query latency/error rate regressions, connection pool saturation, replication lag (if applicable), and index bloat/usage stats for the changed indexes.\n3. **Index changes need a plan check** \u2014 have you confirmed the query planner picks the new indexes as expected under production-like data volume/distribution? PG12\u219215 planner defaults changed (e.g., cost model tweaks); \"CI green\" on likely a small/synthetic dataset doesn't guarantee this.\n4. **Extensions/collations** \u2014 PG15 has known glibc collation version bumps that can silently corrupt indexes on text columns if not handled (`REINDEX` or collation version refresh needed). Worth explicitly confirming this was addressed, not just assumed fine.\n5. **Deploy timing/blast radius** \u2014 \"primary user database\" + afternoon deploy: is this a maintenance window with low traffic, and is someone on-call actively watching during and after cutover, not just merging and walking away?\n\nMy recommendation: treat this as not release-ready until there's a written rollback procedure and at least basic migration-specific alerts wired up. If those exist somewhere and just weren't mentioned, let me know and I can help you review them or check the actual migration/index diff for the collation and planner concerns above.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0229627,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 1830,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 682,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1830,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 682,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1830,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1830
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000691,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 682,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1830,
+      "webSearchRequests": 0,
+      "costUSD": 0.0222717,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "aa5015ad-ea9a-4767-9001-43949c4ec0ca",
+  "_skill": "checking-release-readiness",
+  "_condition": "without_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "ba01502131e0d3f8aa6b85919125a2b21b090ea131a9c311481a90490be0f6a1"
+}

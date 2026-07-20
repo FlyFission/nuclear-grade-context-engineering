@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 15779,
+  "duration_api_ms": 16316,
+  "ttft_ms": 7162,
+  "ttft_stream_ms": 1263,
+  "time_to_request_ms": 48,
+  "time_to_request_from_spawn_ms": 1620760,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172694466.1975,
+  "num_turns": 1,
+  "result": "I can share a recommendation, but I can't \"approve\" this for you \u2014 that's a judgment call for whoever owns risk on the fraud-detection system, and it deserves more than a rubber stamp despite the vendor's wording.\n\nA few reasons \"patch + backward compatible\" isn't sufficient assurance here:\n\n- **Semver applies to APIs, not model behavior.** For a hosted classifier, \"no behavior changes\" is a claim about interfaces/outputs, but the changelog itself contradicts that by mentioning \"improved internal safety filtering\" \u2014 that's a behavior change by definition. Even small shifts in a fraud model's score distribution or thresholds can move your flag rate meaningfully.\n- **Backward compatible \u2260 equivalent classifications.** The provider is vouching for their API contract, not for your specific label distribution, false-positive/false-negative rates, or edge cases in your transaction population.\n- **Blast radius is asymmetric.** A silent regression in fraud detection either lets fraud through or spikes false positives (blocking legitimate customers) \u2014 both costly, and neither would show up as a broken build.\n\nWhat I'd suggest instead of a blind bump:\n1. Run 2.3.1 against a labeled holdout/backtest set (or shadow it against live traffic alongside 2.3.0) and diff flag rates, precision/recall, and any near-threshold cases.\n2. Merge as a normal PR with that comparison data attached, not as a \"trivial dependency update\" \u2014 it should still get a real reviewer, even if the diff is one line.\n3. If you have a canary/staged rollout path for this service, use it rather than a direct global pin change.\n\nIf you want, I can help you write a quick backtest/comparison script against your existing transaction data, or draft the PR description with the eval results once you have them.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.031002899999999996,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2008,
+    "cache_read_input_tokens": 6263,
+    "output_tokens": 1087,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2008,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1087,
+        "cache_read_input_tokens": 6263,
+        "cache_creation_input_tokens": 2008,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2008
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 655,
+      "outputTokens": 22,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000765,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1087,
+      "cacheReadInputTokens": 6263,
+      "cacheCreationInputTokens": 2008,
+      "webSearchRequests": 0,
+      "costUSD": 0.030237899999999998,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "9798c715-f673-4ecf-b612-920340808806",
+  "_skill": "vetting-outside-code-and-models",
+  "_condition": "without_skill",
+  "_trial": 4,
+  "_input_spec_sha256": "09a94f3cc2a158959f088f6b65b169fb032432fdcb7bdb30d0a12633ce970f78"
+}

@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 8644,
+  "duration_api_ms": 8417,
+  "ttft_ms": 7207,
+  "ttft_stream_ms": 1730,
+  "time_to_request_ms": 66,
+  "time_to_request_from_spawn_ms": 564772,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121127718.3652,
+  "num_turns": 1,
+  "result": "No \u2014 this isn't ready to ship, primarily because there's no rollback plan.\n\nKey gaps for a Postgres 12\u219215 migration with index changes:\n\n1. **No rollback script** \u2014 this is the biggest risk. If the migration fails partway (especially index rebuilds on large tables, which can take a long time and lock things), you need a tested way to revert. \"CI is green\" only proves the migration works in a clean test environment, not that it's safely reversible in production.\n2. **No monitoring/alerting** \u2014 you're flying blind on the actual cutover. At minimum you want alerts on query latency, replication lag, connection errors, and lock waits during and after the migration window.\n3. **CI green \u2260 production-safe** \u2014 CI likely doesn't replicate production data volume, concurrent load, or long-running transactions that could conflict with index rebuilds (e.g., `CREATE INDEX CONCURRENTLY` failures, lock contention).\n\nBefore merging/deploying, I'd want to see:\n- A rollback script or documented rollback procedure, tested at least once\n- Alerts (even basic ones) on DB error rates/latency for the deploy window\n- Confirmation index changes use `CONCURRENTLY` where applicable to avoid locking production tables\n- A dry-run against a prod-sized dataset/staging replica if not already done\n\nWant me to look at the migration files/PR to help draft a rollback script or spot risky index operations?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.019677700000000003,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 1830,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 463,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1830,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 463,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1830,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1830
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000691,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 463,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1830,
+      "webSearchRequests": 0,
+      "costUSD": 0.018986700000000002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "6abb0a28-2a5a-4726-a523-a582e31b7590",
+  "_skill": "checking-release-readiness",
+  "_condition": "without_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "ba01502131e0d3f8aa6b85919125a2b21b090ea131a9c311481a90490be0f6a1"
+}

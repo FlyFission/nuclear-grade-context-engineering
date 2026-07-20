@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 7404,
+  "duration_api_ms": 8317,
+  "ttft_ms": 7365,
+  "ttft_stream_ms": 1579,
+  "time_to_request_ms": 58,
+  "time_to_request_from_spawn_ms": 796803,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121360064.869,
+  "num_turns": 1,
+  "result": "I'd avoid that \u2014 the risk here isn't line-count, it's blast radius: `ENFORCE_MFA_FOR_ADMINS` is a shared flag across every backend service, so for however long it's `False`, *every* admin account (not just the locked-out one) is MFA-free, including anyone who might notice and exploit the window during that hour.\n\nSafer path to unblock the admin without the global toggle:\n- **Reset their MFA enrollment directly** (most auth systems support admin-initiated re-enrollment/reset of a specific user's MFA device) rather than disabling the policy for all admins.\n- If there's no per-user reset path, **temporarily exempt just that one account** if your flag system supports per-user overrides, not a global bypass.\n- If you truly must flip the global flag, treat it like a break-glass action: get a second person to review/approve (even a fast Slack + click-approve counts as review), and have someone else confirm the flip-back actually happened and stuck \u2014 self-approval + \"I'll remember to revert\" is exactly the pattern that leads to flags getting left off.\n\nWant help finding whether your auth provider (Okta/Auth0/custom) supports per-user MFA reset instead of the global flag flip?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0192657,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 1910,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 398,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1910,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 398,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1910,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1910
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 684,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007740000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 398,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1910,
+      "webSearchRequests": 0,
+      "costUSD": 0.0184917,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "6e459f92-3d88-43c3-8611-b45316b878b5",
+  "_skill": "rating-change-risk",
+  "_condition": "without_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "5e79948d3db59fa20cf628ff17bec3d1b6347c7af3acfb0391e08ff98ddf55a0"
+}

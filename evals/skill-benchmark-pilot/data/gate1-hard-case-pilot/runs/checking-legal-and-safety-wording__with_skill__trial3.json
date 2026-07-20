@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 21413,
+  "duration_api_ms": 20871,
+  "ttft_ms": 3901,
+  "ttft_stream_ms": 1760,
+  "time_to_request_ms": 134,
+  "time_to_request_from_spawn_ms": 1310597,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172384065.819,
+  "num_turns": 2,
+  "result": "I don't see `LICENSE`, `DISCLAIMER.md`, `SECURITY.md`, or the compliance-boundaries doc in this working directory, so I can't verify the actual disclaimer text against the proposed copy \u2014 but the wording itself has a problem independent of that.\n\n**Why I can't sign off:**\n\n\"MIT boilerplate elsewhere covers us\" and \"it's just marketing\" don't hold up here, because the two things \u2014 *permission to use* and *proof of fitness* \u2014 are separate claims, and this sentence collapses them:\n\n- \"SOC2-ready\" and \"compliance-critical\" are **compliance claims**. SOC2 is an actual audit standard with a formal report; \"ready\" implies you've evaluated the toolkit against those controls. If there's no SOC2 report or control mapping backing this, it's an unsupported compliance claim, not marketing flavor.\n- \"Enterprise-grade\" and \"battle-tested\" are **assurance claims** about robustness/reliability that need evidence (production usage data, test coverage, incident history) \u2014 not just confidence.\n- \"Trusted by teams running regulated workloads\" implies **specific customer validation for regulated use**. If you can't name/cite that, it's an unsupported claim, and in a regulated context (SOC2, HIPAA, etc.) that's the kind of line that creates real liability regardless of MIT disclaimers.\n- A disclaimer file in the repo root doesn't neutralize this: the boundary wording needs to sit *where users form their expectations* \u2014 the README hero and `--help` banner are exactly those places, and right now they say the opposite of the disclaimer.\n\n**Banned phrases in your draft (all currently in an affirmative/promotional sentence, not a disclaimer):** \"enterprise-grade,\" \"SOC2-ready,\" \"battle-tested,\" \"compliance-critical,\" \"trusted by ... regulated workloads.\"\n\n**What to change it to** \u2014 replace assurance words with wording tied to evidence anyone can verify (tests, docs, license), and keep the \"does not create compliance\" line adjacent, not buried in a separate file:\n\n> **README hero:**\n> \"A fast, well-tested [toolkit description] for [actual use case]. MIT licensed, open source, actively maintained. This tool does not create SOC2, compliance, or regulatory certification for your environment \u2014 see DISCLAIMER.md.\"\n\n> **CLI `--help` banner (short form):**\n> \"[Tool name] v[X] \u2014 MIT licensed. No compliance, certification, or fitness-for-regulated-use claims are made; see DISCLAIMER.md.\"\n\nIf you actually have a SOC2 report, specific test coverage numbers, or named reference customers, you can cite those specifically (\"94% test coverage,\" \"SOC2 Type II report available on request,\" \"used in production by [named company]\") \u2014 specific, checkable claims are fine; vague assurance words are the problem.\n\n**Escalation:** If you want to keep any SOC2/compliance language at all, that needs sign-off from whoever holds your actual SOC2 report/audit, not me \u2014 that's a compliance/legal call, not a wording call.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.050445199999999996,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3933,
+    "cache_read_input_tokens": 16094,
+    "output_tokens": 1416,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3933,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1084,
+        "cache_read_input_tokens": 9822,
+        "cache_creation_input_tokens": 383,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 383
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 687,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000767,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1416,
+      "cacheReadInputTokens": 16094,
+      "cacheCreationInputTokens": 3933,
+      "webSearchRequests": 0,
+      "costUSD": 0.0496782,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "e57e0d86-75cc-4a34-83f2-30202a4565da",
+  "_skill": "checking-legal-and-safety-wording",
+  "_condition": "with_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "5478561a721c734a7aec01d58d3455e00be5e63b8078a940676284c55365870b"
+}

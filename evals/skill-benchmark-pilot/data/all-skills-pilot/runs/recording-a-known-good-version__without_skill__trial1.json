@@ -1,0 +1,90 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 19319,
+  "duration_api_ms": 18417,
+  "ttft_ms": 1955,
+  "ttft_stream_ms": 1260,
+  "time_to_request_ms": 103,
+  "time_to_request_from_spawn_ms": 2001034,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783122563915.937,
+  "num_turns": 3,
+  "result": "The working directory is empty \u2014 there's no repo checked out here with details on PR #482, the eval suite results, or a changelog for v2.3.0.\n\nI can still draft the known-good version record, but I'll need you to fill in specifics I can't verify myself. A record like this should be evidence-based (exact eval numbers, commit SHA, config diffs) rather than generic, since its whole purpose is to be trustworthy for a future rollback decision.\n\nHere's a template \u2014 can you supply the bracketed details (or point me to the repo/PR so I can pull them directly)?\n\n---\n\n## Known-Good Version Record: v2.3.0\n\n**Status:** Accepted / Known-Good\n**Date accepted:** 2026-07-03\n**Recorded by:** [name]\n\n### What's in this version\n- **Change:** Embedding model dependency upgraded `embed-v1` \u2192 `embed-v2`\n- **PR:** #482 \u2014 [link]\n- **Commit SHA:** [sha]\n- **Deploy time:** [exact timestamp, ~1 hour before 2026-07-03]\n- **Other changes bundled in this release, if any:** [list, or \"none \u2014 isolated dependency bump\"]\n\n### Why we're accepting it\n- **QA sign-off:** [who/team, date]\n- **Eval suite results:** precision [old \u2192 new], recall [old \u2192 new] \u2014 [link to eval report/dashboard]\n- **Baseline compared against:** v2.2.x running `embed-v1`\n- **Production observation window:** ~1 hour post-deploy, no anomalies in [which dashboards/alerts \u2014 latency, error rate, recommendation CTR, etc.]\n\n### Rollback guidance\n- **Roll back to:** v2.2.x (last version on `embed-v1`) \u2014 commit [sha]\n- **Rollback trigger conditions:** [e.g., precision/recall regression in production metrics, latency spike, error rate above X%, user complaints]\n- **Rollback procedure:** [link to runbook, or brief steps]\n- **Known risks/watch items:** [e.g., embed-v2 has different vector dimensionality \u2014 check downstream consumers; changed inference latency profile]\n\n---\n\nSince production has only been observed for an hour, you may also want a note that \"known-good\" status should be revisited after a longer soak period (e.g., 24\u201348h) before treating it as fully durable \u2014 happy to add that if useful. Let me know the fill-in details and I'll finalize it.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0388267,
+  "usage": {
+    "input_tokens": 90,
+    "cache_creation_input_tokens": 2374,
+    "cache_read_input_tokens": 22899,
+    "output_tokens": 1112,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2374,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 31,
+        "output_tokens": 792,
+        "cache_read_input_tokens": 8416,
+        "cache_creation_input_tokens": 221,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 221
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007629999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 90,
+      "outputTokens": 1112,
+      "cacheReadInputTokens": 22899,
+      "cacheCreationInputTokens": 2374,
+      "webSearchRequests": 0,
+      "costUSD": 0.0380637,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [
+    {
+      "tool_name": "Grep",
+      "tool_use_id": "toolu_01NTafeA6gm2CqMEdZCHRAci",
+      "tool_input": {
+        "pattern": "embed-v2",
+        "path": "/",
+        "output_mode": "files_with_matches",
+        "head_limit": 20
+      }
+    }
+  ],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "8a9d4d70-7e00-45ac-8fc1-fffb5f4e08d5",
+  "_skill": "recording-a-known-good-version",
+  "_condition": "without_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "288e805c347444b661aa6a4c0d0ad38e4f0af2ed9e8d9e1fa71e1c875703f235"
+}

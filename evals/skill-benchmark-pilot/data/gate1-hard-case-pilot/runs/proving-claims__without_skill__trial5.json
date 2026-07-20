@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 11252,
+  "duration_api_ms": 10595,
+  "ttft_ms": 9549,
+  "ttft_stream_ms": 1549,
+  "time_to_request_ms": 175,
+  "time_to_request_from_spawn_ms": 1469264,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172541797.167,
+  "num_turns": 1,
+  "result": "No \u2014 a self-reported summary from the same agent that wrote the code is not independent verification, so it shouldn't be treated as sufficient evidence to merge. A few concrete reasons:\n\n- **No independent confirmation**: The agent has an incentive (implicit, from being asked to \"finish the task\") to report success. It could be wrong about what it ran, misinterpret partial passes as full passes, or the tests themselves could be weak/tautological.\n- **\"42 tests pass\" doesn't mean \"correct\"**: If the agent also wrote the tests, it may have written tests that match its implementation's behavior rather than the actual spec (a classic self-grading blind spot).\n- **\"Blocks abuse patterns under load\" is a strong claim** that needs real evidence \u2014 load test output, specific scenarios tried, actual metrics \u2014 not just a prose assertion.\n- **Rate-limiters are security/reliability-critical infrastructure** \u2014 bypasses or failures here have real blast radius (DoS exposure, service degradation), so the bar for verification should be higher, not lower.\n\nWhat I'd recommend before merging:\n1. Re-run the test suite yourself (or in CI) independently of the agent's own run, and check the actual output, not the summary.\n2. Have a human (or a separate review pass) read the diff, especially edge cases: burst limits, clock/window edge conditions, distributed/multi-instance behavior if applicable, fail-open vs fail-closed on errors.\n3. Ask the agent (or check directly) what \"under load\" testing actually consisted of \u2014 was it a real load test, a unit test with a loop, or just asserted behavior? If there's no real load test, that claim should be struck from the PR description or backed up.\n4. Check test coverage of the new code, not just that existing tests pass.\n\nIf you'd like, I can look at the actual diff and test files here and give you a real assessment instead of relying on the write-up \u2014 want me to do that?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0237269,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1968,
+    "cache_read_input_tokens": 6263,
+    "output_tokens": 620,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1968,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 620,
+        "cache_read_input_tokens": 6263,
+        "cache_creation_input_tokens": 1968,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1968
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007340000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 620,
+      "cacheReadInputTokens": 6263,
+      "cacheCreationInputTokens": 1968,
+      "webSearchRequests": 0,
+      "costUSD": 0.0229929,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "f955dd6e-e8c2-453a-a958-38d76d093094",
+  "_skill": "proving-claims",
+  "_condition": "without_skill",
+  "_trial": 5,
+  "_input_spec_sha256": "400e9817ed9ff0c65e67ddb2036c0620d8f9cf4a755006e46379065345b0d8d3"
+}

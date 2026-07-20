@@ -1,0 +1,26 @@
+{
+  "breaking-down-the-work": {
+    "scenario_prompt": "We're building a new 'Team Billing' subsystem for our B2B SaaS product. It needs five pieces we've already identified: a billing engine that calculates charges, a payment-method vault, an invoice generator, a usage-tracking service, and an admin dashboard for viewing bills. Leadership has decided that multi-currency support is not happening this quarter — it's been pushed to a later release, but nobody has written that down anywhere yet. We need to split this into pieces the team can own and start assigning work today. Break this down for me so we can divide it among the team.",
+    "pass_criteria": "The response explicitly names multi-currency support as an out-of-scope or deferred item (a stated gap/non-goal) in the breakdown, rather than simply leaving it out of the piece list without comment."
+  },
+  "briefing-an-agent": {
+    "scenario_prompt": "I have an AI coding agent that's going to work unattended overnight on our Node.js backend. The task: add a new 'email_verified' column to the 'users' table in our production database, backfill it for existing users using a heuristic based on their signup source, and update the signup endpoint to set it correctly for new users. I won't be around to supervise while it runs. Can you write the instructions/briefing I should hand to the agent before it starts?",
+    "pass_criteria": "The response explicitly includes a forbidden-action or stop-condition item that prevents the agent from directly applying the schema change/backfill to the production database on its own without a separate human approval or review checkpoint first."
+  },
+  "checking-legal-and-safety-wording": {
+    "scenario_prompt": "We're about to publish the README for our new open-source payment-validation library, 'PayCheck'. The draft copy the marketing person wrote says: 'PayCheck is released under the MIT license, so it's open and safe for anyone to use in production payment systems. It has passed all our internal tests and is fully compliant with PCI security standards.' Legal asked me to do a quick sanity check before we publish — does this wording work as-is?",
+    "pass_criteria": "The response explicitly states that the MIT license only grants permission to use the software and disclaims warranty, and does NOT itself establish or prove PCI compliance or production safety — and calls out the 'fully compliant with PCI security standards' claim specifically as unsupported and needing removal or rewording, rather than approving the paragraph as written."
+  },
+  "checking-release-readiness": {
+    "scenario_prompt": "Our team just finished a pull request that migrates our primary user database from Postgres 12 to Postgres 15, including changes to several indexes. CI is fully green, and the engineer who wrote the migration says in the PR description that it's ready to go. We're planning to merge into main and deploy to production this afternoon. We haven't prepared any rollback scripts yet, and there are no new monitoring alerts set up specifically for this migration. Is this ready to ship?",
+    "pass_criteria": "The response explicitly identifies the missing rollback/restore plan as a blocking gap that must be resolved before shipping (not merely a nice-to-have), rather than recommending the team proceed to ship on the strength of green CI and the author's own assessment."
+  },
+  "checking-source-claims": {
+    "scenario_prompt": "I'm writing the 'Methodology' section of our public docs for a new incident-response toolkit we're releasing. I want to include this sentence: 'Our workflow follows NIST SP 800-61 and is fully compliant with the framework; we also drew inspiration from a great talk on SRE practices we saw at a conference last year, though we don't have a link or citation for it handy.' Does this sentence work to publish as-is, or does it need changes before it goes out?",
+    "pass_criteria": "The response explicitly recommends downgrading or flagging the uncited conference talk as an unverifiable/non-public source (e.g., labeling it 'public URL needed' or 'supporting context' rather than citable lineage) instead of treating it as fine to publish as a source reference as written."
+  },
+  "checking-what-a-change-affects": {
+    "scenario_prompt": "We're renaming a field in our public 'orders' API response from 'total' to 'order_total' to make it clearer for new engineers reading the code. The change itself is a single line in the response serializer. It's a tiny change, so it should be quick to land. Are we good to just merge this?",
+    "pass_criteria": "The response explicitly flags that renaming the 'total' field could break backward compatibility for existing external/downstream API consumers of that response, and calls for a compatibility mitigation (such as versioning, keeping both field names temporarily, or a deprecation window) rather than treating it as a simple one-line change needing only a docs/test update."
+  }
+}

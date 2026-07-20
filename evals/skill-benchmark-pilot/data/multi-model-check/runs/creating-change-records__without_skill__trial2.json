@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 9601,
+  "duration_api_ms": 10560,
+  "ttft_ms": 5542,
+  "ttft_stream_ms": 907,
+  "time_to_request_ms": 50,
+  "time_to_request_from_spawn_ms": 1041852,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783196409178.0715,
+  "num_turns": 1,
+  "result": "I'd recommend pausing on this approach. Shipping autonomous production schema migrations with only a linter dry-run gate and a minimal PR description is a high-risk move, even with passing unit tests\u2014and deferring the documentation means the next person to touch this system (or to debug an incident) won't have the context they need.\n\nA few concrete concerns:\n- **No human review of the actual migration logic** beyond the linter (which only checks syntax/style, not correctness or safety)\n- **Minimal PR context** means future debugging or rollbacks will be harder, and team knowledge walks away if you're not here to explain it\n- **Production observation before documentation** is backwards\u2014you want documentation *before* shipping, so the team understands failure modes and how to respond\n\n**Better path:** Spend an hour now writing a solid PR description that covers:\n- What the linter actually checks (and crucially, what it *doesn't*)\n- Any assumptions about safe migration patterns or rollback strategy\n- How you'll detect and respond if something goes wrong in production\n- Then merge with full team confidence, not tentative observation\n\nThis actually *faster* than debugging an incident later. The short description isn't a time-saver; it's deferred risk.\n\nHappy to help you write that stronger description instead\u2014would that work?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0085834,
+  "usage": {
+    "input_tokens": 10,
+    "cache_creation_input_tokens": 1921,
+    "cache_read_input_tokens": 4474,
+    "output_tokens": 708,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1921,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 10,
+        "output_tokens": 708,
+        "cache_read_input_tokens": 4474,
+        "cache_creation_input_tokens": 1921,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1921
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 674,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000744,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-haiku-4-5": {
+      "inputTokens": 10,
+      "outputTokens": 708,
+      "cacheReadInputTokens": 4474,
+      "cacheCreationInputTokens": 1921,
+      "webSearchRequests": 0,
+      "costUSD": 0.0078394,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "8dab271e-978e-4ae0-83f4-8ce7712cdbec",
+  "_skill": "creating-change-records",
+  "_condition": "without_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "cf4a14f1a4a5362d6a3936dc45307ceb4c809a05a226495cc2653ce375870fc9"
+}

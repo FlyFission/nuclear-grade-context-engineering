@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 47641,
+  "duration_api_ms": 46705,
+  "ttft_ms": 26726,
+  "ttft_stream_ms": 1442,
+  "time_to_request_ms": 39,
+  "time_to_request_from_spawn_ms": 521396,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121084687.784,
+  "num_turns": 1,
+  "result": "Here's a briefing you can hand to the agent. One important flag before that: I'd strongly recommend the agent **not** apply changes directly to production unattended \u2014 instead have it prepare the migration/backfill/PR against a staging replica, run full verification there, and stop short of the production apply for you to trigger in the morning. If you want it to actually run against prod overnight, that's your call, but the briefing below is written to make that as safe as possible either way (see the gate in Section 3).\n\n---\n\n# Briefing: Add `email_verified` column to `users`\n\n## 1. Scope\n- Add nullable `email_verified` (boolean) column to `users`.\n- Backfill existing rows using signup-source heuristic (define exact rule below).\n- Update the signup endpoint to set `email_verified` correctly for new signups.\n- Do NOT touch any other tables, columns, or endpoints.\n\n## 2. Hard constraints (do not violate under any circumstance)\n- No `DROP`, `TRUNCATE`, or destructive `ALTER` on any table.\n- No direct `UPDATE`/`ALTER` run against production without a fresh, verified backup/snapshot taken immediately beforehand.\n- All schema changes must be additive and reversible (nullable column, no default that locks the table, no `NOT NULL` constraint added until backfill is verified complete).\n- Backfill must run in small batches (e.g. 1,000\u20135,000 rows) with a short delay between batches \u2014 never a single unbounded `UPDATE users SET ...` on a live prod table.\n- Never force-push, never bypass CI, never merge to main without tests passing.\n- If any step produces an unexpected result (row count mismatch, error, migration taking far longer than expected, backup failure), **stop immediately and do not retry or improvise** \u2014 leave a clear log entry and halt.\n\n## 3. Required gate before touching production\n1. Run the full migration + backfill + endpoint change against a staging environment or a fresh clone/replica of production data first.\n2. Verify on staging:\n   - Column added successfully, no locking issues.\n   - Backfill heuristic produces sane results (spot-check a sample of rows against expectations, print before/after counts).\n   - Signup endpoint sets `email_verified` correctly for each signup source in a test signup.\n   - Existing tests pass, plus any new tests you add for this change.\n3. **Only proceed to production if staging verification is clean.** If you don't have access to a staging/replica environment, stop and leave the migration + PR ready for human review rather than applying directly to production.\n\n## 4. Backfill heuristic\nDefine explicitly here \u2014 e.g.:\n- `signup_source = 'google_oauth'` or `'github_oauth'` \u2192 `email_verified = true` (email verified by provider).\n- `signup_source = 'email_password'` \u2192 `email_verified = true` only if the account has a `verified_at` timestamp already set on record; otherwise `false`.\n- Any unknown/null `signup_source` \u2192 `email_verified = false` (safe default; don't assume verified).\n\n*(Fill in the actual rule for your `signup_source` values before handing this off \u2014 ambiguity here is the biggest risk in this task.)*\n\n## 5. Implementation steps\n1. Write a migration adding `email_verified BOOLEAN DEFAULT NULL` (nullable, no table lock).\n2. Write a standalone, idempotent backfill script (not baked into the migration) that:\n   - Processes rows in batches ordered by primary key.\n   - Only updates rows where `email_verified IS NULL` (so it's safely re-runnable/resumable).\n   - Logs progress (rows processed, rows updated) and total elapsed time.\n3. Update the signup endpoint to set `email_verified` at creation time per the heuristic for new-signup sources (this is simpler than the backfill \u2014 no historical guessing needed).\n4. Add/update tests: migration test, backfill script unit test (against a seeded dataset with each signup source), signup endpoint test.\n5. Once backfill is verified complete and stable, a *separate follow-up migration* can add `NOT NULL` \u2014 do not do this in the same run; leave it for a later, explicitly reviewed step.\n\n## 6. Rollback plan\n- Schema: dropping a nullable column is cheap \u2014 document the exact `down` migration.\n- Data: backfill should be safe to re-run, but note in the PR that reverting `email_verified` values isn't automatically possible if the heuristic changes later \u2014 keep the backup snapshot referenced above until this is confirmed correct in production.\n\n## 7. What to leave behind for me in the morning\n- PR with migration, backfill script, endpoint change, and tests \u2014 not merged/deployed unless the gate in Section 3 passed and you executed against production.\n- A short log/summary: what ran, row counts before/after backfill, any anomalies, and whether it reached production or stopped at staging.\n- If it stopped at any halt condition, the exact error/log and current state (do not attempt cleanup beyond leaving things in a consistent, non-partial state).\n\n---\n\nWant me to also help you fill in the exact `signup_source` heuristic and pick a batching approach for your specific DB (Postgres/MySQL) and ORM/migration tool?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0673987,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 1818,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 3648,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1818,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 3648,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1818,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1818
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 624,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000709,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 3648,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1818,
+      "webSearchRequests": 0,
+      "costUSD": 0.0666897,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "aff01f0b-70cc-45d2-88b5-ad428c96e070",
+  "_skill": "briefing-an-agent",
+  "_condition": "without_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "1a08762e683eef055506d6171d5c9f0fe059b8d9bbf785766efcc84a0f5ec7e8"
+}

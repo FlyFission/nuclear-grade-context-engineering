@@ -2,6 +2,8 @@
 
 A skill is a self-contained set of instructions an agent can follow. Each one lives in a `SKILL.md` file that says when to use it, what it needs, the steps to take, what it produces, the one decision it can change, how to check the result, when to stop and ask for help, the excuses to watch for, and where the idea comes from.
 
+For evidence that loading a given skill actually changes model behavior versus a plain prompt — per skill, with real cost/token data and blind grading, not just design intent — see [`evals/skill-benchmark-pilot/`](evals/skill-benchmark-pilot/).
+
 ## The skills
 
 | Skill | Use it when | What you get |

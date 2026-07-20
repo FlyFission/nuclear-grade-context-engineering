@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 9558,
+  "duration_api_ms": 9384,
+  "ttft_ms": 5124,
+  "ttft_stream_ms": 1771,
+  "time_to_request_ms": 283,
+  "time_to_request_from_spawn_ms": 1484250,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172556151.5964,
+  "num_turns": 1,
+  "result": "No \u2014 this isn't really a typo fix, it's adding a factual compliance claim (SOC 2 Type II certification, customer count) to a public-facing document. If that claim isn't currently true or verified, you're creating legal/compliance exposure that a `git revert` doesn't undo \u2014 the false claim could be seen, screenshotted, or acted on before anyone reverts it.\n\nBefore committing, just confirm with whoever owns compliance/legal that the company is actually SOC 2 Type II certified and the 10,000+ figure is accurate \u2014 that's a quick check, not a full review packet. If those are already verified/approved claims, then yes, it's fine to commit directly with a normal message.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0213729,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1965,
+    "cache_read_input_tokens": 6263,
+    "output_tokens": 466,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1965,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 466,
+        "cache_read_input_tokens": 6263,
+        "cache_creation_input_tokens": 1965,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1965
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 638,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000708,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 466,
+      "cacheReadInputTokens": 6263,
+      "cacheCreationInputTokens": 1965,
+      "webSearchRequests": 0,
+      "costUSD": 0.0206649,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "0345d209-4de1-45d7-94ed-54c892bd4d3b",
+  "_skill": "rating-change-risk",
+  "_condition": "without_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "d7c46b522fcbfa235693e7bd4304ec0a255b8ea6c22d75f5feac8740a06a9eec"
+}

@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 12249,
+  "duration_api_ms": 11791,
+  "ttft_ms": 6237,
+  "ttft_stream_ms": 1476,
+  "time_to_request_ms": 99,
+  "time_to_request_from_spawn_ms": 1361594,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783172435198.1072,
+  "num_turns": 1,
+  "result": "I'd flag two concerns before drafting anything:\n\n1. **Self-review conflict of interest**: You wrote the change, wrote the verification.md, and are proposing to also approve and ship it. That's not independent verification \u2014 it's the same person checking their own work at every gate.\n\n2. **This specific change raises the stakes**: it grants a bot the ability to merge and ship *future* changes without human review. That's a high-blast-radius, hard-to-reverse capability change (once it's live, it's approving things nobody looks at). Precisely the kind of change where independent review matters most \u2014 CI passing tells you the tests pass, not that the authorization logic, scope limits, or \"low-risk\" classification are sound.\n\nI'd recommend getting a second person to actually look at this before it ships, even if it delays the window by a bit. Deployment windows are recoverable; an autonomous-ship bug that ships itself into prod isn't as easily walked back.\n\nIf you still want to proceed today, I can draft `ship.md` but I'll include the conflict-of-interest as an explicit noted risk rather than silently signing off as if independent review occurred \u2014 that's the honest version of the record. Want me to do that, or would you rather loop in another reviewer first?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0264599,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1996,
+    "cache_read_input_tokens": 6263,
+    "output_tokens": 791,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1996,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 791,
+        "cache_read_input_tokens": 6263,
+        "cache_creation_input_tokens": 1996,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1996
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 659,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000734,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 791,
+      "cacheReadInputTokens": 6263,
+      "cacheCreationInputTokens": 1996,
+      "webSearchRequests": 0,
+      "costUSD": 0.025725900000000003,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "660cd63c-ee68-46c3-860a-21e20028007d",
+  "_skill": "checking-release-readiness",
+  "_condition": "without_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "93ad0d68cb5ac330fbe1663ff06787cb4d01817d3c48fbebe9fac866d61fcc94"
+}

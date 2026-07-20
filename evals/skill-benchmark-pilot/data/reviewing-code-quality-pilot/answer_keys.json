@@ -1,0 +1,14 @@
+{
+  "task1_thin_wrapper": {
+    "planted_defect": "get_display_name() is a thin pass-through wrapper: it does nothing but call build_display_name() with the same arguments and return the result. It adds no behavior, and render_profile_header() could call build_display_name() directly.",
+    "pass_criteria": "The review explicitly identifies get_display_name as an unnecessary/thin pass-through wrapper (or equivalent phrasing: 'only forwards', 'adds no value', 'just renames/delegates') and recommends removing it or calling build_display_name directly instead of merely describing what the function does."
+  },
+  "task2_shared_leak": {
+    "planted_defect": "The is_pdf_receipt branch is a checkout-receipt-specific concern (PDF export formatting) added directly into core/currency.py, a shared module used by billing, checkout, invoicing, and the admin dashboard. Feature-specific logic for one consumer (checkout's PDF receipt) has leaked into shared/core code.",
+    "pass_criteria": "The review explicitly identifies that the is_pdf_receipt / PDF-receipt-specific behavior does not belong in the shared core/currency.py module and should live in checkout/receipt-specific code instead (or equivalent phrasing about feature logic leaking into shared/core code)."
+  },
+  "task3_clever_indirection": {
+    "planted_defect": "DISCOUNT_HANDLERS is a lambda-based dispatch table for exactly three fixed, simple cases. This is needless indirection versus a plain if/elif (or match) chain: it is harder to step through, harder to add per-branch validation/error handling to, and hides straightforward logic behind lambdas in a dict.",
+    "pass_criteria": "The review explicitly flags the lambda dispatch table (DISCOUNT_HANDLERS) as unnecessary/clever indirection for a small fixed set of cases and recommends a plain if/elif or match statement instead (or equivalent phrasing about preferring boring/direct code over the dispatch-table indirection)."
+  }
+}

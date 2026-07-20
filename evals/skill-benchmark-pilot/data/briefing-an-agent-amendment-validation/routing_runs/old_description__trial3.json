@@ -1,0 +1,7 @@
+{
+  "variant": "old_description",
+  "trial": 3,
+  "chosen_skill": "handing-off-work",
+  "reasoning": "This is exactly a mid-task interruption transferring ownership to a fresh agent instance, requiring a closed-loop briefing of state, what's done, what changed, remaining scope, and authority limits \u2014 the precise use case for handing-off-work.",
+  "_input_spec_sha256": "44bcc759519088e3dfe12a2f10301466329925d5e2b9ed021dbb0b0191d046c8"
+}

@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 18244,
+  "duration_api_ms": 17301,
+  "ttft_ms": 8829,
+  "ttft_stream_ms": 1171,
+  "time_to_request_ms": 59,
+  "time_to_request_from_spawn_ms": 662315,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783109187677.1194,
+  "num_turns": 1,
+  "result": "## Findings\n\n**Bugs / correctness**\n\n1. **No clamping on `percentage`** \u2014 `value > 100` produces a negative total; `value < 0` increases the total. `flat` is clamped to `0` via `max(...)`, but `percentage` and `free_shipping` are not, which is inconsistent.\n2. **No validation of `value`** \u2014 negative discount values, `None`, or wrong types aren't rejected anywhere; errors will surface as confusing exceptions deep inside the lambda rather than a clear `ValueError` at the boundary.\n3. **`free_shipping` ignores `value` but still requires callers to pass one** \u2014 the shared signature `(order, value)` forces every call site to pass a meaningless argument for this discount type. Awkward API.\n4. **Floating-point money math** \u2014 `order.total * (1 - value / 100)` and subtraction on floats will accumulate rounding errors. Money calculations should use `Decimal` or round explicitly to cents.\n5. **Function name vs. behavior mismatch** \u2014 `apply_discount` doesn't mutate `order`; it returns a new total. The name implies an in-place effect. Worth renaming (e.g. `compute_discounted_total`) or documenting the return contract.\n\n**Robustness**\n\n6. **`order.shipping_cost` / `order.total` are assumed to exist with no guard** \u2014 an `AttributeError` here is less clear than a domain-specific error.\n7. **No case-normalization on `discount_type`** \u2014 `\"Percentage\"` will raise `ValueError` with no fuzzy matching; may be intentional but worth confirming with callers upstream.\n\n**Style**\n\n8. Using lambdas in a dict works, but named functions would give clearer tracebacks and allow docstrings/type hints per discount type \u2014 minor readability tradeoff given only three handlers.\n\n**Missing tests** \u2014 no unit tests included for boundary cases (value=0, value=100, value>100, negative value, discount exceeding total).\n\n**Recommendation:** clamp all handlers to `[0, order.total]`, validate `value` (e.g., `0 <= value`, and `value <= 100` for percentage) before dispatch, and decide whether `free_shipping` should keep the unused `value` parameter or use `*args`/separate signature.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0344157,
+  "usage": {
+    "input_tokens": 24,
+    "cache_creation_input_tokens": 1956,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 1389,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1956,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 24,
+        "output_tokens": 1389,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1956,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1956
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 721,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007859999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 24,
+      "outputTokens": 1389,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1956,
+      "webSearchRequests": 0,
+      "costUSD": 0.0336297,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "fd311d44-f794-4e35-bae7-d48eb4f26f1c",
+  "_task": "task3_clever_indirection",
+  "_condition": "without_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "917da43b0f6fb6d72c8da1b326d1d2a60164cf5a955bc8bd7b1334b6136548cf"
+}

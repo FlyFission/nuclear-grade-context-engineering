@@ -1,0 +1,7 @@
+{
+  "variant": "new_description",
+  "trial": 3,
+  "chosen_skill": "handing-off-work",
+  "reasoning": "The session is being cut off mid-task and needs to transfer to a fresh agent instance, which requires a closed-loop briefing of what's done, what changed, what's remaining, and authority limits \u2014 exactly what handing-off-work is designed for, unlike briefing-an-agent which is for starting fresh work rather than transferring in-progress work.",
+  "_input_spec_sha256": "531ffbc938fe648801df0ad00b64caf56333fb3aa3f9d5865610b024d2a5df31"
+}

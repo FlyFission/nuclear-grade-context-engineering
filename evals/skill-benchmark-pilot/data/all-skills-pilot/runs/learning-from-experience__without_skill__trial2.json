@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 25758,
+  "duration_api_ms": 25598,
+  "ttft_ms": 4450,
+  "ttft_stream_ms": 2978,
+  "time_to_request_ms": 67,
+  "time_to_request_from_spawn_ms": 718648,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121281473.2117,
+  "num_turns": 1,
+  "result": "Here's a draft incident write-up plus concrete prevention measures. Happy to save this to a file (e.g., `INCIDENT-2026-XX.md`) if you tell me where it should live.\n\n## Incident Report: Hardcoded API Key Exposed in Production\n\n**Date of exposure:** [fill in commit date] \u2013 2026-07-03 (approx. 3 days)\n**Detected by:** Routine security audit\n**Severity:** High (live credential in production source/history)\n**Status:** Resolved \u2014 key rotated\n\n### Summary\nAn engineer's pre-commit secrets-scanning hook failed on a branch containing a hardcoded API key. Under time pressure to meet a deadline, the engineer bypassed the hook with `git commit --no-verify` and pushed the change. The branch was merged to `main` without the secret being caught by any other control, and the key remained live in production for approximately three days until a routine security audit identified it. The key was rotated immediately upon discovery.\n\n### Timeline\n| Time | Event |\n|---|---|\n| Day 0 | Pre-commit hook flags hardcoded API key; engineer bypasses with `--no-verify` and pushes |\n| Day 0 | PR merged to `main` (no secondary secrets check blocked the merge) |\n| Day 0\u20133 | Key live in production code |\n| Day 3 | Security audit discovers the exposed key |\n| Day 3 | Key rotated |\n\n### Root Cause\nThe pre-commit hook was the **only** layer of secrets-scanning. It is:\n- **Client-side and optional** \u2014 trivially bypassable with `--no-verify`, and not enforced by the platform.\n- **The sole gate** \u2014 nothing re-checked for secrets at merge time or in CI, so bypassing the local hook meant bypassing the *entire* control.\n\nContributing factors:\n- Deadline pressure incentivized shipping over stopping to fix/rotate the credential.\n- No policy or team norm against `--no-verify` for this class of hook.\n- No automated alerting tied to secret-scanning failures, so the bypass was invisible to anyone but the engineer.\n\n### Impact\n- API key exposed in version history and live in production for ~3 days.\n- [Add specifics if known: what the key granted access to, whether logs show unauthorized use, any customer/data impact.]\n\n### Remediation (completed)\n- Key rotated.\n- [Add: revoked old key everywhere it was used, checked access logs for misuse, purged from git history if the repo is public/broadly accessible \u2014 this may need a force-push/history rewrite, which should be planned and communicated separately since it's disruptive to all collaborators.]\n\n## Recommendations to Prevent Recurrence\n\nThe core fix is: **local pre-commit hooks should never be your only line of defense**, since they're inherently bypassable by design (they run on the developer's machine, under the developer's control).\n\n1. **Add server-side/CI secret scanning as a required check.** Run the same (or a stronger) secrets scanner in CI on every push and PR, and make it a required status check that blocks merging. This closes the exact gap that let this incident happen \u2014 even with `--no-verify`, the PR couldn't have merged.\n2. **Enable a push-protection / GitHub Advanced Security (or equivalent) secret scanning at the remote.** Many providers (GitHub, GitLab) offer server-side secret scanning that can reject pushes containing known credential patterns before they even land in history.\n3. **Alert on hook bypasses.** If feasible, have CI detect when a PR's commits don't show evidence of the pre-commit hook having run (or just rely on the CI-side scan above \u2014 simpler and more robust than trying to detect bypasses).\n4. **Team policy on `--no-verify`.** Document that bypassing security hooks is only acceptable with a documented reason and requires flagging to a lead/security channel before pushing \u2014 not a silent workaround. Make clear that shipping fast never justifies pushing a known secret; the fix is to remove the secret (use env vars/secret manager), not to bypass the check.\n5. **Adopt a secrets manager pattern** (e.g., environment variables injected via a vault/secrets manager) so there's no legitimate reason to hardcode a key in the first place \u2014 reduces reliance on catching mistakes after the fact.\n6. **Reduce detection latency.** Three days between exposure and discovery via \"routine audit\" is a long window. Consider continuous automated scanning of the `main` branch (not just at commit time) so exposures are caught in hours, not days.\n7. **Blast-radius reduction.** For whatever this key granted access to, evaluate scoping keys more narrowly and enabling anomaly detection/alerting on key usage, so a leaked key is less damaging and faster to notice even outside code scanning.\n\nWant me to turn this into a filed doc, tailor it to your actual CI provider (GitHub Actions, GitLab CI, etc.), or draft the actual CI config for the required secret-scanning check?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0393207,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 1850,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 1761,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1850,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 1761,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1850,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1850
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000744,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 1761,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1850,
+      "webSearchRequests": 0,
+      "costUSD": 0.0385767,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "c2217506-02f4-4670-85c5-4082bf68c33c",
+  "_skill": "learning-from-experience",
+  "_condition": "without_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "88ead2abe55c0fc2a369e124387ce07ccdc439c002e8bb3cf761efdba1226113"
+}

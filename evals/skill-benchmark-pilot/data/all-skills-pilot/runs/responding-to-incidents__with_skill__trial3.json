@@ -1,0 +1,79 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 18717,
+  "duration_api_ms": 18205,
+  "ttft_ms": 6001,
+  "ttft_stream_ms": 1298,
+  "time_to_request_ms": 44,
+  "time_to_request_from_spawn_ms": 833013,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121396340.4873,
+  "num_turns": 1,
+  "result": "Right now you have three people issuing conflicting directives during active customer-facing harm \u2014 that's the actual emergency, before you even get to root cause. Here's the call:\n\n**Do this immediately: roll back the deploy. Do not run the ALTER TABLE.**\n\nWhy: the rollback is reversible, fast (90s), and undoes *both* suspect changes at once. The DBA's index rebuild is a hypothesis, not a confirmed cause, is not quickly reversible on a live table, and only addresses half the change surface. Never spend your first move on an irreversible fix for an unconfirmed cause when a reversible one is sitting right there.\n\n## Commander and roles\n- **Commander: the on-call SRE** (they hold rollback authority and aren't the one arguing a hypothesis). Say this explicitly in the channel: \"I'm commander for this incident.\"\n- **DBA:** investigates the index-change hypothesis in parallel, but takes no destructive/DDL action on prod without commander sign-off.\n- **Eng manager:** handles comms/stakeholders, does not direct technical response.\n\n## First action\nCommander orders the CD rollback now. That's the stabilizing move.\n\n## Timeline (facts vs hypotheses)\n- **FACT** \u2014 T-12min: deploy shipped adding async inventory-sync worker + orders table index change.\n- **FACT** \u2014 T-0: checkout API began returning 500s on order creation.\n- **HYPOTHESIS** \u2014 DBA believes the index change is root cause.\n- **HYPOTHESIS** \u2014 worker change could also be contributing (untested).\n- **DECISION** (commander, timestamp now): roll back full deploy via CD pipeline; hold ALTER TABLE until post-rollback confirmation.\n\n## Cadence\nStatus update in the incident channel every 5 minutes minimum, even if it's just \"still rolling back\" or \"rollback complete, verifying 500s cleared.\"\n\n## After rollback\nOnly once checkout is confirmed healthy: DBA can inspect the index change offline/against a non-prod replica to confirm or reject the hypothesis before any prod DDL is considered. If the rollback does *not* clear the 500s, that disproves the DBA's hypothesis in real time \u2014 cheaply, without touching a live index.\n\n## Corrective actions (don't let these become \"we should\")\n- Owner: DBA \u2014 confirm root cause (index vs. worker vs. both) against a replica; done when a written finding is posted to the incident doc.\n- Owner: SRE lead \u2014 add a pre-deploy check/alert correlating deploys with error-rate spikes; done when it's live in the deploy pipeline.\n- Owner: Eng manager \u2014 schedule the postmortem within 48h; done when the doc is written and corrective actions from it are filed with owners.\n\nWant me to draft the actual `incident.md` with this timeline filled in so you can drop it straight into the channel?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.045840399999999996,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 3786,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 1419,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3786,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 1419,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 3786,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3786
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 675,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007750000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 1419,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 3786,
+      "webSearchRequests": 0,
+      "costUSD": 0.0450654,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "67539c1d-02a4-4197-b47d-b83de4c63066",
+  "_skill": "responding-to-incidents",
+  "_condition": "with_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "0037c5c141ad36654738a4b9259fccb577410513ed7f9a13135e7f92f1fd3109"
+}

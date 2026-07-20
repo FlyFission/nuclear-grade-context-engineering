@@ -76,6 +76,7 @@ control that answers it becomes obvious:
 | Context distraction | History grows so long the agent fixates on its own transcript instead of the task. | Mission anchor in the context pack; compaction into the packet; "single next action" framing. |
 | Context confusion | Too many tools or irrelevant documents in scope; the agent picks the wrong one. | Minimal authority: the pack lists what the agent may read, edit, and run — and what to ignore. |
 | Context clash | Two sources in context contradict each other and the agent oscillates or loops. | Precedence is explicit (charter > pack > transcript); conflicts halt work and surface as a question, not a guess. |
+| Instruction smuggling | Retrieved docs, web pages, issue text, tool output, or pasted logs contain commands to the agent and get treated as higher-authority instructions. | Treat retrieved material as **evidence data**, not operating authority; quote or cite the useful fact, ignore embedded directions, and escalate if the source appears to be trying to steer the agent. |
 | Context rot | Slow quality decay as tokens accumulate across turns. | Context budgets by mode; the packet, not the transcript, is the unit of truth; refresh the pack on phase change. |
 | Context collapse | Iterative re-summarizing of a long-lived document erodes its detail until the useful content is gone. | Durable records grow by **appended, discrete entries** (lessons, deficiencies, decisions), never by wholesale rewrites. |
 | Brevity bias | Compression keeps the fluent prose and drops the load-bearing specifics (commands, limits, exact wording). | Proof commands, authority boundaries, and boundary wording are linked or quoted exactly — never paraphrased to save tokens. |
@@ -187,8 +188,9 @@ You are practicing context-window discipline when:
 This page is an original Nuclear-grade operating doctrine. It draws on public
 context-engineering sources — Anthropic's engineering guidance, LangChain's
 context-engineering documentation, Neo4j's practical guide, Breunig's failure-mode taxonomy,
-Chroma's context-rot report, and the Lost-in-the-Middle, ACE, LLMLingua, cAST, and
+Chroma's context-rot report, OpenAI's Model Spec chain-of-command wording on untrusted data,
+OWASP LLM01 prompt-injection guidance, and the Lost-in-the-Middle, ACE, LLMLingua, cAST, and
 LongCodeZip papers — mapped in
 [`../00-standards-foundation/source-map.md`](../00-standards-foundation/source-map.md)
-(Tier 9). Benchmark numbers quoted here are those papers' claims on their benchmarks. This
-page creates no compliance, certification, or fitness claim.
+(Tiers 6 and 9). Benchmark numbers quoted here are those papers' claims on their benchmarks.
+This page creates no compliance, certification, or fitness claim.

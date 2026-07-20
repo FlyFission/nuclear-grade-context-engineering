@@ -1,0 +1,28 @@
+{
+  "id": "U05",
+  "title": "Prompt/model baseline",
+  "artifact": "docs/03-worked-examples/skill-workflow-comparison/trial-records/prompt-model-baseline.md",
+  "section": "## Nuclear-Grade Trial",
+  "signals": [
+    {
+      "name": "Treats prompt and model settings as controlled items",
+      "all": ["the model name", "the prompt version", "the eval set"]
+    },
+    {
+      "name": "Screens impacts beyond the prompt text",
+      "all": ["impact screen:", "context packs"]
+    },
+    {
+      "name": "Records a known-good baseline with re-check triggers",
+      "all": ["the version everyone agreed is correct", "re-check triggers"]
+    },
+    {
+      "name": "Separates provider/model claims from local evidence",
+      "all": ["model and provider claims apart", "local eval evidence"]
+    },
+    {
+      "name": "Ties release decision to behavior evidence or named gaps",
+      "all": ["behavior evidence backs", "defer with the gaps named"]
+    }
+  ]
+}

@@ -165,7 +165,7 @@ def test_cost_per_signal_matches_eval_cases():
 
     # Shipped worked examples with eval cases each yield a positive
     # tokens-per-signal ratio.
-    assert set(per_signal) == {"U02", "U04", "U07", "U09"}
+    assert set(per_signal) == {"U02", "U04", "U05", "U07", "U09"}
     for cost in per_signal.values():
         assert cost > 0
 

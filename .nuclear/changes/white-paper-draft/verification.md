@@ -63,7 +63,7 @@ the record and its internal consistency; it does not establish truth, adequacy, 
 | Method | Command / review / eval | Environment | Result | Evidence link |
 |---|---|---|---|---|
 | Packet validation | `python tools/ng.py validate .nuclear/changes/white-paper-draft --strict-custody` | local worktree | pass | `OK: .nuclear/changes/white-paper-draft` |
-| Full tests | `python -m pytest -q` | local worktree | pass | 212 tests completed with no failures on the rebased tree |
+| Full tests | `python -m pytest -q` | rebased local worktree | pass | 238 tests completed with no failures after refreshing against `origin/main`; the paper separately reports the 212-test result at assessed commit `92357cd` |
 | Ruff | `python -m ruff check .` | local worktree | pass | `All checks passed!` |
 | Repository doctor | `python tools/ng.py doctor .` | local worktree | pass | `OK: Nuclear-grade doctor` |
 | Token budget | `python tools/ng.py tokens .` | local worktree | pass | `OK: token budget` |
@@ -96,10 +96,10 @@ the record and its internal consistency; it does not establish truth, adequacy, 
 - AI scope: Repository inspection, primary-source research coordination, drafting, editing, local checks, and PDF rendering.
 - Model/tool used: Hermes Agent session and delegated research agents; local Git, Python, and rendering tools.
 - Permissions/actions allowed: Read public/local files; create files only in the dedicated worktree and review-artifact paths; run local tests/checks; use read-only web access.
-- Independent checks performed: Planned delegated research, deterministic repository checks, and visual artifact inspection; human review remains required.
+- Independent checks performed: Provider-diverse research/review, full RC1 red team, narrow RC2 delta and closure review, deterministic repository checks, and visual artifact inspection; human author review remains required.
 - Self-check / turnover records: This packet; no separate turnover record.
-- Hallucination/slop screening: Planned source trace, citation/link check, unsupported-claim scan, and independent editorial review.
-- Human approval gates exercised: User approved drafting; publication approval not exercised.
+- Hallucination/slop screening: Source trace, 49/49 citation closure, link and unsupported-claim scans, archived first-party source verification, and independent editorial/technical review completed.
+- Human approval gates exercised: User approved drafting, PR creation, and the focused RC2 update; merge and publication approval were not exercised.
 
 ## Security / dependency / supply-chain checks
 

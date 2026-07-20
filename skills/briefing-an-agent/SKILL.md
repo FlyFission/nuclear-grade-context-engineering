@@ -102,8 +102,9 @@ Inputs:
 - do-not-touch targets: <list>
 - approval gates: <list>
 - required evidence: <commands/links/reviews>
+- loaded instruction files: <AGENTS.md / CLAUDE.md / .github/copilot-instructions.md / tool rules in force, with precedence or "none known">
 
-Return a short context pack. Include the mode, the decision question, the goal, the work phase, a risk summary, a basis summary, the evidence required, the limits on what the agent may do, the claims it must not make, the open gaps, the last action completed, what has changed, the critical next action, and the next action. If responsibility is changing hands, add a step where the incoming owner confirms they understand.
+Return a short context pack. Include the mode, the decision question, the goal, the work phase, a risk summary, a basis summary, the evidence required, the loaded instruction files in force and which one wins on conflict, the limits on what the agent may do, the claims it must not make, the open gaps, the last action completed, what has changed, the critical next action, and the next action. If responsibility is changing hands, add a step where the incoming owner confirms they understand.
 ```
 
 ## Source-lineage note

@@ -19,6 +19,15 @@
   result of what the testing found — amends two skill files (`briefing-an-agent`,
   `creating-change-records`) to fix a diagnosed scope-overlap and a diagnosed weak-model robustness
   gap, each amendment adversarially reviewed and validated before/after.
+- Harvested from PR #63 (closed as superseded, its value folded in here): the Gate-1 deterministic
+  benchmark tooling (`tools/ng_skill_audit.py`, `ng_skill_route_score.py`, `ng_skill_output_score.py`),
+  the routing/output eval manifests (`evals/skill-routing-cases.jsonl`, `evals/skill-output-cases.jsonl`),
+  the static-audit artifacts under `evals/skill-static-audit/2026-07-04/`, three reference docs under
+  `docs/05-reference/`, and five `tests/test_skill_*`/`test_efficacy_signal_mutations.py` guards.
+  A third skill amendment (`proving-claims`, scope-narrowed to trace construction) is also harvested;
+  it is consistent with the same overlap-reduction direction but is **not** backed by the live A/B
+  regression trials that back the other two amendments — its validation is deferred and stated as an
+  open item (see REQ-006 in `trace.md`), so it must not be read as live-proven.
 
 ## Mission anchor
 

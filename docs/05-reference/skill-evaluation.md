@@ -4,7 +4,7 @@
 
 Use these prompts when changing a skill description or process. Run the same prompt with a simple baseline and with the relevant skill, compare the outputs, and record whether the skill adds useful structure, proof discipline, or decision clarity. The negative prompts are near-misses; they should usually be handled by another skill, a normal answer, or no skill at all.
 
-Do not treat this file as proof that a skill is effective. It is the minimum prompt bank for future baseline-vs-skill evaluation.
+Do not treat this file as proof that a skill is effective. It is the minimum prompt bank for future baseline-vs-skill evaluation. Use `independent-skill-benchmark-protocol.md` for the stricter evidence rules before claiming lift over prompt-only.
 
 ## Evaluation Method
 
@@ -84,9 +84,9 @@ If a skill changes decisions but says so only in vague prose, amend its receipt 
 
 ### `creating-change-records`
 
-- Should trigger: Create the packet files for a Standard change that updates skills and tests.
-- Should trigger: Update this Quick packet now that the proof command changed.
-- Should trigger: Prepare an evidence-backed PR packet for an AI-assisted workflow change.
+- Should trigger: The Standard packet exists but is missing `basis.md`, `proof.md`, and a validation receipt; repair the packet structure without deciding release readiness.
+- Should trigger: The proof command changed after review; update this Quick packet's files and validator-facing status labels.
+- Should trigger: The agent completed an AI-assisted workflow change but left no evidence-backed PR packet; create the required record shell and links.
 - Should not trigger: Decide whether this packet should ship.
 - Should not trigger: Only identify which files are controlled items.
 

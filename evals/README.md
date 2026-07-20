@@ -8,7 +8,9 @@ situations.
 | --- | --- | --- |
 | `U02-agent-workspace-boundary` | Agent file-write authority is bounded, controlled items are named, adversarial proof claims are stated, and release wording avoids production-sandbox overclaiming. | A change gives an agent tool or filesystem authority. |
 | `U04-public-assurance-wording` | Public claims separate source inspiration, license permission, assurance, self-checks, cross-document impact, and prohibited-claim scans. | Docs, marketing, README, or release notes could imply compliance, certification, formal QA, safety, security, or regulatory adequacy. |
+| `U05-prompt-model-baseline` | Prompt/model changes are treated as controlled behavior changes, with impacted context surfaces, a known-good baseline, local evidence, re-check triggers, and bounded release/defer logic. | A change alters an agent prompt, model, eval set, tool power, or public claim about model behavior. |
 | `U07-payment-webhook-idempotency` | Money-moving changes escalate mode, bound credentials/API access, prove duplicate/replay behavior, and name rollback, monitoring, and risk ownership. | An agent touches payments, billing state, ledgers, or similarly trust-bearing side effects. |
+| `U09-release-readiness-cut` | Release decisions name controlled release artifacts, evidence beyond green CI, handoff owners, rollback, monitoring, and the accepted baseline. | A PR, tag, package, or public release is about to become the version users trust. |
 
 ## Add or remove a case
 

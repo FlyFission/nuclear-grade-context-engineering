@@ -163,9 +163,9 @@ def test_redundancy_index_ignores_shared_code_snippets(tmp_path):
 def test_cost_per_signal_matches_eval_cases():
     per_signal = tokens.cost_per_signal(ROOT)
 
-    # Three worked examples ship with eval cases (U02, U04, U07); each yields a
-    # positive tokens-per-signal ratio.
-    assert set(per_signal) == {"U02", "U04", "U07"}
+    # Shipped worked examples with eval cases each yield a positive
+    # tokens-per-signal ratio.
+    assert set(per_signal) == {"U02", "U04", "U05", "U07", "U09"}
     for cost in per_signal.values():
         assert cost > 0
 

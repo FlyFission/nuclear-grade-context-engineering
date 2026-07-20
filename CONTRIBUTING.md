@@ -21,9 +21,13 @@ Run:
 
 ```bash
 python -m pytest -q
+python -m ruff check .
 python tools/ng.py doctor .
+python tools/ng.py tokens .
 python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions
 ```
+
+These are the fast local checks shared with CI; the workflow remains the source of truth.
 
 Also scan new public docs for overclaiming. Lean on phrases like:
 

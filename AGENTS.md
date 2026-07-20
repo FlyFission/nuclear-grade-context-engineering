@@ -19,6 +19,18 @@ The idea is simple. Keep a questioning attitude. Use small habits from Human Per
 - Prefer links and short status labels over long, repeated text.
 - Run the right tests and checker commands before you say the work is done.
 
+## Verification routing
+
+Do not invent a new proof path for routine edits. Use the pre-PR commands in
+[`CONTRIBUTING.md`](CONTRIBUTING.md), then narrow only when the change is clearly
+smaller than a full run:
+
+- docs-only wording: `git diff --check` plus the nearest public-doc or token test;
+- template, skill, command, or checker behavior: the targeted pytest file plus `python tools/ng.py doctor .`;
+- worked-example evidence: re-run the example validator or example test named in the change record.
+
+If you skip a full pre-PR run, say why the narrower proof still covers the files you changed.
+
 ## Authority boundaries
 
 Agents must not assume they may:
@@ -33,27 +45,7 @@ Agents must not assume they may:
 
 ## Skill loading rule
 
-Load skills by trigger, not by inventory. First screen the work for risk, evidence, decision-rights, public-claim, trust-boundary, handoff, release, incident, or hard-to-reverse triggers. Then load the smallest skill set that can change the action, evidence, gate, decision right, claim wording, or handoff. The list below is a routing aid, not a checklist; do not load the whole list just because it is listed. If a trigger is present or ambiguous, load the matching skill or state the specific evidence showing why it is not needed. Confidence is not evidence.
-
-## Recommended skills
-
-- `skills/questioning-attitude/SKILL.md`
-- `skills/rating-change-risk/SKILL.md`
-- `skills/choosing-what-to-control/SKILL.md`
-- `skills/checking-what-a-change-affects/SKILL.md`
-- `skills/creating-change-records/SKILL.md`
-- `skills/handing-off-work/SKILL.md`
-- `skills/double-checking-before-acting/SKILL.md`
-- `skills/recording-a-known-good-version/SKILL.md`
-- `skills/proving-claims/SKILL.md`
-- `skills/checking-release-readiness/SKILL.md`
-- `skills/learning-from-experience/SKILL.md`
-- `skills/vetting-outside-code-and-models/SKILL.md`
-- `skills/checking-legal-and-safety-wording/SKILL.md`
-- `skills/deciding-who-decides/SKILL.md`
-- `skills/declaring-intent/SKILL.md`
-- `skills/responding-to-incidents/SKILL.md`
-- `skills/tracking-deficiencies/SKILL.md`
+Load skills by trigger, not by inventory. First screen the work for risk, evidence, decision-rights, public-claim, trust-boundary, handoff, release, incident, or hard-to-reverse triggers. Then load the smallest skill set that can change the action, evidence, gate, decision right, claim wording, or handoff. Use the decision matrix in `CORE.md` to route the trigger; treat `SKILLS.md` as a discovery catalog, not a preload list. If a trigger is present or ambiguous, load the matching skill or state the specific evidence showing why it is not needed. Confidence is not evidence.
 
 ## Completion standard
 

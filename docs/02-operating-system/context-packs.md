@@ -77,7 +77,7 @@ Basis summary: <what must remain true>
 Critical next action: <action, likely error, control>
 Required evidence: <commands, reviews, evals, links>
 Approval gates: <who/what must approve before next step>
-Loaded instruction files: <AGENTS.md / CLAUDE.md / copilot-instructions.md / tool rules in force, with precedence or "none known">
+Loaded instruction files: <AGENTS.md / CLAUDE.md / .github/copilot-instructions.md / tool rules in force, with precedence or "none known">
 Source-lineage excerpts: <only the relevant source-map/crosswalk links>
 Forbidden actions: <scope and authority limits>
 Do-not-touch targets: <files, commands, systems, claims>

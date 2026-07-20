@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -237,3 +238,45 @@ def test_prove_handle_uses_educate_and_stays_consistent():
         text = (ROOT / rel).read_text(encoding="utf-8")
         for token in stale:
             assert token not in text, f"{rel} still contains stale PROVE beat '{token}'"
+
+
+def test_starter_kit_copy_commands_reference_existing_assets():
+    """Starter-kit README snippets are executable adoption paths, not illustrative
+    prose. Guard copied skill and doc paths so an adopter does not learn about a
+    drifted reference only after pasting the command into their repo."""
+
+    starter_readmes = sorted((ROOT / "starter-kit").glob("*/README.md"))
+    assert starter_readmes, "expected starter-kit README files"
+
+    for readme in starter_readmes:
+        text = readme.read_text(encoding="utf-8")
+
+        referenced_skills = set()
+        # Literal `skills/<name>/SKILL.md` references (markdown links, prose).
+        # Anchor on the `skills/` prefix so the `$s` placeholder inside the copy
+        # loops (`cp "skills/$s/SKILL.md"`) is not mistaken for a real skill.
+        referenced_skills.update(re.findall(r"skills/([a-z][a-z0-9-]+)/SKILL\.md", text))
+        # Skills enumerated in `for s in <names...>; do ... cp "skills/$s/..."`
+        # loops -- the actual copy payload. The list wraps across lines with a
+        # trailing backslash, so normalize those away before splitting.
+        for loop in re.finditer(r"for s in\s+(.+?);\s*do", text, re.DOTALL):
+            referenced_skills.update(loop.group(1).replace("\\", " ").split())
+
+        for skill in sorted(referenced_skills):
+            assert (ROOT / "skills" / skill / "SKILL.md").exists(), (
+                f"{readme.relative_to(ROOT)} references missing skill {skill}"
+            )
+
+        referenced_docs = set(re.findall(r"docs/[A-Za-z0-9_./-]+\.md", text))
+        # Docs written with brace expansion, e.g. `docs/<dir>/{a.md,b.md}`.
+        for brace in re.finditer(r"(docs/[A-Za-z0-9_./-]+/)\{([^}]*)\}", text):
+            prefix = brace.group(1)
+            for name in brace.group(2).split(","):
+                name = name.strip()
+                if name:
+                    referenced_docs.add(prefix + name)
+
+        for doc in sorted(referenced_docs):
+            assert (ROOT / doc).exists(), (
+                f"{readme.relative_to(ROOT)} references missing doc {doc}"
+            )

@@ -54,10 +54,10 @@ Usman Gohar, Michael~C. Hunter, Robyn~R. Lutz, and Myra~B. Cohen.
 \bibitem[Huffer(2026)]{flyfission2026repo}
 Ben Huffer.
 \newblock Nuclear-grade context engineering.
-\newblock Public software repository, pre-change baseline at commit 7144831,
-  2026.
+\newblock Public software repository, assessed at commit
+  92357cd2654cde6d4655699a04305b793207d120, 2026.
 \newblock URL
-  \url{https://github.com/FlyFission/nuclear-grade-context-engineering/tree/7144831aff697d76238f51573ff8eedf9c6a70f4}.
+  \url{https://github.com/FlyFission/nuclear-grade-context-engineering/tree/92357cd2654cde6d4655699a04305b793207d120}.
 
 \bibitem[{in-toto project}(2026)]{intoto2026}
 {in-toto project}.

@@ -15,7 +15,7 @@
 - Slug: `white-paper-draft`
 - Related basis: `basis.md`
 - Owner: Ben Huffer / FlyFission
-- Date: 2026-07-19
+- Date: 2026-07-20
 - Verification scope: Practitioner manuscript, academic LaTeX preprint, packet, source links, repository claims, evaluation language, and rendered/package artifacts.
 
 ## Evidence status legend
@@ -55,7 +55,7 @@ the record and its internal consistency; it does not establish truth, adequacy, 
 |---|---|---|---|---|---|---|---|
 | E-001 | coupled — the drafting process invoked and selected its own checks | partially separated — deterministic tools constrain some interpretation but inherit actor-selected scope | partially separated — pytest, Ruff, repository validators, and Tectonic are distinct mechanisms but exercise actor-authored artifacts | coupled — Ben authorizes the PR, but the drafting process controls this evidence summary | coupled — the drafting session controls local runtime and evidence presentation | self-check | Admitted for reproducible structural/build claims only; see `ship.md#residual-risks-and-gaps`. It does not establish novelty, efficacy, authenticated identity, or publication approval. |
 
-- Human apply authority: Ben Huffer explicitly authorized committing, pushing, and opening a PR on 2026-07-19.
+- Human apply authority: Ben Huffer explicitly authorized committing, pushing, and opening the PR on 2026-07-19 and authorized the focused RC2 remediation and PR update on 2026-07-20.
 - Public-paper publication, venue submission, and merge remain separate decisions.
 
 ## Commands, evals, and reviews
@@ -74,12 +74,12 @@ the record and its internal consistency; it does not establish truth, adequacy, 
 | Boundary review | assurance/source claim scan | local worktree | pass | Hits were negative/disclaimer uses or ordinary uses of “first,” not priority claims |
 | PDF content review | `pypdf` extraction and annotations | local artifact | pass | 24 pages; selectable text extracted; 32 URI annotations covering 29 unique links; draft label and closest-source additions present |
 | PDF visual review | rasterized samples of cover, TOC, body, tables, evaluation, and references | local artifact | pass | Post-review related-work and final-reference pages were re-inspected; no clipping, broken tables, orphaned headings, or delivery-blocking layout defects observed |
-| Academic LaTeX build | clean Tectonic compile from current source | local, Tectonic | pass | 19-page v0.3 candidate; 47 citations and 47 bibliography entries; no missing or uncited entries; four non-blocking underfull-box warnings |
-| Clean source-package build | Extract minimal source archive and run Tectonic with `-C` cached-only mode | `/tmp/ng-arxiv-clean` | pass | Archive containing only `paper.tex`, `paper.bbl`, and `references.bib` compiled without source-network or local-path dependencies |
-| Academic PDF content review | `pdfinfo` plus citation/bibliography closure check | local artifact | pass | 19 US-Letter pages; correct v0.3 title/author metadata; no JavaScript/encryption; 47/47 citation closure |
-| Academic PDF visual review | 19-page rasterized contact sheet | local artifact | pass | No blank pages, clipping, overlap, broken tables/figures, malformed title, or publication-blocking layout defect observed |
-| arXiv metadata check | abstract extraction and package checklist | local artifact + official arXiv guidance accessed 2026-07-19 | pass for source candidate | Metadata lists 19 pages, two figures, and five tables; arXiv Preview remains a human submission-time gate |
-| Independent staged reviews | Three delegated review rounds plus `codex review --base origin/main` | staged tree | pass after corrections | Reviewers exposed malformed-input false passes, stale baseline/ordinal and packet-scope claims, boolean decisive aliases, and PR-controlled-enforcement overclaim; each blocker was corrected, retested, and independently closure-reviewed |
+| Academic LaTeX build | clean cached-only Tectonic compile from current source | local, Tectonic | pass | 19-page v0.3 RC2; 49 citations and 49 bibliography entries; no missing or uncited entries; only non-blocking underfull-box notices |
+| Clean source-package build | Extract minimal source archive and run Tectonic with `-C` cached-only mode | unique temporary clean directory | pass | Three-file archive compiled without source-network or local-path dependencies; source checker reported zero warnings/errors; ZIP SHA-256 `3524418418ab57de15daa5ad78f2de94c51bf0b6b9a1a5e3f51611962e0ea239` |
+| Academic PDF content review | `pdfinfo` plus citation/bibliography closure check | exact clean-build artifact | pass | 19 US-Letter pages; correct v0.3 RC2 title/author metadata; no JavaScript/encryption; 49/49 citation closure; PDF SHA-256 `5a250019284100211221fbc5afbd45f69946109898650622164305a40123096e` |
+| Academic PDF visual review | 19-page rasterized contact sheet plus high-resolution figure, command, and bibliography pages | exact clean-build artifact | pass | Figure 1 overlap repaired; Figure 2 identifies a Verdict record; no blank pages, clipping, overlap, broken tables/figures, or publication-blocking defect observed |
+| arXiv metadata check | abstract extraction and package checklist | local artifact + official arXiv guidance accessed 2026-07-20 | pass for source candidate | Metadata lists 19 pages, two figures, and five tables; abstract is 1,518 characters; arXiv Preview remains a human submission-time gate |
+| Independent staged reviews | Repository audits, full five-provider RC1 red team, three-provider RC2 delta, and targeted Codex closure | frozen staged trees/PDFs | pass after corrections | RC1 blockers were corrected; RC2 opening results were Claude `PASS`, Kimi `PASS`, and one Codex command-reproducibility blocker. Exact commands and two wording fixes were added; frozen Codex closure returned exactly `PASS`. |
 
 ## Negative / failure-mode checks
 

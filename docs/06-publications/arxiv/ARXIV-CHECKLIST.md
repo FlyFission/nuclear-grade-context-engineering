@@ -2,7 +2,7 @@
 
 **Scope:** Academic preprint package for *Who Authored the Evidence? Actor–Evidence Coupling in AI-Assisted Software Acceptance*. Following this checklist does not imply arXiv endorsement, moderation approval, or acceptance.
 
-**Official guidance checked:** 2026-07-19.
+**Official guidance checked:** 2026-07-20.
 
 ## Format and processor
 

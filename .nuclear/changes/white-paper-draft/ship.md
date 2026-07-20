@@ -13,15 +13,15 @@
 ## Release identity
 
 - Change slug: `white-paper-draft`
-- Version / release / baseline: Academic preprint v0.3 source candidate and research-driven repository update based on pre-change commit `7144831`
-- PR / commit / artifact: branch `alfred/white-paper-draft-20260719`; commit and PR authorized by Ben Huffer on 2026-07-19
+- Version / release / baseline: Academic preprint v0.3 RC2 source candidate and research-driven repository update based on pre-change commit `7144831`
+- PR / commit / artifact: branch `alfred/white-paper-draft-20260719`; PR #75 opened under Ben Huffer's 2026-07-19 authorization; focused RC2 remediation and PR update authorized on 2026-07-20
 - Owner: Ben Huffer / FlyFission
-- Date: 2026-07-19
+- Date: 2026-07-20
 - Intended release window: GitHub PR review; merge and external venue submission remain separate gates
 
 ## Scope and exclusions
 
-- Included: Current academic LaTeX preprint source, superseded practitioner draft retained as history, reproducible research records, custody/coupling doctrine, templates, migrated example, validator/CLI/MCP/tests, explicit external-enforcement limits, agent-role and session-hook guidance, skills/commands, starter kits, public boundaries, roadmap, and this Standard change packet.
+- Included: Current v0.3 RC2 academic LaTeX preprint source, RC1 red-team decision and RC2 revision records, superseded practitioner draft retained as history, reproducible research records, custody/coupling doctrine, templates, migrated example, validator/CLI/MCP/tests, explicit external-enforcement limits, agent-role and session-hook guidance, skills/commands, starter kits, public boundaries, roadmap, and this Standard change packet.
 - Excluded: Merge without review, public website, GitHub release, Zenodo DOI, actual arXiv upload/submission, press/social copy, empirical study.
 - Known non-goals: Compliance, certification, assurance, safety, security, production-fit, regulator-ready, “first,” or effectiveness claims.
 
@@ -32,7 +32,7 @@
 | Risk classification | pass | `risk.md` | Standard, local and reversible, public-claim review required |
 | Basis / requirements / claims | pass | `basis.md` | Eight bounded manuscript requirements |
 | Questioning attitude | pass | `risk.md` | Decision screen captured in risk record |
-| Verification | pass with gaps | `verification.md` | Deterministic, source, claim, and artifact checks passed; independent contribution review remains open |
+| Verification | pass with publication gaps | `verification.md` | Deterministic, source, claim, artifact, full RC1 red-team, RC2 delta, and blocker-closure checks passed; human author and submission gates remain open |
 | Dependency / supply-chain evidence | not applicable | — | No repo runtime dependency change |
 | AI-assisted work checks | pass for draft | `verification.md` | AI work disclosed; not independent acceptance |
 | Review / approval | pass for PR; gap for publication | `verification.md` | User authorized commit/push/PR; human editorial approval remains required before venue submission or final publication |
@@ -76,7 +76,7 @@
 
 - Decision: proceed to PR review; defer merge and external publication
 - Decision maker: Ben Huffer
-- Rationale: Ben explicitly authorized commit, branch push, and PR creation. Independent source/editorial review and final publication approval remain open.
+- Rationale: Ben explicitly authorized commit, branch push, PR creation, and the focused RC2 update. Provider-diverse review and narrow blocker closure passed; human author wording and final publication approval remain open.
 - Decision question answered by evidence? yes for opening the PR; no for merge, venue submission, or final publication.
 - Decider independent of the actor that produced the change? yes; human author owns the decision.
 - Decision rests on primary evidence the reviewer can reproduce, not the actor's narrative? planned.
@@ -91,7 +91,7 @@ The authorized apply action is limited to committing the staged repository chang
 
 | Clearance check | Status | Notes |
 |---|---|---|
-| Required approvals present and current | yes | User explicitly authorized commit, push, and PR creation on 2026-07-19 |
+| Required approvals present and current | yes | User explicitly authorized commit/push/PR on 2026-07-19 and the focused RC2 update on 2026-07-20 |
 | Release / maintenance window open | not applicable | No operational release |
 | External state unchanged since verification — verdict not stale | yes | Local draft only |
 | Deployment policy satisfied | not applicable | No deployment |

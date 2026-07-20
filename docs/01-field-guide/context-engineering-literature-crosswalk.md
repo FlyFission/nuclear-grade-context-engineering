@@ -71,9 +71,9 @@ lens is now named in `context-packs.md` §1.
 
 **Where the survey goes deeper than we do.** Its **memory** section (episodic vs. working memory,
 graph-backed memory, production systems such as MemGPT/Letta) is a richer literature than our
-`durable-memory.md` currently cites — which is exactly why that doc and the planned MCP server over
-`.nuclear/` (see [`../../ROADMAP.md`](../../ROADMAP.md)) point at it as the place to look when we
-build retrievable cross-run memory for real.
+`durable-memory.md` currently cites — which is exactly why that doc and the planned retrievable
+memory store over `.nuclear/` (see [`../../ROADMAP.md`](../../ROADMAP.md)) point at it as the place
+to look when we build retrievable cross-run memory for real.
 
 ---
 

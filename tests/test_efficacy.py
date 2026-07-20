@@ -149,10 +149,22 @@ def test_eval_command_reports_malformed_case_clearly(tmp_path):
 
 
 def test_eval_command_reports_full_coverage():
+    cases = efficacy.load_cases(CASES_DIR)
+    expected_signals = sum(len(case.signals) for case in cases)
+
+    # Deriving the total from the cases avoids a merge-conflict hotspot when new
+    # cases are added, but still guard the accepted baseline: adding cases may
+    # raise this total, but a drop below 15 means a signal was removed from
+    # evals/cases/*.json and must not pass silently.
+    assert expected_signals >= 15, (
+        f"decision-signal total {expected_signals} fell below the accepted baseline of 15; "
+        "a signal was likely dropped from evals/cases/*.json"
+    )
+
     result = run_ng("eval", str(ROOT))
 
     assert result.returncode == 0, result.stderr
-    assert "Decision-signal coverage: 15/15" in result.stdout
+    assert f"Decision-signal coverage: {expected_signals}/{expected_signals}" in result.stdout
     assert "[ok]" in result.stdout
 
 

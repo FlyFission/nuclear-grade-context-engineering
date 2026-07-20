@@ -13,6 +13,9 @@ Any "yes" puts you in this kit:
   on;
 - the repo is published under a license whose obligations need careful wording;
 - the repo's source lineage is contested, paywalled, or non-public.
+- the repo claims a method is first, original, unique, or novel;
+- the repo says a method improves, reduces, prevents, proves, or outperforms based on author scores, design inspection, or artifact presence;
+- provenance, hashes, traces, human review, or a second agent are presented as automatic proof of adequacy or independence.
 
 ## Drop this into your repo
 
@@ -51,5 +54,5 @@ universal map-each-claim-to-evidence-or-a-gap discipline.
 
 ## Source-lineage note
 
-This kit packages original patterns from this repository. It does not create assurance. See
+This kit packages authored patterns from this repository and their public lineage. It does not create assurance or establish research novelty. See
 [`../../DISCLAIMER.md`](../../DISCLAIMER.md).

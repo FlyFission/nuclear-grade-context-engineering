@@ -2,7 +2,7 @@
 
 **Purpose:** This file lays out the Nuclear-grade backbone for software changes made with AI help.
 
-**Core thesis:** Nuclear-grade joins two habits. The first is a questioning attitude: challenge what you assume. The second is keeping the approved version of everything under control (configuration management). For AI-assisted work, that means you run the power of a large language model (LLM) through clear steps. Check your assumptions. Write down what you need. Name what must stay under control. Tie each claim to its proof. Verify. Review. Decide. Save the version everyone agreed is correct. Then learn from real use. You do all this without wasting tokens or piling on busywork.
+**Core thesis:** Nuclear-grade joins two habits. The first is a questioning attitude: challenge what you assume. The second is keeping the accepted version of everything under control (configuration management). For AI-assisted work, that means you run the power of a large language model (LLM) through clear steps. Check your assumptions. Write down what you need. Name what must stay under control. Tie each claim to evidence and expose who controlled that evidence path. Verify. Review. Decide. Save the exact state accepted for reliance under the recorded evidence, risks, and revalidation triggers. Then learn from real use. You do all this without wasting tokens or piling on busywork.
 
 **Lifecycle spine:**
 
@@ -16,7 +16,7 @@ This is a way of working, not a compliance program. You sort the risk inside `ri
 
 Under the spine sit habits from Human Performance Improvement (HPI). Scale them to how much is at stake: preview the task, check the real repo and files, pause when unsure, check your own work, hand off cleanly, pick the right kind of verification, decide with care, and learn from real use (lessons from real operation, or OPEX). Use `hpi-overlays.md` for those small controls. Keep this lifecycle steady.
 
-The lifecycle has two speeds. While you explore and build drafts, move fast and stay willing to throw work away. Slow down at acceptance. That is the moment a claim, a controlled item, the version everyone agreed is correct (a baseline), a public statement, a release call, or a change to what the agent may do becomes something people now trust. The early steps stop you from racing toward the wrong question. The later steps stop a quick draft from becoming the accepted version with no proof behind it.
+The lifecycle has two speeds. While you explore and build drafts, move fast and stay willing to throw work away. Slow down at acceptance. That is the moment a claim, a controlled item, an identified state accepted for reliance (a baseline), a public statement, a release call, or a change to what the agent may do becomes something people now trust. Acceptance records a bounded decision; it does not establish objective correctness. The early steps stop you from racing toward the wrong question. The later steps stop a quick draft from becoming the accepted version with no evidence path behind it.
 
 ---
 
@@ -29,38 +29,38 @@ The lifecycle has two speeds. While you explore and build drafts, move fast and 
 | Specify | What state or behavior is required? | Requirements, claims, outcomes to protect, assumptions, acceptance criteria. | Claims can be tested or are marked as gaps. |
 | Plan | How will the controlled setup change? | Steps, affected items, rollback, proof commands. | Work can go on without rediscovering scope. |
 | Execute | Did the build stay inside its authority? Did it make a draft, not an accepted state? | Diffs, commits, generated files, self-checks, notes on what the AI did. | Any deviation is recorded, not hidden drift. |
-| Verify | What hard evidence backs the claims? What is still a fact, an assumption, an unknown, a source claim, or local proof? | Tests, evals, reviews, and results, each with a status, a verification type, and gaps. | The evidence matches the claim, and an independent party can reproduce it — or it is labeled a self-check and carried as residual risk. |
+| Verify | What evidence backs the claims, who controlled its path, and what is still a fact, assumption, unknown, source claim, or local proof? | Evidence items with stable IDs, status, custody, five-axis coupling profile, validity, and gaps. | Decisive evidence matches the claim and meets the consequence-specific profile, or its coupling is disclosed and carried as an explicit gap or residual-risk disposition. |
 | Review | Can a doubting reviewer accept the work without relying on confidence or vague instructions? | A claim-to-evidence review, a work-product review, a check of boundary wording, and a call on leftover risk. | The accept, defer, or block call can be reviewed against primary evidence, not the actor's summary of it. |
-| Decide | Should the draft become the accepted setup, ship, block, defer, or go on with leftover risk? This **verdict** answers whether the change is *correct and worth releasing*; it is a separate state from **apply-clearance**, which answers whether it may be applied *now* (see below). | Decision, conditions, owner, baseline trigger; an apply-clearance call when the change takes a real-world action. | The release decision is stated out loud, by a decider independent of the actor on trust-bearing work; clearance to apply now is a separate, operator-owned call. |
+| Decide | Does the admitted evidence justify accepting, blocking, deferring, or bounding reliance on this exact candidate? This **verdict** is separate from **apply-clearance**, which answers whether it may be applied *now* (see below). | Decision, admitted evidence set, conditions, owner, residual-risk disposition, baseline trigger; an apply-clearance call when the change takes a real-world action. | The verdict authority and evidence-path coupling satisfy the consequence policy; clearance to apply now remains a separate, operator-owned call. |
 | Baseline | What accepted state is now under control after the slow, careful acceptance? | Commit, release, or artifact, plus the state of controlled items and the triggers. | Future drift can be spotted. |
 | Operate | What signals show drift or failure? | Monitors, support signals, incident triggers. | Operators know what to watch. |
 | Learn | What should change next time? | An OPEX note tied to a basis, test, control, template, or baseline update. | The lesson changes something or is closed out. |
 
 ---
 
-## Independence at the gates
+## Evidence custody and coupling at the gates
 
-Verify, Review, and Decide are where a draft becomes a trusted state — and in the default
-single-agent path the same agent that built the change also authors what those gates read. That
-coupling is the loop's sharpest failure mode: a confident hallucination produces a wrong change
-*and* the evidence, narrative, and risk call that say it is correct, so the gate cannot tell a
-sound change from a fluent error — it never sees anything the actor did not write. Break the
-coupling in proportion to the stakes: make the load-bearing claim's evidence reproducible by an
-independent party or authored by an independent verifier, and keep the decider off the work it is
-deciding. This is the dual of the rule that an agent must not be able to edit its own gate. See
+Verify, Review, and Decide are where a draft becomes a relied-upon state. In the default single-agent
+path the same process can build the change, select tests, summarize results, frame residual risk, and
+write what every gate reads. A confident error can therefore clear each gate for which it also wrote
+the input. Expose who generated, selected, transformed, captured, retained, and presented each
+decisive item. Record actor, context, mechanism, authority, and resource coupling separately. Then
+reduce prohibited coupling in proportion to the consequence through protected capture, independent
+reproduction, diverse verification, direct witnessing, or separated verdict authority. A second
+agent or human label does not by itself establish independence. See
 [`actor-evidence-independence.md`](actor-evidence-independence.md).
 
 ---
 
 ## Verdict and apply-clearance are two states
 
-`Decide` produces a **verdict**: on the evidence, is the change correct and worth releasing? That is not
+`Decide` produces a **verdict**: does the admitted evidence justify accepting this exact candidate for the stated reliance? That is not
 the same state as being **cleared to apply**: should it actually be applied in the current context? The
 two line up most of the time and diverge once the work touches production — approvals lapse, a freeze or
-maintenance window closes, external state drifts, or deployment policy changes *after* correctness was
-established. So a `ship` verdict is not a standing authorization. Apply-clearance is an operator/policy
+maintenance window closes, external state drifts, or deployment policy changes *after* the verdict was
+issued. So a `ship` verdict is not a standing authorization. Apply-clearance is an operator/policy
 call (rung 4-5 on trust-bearing or irreversible work), context- and time-sensitive, and **re-checked at
-apply-time** — a stale "go" can otherwise ship a correct change into the wrong moment. The read-only
+apply-time** — a stale "go" can otherwise apply an accepted change in the wrong context. The read-only
 decider that authors the verdict is, by design, blind to live operational context, so it cannot own this
 call; clearance is the operator's, mirroring the way Execute opens only after a human approves the plan.
 Today the loop's `Execute` beat builds a *draft*, so the gap is narrow; it widens as agents take real

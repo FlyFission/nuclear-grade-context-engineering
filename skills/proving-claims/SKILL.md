@@ -47,7 +47,8 @@ Boundary: this skill builds the claim-to-evidence trace that feeds other decisio
 5. Give each claim an evidence status: `pass`, `fail`, `gap`, `deferred`, `not applicable`, or `planned`.
 6. Trim any claim that reaches too far, until the evidence truly backs it.
 7. Record the gaps and how they affect the release.
-8. For each load-bearing claim, name who authored the evidence relative to the actor. If only the actor did, it is a self-check: raise it to a reproducible or independently authored check, or carry the gap as residual risk — do not count it as an independent check. See `docs/02-operating-system/actor-evidence-independence.md`.
+8. For each load-bearing claim, record evidence custody: who generated, selected, transformed or summarized, executed or captured, retained, and presented it.
+9. Record the actor–evidence coupling profile on the actor, context, mechanism, authority, and resource axes. Do not collapse the profile into a score or rung. If the profile is too coupled for the consequence, add independent reproduction or diverse verification, or carry the gap as residual risk — do not count the actor's self-check as independent. See `docs/02-operating-system/actor-evidence-independence.md`.
 
 ## Outputs
 
@@ -81,7 +82,7 @@ Boundary: this skill builds the claim-to-evidence trace that feeds other decisio
 - The evidence status is missing.
 - A claim says "safe", "secure", "compliant", or "approved" with no scope around it.
 - The release decision ignores failed or deferred evidence.
-- The only evidence for the load-bearing claim is the actor's own narration, and no independent party can reproduce it.
+- The only evidence for the load-bearing claim is the actor's own narration, or the custody/profile disclosure is missing, internally inconsistent, or below the consequence-specific minimum.
 
 ## Prompt
 
@@ -96,7 +97,8 @@ Inputs:
 
 Return:
 - claim -> basis -> control/design feature -> support type -> verification type -> evidence -> status -> ship posture
-- for each load-bearing claim: who authored the evidence relative to the actor, whether an independent party can reproduce it, and the independence rung (a self-check carried as residual risk if below the stakes)
+- for each load-bearing claim: evidence custody (generated, selected, transformed/summarized, executed/captured, retained, presented)
+- the five-axis actor–evidence coupling profile (actor, context, mechanism, authority, resource), the consequence-specific minimum, and any residual coupling or blocker
 - narrower wording for any claim that is too broad
 - the gaps, deferrals, or blockers, stated plainly
 - the validator command to run
@@ -104,4 +106,4 @@ Return:
 
 ## Source-lineage note
 
-This skill is an original claim-evidence workflow influenced by public software assurance, verification discipline, and secure development sources mapped in `docs/00-standards-foundation/source-map.md`. It is not formal verification.
+This skill is an authored claim-evidence workflow influenced by public professional self-review, software assurance, verification, provenance, and secure-development sources mapped in `docs/00-standards-foundation/source-map.md`. It is not formal verification and does not establish evidence independence.

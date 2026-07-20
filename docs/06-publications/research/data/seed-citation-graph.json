@@ -1,0 +1,308 @@
+{
+  "delegation-contracts": {
+    "seed": {
+      "id": "https://openalex.org/W7164989065",
+      "doi": "https://doi.org/10.48550/arxiv.2606.17099",
+      "title": "Software Delegation Contracts: Measuring Reviewability in AI Coding-Agent Work",
+      "publication_year": 2026,
+      "cited_by_count": 0,
+      "type": "preprint",
+      "cited_by_api_url": null
+    },
+    "citing_error": "KeyError('cited_by_api_url')",
+    "references": [],
+    "related": []
+  },
+  "human-oversight-tests": {
+    "seed": {
+      "id": "https://openalex.org/W7166070675",
+      "doi": "https://doi.org/10.61278/itea.47.2.1008",
+      "title": "Human Oversight for AI-Generated Test Artifacts",
+      "publication_year": 2026,
+      "cited_by_count": 0,
+      "type": "article",
+      "cited_by_api_url": null
+    },
+    "citing_error": "KeyError('cited_by_api_url')",
+    "references": [],
+    "related": []
+  },
+  "decision-assurance": {
+    "seed": {
+      "id": "https://openalex.org/W7166219599",
+      "doi": "https://doi.org/10.61278/itea.47.2.1005",
+      "title": "Decision Assurance for AI-Enabled Mission Systems: From Test Evidence to Operational Authority",
+      "publication_year": 2026,
+      "cited_by_count": 0,
+      "type": "article",
+      "cited_by_api_url": null
+    },
+    "citing_error": "KeyError('cited_by_api_url')",
+    "references": [],
+    "related": []
+  },
+  "intent-claim-review": {
+    "seed": {
+      "id": "https://openalex.org/W7166740058",
+      "doi": "https://doi.org/10.2139/ssrn.7030983",
+      "title": "From Traceability to Reviewability: Intent-Anchored Claim Review for Agentic AI Design Handoffs",
+      "publication_year": 2026,
+      "cited_by_count": 0,
+      "type": "preprint",
+      "cited_by_api_url": null
+    },
+    "citing_error": "KeyError('cited_by_api_url')",
+    "references": [
+      {
+        "id": "https://openalex.org/W1982500521",
+        "doi": "https://doi.org/10.1145/1323688.1323689",
+        "title": "Creativity support tools: accelerating discovery and innovation",
+        "publication_year": 2007,
+        "cited_by_count": 734,
+        "type": "article",
+        "referenced_works": null,
+        "related_works": null,
+        "cited_by_api_url": null
+      },
+      {
+        "id": "https://openalex.org/W2010793828",
+        "doi": "https://doi.org/10.1007/bf01405730",
+        "title": "Dilemmas in a general theory of planning",
+        "publication_year": 1973,
+        "cited_by_count": 15378,
+        "type": "article",
+        "referenced_works": null,
+        "related_works": null,
+        "cited_by_api_url": null
+      },
+      {
+        "id": "https://openalex.org/W2041282815",
+        "doi": "https://doi.org/10.1080/01621459.1952.10483441",
+        "title": "Use of Ranks in One-Criterion Variance Analysis",
+        "publication_year": 1952,
+        "cited_by_count": 12125,
+        "type": "article",
+        "referenced_works": null,
+        "related_works": null,
+        "cited_by_api_url": null
+      },
+      {
+        "id": "https://openalex.org/W2053154970",
+        "doi": "https://doi.org/10.1177/001316446002000104",
+        "title": "A Coefficient of Agreement for Nominal Scales",
+        "publication_year": 1960,
+        "cited_by_count": 41531,
+        "type": "article",
+        "referenced_works": null,
+        "related_works": null,
+        "cited_by_api_url": null
+      },
+      {
+        "id": "https://openalex.org/W2063052894",
+        "doi": "https://doi.org/10.1518/001872097778543886",
+        "title": "Humans and Automation: Use, Misuse, Disuse, Abuse",
+        "publication_year": 1997,
+        "cited_by_count": 4101,
+        "type": "article",
+        "referenced_works": null,
+        "related_works": null,
+        "cited_by_api_url": null
+      },
+      {
+        "id": "https://openalex.org/W2124344619",
+        "doi": "https://doi.org/10.1017/s0269888900008122",
+        "title": "Intelligent agents: theory and practice",
+        "publication_year": 1995,
+        "cited_by_count": 6664,
+        "type": "article",
+        "referenced_works": null,
+        "related_works": null,
+        "cited_by_api_url": null
+      },
+      {
+        "id": "https://openalex.org/W2129559874",
+        "doi": "https://doi.org/10.1109/icre.1994.292398",
+        "title": "An analysis of the requirements traceability problem",
+        "publication_year": 2002,
+        "cited_by_count": 1234,
+        "type": "conference-paper",
+        "referenced_works": null,
+        "related_works": null,
+        "cited_by_api_url": null
+      },
+      {
+        "id": "https://openalex.org/W2911396267",
+        "doi": "https://doi.org/10.1073/pnas.1807184115",
+        "title": "Agency plus automation: Designing artificial intelligence into interactive systems",
+        "publication_year": 2019,
+        "cited_by_count": 274,
+        "type": "article",
+        "referenced_works": null,
+        "related_works": null,
+        "cited_by_api_url": null
+      },
+      {
+        "id": "https://openalex.org/W3011186445",
+        "doi": "https://doi.org/10.1111/jpim.12523",
+        "title": "Innovation and Design in the Age of Artificial Intelligence",
+        "publication_year": 2020,
+        "cited_by_count": 776,
+        "type": "article",
+        "referenced_works": null,
+        "related_works": null,
+        "cited_by_api_url": null
+      },
+      {
+        "id": "https://openalex.org/W4241464738",
+        "doi": "https://doi.org/10.4324/9781315237473",
+        "title": "The Reflective Practitioner",
+        "publication_year": 2017,
+        "cited_by_count": 1578,
+        "type": "book",
+        "referenced_works": null,
+        "related_works": null,
+        "cited_by_api_url": null
+      },
+      {
+        "id": "https://openalex.org/W4243342770",
+        "doi": "https://doi.org/10.1518/hfes.46.1.50.30392",
+        "title": "Trust in Automation: Designing for Appropriate Reliance",
+        "publication_year": 2004,
+        "cited_by_count": 3811,
+        "type": "article",
+        "referenced_works": null,
+        "related_works": null,
+        "cited_by_api_url": null
+      },
+      {
+        "id": "https://openalex.org/W4366003124",
+        "doi": "https://doi.org/10.1145/3579605",
+        "title": "Explanations Can Reduce Overreliance on AI Systems During Decision-Making",
+        "publication_year": 2023,
+        "cited_by_count": 318,
+        "type": "article",
+        "referenced_works": null,
+        "related_works": null,
+        "cited_by_api_url": null
+      },
+      {
+        "id": "https://openalex.org/W4393065402",
+        "doi": "https://doi.org/10.1007/s11704-024-40231-1",
+        "title": "A survey on large language model based autonomous agents",
+        "publication_year": 2024,
+        "cited_by_count": 1262,
+        "type": "article",
+        "referenced_works": null,
+        "related_works": null,
+        "cited_by_api_url": null
+      },
+      {
+        "id": "https://openalex.org/W7133214447",
+        "doi": "https://doi.org/10.52202/075280-2997",
+        "title": "Toolformer: Language Models Can Teach Themselves to Use Tools",
+        "publication_year": 2023,
+        "cited_by_count": 145,
+        "type": "conference-paper",
+        "referenced_works": null,
+        "related_works": null,
+        "cited_by_api_url": null
+      },
+      {
+        "id": "https://openalex.org/W7133222210",
+        "doi": "https://doi.org/10.52202/075280-0377",
+        "title": "Reflexion: language agents with verbal reinforcement learning",
+        "publication_year": 2023,
+        "cited_by_count": 236,
+        "type": "conference-paper",
+        "referenced_works": null,
+        "related_works": null,
+        "cited_by_api_url": null
+      }
+    ],
+    "related": []
+  },
+  "traces-to-trust": {
+    "seed": {
+      "id": "https://openalex.org/W7163565702",
+      "doi": "https://doi.org/10.48550/arxiv.2606.04990",
+      "title": "From Agent Traces to Trust: A Survey of Evidence Tracing and Execution Provenance in LLM Agents",
+      "publication_year": 2026,
+      "cited_by_count": 0,
+      "type": "preprint",
+      "cited_by_api_url": null
+    },
+    "citing_error": "KeyError('cited_by_api_url')",
+    "references": [],
+    "related": []
+  },
+  "runtime-paths": {
+    "seed": {
+      "id": "https://openalex.org/W7139105281",
+      "doi": "https://doi.org/10.48550/arxiv.2603.16586",
+      "title": "Runtime Governance for AI Agents: Policies on Paths",
+      "publication_year": 2026,
+      "cited_by_count": 1,
+      "type": "preprint",
+      "cited_by_api_url": null
+    },
+    "citing_error": "KeyError('cited_by_api_url')",
+    "references": [],
+    "related": []
+  },
+  "contextnest": {
+    "seed": {
+      "id": "https://openalex.org/W7167280029",
+      "doi": "https://doi.org/10.48550/arxiv.2607.02116",
+      "title": "ContextNest: Verifiable Context Governance for Autonomous AI Agent",
+      "publication_year": 2026,
+      "cited_by_count": 0,
+      "type": "preprint",
+      "cited_by_api_url": null
+    },
+    "citing_error": "KeyError('cited_by_api_url')",
+    "references": [],
+    "related": []
+  },
+  "execution-boundary": {
+    "seed": {
+      "id": "https://openalex.org/W7134282576",
+      "doi": "https://doi.org/10.31224/6583",
+      "title": "Boundary as an Execution-Time Primitive for AI-Assisted Software Development Governance",
+      "publication_year": 2026,
+      "cited_by_count": 0,
+      "type": "preprint",
+      "cited_by_api_url": null
+    },
+    "citing_error": "KeyError('cited_by_api_url')",
+    "references": [],
+    "related": []
+  },
+  "evidence-packages": {
+    "seed": {
+      "id": "https://openalex.org/W7165783359",
+      "doi": "https://doi.org/10.2139/ssrn.6987749",
+      "title": "EATF-MultiRoot: A Reproducible Verifier and Corpus for AI-Agent Evidence Packages",
+      "publication_year": 2026,
+      "cited_by_count": 0,
+      "type": "preprint",
+      "cited_by_api_url": null
+    },
+    "citing_error": "KeyError('cited_by_api_url')",
+    "references": [],
+    "related": []
+  },
+  "aegis-runtime": {
+    "seed": {
+      "id": "https://openalex.org/W7162506683",
+      "doi": "https://doi.org/10.2139/ssrn.6783978",
+      "title": "Runtime Governance for Agentic AI: Action-Boundary Control with Trusted Provenance and Fail-Closed Execution",
+      "publication_year": 2026,
+      "cited_by_count": 0,
+      "type": "preprint",
+      "cited_by_api_url": null
+    },
+    "citing_error": "KeyError('cited_by_api_url')",
+    "references": [],
+    "related": []
+  }
+}

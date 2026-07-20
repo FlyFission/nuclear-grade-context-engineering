@@ -37,6 +37,7 @@
 | Verification | | `verification.md` | |
 | Dependency / supply-chain evidence | | | |
 | AI-assisted work checks | | | |
+| Evidence custody / coupling profile | | `verification.md` | |
 | Review / approval | | | |
 
 ## Residual risks and gaps
@@ -69,13 +70,14 @@
 
 ## Release decision
 
-This is the **verdict** on correctness and release-worthiness — *should this draft become the accepted version?* It is decided on the evidence by a decider independent of the actor. It is **not, by itself, authorization to apply right now**; that is the separate **Apply clearance** section below. A `ship` verdict says the change is correct and worth releasing, not that the current moment is the right one to apply it.
+This is the **verdict** on correctness and release-worthiness — *should this draft become the accepted version?* The verdict owner and any residual coupling to the actor must be visible. It is **not, by itself, authorization to apply right now**; that is the separate **Apply clearance** section below. A `ship` verdict says what the admitted evidence supports, not that the current moment is the right one to apply it.
 
 - Decision: ship / do not ship / defer / ship with residual risk
 - Decision maker:
 - Rationale:
 - Decision question answered by evidence? yes/no:
-- Decider independent of the actor that produced the change? yes / no / not trust-bearing:
+- Verdict owner's authority axis relative to the actor: coupled / partially separated / separated; why:
+- Minimum coupling profile for this consequence met? yes / no; gap if no:
 - Decision rests on primary evidence the reviewer can reproduce, not the actor's narrative? yes/no:
 - Conditions attached:
 - Decision posture: conservative enough / not conservative enough:
@@ -84,7 +86,7 @@ This is the **verdict** on correctness and release-worthiness — *should this d
 
 ## Apply clearance
 
-The release decision above answers *is this correct and worth releasing*. This section answers a **different question**: *may it be applied right now, in the current context?* The two states line up most of the time, but once a change touches production they can diverge — approvals lapse, a freeze/maintenance window closes, external state drifts, or deployment policy changes after correctness was established. A `ship` verdict is **not a standing authorization**: clearance is checked against operational reality at apply-time and can lapse. Clearance is an operator/policy call, distinct from the read-only verdict; for trust-bearing or irreversible apply, it rests with an independent human (see `docs/02-operating-system/actor-evidence-independence.md`).
+The release decision above answers *what does the evidence support*. This section answers a **different question**: *may this exact candidate be applied to this target right now?* The two states line up most of the time, but once a change touches production they can diverge — approvals lapse, a freeze/maintenance window closes, external state drifts, or deployment policy changes after the verdict. A `ship` verdict is **not a standing authorization**: clearance is checked against operational reality at apply-time and can lapse. Clearance is an operator/policy call with explicit authority; its required separation from the change actor is consequence-specific (see `docs/02-operating-system/actor-evidence-independence.md`).
 
 If the change makes no real-world action (for example a docs-only change that is its own apply), mark clearance `not applicable` and say why.
 

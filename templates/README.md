@@ -26,7 +26,9 @@ templates/standard/verification.md
 templates/standard/ship.md
 ```
 
-Standard templates are kept light on purpose. If a record does not need much detail, keep it short rather than delete it.
+Standard templates are kept light on purpose. For each load-bearing claim, `verification.md` now
+records evidence custody and the five-axis actor–evidence coupling profile. Keep non-load-bearing
+rows short rather than copying the full disclosure everywhere.
 
 Use `templates/standard/supplier-trust.md` only when a dependency, model, API, SaaS tool, generated file, or vendor claim affects the evidence, permissions, data, release stance, or public trust. It is an add-on you turn on, not part of every Standard packet.
 
@@ -72,6 +74,9 @@ Run the validator against a completed packet:
 
 ```bash
 python tools/ng_validate.py .nuclear/changes/<slug>/
+
+# During the evidence-custody migration, require the new Standard disclosure explicitly:
+python tools/ng_validate.py .nuclear/changes/<slug>/ --strict-custody
 ```
 
 See the completed example packet under:

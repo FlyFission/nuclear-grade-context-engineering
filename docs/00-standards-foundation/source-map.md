@@ -1,10 +1,10 @@
 # Source Map
 
-**Purpose:** List the public, open, linkable sources that Nuclear-grade may cite directly. These are also the sources whose ideas can shape its original software workflows.
+**Purpose:** List the public, open, linkable sources that Nuclear-grade may cite directly. These sources document the lineage behind its open software-native synthesis and reference implementation.
 
 **Repo posture:** Nuclear-grade is a teaching method for software engineering. It is built on public sources. It does not claim to meet DOE, NRC, IAEA, CNSC, ONR, ASME, EPRI, IEEE, IEC, ISO, ANSI/ANS, NEI, NASA, NIST, CISA, OpenSSF, OWASP, or any other framework.
 
-**Use rule:** A source can shape public templates only when two things are true. First, it is public, open, and linkable. Second, the workflow we build from it is original, made for software, and claims no compliance.
+**Use rule:** A source can shape public templates only when two things are true. First, it is public, open, and linkable. Second, the resulting artifact is an authored software adaptation that states its lineage and claims neither conceptual priority nor compliance merely because the implementation text or code is new.
 
 ---
 
@@ -150,7 +150,7 @@ The graded approach is the repo's central organizing principle and is already an
 
 ## Tier 6 — Agentic-AI Operations Sources
 
-These sources shape how we attack-test agents, trace what they do, and profile them. They are supporting context only. The workflows we build from them are original and work with any tool. You do not need NIM, a GPU, W&B, or NeMo to use the skills and templates.
+These sources shape how we attack-test agents, trace what they do, and profile them. They are supporting context only. The repository assembles them into an open, tool-agnostic reference workflow. You do not need NIM, a GPU, W&B, or NeMo to use the skills and templates.
 
 | Source | Public link | Classification | Status | Role in Nuclear-grade | Confidence | Direct repo use |
 |---|---|---:|---|---|---:|---|
@@ -165,12 +165,26 @@ These sources shape how we attack-test agents, trace what they do, and profile t
 | Capability-based scaling trends for LLM red-teaming (arXiv:2505.20162) | https://arxiv.org/abs/2505.20162 | Supporting | verified-public | Fixed-capability probes miss the unknown-unsafe frontier as systems improve. | Medium | Concept lineage for scenario discovery beyond known attack classes (functional insufficiency); no compliance claim. |
 | OpenAI Model Spec, chain of command | https://model-spec.openai.com/2025-09-12.html | Supporting | verified-public | Authority hierarchy and the rule to ignore untrusted data by default. | Medium-high | Concept lineage for treating retrieved pages, tool output, issues, and logs as evidence data rather than operating authority; no model-specific dependency. |
 | OWASP LLM01: Prompt Injection | https://genai.owasp.org/llmrisk/llm01-prompt-injection/ | Supporting | verified-public | Direct and indirect prompt-injection risk, including malicious content in external data. | Medium-high | Concept lineage for the instruction-smuggling failure mode in `context-window-discipline.md`; no appsec compliance claim. |
+| IESBA Code and self-review threat | https://www.ethicsboard.org/iesba-code | Supporting | verified-public | Professional-independence doctrine: evaluating or relying on prior work can create a self-review threat. | High | Conceptual ancestor for evidence self-authorship; use to concede that the generic independence problem predates AI. |
+| Panickssery et al., "LLM Evaluators Recognize and Favor Their Own Generations" (arXiv:2404.13076) | https://arxiv.org/abs/2404.13076 | Supporting | verified-public | Empirical evidence that model evaluators can recognize and prefer their own outputs. | High | Mechanism evidence for actor/evaluator coupling; not proof of software-safety benefit. |
+| Li et al., "Preference Leakage: A Contamination Problem in LLM-as-a-judge" (arXiv:2502.01534) | https://arxiv.org/abs/2502.01534 | Supporting | verified-public | Generator/evaluator preference leakage and correlated model-family effects. | High | Mechanism evidence for the context and mechanism axes of the coupling profile. |
+| Schmalbach, "Software Delegation Contracts" (arXiv:2606.17099) | https://arxiv.org/abs/2606.17099 | Supporting | verified-public | Measures reviewability of AI coding-agent work through delegation-contract structure. | High | Close prior art for reviewable agent handoffs; custody and multidimensional coupling are the narrower extension. |
+| Kang, "Governed AI-Assisted Engineering" (arXiv:2606.22484) | https://arxiv.org/abs/2606.22484 | Supporting | verified-public | Graduated human oversight for agentic code generation in regulated domains. | High | Close prior art for consequence-graded governance and human oversight; prevents broad novelty claims for graded rigor. |
+| Sulpovar et al., "ContextNest" (arXiv:2607.02116) | https://arxiv.org/abs/2607.02116 | Supporting | verified-public | Verifiable context governance for autonomous agents. | Medium-high | Adjacent context-governance work; reinforces that governed context is not the novel center. |
+| Kaptein et al., "Runtime Governance for AI Agents: Policies on Paths" (arXiv:2603.16586) | https://arxiv.org/abs/2603.16586 | Supporting | verified-public | Runtime policy enforcement over agent action paths. | High | Prior art for runtime authorization and apply-time policy; verdict/apply separation remains an implementation primitive. |
+| Wang et al., "From Agent Traces to Trust" (arXiv:2606.04990) | https://arxiv.org/abs/2606.04990 | Supporting | verified-public | Survey of agent evidence tracing and execution provenance. | High | Provenance and trace lineage; reinforces that trace linkage is not semantic adequacy or evidence custody. |
+| Pollner et al., "Human Oversight for AI-Generated Test Artifacts" | https://itea.org/journals/volume-47-2/human-oversight-for-ai-generated-test-artifacts/ | Supporting | verified-public | AI-generated tests are candidate artifacts, not self-validating evidence; oversight should scale to risk. | High | Close prior art for generated-test custody and independent review; Nuclear-grade extends the question across the complete acceptance evidence path. |
+| Kawas, "Decision Assurance for AI-Enabled Mission Systems" | https://doi.org/10.61278/itea.47.2.1005 | Supporting | verified-public | Connects test evidence to operational decision authority. | High | Close lineage for evidence-to-authority reasoning and for treating verdict/apply-clearance as established-adjacent. |
+| Ravuru, "Artifact Gate Evaluation for AI-Assisted Software Delivery" | https://doi.org/10.2139/ssrn.6940958 | Supporting | verified-public | Controlled comparison of prompt-to-code, specification-driven, and artifact-aware delivery. | Medium-high | Prevents novelty claims for artifact-gate workflows or the current twelve-scenario design inspection. |
+| Ming et al., "From Traceability to Reviewability" | https://doi.org/10.2139/ssrn.7030983 | Supporting | verified-public | Intent-anchored claim/evidence structures for reviewing agent-generated software work. | High | Close reviewability prior art; custody and multidimensional coupling remain the narrower Nuclear-grade seam. |
+| Kaul et al., "Behavioral Governance for Autonomous AI Agents: The AgentBound Framework" (arXiv:2606.30970) | https://arxiv.org/abs/2606.30970 | Supporting | verified-public | Behavioral constraints and runtime governance for autonomous agents. | Medium-high | Adjacent agent-governance prior art; not direct custody lineage. |
+| Palantir Ontology, proposals, scenarios, actions, and observability documentation | https://www.palantir.com/docs/foundry/ontology/overview/ | Context-only | supporting-context | Broad operational semantic layer joining governed state, actions, permissions, review, logs, scenarios, and agent traces. | High | Industrial analogue and architecture inspiration only; not direct template lineage and not a platform Nuclear-grade claims to replace. |
 
 ---
 
 ## Tier 7 — Project Structuring, Decomposition & Agentic-Folder Architecture Sources
 
-These sources shape how we break work into pieces and how we lay out folders and files. They are supporting context only. The workflows we build from them are original, made for software, and work with any tool. The main DOE Work Breakdown Structure Handbook is listed in Tier 1. We claim no compliance with DOE, DoD, NASA, PMI, GAO, NARA, NIST, INCOSE, or ISO.
+These sources shape how we break work into pieces and how we lay out folders and files. They are supporting context only. The repository's implementation is an open software-native synthesis that works with any tool. The main DOE Work Breakdown Structure Handbook is listed in Tier 1. We claim no compliance with DOE, DoD, NASA, PMI, GAO, NARA, NIST, INCOSE, or ISO.
 
 | Source | Public link | Classification | Status | Role in Nuclear-grade | Confidence | Direct repo use |
 |---|---|---:|---|---|---:|---|
@@ -189,7 +203,7 @@ These sources shape how we break work down and keep folders in order. Nothing mo
 
 ## Tier 8 — Leadership, Human-Performance, and High-Reliability Operating Culture
 
-These sources shape how people and AI agents are directed, how authority and intent are handled, and how teams stay honest and recover from failure. They are concept lineage only. The workflows built from them are original and software-native. We claim no compliance with any program, and we reproduce no proprietary book.
+These sources shape how people and AI agents are directed, how authority and intent are handled, and how teams stay honest and recover from failure. They are concept lineage only. The repository adapts them into an open software-native workflow. We claim no compliance with any program, and we reproduce no proprietary book.
 
 | Source | Public link | Classification | Status | Role in Nuclear-grade | Confidence | Direct repo use |
 |---|---|---:|---|---|---:|---|
@@ -211,7 +225,7 @@ These sources direct how work is led and how teams stay honest. They do not add 
 
 These sources shape how we budget, order, compress, and retrieve an agent's context window,
 and how we name context failure modes. They are supporting context only. The doctrine built
-from them — `docs/02-operating-system/context-window-discipline.md` — is original and
+from them — `docs/02-operating-system/context-window-discipline.md` — is an authored synthesis and
 tool-agnostic. Benchmark numbers from these papers are their claims on their benchmarks, not
 promises about any workload. No compliance claim is made.
 

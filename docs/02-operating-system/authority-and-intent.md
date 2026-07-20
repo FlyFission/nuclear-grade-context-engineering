@@ -2,7 +2,7 @@
 
 **Purpose:** Put decision authority where the information is — bounded — and make intent explicit before critical action. This is the operating mechanics for Charter Articles 17 (authority to information) and 18 (intent before action).
 
-**Boundary:** Original software-workflow translation. It does not create formal assurance, compliance, certification, safety, or regulatory adequacy.
+**Boundary:** Bounded software-workflow translation. It does not create formal assurance, compliance, certification, safety, or regulatory adequacy.
 
 ---
 

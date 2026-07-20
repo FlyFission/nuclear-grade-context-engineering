@@ -45,7 +45,7 @@ Run the checker when any of these are true:
 | Required section check | Templates keep their purpose, activation threshold, minimum useful version, overhead trap, required links, exit criteria, and source-lineage note. | Templates and examples | A required section is gone or renamed past recognition. |
 | Trace-link check | Important claims link to a basis, an implementation, a verification, a release, or a clearly marked gap. | Standard+ packets | A claim has no evidence link and no stated gap. |
 | Evidence status check | Evidence is labeled planned / run / passed / failed / blocked / not applicable. | `proof.md`, `verification.md`, `ship.md` | Evidence is written as prose but has no status and no reproducible command or artifact link. |
-| AI-assisted change control | The AI's scope, permissions, approvals, and independent checks are stated when the AI did real work, including who authored the load-bearing claim's evidence relative to the actor (the evidence-independence disclosure). | AI-assisted packets | AI or tool actions changed code, docs, tests, or release evidence with no scope and no verification record. |
+| AI-assisted change control | The AI's scope, permissions, approvals, custody roles, and five-axis actor–evidence coupling profile are stated when the AI did real work. | AI-assisted packets | AI or tool actions changed code, docs, tests, or release evidence with no scope or no custody/coupling disclosure when strict custody is enabled. |
 | Source-map reference check | Source-lineage notes point to `source-map.md` or approved public URLs. | Field guide/templates/examples | A new source shows up with no source-map entry and no public URL. |
 | Token/context discipline | Agent context packs stay focused on the mode, the packet, the affected files, and the relevant source excerpts. | Context packs | The prompt or context asks for the whole repo or all standards with no reason to turn that on. |
 | CM record visibility | Turned-on CM records name the controlled items, the impact, the baseline, the variance, the OPEX, and the triggers. | CM records | Controlled state changes with no owner, no evidence link, and no re-check trigger. |
@@ -59,18 +59,30 @@ default and stages any richer semantic check as an opt-in layer, so a structural
 check should arrive the same way — and never as a gate the authoring agent can edit (see
 [`runtime-enforcement.md`](runtime-enforcement.md)).
 
-**Possible future check (not built): evidence-independence disclosure.** For an AI-assisted
-Standard packet, the checker could require that `verification.md` *discloses* who authored the
-load-bearing claim's evidence relative to the actor and whether an independent party can reproduce
-it (the `## Evidence independence` section the template now carries — see
-[`actor-evidence-independence.md`](actor-evidence-independence.md)). This stays inside the
-validator principle: it checks that the packet **exposes** the independence posture, not that the
-posture is adequate. It is deferred on purpose, and the reason is the very thing the check is
-about — a structural check the authoring agent runs on its own packet is itself actor-authored
-evidence, so it can only confirm the disclosure is *present*, never that the evidence is genuinely
-independent. The independent check that actually carries the gate stays the human reviewer and the
-out-of-band CI the agent cannot push to, not a line the authoring agent wrote and the authoring
-agent linted.
+**Built opt-in check: evidence-custody disclosure.** For a Standard packet,
+`ng validate <packet> --strict-custody` requires the `## Evidence custody and coupling` section and
+checks that it names all six custody roles (generated, selected, transformed, captured, retained,
+presented), stable uppercase record IDs (for example `E-001` and `C-001`), an explicit yes/no
+decisive status, raw artifact, change actor, verifier or witness, complete table-row width, all five
+coupling axes (actor, context, mechanism, authority, resource), a basis for every axis, exactly one
+classification, and an admissibility/residual-risk disposition. Unselected slash-delimited template
+choices, escaped pipe characters, empty custody roles, and unknown decisive values fail. Custody and
+profile IDs must match. A coupled actor axis cannot be labeled as independent/diverse verification;
+any non-self-check
+must declare a verifier or witness distinct from the change actor; and evidence generated, selected,
+and presented by the change actor must be classified as a self-check. A decisive
+self-check must point to its `ship.md` disposition. Without `--strict-custody`, legacy Standard packets
+remain valid; if they include the section, an incomplete or internally inconsistent profile still fails.
+This repository does not yet claim mandatory protected enforcement for strict custody. A PR-controlled
+validator or packet mode can weaken an in-repository check. Mandatory policy therefore requires a
+pinned validator and an expected packet mode supplied outside the candidate's writable tree.
+
+This stays inside the validator principle: it checks that the packet **exposes** custody and coupling,
+not that the declared profile is true or adequate. The check is opt-in during migration because a
+structural check the authoring agent runs on its own packet is itself actor-controlled evidence. The
+independent signal that carries a trust-bearing gate still comes from protected CI, independent
+reproduction or diverse verification, and a reviewer with real authority — not from a line the
+actor wrote and linted.
 
 ---
 
@@ -97,6 +109,7 @@ Required checks:
 
 - `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, and `ship.md` exist;
 - important claims have an evidence status or a named gap;
+- `--strict-custody`, when enabled, confirms that evidence IDs, custody roles, decisive status, matching five-axis profiles, classifications, and dispositions are structurally consistent;
 - trust decisions about a dependency, model, or API are scoped to how you will actually use it;
 - the release record names the baseline, the rollback, the monitoring, and the open risks.
 
@@ -110,7 +123,7 @@ Exit criteria:
 The required checks are stricter, but still scaled to the risk:
 
 - the extra records show up only when they are turned on;
-- an independent review is recorded when the stakes call for it;
+- the consequence-appropriate custody/coupling profile and review authority are recorded when the stakes call for stronger separation;
 - OPEX or decision records link back to the basis, tests, monitors, or limits;
 - release readiness does not lean on vague “looks good” statements.
 

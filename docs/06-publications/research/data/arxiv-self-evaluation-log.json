@@ -1,0 +1,42 @@
+[
+  [
+    "all:\"self-evaluation bias\" AND all:LLM",
+    "ok",
+    1
+  ],
+  [
+    "all:\"self-preference bias\" AND all:LLM",
+    "ok",
+    18
+  ],
+  [
+    "all:\"LLM-as-a-judge\" AND (all:self OR all:bias)",
+    "ok",
+    50
+  ],
+  [
+    "all:generator AND all:evaluator AND (all:bias OR all:collusion)",
+    "ok",
+    50
+  ],
+  [
+    "all:\"same model\" AND all:judge AND all:evaluation",
+    "ok",
+    24
+  ],
+  [
+    "all:\"faithful explanation\" AND all:LLM",
+    "ok",
+    25
+  ],
+  [
+    "all:\"AI-generated evidence\" AND (all:review OR all:verification)",
+    "ok",
+    1
+  ],
+  [
+    "all:\"self-critique\" AND (all:hallucination OR all:error)",
+    "ok",
+    24
+  ]
+]

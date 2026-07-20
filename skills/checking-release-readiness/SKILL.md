@@ -11,7 +11,7 @@ Release readiness is a careful, audited decision you write down. It is not a moo
 
 ## Decision contract
 
-- **Claim checked:** the candidate has evidence, rollback, monitoring, and residual risk that is accepted or made a blocker; for trust-bearing work the decision rests on primary evidence the reviewer can reproduce and is made by a decider independent of the actor.
+- **Claim checked:** the candidate has evidence, visible custody and coupling, rollback, monitoring, and residual risk that is accepted or made a blocker; for trust-bearing work the declared coupling profile meets the consequence-specific minimum.
 - **Artifact observed:** `verification.md`/`trace.md` statuses and CI status -> the decision recorded in `ship.md`.
 - **Decision affected:** block -- the `ship.md` ship/block/defer/ship-with-risk release decision.
 - **Failure class:** unevidenced-or-unsafe-release (a gap or missing rollback treated as shippable).
@@ -38,12 +38,12 @@ Release readiness is a careful, audited decision you write down. It is not a moo
 ## Process
 
 1. Confirm the baseline and the artifacts the change affects.
-2. Confirm the question to decide has been answered by evidence, not by confidence — and that the load-bearing evidence is reproducible by you or authored by an independent checker, not just the actor's narrative.
+2. Confirm the question to decide has been answered by evidence, not by confidence. Review who generated, selected, transformed, captured, retained, and presented the load-bearing evidence, then inspect the actor, context, mechanism, authority, and resource axes rather than treating reproducibility or a second role name as automatic independence.
 3. Review each evidence status and each open gap. Check for drift building up: does the shipped change still serve the goal anchor, with the non-goals (the things ruled out of scope) still uncrossed? See `staying-on-mission`.
 4. Confirm a rollback or restore path.
 5. Confirm the monitoring and the checks you will run after release.
 6. State why the decision is cautious enough given what is still uncertain, and confirm the change still delivers the value it was for and that the value outweighs the residual risk — a candidate that ships clean but no longer delivers its value should defer, not ship. For a high-stakes release, state the argument, not just the pile of evidence -- the top claim ("this is safe to ship") and why the evidence discharges it -- then run a defeater hunt: name what would have to be true for the decision to be wrong, and whether the evidence rules it out (this is the release-level form of the `questioning-attitude` falsification step).
-7. Record one decision: ship, block, defer, or ship with named leftover risk. On trust-bearing or irreversible work, the decider is independent of the actor that produced the change. See `docs/02-operating-system/actor-evidence-independence.md`. This verdict answers *correct and worth releasing?* — it is a separate state from whether the change may be applied now.
+7. Record one decision: ship, block, defer, or ship with named leftover risk. Name the verdict owner and its authority-axis coupling to the actor; for trust-bearing or irreversible work, any coupled authority must be explicitly accepted or block. See `docs/02-operating-system/actor-evidence-independence.md`. This verdict records what the admitted evidence supports — it is a separate state from whether the change may be applied now.
 8. For a change that takes a real-world action, record an **apply-clearance** call separate from the verdict: may it be applied *now*? Check that required approvals are present, the release/maintenance (freeze) window is open, external state is unchanged since verification (the verdict is not stale), deployment policy is satisfied, and rollback is ready at apply-time. Clearance is `cleared to apply / hold / lapsed`, owned by the operator/policy layer, and re-checked at apply-time — a `ship` verdict is not a standing authorization. Mark `not applicable` when the change makes no real-world action.
 9. Name the owner, the trigger to abort, whether a handoff is needed, the trigger for an operating lesson (OPEX), and the trigger to record a new baseline.
 
@@ -79,7 +79,7 @@ Release readiness is a careful, audited decision you write down. It is not a moo
 - No release decision.
 - A rollback plan that is vague or missing.
 - Deferred evidence with no owner and no stated consequence.
-- The decider is the actor, or the decision rests only on the actor's summary of its own evidence, on trust-bearing work.
+- The decision rests only on the actor's summary, or any coupling axis is omitted or below the declared minimum, on trust-bearing work.
 
 ## Prompt
 
@@ -99,7 +99,7 @@ Inputs:
 Return:
 - the release decision: ship, block, defer, or ship with a named leftover risk
 - whether the evidence actually answers the decision question
-- whether the decider is independent of the actor, and whether the decision rests on primary evidence the reviewer can reproduce (not the actor's narrative)
+- the evidence custody record and five-axis coupling profile, the consequence-specific minimum, and any residual coupling or blocker
 - an evidence summary
 - the leftover risks and who owns them
 - the rollback and monitoring notes
@@ -109,4 +109,4 @@ Return:
 
 ## Source-lineage note
 
-This skill is an original release-readiness workflow influenced by public lifecycle, configuration, software assurance, and secure development sources mapped in `docs/00-standards-foundation/source-map.md`. It does not grant production suitability.
+This skill is an authored release-readiness workflow influenced by public lifecycle, configuration, decision-assurance, runtime-governance, software-assurance, and secure-development sources mapped in `docs/00-standards-foundation/source-map.md`. It does not grant production suitability or make a verdict standing apply authority.

@@ -6,7 +6,7 @@ applies in scattered form — it consolidates and extends the control-stack para
 [`configuration-management.md`](configuration-management.md) and the forceful-backup rule in
 [`authority-and-intent.md`](authority-and-intent.md); it does not replace them.
 
-**Boundary:** Original software-workflow translation. It does not create formal verification
+**Boundary:** Bounded software-workflow translation. It does not create formal verification
 and validation, compliance, certification, or any safety, security, or regulatory guarantee.
 
 ---

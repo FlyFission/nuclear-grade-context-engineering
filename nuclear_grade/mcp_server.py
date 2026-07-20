@@ -30,16 +30,17 @@ from nuclear_grade.cli import (
 from nuclear_grade.ng_validate import detect_packet_mode, validate_packet
 
 
-def validate_change_record(packet_path: str) -> str:
+def validate_change_record(packet_path: str, strict_custody: bool = False) -> str:
     """Structurally validate a change-record packet directory.
 
     Checks that required sections are present, the placeholder marker is gone,
-    internal links resolve, and evidence statuses are set. Returns OK or the list
-    of structural gaps. It does not judge whether the code is correct, safe,
-    secure, or compliant.
+    internal links resolve, and evidence statuses are set. With `strict_custody`,
+    a Standard packet must also disclose all custody roles and coupling axes.
+    Returns OK or the list of structural gaps. It does not judge whether the code
+    is correct, safe, secure, compliant, or genuinely independent.
     """
 
-    result = validate_packet(Path(packet_path))
+    result = validate_packet(Path(packet_path), require_custody=strict_custody)
     if result.ok:
         return f"OK: {packet_path} is structurally complete."
     gaps = "\n".join(f"- {message}" for message in result.messages)

@@ -5,7 +5,7 @@ system did exactly what it was built to do, and the intended function was simply
 for the situation. This is the dominant shape of harm from AI systems, and a packet that only
 guards against *faults* is blind to it.
 
-**Boundary:** Original software-workflow translation. It does not create formal assurance,
+**Boundary:** Bounded software-workflow translation. It does not create formal assurance,
 compliance, certification, or any safety, security, or regulatory guarantee.
 
 ---

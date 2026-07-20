@@ -85,20 +85,19 @@
 ## Findings
 
 1. **Simple prompting is enough for U01-like work.** If the change is local, reversible, easy to inspect, and has no trust-bearing claim, Quick mode adds only a light audit trail. Standard mode would be waste.
-2. **Nuclear-grade wins when authority crosses a boundary.** U02, U06, U07, and U11 show that explicit allowed actions, forbidden actions, evidence obligations, and stop conditions are the difference between a useful agent handoff and a vague instruction.
-3. **Nuclear-grade wins when evidence must support a decision, not a vibe.** U03, U07, U08, and U09 show that "tests pass" is not enough for dependency trust, data deletion, money-moving behavior, or release readiness.
-4. **Source/legal checks are launch-critical.** U04 and U12 show that simple prompting tends to make public docs more confident, while Nuclear-grade narrows claims to influence, lineage, and evidence.
+2. **The Nuclear-grade artifacts exposed more authority-boundary signals.** In U02, U06, U07, and U11, the structured path made allowed actions, forbidden actions, evidence obligations, and stop conditions visible where the simple-prompt artifact did not.
+3. **The Nuclear-grade artifacts exposed more evidence-to-decision signals.** In U03, U07, U08, and U09, the structured path separated a passing test from the broader dependency, deletion, payment, and release decision. This is an author-scored artifact observation, not a measured reviewer benefit.
+4. **Source/legal checks are launch-critical in the inspected artifacts.** In the author-constructed U04 and U12 pair, the simple-prompt artifacts used more confident public wording, while the Nuclear-grade artifacts narrowed claims to influence, lineage, and evidence. This does not establish a general tendency.
 5. **Baselines matter most for drift-prone artifacts.** U05, U08, U09, and U11 show the value of naming accepted state and revalidation triggers for prompts, models, data policies, release artifacts, API permissions, and credentials.
 6. **HPI microtools add value at transfer and critical action points.** U06, U09, U10, and U11 show that turnover prevents lost state; U04, U07, U08, and U11 show that self-checking is useful before public claims, irreversible data work, payment paths, and API permissions.
 7. **The cost is real.** Nuclear-grade should be framed as consequence-scaled. It is not a universal replacement for good direct prompting.
 
-## Rigor tier vs. what it buys
+## Formative score pattern by rigor tier
 
-The per-trial scores above answer "did Nuclear-grade help *here*." Read across the tiers, they also
-answer the planning question an adopter actually asks: *what does each rigor tier buy, and at what
-overhead?* This table reframes the same 1–5 scores by tier — it introduces no new measurement, and
-the honesty caveat at the top of this file applies unchanged (author-judged, no A/B, overhead is
-judgment not minutes).
+The per-trial scores record how the author judged the constructed artifacts. Read across the tiers,
+they show where the design inspection found additional seeded signals and where it found added
+ceremony. This table introduces no new measurement. It is author-judged, has no blinded A/B review,
+and treats overhead as judgment rather than elapsed time.
 
 | Rigor tier | Typical change | Hidden-risk discovery (simple → NG) | Defensible ship-call (simple → NG) | Overhead | Read the tier off |
 |---|---|:---:|:---:|:---:|---|
@@ -107,10 +106,10 @@ judgment not minutes).
 | Standard | touches users / deps / data / permissions / AI authority / release | 1–2 → 4–5 | 1–2 → 4–5 | 3–4 | U02, U03, U05, U07, U08, U11, U12 |
 | Stronger (human-reviewed) | severe, silent, irreversible, external-trust | 1–2 → 5 + independent review | 1–2 → 5 | 4–5 | U04, U08 (upper band) |
 
-The shape matches the one idea: **the payoff is concentrated where consequence is**, and so is the
-cost. On Quick-tier work the two paths land within a point and the overhead is not worth it; on
-Standard-and-above the hidden-risk-discovery gap is the whole story. Spend rigor where the
-consequence lives, not uniformly.
+The author-scored pattern suggests that the additional structure is concentrated where consequence
+is, while also imposing more ceremony. On the Quick trial the two constructed paths scored similarly;
+on Standard-and-above the structured artifacts exposed more seeded hidden-risk signals. Whether real
+reviewers detect more defects or make better-calibrated decisions remains untested.
 
 As **illustrative external evidence** for the same "reliability rises with rigor, and so does token
 cost" shape, the NeoLabHQ context-engineering-kit publishes success-rate-by-scope tiers (basic
@@ -133,4 +132,4 @@ These results summarize qualitative artifact trials. They do not prove safety, s
 
 ## Source-Lineage Note
 
-This summary is an original Nuclear-grade adoption artifact using the repo operating model and public-source lineage summarized in `docs/00-standards-foundation/source-map.md`.
+This summary is an authored Nuclear-grade adoption artifact using the repo operating model and public-source lineage summarized in `docs/00-standards-foundation/source-map.md`.

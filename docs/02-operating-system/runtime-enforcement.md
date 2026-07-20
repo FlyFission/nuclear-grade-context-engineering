@@ -5,7 +5,7 @@
 onto the controls in this repo that already provide them. This page adds no new mechanism;
 it is an index and a reading lens.
 
-**Boundary:** Original software-workflow translation of public practice. It does not create
+**Boundary:** Bounded software-workflow translation of public practice. It does not create
 assurance, compliance, certification, safety, security, or regulatory adequacy.
 
 ---

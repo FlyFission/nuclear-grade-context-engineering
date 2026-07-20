@@ -2,7 +2,7 @@
 
 **Purpose:** Periodically step back and check whether the method itself — the workflow and its controls — is actually being followed and is actually working, separate from verifying any single change. It names the standing self-assessment habit and routes what it finds into the OPEX learning loop (`learning-from-experience`, `templates/cm/opex.md`) and the deficiency register (`tracking-deficiencies`, `deficiency-register.md`). It supports Charter Art. 3 (rising standards) and the honest-self-assessment habit in `learning-from-experience`.
 
-**Boundary:** Original software-workflow translation. It does not create formal assurance, compliance, certification, safety, or regulatory adequacy. No compliance claim is made; naming the mechanism is in scope, building organizational audit machinery, mandated cadences, or staffing and drills is not.
+**Boundary:** Bounded software-workflow translation. It does not create formal assurance, compliance, certification, safety, or regulatory adequacy. No compliance claim is made; naming the mechanism is in scope, building organizational audit machinery, mandated cadences, or staffing and drills is not.
 
 ---
 

@@ -34,6 +34,8 @@ The agent may not:
 - make a public claim;
 - change the release stance;
 - edit its own tests, prompts, or this context pack;
+- suppress, overwrite, or selectively present adverse evidence;
+- change the acceptance threshold, evidence-sufficiency rule, or verdict authority;
 - `<fill-in: project-specific forbidden actions>`.
 
 ## Approval gates
@@ -46,6 +48,19 @@ The agent must produce, before the work is accepted:
 
 - `<fill-in: the exact tests, commands, or evidence artifacts that must run and their
   expected status>`.
+
+## Evidence-path authority
+
+- Change actor / producing process: `<fill-in>`
+- Who may generate decisive evidence: `<fill-in>`
+- Who may select test cases and presented results: `<fill-in>`
+- Who may transform or summarize raw evidence: `<fill-in>`
+- Who controls execution/capture and the environment: `<fill-in>`
+- Who retains raw and adverse evidence: `<fill-in>`
+- Who presents the evidence to the verdict owner: `<fill-in>`
+- Minimum actor/context/mechanism/authority/resource profile: `<fill-in>`
+- Verdict owner: `<fill-in>`
+- Apply-clearance owner, if different: `<fill-in>`
 
 ## Stop conditions
 

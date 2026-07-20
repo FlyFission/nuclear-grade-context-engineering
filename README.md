@@ -36,7 +36,7 @@ AI agents are gaining exactly that kind of authority over codebases. This repo p
 - [Who does what](#who-does-what)
 - [Keeping the approved version under control](#keeping-the-approved-version-under-control)
 - [The common way vs. the nuclear-grade way](#the-common-way-vs-the-nuclear-grade-way)
-- [Does it actually help?](#does-it-actually-help)
+- [What the comparison does — and does not — show](#what-the-comparison-does--and-does-not--show)
 - [What you get](#what-you-get)
 - [Adopt at your pace](#adopt-at-your-pace)
 - [Who this is for](#who-this-is-for)
@@ -60,9 +60,11 @@ An agent can try ideas and throw them away cheaply, so let it. But the rules tig
 
 **Minimum sufficient context.** Nuclear-grade is not about adding more process. It is about giving agents the smallest set of instructions, facts, limits, and evidence needed to do serious work without drifting into vibes. If a rule, template field, or artifact does not improve execution, verification, review, or decision quality, remove it.
 
-So the first question is the one that matters most: **what does this change have to prove, and what fact would change my decision?**
+**Who authored the evidence?** A gate the agent cannot edit is still weak when the same change actor generated, selected, summarized, and presented everything the gate knows. Nuclear-grade records **evidence custody** and an **actor–evidence coupling profile** across actor, context, mechanism, authority, and resource. The axes stay separate; no one-number independence score hides correlated failure.
 
-That question has a shape, and the shape has a name.
+So the first questions are the ones that matter most: **what does this change have to prove, what fact would change my decision, and who controlled the path from that fact to the gate?**
+
+Those questions have a shape, and the shape has a name.
 
 ### Become a PRO by learning to PROVE
 
@@ -84,13 +86,13 @@ Nuclear-grade is a working toolkit you can use today: skills an agent can follow
 
 ## See it work, then make it yours
 
-The repo ships a finished change record for the kind of change that should make you a little nervous: giving an AI agent permission to write files and call external APIs. It ships with passing evidence for the claim that matters most (the agent cannot write outside its workspace), and named gaps for the claims still open. Clone it and read that evidence with one command. No install, no build step, standard library only (you need `git` and Python 3.11+, and `python3` if your shell has no `python`):
+The repo ships a finished change record for the kind of change that should make you a little nervous: giving an AI agent permission to write files and call external APIs. It includes passing local tests for the narrow workspace-boundary claim, named gaps for the claims still open, and an honest disclosure that the teaching example's evidence path remains mostly coupled to the same AI-assisted maintainer process. Clone it and inspect the record with one command. No install, no build step, standard library only (you need `git` and Python 3.11+, and `python3` if your shell has no `python`):
 
 ```bash
 git clone https://github.com/FlyFission/nuclear-grade-context-engineering
 cd nuclear-grade-context-engineering
-python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions
-# OK: the record links every permission claim to its evidence (or a named gap).
+python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions --strict-custody
+# OK: the record links claims to evidence and discloses custody/coupling (or a named gap).
 ```
 
 Want to watch that evidence regenerate? The example ships the test behind that workspace-boundary claim. This step needs `pytest` (`pip install pytest`); nothing else in the repo does:
@@ -225,11 +227,23 @@ treat green tests as a yes -> make an explicit release decision and record what 
 
 This earns its keep. Instructions should be hard to misuse, small actions should still serve the goal, and "I'm confident" should never get mistaken for "here is the proof."
 
-## Does it actually help?
+## What the comparison does — and does not — show
 
-We ran twelve realistic changes both ways, a direct coding-agent prompt versus these skills and workflows, and scored each on decision clarity, hidden-risk discovery, evidence quality, and ship-or-defer usefulness, with overhead tracked separately so the cost shows up next to the benefit. On a tiny, reversible doc fix the two landed within a point on every axis: the extra rigor was not worth the overhead, and plain prompting was enough. But on changes where a mistake is expensive and hard to walk back (an agent gaining file and API authority, a data-retention migration, a payment path, a release cut), plain prompting scored **1–2 out of 5** at surfacing hidden risk and at producing a defensible ship-or-defer call, while Nuclear-grade scored **4–5**, and it cost more overhead every time. The biggest gains were in hidden-risk discovery, and the rule matches the one idea: spend the rigor where the consequence lives.
+The repository includes twelve synthetic scenarios used as a **formative design inspection** of the workflow and its artifacts. The records help identify where prompts, skills, packets, and validators make decision-relevant information visible. They are not an independent experiment and do not demonstrate improved correctness, safety, reviewer accuracy, defect detection, or organizational outcomes.
 
-The scores are author-judged design evidence, not proof of effectiveness, and the limits are stated up front. The rubric, the methodology, and every trial record are public: [results](docs/03-worked-examples/skill-workflow-comparison/results-summary.md) · [methodology](docs/03-worked-examples/skill-workflow-comparison/methodology.md). Replication is invited.
+The expanded novelty review also found stronger adjacent empirical work on delegation contracts, artifact-aware delivery, AI-generated test review, and LLM evaluator bias. Nuclear-grade therefore treats its current comparison as design history and a source of falsifiable research questions, not as proof of effectiveness.
+
+The next meaningful test is a preregistered, blinded comparison of:
+
+1. an ordinary prompt or issue workflow;
+2. a structured contract or artifact-bundle workflow where the change actor still controls the evidence path;
+3. a matched workflow with independently generated or independently witnessed decisive evidence.
+
+Measure false acceptance, defect and omission detection, reviewer calibration, evidence sufficiency, decision time, disagreement, and cost. Until that study exists, the honest claim is narrower: the repository provides an inspectable implementation of evidence-custody and actor–evidence-coupling controls.
+
+- [Comparison method and raw records](docs/03-worked-examples/skill-workflow-comparison/)
+- [Expanded novelty review](docs/06-publications/research/exhaustive-novelty-review-2026-07-19.md)
+- [v0.3 contribution decision](docs/06-publications/reviews/v0.3-novelty-decision-log.md)
 
 There is a second, more mechanized check on the individual skills: [`evals/skill-benchmark-pilot/`](evals/skill-benchmark-pilot/) runs each skill headless, with and without its instructions loaded, on the same scenario, and grades the result blind against a pre-registered criterion — with real cost/token data and every raw response checked into the repo. 28 of 28 skills show a measured behavior change versus a plain prompt on the primary subject model; one of them, `creating-change-records`, does not replicate on a weaker model even after an amendment attempt and is reported as open, not fixed. That caveat, the statistical limits (n=3–5 per skill, 0 of 47 tests survive multiple-comparisons correction), and an honest self-audit against current benchmark-reporting practice are in that folder's [`README.md`](evals/skill-benchmark-pilot/README.md), not hidden from it.
 
@@ -243,7 +257,7 @@ There is a second, more mechanized check on the individual skills: [`evals/skill
 | Templates | Fill-in records for small changes, standard changes, and high-consequence ones | [`templates/`](templates/) |
 | Command-line tool | `init`, `new`, `validate`, `doctor`, `list`, `status`, `migrate`, `tokens` | [`docs/05-reference/cli-reference.md`](docs/05-reference/cli-reference.md) |
 | Checker | The dependency-free check behind `ng.py validate`, for small and standard change records | [`tools/ng_validate.py`](tools/ng_validate.py) |
-| Worked example | A real change record proving an AI agent stayed inside its workspace | [`EXAMPLES.md`](EXAMPLES.md) |
+| Worked example | A teaching record where the sample guard rejected four tested escape classes and disclosed the evidence path's remaining coupling | [`EXAMPLES.md`](EXAMPLES.md) |
 | Sources | The public ideas this borrows from, and how to talk about them safely | [`docs/00-standards-foundation/source-map.md`](docs/00-standards-foundation/source-map.md) |
 
 The live list is the source of truth (see [`nuclear-grade.yaml`](nuclear-grade.yaml), [`SKILLS.md`](SKILLS.md), and [`COMMANDS.md`](COMMANDS.md)); treat any count here as a snapshot, not a promise.

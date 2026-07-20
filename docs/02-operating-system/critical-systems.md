@@ -2,7 +2,7 @@
 
 **Purpose:** Frame the highest-consequence tier the way the Navy framed submarine survivability after the loss of USS *Thresher* (1963): a small, disciplined quality program focused on the few outcomes that must not fail. This is doctrine for Tier 0 work (see `risk-tiers-and-modes.md`); it is a framing, not an org-building mandate.
 
-**Boundary:** Original software-workflow translation. It does not reproduce the SUBSAFE program or any standard, and it does not create formal assurance, compliance, certification, safety, or regulatory adequacy.
+**Boundary:** Bounded software-workflow translation. It does not reproduce the SUBSAFE program or any standard, and it does not create formal assurance, compliance, certification, safety, or regulatory adequacy.
 
 ---
 

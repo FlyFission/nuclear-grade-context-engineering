@@ -99,9 +99,11 @@ pattern is now a first-class entry in the [`../../WORKFLOWS.md`](../../WORKFLOWS
 
 **What we add that PRP does not.** Three things, all load-bearing in high-consequence work:
 
-- **Actor-evidence independence.** In the PRP loop the same agent writes the blueprint, the code, and
-  the "gates passed" narrative. Nuclear-grade breaks that seam on trust-bearing work — the
-  load-bearing evidence must be reproducible by, or authored by, someone other than the builder
+- **Evidence custody and actor–evidence coupling.** In the PRP loop the same agent can write the
+  blueprint, code, tests, and "gates passed" narrative. Nuclear-grade records who generated,
+  selected, transformed, captured, retained, presented, reviewed, and authorized decisive evidence,
+  then evaluates actor, context, mechanism, authority, and resource coupling against consequence.
+  Different authorship can reduce one axis but does not by itself establish independence
   ([`../02-operating-system/actor-evidence-independence.md`](../02-operating-system/actor-evidence-independence.md)).
 - **Graded rigor.** PRP applies one ceremony to every feature. Nuclear-grade scales from an
   administrative floor to Nuclear+ by consequence

@@ -101,6 +101,6 @@ not a substitute for qualified engineering, legal, security, or safety review.
 
 ## Source-lineage note
 
-This positioning describes where an original, public-source-inspired project is aimed.
+This positioning describes where an open, public-source-inspired software-acceptance project is aimed. It does not claim conceptual priority for graded governance, provenance, authorization, ontology modeling, human approval, or change control.
 It is not a promise to meet any external standard. See
 [`DISCLAIMER.md`](DISCLAIMER.md) and [`ROADMAP.md`](ROADMAP.md).

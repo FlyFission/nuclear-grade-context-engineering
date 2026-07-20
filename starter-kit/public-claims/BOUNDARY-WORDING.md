@@ -28,12 +28,25 @@ do-not-claim context:
 
 Add domain-specific phrases your project should avoid: `<fill-in>`.
 
+## Novelty and efficacy tripwires
+
+Treat these as review triggers even when the deterministic checker does not yet flag every form:
+
+- `first`, `original`, `unique`, `novel`, `breakthrough`, or `unprecedented` without a scoped prior-art basis;
+- `improves`, `reduces`, `prevents`, `outperforms`, or `makes safer` when the evidence is only a design inspection, author score, or artifact-presence check;
+- `proves` when the result covers only named tests, environments, scenarios, or sampled cases;
+- provenance, signatures, hashes, or traces presented as proof of truth, adequacy, custody, independence, or authorization;
+- a complete packet presented as evidence that the underlying change is correct;
+- an LLM judge, separate role name, or human review presented as automatically independent.
+
+Prefer exact scope: what was tested, where, by whom, against which cases, who controlled the evidence path, what remains coupled, and what is not demonstrated.
+
 ## Allowed phrasings
 
 Prefer wording like:
 
 - "public-source-inspired";
-- "original software workflow";
+- "open, software-native synthesis/reference workflow";
 - "evidence-oriented";
 - "non-compliance-claiming";
 - "inspired by";

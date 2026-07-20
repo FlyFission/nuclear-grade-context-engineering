@@ -19,11 +19,21 @@
 
 ## Trace rows
 
-| Step | Action / tool | Inputs (abbreviated) | Output / result | Evidence status | Claim supported |
-|---|---|---|---|---|---|
-| 1 | | | | pass / gap / fail / N/A | `verification.md` REQ-XXX |
+| Step | Action / tool | Inputs (abbreviated) | Raw output / result link | Captured by | Selected / transformed / presented by | Evidence status | Claim / evidence ID |
+|---|---|---|---|---|---|---|---|
+| 1 | | | | | | pass / gap / fail / N/A | `verification.md` REQ-XXX / E-XXX |
 
 Evidence status legend: `pass`, `fail`, `gap`, `deferred`, `not applicable`.
+
+## Trace custody and admission boundary
+
+- Trace source retained by:
+- Actor able to overwrite, suppress, or selectively export the trace? yes/no; basis:
+- Raw trace transformed or summarized? yes/no; by whom and how:
+- Verification reviewer who decides whether trace rows are admitted as evidence:
+- Coupling/profile link in `verification.md`:
+
+A trace establishes linkage and reconstruction. It does not by itself establish truth, semantic adequacy, evidence independence, or authority to accept or apply the change.
 
 ## Decision-point records
 
@@ -68,6 +78,8 @@ Use when token cost or latency is one of the things you check.
 ## Exit criteria
 
 - Every step that matters has an evidence status.
+- Custody transitions and any transformation from raw trace to presented evidence are visible.
+- Evidence admission is decided in `verification.md`, not inferred from the trace's existence.
 - The decision points point back to the limits on the agent's power.
 - The approval gates have a reviewer, a date, and a decision.
 - The stance summary makes sense to a reviewer who was not there for the run.

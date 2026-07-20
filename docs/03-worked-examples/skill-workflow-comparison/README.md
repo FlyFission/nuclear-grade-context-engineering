@@ -1,8 +1,8 @@
 # Skill and Workflow Comparison
 
-**Purpose:** Test whether Nuclear-grade skills and workflows produce better records for review than simple prompting, and find where the extra work is not worth it.
+**Purpose:** Formatively inspect which decision signals appear in author-constructed Nuclear-grade records versus simple-prompt records, and find where the added structure appears unnecessary.
 
-**Status:** A judgment-based look at the records. This is not a benchmark, a user study, a safety claim, a security claim, a compliance claim, a certification claim, a production-suitability claim, or a formal assurance result. For the mechanized, per-skill complement to this comparison — headless with/without-skill runs, blind grading, real cost/token data, every raw response public — see [`evals/skill-benchmark-pilot/`](../../../evals/skill-benchmark-pilot/).
+**Status:** Formative, author-produced artifact inspection. The scores are design feedback, not efficacy evidence. This is not a benchmark, controlled experiment, user study, safety claim, security claim, compliance claim, certification claim, production-suitability claim, or formal assurance result. For the mechanized, per-skill complement to this comparison — headless with/without-skill runs, blind grading, real cost/token data, and every raw response public — see [`evals/skill-benchmark-pilot/`](../../../evals/skill-benchmark-pilot/).
 
 ## Read This First
 
@@ -38,7 +38,7 @@ Every published skill shows up in more than one trial record, and so does every 
 
 ## Bottom Line
 
-Nuclear-grade does not beat simple prompting on every task. For tiny, local changes you can undo, where the proof is obvious, the extra work is barely worth it. It is well worth it when the work touches agent power, trust in dependencies, public assurance wording, prompt and model drift, data you cannot undo, side effects that move money, release stance, or evidence gaps that must turn into ship, defer, or block decisions.
+In the constructed artifacts, the added structure exposed few additional decision signals for tiny, local, reversible changes. It exposed more of the seeded authority, dependency, public-claim, model-drift, irreversible-data, payment, release, and evidence-gap signals in the consequential scenarios. Because the same author designed and scored both paths, this supports repository iteration only; it does not establish that Nuclear-grade improves real reviewer decisions.
 
 ## Boundary Note
 
@@ -46,4 +46,4 @@ This comparison judges how useful the workflow records are for review. It does n
 
 ## Source-Lineage Note
 
-This evaluation is an original Nuclear-grade adoption artifact. It uses the repo operating model and the public-source lineage summed up in `docs/00-standards-foundation/source-map.md`.
+This evaluation is an authored Nuclear-grade adoption artifact. It uses the repo operating model and the public-source lineage summed up in `docs/00-standards-foundation/source-map.md`.

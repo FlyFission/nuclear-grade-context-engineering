@@ -251,12 +251,32 @@ def test_starter_kit_copy_commands_reference_existing_assets():
     for readme in starter_readmes:
         text = readme.read_text(encoding="utf-8")
 
-        for skill in re.findall(r"\b([a-z][a-z0-9-]+)\b/SKILL\.md", text):
+        referenced_skills = set()
+        # Literal `skills/<name>/SKILL.md` references (markdown links, prose).
+        # Anchor on the `skills/` prefix so the `$s` placeholder inside the copy
+        # loops (`cp "skills/$s/SKILL.md"`) is not mistaken for a real skill.
+        referenced_skills.update(re.findall(r"skills/([a-z][a-z0-9-]+)/SKILL\.md", text))
+        # Skills enumerated in `for s in <names...>; do ... cp "skills/$s/..."`
+        # loops -- the actual copy payload. The list wraps across lines with a
+        # trailing backslash, so normalize those away before splitting.
+        for loop in re.finditer(r"for s in\s+(.+?);\s*do", text, re.DOTALL):
+            referenced_skills.update(loop.group(1).replace("\\", " ").split())
+
+        for skill in sorted(referenced_skills):
             assert (ROOT / "skills" / skill / "SKILL.md").exists(), (
                 f"{readme.relative_to(ROOT)} references missing skill {skill}"
             )
 
-        for doc in re.findall(r"docs/[A-Za-z0-9_./-]+\.md", text):
+        referenced_docs = set(re.findall(r"docs/[A-Za-z0-9_./-]+\.md", text))
+        # Docs written with brace expansion, e.g. `docs/<dir>/{a.md,b.md}`.
+        for brace in re.finditer(r"(docs/[A-Za-z0-9_./-]+/)\{([^}]*)\}", text):
+            prefix = brace.group(1)
+            for name in brace.group(2).split(","):
+                name = name.strip()
+                if name:
+                    referenced_docs.add(prefix + name)
+
+        for doc in sorted(referenced_docs):
             assert (ROOT / doc).exists(), (
                 f"{readme.relative_to(ROOT)} references missing doc {doc}"
             )

@@ -88,8 +88,9 @@ retrieve it, and *how* to keep it honest, not the storage. Whatever backs it mus
 provenance, support retrieval by relevance, and grow by appended entries; a store that loses
 those properties has lost the point.
 
-When a future version does back this with real storage — the MCP server over `.nuclear/` on the
-[roadmap](../../ROADMAP.md) — the production-memory literature to draw on is surveyed in
+When a future version does back this with real storage — the retrievable memory store over `.nuclear/`
+on the [roadmap](../../ROADMAP.md), building on the shipped MCP server — the production-memory
+literature to draw on is surveyed in
 [Awesome-Context-Engineering](https://github.com/Meirtz/Awesome-Context-Engineering) (episodic vs.
 working memory, graph-backed memory, and systems such as MemGPT/Letta). That is reference material
 for *how* to build a retrievable store; the discipline on this page is what any such store must

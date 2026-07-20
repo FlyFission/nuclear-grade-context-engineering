@@ -1,0 +1,28 @@
+{
+  "id": "U09",
+  "title": "Release readiness cut",
+  "artifact": "docs/03-worked-examples/skill-workflow-comparison/trial-records/release-readiness-cut.md",
+  "section": "## Nuclear-Grade Trial",
+  "signals": [
+    {
+      "name": "Names release controlled items beyond the commit SHA",
+      "all": ["Controlled items:", "the version", "the changelog", "the package metadata", "the docs", "the examples", "the CI result", "the release notes"]
+    },
+    {
+      "name": "Requires evidence for install, examples, changelog, CI, and public-claim safety",
+      "all": ["the install command works", "the examples pass the validator", "the changelog matches the changes", "CI passes", "no banned assurance claims"]
+    },
+    {
+      "name": "Keeps release as a decision, not a green-CI reflex",
+      "all": ["Release decision:", "ship, defer, block, or ship with leftover risk"]
+    },
+    {
+      "name": "Hands off accepted state, leftover risk, monitoring, and rollback to owners",
+      "all": ["release owner", "support owner", "accepted file state", "leftover risk", "monitoring", "rollback notes"]
+    },
+    {
+      "name": "Baselines and watches the release after shipment",
+      "all": ["Baseline:", "the release tag", "accepted file state", "Monitoring:", "watch issues and discussions", "smoke-test the package install"]
+    }
+  ]
+}

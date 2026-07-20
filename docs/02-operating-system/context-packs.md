@@ -69,7 +69,7 @@ Objective: <one paragraph>
 Mission anchor: <objective, success criteria, non-goals; survives context resets>
 Charter: <.nuclear/charter.md articles in play>
 Affected files: <paths>
-Current phase: Question / Specify / Plan / Execute / Verify / Review / Decide / Baseline / Operate / Learn
+Current phase: Question / Discover / Specify / Plan / Execute / Verify / Review / Decide / Baseline / Operate / Learn
 Last completed action: <resume point>
 Changed conditions: <what changed since the prior agent/context>
 Risk summary: <top risks and escalation triggers>

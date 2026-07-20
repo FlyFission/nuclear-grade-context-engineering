@@ -19,10 +19,15 @@
 \usepackage[nameinlink,noabbrev]{cleveref}
 \usepackage{caption}
 
-\definecolor{ngblue}{HTML}{17324D}
-\definecolor{ngteal}{HTML}{2B7A78}
-\definecolor{nggray}{HTML}{5D6871}
-\definecolor{nglight}{HTML}{EEF4F3}
+\definecolor{ngblue}{HTML}{173B57}
+\definecolor{ngteal}{HTML}{2A7F7F}
+\definecolor{nglight}{HTML}{EAF4F4}
+\definecolor{nggray}{HTML}{5C6870}
+\definecolor{ngpale}{HTML}{F4F7F9}
+\definecolor{ngrust}{HTML}{9C4F3D}
+\definecolor{ngrustlight}{HTML}{F6E9E5}
+\definecolor{nggold}{HTML}{8A6818}
+\definecolor{nggoldlight}{HTML}{F7F0D9}
 
 \hypersetup{
   pdftitle={Who Authored the Evidence? Actor--Evidence Coupling in AI-Assisted Software Acceptance},
@@ -56,9 +61,9 @@ Actor--Evidence Coupling in AI-Assisted Software Acceptance}
 \maketitle
 
 \begin{abstract}
-AI coding agents can implement changes, select tests, summarize evidence, and write the review narratives used to accept those changes within one coupled process. Existing controls address self-modification: an actor editing the gate intended to constrain it. They do not necessarily address \emph{evidence self-authorship}: an actor that leaves the gate untouched while authoring the evidence the gate consumes. A confident hallucination can clear every gate for which it also wrote the input.
+AI coding agents can change software, choose tests, summarize results, and write the review used to accept their own work. These steps can occur in one coupled process. Existing controls often address self-modification, where an actor edits the gate meant to constrain it. They do not always address \emph{evidence self-authorship}. In that failure mode, the gate stays protected, but the actor writes the evidence it consumes. A confident hallucination can clear every gate for which it also wrote the input.
 
-This paper formulates acceptance of agent-assisted changes as a problem distinct from agent task performance. It contributes an agent-specific formulation of evidence self-authorship and a multidimensional profile for actor--evidence coupling across actor, context, mechanism, authority, and resource. A consequence-graded admissibility proposal uses that profile to constrain decisive evidence through externally versioned policy rather than a universal score. The formulation adapts established self-review, configuration-management, independent-verification, and assurance practice rather than claiming to replace them. A Git-native reference implementation shows that custody labels, coupling profiles, and decision state can be represented, exercised, and structurally linted. A twelve-scenario formative inspection supports iteration, not efficacy claims. The paper states a falsifiable prediction and proposes a preregistered comparison of actor-controlled evidence with a specifically defined separated-evidence condition.
+This paper treats acceptance of agent-assisted changes as a problem distinct from task performance. It defines an agent-specific form of evidence self-authorship and a five-axis profile for actor--evidence coupling. The axes are actor, context, mechanism, authority, and resource. The profile is not a score. Instead, an external, versioned policy can set evidence requirements based on consequence. The proposal adapts established review, configuration-management, verification, and assurance practice. A Git-native reference implementation shows that custody labels, coupling profiles, and decision state can be recorded, exercised, and checked for structural consistency. Those checks do not prove identity, truth, or independence. A twelve-scenario formative inspection supports design changes, not efficacy claims. The paper also states a falsifiable prediction and proposes a preregistered comparison of actor-controlled evidence with a defined separated-evidence condition.
 \end{abstract}
 
 \noindent\textbf{Keywords:} coding agents; AI-assisted software engineering; evidence custody; actor--evidence coupling; independent review; configuration management; software assurance.
@@ -66,9 +71,9 @@ This paper formulates acceptance of agent-assisted changes as a problem distinct
 \section{Introduction}
 \label{sec:introduction}
 
-Coding agents have moved beyond code completion. A single agent session may discover repository state, interpret requirements, edit source and prompts, change dependencies, invoke tools, select tests, write the review narrative, and recommend release. This concentration of activity is productive, but it also creates a control problem. If the agent's model of the task is wrong, the same error can propagate into the change, the evidence selected to support it, the explanation presented to a reviewer, and the release recommendation. The result can be internally coherent without being trustworthy.
+Coding agents now do much more than complete code. In one session, an agent may inspect a repository, interpret requirements, edit source and prompts, change dependencies, run tools, choose tests, write a review, and recommend release. This concentration of work is productive, but it also creates a control problem. If the agent misunderstands the task, the same error can spread through the change, the selected evidence, the review narrative, and the release recommendation. The result may be internally coherent but still wrong.
 
-Most context-engineering guidance is designed to improve task performance: select high-signal instructions, retrieve relevant knowledge, expose tools, retain state, compact long histories, and give agents effective interfaces \citep{mei2025context,anthropic2025context,yang2024sweagent}. Those mechanisms are necessary, but they do not by themselves answer five acceptance questions:
+Most context-engineering guidance aims to improve task performance. It helps agents select useful instructions, retrieve knowledge, use tools, retain state, compress long histories, and work through effective interfaces \citep{mei2025context,anthropic2025context,yang2024sweagent}. Those mechanisms are necessary. They do not, by themselves, answer five acceptance questions:
 
 \begin{enumerate}
   \item What was the agent authorized to change or execute?
@@ -78,62 +83,68 @@ Most context-engineering guidance is designed to improve task performance: selec
   \item Which accepted state must remain under configuration control?
 \end{enumerate}
 
-We call the information required to answer those questions \emph{context for accountable acceptance}. This is not a replacement for performance-oriented context. It is a narrower specialization for trust-bearing decisions: decisions that affect users, persistent data, money, permissions, external systems, public claims, release state, or other protected outcomes.
+We call the information needed to answer those questions \emph{context for accountable acceptance}. It does not replace context that helps an agent perform a task. It serves a narrower purpose: trust-bearing decisions. These decisions affect users, persistent data, money, permissions, external systems, public claims, release state, or other protected outcomes.
 
-This paper presents \emph{graded accountable acceptance}, instantiated by the open \method{} reference implementation \citep{flyfission2026repo}. Throughout, ``nuclear-grade'' denotes the project's engineering posture and professional lineage drawn from public high-consequence practice; it does not claim regulatory status, safety classification, formal assurance, or demonstrated efficacy.
+This paper presents \emph{graded accountable acceptance} through the open \method{} reference implementation \citep{flyfission2026repo}. The project uses ``nuclear-grade'' to describe an engineering posture with roots in public high-consequence practice. The term does not claim regulatory status, safety classification, formal assurance, or proven efficacy.
 
 \subsection{Contributions}
 
 The paper makes one problem-formulation contribution, one modeling contribution, and one implementation contribution:
 
 \begin{enumerate}
-  \item \textbf{Evidence self-authorship formulation.} It translates established self-review concerns to agent-assisted software acceptance and distinguishes gate self-modification from control of the evidence path. The formulation predicts that, for plausible but wrong changes, reviewer detection will degrade when the change actor also controls decisive evidence. It is falsified if controlled studies show no meaningful detection difference, or if protected gates bound acceptance error equally well.
-  \item \textbf{Actor--evidence coupling profile.} It defines five axes---actor, context, mechanism, authority, and resource---for exposing correlated failure that nominally separate roles can conceal. It proposes that consequence policy constrain admissible coupling for decisive evidence without collapsing the axes into an assurance ladder. Universal minimum profiles are not claimed; they remain versioned policy choices outside a candidate's writable record.
-  \item \textbf{Open reference implementation.} It shows that custody labels, coupling profiles, and decision state can be represented with ordinary repository artifacts, exercised, and structurally linted. The checks expose declared custody and coupling; they do not authenticate identities, establish semantic adequacy or independence, or decide whether a profile satisfies a consequence policy. Lifecycle stages, packet files, risk tiers, verdict/apply-clearance, and templates are implementation primitives rather than standalone research contributions.
+  \item \textbf{Evidence self-authorship formulation.} The paper applies established self-review concerns to agent-assisted software acceptance. It separates gate self-modification from control of the evidence path. The formulation predicts lower reviewer detection when a change actor produces a plausible but wrong change and also controls the decisive evidence. The prediction is falsified if controlled studies find no meaningful difference, or if protected gates keep acceptance error within the same stated bound.
+  \item \textbf{Actor--evidence coupling profile.} The paper defines five axes: actor, context, mechanism, authority, and resource. The axes expose correlated failure that role names can hide. An external consequence policy may limit coupling for decisive evidence, but the axes do not form an assurance ladder or one score. This paper does not set universal minimum profiles. Those choices belong in versioned policy outside the candidate's writable record.
+  \item \textbf{Open reference implementation.} The repository shows that custody labels, coupling profiles, and decision state can be recorded with ordinary artifacts, exercised, and checked for structural consistency. These checks expose declared relationships. They do not authenticate identity, prove semantic adequacy or independence, or decide whether a profile meets a consequence policy. Lifecycle stages, packet files, risk tiers, verdict/apply-clearance, and templates remain implementation tools rather than separate research contributions.
 \end{enumerate}
 
-The work does not claim invention of configuration management, independent verification, governed context, assurance cases, professional self-review, human approval gates, or operational decision authority. Its claim is a narrow agent-specific synthesis around evidence custody and coupling in software acceptance.
+The work does not claim invention of configuration management, independent verification, governed context, assurance cases, professional self-review, human approval gates, or operational decision authority. It offers a narrow agent-specific synthesis around evidence custody and coupling in software acceptance.
 
 \section{Background and Related Work}
 \label{sec:related}
 
 \subsection{Context, repository instructions, and agent harnesses}
 
-Context engineering spans retrieval, memory, tool use, state management, compaction, and evaluation \citep{mei2025context}. Anthropic emphasizes the smallest high-signal context, just-in-time retrieval, progressive disclosure, and structured state \citep{anthropic2025context}. Repository conventions such as \code{AGENTS.md} provide tool-neutral standing instructions \citep{agentsmd2025}; Spec Kit and related workflows make specifications, plans, and task records first-class inputs to coding agents \citep{github2026speckit,medin2025context}.
+Context engineering includes retrieval, memory, tool use, state management, history compression, and evaluation \citep{mei2025context}. Anthropic recommends small, high-signal context, retrieval when needed, progressive disclosure, and structured state \citep{anthropic2025context}. Repository files such as \code{AGENTS.md} provide standing instructions that work across tools \citep{agentsmd2025}. Spec Kit and similar workflows treat specifications, plans, and task records as direct inputs to coding agents \citep{github2026speckit,medin2025context}.
 
-Long-running-agent harnesses retain progress, use Git history, work incrementally, and require end-to-end checks \citep{anthropic2025harness}. OpenAI's harness-engineering account describes a repository as the system of record, a concise instruction map, mechanical documentation checks, enforceable architecture, isolated worktrees, observability, and agent-to-agent review \citep{openai2026harness}. SWE-agent demonstrates that the agent--computer interface materially changes repository navigation, editing, test execution, and task performance \citep{yang2024sweagent}.
+Harnesses for long-running agents preserve progress, use Git history, work in small steps, and require end-to-end checks \citep{anthropic2025harness}. OpenAI also describes the repository as the system of record. Its account emphasizes concise instructions, mechanical documentation checks, enforceable architecture, isolated worktrees, observability, and agent-to-agent review \citep{openai2026harness}. SWE-agent shows that the interface between an agent and its computer affects navigation, editing, testing, and task performance \citep{yang2024sweagent}.
 
-These sources establish repository legibility, durable state, specifications, executable feedback, and harness design as prior art. \method{} adds an acceptance-oriented layer: explicit authority, controlled surfaces, evidence obligations, evidence provenance, decision rights, residual risk, and closure state.
+This work is established prior art for repository legibility, durable state, specifications, executable feedback, and harness design. \method{} adds a layer for acceptance decisions. That layer records authority, controlled surfaces, evidence duties, provenance, decision rights, residual risk, and closure state.
 
 \subsection{Evaluation integrity}
 
-SWE-bench Verified used human-screened tasks and tests outside the solving agent, providing a benchmark-level example of solver--evidence separation \citep{openai2024swebench}. OpenAI later stopped using the benchmark for frontier-model evaluation because contamination and flawed tests had weakened the judge itself \citep{openai2026noswebench}. This sequence is important: independent execution does not make evidence valid when the evaluator, data, or environment has degraded. Actor--evidence independence is therefore one control among several, not proof of correctness.
+SWE-bench Verified used tasks screened by humans and tests kept outside the solving agent. It is a benchmark-level example of separating the solver from its evidence \citep{openai2024swebench}. OpenAI later stopped using the benchmark for frontier-model evaluation because contamination and flawed tests had weakened the judge \citep{openai2026noswebench}. The sequence shows an important limit. Independent execution does not make evidence valid when the evaluator, data, or environment has degraded. Actor--evidence independence is one control, not proof of correctness.
 
-Empirical work on repository-level instruction files likewise cautions against equating more context with better outcomes. Gloaguen \etal{} report that \code{AGENTS.md}-style context did not generally improve task success and increased inference cost in their studied settings \citep{gloaguen2026agents}. The implication for this method is subtraction: standing instructions should contain unusual constraints and exact routes, while deeper material should load only when needed.
+Research on repository instruction files gives a similar warning about context. In the settings they studied, Gloaguen \etal{} found that \code{AGENTS.md}-style files did not generally improve task success and did increase inference cost \citep{gloaguen2026agents}. The design lesson here is subtraction. Standing instructions should contain unusual constraints and exact routes. Deeper material should load only when needed.
 
-Professional independence and model-evaluation research supply closer lineage for the central failure formulation. The IESBA Code defines a self-review threat as evaluating or relying on one's own prior work \citep{iesba2026code}. LLM evaluators can recognize and favor their own generations, while related generator and judge models can exhibit preference leakage across inheritance and model-family relationships \citep{panickssery2024evaluators,li2025preference}. Human-factors research likewise distinguishes appropriate automation use from misuse, disuse, and abuse and documents automation bias in decision making \citep{parasuraman1997automation,skitka1999automation}. Evidence self-authorship is therefore not a claim to have discovered self-review or automation bias. It is an agent-specific acceptance formulation that extends the concern from model scoring to the tests, summaries, omissions, risk framing, and claims consumed by a software-change decision.
+Professional independence and model-evaluation research are closer to this paper's central failure mode. The IESBA Code defines a self-review threat as judging or relying on one's own prior work \citep{iesba2026code}. LLM evaluators can recognize and favor their own generations. Related generator and judge models can also show preference leakage through inheritance or shared model families \citep{panickssery2024evaluators,li2025preference}. Human-factors research separates proper automation use from misuse, disuse, and abuse. It also documents automation bias in decisions \citep{parasuraman1997automation,skitka1999automation}.
+
+This paper does not claim to have discovered self-review or automation bias. It applies those concerns to agent-assisted software acceptance. The scope includes tests, summaries, omissions, risk framing, and claims used in a software-change decision.
 
 \subsection{Configuration management, independence, and assurance reasoning}
 
-Configuration identification, change control, status accounting, baselines, assessment, and controlled acceptance are established disciplines \citep{doe2016cm,nrc2013rg169}. Secure-software and AI-risk frameworks further establish protected artifacts, provenance, governance, and risk-management processes, but do not by themselves prescribe actor--evidence separation for coding agents \citep{nist2022ssdf,nist2023airmf}. NASA and NRC guidance establish independent verification, validation, review, and audit as lifecycle practices \citep{nasa2022swe141,nasa2022assurance,nrc2013rg168}. NIST assessment guidance addresses separation of duties and independent assessment evidence \citep{nist2022assessment}. Tool accreditation and intended-use reasoning are likewise established ideas \citep{nasa2022swe136}.
+Configuration identification, change control, status accounting, baselines, assessment, and controlled acceptance are established disciplines \citep{doe2016cm,nrc2013rg169}. Secure-software and AI-risk frameworks also require protected artifacts, provenance, governance, and risk management. They do not, by themselves, set rules for separating coding agents from acceptance evidence \citep{nist2022ssdf,nist2023airmf}.
 
-Claims--argument--evidence structures are mature assurance concepts \citep{nist2022systems,omg2023sacm}. Recent work applies safety-case reasoning to frontier AI and explores language models as aids for finding defeaters \citep{buhl2024safetycases,gohar2024codefeater}. \method{} does not claim to replace a formal assurance case. It uses a deliberately thin repository-native chain: basis $\rightarrow$ claim $\rightarrow$ control $\rightarrow$ evidence or gap $\rightarrow$ decision.
+NASA and NRC guidance treat independent verification, validation, review, and audit as lifecycle practices \citep{nasa2022swe141,nasa2022assurance,nrc2013rg168}. NIST guidance addresses separation of duties and independent assessment evidence \citep{nist2022assessment}. Tool accreditation and intended-use reasoning are also established ideas \citep{nasa2022swe136}.
 
-Public high-consequence guidance also provides lineage for graded rigor, questioning assumptions, self-checking, peer checking, independent verification, turnover, and operational learning \citep{doe2009hpi}. The translation in this paper applies those ideas to software agents without importing regulatory classifications or claiming domain equivalence.
+Claims, arguments, and evidence are mature assurance concepts \citep{nist2022systems,omg2023sacm}. Recent work applies safety-case reasoning to frontier AI and uses language models to help find defeaters \citep{buhl2024safetycases,gohar2024codefeater}. \method{} does not replace a formal assurance case. It uses a thin repository-native chain: basis $\rightarrow$ claim $\rightarrow$ control $\rightarrow$ evidence or gap $\rightarrow$ decision.
+
+Public guidance for high-consequence work also covers graded rigor, questioning assumptions, self-checking, peer checking, independent verification, turnover, and operational learning \citep{doe2009hpi}. This paper adapts those ideas to software agents. It does not import regulatory classes or claim that the domains are equivalent.
 
 \subsection{Adjacent acceptance, governance, and provenance work}
 
-Software Delegation Contracts are the closest coding-agent empirical comparison. They structure work around task, bounded authority, returned work package, and acceptance context. A controlled pilot of 64 agent runs and 192 condition-blinded model-based reviews found improved reviewability rather than correctness, at increased token and wall-clock cost \citep{schmalbach2026contracts}. Artifact-gate research likewise compares prompt-to-code, specification-driven, and artifact-aware delivery using synthetic tasks and deterministic evaluators \citep{ravuru2026artifact}. These works occupy broad claims over evidence bundles, artifact gates, and reviewability. The distinction here is the custody and coupling of decisive evidence rather than the existence of a structured package.
+Software Delegation Contracts provide the closest empirical comparison for coding agents. They organize work around a task, bounded authority, a returned work package, and an acceptance context. In a controlled pilot, 64 agent runs produced materials for 192 condition-blinded model reviews. The study reported better reviewability, not better correctness, with higher token use and wall-clock time \citep{schmalbach2026contracts}. Artifact-gate research also compares prompt-to-code, specification-driven, and artifact-aware delivery. It uses synthetic tasks and deterministic evaluators \citep{ravuru2026artifact}. These studies make broad claims about evidence bundles, artifact gates, and reviewability. This paper instead asks who controls the decisive evidence.
 
-Governed AI-Assisted Engineering independently proposes graduated human oversight based on regulatory impact, customer proximity, reversibility, and data sensitivity, with required evidence artifacts \citep{kang2026gaie}. This overlaps consequence grading; the present paper does not claim novelty for oversight tiers. ContextNest formalizes governed knowledge supplied to agents through version identity, provenance, integrity, approved status, and point-in-time reconstruction \citep{sulpovar2026contextnest}. Xu \etal{} likewise propose a persistent governed-context abstraction with access control, provenance, traceability, and human verification roles \citep{xu2025everything}. These systems govern context eligibility and retrieval; this paper focuses on evidence and authority at acceptance of a candidate software state.
+Governed AI-Assisted Engineering proposes human oversight that grows with regulatory impact, customer proximity, reversibility, and data sensitivity. It also requires evidence artifacts \citep{kang2026gaie}. This overlaps the paper's consequence grading, so no novelty is claimed for oversight tiers. ContextNest governs knowledge through version identity, provenance, integrity, approval state, and point-in-time reconstruction \citep{sulpovar2026contextnest}. Xu \etal{} propose a persistent context layer with access control, provenance, traceability, and human verification roles \citep{xu2025everything}. These systems govern which context an agent may use. This paper focuses on evidence and authority when a candidate software state is accepted.
 
-Runtime Governance for AI Agents models enforceable decisions over agent identity, partial execution path, proposed action, and organizational state \citep{kaptein2026runtime}. AgentBound composes delegated authorization, behavioral constitutions, and site action contracts before execution and emits verifiable governance receipts \citep{kaul2026agentbound}. These systems are adjacent to apply-clearance and authority surfaces. The provenance survey by Wang \etal{} connects claims, evidence, tool outputs, memory, actions, and outcomes as a process-accountability graph \citep{wang2026traces}. Zhang and Sun's Knowledge-Based Pull Requests separate knowledge acceptance from implementation integration across a trust boundary \citep{zhang2026kpr}. Together these works preclude broad novelty claims over governed context, evidence bundles, provenance, graduated oversight, runtime authorization, or decision separation.
+Runtime Governance for AI Agents applies policy to agent identity, partial execution path, proposed action, and organizational state \citep{kaptein2026runtime}. AgentBound combines delegated authorization, behavioral rules, and site action contracts before execution. It also emits governance receipts \citep{kaul2026agentbound}. These systems are close to apply-clearance and authority surfaces.
 
-Two recent review-oriented works further narrow the contribution. Pollner treats AI-generated test artifacts as candidates requiring risk-scaled human acceptance rather than self-validating evidence \citep{pollner2026oversight}. Ming \etal{} organize intent, success criteria, actions, completion claims, verification evidence, gaps, and rework constraints into a reviewable claim structure and report improved detection of hidden intent--completion gaps under controlled materials \citep{ming2026reviewability}. The acceptance-record schema in this paper is therefore an implementation mechanism, not an invention claim.
+Wang \etal{} connect claims, evidence, tool output, memory, actions, and outcomes in a process-accountability graph \citep{wang2026traces}. Zhang and Sun's Knowledge-Based Pull Requests separate acceptance of knowledge from integration of code across a trust boundary \citep{zhang2026kpr}. This body of work prevents broad novelty claims about governed context, evidence bundles, provenance, graded oversight, runtime authorization, or decision separation.
 
-Industrial prior art is also substantial. Palantir's Ontology connects semantic objects to governed actions; ontology proposals support review and approval; and scenarios remain hypothetical until associated actions are applied under validation and permission controls \citep{palantir2026ontology,palantir2026proposals,palantir2026scenarios}. These capabilities preclude novelty claims over operational ontologies, controlled proposal/merge workflows, or separation of a modeled state from authority to apply it. The residual distinction is whether the actor producing a candidate also controls the decisive evidence path.
+Two review-focused studies further narrow the contribution. Pollner treats AI-generated test artifacts as candidates that need risk-scaled human acceptance, not as self-validating evidence \citep{pollner2026oversight}. Ming \etal{} organize intent, success criteria, actions, completion claims, evidence, gaps, and rework constraints into a reviewable claim structure. Their controlled materials showed better detection of hidden gaps between intent and completion \citep{ming2026reviewability}. The acceptance-record schema in this paper is therefore an implementation tool, not an invention claim.
 
-The residual specialization is narrower: evidence self-authorship as an agent-specific, falsifiable acceptance problem; a multidimensional profile of actor--evidence coupling; a consequence-dependent admissibility proposal; and an open Git-native reference pattern. \Cref{tab:boundary} summarizes that boundary.
+Industrial prior art is also substantial. Palantir's Ontology connects semantic objects to governed actions. Ontology proposals support review and approval. Scenarios remain hypothetical until their actions are applied under validation and permission controls \citep{palantir2026ontology,palantir2026proposals,palantir2026scenarios}. These capabilities prevent novelty claims about operational ontologies, controlled proposal and merge workflows, or separation of modeled state from authority to apply it. The remaining distinction is whether the candidate actor also controls the decisive evidence path.
+
+The paper's specialization is narrow: an agent-specific and falsifiable form of evidence self-authorship; a five-axis coupling profile; a consequence-dependent admissibility proposal; and an open Git-native reference pattern. \Cref{tab:boundary} summarizes that boundary.
 
 \begin{table}[t]
 \centering
@@ -162,11 +173,13 @@ Git-native acceptance record & Implementation vehicle & Demonstrate feasibility,
 
 \subsection{Trust-bearing changes}
 
-Let $c$ be a candidate change to code, configuration, prompts, models, permissions, data policy, tests, or release state. A change is \emph{trust-bearing} when accepting it commits an organization to an externally meaningful or difficult-to-reverse state. Examples include widening an agent's tool permissions, changing a payment path, altering data retention, changing a model or evaluation baseline, or publishing an assurance claim.
+Let $c$ be a candidate change to code, configuration, prompts, models, permissions, data policy, tests, or release state. A change is \emph{trust-bearing} when acceptance commits an organization to an externally meaningful state or one that is hard to reverse. Examples include wider agent permissions, a changed payment path, a new data-retention rule, a new model or evaluation baseline, and a published assurance claim.
 
-Acceptance requires more than a successful execution trace. The method uses an \emph{acceptance-record schema} with eight fields: intent; discovered state; authority; claims; evidence and provenance; verdict and residual-risk disposition; accepted baseline; and revalidation or operational triggers. This is a record schema, not a proof system.
+Acceptance requires more than a successful run. The method uses an \emph{acceptance-record schema} with eight fields: intent; discovered state; authority; claims; evidence and provenance; verdict and residual-risk disposition; accepted baseline; and revalidation or operational triggers. This schema is a record, not a proof system.
 
-Let $\pi$ be a versioned consequence policy external to the candidate record. For consequence class $k$, acceptance is permitted only when the required fields for $k$ are present, each decisive claim has evidence whose coupling profile satisfies $\pi(k)$, unresolved gaps have an authorized disposition, and the verdicting actor has acceptance authority. Application additionally requires current apply-clearance. This paper proposes that predicate but does not define one universal $\pi$: organizations must state and protect their required profiles, decisive-claim rules, exceptions, and expected packet mode outside the surfaces a change actor may rewrite. A baseline loses reliance when a recorded trigger occurs, its evidence expires, or a behavior-driving surface changes beyond the accepted envelope. These predicates make omissions and invalid transitions inspectable without implying mathematical assurance.
+Let $\pi$ be a versioned consequence policy kept outside the candidate record. For consequence class $k$, acceptance requires four conditions. The required fields for $k$ must be present. Each decisive claim must have evidence whose coupling profile satisfies $\pi(k)$. Any open gap must have an authorized disposition. The actor issuing the verdict must have acceptance authority. Application also requires current apply-clearance.
+
+This paper proposes that predicate but does not define one universal $\pi$. Each organization must state and protect its required profiles, decisive-claim rules, exceptions, and expected packet mode. Those rules must stay outside any surface the change actor can rewrite. A baseline loses reliance when a recorded trigger occurs, its evidence expires, or a behavior-driving surface moves outside the accepted envelope. These rules make missing records and invalid transitions visible. They do not provide mathematical assurance.
 
 \subsection{The evidence self-authorship failure mode}
 
@@ -177,9 +190,9 @@ Two related failure modes must be separated:
   \item[Evidence self-authorship.] The actor cannot edit the gate but can author all evidence, summaries, risk framing, and conclusions consumed by that gate.
 \end{description}
 
-We use \emph{evidence custody} for effective control over an evidence item's generation, selection, transformation, execution environment, retention, and presentation. Provenance can identify where an artifact came from without showing who controlled those choices. Custody makes that control path explicit.
+We use \emph{evidence custody} to mean effective control over an evidence item. That control can cover generation, selection, transformation, execution environment, retention, and presentation. Provenance may show where an artifact came from without showing who controlled those choices. Custody exposes that control path.
 
-Locking a gate addresses self-modification. It does not address evidence self-authorship. An agent can leave a protected CI rule untouched while selecting favorable tests, summarizing incomplete output, omitting a failed condition, or writing the narrative on which a reviewer relies. The resulting gate is structurally separate but informationally coupled to the actor.
+Locking a gate addresses self-modification. It does not address evidence self-authorship. An agent can leave a protected CI rule unchanged while choosing favorable tests, summarizing incomplete output, omitting a failed condition, or writing the review narrative. The gate is structurally separate, but its information path remains coupled to the actor.
 
 The central failure claim is therefore:
 
@@ -191,46 +204,58 @@ This is not a claim that every agent-generated report is unreliable. Actor evide
 
 \subsection{Threat model and control boundaries}
 
-The primary threat is epistemic rather than adversarial: a well-intentioned but fallible actor produces a wrong change and a locally coherent account that repeats the same mistake. Evidence separation addresses correlated reasoning, selective testing, persuasive omission, and unsupported confidence. It does not by itself stop malicious behavior.
+The main threat is a well-intentioned but fallible actor, not a malicious one. The actor produces a wrong change and a coherent explanation that repeats the same mistake. Evidence separation addresses shared reasoning errors, selective testing, persuasive omission, and unsupported confidence. It does not stop malicious behavior by itself.
 
-Other threats require different controls. Locked surfaces and least privilege address unauthorized modification and prompt-injected or compromised actors. Protected baselines address stale or silently changed configuration. Authenticated provenance addresses forged identity or rewritten evidence. Apply-clearance addresses changes in approvals, maintenance windows, external state, and rollback availability after technical acceptance. Human review addresses judgment but remains vulnerable to weak competence, incentives, time, and rubber-stamping. A compromised toolchain or colluding authority can defeat the pattern unless the deployment adds controls outside the actor's administrative domain.
+Other threats need other controls. Locked surfaces and least privilege address unauthorized changes and prompt-injected or compromised actors. Protected baselines address stale or hidden configuration changes. Authenticated provenance addresses forged identity or rewritten evidence. Apply-clearance addresses changes in approvals, maintenance windows, external state, and rollback options after technical acceptance. Human review adds judgment, but it can fail through weak skill, incentives, limited time, or rubber-stamping. A compromised toolchain or colluding authority can defeat the pattern. High-consequence deployments therefore need controls outside the actor's administrative domain.
 
 \begin{figure}[t]
 \centering
-\begin{tikzpicture}[
-  node distance=9mm and 16mm,
-  box/.style={draw=ngblue, rounded corners=2pt, align=center, minimum height=9mm, text width=20mm, fill=white, font=\small},
-  gate/.style={draw=ngteal, very thick, rounded corners=2pt, align=center, minimum height=9mm, text width=21mm, fill=nglight, font=\small},
-  arrow/.style={-{Latex[length=2mm]}, thick, draw=nggray},
-  label/.style={font=\tiny, text=nggray, align=center, fill=white, inner sep=1pt, text width=14mm}
-]
-\node[font=\bfseries, text=ngblue] (ca) at (0,2.0) {Coupled path};
-\node[box] (actor1) at (0,0.9) {Actor};
-\node[box, right=of actor1] (change1) {Candidate\\change};
-\node[box, right=of change1] (evidence1) {Actor-authored\\evidence};
-\node[gate, right=of evidence1] (gate1) {Acceptance\\gate};
-\draw[arrow] (actor1) -- (change1);
-\draw[arrow] (actor1.south east) to[bend right=18] node[below,label]{same\\reasoning path} (evidence1.south west);
-\draw[arrow] (change1) -- (evidence1);
-\draw[arrow] (evidence1) -- (gate1);
+\begin{tikzpicture}[x=1mm,y=1mm]
+\path[use as bounding box] (0,0) rectangle (160,58);
 
-\node[font=\bfseries, text=ngblue] (sa) at (0,-1.0) {Separated evidence path};
-\node[box] (actor2) at (0,-2.1) {Actor};
-\node[box, right=of actor2] (change2) {Candidate\\change};
-\node[box, right=of change2] (verify2) {Independent\\mechanism\\or reviewer};
-\node[gate, right=of verify2] (gate2) {Acceptance\\gate};
-\draw[arrow] (actor2) -- (change2);
-\draw[arrow] (change2) -- node[above=1mm,label]{reproducible\\input} (verify2);
-\draw[arrow] (verify2) -- node[above=1mm,label]{witnessed\\evidence} (gate2);
+\fill[ngrustlight, rounded corners=2mm] (0,31) rectangle (160,58);
+\fill[nglight, rounded corners=2mm] (0,0) rectangle (160,27);
+\node[anchor=west, font=\bfseries\small, text=ngrust] at (5,54) {Coupled evidence path};
+\node[anchor=west, font=\bfseries\small, text=ngteal] at (5,22) {Separated evidence path};
+
+\tikzset{
+  flowbox/.style={draw=ngblue, rounded corners=1.5pt, align=center, minimum height=9mm, text width=24mm, fill=white, font=\footnotesize},
+  evidencebox/.style={draw=ngrust, rounded corners=1.5pt, align=center, minimum height=9mm, text width=28mm, fill=white, font=\footnotesize},
+  verifierbox/.style={draw=ngteal, very thick, rounded corners=1.5pt, align=center, minimum height=9mm, text width=28mm, fill=white, font=\footnotesize},
+  gatebox/.style={draw=ngblue, very thick, rounded corners=1.5pt, align=center, minimum height=9mm, text width=23mm, fill=white, font=\footnotesize},
+  flowarrow/.style={-{Latex[length=2mm]}, thick, draw=nggray},
+  badarrow/.style={-{Latex[length=2mm]}, thick, draw=ngrust},
+  goodarrow/.style={-{Latex[length=2mm]}, thick, draw=ngteal}
+}
+
+\node[flowbox] (actor1) at (17,41) {Change\\actor};
+\node[flowbox] (change1) at (57,41) {Candidate\\change};
+\node[evidencebox] (evidence1) at (103,41) {Actor-controlled\\evidence};
+\node[gatebox] (gate1) at (146,41) {Protected\\gate};
+\draw[flowarrow] (actor1) -- (change1);
+\draw[badarrow] (change1) -- (evidence1);
+\draw[badarrow] (evidence1) -- (gate1);
+\draw[badarrow] (actor1.north) to[bend left=10] (evidence1.north);
+\node[font=\fontsize{7.5}{8.2}\selectfont, text=ngrust, fill=ngrustlight, inner sep=1pt] at (61,49) {same actor controls both};
+
+\node[flowbox] (actor2) at (17,10) {Change\\actor};
+\node[flowbox] (change2) at (57,10) {Candidate\\change};
+\node[verifierbox] (verify2) at (103,10) {External verifier\\or mechanism};
+\node[gatebox] (gate2) at (146,10) {Protected\\gate};
+\draw[flowarrow] (actor2) -- (change2);
+\draw[goodarrow] (change2) -- node[above=0.8mm, align=center, text width=17mm, font=\fontsize{7.2}{7.8}\selectfont, text=nggray, fill=nglight, inner sep=0.5pt] {reproducible\\input} (verify2);
+\draw[goodarrow] (verify2) -- node[above=0.8mm, align=center, text width=14mm, font=\fontsize{7.2}{7.8}\selectfont, text=nggray, fill=nglight, inner sep=0.5pt] {witnessed\\evidence} (gate2);
+\draw[densely dashed, draw=ngteal] (79,2) -- (79,19);
+\node[anchor=south, font=\fontsize{7.5}{8.2}\selectfont, text=ngteal, fill=nglight, inner sep=1pt] at (79,19) {candidate-control boundary};
 \end{tikzpicture}
-\caption{Actor separation and evidence separation are different properties. A protected gate can still consume evidence coupled to the actor's reasoning path.}
+\caption{\textbf{A protected gate can still consume actor-controlled evidence.} The top path keeps the candidate and decisive evidence under one actor. The lower path places a verifier or mechanism beyond the candidate's control boundary. That separation reduces coupling but does not prove correctness.}
 \label{fig:coupling}
 \end{figure}
 
 \section{Implementation Vehicle: The Graded Acceptance Method}
 \label{sec:method}
 
-The coupling profile in \Cref{sec:independence} is the modeling contribution. This section introduces only the operational vocabulary needed to show where that profile enters acceptance; the lifecycle, modes, packet files, and operating envelope are implementation vehicles.
+The coupling profile in \Cref{sec:independence} is the modeling contribution. This section introduces the terms needed to show where that profile enters acceptance. The lifecycle, modes, packet files, and operating envelope are implementation tools.
 
 \subsection{Lifecycle}
 
@@ -240,34 +265,44 @@ The full lifecycle is
 \textsc{Question $\rightarrow$ Discover $\rightarrow$ Specify $\rightarrow$ Plan $\rightarrow$ Execute $\rightarrow$ Verify $\rightarrow$ Review $\rightarrow$ Decide $\rightarrow$ Baseline $\rightarrow$ Operate $\rightarrow$ Learn}.
 \end{center}
 
-The lifecycle is an information flow, not a meeting schedule or research contribution. A small change may represent several stages in a few lines; detailed mnemonics and role prompts remain in the reference repository.
+The lifecycle describes information flow. It is not a meeting schedule or a research contribution. A small change may cover several stages in a few lines. Detailed mnemonics and role prompts remain in the reference repository.
 
 \begin{figure}[t]
 \centering
-\begin{tikzpicture}[
-  node distance=5mm,
-  stage/.style={draw=ngblue, rounded corners=2pt, align=center, minimum height=9mm, text width=24mm, fill=white, font=\small},
-  accept/.style={draw=ngteal, very thick, rounded corners=2pt, align=center, minimum height=9mm, text width=24mm, fill=nglight, font=\small},
-  arrow/.style={-{Latex[length=2mm]}, thick, draw=nggray}
-]
-\node[stage] (q) {Question\\Discover};
-\node[stage, right=of q] (sp) {Specify\\Plan};
-\node[stage, right=of sp] (ex) {Execute};
-\node[stage, right=of ex] (vr) {Verify\\Review};
-\node[accept, below=10mm of vr] (de) {Decide\\Verdict record};
-\node[accept, left=of de] (ba) {Baseline};
-\node[stage, left=of ba] (op) {Operate};
-\node[stage, left=of op] (le) {Learn};
-\draw[arrow] (q) -- (sp);
-\draw[arrow] (sp) -- (ex);
-\draw[arrow] (ex) -- (vr);
-\draw[arrow] (vr) -- (de);
-\draw[arrow] (de) -- (ba);
-\draw[arrow] (ba) -- (op);
-\draw[arrow] (op) -- (le);
-\draw[arrow] (le.west) -- ++(-5mm,0) |- (q.west);
+\begin{tikzpicture}[x=1mm,y=1mm]
+\path[use as bounding box] (0,0) rectangle (160,58);
+\tikzset{
+  explore/.style={draw=ngblue, rounded corners=1.5pt, align=center, minimum height=9mm, text width=26mm, fill=ngpale, font=\footnotesize},
+  accept/.style={draw=ngteal, very thick, rounded corners=1.5pt, align=center, minimum height=9mm, text width=26mm, fill=nglight, font=\footnotesize},
+  operate/.style={draw=ngblue, rounded corners=1.5pt, align=center, minimum height=9mm, text width=26mm, fill=white, font=\footnotesize},
+  looparrow/.style={-{Latex[length=2mm]}, thick, draw=nggray},
+  trustarrow/.style={-{Latex[length=2mm]}, very thick, draw=ngteal}
+}
+\node[font=\bfseries\small, text=ngblue] at (50,54) {Explore};
+\node[font=\bfseries\small, text=ngteal] at (132,54) {Accept};
+\node[font=\bfseries\small, text=ngblue] at (54,4) {Operate and learn};
+
+\node[explore] (q) at (16,41) {Question\\Discover};
+\node[explore] (sp) at (52,41) {Specify\\Plan};
+\node[explore] (ex) at (88,41) {Execute};
+\node[accept] (vr) at (132,41) {Verify\\Review};
+\node[accept] (de) at (132,18) {Decide\\Verdict record};
+\node[accept] (ba) at (94,18) {Baseline};
+\node[operate] (op) at (56,18) {Operate};
+\node[operate] (le) at (18,18) {Learn};
+
+\draw[looparrow] (q) -- (sp);
+\draw[looparrow] (sp) -- (ex);
+\draw[trustarrow] (ex) -- (vr);
+\draw[trustarrow] (vr) -- (de);
+\draw[trustarrow] (de) -- (ba);
+\draw[looparrow] (ba) -- (op);
+\draw[looparrow] (op) -- (le);
+\draw[looparrow] (le.west) -- ++(-5mm,0) |- (q.west);
+\draw[densely dashed, draw=ngteal] (110,30) -- (110,52);
+\node[rotate=90, anchor=south, font=\fontsize{7.5}{8.2}\selectfont, text=ngteal, fill=white, inner sep=1pt] at (110,41) {trust-bearing transition};
 \end{tikzpicture}
-\caption{A compressed view of the acceptance loop; paired labels combine lifecycle stages with the decision record they produce. Rigor is concentrated at trust-bearing transitions rather than imposed uniformly during exploration.}
+\caption{\textbf{Rigor concentrates at the transition from exploration to reliance.} Exploration remains fast inside a bounded workspace. Verification, review, decision, and baseline creation carry the trust-bearing load. Operation then returns evidence to the next question.}
 \label{fig:lifecycle}
 \end{figure}
 
@@ -275,7 +310,7 @@ The operating principle is \emph{fast exploration, slow acceptance}. Agents may 
 
 \subsection{Graded modes}
 
-A method for consequential work fails economically if it imposes the same ceremony on every change. \Cref{tab:modes} defines four levels. The mode is selected by authority, consequence, uncertainty, reversibility, and external trust rather than by diff size alone.
+A method becomes wasteful if it imposes the same ceremony on every change. \Cref{tab:modes} defines four levels. Teams select a mode based on authority, consequence, uncertainty, reversibility, and external trust. Diff size alone is not enough.
 
 \begin{table}[t]
 \centering
@@ -294,7 +329,7 @@ Stronger subset & Severe, silent, difficult to reverse, externally trusted, or a
 \end{tabularx}
 \end{table}
 
-Tripwires move a change upward when it introduces a trust boundary, irreversible action, destructive migration, permission widening, external claim, silent failure path, or material uncertainty. A successful graded method also permits de-escalation when the consequence and proof remain small. Where mode or minimum-profile compliance is mandatory, a protected policy owner must define the tripwires, expected mode, and $\pi(k)$ outside the candidate packet; a packet-local marker or PR-controlled validator cannot protect itself from downgrade.
+Tripwires move a change upward when it creates a trust boundary, irreversible action, destructive migration, wider permission, external claim, silent failure path, or material uncertainty. The method also permits a lower mode when consequence and proof remain small. If mode or profile rules are mandatory, a protected policy owner must define the tripwires, expected mode, and $\pi(k)$. Those rules must stay outside the candidate packet. A packet-local marker or PR-controlled validator cannot protect itself from downgrade.
 
 \subsection{Change packets and context packs}
 
@@ -304,32 +339,83 @@ The Git-native unit is a change packet at
 \code{.nuclear/changes/<change-slug>/}.
 \end{center}
 
-A Standard packet uses six Markdown files to carry one acceptance record: risk and consequence; basis and claims; bounded plan and authority; trace links; verification and provenance; and verdict, residual risk, rollback, monitoring, and baseline triggers. The filenames are repository ergonomics, not separate constructs.
+A Standard packet uses six Markdown files for one acceptance record. They cover risk and consequence; basis and claims; bounded plan and authority; trace links; verification and provenance; and the final decision. The final file also records residual risk, rollback, monitoring, and baseline triggers. The filenames aid repository use. They are not separate research constructs.
 
-The packet does not replace issues, pull requests, tests, CI, or operations systems. It links those primary artifacts around one decision and prefers links to copied output. Its task-specific projection supplies an agent only the objective, authority, evidence obligations, stop conditions, source lineage, and open gaps needed for the current phase. The packet has failed when it becomes a repository summary, duplicated narrative, or AI-generated paperwork that no reviewer uses.
+The packet does not replace issues, pull requests, tests, CI, or operations systems. It links those primary artifacts around one decision and favors links over copied output. Its task-specific view gives an agent only what the current phase needs. That includes the objective, authority, evidence duties, stop conditions, source lineage, and open gaps. The packet has failed when it becomes a repository summary, repeated narrative, or AI-generated paperwork that no reviewer uses.
 
 \subsection{Controlled agent operating envelopes}
 
-Agent behavior depends on more than source code. The controlled configuration boundary may include system and repository prompts, model identifiers and settings, tool schemas, permissions, credential policy, evaluation cases, scoring rubrics, skills, retrieval rules, memory, context packs, and approval instructions. We call this the \emph{agent operating envelope}.
+Agent behavior depends on more than source code. The controlled configuration boundary may include prompts, model identifiers and settings, tool schemas, permissions, credential policy, evaluation cases, scoring rules, skills, retrieval rules, memory, context packs, and approval instructions. We call this the \emph{agent operating envelope}.
 
-The term does not imply a formally qualified tool. It identifies behavior-driving surfaces that require versioning and revalidation when an organization relies upon them. A useful baseline records the accepted versions, intended use, evidence behind acceptance, known limits, residual gaps, and triggers that require a new check. This is a software-agent translation of established configuration-management and intended-use reasoning \citep{doe2016cm,nasa2022swe136}.
+The term does not imply a formally qualified tool. It identifies behavior-driving surfaces that need version control and new checks when an organization relies on them. A useful baseline records accepted versions, intended use, supporting evidence, known limits, open gaps, and triggers for a new check. This applies established configuration-management and intended-use reasoning to software agents \citep{doe2016cm,nasa2022swe136}.
 
 \section{Actor--Evidence Coupling and Independence}
 \label{sec:independence}
 
-Independence is not binary. A different process, agent label, or model call may share the same prompt, retrieved material, orchestrator, scoring rubric, and budget. The relevant question is whether the evidence path can fail differently from the implementation path.
+Independence is not a yes-or-no label. A different process, agent name, or model call may still use the same prompt, retrieved material, orchestrator, scoring rule, and budget. A new reviewer label does not create a new evidence path. The key question is whether the evidence path can fail in a different way from the implementation path.
 
-An evidence item is therefore labeled with a five-axis profile $P=(a,c,m,u,r)$:
+Each evidence item receives a five-axis profile $P=(a,c,m,u,r)$:
 
 \begin{enumerate}
-  \item \textbf{actor ($a$)}: whether a different actor performs or witnesses the check;
-  \item \textbf{context ($c$)}: whether the verifier reconstructs the problem without inheriting the actor's narrative as fact;
-  \item \textbf{mechanism ($m$)}: whether a different test, oracle, model family, tool, or human technique is used;
-  \item \textbf{authority ($u$)}: whether the actor is unable to redefine scope, threshold, evidence sufficiency, or verdict; and
-  \item \textbf{resource ($r$)}: whether the actor is unable to starve the verification budget or suppress its output.
+  \item \textbf{actor ($a$)}: did a different actor perform or witness the check?
+  \item \textbf{context ($c$)}: did the verifier reconstruct the problem without accepting the actor's narrative as fact?
+  \item \textbf{mechanism ($m$)}: did the check use a different test, oracle, model family, tool, or human technique?
+  \item \textbf{authority ($u$)}: was the actor unable to redefine the scope, threshold, evidence requirement, or verdict?
+  \item \textbf{resource ($r$)}: was the actor unable to starve the verification budget or suppress its output?
 \end{enumerate}
 
-Each axis records \emph{coupled}, \emph{partially separated}, or \emph{separated}, with a short basis. The axes are analytic lenses, not presumed causally independent variables: one shared orchestrator, prompt, budget, or policy owner may couple several axes at once, and the basis should name those shared dependencies. Additional axes may be justified empirically. The profile is a partial order, not a scalar score: a human witness does not necessarily dominate diverse mechanical verification, and a different model may remain coupled through shared context or authority. A versioned consequence policy may prescribe minimum constraints for decisive claims, but this paper does not claim one universal sequence of ``higher'' rungs or one universal $\pi$.
+Each axis is labeled \emph{coupled}, \emph{partially separated}, or \emph{separated}. The record also gives a short basis for the label. These axes are analytic views, not separate causes. One shared orchestrator, prompt, budget, or policy owner may couple several axes at once. The basis should name those shared dependencies. Future evidence may support more axes.
+
+The resulting profiles form a partial order, not a numeric score. For example, a human witness does not always provide stronger evidence than a diverse mechanical check. A different model can also remain coupled through shared context or authority. An external, versioned consequence policy may set limits for decisive claims. This paper does not define a universal ladder or one universal policy $\pi$.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[x=1mm,y=1mm]
+\path[use as bounding box] (0,0) rectangle (160,66);
+
+\fill[ngblue] (0,58) rectangle (160,66);
+\node[anchor=west, text=white, font=\bfseries\footnotesize] at (4,62) {Example evidence item: protected CI reruns tests selected by the change actor};
+
+\fill[ngpale] (0,50) rectangle (160,58);
+\fill[nggoldlight] (56,41.6) rectangle (89,50);
+\fill[ngrustlight] (31,33.2) rectangle (56,41.6);
+\fill[nggoldlight] (56,24.8) rectangle (89,33.2);
+\fill[ngrustlight] (31,16.4) rectangle (56,24.8);
+\fill[ngrustlight] (31,8) rectangle (56,16.4);
+
+\draw[nggray, line width=0.35pt] (0,8) rectangle (160,58);
+\foreach \x in {31,56,89,114} {\draw[nggray, line width=0.3pt] (\x,8) -- (\x,58);}
+\foreach \y in {16.4,24.8,33.2,41.6,50} {\draw[nggray, line width=0.3pt] (0,\y) -- (160,\y);}
+
+\node[font=\bfseries\fontsize{7.5}{8.2}\selectfont] at (15.5,54) {Axis};
+\node[font=\bfseries\fontsize{7.5}{8.2}\selectfont, text=ngrust] at (43.5,54) {Coupled};
+\node[font=\bfseries\fontsize{7.5}{8.2}\selectfont, text=nggold, align=center] at (72.5,54) {Partially\\separated};
+\node[font=\bfseries\fontsize{7.5}{8.2}\selectfont, text=ngteal] at (101.5,54) {Separated};
+\node[font=\bfseries\fontsize{7.5}{8.2}\selectfont] at (137,54) {Basis for this item};
+
+\node[anchor=west, align=left, text width=28mm, font=\fontsize{7.5}{8.3}\selectfont] at (1.5,45.8) {\textbf{Actor}\\Different checker?};
+\node[anchor=west, align=left, text width=28mm, font=\fontsize{7.5}{8.3}\selectfont] at (1.5,37.4) {\textbf{Context}\\Reconstructed?};
+\node[anchor=west, align=left, text width=28mm, font=\fontsize{7.5}{8.3}\selectfont] at (1.5,29.0) {\textbf{Mechanism}\\Different oracle?};
+\node[anchor=west, align=left, text width=28mm, font=\fontsize{7.5}{8.3}\selectfont] at (1.5,20.6) {\textbf{Authority}\\Rules fixed outside?};
+\node[anchor=west, align=left, text width=28mm, font=\fontsize{7.5}{8.3}\selectfont] at (1.5,12.2) {\textbf{Resource}\\Budget protected?};
+
+\node[font=\bfseries\fontsize{7.2}{8}\selectfont, text=nggold] at (72.5,45.8) {SELECTED};
+\node[font=\bfseries\fontsize{7.2}{8}\selectfont, text=ngrust] at (43.5,37.4) {SELECTED};
+\node[font=\bfseries\fontsize{7.2}{8}\selectfont, text=nggold] at (72.5,29.0) {SELECTED};
+\node[font=\bfseries\fontsize{7.2}{8}\selectfont, text=ngrust] at (43.5,20.6) {SELECTED};
+\node[font=\bfseries\fontsize{7.2}{8}\selectfont, text=ngrust] at (43.5,12.2) {SELECTED};
+
+\node[anchor=west, align=left, text width=43mm, font=\fontsize{7.5}{8.3}\selectfont] at (115.5,45.8) {Separate executor; actor chose tests};
+\node[anchor=west, align=left, text width=43mm, font=\fontsize{7.5}{8.3}\selectfont] at (115.5,37.4) {Actor framed claims and gaps};
+\node[anchor=west, align=left, text width=43mm, font=\fontsize{7.5}{8.3}\selectfont] at (115.5,29.0) {Protected runner; same oracle};
+\node[anchor=west, align=left, text width=43mm, font=\fontsize{7.5}{8.3}\selectfont] at (115.5,20.6) {Actor chose what counted};
+\node[anchor=west, align=left, text width=43mm, font=\fontsize{7.5}{8.3}\selectfont] at (115.5,12.2) {Actor could affect budget\\or retained output};
+
+\node[anchor=west, font=\bfseries\fontsize{7.5}{8.2}\selectfont, text=ngblue] at (1,4) {Read rows separately. Do not add them. External policy decides admissibility.};
+\end{tikzpicture}
+\caption{\textbf{The five axes form a profile, not a score.} In this example, protected CI partly separates actor and mechanism. Context, authority, and resource remain coupled. The profile describes coupling; external policy decides whether the evidence is admissible.}
+\label{fig:coupling-profile}
+\end{figure}
 
 \begin{table}[t]
 \centering
@@ -349,9 +435,11 @@ Witnessed acceptance & Named authority observes decisive evidence and owns the d
 \end{tabularx}
 \end{table}
 
-Actor evidence remains useful when labeled. It can show intent, attempted commands, raw output, and known uncertainty. It should not be silently upgraded to independent acceptance evidence. Conversely, separated evidence can still be wrong because its evaluator is stale, underspecified, biased, or compromised. Evaluation integrity and evidence independence are separate controls.
+Actor-produced evidence remains useful when it is labeled. It can show intent, attempted commands, raw output, and known uncertainty. It should not be presented as independent acceptance evidence. Separated evidence can also be wrong. Its evaluator may be stale, underspecified, biased, or compromised. Evidence quality and evidence independence are different controls.
 
-Consider an agent widening its own tool permissions. Protected CI executes the agent-selected tests and reports green. A role label such as ``CI verified'' suggests separation, but the profile may still record a partially separated actor and mechanism while context, authority, and resource remain coupled: the agent framed the claims, selected sufficiency, and can influence budget or retained output. Under an illustrative external policy requiring separated authority and at least partially separated context and mechanism for decisive permission claims, the CI result remains useful but is not yet admissible as the sole decisive evidence. A policy owner must define the required claims, and a verifier must reconstruct the permission boundary without treating the actor's narrative as fact. This example illustrates how the profile can change an evidence decision; it is not a universal minimum-profile table.
+Consider an agent that widens its own tool permissions. Protected CI runs tests selected by the agent and reports green. A label such as ``CI verified'' may suggest separation. The profile tells a more careful story. Actor and mechanism may be partially separated because CI executed the check. Context, authority, and resource may remain coupled because the agent framed the claims, chose what counted as sufficient, and influenced the budget or retained output.
+
+Suppose an illustrative external policy requires separated authority and at least partially separated context and mechanism for decisive permission claims. The CI result remains useful, but it cannot serve as the only decisive evidence. A policy owner must define the required claims. A verifier must also reconstruct the permission boundary instead of accepting the actor's narrative as fact. This example shows how a profile can change an evidence decision. It does not define a universal minimum profile.
 
 \section{Authority and Decision State}
 \label{sec:authority}
@@ -405,9 +493,11 @@ The public reference implementation described here was assessed at repository co
   \item tests, continuous integration, worked examples, citation metadata, and disclaimer boundaries.
 \end{itemize}
 
-The validator checks structure, links, statuses, placeholders, declared custody/profile relationships, and boundary wording. It does not determine whether an engineering claim is true, assign consequence, decide which claims are decisive, or judge whether a profile satisfies $\pi(k)$. Structural lint can expose a missing evidence field or an internal contradiction; it cannot replace engineering judgment. Mandatory policy enforcement requires a pinned validator, expected mode, and versioned consequence policy supplied outside the candidate's writable tree. This limit is intentional.
+The validator checks packet structure, links, status values, placeholders, declared custody relationships, coupling profiles, and boundary wording. It does not decide whether an engineering claim is true. It also does not assign consequence, choose decisive claims, or decide whether a profile satisfies $\pi(k)$. Structural checks can expose a missing evidence field or an internal contradiction. They cannot replace engineering judgment. Mandatory enforcement needs three protected inputs outside the candidate's writable tree: a pinned validator, the expected mode, and a versioned consequence policy.
 
-The assessed commit was also executed from a clean archive. The exact commit-relative invocations were \code{python -m pytest -q} (212 tests passed), \code{python -m ruff check .}, \code{python tools/ng.py doctor .}, \code{python tools/ng.py tokens .}, and \code{python tools/ng.py eval .} (25 of 25 selected decision signals across five executable cases). Strict checks used the shell form \code{python tools/ng.py validate}, followed by the packet path and \code{--strict-custody}. The first packet path was
+The assessed commit was also run from a clean archive. The exact commit-relative commands were \code{python -m pytest -q}, which passed 212 tests; \code{python -m ruff check .}; \code{python tools/ng.py doctor .}; \code{python tools/ng.py tokens .}; and \code{python tools/ng.py eval .}. The evaluation reported 25 of 25 selected decision signals across five executable cases.
+
+Strict checks used \code{python tools/ng.py validate}, followed by the packet path and \code{--strict-custody}. The first packet path was
 \begin{quote}
 \small\path{.nuclear/changes/white-paper-draft}.
 \end{quote}
@@ -416,15 +506,15 @@ The second was formed without whitespace by concatenating
 \small\path{docs/03-worked-examples/ai-agent-tool-permissions/}\\[-0.3em]
 \path{.nuclear/changes/add-agent-tool-permissions}.
 \end{quote}
-Both commands passed. These results establish bounded executability and structural consistency, not claim truth, policy adequacy, authenticated independence, or effectiveness.
+Both strict commands passed. These results show bounded executability and structural consistency. They do not establish claim truth, policy quality, authenticated independence, or effectiveness.
 
-The implementation uses Markdown and Git so that records survive the replacement of a model, coding agent, editor, or orchestration framework. Tool-specific integration may improve ergonomics, but the accepted claim, primary evidence link, and decision should not disappear when a chat expires or an API changes.
+The implementation uses Markdown and Git so its records can outlive a model, coding agent, editor, or orchestration framework. Tool-specific integration may improve use, but the accepted claim, primary evidence link, and decision should not disappear when a chat ends or an API changes.
 
-The repository also treats context volume as a measured failure surface. Always-loaded instructions remain short; deeper skill bodies load when their trigger fires; token audits identify instruction growth; and the method rejects records that do not change execution, evidence, review, decision, or operational learning.
+The repository also treats context volume as a failure surface that can be measured. Always-loaded instructions stay short. Deeper skill content loads only when its trigger fires. Token audits identify instruction growth. The method rejects records that do not change execution, evidence, review, decision, or operational learning.
 
 \subsection{Git and evidence trust model}
 
-Git-native does not mean immutable, authenticated, append-only, or independent. The trust obtained from an acceptance record depends on who controls the repository, branch policy, CI identity, evidence store, signing keys, and history. In-toto models authorized functionaries and linked supply-chain steps, while SLSA distinguishes provenance generated in a trusted control plane from metadata that user-controlled build steps can alter \citep{intoto2026,slsa2026}. The implementation can link to such attestations but does not recreate their guarantees.
+Git-native does not mean immutable, authenticated, append-only, or independent. Trust in an acceptance record depends on who controls the repository, branch policy, CI identity, evidence store, signing keys, and history. In-toto calls its authorized actors functionaries and links their supply-chain steps. SLSA separates provenance made in a trusted control plane from metadata that user-controlled build steps can change \citep{intoto2026,slsa2026}. The implementation can link to those attestations, but it does not recreate their guarantees.
 
 \begin{table}[t]
 \centering
@@ -481,27 +571,33 @@ The example does not establish broad security, production readiness, compliance,
 The current evaluation addresses two limited questions:
 
 \begin{description}
-  \item[RQ1.] In author-constructed scenarios, does the method produce artifacts with more explicit decision signals than a reasonable direct-prompt path, and where does added overhead appear unnecessary?
-  \item[RQ2.] Can selected decision signals in worked artifacts be retained through a deterministic regression harness?
+  \item[RQ1.] Do author-constructed scenarios show more explicit decision signals than a reasonable direct-prompt path? Where does the method add needless overhead?
+  \item[RQ2.] Does a deterministic regression harness retain selected decision signals in worked artifacts?
 \end{description}
 
 Neither question measures production defects, safety, reviewer accuracy, task completion, or organizational outcome.
 
 \subsection{Twelve-scenario artifact comparison}
 
-The repository contains twelve paired scenarios: a tiny README fix, agent workspace boundary, dependency update, public assurance wording, prompt/model baseline, agent handoff, payment-webhook idempotency, data-retention migration, release cut, incident regression, external API permission, and source-citation adoption document. Each pair compares a reasonable simple-prompt artifact with the corresponding method records.
+The repository contains twelve paired scenarios. Six cover development changes: a tiny README fix, an agent workspace boundary, a dependency update, public assurance wording, a prompt/model baseline, and an agent handoff. Six cover operational or public risks: payment-webhook idempotency, a data-retention migration, a release cut, an incident regression, external API permission, and a source-citation adoption document. Each pair compares a reasonable simple-prompt artifact with the method's records for the same scenario.
 
-The author scored each artifact from one to five for decision clarity, hidden-risk discovery, evidence quality, and ship/defer usefulness, with overhead scored separately. Because the scenarios, artifacts, rubric, and scores were author-produced without blinding or independent raters, the paper reports patterns rather than numerical means. The raw scores remain in the public evaluation directory for auditability.
+The author scored each artifact from one to five on decision clarity, hidden-risk discovery, evidence quality, and ship/defer usefulness. Overhead was scored separately. The scenarios, artifacts, rubric, and scores were all author-produced. There was no blinding or independent rating. The paper therefore reports patterns instead of numerical means. Raw scores remain in the public evaluation directory.
 
-Three design hypotheses emerged from the inspection. First, on the tiny documentation fix, the method added overhead without changing the decision, motivating a legitimate Administrative floor and Quick mode. Second, scenarios crossing authority, data, payment, model/prompt, release, or public-claim boundaries appeared to expose decision structure that the direct-prompt artifacts left implicit: rollback routes, credential scope, silent-failure paths, and ownership of residual risk. Third, the largest author-scored gap concerned hidden-risk discovery, the dimension most exposed to confirmation bias because the author knew the seeded concerns.
+The inspection produced three design hypotheses:
 
-These hypotheses shaped tripwires, mode boundaries, and the worked example, but remain untested on independently designed artifacts. They are formative design feedback, not evidence of improved decisions or software outcomes. Delegation-contract, artifact-gate, and intent-anchored claim-review studies provide stronger external anchors for reviewability and evidence organization, but none validates this method's coupling prediction \citep{schmalbach2026contracts,ravuru2026artifact,ming2026reviewability}.
+\begin{enumerate}
+  \item On the tiny documentation fix, the method added overhead without changing the decision. This result supports a legitimate Administrative floor and Quick mode.
+  \item Scenarios involving authority, data, payment, model/prompt baselines, release, or public claims appeared to expose decision details that direct prompts left implicit. These details included rollback routes, credential scope, silent failure paths, and ownership of residual risk.
+  \item The largest author-scored gap involved hidden-risk discovery. This dimension faces the greatest confirmation risk because the author knew the seeded concerns.
+\end{enumerate}
 
-By the paper's own model, the formative scenarios, scores, manuscript synthesis, and AI-assisted drafting remain actor-controlled evidence: disclosure makes their custody visible but does not make them independent. Provider-diverse red-team comments informed revision, but they remain advisory model judgments rather than peer review or independent empirical verification.
+These hypotheses shaped the tripwires, mode boundaries, and worked example. They remain untested on artifacts designed by independent researchers. They are formative design feedback, not evidence of better decisions or software outcomes. Studies of delegation contracts, artifact gates, and intent-based claim review provide stronger evidence for reviewability and evidence organization. None validates this method's coupling prediction \citep{schmalbach2026contracts,ravuru2026artifact,ming2026reviewability}.
+
+Under the paper's own model, the scenarios, scores, manuscript synthesis, and AI-assisted drafting are actor-controlled evidence. Disclosure makes their custody visible, but it does not make them independent. Comments from several model providers informed revision. Those comments remain advisory model judgments, not peer review or independent empirical verification.
 
 \subsection{Signal-presence harness}
 
-A deterministic harness reads selected artifacts and checks for required decision signals, including bounded file-write authority, adversarial proof claims, source-lineage boundaries, credential scope, rollback, monitoring, and residual-risk ownership. It prevents examples from silently losing named fields. It does not assess whether those fields are substantively adequate, and it does not mechanize the direct-prompt comparison.
+A deterministic harness checks selected artifacts for required decision signals. These signals include bounded file-write authority, adversarial proof claims, source-lineage boundaries, credential scope, rollback, monitoring, and ownership of residual risk. The harness prevents examples from silently losing named fields. It does not judge whether the fields are adequate. It also does not automate the direct-prompt comparison.
 
 \subsection{Evidence supported by the current repository}
 
@@ -533,7 +629,9 @@ The method can fail by accretion. Additional templates, taxonomies, gates, and s
 
 \subsection{Bounded novelty}
 
-This paper claims a narrow agent-specific synthesis and implementation. Self-review, governed context, evidence bundles, artifact gates, graduated oversight, claim--evidence structures, execution provenance, configuration control, independent assessment, operational ontologies, and authority separation all have prior art. The primary claims stand or fall more sharply: if evidence separation shows no meaningful reviewer-detection benefit under controlled comparison, evidence self-authorship reduces to a relabeling of established self-review; if the coupling profile does not expose correlated failure better than role labels or gate protection alone, it reduces to a checklist. The implementation may retain descriptive value even if those predictions fail.
+This paper claims a narrow agent-specific synthesis and implementation. Many parts have prior art. These include self-review, governed context, evidence bundles, artifact gates, graded oversight, claim--evidence structures, execution provenance, configuration control, independent assessment, operational ontologies, and authority separation.
+
+The primary claims have sharper failure conditions. If controlled comparisons find no meaningful detection benefit from evidence separation, evidence self-authorship may be only a new label for established self-review. If the coupling profile exposes no more correlated failure than role labels or gate protection, it may be only a checklist. The implementation could retain descriptive value even if those predictions fail.
 
 \subsection{Author involvement and confirmation risk}
 
@@ -556,22 +654,41 @@ A human owner is not a guarantee. Review quality depends on competence, time, in
 
 \subsection{Falsification and study design}
 
-The evidence self-authorship formulation predicts that, when an actor authors both a plausible but wrong change and the decisive evidence consumed by its gates, reviewers will detect errors less reliably than under a preregistered separated-evidence condition. The preregistration must name the target profile on all five axes and a manipulation check before data collection. One defensible initial manipulation separates actor, mechanism, and verdict authority, prevents the change actor from vetoing or suppressing output, and measures rather than assumes the remaining context and resource coupling. It must also define the smallest effect of interest and an equivalence or non-inferiority margin: a non-significant difference alone would not establish equivalence. The formulation is weakened or falsified if a sufficiently powered comparison places the effect inside that equivalence region, or if locked thresholds and protected CI bound acceptance error within the same prespecified margin as the preregistered separated-evidence condition.
+The evidence self-authorship formulation makes a testable prediction. When an actor writes both a plausible but wrong change and the decisive evidence used by its gates, reviewers should detect errors less often than under a separated-evidence condition.
 
-A credible test should separate method design from task design, execution, scoring, and publication. We propose a preregistered study with three matched conditions: a direct-prompt workflow; a contract or artifact-bundle workflow whose evidence remains actor-authored; and the same structured workflow under the preregistered separated-evidence profile and manipulation check. Conditions should be crossed with low- and high-consequence scenarios containing seeded plausible defects. Artifacts should be randomized and blinded. Multiple independent reviewers should score defect and omission detection, false acceptance, evidence quality, review time, and confidence calibration. Automation-use and automation-bias research should inform reviewer instructions and reliance measures \citep{parasuraman1997automation,skitka1999automation}. Prompts, models, tools, artifacts, rubrics, failures, and negative results should be published.
+A preregistration must name the target profile on all five axes. It must also define a manipulation check before data collection. One defensible first test would separate the actor, verification mechanism, and verdict authority. It would prevent the change actor from vetoing or suppressing results. It would measure, rather than assume, the remaining context and resource coupling.
+
+The study must define the smallest effect of interest and an equivalence or non-inferiority margin. A non-significant result does not prove equivalence. The formulation is weakened or falsified if a well-powered comparison places the effect inside the stated equivalence region. It is also weakened if locked thresholds and protected CI keep acceptance error within the same prespecified margin as the separated-evidence condition.
+
+A credible test should keep method design separate from task design, execution, scoring, and publication. We propose three matched conditions: a direct-prompt workflow; a contract or artifact-bundle workflow with actor-authored evidence; and the same structured workflow with the preregistered separated-evidence profile and manipulation check. The study should cross these conditions with low- and high-consequence scenarios that contain plausible seeded defects.
+
+Artifacts should be randomized and blinded. Independent reviewers should score defect detection, omission detection, false acceptance, evidence quality, review time, and confidence calibration. Research on automation use and automation bias should guide reviewer instructions and reliance measures \citep{parasuraman1997automation,skitka1999automation}. The study should publish its prompts, models, tools, artifacts, rubrics, failures, and negative results.
 
 \subsection{Secondary questions}
 
-The study should estimate which profile axes carry any effect and when nominally separate agents remain too correlated; whether graded rigor concentrates cost without taxing small changes; which behavior-driving changes warrant revalidation; whether reviewers distinguish verdict from apply-clearance as external state changes; and how often records decay into ceremony. Field studies should report bypasses, abandoned records, false alarms, accepted residual risks, and cases where the direct path performs better. A method about evidence should publish its own failures.
+The study should also ask:
+
+\begin{itemize}
+  \item which profile axes carry any observed effect;
+  \item when nominally separate agents remain too correlated;
+  \item whether graded rigor controls cost without burdening small changes;
+  \item which behavior-driving changes require revalidation;
+  \item whether reviewers distinguish verdict from apply-clearance when external state changes; and
+  \item how often records become empty ceremony.
+\end{itemize}
+
+Field studies should report bypasses, abandoned records, false alarms, accepted residual risks, and cases where the direct path performs better. A method about evidence should publish its own failures.
 
 \section{Conclusion}
 \label{sec:conclusion}
 
-A protected gate is not independent when the change actor also controls the generation, selection, transformation, or presentation of every decisive input it consumes. Evidence self-authorship is an agent-specific form of self-review; evidence custody makes the control path inspectable. The resulting prediction is testable: a preregistered separated-evidence condition should improve detection of plausible but wrong changes relative to an otherwise matched actor-controlled condition. Whether that prediction holds, and which coupling axes matter, remains an empirical question.
+A protected gate is not independent when the change actor controls every decisive input it consumes. That control may include how evidence is generated, selected, changed, retained, or presented. Evidence self-authorship is an agent-specific form of self-review. Evidence custody makes the control path visible.
 
-This paper operationalizes the problem through custody labels, a multidimensional actor--evidence coupling profile, a consequence-dependent admissibility proposal, and an acceptance-record schema. The \method{} repository demonstrates that custody and profile declarations can be represented with ordinary Git workflows and structurally linted. Those checks expose declared relationships; they do not authenticate identities, establish semantic adequacy, or decide whether a profile is admissible. Lifecycle, risk modes, verdict/apply-clearance, and baselines remain implementation primitives, while the trust model makes clear that Git alone does not authenticate evidence or establish independence.
+The central prediction is testable. Reviewers should detect plausible but wrong changes more often under a preregistered separated-evidence condition than under an otherwise matched actor-controlled condition. The study must state which axes it separates and how it will check that separation. Whether the effect exists, and which axes matter, remains an open empirical question.
 
-The present inspection is formative and author-produced. The defensible current result is therefore a problem formulation, control pattern, and runnable reference implementation---not a claim of improved correctness or assurance. Independent, blinded evaluation is the next gate for the central prediction.
+This paper turns the problem into custody labels, a five-axis coupling profile, a consequence-dependent admissibility proposal, and an acceptance-record schema. The \method{} repository shows that ordinary Git workflows can record these declarations and check their structure. The checks reveal declared relationships. They do not authenticate identity, prove semantic adequacy, establish independence, or decide whether a profile is admissible. Lifecycle, risk modes, verdict/apply-clearance, and baselines remain implementation tools. The trust model also makes clear that Git alone does not authenticate evidence or establish independence.
+
+The current inspection is formative and author-produced. The defensible result is a problem formulation, a control pattern, and a runnable reference implementation. It is not a claim of improved correctness or assurance. Independent, blinded evaluation is the next gate for the central prediction.
 
 \section*{Availability and Disclosure}
 

@@ -147,10 +147,10 @@ Different files hold different layers of guidance. Keep each light.
 | Per-task context pack | Role, mode, allowed/forbidden actions, required proof, stop conditions | Per task |
 
 This repo's own [`AGENTS.md`](AGENTS.md) is the reference shape: its **completion standard**
-(an agent is not done until it can name files changed, the change record, the evidence, the
-handoff used or why it was not needed, the intent declared, the gaps still open, and the
-boundary wording it checked) is the strongest exportable artifact. The starter kits ship it
-trimmed and `<fill-in>`-marked.
+always requires changed files, reasoning or change record, evidence, and open gaps, then adds
+handoff, intent, decision-right, custody, and claim-boundary details only when triggered. This
+avoids performative `not applicable` reporting while keeping consequential work inspectable.
+The starter kits ship it trimmed and `<fill-in>`-marked.
 
 ---
 

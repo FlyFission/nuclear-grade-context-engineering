@@ -49,6 +49,7 @@ EXPECTED_SKILLS = {
     "responding-to-incidents",
     "tracking-deficiencies",
     "reporting-shared-defects",
+    "verifying-final-artifacts",
 }
 
 REQUIRED_SECTIONS = (

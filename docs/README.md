@@ -24,6 +24,7 @@ These docs have two parts. First, learn how to use the workflow. Second, look up
 | Place authority and declare intent | [`02-operating-system/authority-and-intent.md`](02-operating-system/authority-and-intent.md) |
 | Expose evidence custody and actor–evidence coupling | [`02-operating-system/actor-evidence-independence.md`](02-operating-system/actor-evidence-independence.md) |
 | Inspect the optional acceptance graph/domain model | [`02-operating-system/acceptance-graph-domain-model.md`](02-operating-system/acceptance-graph-domain-model.md) |
+| Verify the delivered artifact, not the source that makes it | [`02-operating-system/final-artifact-verification.md`](02-operating-system/final-artifact-verification.md) |
 | Keep an LLM judge honest (guard against judge bias) | [`02-operating-system/evaluation-integrity.md`](02-operating-system/evaluation-integrity.md) |
 | Scale rigor by risk tier | [`02-operating-system/risk-tiers-and-modes.md`](02-operating-system/risk-tiers-and-modes.md) |
 | Make a second check genuinely independent | [`02-operating-system/independence-architecture.md`](02-operating-system/independence-architecture.md) |

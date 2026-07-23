@@ -2,7 +2,7 @@
 
 A strategic spine for adopting Nuclear-grade *without* adopting all of it.
 
-The full system has 28 skills, command prompts, templates, a checker, change-control packets,
+The full system has 29 skills, command prompts, templates, a checker, change-control packets,
 governance docs, and an operating model. Most projects need a few of those at once. This page
 names the **Core 7** habits every disciplined AI-agent change uses, and the **decision matrix**
 that says which **ancillary cluster** to invoke for which kind of change.
@@ -57,10 +57,10 @@ Scan the triggers. For every "yes," invoke that cluster. Default is Core only.
 | You produce controlled artifacts — packets, baselines, multi-PR threads, owned configurations | **Configuration management** | [`creating-change-records`](skills/creating-change-records/SKILL.md), [`choosing-what-to-control`](skills/choosing-what-to-control/SKILL.md), [`checking-what-a-change-affects`](skills/checking-what-a-change-affects/SKILL.md), [`recording-a-known-good-version`](skills/recording-a-known-good-version/SKILL.md), [`closing-stale-packets`](skills/closing-stale-packets/SKILL.md), [`breaking-down-the-work`](skills/breaking-down-the-work/SKILL.md) |
 | The change makes public claims about safety, security, compliance, licensing, or provenance | **Claims discipline** | [`checking-legal-and-safety-wording`](skills/checking-legal-and-safety-wording/SKILL.md), [`checking-source-claims`](skills/checking-source-claims/SKILL.md) |
 | Production failure, data loss, or agent-caused harm | **Incident & deficiency** | [`responding-to-incidents`](skills/responding-to-incidents/SKILL.md), [`tracking-deficiencies`](skills/tracking-deficiencies/SKILL.md), [`reporting-shared-defects`](skills/reporting-shared-defects/SKILL.md) |
-| Repo layout / structure decision, or visible code-quality drift in a diff | **Hygiene** | [`organizing-project-folders`](skills/organizing-project-folders/SKILL.md), [`reviewing-code-quality`](skills/reviewing-code-quality/SKILL.md) |
+| Repo layout / structure decision, visible code-quality drift in a diff, or a deliverable that is a produced artifact whose correctness lives in the rendered output (figure, PDF, SVG, screenshot, build, deployed response) | **Hygiene** | [`organizing-project-folders`](skills/organizing-project-folders/SKILL.md), [`reviewing-code-quality`](skills/reviewing-code-quality/SKILL.md), [`verifying-final-artifacts`](skills/verifying-final-artifacts/SKILL.md) |
 | Planning a multi-stage AI / agentic workflow (workspace, orchestration, repo convention) | **Workflow architecture** — a composing path, not a new cluster (see [`docs/02-operating-system/agentic-workflow-architecture.md`](docs/02-operating-system/agentic-workflow-architecture.md)) | [`organizing-project-folders`](skills/organizing-project-folders/SKILL.md), [`breaking-down-the-work`](skills/breaking-down-the-work/SKILL.md), [`briefing-an-agent`](skills/briefing-an-agent/SKILL.md), [`recording-what-an-agent-did`](skills/recording-what-an-agent-did/SKILL.md) |
 
-All 28 skills are accounted for: 7 Core + 20 ancillary across 5 clusters + 1 router
+All 29 skills are accounted for: 7 Core + 21 ancillary across 5 clusters + 1 router
 ([`using-nuclear-grade`](skills/using-nuclear-grade/SKILL.md)). The workflow-architecture
 trigger above composes existing skills rather than adding a sixth cluster or a new skill — its
 home is the doctrine page, not a new `SKILL.md`.
@@ -161,7 +161,7 @@ the skill fires**. In always-on context put only a **one-line pointer per skill*
 description-sized cost.
 
 The framework's own measurement (see [`docs/05-reference/skills-token-audit.md`](docs/05-reference/skills-token-audit.md)):
-the 28 skill descriptions sit at ~104 tokens each (gated 80-500 characters), and the ~35k of
+the 29 skill descriptions sit at ~104 tokens each (gated 80-500 characters), and the ~35k of
 skill *bodies* are loaded only on invocation. Pasting a fat doctrine block into always-on
 context multiplies that cost across every subagent in a fan-out. The framework rejects that
 pattern by measurement.

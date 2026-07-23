@@ -65,6 +65,7 @@
 | `responding-to-incidents` | (new skill; applies conceptually to U07, U10; formal trial records pending) |
 | `tracking-deficiencies` | (new skill; applies conceptually to U03, U10; formal trial records pending) |
 | `reporting-shared-defects` | (new skill; applies conceptually to U03, U10; formal trial records pending) |
+| `verifying-final-artifacts` | (new skill; applies conceptually to U01, U04 where the deliverable is a rendered or produced artifact; formal trial records pending) |
 
 ## Workflow Coverage
 

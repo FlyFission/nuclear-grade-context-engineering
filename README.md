@@ -158,29 +158,39 @@ Underneath the path sit a few **optional** habits borrowed from high-reliability
 
 ## Who does what
 
-Four roles share the work: **you**, the **AI agent**, the **change record**, and the **reviewer**. The agent moves fast, but only inside limits you approve first. The record carries each claim and its evidence. The reviewer decides on the evidence, not the pitch.
+Five roles share the work: the **human owner**, the **builder**, the **exact candidate**, the **change record**, and the **independent verifier**. These are roles, not model brands. The builder moves fast, but only inside limits the human approved first. The record carries each claim, its evidence, and the candidate identity. The verifier judges the exact candidate against approved criteria. The human retains merge and apply authority.
 
 ```mermaid
 sequenceDiagram
-    actor You
-    participant Agent as AI agent
+    actor You as Human owner
+    participant Agent as Builder
+    participant Candidate as PR / exact candidate
     participant Record as Change record
-    actor Reviewer
-    You->>Agent: Ask the hard question, set the goal
-    Agent->>Record: Draft the risk and what "good" means
-    Record-->>You: You read the draft
-    You->>Agent: Approve the limits (may / may not do)
-    Agent->>Agent: Build only inside the limits
-    Agent->>Record: Write each claim with its evidence
-    Record-->>Reviewer: Show evidence, gaps, decision
-    Reviewer->>Record: Decide on purpose (ship / defer / block)
-    Record->>Record: Save the approved version (baseline)
-    Note over You,Reviewer: Lessons from real use feed the next change
+    actor Verifier as Independent verifier
+    You->>Record: Classify risk; approve criteria and limits
+    Record->>Agent: Open bounded build authority
+    Agent->>Candidate: Build inside approved limits
+    Agent->>Record: Link claims and evidence to candidate ID
+    Record-->>Verifier: Show criteria, evidence, gaps, candidate ID
+    Verifier->>Candidate: Reproduce decisive checks
+    Verifier->>Record: Verdict bound to candidate ID
+    alt Needs changes and correction budget remains
+        Record-->>You: Named gaps and round count
+        You->>Agent: Authorize bounded correction
+        Agent->>Candidate: Change candidate; create new ID
+        Candidate->>Record: Prior verdict is stale
+    else Candidate ready for decision
+        Record->>Candidate: Confirm current ID equals reviewed ID
+        Record-->>You: Present current verdict and residual risk
+        You->>Record: Merge/apply, hold, or send back
+        Record->>Record: Save approved version (baseline)
+    end
+    Note over You,Verifier: Lessons from real use feed the next change
 ```
 
-**In words:** you ask and set the goal → the agent drafts the risk and what "good" means → you approve the limits → the agent builds only inside them → the agent writes each claim with its evidence → the reviewer checks the evidence and decides (ship / defer / block) → the approved version is saved as the baseline → lessons from real use feed the next change. Canonical copy in [`docs/diagrams.md`](docs/diagrams.md).
+**In words:** the human classifies the risk and approves the criteria and limits → the builder changes one exact candidate inside those limits → the record binds claims and evidence to that candidate → an independent verifier reproduces the decisive checks and records a verdict against the candidate ID → any correction creates a new candidate and makes the prior verdict stale → before merge or apply, the record confirms the current candidate is the reviewed candidate → the human decides whether to merge, hold, or send it back → an accepted version becomes the baseline and lessons from use feed the next change. A review plan names the maximum correction rounds before human escalation; models do not silently relax the criteria or review forever. Canonical copy in [`docs/diagrams.md`](docs/diagrams.md).
 
-One caution this loop has to defend against on purpose: the agent that builds the change also drafts much of its evidence, writes the narrative the reviewer reads, and frames the decision. A confident mistake can therefore arrive wrapped in convincing proof that it is correct — persuasive documentation the loop manufactured, because the actor and the evidence-author are the same. The defense is **independence**, scaled to the stakes: the load-bearing claim's evidence is reproducible by the reviewer or authored by an independent checker, and on trust-bearing work the decider is not the actor. See [`docs/02-operating-system/actor-evidence-independence.md`](docs/02-operating-system/actor-evidence-independence.md).
+One caution this loop has to defend against on purpose: the agent that builds the change also drafts much of its evidence, writes the narrative the reviewer reads, and frames the decision. A confident mistake can therefore arrive wrapped in convincing proof that it is correct: persuasive documentation the loop manufactured, because the actor and the evidence-author are the same. The defense is **independence**, scaled to the stakes: the load-bearing claim's evidence is reproducible by the reviewer or authored by an independent checker, and on trust-bearing work the decider is not the actor. See [`docs/02-operating-system/actor-evidence-independence.md`](docs/02-operating-system/actor-evidence-independence.md).
 
 ## Keeping the approved version under control
 

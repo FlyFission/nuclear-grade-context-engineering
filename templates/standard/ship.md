@@ -27,6 +27,21 @@
 - Excluded:
 - Known non-goals:
 
+## Reviewed candidate identity
+
+A verdict applies only to the exact candidate the verifier inspected. Record both identities immediately before merge or apply. A material edit, generated-file refresh, amended commit, rebase, or conflict resolution creates a new review candidate unless a bounded delta review establishes otherwise.
+
+- Acceptance-criteria revision:
+- Reviewed candidate commit / artifact hash:
+- Current candidate commit / artifact hash:
+- Candidate matches reviewed identity? yes/no:
+- Material changes after verdict:
+- Re-review status: not required / delta review complete / full re-review complete / pending
+- Current verdict status: current / stale / blocked
+- Verifier and evidence link:
+
+If the identities do not match, the prior verdict is stale. Do not baseline, merge, release, or apply the candidate until the affected evidence is rerun and the verdict is renewed or the change is explicitly blocked.
+
 ## Evidence status summary
 
 | Evidence area | Status | Link | Notes |

@@ -128,6 +128,23 @@ own test" trap. See the agent-drafts-spec workflow in `CORE.md`.
 | Release decision ready | The leftover risks and the rollback are recorded. | planned / pass / gap |
 | Turnover complete if activated | The next owner has the state, the authority, the stop rules, and the work left to do. | planned / pass / gap |
 
+## Review candidate and correction budget
+
+Use when an AI-assisted pull request or other controlled candidate will receive a verdict. Roles are capability assignments, not model brands. Name the criteria challenger, builder, independent verifier, and human decision owner. A checker that helped author the criteria may still advise, but do not count that later review as independent without a separate custody basis.
+
+- Acceptance-criteria revision:
+- Candidate identity scheme (commit SHA, artifact hash, or equivalent):
+- Criteria challenger and custody note:
+- Builder:
+- Independent verifier and separation rationale:
+- Human decision owner:
+- Maximum correction rounds before human escalation:
+- Current correction round:
+- Material change that invalidates the current verdict:
+- Escalation action when the budget is exhausted:
+
+Any material correction creates a new candidate identity and makes the prior verdict stale. Do not relax the acceptance criteria inside the correction loop merely to obtain a pass.
+
 ## Rollback approach
 
 - Rollback method:

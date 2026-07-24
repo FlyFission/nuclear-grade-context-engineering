@@ -103,6 +103,20 @@ python tools/ng.py validate .nuclear/changes/add-agent-boundary
 
 Use Standard when reviewers need the spec (what the change must do and why), the plan, the trace, the verification and validation (V&V), and the release decision saved in the repo.
 
+### Minimum assurance view for an AI-assisted pull request
+
+For an AI-assisted pull request, the Standard loop can be read as one compact control path:
+
+```text
+classify risk -> approve criteria and limits -> build one exact candidate -> independently verify -> bind verdict to candidate ID -> human merge/apply decision -> operate and learn
+```
+
+Use roles rather than model brands: human owner, criteria challenger, builder, independent verifier, and change record. Validate the criteria against the intended outcome before asking whether the implementation meets them. The builder may draft criteria, tests, and evidence, but a human approves the limits; on trust-bearing work, decisive evidence is reproduced by a verifier or authored outside the builder's evidence path.
+
+Record a correction-round budget in `plan.md`. Each material correction, rebase, generated-artifact refresh, or conflict resolution creates a new candidate identity and makes the prior verdict stale. Before merge or apply, use `ship.md` to confirm that the current candidate still matches the reviewed candidate and that any required delta or full re-review is complete. Passing criteria support a bounded verdict; they do not replace the human release decision, residual-risk treatment, rollback, monitoring, or apply-time clearance.
+
+This is a simple view of the existing Standard loop, not a new mode.
+
 ## Blueprint and execute
 
 Sometimes you want the agent to do the research up front — read the codebase, gather the patterns and constraints, and write a *complete* plan — and only then build, in one focused pass, against gates it must pass. This is the shape the PRP (Product Requirements Prompt) template popularized (`docs/01-field-guide/context-engineering-literature-crosswalk.md`), expressed in Nuclear-grade's beats:

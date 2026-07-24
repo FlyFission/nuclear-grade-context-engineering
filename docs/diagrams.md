@@ -198,27 +198,37 @@ flowchart TD
 
 ## 6. Who does what in one change
 
-How four roles hand off authority over a single change: **you**, the **AI agent**, the **change record**, and the **reviewer**. The agent moves fast inside limits you approved first; the record carries the claims and their evidence; the reviewer decides on the evidence, not the pitch. Read top to bottom.
+How five roles hand off authority over a single change: the **human owner**, the **builder**, the **exact candidate**, the **change record**, and the **independent verifier**. These are roles, not model brands. The builder moves fast inside limits approved first; the record binds claims, evidence, and verdict to the candidate identity; the verifier judges the evidence rather than the pitch; the human retains merge and apply authority. Read top to bottom.
 
 ```mermaid
 sequenceDiagram
-    actor You
-    participant Agent as AI agent
+    actor You as Human owner
+    participant Agent as Builder
+    participant Candidate as PR / exact candidate
     participant Record as Change record
-    actor Reviewer
-    You->>Agent: Ask the hard question, set the goal
-    Agent->>Record: Draft the risk and what "good" means
-    Record-->>You: You read the draft
-    You->>Agent: Approve the limits (may / may not do)
-    Agent->>Agent: Build only inside the limits
-    Agent->>Record: Write each claim with its evidence
-    Record-->>Reviewer: Show evidence, gaps, decision
-    Reviewer->>Record: Decide on purpose (ship / defer / block)
-    Record->>Record: Save the approved version (baseline)
-    Note over You,Reviewer: Lessons from real use feed the next change
+    actor Verifier as Independent verifier
+    You->>Record: Classify risk; approve criteria and limits
+    Record->>Agent: Open bounded build authority
+    Agent->>Candidate: Build inside approved limits
+    Agent->>Record: Link claims and evidence to candidate ID
+    Record-->>Verifier: Show criteria, evidence, gaps, candidate ID
+    Verifier->>Candidate: Reproduce decisive checks
+    Verifier->>Record: Verdict bound to candidate ID
+    alt Needs changes and correction budget remains
+        Record-->>You: Named gaps and round count
+        You->>Agent: Authorize bounded correction
+        Agent->>Candidate: Change candidate; create new ID
+        Candidate->>Record: Prior verdict is stale
+    else Candidate ready for decision
+        Record->>Candidate: Confirm current ID equals reviewed ID
+        Record-->>You: Present current verdict and residual risk
+        You->>Record: Merge/apply, hold, or send back
+        Record->>Record: Save approved version (baseline)
+    end
+    Note over You,Verifier: Lessons from real use feed the next change
 ```
 
-**In words (text fallback):** you ask + set the goal → agent drafts the risk and the definition of "good" → you approve the limits → agent builds only inside them → agent writes each claim with its evidence → reviewer checks the evidence and decides (ship / defer / block) → the approved version is saved as the baseline → lessons from real use feed the next change.
+**In words (text fallback):** the human classifies the risk and approves the criteria and limits → the builder changes one exact candidate inside those limits → the record binds claims and evidence to that candidate → an independent verifier reproduces decisive checks and records a verdict against the candidate ID → any correction creates a new candidate and makes the prior verdict stale → before merge or apply, the record confirms the current candidate is the reviewed candidate → the human decides whether to merge, hold, or send it back → an accepted version becomes the baseline → lessons from real use feed the next change. The plan sets a correction-round budget and escalates when it is exhausted rather than allowing an unbounded agent review loop.
 
 ---
 

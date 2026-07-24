@@ -90,6 +90,27 @@ def test_baseline_is_late_lifecycle_state():
     assert "Decide -> Baseline -> Operate -> Learn" in text
 
 
+def test_ai_assisted_pr_loop_closes_the_exact_review_candidate():
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    diagrams = (ROOT / "docs" / "diagrams.md").read_text(encoding="utf-8")
+    plan = (ROOT / "templates" / "standard" / "plan.md").read_text(encoding="utf-8")
+    ship = (ROOT / "templates" / "standard" / "ship.md").read_text(encoding="utf-8")
+
+    for text in (readme, diagrams):
+        assert "Independent verifier" in text
+        assert "Verdict bound to candidate ID" in text
+        assert "Prior verdict is stale" in text
+
+    assert "Maximum correction rounds before human escalation" in plan
+    assert "Material change that invalidates the current verdict" in plan
+
+    assert "## Reviewed candidate identity" in ship
+    assert "Reviewed candidate commit / artifact hash:" in ship
+    assert "Current candidate commit / artifact hash:" in ship
+    assert "Candidate matches reviewed identity? yes/no:" in ship
+    assert "Re-review status:" in ship
+
+
 def test_hpi_overlay_is_public_operating_doc():
     text = (
         ROOT / "docs" / "02-operating-system" / "hpi-overlays.md"

@@ -95,7 +95,7 @@ python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.n
 # OK: the record links claims to evidence and discloses custody/coupling (or a named gap).
 ```
 
-Want to watch that evidence regenerate? The example ships the test behind that workspace-boundary claim. This step needs `pytest` (`pip install pytest`); nothing else in the repo does:
+Want to watch that evidence regenerate? The example ships the test behind that workspace-boundary claim. This step needs `pytest` (`pip install pytest`); the one-command validator above does not:
 
 ```bash
 python -m pytest docs/03-worked-examples/ai-agent-tool-permissions/tests/test_workspace_guard.py -v

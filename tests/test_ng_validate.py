@@ -83,7 +83,7 @@ def add_decision_authority(
     for right in rights:
         required = apply_authority if right == "apply" else "human_required"
         rows.append(
-            f"| {right} | release owner | {evidence_id} | policy-v1 | {required} | transfer when evidence is unresolved |"
+            f"| {right} | release owner | {evidence_id} | release evidence owner | policy-v1 | {required} | transfer when evidence is unresolved |"
         )
     write(
         packet / "decision-authority.md",
@@ -93,6 +93,10 @@ def add_decision_authority(
         "- Action: apply the candidate change\n"
         "- Action identity: commit:abc123\n"
         "- Policy version: policy-v1\n"
+        "- Policy authority ID: release-policy-board\n"
+        "- Policy custodian: release-policy-owner\n"
+        "- Policy digest: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+        "- Policy valid through: 2099-07-31T00:00:00Z\n"
         "- Reversible: yes\n"
         "- Consequence if wrong: release evidence may not support the applied change\n\n"
         "## Evidence basis\n\n"
@@ -100,8 +104,8 @@ def add_decision_authority(
         "|---|---|---|---|---|\n"
         f"| {evidence_id} | {raw_state} | observed in this packet | supports the apply decision | `verification.md#evidence-custody-and-coupling` |\n\n"
         "## Decision-right allocation\n\n"
-        "| Decision right | Proposed actor | Evidence IDs | Policy / standing gate | Required authority | Transfer trigger |\n"
-        "|---|---|---|---|---|---|\n"
+        "| Decision right | Proposed actor | Evidence IDs | Evidence-basis authority | Policy / standing gate | Required authority | Transfer trigger |\n"
+        "|---|---|---|---|---|---|---|\n"
         + "\n".join(rows)
         + "\n\n## Derived authority result\n\n"
         "- Decision right evaluated: apply\n"
@@ -118,6 +122,41 @@ def add_decision_authority(
         "- Interim expiry: 2026-07-25T00:00:00Z\n"
         + COMMON_TAIL,
     )
+
+
+def add_evidence_basis_authority_column(
+    record: Path,
+    *,
+    blank_right: str | None = None,
+) -> None:
+    text = record.read_text(encoding="utf-8")
+    if blank_right is not None:
+        target = (
+            f"| {blank_right} | release owner | E-001 | release evidence owner |"
+        )
+        assert target in text
+        text = text.replace(
+            target,
+            f"| {blank_right} | release owner | E-001 | not applicable |",
+        )
+    record.write_text(text, encoding="utf-8")
+
+
+def add_policy_custody_fields(
+    record: Path,
+    *,
+    digest: str = "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    valid_through: str = "2099-07-31T00:00:00Z",
+) -> None:
+    text = record.read_text(encoding="utf-8")
+    text = text.replace(
+        "- Policy digest: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        f"- Policy digest: {digest}",
+    ).replace(
+        "- Policy valid through: 2099-07-31T00:00:00Z",
+        f"- Policy valid through: {valid_through}",
+    )
+    record.write_text(text, encoding="utf-8")
 
 
 def test_validate_packet_accepts_strict_authority_contract():
@@ -163,14 +202,14 @@ def test_unknown_decisive_evidence_cannot_clear_agent_apply_authority(tmp_path):
     add_decision_authority(
         packet,
         raw_state="unknown",
-        apply_authority="agent_authorized",
-        result="agent_authorized",
+        apply_authority="agent_permitted",
+        result="agent_apply_structurally_clearable",
     )
 
     result = validate_packet(packet, require_authority=True)
 
     assert not result.ok
-    assert any("unknown evidence E-001 cannot clear agent_authorized" in message for message in result.messages)
+    assert any("unknown evidence E-001 cannot clear agent application" in message for message in result.messages)
 
 
 def test_unknown_evidence_can_block_an_otherwise_agent_authorized_allocation(tmp_path):
@@ -178,7 +217,7 @@ def test_unknown_evidence_can_block_an_otherwise_agent_authorized_allocation(tmp
     add_decision_authority(
         packet,
         raw_state="unknown",
-        apply_authority="agent_authorized",
+        apply_authority="agent_permitted",
         result="blocked_pending_evidence",
     )
 
@@ -192,7 +231,7 @@ def test_human_required_can_override_an_agent_authorized_allocation(tmp_path):
     add_decision_authority(
         packet,
         raw_state="observed",
-        apply_authority="agent_authorized",
+        apply_authority="agent_permitted",
         result="human_required",
     )
 
@@ -213,12 +252,722 @@ def test_strict_authority_rejects_invalid_raw_state(tmp_path):
     assert any("invalid raw state for evidence E-001: guessed" in message for message in result.messages)
 
 
+def test_policy_result_indeterminate_is_a_valid_nonclearing_override(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(
+        packet,
+        apply_authority="agent_permitted",
+        result="policy_result_indeterminate",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert result.ok, result.messages
+
+
+def test_legacy_agent_authorized_allocation_is_rejected(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(
+        packet,
+        apply_authority="agent_authorized",
+        result="human_required",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any(
+        "invalid required authority for apply: agent_authorized" in message
+        for message in result.messages
+    )
+
+
+def test_structural_agent_apply_result_passes_with_decisive_evidence(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(
+        packet,
+        apply_authority="agent_permitted",
+        result="agent_apply_structurally_clearable",
+    )
+    record = packet / "decision-authority.md"
+    add_evidence_basis_authority_column(record)
+    add_policy_custody_fields(record)
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert result.ok, result.messages
+
+
+def test_strict_authority_rejects_impossible_policy_valid_through(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    record = packet / "decision-authority.md"
+    add_policy_custody_fields(record, valid_through="2026-99-99T00:00:00Z")
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("invalid policy valid through" in message for message in result.messages)
+
+
+def test_strict_authority_rejects_expired_policy_valid_through(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(
+        packet,
+        apply_authority="agent_permitted",
+        result="agent_apply_structurally_clearable",
+    )
+    record = packet / "decision-authority.md"
+    add_policy_custody_fields(record, valid_through="2000-01-01T00:00:00Z")
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("expired policy valid through" in message for message in result.messages)
+
+
+def test_strict_authority_rejects_malformed_policy_valid_through(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    record = packet / "decision-authority.md"
+    add_evidence_basis_authority_column(record)
+    add_policy_custody_fields(record, valid_through="tomorrow")
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("invalid policy valid through" in message for message in result.messages)
+
+
+def test_strict_authority_rejects_malformed_policy_digest(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    record = packet / "decision-authority.md"
+    add_evidence_basis_authority_column(record)
+    add_policy_custody_fields(record, digest="sha256:not-a-digest")
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("invalid policy digest" in message for message in result.messages)
+
+
+def test_strict_authority_requires_policy_custody_fields(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    record = packet / "decision-authority.md"
+    text = record.read_text(encoding="utf-8")
+    for line in (
+        "- Policy authority ID: release-policy-board\n",
+        "- Policy custodian: release-policy-owner\n",
+        "- Policy digest: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n",
+        "- Policy valid through: 2099-07-31T00:00:00Z\n",
+    ):
+        text = text.replace(line, "")
+    record.write_text(text, encoding="utf-8")
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    for field in (
+        "policy authority id",
+        "policy custodian",
+        "policy digest",
+        "policy valid through",
+    ):
+        assert any(f"missing {field}" in message for message in result.messages)
+
+
+def test_strict_authority_requires_evidence_basis_authority_for_each_right(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    record = packet / "decision-authority.md"
+    add_evidence_basis_authority_column(record, blank_right="accept")
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any(
+        "decision right accept missing evidence-basis authority" in message
+        for message in result.messages
+    )
+
+
+def test_strict_authority_rejects_not_applicable_evidence_basis_authority(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    record = packet / "decision-authority.md"
+    text = record.read_text(encoding="utf-8").replace(
+        "release evidence owner", "not applicable: no authority exists"
+    )
+    record.write_text(text, encoding="utf-8")
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any(
+        "missing evidence-basis authority" in message for message in result.messages
+    )
+
+
+def test_strict_authority_uses_allocation_table_inside_named_section(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(
+        packet,
+        apply_authority="agent_permitted",
+        result="agent_apply_structurally_clearable",
+    )
+    record = packet / "decision-authority.md"
+    text = record.read_text(encoding="utf-8")
+    prefix, rest = text.split("## Decision-right allocation", maxsplit=1)
+    valid_body, suffix = rest.split("## Derived authority result", maxsplit=1)
+    decoy_body = valid_body.replace("agent_permitted", "agent_authorized")
+    record.write_text(
+        prefix
+        + valid_body
+        + "\n## Decision-right allocation"
+        + decoy_body
+        + "## Derived authority result"
+        + suffix,
+        encoding="utf-8",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any(
+        "invalid required authority for apply: agent_authorized" in message
+        for message in result.messages
+    )
+
+
+def test_structural_apply_clearance_must_evaluate_apply_right(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(
+        packet,
+        apply_authority="agent_permitted",
+        result="agent_apply_structurally_clearable",
+    )
+    record = packet / "decision-authority.md"
+    text = record.read_text(encoding="utf-8").replace(
+        "- Decision right evaluated: apply",
+        "- Decision right evaluated: reopen",
+    )
+    record.write_text(text, encoding="utf-8")
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any(
+        "agent_apply_structurally_clearable must evaluate apply" in message
+        for message in result.messages
+    )
+
+
+def test_strict_authority_uses_evidence_table_inside_named_section(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    record = packet / "decision-authority.md"
+    text = record.read_text(encoding="utf-8")
+    prefix, rest = text.split("## Evidence basis", maxsplit=1)
+    valid_body, suffix = rest.split("## Decision-right allocation", maxsplit=1)
+    decoy_body = valid_body.replace("| E-001 |", "| invalid |")
+    record.write_text(
+        prefix
+        + valid_body
+        + "\n## Evidence basis"
+        + decoy_body
+        + "## Decision-right allocation"
+        + suffix,
+        encoding="utf-8",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("invalid Evidence ID: invalid" in message for message in result.messages)
+
+
+def test_strict_authority_rejects_duplicate_normalized_table_headers(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    record = packet / "decision-authority.md"
+    text = record.read_text(encoding="utf-8").replace(
+        "| Decision right | Proposed actor | Evidence IDs |",
+        "| Decision right | Proposed actor | Proposed-actor | Evidence IDs |",
+    )
+    record.write_text(text, encoding="utf-8")
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("decision-right table has duplicate headers" in message for message in result.messages)
+
+
+def test_strict_authority_rejects_duplicate_required_sections(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    record = packet / "decision-authority.md"
+    text = record.read_text(encoding="utf-8")
+    duplicate = (
+        "\n## Decision-right allocation\n\n"
+        "| Decision right | Proposed actor | Evidence IDs | Evidence-basis authority | Policy / standing gate | Required authority | Transfer trigger |\n"
+        "|---|---|---|---|---|---|---|\n"
+        "| apply | release owner | E-001 | release evidence owner | policy-v1 | agent_authorized | never |\n"
+    )
+    record.write_text(text + duplicate, encoding="utf-8")
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any(
+        "duplicate required section: Decision-right allocation" in message
+        for message in result.messages
+    )
+
+
+def test_strict_authority_rejects_markdown_equivalent_duplicate_sections(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(
+        packet,
+        apply_authority="agent_permitted",
+        result="agent_apply_structurally_clearable",
+    )
+    record = packet / "decision-authority.md"
+    duplicate_sections = """
+## Derived authority result ##
+
+- Decision right evaluated: apply
+- Result: human_required
+- Basis: conflicting later declaration
+- Derived by: attacker
+- Recorded at: 2026-07-24T13:00:00Z
+
+## Decision-right allocation <!-- duplicate -->
+
+| Decision right | Proposed actor | Evidence IDs | Evidence-basis authority | Policy / standing gate | Required authority | Transfer trigger |
+|---|---|---|---|---|---|---|
+| apply | release owner | E-001 | release evidence owner | policy-v1 | human_required | never |
+
+## Evidence basis ##
+
+| Evidence ID | Claim / proposition | Source state | Finite scope | Time boundary | V&V status | Material custody path | Evidence-basis authority |
+|---|---|---|---|---|---|---|---|
+| E-001 | conflicting state | disputed | repository | 2026-07-24T12:00:00Z | failed | attacker | attacker |
+"""
+    record.write_text(
+        record.read_text(encoding="utf-8") + duplicate_sections,
+        encoding="utf-8",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    for section in (
+        "Derived authority result",
+        "Decision-right allocation",
+        "Evidence basis",
+    ):
+        assert any(
+            f"duplicate required section: {section}" in message
+            for message in result.messages
+        )
+
+
+def test_strict_authority_normalizes_inline_comments_in_scalar_labels(tmp_path):
+    cases = (
+        (
+            "result",
+            "- Result: human_required",
+            "- Result<!-- note -->: agent_apply_structurally_clearable",
+            "duplicate derived authority field: result",
+        ),
+        (
+            "policy-digest",
+            "- Policy digest: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "- Policy digest<!-- note -->: sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "duplicate decision episode field: policy digest",
+        ),
+    )
+    for name, marker, duplicate, expected in cases:
+        packet = minimal_standard_packet(tmp_path / name)
+        add_decision_authority(packet)
+        record = packet / "decision-authority.md"
+        text = record.read_text(encoding="utf-8")
+        assert marker in text
+        record.write_text(
+            text.replace(marker, marker + "\n" + duplicate),
+            encoding="utf-8",
+        )
+
+        result = validate_packet(packet, require_authority=True)
+
+        assert not result.ok
+        assert any(expected in message for message in result.messages)
+
+
+def test_strict_authority_normalizes_inline_comments_in_table_headers(tmp_path):
+    cases = (
+        (
+            "allocation",
+            "Decision-right allocation",
+            "Derived authority result",
+            "Required authority",
+            "has multiple decision-right tables",
+        ),
+        (
+            "evidence",
+            "Evidence basis",
+            "Decision-right allocation",
+            "Raw state",
+            "has multiple evidence-basis tables",
+        ),
+    )
+    for name, section, next_section, header, expected in cases:
+        packet = minimal_standard_packet(tmp_path / name)
+        add_decision_authority(packet)
+        record = packet / "decision-authority.md"
+        text = record.read_text(encoding="utf-8")
+        prefix, rest = text.split(f"## {section}", maxsplit=1)
+        body, suffix = rest.split(f"## {next_section}", maxsplit=1)
+        shadow_body = body.replace(header, f"{header} <!-- note -->")
+        record.write_text(
+            prefix
+            + f"## {section}"
+            + body
+            + shadow_body
+            + f"## {next_section}"
+            + suffix,
+            encoding="utf-8",
+        )
+
+        result = validate_packet(packet, require_authority=True)
+
+        assert not result.ok
+        assert any(expected in message for message in result.messages)
+
+
+def test_strict_authority_ignores_required_headings_inside_fenced_examples(tmp_path):
+    sections = (
+        "Decision episode",
+        "Evidence basis",
+        "Decision-right allocation",
+        "Derived authority result",
+        "Reopen and closure controls",
+    )
+    cases = (
+        ("backtick", lambda section: f"```text\n## {section}\n```"),
+        ("tilde", lambda section: f"~~~text\n## {section}\n~~~"),
+        ("indented", lambda section: f"  ```text\n  ## {section}\n  ```"),
+    )
+    for name, fenced_heading in cases:
+        packet = minimal_standard_packet(tmp_path / name)
+        add_decision_authority(packet)
+        record = packet / "decision-authority.md"
+        text = record.read_text(encoding="utf-8")
+        for section in sections:
+            text = text.replace(f"## {section}", fenced_heading(section))
+        record.write_text(text, encoding="utf-8")
+
+        result = validate_packet(packet, require_authority=True)
+
+        assert not result.ok
+        for section in sections:
+            assert any(
+                f"missing required section: {section}" in message
+                for message in result.messages
+            )
+
+
+def test_strict_authority_ignores_raw_html_h2_inside_inert_markdown(tmp_path):
+    examples = (
+        "<!-- illustrative unsupported syntax: <h2>Derived authority result</h2> -->",
+        "```html\n<h2>Derived authority result</h2>\n```",
+    )
+    for index, example in enumerate(examples):
+        packet = minimal_standard_packet(tmp_path / str(index))
+        add_decision_authority(packet)
+        record = packet / "decision-authority.md"
+        record.write_text(
+            record.read_text(encoding="utf-8") + "\n" + example + "\n",
+            encoding="utf-8",
+        )
+
+        result = validate_packet(packet, require_authority=True)
+
+        assert result.ok, result.messages
+
+
+def test_strict_authority_rejects_raw_html_h2(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(
+        packet,
+        apply_authority="agent_permitted",
+        result="agent_apply_structurally_clearable",
+    )
+    record = packet / "decision-authority.md"
+    duplicate = """
+<h2>Derived authority result</h2>
+
+- Decision right evaluated: apply
+- Result: human_required
+- Basis: conflicting HTML heading
+- Derived by: attacker
+- Recorded at: 2026-07-24T13:00:00Z
+"""
+    record.write_text(record.read_text(encoding="utf-8") + duplicate, encoding="utf-8")
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("raw HTML H2 headings are not supported" in message for message in result.messages)
+
+
+def test_strict_authority_does_not_skip_setext_allocation_section(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    record = packet / "decision-authority.md"
+    text = record.read_text(encoding="utf-8")
+    text = text.replace(
+        "## Decision-right allocation",
+        "Decision-right allocation\n-------------------------",
+    )
+    close_row = "| close | release owner | E-001 | release evidence owner | policy-v1 | human_required | transfer when evidence is unresolved |\n"
+    assert close_row in text
+    record.write_text(text.replace(close_row, ""), encoding="utf-8")
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("missing decision right: close" in message for message in result.messages)
+
+
+def test_strict_authority_rejects_setext_duplicate_section(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(
+        packet,
+        apply_authority="agent_permitted",
+        result="agent_apply_structurally_clearable",
+    )
+    record = packet / "decision-authority.md"
+    duplicate = """
+Derived authority result
+------------------------
+
+- Decision right evaluated: apply
+- Result: human_required
+- Basis: conflicting Setext section
+- Derived by: attacker
+- Recorded at: 2026-07-24T13:00:00Z
+"""
+    record.write_text(record.read_text(encoding="utf-8") + duplicate, encoding="utf-8")
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any(
+        "duplicate required section: Derived authority result" in message
+        for message in result.messages
+    )
+
+
+def test_strict_authority_rejects_markdown_equivalent_scalar_bullets(tmp_path):
+    cases = (
+        ("star-result", "* Result: human_required", "duplicate derived authority field: result"),
+        ("plus-result", "+ Result: human_required", "duplicate derived authority field: result"),
+        ("indented-result", "  - Result: human_required", "duplicate derived authority field: result"),
+        (
+            "star-policy",
+            "* Policy digest: sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "duplicate decision episode field: policy digest",
+        ),
+    )
+    for name, duplicate, expected in cases:
+        packet = minimal_standard_packet(tmp_path / name)
+        add_decision_authority(packet)
+        record = packet / "decision-authority.md"
+        text = record.read_text(encoding="utf-8")
+        if "Policy digest" in duplicate:
+            marker = "- Policy digest: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        else:
+            marker = "- Result: human_required"
+        assert marker in text
+        record.write_text(
+            text.replace(marker, marker + "\n" + duplicate),
+            encoding="utf-8",
+        )
+
+        result = validate_packet(packet, require_authority=True)
+
+        assert not result.ok
+        assert any(expected in message for message in result.messages)
+
+
+def test_strict_authority_rejects_duplicate_derived_result_scalars(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(
+        packet,
+        apply_authority="agent_permitted",
+        result="agent_apply_structurally_clearable",
+    )
+    record = packet / "decision-authority.md"
+    text = record.read_text(encoding="utf-8")
+    marker = "- Recorded at: 2026-07-24T12:00:00Z"
+    assert marker in text
+    record.write_text(
+        text.replace(
+            marker,
+            marker
+            + "\n- Decision right evaluated: reopen"
+            + "\n- Result: agent_apply_structurally_clearable",
+        ),
+        encoding="utf-8",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any(
+        "duplicate derived authority field: decision right evaluated" in message
+        for message in result.messages
+    )
+    assert any(
+        "duplicate derived authority field: result" in message
+        for message in result.messages
+    )
+
+
+def test_strict_authority_rejects_duplicate_policy_scalars(tmp_path):
+    cases = (
+        ("Policy authority ID", "other-policy-board"),
+        ("Policy custodian", "other-policy-owner"),
+        (
+            "Policy digest",
+            "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        ),
+        ("Policy valid through", "2000-01-01T00:00:00Z"),
+    )
+    for label, conflicting_value in cases:
+        packet = minimal_standard_packet(tmp_path / label.replace(" ", "-"))
+        add_decision_authority(packet)
+        record = packet / "decision-authority.md"
+        text = record.read_text(encoding="utf-8")
+        marker = next(
+            line for line in text.splitlines() if line.startswith(f"- {label}:")
+        )
+        record.write_text(
+            text.replace(marker, marker + f"\n- {label}: {conflicting_value}"),
+            encoding="utf-8",
+        )
+
+        result = validate_packet(packet, require_authority=True)
+
+        assert not result.ok
+        assert any(
+            f"duplicate decision episode field: {label.lower()}" in message
+            for message in result.messages
+        )
+
+
+def test_strict_authority_rejects_duplicate_lifecycle_scalars(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    record = packet / "decision-authority.md"
+    text = record.read_text(encoding="utf-8")
+    marker = "- Reopen authority: release owner"
+    assert marker in text
+    record.write_text(
+        text.replace(marker, marker + "\n- Reopen authority: agent operator"),
+        encoding="utf-8",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any(
+        "duplicate reopen and closure field: reopen authority" in message
+        for message in result.messages
+    )
+
+
+def test_strict_authority_rejects_duplicate_custody_classification(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    verification = packet / "verification.md"
+    text = verification.read_text(encoding="utf-8")
+    marker = "| E-001 | partially separated — reviewer differs | separated — fresh brief | partially separated — shared tests | separated — reviewer decides | separated — protected CI retains output | diverse verification | admitted for this demo |"
+    assert marker in text
+    duplicate = "| E-001 | same actor | same context | same mechanism | same authority | same resource | self-check | contradictory duplicate |"
+    verification.write_text(
+        text.replace(marker, marker + "\n" + duplicate),
+        encoding="utf-8",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any(
+        "verification.md duplicate classification declaration for evidence E-001"
+        in message
+        for message in result.messages
+    )
+
+
+def test_control_right_prepare_can_use_explicit_non_evidentiary_basis(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    record = packet / "decision-authority.md"
+    text = record.read_text(encoding="utf-8")
+    target = "| prepare | release owner | E-001 | release evidence owner | policy-v1 | human_required | transfer when evidence is unresolved |"
+    assert target in text
+    record.write_text(
+        text.replace(
+            target,
+            "| prepare | release owner | not applicable | release evidence owner | policy-v1 grants preparation capability without an evidentiary determination | human_required | transfer when evidence is unresolved |",
+        ),
+        encoding="utf-8",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert result.ok, result.messages
+
+
+def test_agent_apply_cannot_clear_without_decisive_evidence(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(
+        packet,
+        apply_authority="agent_permitted",
+        result="agent_apply_structurally_clearable",
+    )
+    record = packet / "decision-authority.md"
+    text = record.read_text(encoding="utf-8")
+    target = "| apply | release owner | E-001 | release evidence owner | policy-v1 | agent_permitted | transfer when evidence is unresolved |"
+    assert target in text
+    record.write_text(
+        text.replace(
+            target,
+            "| apply | release owner | not applicable | release evidence owner | policy-v1 | agent_permitted | transfer when evidence is unresolved |",
+        ),
+        encoding="utf-8",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any(
+        "agent application cannot clear without decisive apply evidence"
+        in message
+        for message in result.messages
+    )
+
+
 def test_strict_authority_requires_every_decision_right(tmp_path):
     packet = minimal_standard_packet(tmp_path)
     add_decision_authority(packet)
     record = packet / "decision-authority.md"
     text = record.read_text(encoding="utf-8")
-    close_row = "| close | release owner | E-001 | policy-v1 | human_required | transfer when evidence is unresolved |\n"
+    close_row = "| close | release owner | E-001 | release evidence owner | policy-v1 | human_required | transfer when evidence is unresolved |\n"
     assert close_row in text
     record.write_text(text.replace(close_row, ""), encoding="utf-8")
 
@@ -233,9 +982,9 @@ def test_strict_authority_rejects_invalid_authority_value(tmp_path):
     add_decision_authority(packet)
     record = packet / "decision-authority.md"
     text = record.read_text(encoding="utf-8")
-    target = "| apply | release owner | E-001 | policy-v1 | human_required |"
+    target = "| apply | release owner | E-001 | release evidence owner | policy-v1 | human_required |"
     assert target in text
-    record.write_text(text.replace(target, "| apply | release owner | E-001 | policy-v1 | maybe |"), encoding="utf-8")
+    record.write_text(text.replace(target, "| apply | release owner | E-001 | release evidence owner | policy-v1 | maybe |"), encoding="utf-8")
 
     result = validate_packet(packet, require_authority=True)
 
@@ -255,13 +1004,13 @@ def test_bounded_absence_requires_finite_scope_and_time_boundary(tmp_path):
 
 def test_derived_result_must_match_apply_policy(tmp_path):
     packet = minimal_standard_packet(tmp_path)
-    add_decision_authority(packet, apply_authority="human_required", result="agent_authorized")
+    add_decision_authority(packet, apply_authority="human_required", result="agent_apply_structurally_clearable")
 
     result = validate_packet(packet, require_authority=True)
 
     assert not result.ok
     assert any(
-        "derived result agent_authorized is incompatible with apply allocation human_required"
+        "derived result agent_apply_structurally_clearable is incompatible with apply allocation human_required"
         in message
         for message in result.messages
     )
@@ -278,14 +1027,14 @@ def test_decisive_self_check_cannot_clear_agent_apply_authority(tmp_path):
     verification.write_text(text, encoding="utf-8")
     add_decision_authority(
         packet,
-        apply_authority="agent_authorized",
-        result="agent_authorized",
+        apply_authority="agent_permitted",
+        result="agent_apply_structurally_clearable",
     )
 
     result = validate_packet(packet, require_authority=True)
 
     assert not result.ok
-    assert any("self-check evidence E-001 cannot clear agent_authorized" in message for message in result.messages)
+    assert any("self-check evidence E-001 cannot clear agent application" in message for message in result.messages)
 
 
 def test_complete_authority_record_passes_strict_mode(tmp_path):
@@ -306,11 +1055,16 @@ def test_shipped_decision_authority_template_can_form_a_valid_strict_packet(tmp_
     for old, new in {
         "Replace with the exact bounded action under consideration.": "Apply commit abc123 to the release branch.",
         "Replace with the controlling local policy identifier and version.": "release-policy-v1.2",
+        "Replace with the stable identity of the authority that controls this policy.": "release-policy-board",
+        "Replace with the actor or protected service that maintains the exact policy version.": "release-policy-owner",
+        "Replace with `sha256:` followed by the policy artifact's 64-character hexadecimal digest.": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "Replace with a future ISO 8601 UTC timestamp or `not applicable:` followed by a concrete non-expiry basis. Expiry is checked against the validator host's UTC clock, which is not a trusted time source.": "2099-07-31T00:00:00Z",
         "Replace with a stable artifact, commit, request, or payload identifier.": "commit:abc123",
         "Replace with `yes`, `no`, or a bounded condition.": "yes",
         "Replace with the bounded consequence of an incorrect authority result.": "An unsupported change could enter the release branch.",
         "Replace with the validator/tool version or named policy evaluator.": "ng-validate-v0.5",
         "Replace with an ISO 8601 timestamp.": "2026-07-24T12:00:00Z",
+        "named evidence-basis owner": "release evidence owner",
         "named owner": "release owner",
         "Exact Evidence IDs required to demonstrate the recorded correction or effectiveness condition.": "E-001 or an admitted successor Evidence ID demonstrates closure.",
         "Replace with a timestamp or `not applicable` and a basis.": "2026-07-25T12:00:00Z",
@@ -535,8 +1289,8 @@ def test_agent_authorized_apply_cannot_use_not_applicable_evidence(tmp_path):
     packet = minimal_standard_packet(tmp_path)
     add_decision_authority(
         packet,
-        apply_authority="agent_authorized",
-        result="agent_authorized",
+        apply_authority="agent_permitted",
+        result="agent_apply_structurally_clearable",
     )
     record = packet / "decision-authority.md"
     text = record.read_text(encoding="utf-8")
@@ -554,7 +1308,10 @@ def test_agent_authorized_apply_cannot_use_not_applicable_evidence(tmp_path):
     result = validate_packet(packet, require_authority=True)
 
     assert not result.ok
-    assert any("decision right apply missing evidence IDs" in message for message in result.messages)
+    assert any(
+        "agent application cannot clear without decisive apply evidence" in message
+        for message in result.messages
+    )
 
 
 def test_strict_authority_rejects_right_placeholders(tmp_path):

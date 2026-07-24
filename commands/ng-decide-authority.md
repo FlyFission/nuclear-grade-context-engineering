@@ -20,7 +20,8 @@ Portable command prompt generated from `skills/deciding-who-decides/SKILL.md`. E
 ## Inputs
 
 - The proposed action, its target, and whether it can be undone.
-- The exact evidence IDs in `verification.md`, their raw states, intended use, and custody/coupling profile.
+- The exact Evidence IDs in `verification.md`, their coded source states, intended use, and custody/coupling profile.
+- The controlling policy ID/version, policy authority, policy custodian, policy digest, and validity or non-expiry basis.
 - The consequence if it is wrong, and who is affected.
 - The agent's granted authority, effective stop/reversal capability, and any standing rule or human gate that already applies.
 - The actors proposed for prepare, recommend, verify, validate, verdict, accept, apply, reopen, and close.
@@ -32,13 +33,13 @@ Decide who decides for this action the Nuclear-grade way.
 
 Inputs:
 - exact action, target, and stable identity:
-- controlling local policy/version:
+- controlling policy ID/version, authority, custodian, digest, and validity:
 - reversible? (yes/no):
-- `verification.md` Evidence IDs, raw states, V&V status, and custody/coupling profile:
+- `verification.md` Evidence IDs, coded source states, V&V status, and custody/coupling profile:
 - consequence if wrong and effective stop/reversal capability:
 - granted agent authority / existing human gates:
 
-Create or update `decision-authority.md` using the repository template. Allocate prepare, recommend, verify, validate, verdict, accept, apply, reopen, and close. Derive one policy-relative result, name every transfer trigger, preserve unknown/disputed states, and record reopen/closure controls.
+Create or update `decision-authority.md` using the repository template. Allocate prepare, recommend, verify, validate, verdict, accept, apply, reopen, and close. Name each right's evidence-basis authority. Derive one declaration-relative structural result, name every transfer trigger, preserve unknown/disputed states, and record reopen/closure controls.
 
 Run `ng validate <packet> --strict-authority`. Do not let confidence, technical capability, repository activity, or nominal human presence stand in for evidence or authorization.
 ```
@@ -46,9 +47,9 @@ Run `ng validate <packet> --strict-authority`. Do not let confidence, technical 
 ## Verification
 
 - `ng validate <packet> --strict-authority` passes; for strict evidence custody use both strict flags.
-- Every Evidence ID exists in `verification.md`; `bounded_absence` has finite scope and a time boundary.
-- Unknown, disputed, or decisive self-check evidence does not clear `agent_authorized` apply.
-- Every decision right appears once, and the derived result is consistent with the recorded apply allocation or a blocking override.
+- Every required Evidence ID exists in `verification.md`; `bounded_absence` has finite scope and a time boundary; each right names evidence-basis authority.
+- Unknown, disputed, absent, or decisive self-check evidence does not produce `agent_apply_structurally_clearable`; `policy_result_indeterminate` is non-clearing.
+- Each required table occurs once inside its named section; supported Markdown-equivalent H2, unordered-list, comment, and fenced-example forms cannot hide duplicates or satisfy required structure from examples; every required episode, result, and lifecycle scalar occurs once; every decision right appears once; and the derived result evaluates `apply` and is consistent with the recorded apply allocation or a blocking override.
 - Passing proves structural consistency only, not identity, evidence quality, independence, authorization, safety, security, or compliance.
 
 ## Full skill

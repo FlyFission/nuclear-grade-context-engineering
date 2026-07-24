@@ -33,7 +33,7 @@ External diagram and current-main gap inspection
 
 | Gap | Why it matters | Disposition | Owner | Recheck trigger |
 |---|---|---|---|---|
-| Corrected readability and proportionality need delta review | First-round review found the diagram overloaded and the corrected payload changed materially | block until corrected-candidate review and human PR review | FlyFission | Corrected payload frozen |
+| Human adoption judgment remains open | Model review can find defects but cannot decide whether the public explanation is worth merging | hold merge for human PR review | FlyFission | PR opened and rendered |
 | Mermaid not visually rendered in this worktree | Source syntax and GitHub rendering may diverge | mitigate through source review and GitHub PR render; block if malformed | FlyFission | PR opened |
 
 ## Required links

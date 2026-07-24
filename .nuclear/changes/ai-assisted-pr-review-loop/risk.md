@@ -6,8 +6,8 @@
 - PR / issue: user-authorized follow-up from an external AI-assisted PR workflow diagram
 - Owner: FlyFission
 - Date: 2026-07-24
-- Current lifecycle phase: Execute
-- Current work phase: candidate
+- Current lifecycle phase: Review
+- Current work phase: audit
 - Summary: Tighten the existing role diagram and Standard templates around approved criteria, exact-candidate verdict identity, bounded correction rounds, and human merge/apply authority.
 
 ## Mission anchor

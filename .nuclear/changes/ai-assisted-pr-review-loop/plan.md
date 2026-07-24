@@ -7,12 +7,12 @@
 - Related basis record: `basis.md`
 - Owner: FlyFission
 - Date: 2026-07-24
-- Current lifecycle phase: Execute
+- Current lifecycle phase: Review
 
 ## Charter and anchor check
 
 - Mission anchor confirmed before Plan? yes
-- Re-checked before Verify? not yet
+- Re-checked before Verify? yes
 - Charter articles in play: minimum sufficient context, evidence before acceptance, human decision authority, no silent standards drift
 
 No non-goal or charter crossing is authorized.
@@ -94,7 +94,7 @@ Model-mediated determinism posture: Hermes GPT-5.6 Sol authors the candidate; de
 | Tests/evals defined | Focused contract plus full repo gates | pass |
 | Build complete | Intended files match plan | pass |
 | Verification complete | Full local evidence linked in `verification.md`; remote checks are a PR-time gate | pass |
-| Release decision ready | Residual risks, identity, and rollback recorded | planned |
+| Release decision ready | Residual risks, identity, and rollback recorded | pass |
 | Turnover complete if activated | Not activated | not applicable |
 
 ## Review candidate and correction budget
@@ -103,7 +103,7 @@ Model-mediated determinism posture: Hermes GPT-5.6 Sol authors the candidate; de
 - Human decision owner: Ben/FlyFission
 - Builder: Hermes GPT-5.6 Sol
 - Criteria challenger function, if activated, and custody note: External friend's diagram prompted the critique; Hermes translated it into criteria; Ben approved PR implementation. This is not independent evidence.
-- Verifier and separation rationale: Blind first-round Claude, Codex, and Grok reviews inspected frozen commit `2bc9c00`; a timed-out OpenCode/Kimi attempt produced no verdict and is not counted. Delta review is required after accepted corrections. Model review remains advisory defect discovery.
+- Verifier and separation rationale: Blind first-round Claude, Codex, and Grok reviews inspected frozen commit `2bc9c00`; OpenCode/Kimi attempts produced no substantive verdict and are not counted. Codex then completed a read-only corrected-candidate delta review of `6cc462a`; Claude and Grok delta attempts did not return reliable final verdicts and are excluded. Model review remains advisory defect discovery.
 - Candidate identity method and attestation location: SHA-256 manifest over the changed public/template/test payload; provenance commit recorded separately; final attestation in this packet and PR review, outside the payload scope.
 - Identity scope and exclusions: Include `CHANGELOG.md`, `README.md`, `WORKFLOWS.md`, `docs/diagrams.md`, both changed Standard templates, and `tests/test_public_docs.py`; exclude this mutable `.nuclear` decision packet.
 - Maximum correction rounds before human escalation: 2

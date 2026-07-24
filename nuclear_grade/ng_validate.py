@@ -51,6 +51,27 @@ EVIDENCE_CLASSIFICATIONS = {
     "diverse verification",
     "direct witnessing",
 }
+AUTHORITY_RAW_STATES = {"observed", "bounded_absence", "unknown", "disputed"}
+DECISION_RIGHTS = {
+    "prepare",
+    "recommend",
+    "verify",
+    "validate",
+    "verdict",
+    "accept",
+    "apply",
+    "reopen",
+    "close",
+}
+AUTHORITY_RESULTS = {
+    "agent_authorized",
+    "human_required",
+    "separate_control_required",
+    "dual_authority_required",
+    "blocked_pending_evidence",
+    "prohibited_for_agent",
+    "indeterminate",
+}
 MARKDOWN_LINK_PATTERN = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
 EMPTY_PROMPT_PATTERN = re.compile(
     r"^\s*-\s+[^|\n:][^:\n]*?:\s*$|^\s*(?:Claim|Question|Answer|Decision|Rationale):\s*$",
@@ -139,7 +160,12 @@ class ValidationResult:
     messages: list[str]
 
 
-def validate_packet(packet: str | Path, *, require_custody: bool = False) -> ValidationResult:
+def validate_packet(
+    packet: str | Path,
+    *,
+    require_custody: bool = False,
+    require_authority: bool = False,
+) -> ValidationResult:
     packet_path = Path(packet)
     messages: list[str] = []
 
@@ -181,6 +207,19 @@ def validate_packet(packet: str | Path, *, require_custody: bool = False) -> Val
         _check_unresolved_clarifications(md_file, text, messages)
 
     effective_mode = mode if mode != UNSPECIFIED_MODE else declared
+    if require_authority and effective_mode == QUICK_MODE:
+        messages.append("strict authority requires a Standard packet")
+    authority_file = packet_path / "decision-authority.md"
+    if effective_mode == STANDARD_MODE and require_authority:
+        if not authority_file.exists():
+            messages.append("missing required file: decision-authority.md")
+        else:
+            _check_decision_authority(
+                authority_file,
+                authority_file.read_text(encoding="utf-8"),
+                messages,
+            )
+
     if effective_mode != UNSPECIFIED_MODE:
         evidence_file = packet_path / ("proof.md" if effective_mode == QUICK_MODE else "verification.md")
         if evidence_file.exists():
@@ -192,7 +231,7 @@ def validate_packet(packet: str | Path, *, require_custody: bool = False) -> Val
                     evidence_file,
                     evidence_text,
                     messages,
-                    required=require_custody,
+                    required=require_custody or require_authority,
                 )
 
     ship = packet_path / "ship.md"
@@ -522,6 +561,328 @@ def _check_evidence_custody(
         messages.append(f"{md_file.name} coupling profile {evidence_id} has no matching custody row")
 
 
+def _check_decision_authority(md_file: Path, text: str, messages: list[str]) -> None:
+    """Structurally lint an activated evidence-conditioned authority record."""
+
+    required_sections = (
+        "Decision episode",
+        "Evidence basis",
+        "Decision-right allocation",
+        "Derived authority result",
+        "Reopen and closure controls",
+    )
+    lowered = text.lower()
+    for section in required_sections:
+        if f"## {section.lower()}" not in lowered:
+            messages.append(f"{md_file.name} missing required section: {section}")
+
+    episode_section = _section_text(text, "## decision episode")
+    episode_fields = {
+        "decision id": ("decision id",),
+        "action": ("candidate / action", "action"),
+        "action identity": ("action identity",),
+        "policy version": ("policy version",),
+        "reversible": ("reversible",),
+        "consequence if wrong": ("consequence if wrong",),
+    }
+    for field, labels in episode_fields.items():
+        value = _first_authority_bullet_value(episode_section, labels)
+        if _authority_value_is_unfilled(value):
+            messages.append(f"{md_file.name} missing {field}")
+
+    if "## decision-right allocation" not in lowered:
+        return
+
+    tables = _markdown_tables(_strip_code_blocks(text))
+    evidence_table = _find_markdown_table(
+        tables,
+        ("evidence id", "raw state", "scope basis", "intended use v&v status", "custody profile link"),
+    )
+    rights_table = _find_markdown_table(
+        tables,
+        (
+            "decision right",
+            "proposed actor",
+            "evidence ids",
+            "policy standing gate",
+            "required authority",
+            "transfer trigger",
+        ),
+    )
+    if evidence_table is None:
+        messages.append(f"{md_file.name} missing the evidence-basis table or required headers")
+    if rights_table is None:
+        messages.append(f"{md_file.name} missing the decision-right table or required headers")
+    if evidence_table is None or rights_table is None:
+        return
+
+    evidence_headers, evidence_rows = evidence_table
+    rights_headers, rights_rows = rights_table
+    if not evidence_rows:
+        messages.append(
+            f"{md_file.name} evidence-basis table must include at least one evidence row"
+        )
+    if not rights_rows:
+        messages.append(
+            f"{md_file.name} decision-right table must include at least one decision row"
+        )
+    evidence_index = {
+        _normalize_table_label(value): index for index, value in enumerate(evidence_headers)
+    }
+    rights_index = {
+        _normalize_table_label(value): index for index, value in enumerate(rights_headers)
+    }
+    evidence_states: dict[str, str] = {}
+    referenced_ids: set[str] = set()
+    for row in evidence_rows:
+        if len(row) != len(evidence_headers):
+            messages.append(
+                f"{md_file.name} evidence-basis row has {len(row)} cells; expected {len(evidence_headers)}"
+            )
+        evidence_id = _table_value(row, evidence_index, "evidence id")
+        raw_state = _table_value(row, evidence_index, "raw state").lower()
+        scope = _table_value(row, evidence_index, "scope basis")
+        intended_use = _table_value(row, evidence_index, "intended use v&v status")
+        custody_link = _table_value(row, evidence_index, "custody profile link")
+        if not RECORD_ID_PATTERN.fullmatch(evidence_id) or not evidence_id.startswith("E-"):
+            messages.append(f"{md_file.name} invalid Evidence ID: {evidence_id}")
+        if raw_state not in AUTHORITY_RAW_STATES:
+            messages.append(
+                f"{md_file.name} invalid raw state for evidence {evidence_id}: {raw_state}"
+            )
+        for label, value in (
+            ("scope or basis", scope),
+            ("intended use or V&V status", intended_use),
+            ("custody or profile link", custody_link),
+        ):
+            if _authority_value_is_unfilled(value):
+                messages.append(f"{md_file.name} evidence {evidence_id} missing {label}")
+        if raw_state == "bounded_absence":
+            scope_normalized = scope.lower()
+            placeholder_or_negation = re.search(
+                r"\b(?:unbounded|tbd|todo|replace|pending)\b|"
+                r"\bnot\s+(?:a\s+)?finite\s+scope\b|"
+                r"\b(?:no|without)\s+(?:finite\s+)?(?:scope|time(?:\s+boundary)?)\b",
+                scope_normalized,
+            )
+            if (
+                "finite scope" not in scope_normalized
+                or "time" not in scope_normalized
+                or placeholder_or_negation is not None
+            ):
+                messages.append(
+                    f"{md_file.name} bounded_absence for evidence {evidence_id} requires finite scope and time boundary"
+                )
+        if evidence_id in evidence_states:
+            messages.append(f"{md_file.name} duplicate evidence basis ID: {evidence_id}")
+        evidence_states[evidence_id] = raw_state
+        referenced_ids.add(evidence_id)
+
+    rights_seen: set[str] = set()
+    right_authorities: dict[str, str] = {}
+    right_evidence: dict[str, set[str]] = {}
+    for row in rights_rows:
+        if len(row) != len(rights_headers):
+            messages.append(
+                f"{md_file.name} decision-right row has {len(row)} cells; expected {len(rights_headers)}"
+            )
+        right = _table_value(row, rights_index, "decision right").lower()
+        proposed_actor = _table_value(row, rights_index, "proposed actor")
+        declarations = _table_value(row, rights_index, "evidence ids")
+        policy_basis = _table_value(row, rights_index, "policy standing gate")
+        authority = _table_value(row, rights_index, "required authority").lower()
+        transfer_trigger = _table_value(row, rights_index, "transfer trigger")
+        if right not in DECISION_RIGHTS:
+            messages.append(f"{md_file.name} invalid decision right: {right}")
+        if right in rights_seen:
+            messages.append(f"{md_file.name} duplicate decision right: {right}")
+        rights_seen.add(right)
+        if authority not in AUTHORITY_RESULTS - {"indeterminate"}:
+            messages.append(
+                f"{md_file.name} invalid required authority for {right}: {authority}"
+            )
+        for label, value in (
+            ("proposed actor", proposed_actor),
+            ("policy/standing gate", policy_basis),
+            ("transfer trigger", transfer_trigger),
+        ):
+            if _authority_value_is_unfilled(value):
+                messages.append(f"{md_file.name} decision right {right} missing {label}")
+        row_evidence_ids = {
+            item.strip()
+            for item in re.split(r"[,;/]", declarations)
+            if item.strip() and item.strip().lower() != "not applicable"
+        }
+        if not row_evidence_ids:
+            messages.append(f"{md_file.name} decision right {right} missing evidence IDs")
+        for evidence_id in sorted(row_evidence_ids - evidence_states.keys()):
+            messages.append(
+                f"{md_file.name} decision right {right} evidence {evidence_id} has no evidence-basis row"
+            )
+        referenced_ids.update(row_evidence_ids)
+        right_evidence[right] = row_evidence_ids
+        right_authorities[right] = authority
+
+    for missing_right in sorted(DECISION_RIGHTS - rights_seen):
+        messages.append(f"{md_file.name} missing decision right: {missing_right}")
+
+    verification = md_file.parent / "verification.md"
+    verification_text = verification.read_text(encoding="utf-8") if verification.exists() else ""
+    verification_tables = _markdown_tables(_strip_code_blocks(verification_text))
+    custody_table = _find_markdown_table(
+        verification_tables,
+        ("evidence id", "decisive"),
+    )
+    verification_ids: set[str] = set()
+    decisive_by_id: dict[str, bool] = {}
+    if custody_table is not None:
+        custody_headers, custody_rows = custody_table
+        custody_index = {
+            _normalize_table_label(value): index for index, value in enumerate(custody_headers)
+        }
+        for row in custody_rows:
+            evidence_id = _table_value(row, custody_index, "evidence id")
+            decisive = _table_value(row, custody_index, "decisive").lower()
+            if evidence_id in verification_ids:
+                messages.append(
+                    f"verification.md duplicate custody declaration for evidence {evidence_id}"
+                )
+            verification_ids.add(evidence_id)
+            decisive_by_id[evidence_id] = decisive == "yes"
+    for evidence_id in sorted(referenced_ids - verification_ids):
+        messages.append(
+            f"{md_file.name} evidence {evidence_id} is not declared in verification custody"
+        )
+    for right, evidence_ids in sorted(right_evidence.items()):
+        for evidence_id in sorted(evidence_ids & verification_ids):
+            if not decisive_by_id.get(evidence_id, False):
+                messages.append(
+                    f"{md_file.name} decision right {right} evidence {evidence_id} is not marked decisive in verification custody"
+                )
+
+    profile_table = _find_markdown_table(
+        verification_tables,
+        ("evidence id", "classification"),
+    )
+    classifications: dict[str, str] = {}
+    if profile_table is not None:
+        profile_headers, profile_rows = profile_table
+        profile_index = {
+            _normalize_table_label(value): index for index, value in enumerate(profile_headers)
+        }
+        classifications = {
+            _table_value(row, profile_index, "evidence id"): _table_value(
+                row, profile_index, "classification"
+            ).lower()
+            for row in profile_rows
+        }
+    derived_result = ""
+    derived_section = _section_text(text, "## derived authority result")
+    if not derived_section:
+        messages.append(f"{md_file.name} missing required section: Derived authority result")
+    else:
+        for label in (
+            "decision right evaluated",
+            "basis",
+            "derived by",
+            "recorded at",
+        ):
+            value = _authority_bullet_value(derived_section, label)
+            if _authority_value_is_unfilled(value):
+                messages.append(f"{md_file.name} missing {label}")
+        result_match = re.search(
+            r"(?im)^-\s*(?:\*\*Result:\*\*|Result:)\s*`?([a-z_]+)`?\s*$",
+            derived_section,
+        )
+        if result_match is None:
+            messages.append(f"{md_file.name} missing derived authority Result")
+        else:
+            derived_result = result_match.group(1).lower()
+            if derived_result not in AUTHORITY_RESULTS:
+                messages.append(
+                    f"{md_file.name} invalid derived authority result: {derived_result}"
+                )
+            apply_authority = right_authorities.get("apply")
+            non_clearing_overrides = {
+                "blocked_pending_evidence",
+                "prohibited_for_agent",
+                "indeterminate",
+            }
+            if apply_authority == "agent_authorized":
+                non_clearing_overrides |= {
+                    "human_required",
+                    "separate_control_required",
+                    "dual_authority_required",
+                }
+            if (
+                apply_authority in AUTHORITY_RESULTS
+                and derived_result != apply_authority
+                and derived_result not in non_clearing_overrides
+            ):
+                messages.append(
+                    f"{md_file.name} derived result {derived_result} is incompatible with apply allocation {apply_authority}"
+                )
+
+    if derived_result == "agent_authorized":
+        for evidence_id in sorted(right_evidence.get("apply", set())):
+            raw_state = evidence_states.get(evidence_id)
+            if raw_state in {"unknown", "disputed"}:
+                messages.append(
+                    f"{md_file.name} {raw_state} evidence {evidence_id} cannot clear agent_authorized"
+                )
+            if classifications.get(evidence_id) == "self-check":
+                messages.append(
+                    f"{md_file.name} self-check evidence {evidence_id} cannot clear agent_authorized"
+                )
+
+    reopen_section = _section_text(text, "## reopen and closure controls")
+    for label in (
+        "reopen authority",
+        "reopen trigger",
+        "superseded decision handling",
+        "close authority",
+        "closure evidence",
+        "interim expiry",
+    ):
+        value = _authority_bullet_value(reopen_section, label)
+        if _authority_value_is_unfilled(value):
+            messages.append(f"{md_file.name} missing {label}")
+    closure_evidence = _authority_bullet_value(reopen_section, "closure evidence")
+    closure_ids = set(re.findall(r"\bE-[0-9][A-Za-z0-9._-]*\b", closure_evidence))
+    if not _authority_value_is_unfilled(closure_evidence) and not closure_ids:
+        messages.append(f"{md_file.name} closure evidence must name an Evidence ID")
+    for evidence_id in sorted(closure_ids - evidence_states.keys()):
+        messages.append(
+            f"{md_file.name} closure evidence {evidence_id} has no evidence-basis row"
+        )
+
+
+def _first_authority_bullet_value(section: str, labels: tuple[str, ...]) -> str:
+    for label in labels:
+        value = _authority_bullet_value(section, label)
+        if value:
+            return value
+    return ""
+
+
+def _authority_bullet_value(section: str, label: str) -> str:
+    escaped = re.escape(label)
+    match = re.search(
+        rf"(?im)^-\s*(?:\*\*{escaped}:\*\*|{escaped}:)\s*(.*?)\s*$",
+        section,
+    )
+    return match.group(1).strip() if match else ""
+
+
+def _authority_value_is_unfilled(value: str) -> bool:
+    normalized = re.sub(r"[`*_]", "", value).strip().lower()
+    if not normalized:
+        return True
+    if normalized in {"unknown", "pending", "none", "not applicable", "n/a"}:
+        return True
+    return bool(re.search(r"\b(?:replace|tbd|todo)\b", normalized))
+
+
 def _markdown_tables(text: str) -> list[tuple[list[str], list[list[str]]]]:
     """Parse simple pipe-delimited Markdown tables used by packet templates."""
 
@@ -778,9 +1139,18 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="Require a complete evidence-custody and five-axis coupling disclosure for Standard packets.",
     )
+    parser.add_argument(
+        "--strict-authority",
+        action="store_true",
+        help="Require and validate an evidence-conditioned decision-authority record for Standard packets.",
+    )
     args = parser.parse_args(argv)
 
-    result = validate_packet(args.packet, require_custody=args.strict_custody)
+    result = validate_packet(
+        args.packet,
+        require_custody=args.strict_custody,
+        require_authority=args.strict_authority,
+    )
     if result.ok:
         print(f"OK: {args.packet}")
         return 0

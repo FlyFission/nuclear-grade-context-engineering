@@ -30,6 +30,7 @@ templates:
     - intent.md
     - deficiency.md
   optional:
+    - standard/decision-authority.md
     - standard/supplier-trust.md
     - standard/red-team.md
     - standard/execution-trace.md

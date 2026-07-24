@@ -84,6 +84,17 @@ independent signal that carries a trust-bearing gate still comes from protected 
 reproduction or diverse verification, and a reviewer with real authority — not from a line the
 actor wrote and linted.
 
+**Built opt-in check: evidence-conditioned decision authority.** For a Standard packet,
+`ng validate <packet> --strict-authority` requires `decision-authority.md` and checks that prepare,
+recommend, verify, validate, verdict, accept, apply, reopen, and close each appear exactly once; every
+referenced Evidence ID appears in `verification.md`; raw states use `observed`, `bounded_absence`,
+`unknown`, or `disputed`; finite negative claims name a finite scope and time boundary; authority
+values use the declared vocabulary; and the derived result matches the apply allocation or a blocking
+override. Unknown, disputed, or decisive self-check evidence cannot clear `agent_authorized` apply.
+The check does not authenticate actors, qualify evidence, prove authorization or independence, bind
+an approval cryptographically to an action, prevent replay, or establish effective human control.
+Those require protected enforcement and additional implementation outside the writable packet.
+
 ---
 
 ## 4. Mode-specific validation gates
@@ -110,6 +121,7 @@ Required checks:
 - `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, and `ship.md` exist;
 - important claims have an evidence status or a named gap;
 - `--strict-custody`, when enabled, confirms that evidence IDs, custody roles, decisive status, matching five-axis profiles, classifications, and dispositions are structurally consistent;
+- `--strict-authority`, when enabled, confirms that the activated decision-right record is structurally consistent with declared verification evidence and its apply result;
 - trust decisions about a dependency, model, or API are scoped to how you will actually use it;
 - the release record names the baseline, the rollback, the monitoring, and the open risks.
 

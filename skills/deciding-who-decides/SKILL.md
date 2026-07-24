@@ -7,15 +7,15 @@ description: Decides who holds authority for a change — the agent at the edge 
 
 ## Overview
 
-Authority should sit where the evidence and competence are, not automatically at the top. But that gradient is bounded: an agent may decide reversible, well-evidenced work at the edge, and must escalate irreversible, trust-bearing, or thinly evidenced decisions to a human. This skill names, for a specific action, who decides and what makes it escalate. The point is to push decisions to the information, not to remove a human gate.
+Authority should sit where the policy, evidence, competence, and effective ability to intervene support it, not automatically at the top or with the actor holding the tool. This skill creates an evidence-conditioned authority record for one bounded decision episode. It separates prepare, recommend, verify, validate, verdict, accept, apply, reopen, and close rights; links each right to exact evidence IDs; preserves unknown and disputed states; and names transfer or blocking triggers. It does not infer authorization from technical capability, repository activity, fluency, or nominal human presence.
 
 ## Decision contract
 
-- **Claim checked:** the action's reversibility, evidence grade, and consequence place it at the agent's edge or behind a named human gate, with an escalation trigger concrete enough to obey and no required approval skipped.
-- **Artifact observed:** the proposed action and target, the evidence and its grade, the consequence, and the agent's authority and standing gates -> a decision-rights line (action, who decides, escalation trigger), the evidence the decider must hold, and any mandatory human gate.
-- **Decision affected:** block -- may the agent act at the edge or must it escalate: the decision-rights line and its escalation trigger.
-- **Failure class:** misplaced-authority (an irreversible or thinly-evidenced action placed at the edge, or a gate skipped).
-- **Next action:** escalate to the named human when consequence is protected and evidence is short of proven; stop when only the agent's assurance authorizes it.
+- **Claim checked:** each decision right is assigned under an explicit local policy to a named actor, the exact admitted evidence IDs and custody profile are visible, unresolved evidence cannot silently clear agent application, and transfer/reopen/close triggers are concrete.
+- **Artifact observed:** the bounded action; `verification.md` evidence IDs, raw states, intended-use/V&V status, and coupling profile; standing authority policy; effective intervention capability; and any existing human gate -> `decision-authority.md` plus a policy-relative derived result.
+- **Decision affected:** block -- may the proposed actor exercise the evaluated decision right, must authority transfer, is separate or dual control required, or is the action blocked/prohibited/indeterminate.
+- **Failure class:** misplaced-authority or unsupported-basis (capability treated as authorization, unresolved/self-check evidence clearing agent action, prohibited role overlap, stale basis, or skipped gate).
+- **Next action:** record raw observations, derive the policy-relative result, and transfer or block before side effects when the basis or authority is unresolved.
 
 ## When to Use
 
@@ -33,37 +33,43 @@ Authority should sit where the evidence and competence are, not automatically at
 ## Inputs
 
 - The proposed action, its target, and whether it can be undone.
-- The evidence on hand, and how good it is (fact, local proof, source claim, or just confidence).
+- The exact evidence IDs in `verification.md`, their raw states, intended use, and custody/coupling profile.
 - The consequence if it is wrong, and who is affected.
-- The agent's granted authority, and any standing rule or human gate that already applies.
+- The agent's granted authority, effective stop/reversal capability, and any standing rule or human gate that already applies.
+- The actors proposed for prepare, recommend, verify, validate, verdict, accept, apply, reopen, and close.
 
 ## Process
 
-1. State the decision in one sentence and whether it is reversible.
-2. Rate the evidence: proven, partially proven, or only asserted.
-3. Rate the consequence: low, meaningful, or protected/irreversible.
-4. Place the decision: reversible + well-evidenced + low consequence may be decided at the edge; anything irreversible, trust-bearing, or thinly evidenced escalates to a named human.
-5. Name the escalation trigger in concrete terms an agent can actually obey.
-6. Check that the placement raises rigor at the boundary; if it would let an agent skip a required gate, reject it.
-7. Record who decides, who is informed, and what evidence the decider needs in hand. Name who is affected by the action and anyone who must be consulted before it — placement is hollow if a materially affected party never appears.
+1. Bound the decision episode: identify the exact candidate/action, controlling policy version, and whether the action is reversible.
+2. Copy source-linked raw evidence states from the record: `observed`, `bounded_absence`, `unknown`, or `disputed`. Never convert missing telemetry into absence.
+3. Link the intended-use/V&V status and evidence-custody/coupling profile from `verification.md`. Do not infer substantive truth or independence from structure alone.
+4. Allocate every decision right: prepare, recommend, verify, validate, verdict, accept, apply, reopen, and close. Name the proposed actor, evidence IDs, policy gate, required authority, and transfer trigger.
+5. Derive the evaluated result under the declared policy: `agent_authorized`, `human_required`, `separate_control_required`, `dual_authority_required`, `blocked_pending_evidence`, `prohibited_for_agent`, or `indeterminate`.
+6. Block agent application when decisive evidence is unknown, disputed, or classified as self-check. A nominal human approval does not cure absent evidence, absent authority, or absent intervention capability.
+7. Record reopen, supersession, interim-expiry, and closure controls. A materially changed action or evidence basis requires a new or successor episode; do not silently reuse prior acceptance.
+8. Run `ng validate <packet> --strict-authority`; use `--strict-custody` as well when the packet must require both activated records.
 
 ## Outputs
 
-- A decision-rights line: the action, who decides, and the escalation trigger.
-- The evidence the decider must have before acting.
-- Any human gate that stays mandatory regardless of the gradient.
+- A completed `decision-authority.md` for the bounded episode.
+- Explicit allocations for all nine decision rights and their evidence IDs.
+- A policy-relative result and concrete transfer/blocking trigger.
+- Reopen, supersession, expiry, and closure controls.
 
 ## Verification
 
-- Every escalation trigger is concrete enough for an agent or reviewer to obey without judgment calls.
-- No placement removes a required human approval or lets confidence stand in for evidence.
-- The decider named actually has the evidence and authority the decision needs.
+- `ng validate <packet> --strict-authority` passes; for strict evidence custody use both strict flags.
+- Every Evidence ID exists in `verification.md`; `bounded_absence` has finite scope and a time boundary.
+- Unknown, disputed, or decisive self-check evidence does not clear `agent_authorized` apply.
+- Every decision right appears once, and the derived result is consistent with the recorded apply allocation or a blocking override.
+- Passing proves structural consistency only, not identity, evidence quality, independence, authorization, safety, security, or compliance.
 
 ## Escalation
 
-- Escalate when consequence is protected or irreversible and the evidence is anything short of proven.
-- Stop when the only thing authorizing the action is the agent's own assurance.
-- Get an independent human when one agent's read is the sole basis for a trust-bearing decision.
+- Transfer or block when the policy requires a human, separate control, or dual authority.
+- Stop when the exact evidence basis, action identity, authority holder, or intervention capability is unknown or disputed.
+- Stop when only the action-producing agent's self-check clears a decisive acceptance condition.
+- Reopen when admitted evidence expires, is invalidated, becomes disputed, or no longer matches the action.
 
 ## Common Rationalizations
 
@@ -85,23 +91,18 @@ Authority should sit where the evidence and competence are, not automatically at
 Decide who decides for this action the Nuclear-grade way.
 
 Inputs:
-- action and target:
+- exact action, target, and stable identity:
+- controlling local policy/version:
 - reversible? (yes/no):
-- evidence and how good it is:
-- consequence if wrong:
-- agent authority / existing human gates:
+- `verification.md` Evidence IDs, raw states, V&V status, and custody/coupling profile:
+- consequence if wrong and effective stop/reversal capability:
+- granted agent authority / existing human gates:
 
-Return:
-- the decision in one sentence, and whether it is reversible
-- evidence rating (proven / partial / asserted) and consequence rating (low / meaningful / protected)
-- placement: who decides (agent at the edge, or a named human gate)
-- the concrete escalation trigger an agent can obey
-- any human approval that stays mandatory regardless of the gradient
-- a check that the placement raises rigor at the boundary, not lowers it
+Create or update `decision-authority.md` using the repository template. Allocate prepare, recommend, verify, validate, verdict, accept, apply, reopen, and close. Derive one policy-relative result, name every transfer trigger, preserve unknown/disputed states, and record reopen/closure controls.
 
-Do not let confidence stand in for evidence. Do not use "authority to information" to skip a required gate.
+Run `ng validate <packet> --strict-authority`. Do not let confidence, technical capability, repository activity, or nominal human presence stand in for evidence or authorization.
 ```
 
 ## Source-lineage note
 
-This skill is an original software-workflow translation of decentralized-decision and decision-rights ideas. Pushing authority to where the information is takes concept inspiration from intent-based leadership (paraphrased, not template lineage; see `docs/00-standards-foundation/do-not-cite-directly.md`) and from public naval mission-command doctrine, bounded by the conservative-decision-making and questioning-attitude habits in DOE-HDBK-1028-2009, mapped in `docs/00-standards-foundation/source-map.md`. It does not create DOE compliance, formal assurance, safety, security, certification, or regulatory adequacy.
+This skill is an original software-workflow integration, not a claim to have invented authority transfer, mixed initiative, provenance, V&V, human oversight, or meaningful human control. Relevant prior mechanisms include Parasuraman, Sheridan, and Wickens' levels-of-automation model (https://doi.org/10.1109/3468.844354), Scerri, Pynadath, and Tambe's adjustable-autonomy transfer-of-control strategies (https://doi.org/10.1613/jair.1037), Decision Provenance (https://doi.org/10.1109/ACCESS.2018.2887201), and meaningful-human-control tracking/tracing (https://doi.org/10.3389/frobt.2018.00015). The repository contribution is the record-supported join between exact software evidence IDs, custody/coupling, explicit decision rights, and a policy-relative result. It does not create DOE compliance, formal assurance, safety, security, certification, regulatory adequacy, or proof of effective human control.

@@ -12,7 +12,12 @@ from nuclear_grade.mcp_server import (
     status,
     validate_change_record,
 )
-from tests.test_ng_validate import COMMON_TAIL, minimal_quick_packet, minimal_standard_packet
+from tests.test_ng_validate import (
+    COMMON_TAIL,
+    add_decision_authority,
+    minimal_quick_packet,
+    minimal_standard_packet,
+)
 
 
 def test_validate_change_record_accepts_filled_packet(tmp_path):
@@ -38,6 +43,22 @@ def test_validate_change_record_strict_flag_changes_legacy_packet_result(tmp_pat
     strict = validate_change_record(str(packet), strict_custody=True)
     assert strict.startswith("FAILED")
     assert "missing required section: Evidence custody and coupling" in strict
+
+
+def test_validate_change_record_supports_strict_authority(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+
+    assert validate_change_record(str(packet), strict_authority=True).startswith("OK")
+
+
+def test_validate_change_record_strict_authority_requires_record(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+
+    strict = validate_change_record(str(packet), strict_authority=True)
+
+    assert strict.startswith("FAILED")
+    assert "missing required file: decision-authority.md" in strict
 
 
 def test_new_then_validate_flags_unfilled_scaffold(tmp_path):

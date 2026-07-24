@@ -20,9 +20,10 @@ Portable command prompt generated from `skills/deciding-who-decides/SKILL.md`. E
 ## Inputs
 
 - The proposed action, its target, and whether it can be undone.
-- The evidence on hand, and how good it is (fact, local proof, source claim, or just confidence).
+- The exact evidence IDs in `verification.md`, their raw states, intended use, and custody/coupling profile.
 - The consequence if it is wrong, and who is affected.
-- The agent's granted authority, and any standing rule or human gate that already applies.
+- The agent's granted authority, effective stop/reversal capability, and any standing rule or human gate that already applies.
+- The actors proposed for prepare, recommend, verify, validate, verdict, accept, apply, reopen, and close.
 
 ## Prompt text
 
@@ -30,28 +31,25 @@ Portable command prompt generated from `skills/deciding-who-decides/SKILL.md`. E
 Decide who decides for this action the Nuclear-grade way.
 
 Inputs:
-- action and target:
+- exact action, target, and stable identity:
+- controlling local policy/version:
 - reversible? (yes/no):
-- evidence and how good it is:
-- consequence if wrong:
-- agent authority / existing human gates:
+- `verification.md` Evidence IDs, raw states, V&V status, and custody/coupling profile:
+- consequence if wrong and effective stop/reversal capability:
+- granted agent authority / existing human gates:
 
-Return:
-- the decision in one sentence, and whether it is reversible
-- evidence rating (proven / partial / asserted) and consequence rating (low / meaningful / protected)
-- placement: who decides (agent at the edge, or a named human gate)
-- the concrete escalation trigger an agent can obey
-- any human approval that stays mandatory regardless of the gradient
-- a check that the placement raises rigor at the boundary, not lowers it
+Create or update `decision-authority.md` using the repository template. Allocate prepare, recommend, verify, validate, verdict, accept, apply, reopen, and close. Derive one policy-relative result, name every transfer trigger, preserve unknown/disputed states, and record reopen/closure controls.
 
-Do not let confidence stand in for evidence. Do not use "authority to information" to skip a required gate.
+Run `ng validate <packet> --strict-authority`. Do not let confidence, technical capability, repository activity, or nominal human presence stand in for evidence or authorization.
 ```
 
 ## Verification
 
-- Every escalation trigger is concrete enough for an agent or reviewer to obey without judgment calls.
-- No placement removes a required human approval or lets confidence stand in for evidence.
-- The decider named actually has the evidence and authority the decision needs.
+- `ng validate <packet> --strict-authority` passes; for strict evidence custody use both strict flags.
+- Every Evidence ID exists in `verification.md`; `bounded_absence` has finite scope and a time boundary.
+- Unknown, disputed, or decisive self-check evidence does not clear `agent_authorized` apply.
+- Every decision right appears once, and the derived result is consistent with the recorded apply allocation or a blocking override.
+- Passing proves structural consistency only, not identity, evidence quality, independence, authorization, safety, security, or compliance.
 
 ## Full skill
 

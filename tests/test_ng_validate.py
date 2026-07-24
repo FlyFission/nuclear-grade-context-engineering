@@ -1,3 +1,4 @@
+import inspect
 from pathlib import Path
 
 from tools.ng_validate import validate_packet
@@ -57,6 +58,556 @@ def minimal_standard_packet(root: Path) -> Path:
         + COMMON_TAIL,
     )
     return packet
+
+
+def add_decision_authority(
+    packet: Path,
+    *,
+    evidence_id: str = "E-001",
+    raw_state: str = "observed",
+    apply_authority: str = "human_required",
+    result: str = "human_required",
+) -> None:
+    rights = (
+        "prepare",
+        "recommend",
+        "verify",
+        "validate",
+        "verdict",
+        "accept",
+        "apply",
+        "reopen",
+        "close",
+    )
+    rows = []
+    for right in rights:
+        required = apply_authority if right == "apply" else "human_required"
+        rows.append(
+            f"| {right} | release owner | {evidence_id} | policy-v1 | {required} | transfer when evidence is unresolved |"
+        )
+    write(
+        packet / "decision-authority.md",
+        "# Decision Authority\n\n"
+        "## Decision episode\n\n"
+        "- Decision ID: DEC-001\n"
+        "- Action: apply the candidate change\n"
+        "- Action identity: commit:abc123\n"
+        "- Policy version: policy-v1\n"
+        "- Reversible: yes\n"
+        "- Consequence if wrong: release evidence may not support the applied change\n\n"
+        "## Evidence basis\n\n"
+        "| Evidence ID | Raw state | Scope / basis | Intended use / V&V status | Custody / profile link |\n"
+        "|---|---|---|---|---|\n"
+        f"| {evidence_id} | {raw_state} | observed in this packet | supports the apply decision | `verification.md#evidence-custody-and-coupling` |\n\n"
+        "## Decision-right allocation\n\n"
+        "| Decision right | Proposed actor | Evidence IDs | Policy / standing gate | Required authority | Transfer trigger |\n"
+        "|---|---|---|---|---|---|\n"
+        + "\n".join(rows)
+        + "\n\n## Derived authority result\n\n"
+        "- Decision right evaluated: apply\n"
+        f"- Result: {result}\n"
+        "- Basis: policy-v1 requires the recorded release owner\n"
+        "- Derived by: ng-validate-test\n"
+        "- Recorded at: 2026-07-24T12:00:00Z\n\n"
+        "## Reopen and closure controls\n\n"
+        "- Reopen authority: release owner\n"
+        "- Reopen trigger: evidence E-001 is invalidated or expires\n"
+        "- Superseded decision handling: preserve the prior record and issue a successor episode\n"
+        "- Close authority: release owner\n"
+        "- Closure evidence: E-001 or its admitted successor demonstrates closure\n"
+        "- Interim expiry: 2026-07-25T00:00:00Z\n"
+        + COMMON_TAIL,
+    )
+
+
+def test_validate_packet_accepts_strict_authority_contract():
+    assert "require_authority" in inspect.signature(validate_packet).parameters
+
+
+def test_legacy_standard_packet_without_authority_record_only_fails_strict_mode(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+
+    compatible = validate_packet(packet)
+    strict = validate_packet(packet, require_authority=True)
+
+    assert compatible.ok, compatible.messages
+    assert not strict.ok
+    assert any("missing required file: decision-authority.md" in message for message in strict.messages)
+
+
+def test_strict_authority_rejects_record_without_decision_rights_section(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    write(packet / "decision-authority.md", "# Decision Authority\n" + COMMON_TAIL)
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("missing required section: Decision-right allocation" in message for message in result.messages)
+
+
+def test_strict_authority_rejects_evidence_id_missing_from_verification(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet, evidence_id="E-999")
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any(
+        "evidence E-999 is not declared in verification custody" in message
+        for message in result.messages
+    )
+
+
+def test_unknown_decisive_evidence_cannot_clear_agent_apply_authority(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(
+        packet,
+        raw_state="unknown",
+        apply_authority="agent_authorized",
+        result="agent_authorized",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("unknown evidence E-001 cannot clear agent_authorized" in message for message in result.messages)
+
+
+def test_unknown_evidence_can_block_an_otherwise_agent_authorized_allocation(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(
+        packet,
+        raw_state="unknown",
+        apply_authority="agent_authorized",
+        result="blocked_pending_evidence",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert result.ok, result.messages
+
+
+def test_human_required_can_override_an_agent_authorized_allocation(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(
+        packet,
+        raw_state="observed",
+        apply_authority="agent_authorized",
+        result="human_required",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert result.ok, result.messages
+
+
+def test_strict_authority_rejects_invalid_raw_state(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    record = packet / "decision-authority.md"
+    record.write_text(record.read_text(encoding="utf-8").replace("| observed |", "| guessed |"), encoding="utf-8")
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("invalid raw state for evidence E-001: guessed" in message for message in result.messages)
+
+
+def test_strict_authority_requires_every_decision_right(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    record = packet / "decision-authority.md"
+    text = record.read_text(encoding="utf-8")
+    close_row = "| close | release owner | E-001 | policy-v1 | human_required | transfer when evidence is unresolved |\n"
+    assert close_row in text
+    record.write_text(text.replace(close_row, ""), encoding="utf-8")
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("missing decision right: close" in message for message in result.messages)
+
+
+def test_strict_authority_rejects_invalid_authority_value(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    record = packet / "decision-authority.md"
+    text = record.read_text(encoding="utf-8")
+    target = "| apply | release owner | E-001 | policy-v1 | human_required |"
+    assert target in text
+    record.write_text(text.replace(target, "| apply | release owner | E-001 | policy-v1 | maybe |"), encoding="utf-8")
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("invalid required authority for apply: maybe" in message for message in result.messages)
+
+
+def test_bounded_absence_requires_finite_scope_and_time_boundary(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet, raw_state="bounded_absence")
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("bounded_absence for evidence E-001 requires finite scope and time boundary" in message for message in result.messages)
+
+
+def test_derived_result_must_match_apply_policy(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet, apply_authority="human_required", result="agent_authorized")
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any(
+        "derived result agent_authorized is incompatible with apply allocation human_required"
+        in message
+        for message in result.messages
+    )
+
+
+def test_decisive_self_check_cannot_clear_agent_apply_authority(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    verification = packet / "verification.md"
+    text = verification.read_text(encoding="utf-8")
+    text = text.replace(
+        "| E-001 | partially separated — reviewer differs | separated — fresh brief | partially separated — shared tests | separated — reviewer decides | separated — protected CI retains output | diverse verification | admitted for this demo |",
+        "| E-001 | partially separated — reviewer differs | separated — fresh brief | partially separated — shared tests | separated — reviewer decides | separated — protected CI retains output | self-check | admitted with residual risk; see ship.md |",
+    )
+    verification.write_text(text, encoding="utf-8")
+    add_decision_authority(
+        packet,
+        apply_authority="agent_authorized",
+        result="agent_authorized",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("self-check evidence E-001 cannot clear agent_authorized" in message for message in result.messages)
+
+
+def test_complete_authority_record_passes_strict_mode(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert result.ok, result.messages
+
+
+def test_shipped_decision_authority_template_can_form_a_valid_strict_packet(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    template = (ROOT / "templates" / "standard" / "decision-authority.md").read_text(
+        encoding="utf-8"
+    )
+    completed = template.replace("NUCLEAR-GRADE-PLACEHOLDER\n\n", "")
+    for old, new in {
+        "Replace with the exact bounded action under consideration.": "Apply commit abc123 to the release branch.",
+        "Replace with the controlling local policy identifier and version.": "release-policy-v1.2",
+        "Replace with a stable artifact, commit, request, or payload identifier.": "commit:abc123",
+        "Replace with `yes`, `no`, or a bounded condition.": "yes",
+        "Replace with the bounded consequence of an incorrect authority result.": "An unsupported change could enter the release branch.",
+        "Replace with the validator/tool version or named policy evaluator.": "ng-validate-v0.5",
+        "Replace with an ISO 8601 timestamp.": "2026-07-24T12:00:00Z",
+        "named owner": "release owner",
+        "Exact Evidence IDs required to demonstrate the recorded correction or effectiveness condition.": "E-001 or an admitted successor Evidence ID demonstrates closure.",
+        "Replace with a timestamp or `not applicable` and a basis.": "2026-07-25T12:00:00Z",
+        "replace with a stable identifier or public URL.": "release-policy-v1.2",
+    }.items():
+        completed = completed.replace(old, new)
+    write(packet / "decision-authority.md", completed)
+
+    result = validate_packet(
+        packet,
+        require_custody=True,
+        require_authority=True,
+    )
+
+    assert result.ok, result.messages
+
+
+def test_strict_authority_rejects_empty_evidence_basis(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    record = packet / "decision-authority.md"
+    text = record.read_text(encoding="utf-8")
+    evidence_row = "| E-001 | observed | observed in this packet | supports the apply decision | `verification.md#evidence-custody-and-coupling` |\n"
+    assert evidence_row in text
+    record.write_text(text.replace(evidence_row, ""), encoding="utf-8")
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("evidence-basis table must include at least one evidence row" in message for message in result.messages)
+
+
+def test_strict_authority_requires_reopen_and_closure_controls(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    record = packet / "decision-authority.md"
+    text = record.read_text(encoding="utf-8")
+    start = text.index("## Reopen and closure controls")
+    end = text.index("## Required links", start)
+    record.write_text(text[:start] + text[end:], encoding="utf-8")
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("missing required section: Reopen and closure controls" in message for message in result.messages)
+
+
+def test_strict_authority_rejects_right_evidence_absent_from_evidence_basis(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    record = packet / "decision-authority.md"
+    text = record.read_text(encoding="utf-8").replace(
+        "| release owner | E-001 |",
+        "| release owner | E-002 |",
+    )
+    record.write_text(text, encoding="utf-8")
+    verification = packet / "verification.md"
+    verification.write_text(
+        verification.read_text(encoding="utf-8") + "\nE-002 appears only in explanatory prose.\n",
+        encoding="utf-8",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("evidence E-002 has no evidence-basis row" in message for message in result.messages)
+
+
+def test_strict_authority_rejects_evidence_id_mentioned_only_in_verification_prose(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet, evidence_id="E-002")
+    verification = packet / "verification.md"
+    verification.write_text(
+        verification.read_text(encoding="utf-8") + "\nE-002 is not admitted evidence.\n",
+        encoding="utf-8",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("evidence E-002 is not declared in verification custody" in message for message in result.messages)
+
+
+def test_strict_authority_requires_custody_and_decisiveness_metadata(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    write(
+        packet / "verification.md",
+        "# Verification\n\n## Result\n\n- Status: pass\n- Evidence: E-001\n" + COMMON_TAIL,
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("missing required section: Evidence custody and coupling" in message for message in result.messages)
+
+
+def test_bounded_absence_rejects_negated_keyword_spoof(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet, raw_state="bounded_absence")
+    record = packet / "decision-authority.md"
+    record.write_text(
+        record.read_text(encoding="utf-8").replace(
+            "observed in this packet",
+            "not a finite scope and no time boundary exists",
+        ),
+        encoding="utf-8",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("bounded_absence for evidence E-001 requires finite scope and time boundary" in message for message in result.messages)
+
+
+def test_strict_authority_rejects_empty_reopen_and_closure_fields(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    record = packet / "decision-authority.md"
+    text = record.read_text(encoding="utf-8")
+    start = text.index("## Reopen and closure controls")
+    end = text.index("## Required links", start)
+    record.write_text(
+        text[:start] + "## Reopen and closure controls\n\n" + text[end:],
+        encoding="utf-8",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("missing reopen authority" in message for message in result.messages)
+
+
+def test_default_validation_ignores_preexisting_custom_authority_file(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    write(
+        packet / "decision-authority.md",
+        "# Team decision authority notes\n\nLegacy custom content.\n" + COMMON_TAIL,
+    )
+
+    result = validate_packet(packet)
+
+    assert result.ok, result.messages
+
+
+def test_strict_authority_rejects_quick_mode_instead_of_silently_nooping(tmp_path):
+    packet = minimal_quick_packet(tmp_path)
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("strict authority requires a Standard packet" in message for message in result.messages)
+
+
+def test_strict_authority_requires_complete_decision_episode_fields(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    record = packet / "decision-authority.md"
+    record.write_text(
+        record.read_text(encoding="utf-8").replace("- Action identity: commit:abc123\n", ""),
+        encoding="utf-8",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("missing action identity" in message for message in result.messages)
+
+
+def test_strict_authority_rejects_empty_evidence_basis_cells(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    record = packet / "decision-authority.md"
+    record.write_text(
+        record.read_text(encoding="utf-8").replace(
+            "| supports the apply decision |",
+            "|  |",
+        ),
+        encoding="utf-8",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("evidence E-001 missing intended use or V&V status" in message for message in result.messages)
+
+
+def test_strict_authority_requires_complete_derived_result_fields(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    record = packet / "decision-authority.md"
+    record.write_text(
+        record.read_text(encoding="utf-8").replace("- Derived by: ng-validate-test\n", ""),
+        encoding="utf-8",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("missing derived by" in message for message in result.messages)
+
+
+def test_strict_authority_requires_closure_evidence_id(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    record = packet / "decision-authority.md"
+    record.write_text(
+        record.read_text(encoding="utf-8").replace(
+            "E-001 or its admitted successor demonstrates closure",
+            "the owner says the work is complete",
+        ),
+        encoding="utf-8",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("closure evidence must name an Evidence ID" in message for message in result.messages)
+
+
+def test_agent_authorized_apply_cannot_use_not_applicable_evidence(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(
+        packet,
+        apply_authority="agent_authorized",
+        result="agent_authorized",
+    )
+    record = packet / "decision-authority.md"
+    text = record.read_text(encoding="utf-8")
+    original = "| apply | release owner | E-001 |"
+    assert original in text
+    record.write_text(
+        text.replace(
+            original,
+            "| apply | release owner | not applicable |",
+            1,
+        ),
+        encoding="utf-8",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("decision right apply missing evidence IDs" in message for message in result.messages)
+
+
+def test_strict_authority_rejects_right_placeholders(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    record = packet / "decision-authority.md"
+    record.write_text(
+        record.read_text(encoding="utf-8").replace(
+            "| prepare | release owner |",
+            "| prepare | TBD |",
+        ),
+        encoding="utf-8",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("decision right prepare missing proposed actor" in message for message in result.messages)
+
+
+def test_closure_evidence_must_link_to_the_authority_evidence_basis(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+    record = packet / "decision-authority.md"
+    record.write_text(
+        record.read_text(encoding="utf-8").replace(
+            "E-001 or its admitted successor demonstrates closure",
+            "E-999 demonstrates closure",
+        ),
+        encoding="utf-8",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert not result.ok
+    assert any("closure evidence E-999 has no evidence-basis row" in message for message in result.messages)
+
+
+def test_bounded_absence_allows_explicit_scope_exclusions(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet, raw_state="bounded_absence")
+    record = packet / "decision-authority.md"
+    record.write_text(
+        record.read_text(encoding="utf-8").replace(
+            "observed in this packet",
+            "finite scope: files A and B; time boundary: 2026-07-24; does not include file C",
+        ),
+        encoding="utf-8",
+    )
+
+    result = validate_packet(packet, require_authority=True)
+
+    assert result.ok, result.messages
 
 
 def test_quick_packet_with_required_files_sections_and_status_passes(tmp_path):

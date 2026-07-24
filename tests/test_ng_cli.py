@@ -6,7 +6,12 @@ from pathlib import Path
 import pytest
 
 from nuclear_grade.ng_validate import CLOSURE_MARKER
-from tests.test_ng_validate import COMMON_TAIL, minimal_quick_packet, minimal_standard_packet
+from tests.test_ng_validate import (
+    COMMON_TAIL,
+    add_decision_authority,
+    minimal_quick_packet,
+    minimal_standard_packet,
+)
 from tools import ng as ng_cli
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -204,6 +209,7 @@ def test_list_includes_golden_path_templates():
     assert "self-check.md" in result.stdout
     assert "Optional files:" in result.stdout
     assert "standard/supplier-trust.md" in result.stdout
+    assert "standard/decision-authority.md" in result.stdout
 
 
 def test_validate_delegates_to_packet_validator(tmp_path):
@@ -228,6 +234,24 @@ def test_validate_strict_custody_flag_changes_legacy_packet_exit(tmp_path):
     assert compatible.returncode == 0, compatible.stdout
     assert strict.returncode != 0
     assert "missing required section: Evidence custody and coupling" in strict.stdout
+
+
+def test_validate_strict_authority_flag_requires_authority_record(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+
+    result = run_ng("validate", str(packet), "--strict-authority")
+
+    assert result.returncode != 0
+    assert "missing required file: decision-authority.md" in result.stdout
+
+
+def test_validate_strict_authority_flag_accepts_complete_record(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    add_decision_authority(packet)
+
+    result = run_ng("validate", str(packet), "--strict-authority")
+
+    assert result.returncode == 0, result.stdout + result.stderr
 
 
 def test_doctor_passes_on_this_repo():

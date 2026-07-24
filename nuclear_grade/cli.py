@@ -72,6 +72,7 @@ GOLDEN_PATH_FILES = (
     "deficiency.md",
 )
 OPTIONAL_FILES = (
+    "standard/decision-authority.md",
     "standard/supplier-trust.md",
     "standard/red-team.md",
     "standard/execution-trace.md",
@@ -351,6 +352,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--strict-custody",
         action="store_true",
         help="Require evidence-custody and five-axis coupling disclosure for Standard packets.",
+    )
+    validate_parser.add_argument(
+        "--strict-authority",
+        action="store_true",
+        help="Require and validate an evidence-conditioned decision-authority record for Standard packets.",
     )
     validate_parser.set_defaults(handler=handle_validate)
 
@@ -696,7 +702,11 @@ def handle_new(args: argparse.Namespace) -> int:
 
 
 def handle_validate(args: argparse.Namespace) -> int:
-    result = validate_packet(args.packet, require_custody=args.strict_custody)
+    result = validate_packet(
+        args.packet,
+        require_custody=args.strict_custody,
+        require_authority=args.strict_authority,
+    )
     if result.ok:
         print(f"OK: {args.packet}")
         return 0

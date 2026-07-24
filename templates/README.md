@@ -32,6 +32,8 @@ rows short rather than copying the full disclosure everywhere.
 
 Use `templates/standard/supplier-trust.md` only when a dependency, model, API, SaaS tool, generated file, or vendor claim affects the evidence, permissions, data, release stance, or public trust. It is an add-on you turn on, not part of every Standard packet.
 
+Use `templates/standard/decision-authority.md` when an agent or automation can recommend, decide, accept, apply, reopen, or close a consequential change. It links every decision right to exact `verification.md` evidence IDs and preserves transfer, blocking, reopening, and closure conditions. It is optional for compatibility and should not be added to low-consequence packets that do not present an authority question.
+
 ## Activated CM records
 
 Use `templates/cm/` (records for keeping the approved version under control, CM) when a change affects controlled items: prompts, models, tools, dependencies, docs, releases, runbooks, evals, or anything else whose approved state matters.
@@ -77,6 +79,12 @@ python tools/ng_validate.py .nuclear/changes/<slug>/
 
 # During the evidence-custody migration, require the new Standard disclosure explicitly:
 python tools/ng_validate.py .nuclear/changes/<slug>/ --strict-custody
+
+# Require the activated evidence-conditioned decision-authority record:
+python tools/ng_validate.py .nuclear/changes/<slug>/ --strict-authority
+
+# Require both activated records:
+python tools/ng_validate.py .nuclear/changes/<slug>/ --strict-custody --strict-authority
 ```
 
 See the completed example packet under:

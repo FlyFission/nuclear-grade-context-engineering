@@ -4,7 +4,7 @@
 
 - Change slug: ai-assisted-pr-review-loop
 - Version / release / baseline: PR candidate based on `origin/main` 77f1645e9205c45c754a567fc5e0a3fcede52f0e
-- PR / commit / artifact: branch `docs/minimum-assurance-loop`; commit and PR pending final freeze
+- PR / commit / artifact: branch `docs/minimum-assurance-loop`; first reviewed commit `2bc9c005b8a796afae1857500d1f27573f754c43`; corrected candidate pending freeze
 - Owner: FlyFission
 - Date: 2026-07-24
 - Intended release window: After human PR review and green required checks
@@ -17,16 +17,21 @@
 
 ## Reviewed candidate identity
 
-- Acceptance-criteria revision: `basis.md` dated 2026-07-24, REQ-001 through REQ-005
-- Reviewed candidate commit / artifact hash: pending final implementation commit
-- Current candidate commit / artifact hash: pending final implementation commit
-- Candidate matches reviewed identity? no
-- Material changes after verdict: No verdict has been issued; candidate remains open.
+- Identity method and attestation location: SHA-256 manifest over the public/template/test payload; provenance commit recorded separately; attestation lives in this excluded packet and PR review.
+- Identity scope and exclusions: Seven controlled payload files named in `plan.md`; exclude `.nuclear/changes/ai-assisted-pr-review-loop/` so the decision record does not identify itself.
+- Reviewed payload / content identity: SHA-256 `5bdc1044d2be0ea061690a21ea744543359fd8b3ae93d3041b21aa80e543572d` for the seven-file scope at `2bc9c00`
+- Reviewed provenance identity: `2bc9c005b8a796afae1857500d1f27573f754c43`
+- Current payload / content identity: SHA-256 `3d6270a98cafe28cc44fe90a88222c5a7c9a24eb90375bbd5ad38086bc655950` for the corrected working-tree payload
+- Current provenance identity: working tree after `2bc9c00`; corrected commit pending
+- Payload identity matches reviewed identity? no
+- Base / provenance impact check: Base remains `77f1645e9205c45c754a567fc5e0a3fcede52f0e`; no base change; payload changed to address review findings.
+- Material changes after verdict: Role taxonomy unified; diagram simplified; record authority corrected; correction-to-reverification and budget exhaustion made explicit; identity method made non-recursive; delta-review fields and exact mirror test added.
+- Delta review evidence: `reviews/payload-manifest-round-1.txt`; corrected-candidate gate and reviewer closure pending
 - Re-review status: pending
 - Current verdict status: stale
-- Verifier and evidence link: pending E-003 in `verification.md`
+- Verifier and evidence link: E-003 first-round reviews in `verification.md`; corrected-candidate closure pending
 
-The packet deliberately marks the verdict stale until one exact committed candidate is reviewed and compared again before PR handoff. A pushed branch or PR number alone is not the candidate identity.
+The packet deliberately marks the first-round verdict stale after material corrections. The final payload digest will be frozen and reviewed without asking an in-tree file to contain its own commit SHA.
 
 ## Evidence status summary
 
@@ -39,16 +44,16 @@ The packet deliberately marks the verdict stale until one exact committed candid
 | Dependency / supply-chain evidence | not applicable | `risk.md` | No dependency change |
 | AI-assisted work checks | pass | `verification.md` | Scope and authority disclosed |
 | Evidence custody / coupling profile | pass | `verification.md` | Actor coupling disclosed; planned separated checks not inflated |
-| Review / approval | gap | `verification.md` E-003 | Frozen semantic review and human PR decision pending |
+| Review / approval | gap | `verification.md` E-003 | First round found material revisions; corrected-candidate review and human PR decision pending |
 
 ## Residual risks and gaps
 
 | Risk / gap | Impact | Disposition | Owner | Recheck trigger |
 |---|---|---|---|---|
-| Diagram may be more detailed than the simple external inspiration | Medium adoption friction | mitigate through frozen semantic review and human PR review | FlyFission | Review finding |
+| Corrected diagram may still be too dense | Medium adoption friction | mitigate through delta review and GitHub render | FlyFission | Corrected-candidate review |
 | Template fields are contract-tested for presence, not validator-enforced | Low; this PR makes no enforcement claim | accept as documented template behavior | FlyFission | Evidence of repeated omission |
 | GitHub checks may reveal environment or render drift | Medium | block until green | FlyFission | Remote PR checks and rendered view |
-| Candidate identity is not frozen yet | High for verdict use | block; record exact commit and renew review | FlyFission | Commit freeze |
+| Corrected payload identity is not frozen yet | High for verdict use | block; record scoped payload digest and renew review | FlyFission | Payload freeze |
 
 ## Rollback / restore plan
 
@@ -79,10 +84,10 @@ The packet deliberately marks the verdict stale until one exact committed candid
 
 - Decision: defer
 - Decision maker: FlyFission
-- Rationale: The implementation candidate exists and all local gates are green, but frozen semantic review, exact commit identity, remote checks, and human PR review are not complete.
+- Rationale: Local gates passed on the first candidate, but three blind reviews found material role, agency, identity-recursion, re-verification, and operability defects. Corrections are in progress; the corrected payload, delta review, remote checks, and human PR review are not complete.
 - Decision question answered by evidence? no
 - Verdict owner's authority axis relative to the actor: separated; FlyFission owns the final PR decision while Hermes is the builder.
-- Minimum coupling profile for this consequence met? no; E-003 and remote checks remain planned.
+- Minimum coupling profile for this consequence met? no; first-round E-003 is complete but corrected-candidate review and remote checks remain planned.
 - Decision rests on primary evidence the reviewer can reproduce, not the actor's narrative? no; mechanical evidence is reproducible, semantic review remains open.
 - Conditions attached: Complete full gates, freeze commit, close P0/P1 review findings, verify GitHub head and checks.
 - Decision posture: conservative enough

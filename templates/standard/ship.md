@@ -29,18 +29,23 @@
 
 ## Reviewed candidate identity
 
-A verdict applies only to the exact candidate the verifier inspected. Record both identities immediately before merge or apply. A material edit, generated-file refresh, amended commit, rebase, or conflict resolution creates a new review candidate unless a bounded delta review establishes otherwise.
+A verdict applies only to the exact payload the verifier inspected. Choose a non-recursive identity method before review. For git work, a content identity such as a tree OID can identify the payload while the commit SHA records provenance and base history. Put the final verdict or attestation outside the payload it identifies, or define a content-digest scope that explicitly excludes the mutable decision record. **Do not write a commit's own SHA into a file inside that same commit**; that changes the SHA and can never close.
 
-- Acceptance-criteria revision:
-- Reviewed candidate commit / artifact hash:
-- Current candidate commit / artifact hash:
-- Candidate matches reviewed identity? yes/no:
+- Identity method and attestation location:
+- Identity scope and exclusions:
+- Reviewed payload / content identity:
+- Reviewed provenance identity (for example commit SHA):
+- Current payload / content identity:
+- Current provenance identity:
+- Payload identity matches reviewed identity? yes/no:
+- Base / provenance impact check:
 - Material changes after verdict:
+- Delta review evidence: changed scope; affected claims/evidence; checks rerun; reviewer; renewed verdict
 - Re-review status: not required / delta review complete / full re-review complete / pending
 - Current verdict status: current / stale / blocked
 - Verifier and evidence link:
 
-If the identities do not match, the prior verdict is stale. Do not baseline, merge, release, or apply the candidate until the affected evidence is rerun and the verdict is renewed or the change is explicitly blocked.
+A changed payload identity makes the prior verdict stale. If the payload identity is unchanged but a rebase, base update, or provenance change occurred, record whether the changed context affects requirements, dependencies, admitted evidence, or applicability. Reuse unaffected evidence only through the bounded delta review above. Do not baseline, merge, release, or apply until the identity and impact checks support a current verdict.
 
 ## Evidence status summary
 

@@ -22,7 +22,7 @@ No non-goal or charter crossing is authorized.
 | # | Task | Reqs | Prereqs | Inputs (`file#section`) + budget | Outputs / artifact | Proof | Stop/done |
 |---|---|---|---|---|---|---|---|
 | 1 | Add a failing public-doc contract for role labels, exact-candidate closure, and correction budget | REQ-001, REQ-002, REQ-003, REQ-004, REQ-005 | Current-main inspection | `tests/test_public_docs.py`; 1 file | Failing focused test | Focused pytest fails because controls are absent | Expected failure observed |
-| 2 | Update existing role diagram and text fallback in both canonical copies | REQ-001, REQ-002, REQ-005 | Step 1 | `README.md#Who does what`, `docs/diagrams.md#6`; 2 sections | Mirrored five-role sequence | Focused test plus source comparison | Diagram is role-based and candidate-bound |
+| 2 | Update existing role diagram and text fallback in both canonical copies | REQ-001, REQ-002, REQ-005 | Step 1 | `README.md#Who does what`, `docs/diagrams.md#6`; 2 sections | Mirrored four-role sequence with one controlled candidate artifact | Focused test plus source comparison | Diagram is role-based, candidate-bound, and readable |
 | 3 | Add bounded correction planning and exact-candidate ship closure | REQ-003, REQ-004 | Step 1 | Standard plan and ship templates; 2 sections | Operational fields | Focused test and template review | Required fields present with stale-verdict rule |
 | 4 | Add compact Standard-loop explanation and change history | REQ-001, REQ-002, REQ-005 | Steps 2-3 | `WORKFLOWS.md`, `CHANGELOG.md`; 2 sections | Public explanation | Public-doc tests and diff review | No new mode or overclaim |
 | 5 | Complete packet, full verification, frozen review, commit, push, and PR | REQ-001 through REQ-005 | Steps 1-4 | Candidate tree and packet; bounded to staged diff | Verified PR candidate | Full gates, exact-candidate review, remote checks | PR open with current head verified |
@@ -43,7 +43,7 @@ Model-mediated determinism posture: Hermes GPT-5.6 Sol authors the candidate; de
 | Critical step | Likely error | Consequence | Control / contingency | Evidence |
 |---|---|---|---|---|
 | Amend public diagram | Overload the simple view | Adoption surface becomes harder to understand | Keep one existing diagram, use role labels, retain text fallback | Reviewer finding and source inspection |
-| Record candidate identity | Confuse source branch with reviewed artifact | Stale verdict may clear | Compare exact commit/hash immediately before apply | `ship.md` fields and contract test |
+| Record candidate identity | Ask an in-tree record to contain its own commit SHA | Self-referential identity never closes | Use a scoped payload identity plus provenance, with attestation outside the payload | `ship.md` fields and contract test |
 | Correction loop | Review forever or lower criteria | Cost and false pass | Fixed budget plus human escalation | Plan fields and review record |
 | Open PR | Build on stale or dirty checkout | Conflicts or user-work damage | Isolated worktree from fetched `origin/main` | Git branch and remote OID |
 
@@ -60,7 +60,7 @@ Model-mediated determinism posture: Hermes GPT-5.6 Sol authors the candidate; de
 
 | File / asset | Change expected | Requirements covered | Why it matters | Owner |
 |---|---|---|---|---|
-| `README.md` | Replace four-role sequence with five-role candidate-bound sequence | REQ-001, REQ-002, REQ-005 | Public front door | FlyFission |
+| `README.md` | Replace the base sequence with four roles plus one candidate artifact | REQ-001, REQ-002, REQ-005 | Public front door | FlyFission |
 | `docs/diagrams.md` | Mirror canonical sequence and text fallback | REQ-001, REQ-002, REQ-005 | Controlled diagram source | FlyFission |
 | `WORKFLOWS.md` | Add compact Standard-mode PR interpretation | REQ-001, REQ-002 | Prevents new-mode ambiguity | FlyFission |
 | `templates/standard/plan.md` | Add review/correction budget fields | REQ-003 | Operationalizes bounded remediation | FlyFission |
@@ -80,7 +80,7 @@ Model-mediated determinism posture: Hermes GPT-5.6 Sol authors the candidate; de
 | Decision | Option selected | Alternatives rejected | Evidence or reason | Revalidation trigger |
 |---|---|---|---|---|
 | Host surface | Existing Standard workflow and role diagram | New standalone workflow or skill | Current repo already owns the full lifecycle | Existing surfaces cannot express the control cleanly |
-| Candidate identity | Commit SHA, artifact hash, or equivalent stable ID | PR number alone | PR content can change without PR number changing | Target tool lacks stable candidate identity |
+| Candidate identity | Scoped payload/content identity plus provenance ID and out-of-payload attestation | PR number alone; self-referential in-tree commit SHA | Stable payload closure without asking a commit to contain its own SHA | Target tool lacks a stable payload identity |
 | Review loop | Declared correction budget plus human escalation | Fixed one-round rule; unlimited loop | Preserves boundedness without premature stop | Empirical use shows different default needed |
 
 ## Review checkpoints
@@ -100,14 +100,16 @@ Model-mediated determinism posture: Hermes GPT-5.6 Sol authors the candidate; de
 ## Review candidate and correction budget
 
 - Acceptance-criteria revision: `basis.md` dated 2026-07-24, REQ-001 through REQ-005
-- Candidate identity scheme: git commit SHA after complete implementation freeze; staged diff used before commit
-- Criteria challenger and custody note: External friend's diagram prompted the critique; Hermes translated it into criteria; Ben approved PR implementation. This is not independent evidence.
-- Builder: Hermes GPT-5.6 Sol
-- Independent verifier and separation rationale: Assigned after candidate freeze; must not read another review opening; model review remains advisory defect discovery.
 - Human decision owner: Ben/FlyFission
+- Builder: Hermes GPT-5.6 Sol
+- Criteria challenger function, if activated, and custody note: External friend's diagram prompted the critique; Hermes translated it into criteria; Ben approved PR implementation. This is not independent evidence.
+- Verifier and separation rationale: Blind first-round Claude, Codex, and Grok reviews inspected frozen commit `2bc9c00`; a timed-out OpenCode/Kimi attempt produced no verdict and is not counted. Delta review is required after accepted corrections. Model review remains advisory defect discovery.
+- Candidate identity method and attestation location: SHA-256 manifest over the changed public/template/test payload; provenance commit recorded separately; final attestation in this packet and PR review, outside the payload scope.
+- Identity scope and exclusions: Include `CHANGELOG.md`, `README.md`, `WORKFLOWS.md`, `docs/diagrams.md`, both changed Standard templates, and `tests/test_public_docs.py`; exclude this mutable `.nuclear` decision packet.
 - Maximum correction rounds before human escalation: 2
-- Current correction round: 0
+- Current correction round: 1
 - Material change that invalidates the current verdict: Any change to README/diagram semantics, Standard plan/ship fields, contract test, or packet claim boundary; any rebase/conflict resolution affecting those surfaces.
+- What consumes a correction round: A material payload change followed by a renewed review request. Round 1 addresses accepted role, agency, recursion, re-verification, mirror-test, and delta-review findings from frozen commit `2bc9c00`.
 - Escalation action when the budget is exhausted: Hold the PR and present unresolved blockers and options to Ben; do not relax criteria.
 
 ## Rollback approach

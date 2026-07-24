@@ -38,7 +38,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | E-001 | REQ-001, REQ-002, REQ-003, REQ-004 | no | Focused pytest result and changed Markdown | Hermes GPT-5.6 Sol | Hermes GPT-5.6 Sol | Hermes GPT-5.6 Sol | none | Hermes tool runtime | git worktree and session log | Hermes GPT-5.6 Sol | Reproducible by PR reviewer |
 | E-002 | REQ-005 | yes | Full repository gate outputs | Existing repository checks plus candidate contract test | Existing repo maintainers and Hermes for the new assertion | Project-defined commands from AGENTS/workflow | none | Hermes tool runtime and GitHub CI | git history, cron/session logs, GitHub checks | Hermes GPT-5.6 Sol | Pending closure reviewer, GitHub CI, and human owner |
-| E-003 | REQ-001, REQ-002, REQ-003, REQ-004 | yes | Frozen candidate semantic review | Hermes GPT-5.6 Sol | Assigned reviewer outside builder opening | FlyFission/Hermes chair | Reviewer authors raw findings; chair adjudicates later | Reviewer tool runtime | Versioned review record | Reviewer raw output plus chair disposition | Pending human owner |
+| E-003 | REQ-001, REQ-002, REQ-003, REQ-004 | yes | Blind first-round reviews of commit `2bc9c00` | Hermes GPT-5.6 Sol | Claude, Codex, and Grok provider runs; OpenCode/Kimi attempts timed out and are excluded | Hermes chair selected distinct lenses | Reviewers authored blind findings; Hermes adjudicated cited defects | Separate provider CLI runtimes | `reviews/round-1-adjudication.md` | Adjudication plus provider outputs | Pending corrected-candidate review and human owner |
 
 ### Coupling profile
 
@@ -46,13 +46,13 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 |---|---|---|---|---|---|---|---|
 | E-001 | coupled; builder authored change and assertion | coupled; same task context | partially separated; pytest executes mechanically | separated; test cannot authorize merge | coupled; same worktree and runtime | self-check | admitted for mechanical presence only; not semantic adequacy |
 | E-002 | partially separated; most checks predate the change while one assertion is actor-authored | partially separated; project commands fixed before candidate | separated; distinct test, lint, validator, and mirror mechanisms | separated; checks report status but do not merge | partially separated; local runtime complete, GitHub CI pending | diverse verification | admitted for local gate completion; remote checks remain a PR-time gate |
-| E-003 | separated; reviewer did not build the candidate | partially separated; common frozen packet, distinct assigned lens | separated; independent review path | separated; reviewer advises and human decides | partially separated; separate reviewer session, same public repository | diverse verification | planned; model finding supports defect discovery only and does not replace human decision |
+| E-003 | separated; counted reviewers did not build the candidate | partially separated; common frozen commit with distinct blind lenses | separated; three provider CLI paths | separated; reviewers advise and human decides | partially separated; separate provider runtimes, same public repository | diverse verification | admitted for first-round defect discovery; material findings made the verdict stale and require corrected-candidate review |
 
-- Evidence pattern used: actor self-check plus planned reproducible project gates and separated advisory review.
+- Evidence pattern used: actor self-check, reproducible project gates, and blind provider-diverse advisory review.
 - Verdict owner: FlyFission.
 - Apply-clearance owner: FlyFission; no real-world deployment is part of this PR.
 - Minimum profile required by the consequence: Mechanical claims reproducible; semantic adequacy challenged outside the builder opening; human owns merge.
-- Any unmet separation carried into `ship.md`: E-003 and remote GitHub checks remain planned; ship decision is deferred.
+- Any unmet separation carried into `ship.md`: Corrected-candidate delta review and remote GitHub checks remain planned; ship decision is deferred.
 
 ## Commands, evals, and reviews
 
@@ -66,14 +66,23 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 | Packet custody | `python tools/ng.py validate .nuclear/changes/ai-assisted-pr-review-loop --strict-custody` | Python worktree | pass after source-lineage paths were made explicit | E-002 |
 | Diff hygiene | `git diff --check` | Git worktree | pass | E-002 |
 | Diagram mirror | Extract both Mermaid blocks and compare exact text | Python worktree | `MIRROR_OK` | E-002 |
-| Frozen semantic review | Reviewer brief against exact candidate | Isolated reviewer context | planned | E-003 |
+| First-round semantic review | Blind Claude, Codex, Grok, and attempted OpenCode/Kimi briefs against commit `2bc9c00` | Separate provider contexts | Claude ACCEPT with P1 corrections; Codex and Grok REVISE; two Kimi attempts timed out with no verdict and were excluded | E-003 and `reviews/round-1-adjudication.md` |
+| Correction-round RED test | Strengthened focused contract for exact mirror, role/artifact coherence, re-verification, escalation, and non-recursive identity | Python worktree | failed at missing `Four roles and one controlled artifact`, as expected | E-001 |
+| Correction-round GREEN test | Same strengthened focused contract after accepted corrections | Python worktree | 1 passed | E-001 |
+| Corrected-candidate local gate | Full pytest, Ruff, doctor, tokens, eval, command parity, strict-custody packet validation, and diff check | Python/git worktree | pass | E-002 |
+
+## First-round review adjudication
+
+The three substantive blind reviews converged on real defects even though their verdict labels differed. Source inspection confirmed six material issues: role/artifact taxonomy drift, the record acting as authority, a correction branch that did not return to verification, self-referential in-tree commit identity, an underspecified delta review, and a contract test that did not enforce the exact Mermaid mirror. The public diagram was also denser than its protected simplicity outcome allowed.
+
+All material findings were accepted or modified into correction round 1. The corrected design uses four roles plus one candidate artifact, a linear sequence with explicit re-verification and human escalation notes, a scoped payload identity plus provenance, an out-of-payload attestation rule, base/provenance impact and delta-review fields, and an exact committed mirror test. Full dispositions are retained in `reviews/round-1-adjudication.md`.
 
 ## Negative / failure-mode checks
 
 | Failure mode | Check performed | Result | Evidence link |
 |---|---|---|---|
 | Contract passes without implementation | Focused test run before edits | fail as expected | RED test output |
-| Diagram/template controls drift later | Public-doc test requires mirrored role/candidate tokens and plan/ship fields | pass | E-001 |
+| Diagram/template controls drift later | Public-doc test requires exact Mermaid equality, role/artifact coherence, correction/re-verification notes, and plan/ship fields | pass | E-001 |
 | Verdict reused after material change | Ship template requires identity comparison and stale status | pass by source contract | E-001 |
 | Correction loop silently lowers criteria | Plan template prohibits criteria relaxation and requires escalation | pass by source contract | E-001 |
 | Model brand treated as authority | Diagram and workflow use roles; plan requires custody rationale | pass by source review | E-001 |
@@ -83,7 +92,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 - AI scope: Inspected current main and open PRs; designed and authored docs, templates, test, packet, and PR materials.
 - Model/tool used: Hermes GPT-5.6 Sol with file, terminal, GitHub, and review tools.
 - Permissions/actions allowed: Read repository and GitHub state; edit isolated worktree; run checks; commit, push, and open requested PR. Merge and release are not authorized.
-- Independent checks performed: Planned frozen-candidate reviewer plus GitHub CI; local deterministic checks are reproducible but builder-chaired.
+- Independent checks performed: Three substantive blind provider reviews completed on the first candidate; two OpenCode/Kimi attempts timed out and were excluded. Corrected-candidate delta review plus GitHub CI remain pending; local deterministic checks are reproducible but builder-chaired.
 - Self-check / turnover records: This Standard packet.
 - Hallucination/slop screening: Current source read directly; open PR overlap inspected; exact claims contract-tested; no external diagram text copied.
 - Human approval gates exercised: Ben authorized implementation and PR; merge remains pending human review.
@@ -97,7 +106,7 @@ Not activated. No dependencies, secrets, runtime permissions, deployment configu
 - `risk.md`
 - `basis.md`
 - `ship.md`
-- CI run / eval report / test logs / review notes: to be added after execution
+- CI run / eval report / test logs / review notes: `reviews/round-1-adjudication.md`; corrected-candidate and remote evidence pending
 - Implementation diff / PR: branch `docs/minimum-assurance-loop`; PR URL pending
 
 ## Exit criteria

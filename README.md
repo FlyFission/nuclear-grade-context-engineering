@@ -158,37 +158,32 @@ Underneath the path sit a few **optional** habits borrowed from high-reliability
 
 ## Who does what
 
-Five roles share the work: the **human owner**, the **builder**, the **exact candidate**, the **change record**, and the **independent verifier**. These are roles, not model brands. The builder moves fast, but only inside limits the human approved first. The record carries each claim, its evidence, and the candidate identity. The verifier judges the exact candidate against approved criteria. The human retains merge and apply authority.
+**Four roles and one controlled artifact** share the work: the **human owner**, **builder**, **change record**, and **verifier**, plus the **exact candidate** being judged. These are roles and an artifact, not model brands. The human approves criteria and limits, authorizes build and correction, and retains merge/apply authority. The verifier checks the exact candidate; whether that check counts as independent depends on disclosed evidence custody and separation, not the label. Criteria challenge is a function assigned before build according to consequence, not necessarily a fifth standing role.
 
 ```mermaid
 sequenceDiagram
     actor You as Human owner
     participant Agent as Builder
-    participant Candidate as PR / exact candidate
+    participant Candidate as Exact candidate
     participant Record as Change record
-    actor Verifier as Independent verifier
+    actor Verifier as Verifier / checker
     You->>Record: Classify risk; approve criteria and limits
-    Record->>Agent: Open bounded build authority
+    You->>Agent: Authorize bounded build
     Agent->>Candidate: Build inside approved limits
-    Agent->>Record: Link claims and evidence to candidate ID
-    Record-->>Verifier: Show criteria, evidence, gaps, candidate ID
+    Agent->>Record: Link claims, evidence, candidate ID
+    Record-->>Verifier: Present criteria, evidence, gaps, candidate ID
     Verifier->>Candidate: Reproduce decisive checks
     Verifier->>Record: Verdict bound to candidate ID
-    alt Needs changes and correction budget remains
-        Record-->>You: Named gaps and round count
-        You->>Agent: Authorize bounded correction
-        Agent->>Candidate: Change candidate; create new ID
-        Candidate->>Record: Prior verdict is stale
-    else Candidate ready for decision
-        Record->>Candidate: Confirm current ID equals reviewed ID
-        Record-->>You: Present current verdict and residual risk
-        You->>Record: Merge/apply, hold, or send back
-        Record->>Record: Save approved version (baseline)
-    end
-    Note over You,Verifier: Lessons from real use feed the next change
+    Candidate-->>You: Expose current candidate ID
+    You->>Record: Confirm identity match or hold
+    Record-->>You: Present verdict, gaps, residual risk
+    You->>Record: Merge/apply, hold, or authorize correction
+    Record->>Record: On acceptance, save baseline
+    Note over Agent,Verifier: Material correction: new ID; prior verdict is stale; re-verify
+    Note over You,Verifier: Budget exhausted: stop and escalate to human owner
 ```
 
-**In words:** the human classifies the risk and approves the criteria and limits → the builder changes one exact candidate inside those limits → the record binds claims and evidence to that candidate → an independent verifier reproduces the decisive checks and records a verdict against the candidate ID → any correction creates a new candidate and makes the prior verdict stale → before merge or apply, the record confirms the current candidate is the reviewed candidate → the human decides whether to merge, hold, or send it back → an accepted version becomes the baseline and lessons from use feed the next change. A review plan names the maximum correction rounds before human escalation; models do not silently relax the criteria or review forever. Canonical copy in [`docs/diagrams.md`](docs/diagrams.md).
+**In words:** the human classifies the risk and approves the criteria and limits → the human authorizes the builder to change one exact candidate → the record binds claims and evidence to that candidate → the verifier reproduces the decisive checks and records a verdict against the candidate ID → the human confirms that the current candidate still matches the reviewed identity → the human merges/applies, holds, or authorizes a bounded correction → any material correction creates a new identity, makes the old verdict stale, and returns the candidate to verification → an exhausted correction budget stops and escalates rather than lowering the criteria → an accepted version becomes the baseline and lessons from use feed the next change. Canonical copy in [`docs/diagrams.md`](docs/diagrams.md).
 
 One caution this loop has to defend against on purpose: the agent that builds the change also drafts much of its evidence, writes the narrative the reviewer reads, and frames the decision. A confident mistake can therefore arrive wrapped in convincing proof that it is correct: persuasive documentation the loop manufactured, because the actor and the evidence-author are the same. The defense is **independence**, scaled to the stakes: the load-bearing claim's evidence is reproducible by the reviewer or authored by an independent checker, and on trust-bearing work the decider is not the actor. See [`docs/02-operating-system/actor-evidence-independence.md`](docs/02-operating-system/actor-evidence-independence.md).
 

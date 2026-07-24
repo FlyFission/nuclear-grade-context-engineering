@@ -38,7 +38,7 @@ Make the existing Nuclear-grade AI-assisted change loop as easy to understand as
 |---|---|---|---|---|
 | Existing Standard mode is the correct host | fact | Current `WORKFLOWS.md` and templates | A required control cannot fit without a new artifact | FlyFission |
 | Mermaid sequence diagrams render on GitHub | fact | Existing repository practice | GitHub render or parser failure | FlyFission |
-| Candidate identity can be a commit SHA or artifact hash | fact | Existing git/artifact release practice | Target system lacks a stable identity mechanism | FlyFission |
+| Candidate identity needs a stable payload/content ID plus a provenance ID | fact | First-round Codex review exposed in-tree SHA recursion; existing git tree/commit distinction | Target system lacks a stable payload identity or out-of-payload attestation | FlyFission |
 | Two correction rounds are enough for this PR before escalation | assumption | Bounded scope and docs/template-only changes | P0/P1 remains after two rounds | FlyFission |
 | Public wording can remain tool-agnostic | assumption | Role abstraction | A real workflow requires provider-specific behavior | FlyFission |
 
@@ -49,7 +49,7 @@ Make the existing Nuclear-grade AI-assisted change loop as easy to understand as
 | The current README already has a four-role sequence diagram | fact | `README.md#who-does-what` on base `77f1645` | Amend rather than add a second diagram |
 | The current ship record lacks an explicit reviewed-versus-current candidate identity section | fact | Base `templates/standard/ship.md` | Add exact-candidate closure fields |
 | The current plan lacks a correction-round budget | fact | Base `templates/standard/plan.md` | Add bounded remediation fields |
-| The proposed wording preserves simplicity | assumption | Visual and human review pending | Hold merge if reviewers find the diagram overloaded |
+| The first candidate overloaded the public diagram and split the role taxonomy | local proof | Claude, Codex, and Grok reviews of `2bc9c00` | Revise to a linear four-role plus artifact view and re-review |
 | Ben authorized commit, push, and PR creation | decision authority | Direct user instruction in this session | PR may be opened; merge remains held |
 
 ## Interfaces and trust boundaries
@@ -68,18 +68,18 @@ Not activated. No dependency, model runtime, API, or supplier behavior changes.
 
 | ID | Requirement / claim | Basis | Design feature or control | Evidence planned |
 |---|---|---|---|---|
-| REQ-001 | WHEN the public role diagram describes AI-assisted PR work THE DOCUMENTATION SHALL use durable roles rather than model brands and retain human criteria and merge/apply authority. | Role authority must survive provider changes | Five-role Mermaid sequence and text fallback | Public-doc contract plus visual/source review |
+| REQ-001 | WHEN the public role diagram describes AI-assisted PR work THE DOCUMENTATION SHALL use four durable roles plus the controlled candidate artifact, rather than model brands, and retain human criteria and merge/apply authority. | Role authority must survive provider changes and artifacts are not actors | Linear Mermaid sequence and text fallback | Public-doc contract plus visual/source review |
 | REQ-002 | WHEN a verifier records a verdict THE RECORD SHALL bind it to an exact candidate identity and mark it stale after a material candidate change. | Verdicts do not cover moving targets | Candidate ID handoff in diagram and `ship.md` | Contract test, diff review, packet trace |
 | REQ-003 | WHEN correction is authorized THE PLAN SHALL name a maximum round count and human escalation without lowering acceptance criteria. | Bounded remediation avoids churn and premature fixed stops | Review candidate and correction budget section | Contract test and template review |
-| REQ-004 | BEFORE merge or apply THE SHIP RECORD SHALL compare the reviewed candidate identity with the current candidate and require renewed review when they differ. | Exact-candidate closure prevents stale release decisions | Reviewed candidate identity section | Contract test and template review |
+| REQ-004 | BEFORE merge or apply THE SHIP RECORD SHALL compare a non-recursive reviewed payload identity with the current payload, record provenance/base impact, and require renewed review when affected evidence is stale. | Exact-candidate closure must be operational rather than self-referential | Payload/provenance and delta-review section | Contract test, template review, and dogfood manifest |
 | REQ-005 | WHEN the role diagram changes THE README AND canonical diagrams source SHALL remain semantically mirrored and all project checks SHALL pass. | Public diagrams are controlled items | Mirrored Mermaid and text fallback; test suite | Pytest, Ruff, doctor, tokens, eval, command parity, diff check |
 
 ## Design outline
 
 | Section | Covered? | Where it lives |
 |---|---|---|
-| Overview: what changes and why | yes | `WORKFLOWS.md` minimum assurance view |
-| Architecture: shape and major parts | yes | README and `docs/diagrams.md` five-role sequence |
+| Overview: what changes and why | yes | `WORKFLOWS.md` compact Standard view |
+| Architecture: shape and major parts | yes | README and `docs/diagrams.md` four-role plus artifact sequence |
 | Components and interfaces: boundaries above | yes | Interfaces and trust boundaries |
 | Data models: shapes, classes, ownership | not applicable | Markdown fields only |
 | Error handling: failure paths and responses | yes | Stale verdict and correction-budget escalation paths |

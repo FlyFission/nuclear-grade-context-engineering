@@ -198,37 +198,32 @@ flowchart TD
 
 ## 6. Who does what in one change
 
-How five roles hand off authority over a single change: the **human owner**, the **builder**, the **exact candidate**, the **change record**, and the **independent verifier**. These are roles, not model brands. The builder moves fast inside limits approved first; the record binds claims, evidence, and verdict to the candidate identity; the verifier judges the evidence rather than the pitch; the human retains merge and apply authority. Read top to bottom.
+**Four roles and one controlled artifact** hand off authority over a single change: the **human owner**, **builder**, **change record**, and **verifier**, plus the **exact candidate** being judged. These are roles and an artifact, not model brands. The human approves criteria and limits, authorizes build and correction, and retains merge/apply authority. The verifier checks the exact candidate; whether that check counts as independent depends on disclosed evidence custody and separation, not the label. Criteria challenge is a function assigned before build according to consequence, not necessarily a fifth standing role. Read top to bottom.
 
 ```mermaid
 sequenceDiagram
     actor You as Human owner
     participant Agent as Builder
-    participant Candidate as PR / exact candidate
+    participant Candidate as Exact candidate
     participant Record as Change record
-    actor Verifier as Independent verifier
+    actor Verifier as Verifier / checker
     You->>Record: Classify risk; approve criteria and limits
-    Record->>Agent: Open bounded build authority
+    You->>Agent: Authorize bounded build
     Agent->>Candidate: Build inside approved limits
-    Agent->>Record: Link claims and evidence to candidate ID
-    Record-->>Verifier: Show criteria, evidence, gaps, candidate ID
+    Agent->>Record: Link claims, evidence, candidate ID
+    Record-->>Verifier: Present criteria, evidence, gaps, candidate ID
     Verifier->>Candidate: Reproduce decisive checks
     Verifier->>Record: Verdict bound to candidate ID
-    alt Needs changes and correction budget remains
-        Record-->>You: Named gaps and round count
-        You->>Agent: Authorize bounded correction
-        Agent->>Candidate: Change candidate; create new ID
-        Candidate->>Record: Prior verdict is stale
-    else Candidate ready for decision
-        Record->>Candidate: Confirm current ID equals reviewed ID
-        Record-->>You: Present current verdict and residual risk
-        You->>Record: Merge/apply, hold, or send back
-        Record->>Record: Save approved version (baseline)
-    end
-    Note over You,Verifier: Lessons from real use feed the next change
+    Candidate-->>You: Expose current candidate ID
+    You->>Record: Confirm identity match or hold
+    Record-->>You: Present verdict, gaps, residual risk
+    You->>Record: Merge/apply, hold, or authorize correction
+    Record->>Record: On acceptance, save baseline
+    Note over Agent,Verifier: Material correction: new ID; prior verdict is stale; re-verify
+    Note over You,Verifier: Budget exhausted: stop and escalate to human owner
 ```
 
-**In words (text fallback):** the human classifies the risk and approves the criteria and limits → the builder changes one exact candidate inside those limits → the record binds claims and evidence to that candidate → an independent verifier reproduces decisive checks and records a verdict against the candidate ID → any correction creates a new candidate and makes the prior verdict stale → before merge or apply, the record confirms the current candidate is the reviewed candidate → the human decides whether to merge, hold, or send it back → an accepted version becomes the baseline → lessons from real use feed the next change. The plan sets a correction-round budget and escalates when it is exhausted rather than allowing an unbounded agent review loop.
+**In words (text fallback):** the human classifies the risk and approves the criteria and limits → the human authorizes the builder to change one exact candidate → the record binds claims and evidence to that candidate → the verifier reproduces the decisive checks and records a verdict against the candidate ID → the human confirms that the current candidate still matches the reviewed identity → the human merges/applies, holds, or authorizes a bounded correction → any material correction creates a new identity, makes the old verdict stale, and returns the candidate to verification → an exhausted correction budget stops and escalates rather than lowering the criteria → an accepted version becomes the baseline → lessons from use feed the next change.
 
 ---
 

@@ -1,0 +1,29 @@
+AI-assisted PR review payload manifest
+
+Algorithm:
+For each path in bytewise sorted order, hash UTF-8 path bytes, NUL, raw file bytes, NUL with SHA-256.
+The mutable .nuclear decision packet is excluded from the payload scope.
+
+Scope:
+CHANGELOG.md
+README.md
+WORKFLOWS.md
+docs/diagrams.md
+templates/standard/plan.md
+templates/standard/ship.md
+tests/test_public_docs.py
+
+Base commit:
+77f1645e9205c45c754a567fc5e0a3fcede52f0e
+
+First-round provenance commit:
+2bc9c005b8a796afae1857500d1f27573f754c43
+
+First-round payload SHA-256:
+5bdc1044d2be0ea061690a21ea744543359fd8b3ae93d3041b21aa80e543572d
+
+Corrected working-tree payload SHA-256 before final local gates:
+3d6270a98cafe28cc44fe90a88222c5a7c9a24eb90375bbd5ad38086bc655950
+
+Status:
+The payload changed materially in correction round 1. The first-round verdict is stale. The corrected payload requires local gate rerun and bounded delta review. Recompute before PR handoff if any scoped file changes.

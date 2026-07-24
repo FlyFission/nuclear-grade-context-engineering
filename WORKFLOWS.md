@@ -103,17 +103,21 @@ python tools/ng.py validate .nuclear/changes/add-agent-boundary
 
 Use Standard when reviewers need the spec (what the change must do and why), the plan, the trace, the verification and validation (V&V), and the release decision saved in the repo.
 
-### Minimum assurance view for an AI-assisted pull request
+### Compact Standard view for an AI-assisted pull request
 
 For an AI-assisted pull request, the Standard loop can be read as one compact control path:
 
 ```text
-classify risk -> approve criteria and limits -> build one exact candidate -> independently verify -> bind verdict to candidate ID -> human merge/apply decision -> operate and learn
+classify risk -> approve criteria and limits -> build one exact candidate -> verify with consequence-appropriate separation -> verdict bound to candidate ID -> human merge/apply decision -> operate and learn
 ```
 
-Use roles rather than model brands: human owner, criteria challenger, builder, independent verifier, and change record. Validate the criteria against the intended outcome before asking whether the implementation meets them. The builder may draft criteria, tests, and evidence, but a human approves the limits; on trust-bearing work, decisive evidence is reproduced by a verifier or authored outside the builder's evidence path.
+**Four roles and one controlled artifact** carry the path: human owner, builder, change record, verifier, and the exact candidate being judged. Criteria challenge is a function assigned before build according to consequence; it may be performed by the human owner, a specialist, or a separate challenger. Validate the criteria against the intended outcome before asking whether the implementation meets them. The builder may draft criteria, tests, and evidence, but a human approves the limits. A verifier counts as independent only when the evidence-custody and separation basis supports that label.
 
-Record a correction-round budget in `plan.md`. Each material correction, rebase, generated-artifact refresh, or conflict resolution creates a new candidate identity and makes the prior verdict stale. Before merge or apply, use `ship.md` to confirm that the current candidate still matches the reviewed candidate and that any required delta or full re-review is complete. Passing criteria support a bounded verdict; they do not replace the human release decision, residual-risk treatment, rollback, monitoring, or apply-time clearance.
+Record a correction-round budget in `plan.md`. A correction round is consumed when a material change creates a new candidate and asks for a renewed verdict. The budget is an escalation threshold, not a universal default or an automatic rejection; when it is exhausted, stop and ask the human owner whether to narrow scope, change the plan, reapprove criteria, or block the work. Never lower the acceptance criteria merely to obtain a pass.
+
+Choose a non-recursive identity method before review. For git work, a content identity such as a tree OID can name the reviewed payload while the commit SHA records provenance. Put the final attestation outside the payload it identifies, or define and record a digest scope that excludes the mutable decision record. Do not try to write a commit's own SHA into a file inside that same commit. A changed payload identity makes the prior verdict stale. A rebase or base change with the same payload identity still needs a base/provenance impact check. A bounded delta review records the changed scope, affected claims and evidence, checks rerun, reviewer, and renewed verdict.
+
+Before merge or apply, use `ship.md` to confirm that the current payload still matches the reviewed identity and that any required delta or full re-review is complete. Passing criteria support a bounded verdict; they do not replace the human release decision, residual-risk treatment, rollback, monitoring, or apply-time clearance.
 
 This is a simple view of the existing Standard loop, not a new mode.
 

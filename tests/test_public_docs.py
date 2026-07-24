@@ -93,22 +93,42 @@ def test_baseline_is_late_lifecycle_state():
 def test_ai_assisted_pr_loop_closes_the_exact_review_candidate():
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     diagrams = (ROOT / "docs" / "diagrams.md").read_text(encoding="utf-8")
+    workflows = (ROOT / "WORKFLOWS.md").read_text(encoding="utf-8")
     plan = (ROOT / "templates" / "standard" / "plan.md").read_text(encoding="utf-8")
     ship = (ROOT / "templates" / "standard" / "ship.md").read_text(encoding="utf-8")
 
-    for text in (readme, diagrams):
-        assert "Independent verifier" in text
-        assert "Verdict bound to candidate ID" in text
-        assert "Prior verdict is stale" in text
+    def mermaid_block(text: str, heading: str) -> str:
+        section_start = text.index(heading)
+        block_start = text.index("```mermaid", section_start)
+        block_end = text.index("```", block_start + len("```mermaid")) + len("```")
+        return text[block_start:block_end]
+
+    readme_diagram = mermaid_block(readme, "## Who does what")
+    canonical_diagram = mermaid_block(diagrams, "## 6. Who does what in one change")
+    assert readme_diagram == canonical_diagram
+
+    for text in (readme, diagrams, workflows):
+        assert "Four roles and one controlled artifact" in text
+        assert "verdict bound to candidate id" in text.lower()
+
+    for text in (readme_diagram, canonical_diagram):
+        assert "Material correction: new ID; prior verdict is stale; re-verify" in text
+        assert "Budget exhausted: stop and escalate to human owner" in text
+        assert "Open bounded build authority" not in text
 
     assert "Maximum correction rounds before human escalation" in plan
     assert "Material change that invalidates the current verdict" in plan
+    assert "A correction round is consumed" in plan
 
     assert "## Reviewed candidate identity" in ship
-    assert "Reviewed candidate commit / artifact hash:" in ship
-    assert "Current candidate commit / artifact hash:" in ship
-    assert "Candidate matches reviewed identity? yes/no:" in ship
-    assert "Re-review status:" in ship
+    assert "Identity method and attestation location:" in ship
+    assert "Identity scope and exclusions:" in ship
+    assert "Reviewed payload / content identity:" in ship
+    assert "Current payload / content identity:" in ship
+    assert "Payload identity matches reviewed identity? yes/no:" in ship
+    assert "Base / provenance impact check:" in ship
+    assert "Delta review evidence:" in ship
+    assert "Do not write a commit's own SHA into a file inside that same commit" in ship
 
 
 def test_hpi_overlay_is_public_operating_doc():

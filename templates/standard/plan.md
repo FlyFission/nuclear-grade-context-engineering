@@ -130,20 +130,22 @@ own test" trap. See the agent-drafts-spec workflow in `CORE.md`.
 
 ## Review candidate and correction budget
 
-Use when an AI-assisted pull request or other controlled candidate will receive a verdict. Roles are capability assignments, not model brands. Name the criteria challenger, builder, independent verifier, and human decision owner. A checker that helped author the criteria may still advise, but do not count that later review as independent without a separate custody basis.
+Use when an AI-assisted pull request or other controlled candidate will receive a verdict. Keep **four roles and one controlled artifact** distinct: human owner, builder, change record, verifier, and the exact candidate. Criteria challenge is an optional function assigned according to consequence, not automatically a fifth role. A verifier that helped author the criteria may still advise, but do not count that later review as independent without a separate custody basis.
 
 - Acceptance-criteria revision:
-- Candidate identity scheme (commit SHA, artifact hash, or equivalent):
-- Criteria challenger and custody note:
-- Builder:
-- Independent verifier and separation rationale:
 - Human decision owner:
+- Builder:
+- Criteria challenger function, if activated, and custody note:
+- Verifier and separation rationale:
+- Candidate identity method and attestation location:
+- Identity scope and exclusions:
 - Maximum correction rounds before human escalation:
 - Current correction round:
 - Material change that invalidates the current verdict:
+- What consumes a correction round:
 - Escalation action when the budget is exhausted:
 
-Any material correction creates a new candidate identity and makes the prior verdict stale. Do not relax the acceptance criteria inside the correction loop merely to obtain a pass.
+A correction round is consumed when a material change creates a new candidate identity and asks for a renewed verdict. Automation-only edits count when they change the reviewed payload or affect admitted evidence. The budget is an escalation threshold, not a universal default or automatic failure: when exhausted, stop and ask the human owner whether to narrow scope, change the plan, reapprove criteria, or block the work. Any material correction makes the prior verdict stale and returns the candidate to verification. Do not relax the acceptance criteria inside the correction loop merely to obtain a pass.
 
 ## Rollback approach
 

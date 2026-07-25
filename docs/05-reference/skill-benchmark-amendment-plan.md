@@ -61,8 +61,8 @@
 | `tools/ng_skill_audit.py` | Static skill readiness audit; caveats that score is structural only. | REQ-001, REQ-002 | Prevents structural completeness from being mistaken for measured efficacy. |
 | `tools/ng_skill_route_score.py` | Deterministic route-case validator/scorer. | REQ-001, REQ-005 | Measures trigger coverage and over-triggering. |
 | `tools/ng_skill_output_score.py` | Deterministic required/forbidden signal scorer. | REQ-001, REQ-005 | Measures concrete output obligations. |
-| `evals/skill-routing-cases.jsonl` | 152 routing cases covering all skills with positives and near-miss negatives. | REQ-001 | Ensures full-corpus trigger coverage. |
-| `evals/skill-output-cases.jsonl` | 28 output cases with required/forbidden signals. | REQ-001 | Ensures each skill has a measurable output contract. |
+| `evals/skill-routing-cases.jsonl` | 158 routing cases covering all skills with positives and near-miss negatives. | REQ-001 | Ensures full-corpus trigger coverage. |
+| `evals/skill-output-cases.jsonl` | 29 output cases with required/forbidden signals. | REQ-001 | Ensures each skill has a measurable output contract. |
 | `docs/05-reference/independent-skill-benchmark-protocol.md` | Gate protocol for prompt-only vs skill-loaded comparisons. | REQ-002, REQ-006 | Defines fair comparison and avoids vibe scoring. |
 | `docs/05-reference/skillsbench-adoption-plan.md` | Gate 2 SkillsBench/BenchFlow adoption plan. | REQ-004, REQ-006 | Provides live-execution architecture. |
 | `docs/05-reference/skill-evaluation.md` | Reframe as minimum prompt bank and point to stricter protocol. | REQ-002 | Aligns existing docs with new benchmark standard. |

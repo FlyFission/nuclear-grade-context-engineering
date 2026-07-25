@@ -33,18 +33,22 @@ Hygiene) by trigger from the decision matrix in `CORE.md`.
 
 ## Completion standard
 
-An agent is not done until it can name:
+Every completion report names:
 
 - the files it changed;
 - the change record or reasoning it used;
 - the evidence it ran;
-- who generated, selected, transformed, captured, retained, and presented any load-bearing evidence;
-- the actor/context/mechanism/authority/resource coupling profile and any residual gap;
-- the handoff, self-check, OPEX, or trust record it used, or why it did not need one;
-- the intent it declared and the decision rights or escalation it used for any critical action;
-- the gaps still open;
-- the boundary wording it checked;
-- `<fill-in: any project-specific completion criteria>`.
+- the gaps still open.
+
+Add triggered details only when they apply:
+
+- for load-bearing evidence, who controlled its path and any residual actor/context/mechanism/authority/resource coupling;
+- for a required handoff, self-check, OPEX, or trust record, which record was used;
+- for a critical action, the declared intent and decision rights or escalation;
+- for a public claim, the boundary wording checked;
+- `<fill-in: any project-specific completion criteria and its trigger>`.
+
+Do not pad routine completions with `not applicable` declarations.
 
 ## Boundary note
 

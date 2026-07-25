@@ -49,15 +49,16 @@ Load skills by trigger, not by inventory. First screen the work for risk, eviden
 
 ## Completion standard
 
-An agent is not done until it can name:
+Every completion report names:
 
 - the files it changed;
 - the change record or reasoning it used;
 - the evidence it ran;
-- the handoff, self-check, OPEX, or trust record it used, or why it did not need one;
-- the intent it declared and the decision rights or escalation it used for any critical action;
-- the gaps still open;
-- the boundary wording it checked.
+- the gaps still open.
+
+Add triggered details only when they apply: handoff, self-check, OPEX, or trust records when
+used or required; intent and decision rights for critical actions; and boundary wording for
+public claims. Do not pad routine completions with `not applicable` declarations.
 
 ## Boundary note
 

@@ -58,6 +58,11 @@ The next work should deepen that seam rather than add another generic approval f
    reviewer calibration, evidence sufficiency, disagreement, decision time, and cost.
 6. **Obtain external review.** Recruit software-assurance, empirical-SE, provenance, and AI-agent
    governance reviewers before making efficacy or venue-strength claims.
+7. **Harden decision custody beyond records.** Bind approval to canonical action, policy, evidence,
+   and V&V identities; issue scoped and expiring apply capabilities; consume or revoke them on use;
+   and reject evidence swaps, payload mutation, replay, stale evidence, close without required lineage,
+   and reuse of acceptance after reopen or supersession. The optional `decision-authority.md` and
+   `--strict-authority` check are the structural first slice, not cryptographic or runtime enforcement.
 
 ### Deliberate non-goals
 

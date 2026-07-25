@@ -84,6 +84,25 @@ independent signal that carries a trust-bearing gate still comes from protected 
 reproduction or diverse verification, and a reviewer with real authority — not from a line the
 actor wrote and linted.
 
+**Built opt-in check: evidence-conditioned decision authority.** For a Standard packet,
+`ng validate <packet> --strict-authority` requires `decision-authority.md` and checks that prepare,
+recommend, verify, validate, verdict, accept, apply, reopen, and close each appear exactly once; each
+right names a non-null evidence-basis authority; the evidence-basis and allocation tables each occur
+once inside their named sections; required episode, result, and reopening scalar fields occur once;
+evidence-adjudicative rights cite Evidence IDs declared in
+`verification.md`; coded source states use `observed`, `bounded_absence`, `unknown`, or `disputed`;
+finite negative claims name a finite scope and time boundary; the policy record declares authority,
+custodian, SHA-256 digest, and a calendar-valid, non-expired UTC validity under the validator host clock
+(or a concrete non-expiry basis); authority values use the declared vocabulary; and the derived
+structural result matches the apply allocation or a blocking override. Unknown, disputed, absent, or
+decisive self-check evidence cannot produce `agent_apply_structurally_clearable`, and
+`policy_result_indeterminate` never clears application. The check does not authenticate actors or the
+declared policy, qualify evidence, prove authorization or independence, bind an approval
+cryptographically to an action or effect, prevent replay, or establish effective human control. Those
+require protected enforcement and additional implementation outside the writable packet.
+
+For strict-authority records, equivalent Markdown H2 forms, including ATX headings with optional closing hashes or trailing HTML comments and Setext H2 headings, are normalized before required-section counting and extraction. HTML comments are removed, and backtick or tilde fenced examples with up to three leading spaces are ignored, before section, scalar, and table parsing. Raw HTML H2 tags are rejected. Scalar bullets recognize `-`, `+`, and `*` unordered-list markers with up to three leading spaces. This prevents visually conflicting declarations from evading uniqueness checks through the supported Markdown forms; it is not a general-purpose CommonMark parser.
+
 ---
 
 ## 4. Mode-specific validation gates
@@ -110,6 +129,7 @@ Required checks:
 - `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, and `ship.md` exist;
 - important claims have an evidence status or a named gap;
 - `--strict-custody`, when enabled, confirms that evidence IDs, custody roles, decisive status, matching five-axis profiles, classifications, and dispositions are structurally consistent;
+- `--strict-authority`, when enabled, confirms that the activated decision-right record is structurally consistent with declared verification evidence and its apply result;
 - trust decisions about a dependency, model, or API are scoped to how you will actually use it;
 - the release record names the baseline, the rollback, the monitoring, and the open risks.
 

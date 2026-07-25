@@ -16,6 +16,7 @@ Portable command prompt generated from `skills/reviewing-code-quality/SKILL.md`.
 
 - The change is a trivial, obvious edit with no effect on structure.
 - The task is only about whether the code works (use proving-claims and verification instead).
+- The deliverable is a produced artifact whose correctness lives in the rendered output — a figure, PDF, SVG, screenshot, build, or deployed response — rather than the source structure; use `verifying-final-artifacts` instead.
 - A quick fix has to ship to contain a live incident before a quality pass makes sense.
 
 ## Inputs

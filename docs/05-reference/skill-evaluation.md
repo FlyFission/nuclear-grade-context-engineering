@@ -265,6 +265,15 @@ If a skill changes decisions but says so only in vague prose, amend its receipt 
 - Should not trigger: I fixed a typo in my own service that nothing else consumes.
 - Should not trigger: Production is down right now and I need to stabilize it first.
 
+### `verifying-final-artifacts`
+
+- Should trigger: The agent keeps saying the book figures are fixed by reading the plotting code, but the exported PNGs still have overlapping labels; check the actual images.
+- Should trigger: We generate a PDF report from a template; confirm the rendered pages look right, not just that the source compiles.
+- Should trigger: The UI component looks correct in the JSX, but does the built page actually render without the button clipping off-screen?
+- Should trigger: The deploy config is valid; does the live endpoint actually return the expected body?
+- Should not trigger: Review this refactor of the data layer for standards drift; there is no rendered output involved.
+- Should not trigger: Map the safety claims in this change record to their evidence.
+
 ## Source-lineage note
 
 This evaluation prompt bank is an original Nuclear-grade artifact informed by public skill-authoring practice: concise skills, realistic trigger prompts, baseline-vs-skill comparison, and iterative trigger-description improvement. It does not create formal assurance, compliance, certification, safety, security, or regulatory adequacy.

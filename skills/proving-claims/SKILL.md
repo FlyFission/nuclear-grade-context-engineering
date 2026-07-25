@@ -75,12 +75,14 @@ Boundary: this skill builds the claim-to-evidence trace that feeds other decisio
 - "A reviewer can read the code." Review counts as evidence only when its scope and result are written down.
 - "The same agent checked itself." That can be a self-check, but it is not an independent check — the actor that made the change also wrote the proof, so the gate is downstream of the same mistake.
 - "The write-up says it passed." A confident narrative the actor authored is a claim, not evidence. Verify it; do not read it as the verification.
+- "The code that renders the figure is correct, so the figure is correct." When a load-bearing claim is about a *produced* artifact (a figure, PDF, screenshot, build, or deployed response), the evidence is a fresh observation of that artifact, not a reading of its generator — the generator is not the output. Route it to `verifying-final-artifacts`.
 - "We should not mention gaps." Hidden gaps lead to worse release decisions.
 
 ## Red Flags
 
 - The evidence status is missing.
 - A claim says "safe", "secure", "compliant", or "approved" with no scope around it.
+- A claim about a rendered or produced artifact is backed only by a reading of its generator, with no fresh observation of the output itself (route to `verifying-final-artifacts`).
 - The release decision ignores failed or deferred evidence.
 - The only evidence for the load-bearing claim is the actor's own narration, or the custody/profile disclosure is missing, internally inconsistent, or below the consequence-specific minimum.
 

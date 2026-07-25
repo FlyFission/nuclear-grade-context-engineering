@@ -150,3 +150,9 @@
 {"id": "reporting-shared-defects-trigger-03", "skill": "reporting-shared-defects", "prompt": "An OPEX review traced the incident to a defect in the shared eval harness other repos run.", "expected": "trigger"}
 {"id": "reporting-shared-defects-not-trigger-01", "skill": "reporting-shared-defects", "prompt": "I fixed a typo in my own service that nothing else consumes.", "expected": "not-trigger"}
 {"id": "reporting-shared-defects-not-trigger-02", "skill": "reporting-shared-defects", "prompt": "Production is down right now and I need to stabilize it first.", "expected": "not-trigger"}
+{"id": "verifying-final-artifacts-trigger-01", "skill": "verifying-final-artifacts", "prompt": "The chart in the report still has overlapping axis labels after the last fix -- check the actual rendered figure.", "expected": "trigger"}
+{"id": "verifying-final-artifacts-trigger-02", "skill": "verifying-final-artifacts", "prompt": "Confirm the exported PDF paginates correctly on every page before we send it.", "expected": "trigger"}
+{"id": "verifying-final-artifacts-trigger-03", "skill": "verifying-final-artifacts", "prompt": "The agent said the diagram is fixed but only read the plotting script. Verify the delivered output itself.", "expected": "trigger"}
+{"id": "verifying-final-artifacts-trigger-04", "skill": "verifying-final-artifacts", "prompt": "Regenerate the built UI screen and compare the screenshot against the reference design.", "expected": "trigger"}
+{"id": "verifying-final-artifacts-not-trigger-01", "skill": "verifying-final-artifacts", "prompt": "Refactor this helper function for readability.", "expected": "not-trigger"}
+{"id": "verifying-final-artifacts-not-trigger-02", "skill": "verifying-final-artifacts", "prompt": "Map these release claims to their supporting evidence.", "expected": "not-trigger"}

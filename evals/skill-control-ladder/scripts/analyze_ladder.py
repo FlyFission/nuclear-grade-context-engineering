@@ -36,7 +36,7 @@ from ladder_common import (
     ARMS,
     GENERIC_NUDGE,
     GRADED_PATH,
-    LADDER_DIR,
+    REPORT_PATH,
     TASKS,
     append_text,
     load_compressions,
@@ -271,8 +271,8 @@ def main() -> int:
         "  would inflate every skill's measured effect.\n"
     )
 
-    (LADDER_DIR / "REPORT.md").write_text("\n".join(L) + "\n")
-    print(f"Wrote {LADDER_DIR / 'REPORT.md'}")
+    REPORT_PATH.write_text("\n".join(L) + "\n")
+    print(f"Wrote {REPORT_PATH}")
     if primary:
         print(f"primary C4 vs C1: mean {primary['mean_diff']:+.3f}, "
               f"sign p={primary['p_sign']:.4f}, perm p={primary['p_perm']:.4f}, "

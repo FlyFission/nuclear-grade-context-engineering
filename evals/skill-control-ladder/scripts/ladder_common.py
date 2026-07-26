@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
 from pathlib import Path
 
@@ -28,11 +29,44 @@ SKILLS_ROOT = REPO_ROOT / "skills"
 
 PILOT_DATA = LADDER_DIR.parent / "skill-benchmark-pilot" / "data" / "all-skills-pilot"
 PILOT_RUNS = PILOT_DATA / "runs"
-TASKS = json.loads((PILOT_DATA / "all_skill_tasks.json").read_text())
 
-RUNS_DIR = LADDER_DIR / "data" / "runs"
+# Scenario pools. `v1` is the pilot's original pool, inherited unchanged so its
+# 150 valid transcripts stay adoptable. `hard` is the pre-calibrated replacement
+# pool for the scenarios where v1 hit the ceiling and could not measure anything.
+#
+# Selected by the NG_LADDER_POOL environment variable so that run/grade/analyze
+# all read the same pool from one place; passing it per-script would let a run
+# and its grading silently disagree about which scenarios they refer to.
+POOL = os.environ.get("NG_LADDER_POOL", "v1")
+_POOLS = {
+    "v1": {
+        "tasks": PILOT_DATA / "all_skill_tasks.json",
+        "runs": LADDER_DIR / "data" / "runs",
+        "graded": LADDER_DIR / "data" / "graded.json",
+        "report": LADDER_DIR / "REPORT.md",
+        # Only v1 shares the pilot's scenarios, so only v1 may adopt its transcripts.
+        "adopt_pilot": True,
+    },
+    "hard": {
+        "tasks": LADDER_DIR / "data" / "hard-pool" / "selected_tasks.json",
+        "runs": LADDER_DIR / "data" / "hard-pool" / "runs",
+        "graded": LADDER_DIR / "data" / "hard-pool" / "graded.json",
+        "report": LADDER_DIR / "REPORT-hard.md",
+        "adopt_pilot": False,
+    },
+}
+if POOL not in _POOLS:
+    raise SystemExit(f"unknown NG_LADDER_POOL={POOL!r}; expected one of {sorted(_POOLS)}")
+
+_CFG = _POOLS[POOL]
+TASKS_PATH = _CFG["tasks"]
+TASKS = json.loads(TASKS_PATH.read_text()) if TASKS_PATH.exists() else {}
+RUNS_DIR = _CFG["runs"]
+GRADED_PATH = _CFG["graded"]
+REPORT_PATH = _CFG["report"]
+ADOPT_PILOT = _CFG["adopt_pilot"]
+
 COMPRESSIONS_PATH = LADDER_DIR / "data" / "compressed_skills.json"
-GRADED_PATH = LADDER_DIR / "data" / "graded.json"
 
 # Held identical to the skill-benchmark-pilot all-skills run so that its cached
 # C0/C4 transcripts remain valid members of this ladder rather than a separate,
@@ -76,7 +110,88 @@ ARM_LABELS = {
 # Arms whose transcripts are byte-identical in construction to an existing
 # skill-benchmark-pilot condition, and may therefore be reused instead of
 # re-spent -- but only when the recorded input-spec hash still matches.
-REUSABLE_FROM_PILOT = {"C0_bare": "without_skill", "C4_full_skill": "with_skill"}
+REUSABLE_FROM_PILOT = (
+    {"C0_bare": "without_skill", "C4_full_skill": "with_skill"} if ADOPT_PILOT else {}
+)
+
+
+GRADER_MODEL = "claude-haiku-4-5-20251001"
+# Bump when the grading prompt's wording changes, so a wording-only edit
+# invalidates cached rows the same way a criteria or model change already does.
+PROMPT_VERSION = "v1"
+
+_GRADE_SCHEMA = json.dumps({
+    "type": "object",
+    "properties": {
+        "meets_criteria": {"type": "string", "enum": ["YES", "PARTIAL", "NO"]},
+        "quote": {"type": "string"},
+    },
+    "required": ["meets_criteria", "quote"],
+})
+
+# Wording frozen to match skill-benchmark-pilot/scripts/grade_pilot_all.py. Every
+# consumer (final grading, candidate screening) calls THIS function rather than
+# its own copy: a screening pass that graded even slightly differently from the
+# final pass would select scenarios against one standard and measure them against
+# another, and the resulting difficulty calibration would be meaningless.
+_GRADE_PROMPT = (
+    "You are grading a response against ONE specific pass criterion. "
+    "Do not reward general competence, tone, or thoroughness — check ONLY whether "
+    "this exact criterion is explicitly satisfied.\n\n"
+    "Pass criterion:\n{criteria}\n\n"
+    "Response to grade:\n---\n{text}\n---\n\n"
+    "Answer YES only if the criterion is clearly and explicitly met, "
+    "PARTIAL if it is hinted at but not explicit or is materially incomplete, "
+    "NO if it is absent."
+)
+
+
+def blind_grade(criteria: str, text: str) -> dict:
+    """Grade one response against one criterion. The grader is never told the
+    arm, the skill, or that a comparison is running -- it sees only these two
+    strings."""
+    import subprocess  # local: keeps this module import-safe for non-running uses
+
+    cmd = [
+        "claude", "-p", _GRADE_PROMPT.format(criteria=criteria, text=text),
+        "--output-format", "json",
+        "--model", GRADER_MODEL,
+        "--safe-mode",
+        "--tools", "",
+        "--no-session-persistence",
+        "--max-budget-usd", "0.20",
+        "--json-schema", _GRADE_SCHEMA,
+    ]
+    try:
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+        return json.loads(json.loads(proc.stdout.strip())["result"])
+    except Exception as e:  # noqa: BLE001 -- surfaced as an ERROR verdict row
+        return {"meets_criteria": "ERROR", "quote": f"{type(e).__name__}: {e}"[:200]}
+
+
+def run_subject(scenario: str, appended: str, cwd: Path) -> dict:
+    """One subject-model call under the ladder's fixed harness configuration."""
+    import subprocess
+
+    cwd.mkdir(parents=True, exist_ok=True)
+    cmd = [
+        "claude", "-p",
+        "--output-format", "json",
+        "--model", MODEL,
+        "--tools", TOOLS,
+        "--max-budget-usd", MAX_BUDGET_USD,
+        *HARNESS_FLAGS,
+    ]
+    if appended:
+        cmd += ["--append-system-prompt", appended]
+    try:
+        proc = subprocess.run(cmd, input=scenario, capture_output=True, text=True,
+                              cwd=str(cwd), timeout=180)
+        return json.loads(proc.stdout.strip())
+    except subprocess.TimeoutExpired:
+        return {"type": "error", "error": "timeout"}
+    except Exception as e:  # noqa: BLE001
+        return {"type": "error", "error": f"{type(e).__name__}: {e}"}
 
 
 def read_skill(skill: str) -> str:

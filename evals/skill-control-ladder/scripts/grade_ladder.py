@@ -16,33 +16,21 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from ladder_common import (
     ARMS,
     GRADED_PATH,
+    GRADER_MODEL,
     MAX_WORKERS,
+    PROMPT_VERSION,
     TASKS,
     TRIALS,
+    blind_grade,
     response_text,
     run_path,
 )
-
-GRADER_MODEL = "claude-haiku-4-5-20251001"
-# Bump when the grading prompt's wording changes, so a wording-only edit
-# invalidates cached rows the same way a criteria or model change already does.
-PROMPT_VERSION = "v1"
-
-SCHEMA = json.dumps({
-    "type": "object",
-    "properties": {
-        "meets_criteria": {"type": "string", "enum": ["YES", "PARTIAL", "NO"]},
-        "quote": {"type": "string"},
-    },
-    "required": ["meets_criteria", "quote"],
-})
 
 
 def grading_spec_hash(skill: str) -> str:
@@ -52,31 +40,7 @@ def grading_spec_hash(skill: str) -> str:
 
 
 def grade(skill: str, text: str) -> dict:
-    prompt = (
-        "You are grading a response against ONE specific pass criterion. "
-        "Do not reward general competence, tone, or thoroughness — check ONLY whether "
-        "this exact criterion is explicitly satisfied.\n\n"
-        f"Pass criterion:\n{TASKS[skill]['pass_criteria']}\n\n"
-        f"Response to grade:\n---\n{text}\n---\n\n"
-        "Answer YES only if the criterion is clearly and explicitly met, "
-        "PARTIAL if it is hinted at but not explicit or is materially incomplete, "
-        "NO if it is absent."
-    )
-    cmd = [
-        "claude", "-p", prompt,
-        "--output-format", "json",
-        "--model", GRADER_MODEL,
-        "--safe-mode",
-        "--tools", "",
-        "--no-session-persistence",
-        "--max-budget-usd", "0.20",
-        "--json-schema", SCHEMA,
-    ]
-    try:
-        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
-        return json.loads(json.loads(proc.stdout.strip())["result"])
-    except Exception as e:  # noqa: BLE001 -- surfaced as an ERROR verdict row
-        return {"meets_criteria": "ERROR", "quote": f"{type(e).__name__}: {e}"[:200]}
+    return blind_grade(TASKS[skill]["pass_criteria"], text)
 
 
 def load_cache() -> dict:

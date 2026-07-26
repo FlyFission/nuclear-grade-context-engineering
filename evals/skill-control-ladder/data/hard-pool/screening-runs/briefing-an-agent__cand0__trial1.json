@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 51401,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0944723,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 4895,
+    "cache_read_input_tokens": 14841,
+    "output_tokens": 3986,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4895,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1476,
+        "cache_read_input_tokens": 8561,
+        "cache_creation_input_tokens": 2614,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2614
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 743,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0008479999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 3986,
+      "cacheReadInputTokens": 14841,
+      "cacheCreationInputTokens": 4895,
+      "webSearchRequests": 0,
+      "costUSD": 0.0936243,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No repo files here, so I'll draft based on what you've described. Before finalizing, there's a real gap I need to flag.\n\n**The core problem:** `npm publish` and `twine upload` push to the *public* registries \u2014 there's no built-in \"early access only\" audience on either. If the agent runs those commands as literally described, 2.4.0 goes out to everyone, not just design partners, and that's not cleanly reversible:\n- **PyPI uploads are permanent** \u2014 you can never re-upload version 2.4.0 again, even if you yank it.\n- **npm unpublish is restricted** after 24-72 hrs or once there's meaningful download volume \u2014 you'd need to file a support ticket to fully undo it.\n\nSo \"publish access to npm/PyPI, run npm publish/twine upload\" and \"design-partners-only, everyone else stays on 2.3.0\" directly conflict as written. This is the one thing that's genuinely *not* a repeat of 2.3.0's playbook, even though it might feel like a small tweak.\n\nStandard fixes, pick one before I lock the brief:\n1. **npm dist-tag + PyPI pre-release version** (recommended): `npm publish --tag early-access` (doesn't touch `latest`, so plain `npm install` still gets 2.3.0; partners install via `sdk@early-access`) + publish PyPI as `2.4.0rc1` or similar (won't be picked up by default resolvers unless pinned). Cheap, uses standard tooling, easy to promote to full `latest` later.\n2. **Private/restricted feed** for design partners (separate index, GitHub Packages, etc.) instead of public registries at all \u2014 cleaner isolation, more setup.\n\nAlso flagging: Priya's approval this morning was presumably on the retry-backoff diff \u2014 worth confirming it also covers this early-access distribution approach, since that's new since 2.3.0. And I'd scope the agent's publish credentials to package-specific automation tokens rather than full account-level npm/PyPI access, given it's running unattended tonight.\n\nWhich distribution mechanism do you want \u2014 option 1, or something else? I'll drop it into the brief and have the rest ready now:\n\n---\n\n## Kickoff Brief \u2014 SDK v2.4.0 Release Agent\n\n**Objective:** Build, test, and publish v2.4.0 (retry-backoff tuning only) to design-partner early-access channel. Do not promote to general `latest`/default audience.\n\n**Preconditions (verify, don't assume):**\n- [ ] CI green on `main`\n- [ ] Priya's approval covers both the retry-backoff diff *and* the early-access-only distribution plan\n- [ ] `package.json` version = 2.4.0 (confirmed); verify PyPI-side version file (`setup.py`/`pyproject.toml`) also reads 2.4.0 before build\n- [ ] No other diffs merged to `main` since Priya's review (confirm scope hasn't drifted)\n\n**Steps:**\n1. Checkout `main` at current HEAD, confirm clean working tree.\n2. Run full test suite. **Stop and report \u2014 do not proceed \u2014 on any failure.**\n3. Build packages (npm + Python).\n4. Update `CHANGELOG.md`: add 2.4.0 entry, retry-backoff tuning only, note early-access/design-partner scope of this release.\n5. Publish:\n   - npm: `npm publish --tag early-access` *(do not touch `latest`)*\n   - PyPI: publish as `2.4.0` [or pre-release version, per your call above] via `twine upload`\n6. Verify post-publish: confirm `npm view <pkg> dist-tags` shows `latest` still at 2.3.0 and `early-access` at 2.4.0.\n7. Report back: test results, changelog diff, publish confirmation, and exact install instructions to hand to design partners (e.g., `npm install <pkg>@early-access`).\n\n**Stop conditions:** any test failure, any build failure, any mismatch between expected and actual version strings, or any ambiguity about publish scope \u2014 halt and escalate, do not publish.\n\n**Credentials:** scoped automation tokens for npm/PyPI (this package only), not personal account-level access.\n\n---\n\nConfirm the distribution mechanism (or tell me your preferred one) and I'll finalize.",
+  "ttft_ms": 30640,
+  "ttft_stream_ms": 1454,
+  "time_to_request_ms": 123,
+  "time_to_request_from_spawn_ms": 437664,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078210620.6172,
+  "type": "result",
+  "duration_ms": 51320,
+  "uuid": "08916822-706b-474e-b517-f0fffee04147",
+  "_spec": "f63cd9e2c5b49650ada7f9ba7c86aed314b5ddfcf7601a2666053b036f045f45",
+  "_skill": "briefing-an-agent",
+  "_cand": 0,
+  "_trial": 1
+}

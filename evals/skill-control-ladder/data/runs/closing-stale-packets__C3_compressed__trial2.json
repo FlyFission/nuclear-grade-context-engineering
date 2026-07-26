@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 18775,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.047000299999999995,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2883,
+    "cache_read_input_tokens": 24021,
+    "output_tokens": 1444,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2883,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1187,
+        "cache_read_input_tokens": 8993,
+        "cache_creation_input_tokens": 170,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 170
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 748,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0008179999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1444,
+      "cacheReadInputTokens": 24021,
+      "cacheCreationInputTokens": 2883,
+      "webSearchRequests": 0,
+      "costUSD": 0.046182299999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Since this repo directory doesn't actually contain the packet files (nothing found here), I can't run `ng status` or edit the packet myself \u2014 but based on what you've described, here's what should happen:\n\n**`add-dark-mode-toggle` \u2192 close it, don't delete it.**\n\nIt's not empty scaffolding with nothing to learn \u2014 there's a real rationale (explicit team decision to defer, design hadn't finalized the palette) that's worth preserving for anyone who revisits dark mode later. Deleting would erase that context; leaving it as `scaffold` is the noise you want gone. Add a `NUCLEAR-GRADE-CLOSED:` line to the packet, something like:\n\n```\nNUCLEAR-GRADE-CLOSED: Deferred \u2014 team decided not to pursue dark mode this quarter (design hadn't finalized color palette). No code merged. Revisit once palette is finalized. Decided in team meeting [date]; closed by benjaminhuffer1@gmail.com.\n```\n\nOne thing I can't fill in for you: who should be recorded as the decider \u2014 you, or whoever ran that meeting? Use whichever name/role makes the decision traceable.\n\nFor `refactor-auth-flow`, leave it alone \u2014 it's actively owned and not stale, so no action needed there; it'll clear to `ok` once your teammate adds the missing file. `bump-lodash-version` is already `ok`. Once the dark-mode packet is closed, your status report should show `ok` / `closed` / `invalid (in progress)` with no real noise left.",
+  "ttft_ms": 1372,
+  "ttft_stream_ms": 1073,
+  "time_to_request_ms": 42,
+  "time_to_request_from_spawn_ms": 602248,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025479908.2625,
+  "type": "result",
+  "duration_ms": 19300,
+  "uuid": "6fb1e7bb-ae9e-4fbb-95c0-810bc3249e50",
+  "_skill": "closing-stale-packets",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "9158a8eeba31bd6599daae93ed82fc9b643498d2a53280ab59cdac230fb4ad66"
+}

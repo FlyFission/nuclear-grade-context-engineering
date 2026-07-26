@@ -1,0 +1,95 @@
+{
+  "is_error": false,
+  "duration_api_ms": 20756,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0517708,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 3445,
+    "cache_read_input_tokens": 32746,
+    "output_tokens": 1362,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3445,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 502,
+        "cache_read_input_tokens": 9144,
+        "cache_creation_input_tokens": 581,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 581
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 748,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000823,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 1362,
+      "cacheReadInputTokens": 32746,
+      "cacheCreationInputTokens": 3445,
+      "webSearchRequests": 0,
+      "costUSD": 0.050947799999999994,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [
+    {
+      "tool_name": "Grep",
+      "tool_use_id": "toolu_01JzgjYv9aeDow1Un3QQdF9F",
+      "tool_input": {
+        "pattern": "packet",
+        "path": "/home/user/nuclear-grade-context-engineering/evals/skill-control-ladder/data/work",
+        "output_mode": "files_with_matches",
+        "head_limit": 20
+      }
+    }
+  ],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't have search access outside this directory, and this working directory itself has no files in it (no packet folder or tracking tool present), so I can't inspect the actual packet contents directly \u2014 I'm going on your description.\n\nBased on what you've told me: `add-dark-mode-toggle` is genuinely dead, not just stale. The team explicitly decided against it last month, nothing from it ever merged, and it's still just placeholder scaffolding. That's different from `refactor-auth-flow`, which is invalid-tagged but actively being worked on \u2014 that one just needs its teammate to finish adding the missing file; it shouldn't be touched.\n\nFor `add-dark-mode-toggle`, I'd delete the packet folder outright rather than leave it around:\n\n- It has no merged work to preserve.\n- \"Scaffold with placeholder text\" means there's no real content to archive for later reference.\n- If you want a paper trail for the decision, the team meeting notes (or wherever that decision was recorded) already serve that purpose \u2014 you don't need to keep a stale folder as a substitute for that record.\n\nIf you'd rather keep a trace of it instead of deleting (e.g., in case the color-palette work resumes later and someone wants the sketch as a starting point), the alternative is to move it out of the scanned directory (e.g., into an `archive/` folder or a git branch) so the status check stops flagging it, without losing the content.\n\nWant me to locate the actual packets directory (I'd need permission to browse outside this folder) so I can do the removal, or do you want to handle the delete/move yourself?",
+  "ttft_ms": 2597,
+  "ttft_stream_ms": 1859,
+  "time_to_request_ms": 46,
+  "time_to_request_from_spawn_ms": 577526,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025455818.486,
+  "type": "result",
+  "duration_ms": 21568,
+  "uuid": "489b252c-81dd-48ce-95d4-020da5e728e6",
+  "_skill": "closing-stale-packets",
+  "_arm": "C1_generic_nudge",
+  "_trial": 2,
+  "_input_spec_sha256": "64e5a906a5e816e3e9dd1b7900262f854498c1721b33630e0afc0e709052810d"
+}

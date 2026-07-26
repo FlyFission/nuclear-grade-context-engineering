@@ -1,0 +1,81 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 27027,
+  "duration_api_ms": 25689,
+  "ttft_ms": 7956,
+  "ttft_stream_ms": 2500,
+  "time_to_request_ms": 73,
+  "time_to_request_from_spawn_ms": 619532,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121182678.5688,
+  "num_turns": 1,
+  "result": "A one-line diff doesn't mean one-line risk. The line count measures the code change; the record should measure the blast radius, and \"autonomous agent that approves refunds with no human in the loop\" is high-stakes regardless of diff size. I'd use **Standard mode**, not Quick \u2014 the tradeoff is it takes longer than one sentence, but Quick's `risk.md`+`proof.md` can't carry the behavioral-equivalence evidence a skeptical reviewer will actually want in six months (Quick is for changes where \"did it work\" is a single obvious check; here \"did it work\" hides \"did the new model approve/deny refunds the same way, including edge cases and adversarial prompts\").\n\nWhat a Standard record needs to say, specifically for this swap:\n\n- **`risk.md`** \u2014 Why this is high-stakes despite being a config change: autonomous financial decision-making, no human approval step, potential for cost/behavior drift between providers. State the mode (Standard) and why Quick was rejected.\n- **`basis.md`** \u2014 What \"safe\" means for this agent: the refund policy/guardrails the model must enforce, any prompt/system instructions, rate/amount limits, and what specifically differs between Provider A and B (context window, safety tuning, instruction-following behavior) that could change approval decisions.\n- **`plan.md`** \u2014 The rollout plan: shadow mode or canary percentage before full cutover, rollback trigger (e.g., revert the model ID if approval-rate or dollar-amount anomalies exceed X%), and who signs off.\n- **`trace.md`** \u2014 Link each claim (\"Provider B approves refunds at the same rate/pattern as Provider A\") to the actual evidence (eval dataset results, before/after approval-rate comparison, red-team/adversarial prompt tests for refund abuse).\n- **`verification.md`** \u2014 The actual proof run: a labeled eval set of historical refund requests (including edge cases \u2014 high-dollar, fraud-flagged, borderline-policy cases) replayed against both models, with pass/fail/gap status per category, not just \"it responded.\"\n- **`ship.md`** \u2014 The release decision: go/no-go, monitoring plan post-launch (approval rate, dollar volume, false-approve rate), and rollback owner/procedure.\n\nThe failure mode to avoid: \"swapped model per cost review\" gives a future reviewer no way to tell if anyone checked whether Provider B approves refunds it shouldn't. Want me to run `python tools/ng.py new <slug> --mode standard` and draft these files with you?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0514654,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 3540,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 1895,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3540,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 1895,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 3540,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3540
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 656,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000736,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 1895,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 3540,
+      "webSearchRequests": 0,
+      "costUSD": 0.0507294,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "2c216fac-b84a-47be-86e7-a44bbbe5520d",
+  "_skill": "creating-change-records",
+  "_condition": "with_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "d34833729a77f62c818b6c95866bf607e2d7312595419bce930936a6ccbfd925",
+  "_arm": "C4_full_skill",
+  "_reused_from": "evals/skill-benchmark-pilot/data/all-skills-pilot/runs/creating-change-records__with_skill__trial2.json"
+}

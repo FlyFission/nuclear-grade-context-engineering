@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 26860,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.045572999999999995,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2172,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1994,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2172,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1994,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2172,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2172
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 656,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000741,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1994,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2172,
+      "webSearchRequests": 0,
+      "costUSD": 0.044832,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "For an agent that autonomously approves customer refunds, \"swapped model per cost review\" is not an adequate record \u2014 a one-sentence commit message can't tell a future reviewer whether the swap changed approval behavior, only that someone changed a string. The risk isn't the code diff, it's the behavioral diff in a system making unsupervised financial decisions.\n\nWhat you actually need is a short **model change record** (a doc/ADR linked from the PR, or a structured PR description) containing:\n\n**1. Exact identity of what changed**\n- Old model ID/version and new model ID/version, pinned precisely (not \"latest\" \u2014 providers silently update models behind stable-sounding names)\n- Date of swap, who approved it\n\n**2. Why, with the actual numbers**\n- The cost data that motivated it (not just \"cost review\" \u2014 $/1k requests before/after, projected savings)\n- Any other stated benefits (latency, capability)\n\n**3. Evidence the new model behaves safely for this specific task**\n- Results of running the new model against a held-out eval set of past refund decisions (ideally including edge cases: fraud attempts, ambiguous policy cases, adversarial/prompt-injection attempts, boundary dollar amounts)\n- Side-by-side comparison of approve/deny rates and dollar amounts approved vs. the old model on the same inputs\n- Any known differences in refusal behavior, instruction-following, or susceptibility to manipulation between the two providers\n\n**4. Autonomy and blast radius at time of swap**\n- What the agent can do unsupervised (max refund amount, any human-in-the-loop threshold) \u2014 this defines how bad a silent regression could be\n- Whether the swap changes that autonomy envelope at all\n\n**5. Rollback and monitoring plan**\n- How fast you can revert if something's wrong\n- What metrics are watched post-swap (approval rate shift, total $ approved, anomaly/fraud flags, customer disputes) and for how long before it's considered \"safe\"\n\n**6. Sign-off from the right owner**\n- An engineering approval isn't sufficient authorization for a change to a financial-decision system \u2014 whoever owns fraud/financial risk should be aware and have signed off, not just be informed after the fact via a Slack message\n\nThe bar isn't heavy process \u2014 this can be a half-page doc plus a linked eval run \u2014 but \"one line diff, one sentence PR\" gives a future reviewer no way to distinguish \"we tested this and it's fine\" from \"we assumed it's fine because the diff was small.\" If you want, I can help you draft a template for this record or find where in the repo the eval harness for the refund agent lives so you can actually generate the before/after comparison.",
+  "ttft_ms": 15661,
+  "ttft_stream_ms": 1070,
+  "time_to_request_ms": 47,
+  "time_to_request_from_spawn_ms": 610426,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025489286.5444,
+  "type": "result",
+  "duration_ms": 27710,
+  "uuid": "9b3dd973-7952-4ee6-8550-2d62ca1eeb59",
+  "_skill": "creating-change-records",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "4546ee653a44bd61beba656a58752ac4f42e8dd9893c59e7ee4c436cd0c43067"
+}

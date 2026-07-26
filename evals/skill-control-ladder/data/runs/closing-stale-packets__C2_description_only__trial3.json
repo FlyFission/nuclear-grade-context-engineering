@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 22791,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0483013,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2671,
+    "cache_read_input_tokens": 23681,
+    "output_tokens": 1622,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2671,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1399,
+        "cache_read_input_tokens": 8830,
+        "cache_creation_input_tokens": 121,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 121
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 748,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000823,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1622,
+      "cacheReadInputTokens": 23681,
+      "cacheCreationInputTokens": 2671,
+      "webSearchRequests": 0,
+      "costUSD": 0.0474783,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The directory here is empty, so I can't run the actual `ng` command \u2014 I'll answer based on what you've described.\n\n**`add-dark-mode-toggle`: close it, don't delete it.** It's genuinely abandoned \u2014 you've confirmed the decision (team explicitly deprioritized dark mode this quarter pending the color palette) and confirmed nothing from it ever merged, so there's no in-progress work to protect. But deleting it would erase the record of *why* it stopped, which is worth keeping in case dark mode comes back up next quarter and someone wonders what happened to this packet or wants to pick up where you left off. Close it with a rationale like:\n\n> Paused \u2014 team decided not to pursue dark mode this quarter (design hasn't finalized the color palette). No merged work. Revisit if/when palette is finalized.\n\nThat gets it out of `scaffold` limbo into an honest closed state, and the status report stops flagging it as stale noise.\n\n**Leave `refactor-auth-flow` alone.** It's `invalid` only because of a missing file, but your teammate is actively working on it \u2014 that's not a stale/abandoned packet, it's normal in-progress work. Closing, completing, or deleting it would step on their work. The `invalid` tag there isn't \"noise\" to clean up, it's just the tool correctly noting a file is still pending \u2014 that'll resolve itself when they add it.\n\nSo: close one, touch nothing on the other, and `bump-lodash-version` needs no action since it's already `ok`.",
+  "ttft_ms": 1768,
+  "ttft_stream_ms": 982,
+  "time_to_request_ms": 42,
+  "time_to_request_from_spawn_ms": 597497,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025476268.6702,
+  "type": "result",
+  "duration_ms": 23441,
+  "uuid": "a80d94d6-c54f-49d2-a8bb-1c68fc71c903",
+  "_skill": "closing-stale-packets",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "46fb51598673e8e765a801adeea814bb1b035054f2d38133b5487d736eb7770d"
+}

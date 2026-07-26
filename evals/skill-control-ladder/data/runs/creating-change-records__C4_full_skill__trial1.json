@@ -1,0 +1,81 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 25408,
+  "duration_api_ms": 25386,
+  "ttft_ms": 16877,
+  "ttft_stream_ms": 1581,
+  "time_to_request_ms": 56,
+  "time_to_request_from_spawn_ms": 619117,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121182390.4297,
+  "num_turns": 1,
+  "result": "A one-line diff can still be a high-stakes change \u2014 the blast radius here is \"which model autonomously decides to hand out real money,\" and Provider A vs B can differ meaningfully in reasoning, refusal behavior, and susceptibility to prompt injection even with identical prompts. I'd treat this as **Standard mode**, not Quick, because it's an autonomous agent, financially consequential, and hard to reverse once refunds are issued \u2014 the main tradeoff is that doing it properly costs you an eval run today instead of a one-sentence PR description.\n\nConcretely, a skeptical reviewer six months from now would want to see:\n\n- **`risk.md`** \u2014 states this is an autonomous, money-moving agent, so mode = standard regardless of diff size; names what actually changes (model behavior, not just config).\n- **`basis.md`** \u2014 what must still hold true after the swap: same approval accuracy/precision, same guardrails (limits, fraud checks, escalation triggers) still fire, no new susceptibility to prompt injection or jailbreak-style refund requests, latency/cost within bounds.\n- **`plan.md`** \u2014 the eval plan: run a fixed held-out set of real (anonymized) past refund cases through both models and diff the decisions, with extra weight on edge cases and adversarial inputs; include a rollback plan (revert the model ID string).\n- **`trace.md`** \u2014 links each claim (\"approval precision unchanged,\" \"guardrails preserved\") to the actual evidence \u2014 eval run output, logs, dashboard links \u2014 not just an assertion.\n- **`verification.md`** \u2014 plain pass/fail per exit criterion (false-approval rate, refusal behavior, latency, cost).\n- **`ship.md`** \u2014 who approved the release, the rollback trigger condition, and the post-ship monitoring window.\n\nIf you want, I can scaffold this with `ng.py new` and fill in what we already know \u2014 but the eval run comparing the two providers on real refund cases is the piece that actually has to happen before shipping, not after.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0509904,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 3540,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 1863,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3540,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 1863,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 3540,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3540
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 656,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000741,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 1863,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 3540,
+      "webSearchRequests": 0,
+      "costUSD": 0.0502494,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "d6acaf72-b755-4d9d-a205-7ef738683b1f",
+  "_skill": "creating-change-records",
+  "_condition": "with_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "d34833729a77f62c818b6c95866bf607e2d7312595419bce930936a6ccbfd925",
+  "_arm": "C4_full_skill",
+  "_reused_from": "evals/skill-benchmark-pilot/data/all-skills-pilot/runs/creating-change-records__with_skill__trial1.json"
+}

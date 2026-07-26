@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 23795,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0456172,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2553,
+    "cache_read_input_tokens": 14904,
+    "output_tokens": 1673,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2553,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1514,
+        "cache_read_input_tokens": 8624,
+        "cache_creation_input_tokens": 209,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 209
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000721,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1673,
+      "cacheReadInputTokens": 14904,
+      "cacheCreationInputTokens": 2553,
+      "webSearchRequests": 0,
+      "costUSD": 0.0448962,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 this isn't ready to ship. Green CI and the author's own \"it's ready\" statement aren't evidence of production-readiness for a primary-database engine migration with index changes; they only tell you the code compiles and passes tests, not that the migration is safe to run against live data. Two concrete blockers:\n\n1. **No rollback plan.** A DB engine upgrade (PG12\u219215) plus index changes is close to irreversible once applied to production \u2014 if something goes wrong post-deploy (query planner regressions from new PG15 defaults, index corruption, replication issues), you need a tested path back. \"We'll figure it out if it breaks\" is not a rollback plan for a primary user database.\n2. **No migration-specific monitoring.** Without new alerts (query latency, error rates, replication lag, index bloat/scan stats), you won't know quickly if the migration degraded something \u2014 you'll find out from user reports instead.\n\n**Verdict: BLOCK** \u2014 do not merge/deploy this afternoon until:\n- A rollback script/procedure exists and has been dry-run tested (e.g., against a staging snapshot).\n- Monitoring/alerts are in place for the specific risk surface of this change (slow queries, index usage, connection errors, replication health).\n- Someone other than the migration author has verified behavior on a staging environment with production-like data volume, since the only current confirmation is the author's own summary.\n\n**Apply-clearance: HOLD.** Even once the above is fixed, treat this as a separate go/no-go \u2014 confirm deploy window, who's on call, and that rollback is executable within the freeze/maintenance window before pulling the trigger.\n\nWant me to draft a rollback script skeleton and a monitoring checklist for this migration?",
+  "ttft_ms": 3745,
+  "ttft_stream_ms": 2240,
+  "time_to_request_ms": 40,
+  "time_to_request_from_spawn_ms": 464597,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025343507.2866,
+  "type": "result",
+  "duration_ms": 24536,
+  "uuid": "4fcd7b4e-f9eb-4688-a1d5-a7fe9656659a",
+  "_skill": "checking-release-readiness",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "ce61a7db835d338265dde44d389788f65737eaf670032e880cd4ac5a11c3f07d"
+}

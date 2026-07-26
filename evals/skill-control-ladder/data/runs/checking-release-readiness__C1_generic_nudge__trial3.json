@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 24253,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.045160900000000004,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2510,
+    "cache_read_input_tokens": 14693,
+    "output_tokens": 1664,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2510,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1391,
+        "cache_read_input_tokens": 8413,
+        "cache_creation_input_tokens": 377,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 377
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000721,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1664,
+      "cacheReadInputTokens": 14693,
+      "cacheCreationInputTokens": 2510,
+      "webSearchRequests": 0,
+      "costUSD": 0.044439900000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 this shouldn't ship as-is. CI green and the author's sign-off tell you the code passes tests, not that a production database migration is safe to run. For a Postgres 12\u219215 upgrade with index changes, the gaps you listed aren't minor:\n\n**Blockers:**\n- **No rollback plan** \u2014 major PG version upgrades aren't cleanly reversible by reverting a commit. If something goes wrong post-migration, what's the actual backout path (verified backup restore? logical replication fallback to a PG12 standby?)? This needs to be written and tested *before* merge, not improvised during an incident.\n- **No monitoring/alerts** \u2014 you're changing indexes and the engine version simultaneously, both of which can silently degrade query plans, cause lock contention, or blow up latency. Deploying without alerts on query latency/error rate, lock waits, and replication lag means you'll find out from users, not dashboards.\n\n**Also worth confirming before merge:**\n- Was this migration tested against production-scale data/volume? CI fixtures rarely reveal how long `CREATE INDEX` takes or whether it locks writes on a real-size table (are the new indexes built `CONCURRENTLY`?).\n- Has a pre-migration backup been verified as restorable recently \u2014 not just that backups exist?\n- Is there independent review/DBA sign-off, or just the author's own assessment?\n- Is there a maintenance window and on-call coverage for the deploy, given there's no alerting safety net yet?\n\nRecommendation: treat \"rollback plan + monitoring\" as merge-blocking, not follow-up work. Push the deploy until those exist \u2014 this is a primary user database, and going in without a backout plan is the kind of thing that turns a bug into an outage.",
+  "ttft_ms": 2470,
+  "ttft_stream_ms": 994,
+  "time_to_request_ms": 98,
+  "time_to_request_from_spawn_ms": 452829,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025331308.7786,
+  "type": "result",
+  "duration_ms": 23818,
+  "uuid": "7974fcc7-ad3d-4541-8bdc-3f8585e08580",
+  "_skill": "checking-release-readiness",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "334fd38245045cb1c8f1ab5071e243d1d014f5d8412914f5a0c94c257f8becde"
+}

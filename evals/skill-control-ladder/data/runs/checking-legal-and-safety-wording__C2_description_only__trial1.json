@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 18404,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.040892200000000004,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2326,
+    "cache_read_input_tokens": 14664,
+    "output_tokens": 1456,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2326,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1288,
+        "cache_read_input_tokens": 8384,
+        "cache_creation_input_tokens": 222,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 222
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 615,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000685,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1456,
+      "cacheReadInputTokens": 14664,
+      "cacheCreationInputTokens": 2326,
+      "webSearchRequests": 0,
+      "costUSD": 0.0402072,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No, this doesn't work as-is \u2014 it has three claims that overreach what the facts actually support:\n\n**1. \"MIT license, so it's open and safe for anyone to use in production payment systems\"**\nThis conflates license permissiveness with safety. The MIT license does the opposite of what's implied \u2014 it includes an explicit warranty disclaimer (\"THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND\"). Saying the license makes it \"safe\" contradicts the license text itself and could read as an implied warranty a court might hold you to.\n\n**2. \"It has passed all our internal tests\"**\nAn absolute, unqualified claim (\"all\") that's hard to defend if any bug or CVE ever surfaces. If it's true, it's better stated specifically (e.g., what the test suite covers) rather than as a blanket guarantee.\n\n**3. \"fully compliant with PCI security standards\"**\nThis is the biggest issue. PCI DSS compliance isn't something a standalone library can claim for itself \u2014 compliance is assessed for an entire system/implementation, typically via a QSA audit, and results in an actual certification/AOC. Unless PayCheck has gone through that formal process, this is an unsubstantiated compliance claim, which carries real legal risk (false certification/advertising exposure) \u2014 this is the one I'd flag hardest to legal.\n\n**Suggested rewrite:**\n> \"PayCheck is released under the MIT license (see LICENSE for full terms, including the warranty disclaimer). It is covered by our internal test suite [describe scope, e.g., 'covering core validation logic and edge cases']. PayCheck is designed to help with payment validation, but it is provided as-is; it is the integrator's responsibility to ensure their overall system meets PCI DSS and other applicable compliance requirements.\"\n\nTwo things worth checking with legal/eng directly: (1) whether there's any actual PCI assessment or audit trail to point to \u2014 if so, cite it specifically rather than asserting compliance; (2) confirm test coverage claims are something you can stand behind if challenged. I'd treat my read here as a flag for legal to make the final call, not a substitute for their sign-off.",
+  "ttft_ms": 2701,
+  "ttft_stream_ms": 1227,
+  "time_to_request_ms": 50,
+  "time_to_request_from_spawn_ms": 425281,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025304097.6223,
+  "type": "result",
+  "duration_ms": 19072,
+  "uuid": "27ee3c9d-2de3-4955-8b38-312967b19040",
+  "_skill": "checking-legal-and-safety-wording",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "d4071e64a8bd1cbcbe3a7e13679c0d60537e54c0d20951703d0ecbdcd84d5505"
+}

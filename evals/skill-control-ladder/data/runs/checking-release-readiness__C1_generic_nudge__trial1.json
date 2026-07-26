@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 21352,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.042663099999999995,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2321,
+    "cache_read_input_tokens": 14697,
+    "output_tokens": 1573,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2321,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1439,
+        "cache_read_input_tokens": 8417,
+        "cache_creation_input_tokens": 184,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 184
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000721,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1573,
+      "cacheReadInputTokens": 14697,
+      "cacheCreationInputTokens": 2321,
+      "webSearchRequests": 0,
+      "costUSD": 0.041942099999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 not as described. Green CI and author sign-off tell you the code doesn't obviously break tests; they don't tell you the migration is safe to run against production data. For a major-version DB migration on your primary user database, the two things you flagged as missing are the two that matter most, plus a few unstated risks worth surfacing:\n\n**Blocking gaps**\n- **No rollback plan.** This is the biggest issue. If the migration fails partway, or Postgres 15 causes a regression discovered post-deploy, you need a tested path back (e.g., restoring from a pre-migration snapshot, or a scripted down-migration). \"We'll figure it out live\" is not acceptable for a primary user DB.\n- **No monitoring/alerts for the migration itself.** Without alerts on query latency, error rates, replication lag, and connection pool health during and after the cutover, you'll find out about problems from users, not dashboards.\n\n**Non-obvious risks specific to PG12\u219215 + index changes**\n- **Collation version mismatches.** Postgres upgrades can carry glibc/ICU collation changes that silently corrupt text-based indexes (rows appear correctly ordered to Postgres but aren't actually sorted per the new collation) \u2014 this doesn't throw errors, it just causes wrong query results until you `REINDEX`. Worth confirming the migration handles this explicitly.\n- **Index build locking.** Are new/changed indexes built with `CONCURRENTLY`? If not, you'll take table locks on your primary user table during business hours.\n- **Query planner behavior changes.** Version jumps change planner defaults/statistics behavior \u2014 CI passing doesn't catch plan regressions that only show up under production data volume and concurrency.\n- **Backup freshness.** Confirm there's a verified, recent backup/snapshot taken immediately before the cutover, independent of the rollback script question.\n\n**Also worth asking**\n- Has this been dry-run against a production-scale (data volume + concurrency) staging copy, not just CI?\n- Is deploying \"this afternoon\" during peak traffic, and is someone on call specifically watching this deploy?\n\nRecommendation: don't merge/deploy until rollback steps exist and are tested, and at minimum basic alerting (error rate, latency, lock waits) is in place for the deploy window. The engineer's confidence and green CI are necessary but not sufficient signals here given the blast radius of a primary DB migration.",
+  "ttft_ms": 1897,
+  "ttft_stream_ms": 787,
+  "time_to_request_ms": 34,
+  "time_to_request_from_spawn_ms": 447382,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025325882.0635,
+  "type": "result",
+  "duration_ms": 21850,
+  "uuid": "14e2957f-26b8-4c9f-84f4-08ff7a8533ff",
+  "_skill": "checking-release-readiness",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "334fd38245045cb1c8f1ab5071e243d1d014f5d8412914f5a0c94c257f8becde"
+}

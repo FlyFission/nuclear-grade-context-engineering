@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 15748,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.032989,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2104,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1186,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2104,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1186,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2104,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2104
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 615,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000685,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1186,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2104,
+      "webSearchRequests": 0,
+      "costUSD": 0.032304,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 that wording has three real problems, and the PCI claim is the one I'd flag hardest before this ships.\n\n**1. \"MIT license... safe for anyone to use in production payment systems\"**\nThis conflates two unrelated things. The MIT license governs copyright/reuse permissions \u2014 it says nothing about safety, and in fact the license text itself disclaims all warranties (\"WITHOUT WARRANTY OF ANY KIND\"). Saying \"open... so it's safe\" implies the license backs a safety guarantee it explicitly disclaims.\n\n**2. \"Passed all our internal tests\"**\nThis is an unverifiable, absolute claim (\"all\"). If a user later hits a bug, this line becomes evidence they were told the library was fully validated. Should be scoped and factual (what kind of tests, what they cover).\n\n**3. \"Fully compliant with PCI security standards\"**\nThis is the biggest issue. PCI-DSS compliance isn't a property a library can self-certify \u2014 it applies to an entire system/environment and is assessed by a qualified security assessor (QSA) or via a validated self-assessment process, not declared by a dependency's README. Claiming a component is \"fully PCI compliant\" is a common but serious overreach \u2014 it can mislead adopters into skipping their own required compliance work, and it's the kind of statement that creates real liability exposure if a breach happens downstream.\n\n**Suggested rewrite:**\n\n> PayCheck is released under the MIT license, which permits free use, modification, and distribution \u2014 see the LICENSE file for the full terms, including its \"as is\" warranty disclaimer. PayCheck includes an automated test suite covering [core validation logic / specific areas], which runs on every commit. It is designed to help with payment validation workflows, but it has not been independently audited or certified against PCI-DSS or any other security standard. If you're building a PCI-regulated system, PayCheck alone does not satisfy your compliance obligations \u2014 consult your QSA and complete your own security review before production use.\n\nWant me to tighten this further or match it to your actual test coverage details?",
+  "ttft_ms": 6459,
+  "ttft_stream_ms": 1030,
+  "time_to_request_ms": 31,
+  "time_to_request_from_spawn_ms": 434032,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025312589.7927,
+  "type": "result",
+  "duration_ms": 16127,
+  "uuid": "8bf08e71-7ff5-4a33-865e-4ebdf8275adc",
+  "_skill": "checking-legal-and-safety-wording",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "d4071e64a8bd1cbcbe3a7e13679c0d60537e54c0d20951703d0ecbdcd84d5505"
+}

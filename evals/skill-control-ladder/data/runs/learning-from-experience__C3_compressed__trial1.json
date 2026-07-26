@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 45720,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0853827,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 4069,
+    "cache_read_input_tokens": 14859,
+    "output_tokens": 3717,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4069,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2079,
+        "cache_read_input_tokens": 8579,
+        "cache_creation_input_tokens": 1770,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1770
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000744,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 3717,
+      "cacheReadInputTokens": 14859,
+      "cacheCreationInputTokens": 4069,
+      "webSearchRequests": 0,
+      "costUSD": 0.0846387,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Here's a draft postmortem. A few notes before the doc: this wasn't really \"an engineer in a hurry\" as the root cause \u2014 that's the trigger, not the failure. The actual root cause is that your secrets-scanning control was **client-side only and trivially bypassable** with a flag, and nothing server-side caught it before merge or before it reached production. I've framed it that way below, and flagged that the bypass itself (not just the leaked key) needs to be treated as a real finding, not smoothed over.\n\n---\n\n## Incident Postmortem: Hardcoded API Key Exposed in Production\n\n**Date of incident:** [date key was merged] \u00b7 **Date detected:** [date of audit] \u00b7 **Date resolved:** [date key rotated, same day as detection]\n**Severity:** High (credential exposed in production ~3 days)\n**Status:** Key rotated; corrective actions in progress\n\n### Summary\nA commit containing a hardcoded API key bypassed the pre-commit secrets-scanning hook via `git commit --no-verify` and was pushed to a branch that merged to `main`. No server-side check caught it. The key was live in production for 3 days until a routine security audit flagged it. The key was rotated immediately upon discovery.\n\n### Timeline\n- Engineer commits code; pre-commit secrets-scanning hook fails (correctly flagging the key).\n- Engineer runs `git commit --no-verify` to bypass the hook and pushes.\n- PR merges to `main` \u2014 no CI/server-side secret scan or branch protection caught it.\n- Change deploys to production; key is live.\n- 3 days later, routine security audit discovers the exposed key.\n- Key is rotated same day.\n\n### Impact\n- API key exposed in a public/shared surface (repo history, and live in production) for ~3 days.\n- **Open item:** has anyone checked the key's usage/access logs for that 3-day window to confirm whether it was actually accessed by anything unexpected? Rotating closes the exposure but doesn't tell you if it was exploited \u2014 worth a quick check before closing this out.\n\n### Root Cause Analysis\nThis should be named accurately rather than softened: the engineer **knowingly bypassed a security control** under deadline pressure. That's a willful bypass, not an honest slip like a typo or a missed edge case \u2014 and it should be documented as such. That said, the fix here isn't primarily about that one engineer; it's that the control was structured so that bypassing it was a) possible with zero friction and b) had no backstop. Under enough deadline pressure, someone will always be tempted to do this again unless the control itself doesn't allow it.\n\n**Contributing factors:**\n1. **Secrets scanning only existed client-side (pre-commit hook).** Any local hook can be skipped with `--no-verify` \u2014 this is a known, expected property of git hooks, so relying on them as the *only* line of defense for secrets is a gap by design, not a fluke.\n2. **No server-side enforcement.** No CI check re-ran the secrets scan on the PR, and branch protection on `main` didn't require it to pass.\n3. **No merge-time or pre-deploy gate** caught the key before it reached production.\n4. **Detection relied on a periodic manual audit** rather than continuous scanning, so the exposure window was as long as the gap between audits (3 days here, could've been longer).\n5. **Possible friction/false-positive issue in the linter** \u2014 worth checking whether the engineer bypassed it because it's known to be noisy. If the check has a history of false positives, that increases the temptation to skip it and is itself worth fixing.\n\n### Corrective Actions\n\n| # | Action | Owner | Fixes |\n|---|--------|-------|-------|\n| 1 | Add the same secrets-scanning check to CI on every PR, required to pass via branch protection before merge to `main` | [assign] | Removes the ability to bypass scanning by skipping local hooks |\n| 2 | Add a pre-deploy/CD-stage secret scan as a final backstop | [assign] | Catches anything that slips through PR review |\n| 3 | Enable continuous secret scanning on the repo (e.g. GitHub secret scanning / gitleaks scheduled scan) instead of relying on periodic manual audits | [assign] | Shrinks detection window from days to near-real-time |\n| 4 | Audit repo history and other recent commits for other `--no-verify` usage or additional hardcoded secrets | [assign] | Confirms this wasn't an isolated case |\n| 5 | Check the exposed key's access/usage logs for the 3-day window | [assign] | Confirms whether exposure was actually exploited, informs whether broader incident response is needed |\n| 6 | Review the secrets-scanning linter's false-positive rate; tune it if it's noisy | [assign] | Reduces the incentive to bypass a check that's seen as unreliable |\n| 7 | Direct conversation with the engineer about why `--no-verify` was used on a security check specifically (not commit hooks generally) | [manager] | Addresses the individual judgment call, separate from the systemic fix above |\n\n### Escalation note\nSince this involves a credential that was live in production, this should be reported to your security lead / whoever owns incident response (if it wasn't already the audit team) so items #4 and #5 above get proper visibility \u2014 that's a decision I'd flag up rather than quietly close out at the engineering level.\n\n---\n\nWant me to adjust severity/dates once you fill those in, or save this as a file (e.g. `docs/incidents/2026-XX-XX-hardcoded-api-key.md`) in the repo?",
+  "ttft_ms": 18086,
+  "ttft_stream_ms": 1560,
+  "time_to_request_ms": 36,
+  "time_to_request_from_spawn_ms": 827561,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025706479.7966,
+  "type": "result",
+  "duration_ms": 44854,
+  "uuid": "fd5a0d31-dd99-4970-acf7-81fe57afd8ff",
+  "_skill": "learning-from-experience",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "e5c1e8ae96210bf0b437d2d17a20ba1d6da05118e7f4af6a16e22cca704c107e"
+}

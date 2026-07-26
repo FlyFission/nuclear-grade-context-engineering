@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 18159,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.034789999999999995,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2175,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1272,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2175,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1272,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2175,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2175
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 675,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007700000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1272,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2175,
+      "webSearchRequests": 0,
+      "costUSD": 0.034019999999999995,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Roll back now via the CD pipeline \u2014 don't run the ALTER TABLE.\n\n**Right now, in order:**\n\n1. **Name an incident commander immediately.** Having the SRE, DBA, and EM each proposing actions in the same channel is how you get two people making conflicting changes to prod at once. Pick one person (usually on-call SRE) to own the decision and have everyone else feed them info instead of acting independently.\n\n2. **Roll back the deploy, don't alter the index.** The rollback is reversible, takes 90 seconds, and undoes *both* suspects (worker + index change) without requiring you to first prove which one is the actual cause. The ALTER TABLE is:\n   - Based on an unconfirmed hypothesis (\"DBA is confident,\" not \"DBA has verified from logs/query plans\")\n   - A live schema change on the production table taking live traffic \u2014 drop/rebuild can lock the table and make things worse mid-outage\n   - Not easily reversible if it goes wrong, versus a rollback which is\n\n   Stabilize first with the cheaper, reversible action. Root-causing which change actually broke checkout can happen after customers can check out again.\n\n3. **Have the DBA hold the ALTER TABLE.** If checkout is still broken after rollback confirms clean, that's useful diagnostic info \u2014 it'd point away from the index/worker deploy entirely. If it's fixed, the DBA can test the index theory against a replica or staging copy, not prod, before ever touching prod again.\n\n4. **Once rollback lands, verify and communicate.** Confirm 500s stop and order creation succeeds, then post a short status update to the channel (what happened, what action was taken, current state) so people stop freelancing fixes.\n\nAfter things stabilize, that's the time to determine whether it was the index change, the worker, or both, and to write it up \u2014 not during the outage.",
+  "ttft_ms": 9194,
+  "ttft_stream_ms": 1536,
+  "time_to_request_ms": 144,
+  "time_to_request_from_spawn_ms": 1086902,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025963466.315,
+  "type": "result",
+  "duration_ms": 18216,
+  "uuid": "06fece0e-0245-4b5f-b0a7-596086442a0c",
+  "_skill": "responding-to-incidents",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "802483c74153d39e8741bcd4e4c41a6c97f9d4540fd87e7bc4abc16db6165dff"
+}

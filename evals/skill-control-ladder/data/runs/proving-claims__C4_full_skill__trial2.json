@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 25249,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0650255,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 5357,
+    "cache_read_input_tokens": 17065,
+    "output_tokens": 1804,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 5357,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1002,
+        "cache_read_input_tokens": 10785,
+        "cache_creation_input_tokens": 852,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 852
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 617,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000692,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1804,
+      "cacheReadInputTokens": 17065,
+      "cacheCreationInputTokens": 5357,
+      "webSearchRequests": 0,
+      "costUSD": 0.0643335,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before I draft this, two problems with the claim as stated:\n\n**1. \"Safe and fully backward compatible\" overreaches your evidence.** Passing the existing test suite only proves what those tests check \u2014 not \"fully\" anything, unless you know the suite covers every caller, every edge case, every data/schema path touched by the refactor. \"Safe\" is even broader (concurrency, error handling, PCI-relevant behavior, etc.) and isn't demonstrated by a green test run at all.\n\n**2. Both pieces of evidence are self-checks.** You wrote the diff, ran the tests, and reviewed the diff yourself. For a payment-processing module, that's a case where reviewers should not treat your own narration as proof \u2014 the same blind spots that could've caused a bug are the ones reviewing your own work won't catch. This isn't a knock on you; it's just that self-check and independent check answer different questions, and payment code is exactly the place where that distinction matters.\n\nHere's an evidence section that states what you actually verified, scoped honestly, with the gap flagged rather than papered over:\n\n---\n\n### Evidence\n\n| Claim | Evidence | Status |\n|---|---|---|\n| Existing test suite passes against refactored code | `<test command>` run locally by author, all green \u2014 [link to output/CI run if available] | pass (self-check) |\n| Diff reviewed for correctness | Line-by-line self-review by author | self-check only \u2014 not a substitute for independent review |\n| Refactor is backward compatible | *Not yet independently verified* | gap |\n| Refactor is safe for production payment flows | *Not yet independently verified* | gap |\n\n**Scope of test coverage:** [list what the suite actually exercises \u2014 e.g. unit tests for X, integration tests for Y \u2014 and note anything it does *not* cover, e.g. external API contract tests, load, concurrent transaction handling, idempotency, currency edge cases, etc.]\n\n**Custody note:** All evidence above (test execution, diff review) was generated, run, and reviewed by the PR author alone. No independent reviewer or second execution has occurred yet.\n\n**Requesting before merge:**\n- A second reviewer to independently exercise [the compatibility-critical paths \u2014 specify which] rather than re-reading the same diff.\n- [If applicable] contract/regression tests against the payment gateway or downstream consumers that weren't part of the existing suite.\n\n---\n\nWant me to help identify which specific compatibility paths (API shape, error codes, idempotency keys, currency/rounding, etc.) are highest-risk in your diff so you can point reviewers at them precisely, or narrow the PR title claim to something like \"Refactor passes existing test suite; backward compatibility pending review of [specific surfaces]\"?",
+  "ttft_ms": 9350,
+  "ttft_stream_ms": 921,
+  "time_to_request_ms": 61,
+  "time_to_request_from_spawn_ms": 914596,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025793368.3647,
+  "type": "result",
+  "duration_ms": 26004,
+  "uuid": "0a6daaeb-9ba0-4610-b5ad-236f359e51a6",
+  "_skill": "proving-claims",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "8cd93abb9bf584a6a8b2d6026ecb8b290f73525140c10b7a042570ed17826884"
+}

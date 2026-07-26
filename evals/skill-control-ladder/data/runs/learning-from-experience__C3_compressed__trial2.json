@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 31877,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.061393699999999995,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2880,
+    "cache_read_input_tokens": 14859,
+    "output_tokens": 2594,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2880,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2149,
+        "cache_read_input_tokens": 8579,
+        "cache_creation_input_tokens": 581,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 581
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007340000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2594,
+      "cacheReadInputTokens": 14859,
+      "cacheCreationInputTokens": 2880,
+      "webSearchRequests": 0,
+      "costUSD": 0.0606597,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Since there's no existing incident-doc template or CI/hook config in this repo to build on, I'll draft this as a standalone postmortem you can adapt. One important framing point first, then the doc.\n\n**This wasn't just a slip \u2014 it was a willful bypass.** The engineer didn't miss a warning; they explicitly ran `--no-verify` to skip a security control they knew was failing. That distinction matters: \"remind him to be careful next time\" doesn't fix anything, because the control itself was optional. The fix has to make the gate non-bypassable, not just re-explain the rule to one person. This also touches credentials/security in prod, so it should get proper incident review (probably already did via the audit) rather than being closed out quietly.\n\n---\n\n## Incident Report: Hardcoded API Key Merged to Production\n\n**Date of incident:** ~3 days before discovery (week of ~July 19, 2026)\n**Date detected:** During routine security audit\n**Status:** Resolved \u2014 key rotated\n**Severity:** High (credential exposed in production for 3 days)\n\n### Summary\nA pre-commit secrets-scanning hook correctly flagged a hardcoded API key in a developer's branch. The developer bypassed the hook using `git commit --no-verify` under deadline pressure and pushed the change. No server-side or CI-level secrets scan existed to catch it after the local hook was skipped, so the key merged to `main` and remained live in production for three days until caught by a routine audit.\n\n### Timeline\n| When | Event |\n|---|---|\n| T-3 days | Developer commits change containing hardcoded API key; pre-commit hook fails |\n| T-3 days | Developer runs `git commit --no-verify`, bypassing the check, and pushes |\n| T-3 days | PR merges to `main` \u2014 no CI check re-ran the secrets scan; no reviewer caught it |\n| T-3 days | Change deploys to production with live API key in source |\n| T0 | Routine security audit discovers the exposed key |\n| T0 | Key rotated |\n\n### Impact\n- API key exposed in production source (and git history) for 3 days.\n- No confirmed evidence of malicious use (should confirm this via access/usage logs on the rotated key before closing).\n- Key rotated same day as discovery.\n\n### Root Cause\nThe proximate cause was a developer bypassing a failing local check. The **actual root cause** is that the secrets-scanning control existed only as a local, skippable pre-commit hook with no enforcement elsewhere in the pipeline. A single `--no-verify` flag was sufficient to remove all protection \u2014 there was no second layer (CI check, branch protection, server-side scan) that didn't depend on the committer's cooperation.\n\nContributing factors:\n- Deadline pressure created incentive to bypass rather than fix or escalate.\n- No CI/server-side re-check meant the bypass was invisible to reviewers and merge gates.\n- No branch protection rule required a passing secrets-scan status check before merge.\n- No secrets-scanning at the git host or deploy pipeline as a backstop.\n- Code review didn't catch the hardcoded key (worth checking: was this a small/rushed review too?).\n\n### Corrective Actions\n\n| Action | Owner | Fixes |\n|---|---|---|\n| Add secrets scanning as a **required CI status check** on the PR/merge, not just a local pre-commit hook (e.g. gitleaks/trufflehog in CI) | (assign) | Makes the control non-bypassable by `--no-verify` |\n| Enable branch protection on `main` requiring that check to pass before merge | (assign) | Closes the \"no server-side gate\" gap |\n| Add secrets scanning at the git host level if available (e.g. GitHub secret scanning + push protection) as a second independent backstop | (assign) | Defense in depth even if CI is misconfigured |\n| Audit git history for other instances of this or similar bypasses (`--no-verify` usage) and other hardcoded secrets | (assign) | Confirms scope of exposure |\n| Confirm rotated key's access logs show no unauthorized use during the exposure window | (assign) | Closes out impact assessment |\n| Handle the deadline-pressure bypass directly with the engineer and their manager \u2014 not as a \"don't do this again\" chat, but reinforcing that failing a security check is an escalation path (ping security/lead), not a skip-and-ship path | (assign, likely eng manager) | Addresses the willful-bypass behavior, separate from the technical control gap |\n| Move secret management to a proper secrets manager / vault + env injection so hardcoding isn't the path of least resistance | (assign) | Removes root incentive to hardcode keys under time pressure |\n\n### Verification\nEach action above needs an owner and a verification step (e.g., confirm the CI check actually blocks a test PR with a fake secret, confirm branch protection can't be overridden by admins without an explicit override log). Don't close this out on \"we talked to him\" alone \u2014 close it on \"the bypass is no longer possible.\"\n\n---\n\nWant me to tailor this to your actual stack (which CI system, which secrets tool, GitHub vs GitLab) so the action items are concrete commands/config rather than generic, or turn this into a file in the repo?",
+  "ttft_ms": 3657,
+  "ttft_stream_ms": 721,
+  "time_to_request_ms": 48,
+  "time_to_request_from_spawn_ms": 831315,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025710077.6587,
+  "type": "result",
+  "duration_ms": 32864,
+  "uuid": "8301087a-5091-462e-a7e7-8899161081c5",
+  "_skill": "learning-from-experience",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "e5c1e8ae96210bf0b437d2d17a20ba1d6da05118e7f4af6a16e22cca704c107e"
+}

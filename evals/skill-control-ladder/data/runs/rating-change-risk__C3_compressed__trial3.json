@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 19283,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0417832,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3074,
+    "cache_read_input_tokens": 15044,
+    "output_tokens": 1203,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3074,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 663,
+        "cache_read_input_tokens": 8764,
+        "cache_creation_input_tokens": 590,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 590
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 684,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000769,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1203,
+      "cacheReadInputTokens": 15044,
+      "cacheCreationInputTokens": 3074,
+      "webSearchRequests": 0,
+      "costUSD": 0.0410142,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 don't self-approve and skip review on this one, even though the diff is one line.\n\n**Why size doesn't matter here:** `ENFORCE_MFA_FOR_ADMINS` is a shared flag across *all* backend services. Flipping it to `False` doesn't just unblock one admin \u2014 it removes MFA enforcement for every admin, on every service reading that config, for the entire window it's off. That's an authentication/security-control change with broad blast radius, not a cosmetic flag tweak, regardless of line count. This trips the \"auth\" and \"security\" tripwires that push it well past the administrative floor.\n\n**Risks with the \"flip back in an hour\" plan:**\n- It's a manual, unmonitored step \u2014 the person doing it can get pulled away, the PR can get lost, or the revert can itself get blocked by the same on-call chaos that caused the lockout.\n- Self-approval means no second set of eyes confirms the window is actually closed or that this is the least-invasive fix.\n- Any admin (or attacker who compromises an admin credential) can log in without MFA during the window \u2014 not just the locked-out person.\n\n**Better options, roughly in order of preference:**\n1. **Fix the individual, not the global control.** Most IdPs/auth systems support resetting or bypassing MFA for a single user (issue a new TOTP enrollment, use a backup code, or an admin-initiated MFA reset in the IdP). This avoids touching the shared flag at all.\n2. **Break-glass account/procedure**, if one exists, scoped to that person with full audit logging.\n3. If you truly must touch the global flag, treat it as an incident: get at least one independent approver (even a fast Slack \"ship it\" from someone else counts), merge with a tracked revert PR already open, and set a hard reminder/alert so the revert isn't relying on memory.\n\nIf your org doesn't have a per-user MFA reset path today, that's worth flagging separately \u2014 this situation will recur.",
+  "ttft_ms": 8982,
+  "ttft_stream_ms": 1138,
+  "time_to_request_ms": 67,
+  "time_to_request_from_spawn_ms": 982821,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025861219.835,
+  "type": "result",
+  "duration_ms": 20005,
+  "uuid": "a3aeb94a-74d0-4002-88f9-d6b278d2fb5e",
+  "_skill": "rating-change-risk",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "b6d7bf31322e2acefce2022def1bc4771e0b6845264c23aa983ea9e253a2369a"
+}

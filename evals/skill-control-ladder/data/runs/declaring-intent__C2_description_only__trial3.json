@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 28515,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0520992,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2371,
+    "cache_read_input_tokens": 14624,
+    "output_tokens": 2187,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2371,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1930,
+        "cache_read_input_tokens": 8344,
+        "cache_creation_input_tokens": 307,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 307
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 604,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000669,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2187,
+      "cacheReadInputTokens": 14624,
+      "cacheCreationInputTokens": 2371,
+      "webSearchRequests": 0,
+      "costUSD": 0.0514302,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Good that you've staged it \u2014 but staging doesn't reproduce live concurrent read load, replication lag, or lock contention, which are the real risks here. Before you run this, it's worth writing down a concrete plan you'd show a colleague and having them sanity-check it. Here's a structure for that:\n\n**Intent & why**\n- What: backfill `loyalty_tier` on `orders` (~40M rows), table is read live by checkout during the window.\n- Why now: [your reason \u2014 e.g. dependent feature launching, low-traffic window tonight]\n- Why this approach: batched backfill vs. one big UPDATE, why you chose it.\n\n**How to make it safe to run**\n1. **Separate schema change from data backfill.** Add the column as `NULL` with no default first \u2014 that's metadata-only in Postgres 11+/MySQL 8+ and won't scan or lock the table. Do the backfill as a separate step via `UPDATE`.\n2. **Batch the backfill, don't do one giant UPDATE.** Update in chunks (e.g. 1,000\u201310,000 rows) keyed by primary key ranges (`WHERE id BETWEEN x AND y`), not `OFFSET`, and commit each batch separately. This keeps transactions short, avoids long lock waits, and limits WAL/replication lag spikes.\n3. **Throttle between batches.** Add a small sleep (e.g. 50\u2013200ms) between batches so you're not saturating I/O or replica catch-up capacity while checkout is live.\n4. **Run a canary first.** Backfill a small slice (e.g. 100k rows) in production, watch metrics for a few minutes, then continue if clean \u2014 don't go straight to all 40M rows.\n5. **Watch these live, not just at the end:**\n   - Replication lag (if checkout reads from a replica, lag directly causes stale/inconsistent reads)\n   - Lock wait times / `pg_stat_activity` blocking queries\n   - Checkout service p99 latency and error rate\n   - DB CPU, disk I/O, connection pool saturation\n6. **Have a kill switch.** Script should be interruptible mid-batch without leaving partial/corrupt state \u2014 since each batch commits independently, stopping is just \"stop the loop,\" not a rollback.\n\n**Abort criteria** (decide these numbers now, not mid-incident)\n- Replication lag exceeds X seconds\n- Checkout error rate or p99 latency exceeds Y\n- Any blocking lock wait exceeds Z seconds\n\n**Backup / rollback**\n- Confirm you have a recent backup/snapshot independent of this migration (not as your rollback mechanism, but as your safety net if something goes badly wrong).\n- Rollback path if you abort partway: since the column is nullable and unindexed until you finish, you can just stop \u2014 no need to undo. Only add an index or `NOT NULL` constraint *after* the full backfill completes and is verified.\n- Decide who else should know this is running tonight (on-call, checkout team) so a symptom shows up as \"known migration\" rather than a mystery incident.\n\nIf you share the actual script, I can check it against this (batch size, commit strategy, indexing timing, lock behavior) rather than just going off the general pattern.",
+  "ttft_ms": 3341,
+  "ttft_stream_ms": 814,
+  "time_to_request_ms": 55,
+  "time_to_request_from_spawn_ms": 713720,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025592477.926,
+  "type": "result",
+  "duration_ms": 30002,
+  "uuid": "ab939f22-4b45-49da-a176-26c2a77063cc",
+  "_skill": "declaring-intent",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "536c6cf54529ce8a5b52c9e45191946cdd59285273ece99dfe0c22b35bd6e0cb"
+}

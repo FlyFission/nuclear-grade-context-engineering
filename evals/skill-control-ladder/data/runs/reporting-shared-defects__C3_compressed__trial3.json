@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 20943,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.046068099999999994,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2781,
+    "cache_read_input_tokens": 23707,
+    "output_tokens": 1431,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2781,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1158,
+        "cache_read_input_tokens": 8797,
+        "cache_creation_input_tokens": 264,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 264
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 702,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000787,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1431,
+      "cacheReadInputTokens": 23707,
+      "cacheCreationInputTokens": 2781,
+      "webSearchRequests": 0,
+      "costUSD": 0.0452811,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 a local override plus a code comment isn't enough here. That fixes only your bot; the same leak is still live for sales, onboarding, and internal-tools, and none of those teams know it exists. A few things to do:\n\n1. **Notify the other three teams now, not later.** Send each owning team (or file tickets against their repos) a short shared-defect report: what the bug is, why it happens (prompt-truncation edge case in `prompt-common`'s system-prompt template causes internal tool identifiers to leak into customer-facing output), severity, and your workaround/fix as a reference. Don't rely on them discovering your code comment.\n\n2. **Fix it upstream in `prompt-common`, not just locally.** A local override drifts silently \u2014 next time someone updates the shared template, your override may reintroduce the bug or diverge in other ways. Land the fix (or your patched version) in the shared package itself and open a PR/issue there so it's the source of truth.\n\n3. **Treat this as a security/data-disclosure issue, not just a formatting bug.** Leaking internal database query tool identifiers to customers is an information-disclosure risk \u2014 flag it to whoever owns security/incident response so they can judge if it needs to go through your org's security process (and check if it's already leaked in production logs/transcripts for the other three bots).\n\n4. **Log it formally** \u2014 a shared-defect report tied to your OPEX record and deficiency register, not just a code comment. That gives it an owner, a tracking link, and a paper trail if the other teams don't act quickly.\n\nYour bot being fixed is the least important part of this \u2014 the real exposure is the three teams still shipping the vulnerable template. Want help drafting the notification (description, severity, repro steps, fix reference) to send to those teams?",
+  "ttft_ms": 2289,
+  "ttft_stream_ms": 1043,
+  "time_to_request_ms": 143,
+  "time_to_request_from_spawn_ms": 1080671,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025959022.712,
+  "type": "result",
+  "duration_ms": 20128,
+  "uuid": "41873c30-c932-4c98-b0a4-fe066b7f2f85",
+  "_skill": "reporting-shared-defects",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "41b168ac7a01b0726b5ab40da47d1fee99d3879be53c9e916b56f862c83f6eb1"
+}

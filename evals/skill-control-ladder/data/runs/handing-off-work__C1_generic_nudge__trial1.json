@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 18933,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.041590499999999996,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2483,
+    "cache_read_input_tokens": 14765,
+    "output_tokens": 1433,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2483,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1205,
+        "cache_read_input_tokens": 8485,
+        "cache_creation_input_tokens": 278,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 278
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 676,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007559999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1433,
+      "cacheReadInputTokens": 14765,
+      "cacheCreationInputTokens": 2483,
+      "webSearchRequests": 0,
+      "costUSD": 0.040834499999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Here's a handoff note draft. I left placeholders (in `[brackets]`) for details only you know \u2014 service names, links, and who to escalate to \u2014 since I don't have access to those from here.\n\n---\n\n## Handoff: OAuth2 Migration for Billing Service (`oauth-migration` branch)\n\n**Owner:** Benjamin (out on vacation [dates], back [return date])\n**Status as of 2026-07-26:** In progress, ~40% complete\n\n### What's done\n- Auth middleware migrated to OAuth2 \u2014 merged to `oauth-migration`\n- Token-refresh logic migrated \u2014 merged to `oauth-migration`\n- Both have passing unit tests\n\n### What's NOT done (and blocks going further)\n1. **Three downstream services still call the old API-key auth endpoints** \u2014 not yet migrated:\n   - `[service 1]`\n   - `[service 2]`\n   - `[service 3]`\n2. **Production config has not been touched** \u2014 still pointing at old auth.\n3. **Old API keys have NOT been rotated.**\n\n### \u26a0\ufe0f Critical constraint \u2014 read before touching anything\n**Do not rotate or disable the old API keys, and do not deploy the production config change, until all three downstream services are migrated to OAuth2.** The old keys must stay active as long as those services depend on them, or their requests will start failing with 401s in production.\n\n### Suggested next steps\n1. Migrate the three downstream services to use OAuth2 (mirroring the pattern in the middleware/token-refresh commits on `oauth-migration`).\n2. Verify each service authenticates successfully against the new flow (staging, not prod).\n3. Only after all three are confirmed working on OAuth2: update production config and rotate/retire the old API keys.\n4. Until then, treat the old API-key path as live infrastructure \u2014 don't touch it.\n\n### Useful references\n- Branch: `oauth-migration`\n- [Link to PRs / commits for middleware + token-refresh]\n- [Link to design doc / ticket, if one exists]\n- [Who to ping with questions \u2014 teammate, manager, on-call channel]\n\n### Contact\nI'll be unreachable [dates]. For anything urgent, reach out to [backup contact / manager].\n\n---\n\nWant me to adjust tone (more casual for Slack vs. formal for a wiki/ticket), or save this as a file in the repo (e.g., `HANDOFF.md`)?",
+  "ttft_ms": 3297,
+  "ttft_stream_ms": 778,
+  "time_to_request_ms": 46,
+  "time_to_request_from_spawn_ms": 772346,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025651006.3535,
+  "type": "result",
+  "duration_ms": 18098,
+  "uuid": "771211fa-4964-46b6-9e76-f79d519f694a",
+  "_skill": "handing-off-work",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "c4df2ff62dae413d11231740340738f11821088fd9d355374d4984f400eea1bf"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 13418,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.028802000000000005,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2298,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 827,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2298,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 827,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2298,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2298
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000719,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 827,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2298,
+      "webSearchRequests": 0,
+      "costUSD": 0.028083000000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 don't cut production over this week based on vendor marketing claims alone. Here's why and what I'd do instead.\n\n**The core problem:** \"99.9% accuracy,\" \"enterprise-grade safety,\" and customer case studies are vendor-asserted claims, not independent evidence. They tell you nothing about:\n- What their accuracy is measured against (their own benchmark? on what content distribution? does it match yours \u2014 languages, content types, adversarial/edge cases you actually see?)\n- Precision/recall tradeoffs for your specific harm categories (a single \"accuracy\" number can hide terrible recall on the categories that matter most to you)\n- Behavior on your actual traffic patterns, not their marketing demo\n\nSOC2 compliance verifies security/operational controls (access management, change control, etc.) \u2014 it says nothing about moderation *quality*, so it doesn't substitute for accuracy testing.\n\n**What I'd actually verify before any production traffic touches this vendor:**\n\n1. **Accuracy on your data, independently** \u2014 run a shadow/parallel test: pipe a sample of real (or representative synthetic) traffic through both your current provider and the new API, compare against a human-labeled ground truth set you control. This is the one non-negotiable step.\n2. **SOC2 report itself** \u2014 request the actual SOC2 Type II report (not just the badge), check scope and any exceptions noted by the auditor.\n3. **Case studies** \u2014 treat as leads, not proof; if relevant, ask the vendor for a reference customer you can actually talk to about failure modes, not just the ones they picked to showcase.\n4. **Failure/latency behavior** \u2014 what happens on API timeout or downgrade \u2014 does content get blocked, allowed, or queued? This matters a lot for moderation specifically since silent fail-open is a real risk.\n5. **Provenance/model details** \u2014 what underlying model(s) do they use, do they fine-tune, how often does the model change (a version bump could silently shift accuracy).\n\n**Suggested path:** Run a shadow deployment (send traffic to both, act only on current provider, log both outputs) for at least 1\u20132 weeks covering your real volume and edge cases. Compare disagreement cases by hand. Only cut over once you have your own numbers, not before, and even then consider a staged rollout (% of traffic) rather than a full switch.\n\nGiven zero testing has been done yet, \"this week\" isn't realistic for a safe cutover \u2014 I'd push the timeline to accommodate at least the shadow test. Want help designing the test harness or comparison methodology?",
+  "ttft_ms": 12195,
+  "ttft_stream_ms": 1017,
+  "time_to_request_ms": 151,
+  "time_to_request_from_spawn_ms": 1226529,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785026104423.2944,
+  "type": "result",
+  "duration_ms": 12236,
+  "uuid": "d3ee2895-b422-4209-9a03-32e840dee4af",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "1004d8043388a980ff198f473bf17ce798d01dc2bbf467baa2c742776c2a2102"
+}

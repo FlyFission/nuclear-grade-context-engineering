@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 12261,
+  "num_turns": 6,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0430464,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 3006,
+    "cache_read_input_tokens": 32598,
+    "output_tokens": 968,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3006,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 327,
+        "cache_read_input_tokens": 9085,
+        "cache_creation_input_tokens": 201,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 201
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 607,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000687,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 968,
+      "cacheReadInputTokens": 32598,
+      "cacheCreationInputTokens": 3006,
+      "webSearchRequests": 0,
+      "costUSD": 0.042359400000000005,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory is empty \u2014 there's no repo here with a `package.json` or a system prompt template for me to edit.\n\nBefore I do anything, I want to flag something: this is described as two \"tiny\" edits bundled together, but they're actually different in kind. A dependency version bump is low-risk and easy to review at a glance. A change to the system prompt sent to the model is a behavioral change to your product \u2014 it can affect output quality, safety, cost, or introduce prompt-injection surface, and diffing it against \"bump 4.2.0 to 4.3.1\" in the same PR makes it easy for a reviewer to rubber-stamp the prompt change without really reading it. I'd suggest splitting them into two commits/PRs (or at least calling out the prompt change explicitly in the PR description) so it gets the scrutiny it deserves \u2014 happy to do that once I can see the files.\n\nSince there's no code here yet, can you either point me to the actual repo path, or paste in the `package.json` and the system prompt file/snippet you want changed?",
+  "ttft_ms": 1274,
+  "ttft_stream_ms": 817,
+  "time_to_request_ms": 70,
+  "time_to_request_from_spawn_ms": 1192785,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785026071273.2083,
+  "type": "result",
+  "duration_ms": 11431,
+  "uuid": "b72df94e-f516-427d-bbca-ce0ddd7ad251",
+  "_skill": "using-nuclear-grade",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "b17ad0392cfe87e79b57e6b6b1a955875f5a5f3c55dede94225dcb2d9c3b3b24"
+}

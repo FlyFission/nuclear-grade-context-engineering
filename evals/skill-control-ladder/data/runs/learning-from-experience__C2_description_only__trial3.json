@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 33872,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.06055200000000001,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2633,
+    "cache_read_input_tokens": 14660,
+    "output_tokens": 2640,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2633,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2239,
+        "cache_read_input_tokens": 8380,
+        "cache_creation_input_tokens": 533,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 533
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000744,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2640,
+      "cacheReadInputTokens": 14660,
+      "cacheCreationInputTokens": 2633,
+      "webSearchRequests": 0,
+      "costUSD": 0.059808,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Here's a draft. Local pre-commit hooks are inherently bypassable (`--no-verify` exists by design), so the fix isn't \"remind people not to use that flag\" \u2014 it's making the check unavoidable downstream. I've structured this as a blameless postmortem plus a prioritized action list.\n\n---\n\n## Incident Write-Up: Hardcoded API Key Merged to Main\n\n**Date of incident:** ~2026-07-19 (merge) \u2192 2026-07-22ish (discovered via audit)\n**Status:** Resolved \u2014 key rotated\n**Severity:** Medium-High (credential exposure, no confirmed exploitation)\n\n### Summary\nA commit containing a hardcoded API key was pushed to a feature branch and merged to `main`. The commit bypassed the local pre-commit secrets-scanning hook via `git commit --no-verify` after the hook failed to pass, and there was no equivalent check in CI or on the remote to catch it. The key was live in production for approximately three days until a routine security audit flagged it. It was rotated immediately upon discovery.\n\n### Timeline\n| When | What |\n|---|---|\n| T-0 | Engineer commits change; local pre-commit secrets scan fails |\n| T-0 | Engineer runs `git commit --no-verify`, bypassing the scan, and pushes |\n| T-0 | PR merged to `main` (no CI secrets check existed to block it) |\n| T+3 days | Routine security audit discovers the hardcoded key in `main` |\n| T+3 days | Key rotated |\n\n### Impact\n- API key exposed in git history (and in `main`) for ~3 days.\n- No evidence cited of unauthorized use \u2014 confirm this explicitly in the final writeup if you have log access for the key's provider.\n- Exposure surface: anyone with repo read access during that window, and permanently in git history until the commit is scrubbed (see action items).\n\n### Root Cause\nThe only secrets-scanning control was a **local, opt-out pre-commit hook**. Any developer can bypass it in one command, and there was no server-side or CI-side enforcement to catch what the local hook missed.\n\n### Contributing Factors\n- Time pressure (deadline) incentivized skipping the check rather than fixing the finding or escalating.\n- No secondary/server-side detection layer (CI check, branch protection, or git-host push protection).\n- No clear \"what do I do if the secrets scanner is a false positive or I need to bypass it\" process \u2014 the engineer's only visible option was to force past it silently.\n- The key was hardcoded at all, rather than pulled from a secrets manager/env var \u2014 the underlying practice that makes this class of incident possible.\n\n### Corrective Actions\n\n**Prevent recurrence (do these first)**\n1. **Add a required CI check that runs the same secrets scanner on every push/PR**, independent of the local hook, and make it a required status check in branch protection so PRs can't merge without it passing. This is the actual fix \u2014 it closes the `--no-verify` loophole entirely since it doesn't run on the developer's machine.\n2. **Enable git-host push protection for secrets** if your provider supports it (e.g., GitHub secret scanning push protection) \u2014 this blocks the push itself, before it ever reaches a branch.\n3. **Define a bypass process**: if the scanner has a false positive, there should be a documented, fast path (e.g., inline allowlist comment + reviewer sign-off, or a Slack channel for urgent overrides) so nobody feels forced to silently `--no-verify` under deadline pressure.\n\n**Reduce blast radius**\n4. Move secrets out of source entirely where feasible \u2014 environment variables backed by a secrets manager (Vault, AWS/GCP secrets manager, etc.) rather than hardcoded values, so \"forgot to scan\" can't leak a live credential.\n5. Add short-lived/rotatable credentials where the provider supports it, so exposure windows are cheaper by default.\n\n**Detect faster next time**\n6. Increase the cadence of the audit process that caught this (or replace it with continuous scanning of `main`/all branches, not just at commit time) so exposure windows shrink from days to minutes.\n7. Scrub the exposed key from git history if it's still reachable (BFG/git-filter-repo), noting this doesn't undo exposure but limits future discovery risk.\n\n**Process**\n8. Share this writeup with the team in a blameless retro \u2014 the goal is \"the system allowed a rushed bypass with no safety net,\" not \"an engineer made a mistake under deadline pressure.\" Emphasize the deadline pressure itself as a factor worth naming to leadership if it's a recurring pattern.\n\n---\n\nWant me to tailor the CI check section to your actual stack (GitHub Actions vs GitLab CI vs other, and which scanner you use \u2014 gitleaks, trufflehog, etc.), or turn this into a file in your repo (e.g., `docs/postmortems/2026-07-hardcoded-key.md`)? I didn't find any existing pre-commit/CI config in this working directory, so let me know where your actual project lives if you want me to wire up the CI check directly.",
+  "ttft_ms": 3643,
+  "ttft_stream_ms": 1600,
+  "time_to_request_ms": 39,
+  "time_to_request_from_spawn_ms": 822244,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025700931.4683,
+  "type": "result",
+  "duration_ms": 35199,
+  "uuid": "4d8ca53f-89ca-42cb-948f-de76f352ed33",
+  "_skill": "learning-from-experience",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "4dbea7cefe1c8425ec97d7d54173d4fc3fc08bc958b4043160ef0219e4a03c7a"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 44959,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.07340189999999999,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2405,
+    "cache_read_input_tokens": 14703,
+    "output_tokens": 3589,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2405,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 3381,
+        "cache_read_input_tokens": 8423,
+        "cache_creation_input_tokens": 262,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 262
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 634,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000714,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 3589,
+      "cacheReadInputTokens": 14703,
+      "cacheCreationInputTokens": 2405,
+      "webSearchRequests": 0,
+      "costUSD": 0.07268789999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Since the repo here is empty, I'm working from your description rather than the actual file list \u2014 happy to refine once you share `ls misc/ utils/`. Here's a structure that splits by **what actually happens to each file** (edited routinely vs. frozen for reference) rather than by vague \"type\":\n\n```\nconfig/\n  templates/            # env & service config templates, copied+filled at setup time \u2014 edited when config schema changes\n\npackages/                # shared code used by 2+ services (kebab-case, one folder per concern, not one big dump)\n  <concern-a>/           # e.g. http-client, date-utils, validation \u2014 split the \"shared helpers\" by what they do\n  <concern-b>/\n\nservices/\n  <service-a>/\n    lib/                # helpers used only by this service \u2014 pull these out of utils/, they don't need to be shared\n  <service-b>/\n    lib/\n\nscripts/\n  maintenance/           # scripts run repeatedly (cron, backups) \u2014 only if any of the 47 fit this\n\narchive/                 # frozen, read-only, never edited \u2014 kept for audit trail, excluded from active navigation\n  compliance-reports/    # old compliance reports\n  migrations/            # completed one-off migration scripts, once run they're history not code\n  meeting-notes/         # (consider moving these to a wiki/Drive instead \u2014 they don't need to live in the repo at all)\n```\n\n**Why this split:**\n- `packages/` vs `services/*/lib/` \u2014 a helper used by two services is genuinely shared and should live in a versioned, discoverable spot; a helper used by one service should move next to its caller so `utils/` stops being the default answer to \"where does this go.\"\n- `archive/` \u2014 compliance reports, finished migrations, and meeting notes are never edited again. Separating them from active code means nobody has to scroll past them while working, and it's obvious at a glance that nothing in there needs review.\n- Config templates get their own top-level home since they're neither \"shared code\" nor \"archive\" \u2014 they're edited on their own cadence (when infra/config schema changes).\n\n**To sort the actual 77 files**, I'd suggest a quick audit rather than guessing:\n1. For each file in `utils/`, grep the codebase for who imports it \u2014 1 caller \u2192 move to that service's `lib/`; 2+ callers \u2192 `packages/<concern>/`; 0 callers \u2192 flag as dead code for deletion.\n2. For `misc/`, sort by the five categories you named (config templates, migrations, compliance reports, shared helpers, meeting notes) into the tree above.\n\nIf you paste the actual filenames (or even just `ls -la misc utils`), I can give you the concrete file-by-file mapping instead of this template.",
+  "ttft_ms": 2677,
+  "ttft_stream_ms": 882,
+  "time_to_request_ms": 49,
+  "time_to_request_from_spawn_ms": 862006,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025740482.8533,
+  "type": "result",
+  "duration_ms": 45650,
+  "uuid": "cc06a75c-fcd8-41cc-b1f5-bdbca0810913",
+  "_skill": "organizing-project-folders",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "211db5615828214564220e6f8ce44b5397bbe645e0066b145fbe80cd1cc22859"
+}

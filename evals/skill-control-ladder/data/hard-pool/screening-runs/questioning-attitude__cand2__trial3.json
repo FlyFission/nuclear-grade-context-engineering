@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 56396,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.10322529999999999,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 5387,
+    "cache_read_input_tokens": 14791,
+    "output_tokens": 4377,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 5387,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1279,
+        "cache_read_input_tokens": 8511,
+        "cache_creation_input_tokens": 3156,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3156
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 689,
+      "outputTokens": 22,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000799,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 4377,
+      "cacheReadInputTokens": 14791,
+      "cacheCreationInputTokens": 5387,
+      "webSearchRequests": 0,
+      "costUSD": 0.1024263,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This repo doesn't contain the actual wrapper/lockfile, so I can't inspect the diff directly \u2014 this is a review of the plan as described. A few things don't add up to \"just a version bump\" for me:\n\n**The stated justification and the actual risk don't match.** You're bumping 0.23\u21920.27 specifically because of a connection-pool/keepalive fix \u2014 that means the low-level connection lifecycle code is exactly what changed. That's not a neutral area to wave through on \"tests are green,\" because pool behavior under redirects, retries, and keepalive expiry is precisely the kind of thing that's undertested by default.\n\n**The 307-to-maintenance-host detail is the actual landmine here, and it's not addressed at all.** httpx has real, version-sensitive behavior around redirects that matters for your exact scenario:\n- Whether `Authorization`/auth headers get stripped when a redirect crosses to a different host (maintenance host \u2260 origin host) \u2014 this has shifted across httpx versions and could silently break or silently *succeed differently* than before.\n- Whether 307 preserves method/body correctly (should, per spec, but worth confirming it isn't regressed).\n- Default `follow_redirects` behavior and `max_redirects` \u2014 if the wrapper doesn't explicitly pin these, an upstream default change silently alters behavior for every caller.\n\nNone of this is \"alarming\" in a changelog skim, because it reads as normal bug-fix/perf language \u2014 but it's exactly the category of change that bites you only when the specific runtime condition (redirect to a different host, mid-deploy) actually fires. Skimming isn't the right level of scrutiny for a client library upgrade whose whole premise is \"connection handling changed.\"\n\n**\"Tests are green\" and \"worked for billing last sprint\" are weaker evidence than they sound:**\n- Does the test suite have a test that actually simulates a 307 to a different host, or is that scenario only exercised by production traffic during deploys? If it's not explicitly tested, green tests tell you nothing about this path.\n- Billing service precedent only transfers if billing exercises the same redirect-during-deploy code path against the same LB. If billing doesn't call the partner integrations API, or never hits a live redirect during its test run, \"zero issues\" there isn't evidence about this concern.\n\n**Blast radius**: this wrapper is used by every service hitting partner integrations, so a silent behavior change during deploy-window redirects wouldn't show up as a merge-time failure \u2014 it'd show up as an intermittent, hard-to-repro incident weeks later, which is worse than the pool leak you're trying to fix.\n\n**What I'd want before merging today:**\n1. A test (even a quick one, mocking the LB) that sends a request expecting a 307 to a different host, with auth headers set, and asserts what gets forwarded/stripped and that the method/body survive \u2014 on 0.27.\n2. A quick check of the wrapper's client config for whether `follow_redirects`/`max_redirects` are explicit or relying on httpx defaults.\n3. Actually diffing the httpx CHANGELOG.md entries between 0.23.0 and 0.27.0 (not skimming) for the words \"redirect,\" \"Authorization,\" \"header,\" and \"pool\"/\"keepalive\" \u2014 those are the ones relevant to your usage, not a general read-through.\n\nIf those check out, ship it \u2014 the leak is a real production pain point and I'm not saying block indefinitely. But \"two-line bump, tests green, changelog looked fine\" isn't sufficient verification given you've already identified the one scenario (cross-host redirect during deploy) where this exact class of library has historically had surprising behavior changes.",
+  "ttft_ms": 37251,
+  "ttft_stream_ms": 2016,
+  "time_to_request_ms": 28,
+  "time_to_request_from_spawn_ms": 729875,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078504697.79,
+  "type": "result",
+  "duration_ms": 57674,
+  "uuid": "e9efcb3d-900e-46e1-8fad-88411a93c2b1",
+  "_spec": "6717b948006fd8b693375893dbb923d05ae78745637a655dd7de92193055d689",
+  "_skill": "questioning-attitude",
+  "_cand": 2,
+  "_trial": 3
+}

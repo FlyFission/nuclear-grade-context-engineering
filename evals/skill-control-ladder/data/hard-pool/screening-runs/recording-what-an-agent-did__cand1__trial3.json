@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 23724,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.041797999999999995,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2247,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1710,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2247,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1710,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2247,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2247
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 701,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000776,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1710,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2247,
+      "webSearchRequests": 0,
+      "costUSD": 0.041021999999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Yes \u2014 this breaks the exact guarantee you just built the approval gate to provide. If gofmt/goimports commit changes *after* the diff hash is logged, that hash no longer matches what actually merges. If a release gets questioned, you can't point to \"this hash is what was approved and what shipped\" anymore \u2014 you can only say \"this hash is what was approved, and then something else ran.\"\n\nTwo other risks worth naming: goimports can silently drop an unused import that was actually there for its side effect (e.g. `_ \"net/http/pprof\"`), which is a real behavior change, not just whitespace; and \"Marcus tried it once\" doesn't establish safety for a process whose whole point is auditability, not just passing tests.\n\nBetter fix: run the formatter as a blocking pre-approval check (CI fails / approval can't be requested until the branch is formatted) so the hash recorded at approval time is already final \u2014 no post-approval commits at all. If you want to keep the auto-commit-after-approval flow for convenience anyway, at minimum log it as a distinct event with its own diff hash and don't let it silently supersede the approved hash. I'd hold this out of today's cut unless you go with the pre-approval-check version \u2014 happy to help wire that up instead if you want it fast.",
+  "ttft_ms": 17595,
+  "ttft_stream_ms": 845,
+  "time_to_request_ms": 26,
+  "time_to_request_from_spawn_ms": 793103,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078567935.53,
+  "type": "result",
+  "duration_ms": 23571,
+  "uuid": "3ab3c612-ef54-4a15-a186-65d9aa4ba98c",
+  "_spec": "1cc94828f5a61926c2acc52aefd4c178d3c118170f4678b387f65ec9ee435d87",
+  "_skill": "recording-what-an-agent-did",
+  "_cand": 1,
+  "_trial": 3
+}

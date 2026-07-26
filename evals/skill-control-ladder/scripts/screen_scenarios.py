@@ -47,6 +47,7 @@ OUT_DIR = LADDER_DIR / "data" / "hard-pool"
 CANDIDATES_PATH = OUT_DIR / "candidates.json"
 SCREEN_RUNS = OUT_DIR / "screening-runs"
 SCREENING_PATH = OUT_DIR / "screening.json"
+GRADE_CACHE_PATH = OUT_DIR / "screening-grade-cache.json"
 SELECTED_PATH = OUT_DIR / "selected_tasks.json"
 WORK_DIR = OUT_DIR / "work"
 
@@ -108,18 +109,45 @@ def main() -> int:
             print(f"  {k}", file=sys.stderr)
         return 1
 
-    grade_jobs = [(s, i, t, candidates[s][i]["pass_criteria"], response_text(r))
-                  for (s, i, t), r in records.items()]
+    # Grading verdicts are cached on disk keyed by the response text and the
+    # criterion. Without this, one transient grader failure forces a re-grade of
+    # every other cell on the retry -- which is both wasteful and a source of
+    # drift, since re-grading resamples verdicts that were already settled.
+    cache: dict[str, str] = {}
+    if GRADE_CACHE_PATH.exists():
+        try:
+            cache = json.loads(GRADE_CACHE_PATH.read_text())
+        except (json.JSONDecodeError, OSError):
+            cache = {}
+
+    def cache_key(criteria: str, text: str) -> str:
+        return hashlib.sha256(f"{criteria}::{text}".encode()).hexdigest()
+
     verdicts: dict[tuple[str, int, int], str] = {}
+    grade_jobs = []
+    for (s, i, t), r in records.items():
+        criteria = candidates[s][i]["pass_criteria"]
+        text = response_text(r)
+        hit = cache.get(cache_key(criteria, text))
+        if hit and hit != "ERROR":
+            verdicts[(s, i, t)] = hit
+        else:
+            grade_jobs.append((s, i, t, criteria, text))
+
+    print(f"grading: cached={len(verdicts)} to_grade={len(grade_jobs)}", file=sys.stderr)
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as ex:
         futures = {ex.submit(blind_grade, j[3], j[4]): j for j in grade_jobs}
         done = 0
         for fut in as_completed(futures):
-            s, i, t, _crit, _txt = futures[fut]
-            verdicts[(s, i, t)] = fut.result().get("meets_criteria", "ERROR")
+            s, i, t, crit, txt = futures[fut]
+            verdict = fut.result().get("meets_criteria", "ERROR")
+            verdicts[(s, i, t)] = verdict
+            if verdict != "ERROR":
+                cache[cache_key(crit, txt)] = verdict
             done += 1
             print(f"[{done}/{len(grade_jobs)}] grade {s}/cand{i}/t{t} -> "
-                  f"{verdicts[(s, i, t)]}", file=sys.stderr)
+                  f"{verdict}", file=sys.stderr)
+    GRADE_CACHE_PATH.write_text(json.dumps(cache, indent=2) + "\n")
 
     if any(v == "ERROR" for v in verdicts.values()):
         n = sum(1 for v in verdicts.values() if v == "ERROR")

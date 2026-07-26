@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 34452,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.05488319999999999,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2482,
+    "cache_read_input_tokens": 14824,
+    "output_tokens": 2315,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2482,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2152,
+        "cache_read_input_tokens": 8544,
+        "cache_creation_input_tokens": 218,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 218
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 717,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000807,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2315,
+      "cacheReadInputTokens": 14824,
+      "cacheCreationInputTokens": 2482,
+      "webSearchRequests": 0,
+      "costUSD": 0.0540762,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This design has a real gap given exactly the use case you described. A few things worth flagging before treating it as settled:\n\n**The core problem: dropping all-but-first response payloads, not just requests.** Retries against a \"flaky search API\" are retried *because* something differs between calls \u2014 timeouts, rate-limit errors, partial results, eventual success. The request args being identical says nothing about the responses being identical. By keeping only the first entry's response, you're discarding the exact data that usually explains *why* a run needed 40-50 calls in the first place (e.g., call #38 finally got a 200 after 37 timeouts) \u2014 which is precisely what you'd want when debugging an anomalous-cost or anomalous-outcome run.\n\n**Your validation didn't test the actual risk.** Confirming the collapsed count matches the original call count proves the counting logic works, but it doesn't prove no information was lost \u2014 you'd need to check whether the dropped entries' *responses* differed from the first one. If they did (likely, for a flaky API), that's silent, irrecoverable data loss for every trace already collapsed.\n\n**Cost/latency fields, if per-call, are probably also gone.** If each original entry had its own timestamp/latency/token or billing data, collapsing to one entry means you can no longer see time spent in backoff/retries or per-call cost \u2014 again undermining the specific \"why did cost come out different\" use case.\n\n**This week's traces are already collapsed and can't be un-collapsed.** If any incident from this week turns out to hinge on what a retry actually returned, that data's gone unless there's a pre-dedup raw log retained somewhere upstream.\n\n**My recommendation:** don't collapse response payloads for retried calls, only requests \u2014 or at minimum, keep a lightweight per-call record (timestamp, status/error code, response size) even while collapsing the full duplicate response bodies. That preserves most of the storage win without blinding you on the runs you most need to debug. I'd flag this to your teammate before it goes further, and check whether raw pre-dedup traces still exist anywhere as a safety net for this week's data.",
+  "ttft_ms": 3033,
+  "ttft_stream_ms": 1505,
+  "time_to_request_ms": 26,
+  "time_to_request_from_spawn_ms": 800368,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078575220.7908,
+  "type": "result",
+  "duration_ms": 35312,
+  "uuid": "a8fa9ee0-783e-4939-8e19-206bda58ebf5",
+  "_spec": "75b674341ca9b81db1127f542bbb96ed7fc342bded7038ee3101a5f4d4e7ead3",
+  "_skill": "recording-what-an-agent-did",
+  "_cand": 2,
+  "_trial": 2
+}

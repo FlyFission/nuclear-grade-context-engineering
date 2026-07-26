@@ -1,0 +1,110 @@
+{
+  "breaking-down-the-work": {
+    "body_sha256": "eb326d451a2b5c9585b9222bc652df6c1198e5d313f461e0d7b04f4d41b554d8",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "briefing-an-agent": {
+    "body_sha256": "d6a921beb176f1f5664e6babbd95359370c72ec60fbd9cfa1952d1139285f75a",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "checking-legal-and-safety-wording": {
+    "body_sha256": "696f4ffbb1442e38a8d7ea0cb4091014e7f4048ba0eda3720bd477b3f5431b21",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "checking-release-readiness": {
+    "body_sha256": "467c477d48035967add523c84ce827745e6ea981399c79d6000dab1a518ef126",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "checking-source-claims": {
+    "body_sha256": "93d9dc8d889594983a049ec1af039988c4bafd7b02c9eda6c1df8775c8c28433",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "checking-what-a-change-affects": {
+    "body_sha256": "6e57b6d9fe8dcb4e2bd2b30c3583eb1d713b738fb23ad5b0cf58e10b8e8b6fe4",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "choosing-what-to-control": {
+    "body_sha256": "c3b3ef173ac459bc4ef22038b2aa58264ac183843a3db5760f817a61420c2999",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "closing-stale-packets": {
+    "body_sha256": "1c612baf64f720c39c384108bf564bb849647a20769a7b1e809923595304690a",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "creating-change-records": {
+    "body_sha256": "291c61d81991e53a07e25a5b6547ae5b3c26cbd3068868318d2dcf679e27d65a",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "deciding-who-decides": {
+    "body_sha256": "ebd0aa1e7b81ba1cab9b7a6e86fe509d0c04d9cc7e52eecc135f406168e31343",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "declaring-intent": {
+    "body_sha256": "1812449b181715c1b8a2ec9689e9d70b17064fdee78ad5098e5e5cb5d8cfec20",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "double-checking-before-acting": {
+    "body_sha256": "73831a58e3283cc151aedd71d5ce9071c79d3c96f3c4adb280826e0b8c2017ac",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "handing-off-work": {
+    "body_sha256": "b93e835e3ca98cc7fac7c5789ad27537141d8b834cf01db35503a691e3414605",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "learning-from-experience": {
+    "body_sha256": "ea6458f141682d2eeab5fab8658a310124d6141bb74b3161adfd6182a481dffc",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "organizing-project-folders": {
+    "body_sha256": "d60ebf61b95042f9a93dd315bdd3a589773b57f6c6fea886820d14c5d29e8bfd",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "proving-claims": {
+    "body_sha256": "3b745cd46ce02c12ece5563c798b4ac85ddddc8281b4705b11f060645fd9bf2a",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "questioning-attitude": {
+    "body_sha256": "9e7e41bad82c0e264b40b1ba64be9c2e0d21ea65dff3fa6fee1e9a156c17cb72",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "rating-change-risk": {
+    "body_sha256": "efe461c7df81333d88c481358646347d8da1812f4d57e85988f3683d59c2adc9",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "recording-a-known-good-version": {
+    "body_sha256": "95d7602ec1a6612a0b6652300da7bfab065c7e0a4d96347567799ff0ed1b504e",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "recording-what-an-agent-did": {
+    "body_sha256": "299c6efa6c53c76834616e209b71780d1643a9ee29a8fb73c8f33484779c928c",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "reporting-shared-defects": {
+    "body_sha256": "60d5579be744ca67c11b6537054b534edcff8541064515a06ab36b8a56dd29a9",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "responding-to-incidents": {
+    "body_sha256": "6fb55f5796d798971d5b10fa1966d725d12fc5945c8d49dcf3f5ad12139b448f",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "staying-on-mission": {
+    "body_sha256": "1f310919b8e1c81d41a59f5c7cb6bdbaa553ff216ec3387f9b75379b33ac7bd1",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "stress-testing-agent-changes": {
+    "body_sha256": "45cff5aff2e6c659a4aaa2aedb465206f21052c61ae79f4f0e91e20d143f6a0f",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "tracking-deficiencies": {
+    "body_sha256": "05e8e66a38672627e7cc0fd0e1b9baaabb53899c03b6c3c15da883c8a4de30e1",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "using-nuclear-grade": {
+    "body_sha256": "671a79d742f46918431f7a7a15b6dbb50f56735c004a9565e3dbdf72fc5003b7",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "vetting-outside-code-and-models": {
+    "body_sha256": "9a9e5621cccea2cf7b35ee8a1bb638f4cd33d933a81aeda73416237fd8052632",
+    "compressor_model": "claude-sonnet-5"
+  }
+}

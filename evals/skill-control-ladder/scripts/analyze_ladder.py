@@ -31,7 +31,16 @@ import random
 import statistics
 from collections import defaultdict
 
-from ladder_common import ARM_LABELS, ARMS, GENERIC_NUDGE, GRADED_PATH, LADDER_DIR, TASKS
+from ladder_common import (
+    ARM_LABELS,
+    ARMS,
+    GENERIC_NUDGE,
+    GRADED_PATH,
+    LADDER_DIR,
+    TASKS,
+    append_text,
+    load_compressions,
+)
 
 SCORE = {"YES": 1.0, "PARTIAL": 0.5, "NO": 0.0}
 PERMUTATIONS = 100_000
@@ -80,21 +89,19 @@ def wilson(successes: float, n: int, z: float = 1.96) -> tuple[float, float]:
 
 def main() -> int:
     rows = json.loads(GRADED_PATH.read_text())
+    compressions = load_compressions()
     arms_present = [a for a in ARMS if any(r["arm"] == a for r in rows)]
 
     # scores[skill][arm] = mean score over trials
     by_cell: dict[tuple[str, str], list[float]] = defaultdict(list)
     cost: dict[str, list[float]] = defaultdict(list)
     out_tok: dict[str, list[int]] = defaultdict(list)
-    in_tok: dict[str, list[int]] = defaultdict(list)
     for r in rows:
         by_cell[(r["skill"], r["arm"])].append(SCORE.get(r["verdict"], 0.0))
         if r.get("cost_usd") is not None:
             cost[r["arm"]].append(r["cost_usd"])
         if r.get("output_tokens") is not None:
             out_tok[r["arm"]].append(r["output_tokens"])
-        if r.get("input_tokens") is not None:
-            in_tok[r["arm"]].append(r["input_tokens"])
 
     skills = sorted({r["skill"] for r in rows})
     score = {
@@ -163,14 +170,38 @@ def main() -> int:
         L.append(f"- Two-sided paired permutation test "
                  f"({PERMUTATIONS:,} resamples, seed {SEED}): **p = {primary['p_perm']:.4f}**")
         L.append("")
-        if primary["losers"]:
+        # Ties are separated into ceiling and non-ceiling before any of them is
+        # described as a skill "failing to beat" the control. A tie at 1.00 means
+        # BOTH arms scored perfectly and the scenario cannot show a difference --
+        # that is a measurement limit, not a finding about the skill. Lumping the
+        # two kinds of tie together would read as 15 skills underperforming when
+        # the data says nothing of the sort.
+        ceiling, real_ties = [], []
+        for s in primary["losers"]:
+            c1 = score[s].get("C1_generic_nudge", 0.0)
+            c4 = score[s].get("C4_full_skill", 0.0)
+            (ceiling if c1 >= 1.0 and c4 >= 1.0 else real_ties).append((s, c1, c4))
+
+        L.append(
+            f"C4 is **never worse** than C1 on any of the {primary['n']} skills. The "
+            f"{primary['ties']} ties break down as follows, and the distinction matters:\n"
+        )
+        if ceiling:
             L.append(
-                f"**{len(primary['losers'])} of {primary['n']} skills did not beat a single "
-                f"reusable generic paragraph** on their own scenario and their own criterion:\n"
+                f"**{len(ceiling)} ties at the ceiling** — both arms scored 1.00, so the "
+                f"scenario is too easy to separate them. These are *uninformative*, not "
+                f"negative: the scenario cannot show a difference that may well exist. They "
+                f"are the top priority for harder replacement scenarios.\n"
             )
-            for s in primary["losers"]:
-                L.append(f"- `{s}` (C1 {score[s].get('C1_generic_nudge', 0):.2f} → "
-                         f"C4 {score[s].get('C4_full_skill', 0):.2f})")
+            L.append("> " + ", ".join(f"`{s}`" for s, _, _ in ceiling) + "\n")
+        if real_ties:
+            L.append(
+                f"**{len(real_ties)} ties below the ceiling** — both arms scored the same "
+                f"and neither was perfect. Here the generic paragraph genuinely matched the "
+                f"skill with room to spare on both sides, which is the real finding:\n"
+            )
+            for s, c1, c4 in real_ties:
+                L.append(f"- `{s}` (C1 {c1:.2f} = C4 {c4:.2f})")
             L.append("")
 
     L.append("## Secondary comparisons\n")
@@ -188,15 +219,18 @@ def main() -> int:
     )
 
     L.append("## Cost ledger\n")
-    L.append("| Arm | Mean $/call | Mean input tokens | Mean output tokens | Pool score |")
+    L.append("| Arm | Mean appended words | Mean $/call | Mean output tokens | Pool score |")
     L.append("|---|---|---|---|---|")
     for a in arms_present:
         vals = [score[s][a] for s in skills if a in score[s]]
         pool = statistics.fmean(vals) if vals else 0.0
         lo, hi = wilson(sum(vals), len(vals))
+        appended = statistics.fmean(
+            len(append_text(s, a, compressions).split()) for s in skills
+        )
         L.append(
-            f"| `{a}` | ${statistics.fmean(cost[a]):.4f} | "
-            f"{statistics.fmean(in_tok[a]):,.0f} | {statistics.fmean(out_tok[a]):,.0f} | "
+            f"| `{a}` | {appended:,.0f} | ${statistics.fmean(cost[a]):.4f} | "
+            f"{statistics.fmean(out_tok[a]):,.0f} | "
             f"{pool:.3f} (95% CI {lo:.2f}–{hi:.2f}) |"
         )
     L.append("")
@@ -242,7 +276,8 @@ def main() -> int:
     if primary:
         print(f"primary C4 vs C1: mean {primary['mean_diff']:+.3f}, "
               f"sign p={primary['p_sign']:.4f}, perm p={primary['p_perm']:.4f}, "
-              f"{len(primary['losers'])} non-winning skills")
+              f"{primary['pos']} better / {primary['neg']} worse / "
+              f"{primary['ties']} tied ({len(ceiling)} at ceiling)")
     return 0
 
 

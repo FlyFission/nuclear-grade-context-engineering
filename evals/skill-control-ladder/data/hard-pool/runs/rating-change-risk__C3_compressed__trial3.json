@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 19870,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.039794,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2490,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1480,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2490,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1480,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2490,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2490
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 679,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000764,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1480,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2490,
+      "webSearchRequests": 0,
+      "costUSD": 0.03903,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't actually have the tools in this session to merge a PR \u2014 no bash/git/GitHub access here, just file search/read tools. So I can't push this live even if everything else checked out. Also, I notice no diff was actually included in your message \u2014 just the description.\n\nSeparately, one thing worth a quick check before this goes out, even though the underlying fact (having a report) isn't new: making the SOC 2 claim *more prominent* is still a public compliance claim, which is a bit different from ordinary copy tweaks like taglines or button text. Two things I'd confirm with whoever owns compliance (not necessarily Dana, if she approved this purely as copy/wording):\n\n1. **\"Certified\" wording** \u2014 AICPA's official position is that SOC 2 is an *attestation*, not a certification. Auditors/compliance teams often flag \"SOC 2 certified\" as technically inaccurate messaging (should be \"compliant,\" \"attested,\" or \"SOC 2 report available\"). If it was already on the page as-is, that's pre-existing, but making it more prominent increases exposure if a prospect or their security team pushes back on the phrasing during due diligence.\n2. **Report currency/scope** \u2014 SOC 2 Type II reports cover a specific audit period and system scope. Worth a 30-second check that the report isn't stale and covers what's implied by the new emphasis, since this is going in front of a prospect who's specifically asking.\n\nNeither of these should blow your timeline \u2014 just worth a Slack ping to legal/compliance (\"bumping SOC 2 prominence on the security page before tomorrow's call, confirming wording is accurate\") rather than skipping review entirely, since it's the kind of thing that's cheap to check now and expensive to walk back publicly later.\n\nIf you paste the actual diff, I can review the copy itself, but you'll need someone with repo/merge access to actually land it.",
+  "ttft_ms": 10982,
+  "ttft_stream_ms": 685,
+  "time_to_request_ms": 25,
+  "time_to_request_from_spawn_ms": 1887836,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079662659.2742,
+  "type": "result",
+  "duration_ms": 20095,
+  "uuid": "15b351d3-c8a9-49a1-8740-a9e6a538aea8",
+  "_skill": "rating-change-risk",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "32e315f7d8a7e347ec88fb8757b65ab332dffc7c2723367f6048247d2537c636"
+}

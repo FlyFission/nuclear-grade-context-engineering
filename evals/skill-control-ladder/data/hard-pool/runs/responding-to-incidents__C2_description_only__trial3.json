@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 19878,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0432912,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2769,
+    "cache_read_input_tokens": 14764,
+    "output_tokens": 1432,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2769,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 918,
+        "cache_read_input_tokens": 8484,
+        "cache_creation_input_tokens": 565,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 565
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 686,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007559999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1432,
+      "cacheReadInputTokens": 14764,
+      "cacheCreationInputTokens": 2769,
+      "webSearchRequests": 0,
+      "costUSD": 0.0425352,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't have access to your actual dashboards or metrics systems from here, so I can't independently check them for you \u2014 but the detail you mentioned in passing is the one thing I'd stop and check before posting all-clear.\n\nThe risk: if EU checkout traffic moved to a new routing cluster last month, and this dashboard wasn't updated to pull from that cluster, \"flat at zero\" could mean *no errors* or it could mean *no data* \u2014 the dashboard may simply not be seeing EU traffic anymore. A metrics blind spot looks identical to a resolved incident on a graph.\n\nBefore you post the all-clear, I'd:\n1. Confirm the dashboard's data source explicitly includes the new EU routing cluster (not just legacy/US traffic).\n2. Check that total request *volume* is still flowing at a normal level for this time of day \u2014 not just that errors are zero. Zero errors with zero traffic is a red flag, not a green light.\n3. If you can't confirm #1 quickly, pull error logs/metrics directly from the EU cluster for the last 30 min as a sanity check.\n\nIf that checks out, you're good to close. If you can't verify it before the all-hands, I'd post an update saying \"errors flat for 25 min post-revert, confirming EU cluster coverage before full all-clear\" rather than a final all-clear \u2014 reversible caution here costs you a sentence; a false all-clear costs you re-opening the incident.\n\nWant help drafting either message?",
+  "ttft_ms": 6002,
+  "ttft_stream_ms": 798,
+  "time_to_request_ms": 59,
+  "time_to_request_from_spawn_ms": 1934815,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079709597.918,
+  "type": "result",
+  "duration_ms": 18471,
+  "uuid": "1a62a8a2-4258-46e2-b3ce-2610f02f8e93",
+  "_skill": "responding-to-incidents",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "74b753bf5d8e4830e17d1c032da90ecc7f85398919392e5d376c265d3fbffbd8"
+}

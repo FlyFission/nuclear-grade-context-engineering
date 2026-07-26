@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 27310,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.044994,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2263,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1915,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2263,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1915,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2263,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2263
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 691,
+      "outputTokens": 22,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000801,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1915,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2263,
+      "webSearchRequests": 0,
+      "costUSD": 0.044192999999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A few things I'd want nailed down before Friday, since a signed contract's validity is now hinging on a vendor you've verified mostly via marketing copy and two demo runs:\n\n- **\"Legally binding\" is a vendor claim, not a legal review.** Get someone (legal/compliance) to actually look at what SignFast's certificate contains \u2014 consent language, IP/timestamp capture, identity verification method \u2014 and confirm it satisfies ESIGN Act/UETA (or whatever applies in your customers' jurisdictions). Don't take their landing page's word for it, especially since disputes are the exact scenario you're building this for.\n- **Test failure paths, not just the happy path.** Two clean sales demos tell you nothing about declined signatures, expired links, multi-signer flows, or what happens if your API pull of the completed doc fails after signing. Silent failures here mean a customer thinks they signed and you have no record.\n- **Confirm the certificate is tamper-evident, not just a PDF.** If it's a plain PDF SignFast generates, ask what stops it from being edited after the fact \u2014 you want a hash/digital signature you can independently verify, since \"we archived their certificate\" only helps in a dispute if it's provably authentic.\n- **Uptime % measures their platform, not your critical path.** 99.98% still means ~1.75 hours of downtime this year \u2014 what happens if a customer is mid-signature during an outage? Do you have a fallback (even manual) for onboarding to not stall entirely?\n- **Check the DPA and data handling.** Customer PII/signatures flowing through a third party needs a data processing agreement and clarity on hosting/retention, not just a vendor status page.\n- **Confirm bulk export exists**, so you're not locked in if you switch providers later and need to pull years of historical certificates at once.\n\nGiven the legal weight here, I'd push for a short pilot with a handful of real (low-stakes) customers before fully retiring the manual process, rather than a hard cutover Friday based on demo-only validation.",
+  "ttft_ms": 16584,
+  "ttft_stream_ms": 895,
+  "time_to_request_ms": 39,
+  "time_to_request_from_spawn_ms": 1966543,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079741250.927,
+  "type": "result",
+  "duration_ms": 26786,
+  "uuid": "0881320f-cf67-4003-b1d9-80340eccd7e2",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "d3ae8be97a31349ae087d5b2d312bbfd6afca778f7b14bba68733f70a55f8093"
+}

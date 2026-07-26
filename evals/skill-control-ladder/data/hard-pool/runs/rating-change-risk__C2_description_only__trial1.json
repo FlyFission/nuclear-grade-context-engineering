@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 36605,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.058012,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2223,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2801,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2223,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2801,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2223,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2223
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 679,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000769,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2801,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2223,
+      "webSearchRequests": 0,
+      "costUSD": 0.057243,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A couple things before treating this as a routine copy tweak:\n\n**I can't actually merge this** \u2014 I don't have push/deploy access to your marketing site repo in this session, so you'll need to merge it yourself either way.\n\n**On the risk level itself, I'd bump this above \"no review needed,\" for one specific reason**: this isn't really \"copy\" \u2014 it's a public compliance/certification claim, and you're deliberately amplifying it *in response to* a competitor getting called out for the same claim type. That's exactly the situation where claims get more scrutiny (from prospects, auditors, or legal), not less. Two things worth 5 minutes before it ships:\n\n1. **Wording precision**: \"SOC 2 Type II certified\" is common shorthand, but SOC 2 isn't a certification \u2014 it's an attestation report. If you're making it *more prominent*, it's worth having whoever owns your auditor relationship (or legal) confirm the exact phrasing you're allowed to use publicly. Dana approving the original copy covers tone/brand, not necessarily audit-language accuracy.\n2. **Currency/scope**: is the Type II report still within its audit period, and does it cover what the new line implies? Increasing prominence increases reliance on it being current and accurately scoped.\n\nThis doesn't need a full review cycle \u2014 just a quick async check from whoever signs off on compliance claims (security/legal), which you can likely get same-day. I wouldn't hold the whole PR for it if that's not possible, but I'd flag it rather than ship silently, especially with a prospect specifically asking about it tomorrow \u2014 if the wording is off, that's the exact call where it'd get noticed.\n\nCan you paste the actual diff text? I didn't receive it in your message \u2014 I'll take a look at the wording either way.",
+  "ttft_ms": 28446,
+  "ttft_stream_ms": 806,
+  "time_to_request_ms": 43,
+  "time_to_request_from_spawn_ms": 1874669,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079649458.7144,
+  "type": "result",
+  "duration_ms": 37389,
+  "uuid": "c2941ebe-f879-4070-8420-c484bf342736",
+  "_skill": "rating-change-risk",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "30bd81198c87a6bd36c35a0b8e6aefda72fce54140496ee1f972aabe4c999e4a"
+}

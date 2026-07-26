@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 21792,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.051882899999999996,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 3505,
+    "cache_read_input_tokens": 24263,
+    "output_tokens": 1518,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3505,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 415,
+        "cache_read_input_tokens": 9515,
+        "cache_creation_input_tokens": 270,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 270
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 701,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000786,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1518,
+      "cacheReadInputTokens": 24263,
+      "cacheCreationInputTokens": 3505,
+      "webSearchRequests": 0,
+      "costUSD": 0.0510969,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before I create this, one thing needs clarifying: you rebased and re-pushed *after* CI build #9012 ran, or did #9012 run on the post-rebase commit?\n\nIf #9012 ran before the rebase, it validated a different commit SHA than what's actually on the PR now \u2014 it never tested the code merged with yesterday's queue-timeout fix. A clean rebase diff being \"just the one constant\" doesn't guarantee CI passes against the new base (that fix could touch shared code paths, retry logic, etc.). \"Fully tested and ready to merge\" as a claim needs CI evidence tied to the current HEAD, not a pre-rebase run.\n\nCan you confirm the commit SHA build #9012 ran against matches the current PR HEAD after your re-push? If yes, I'll create the record now with that as evidence. If it ran before the rebase, we should either point to a fresh CI run on the current HEAD, or trigger one \u2014 given your 5pm window that's worth checking first rather than after merge.",
+  "ttft_ms": 10687,
+  "ttft_stream_ms": 1673,
+  "time_to_request_ms": 50,
+  "time_to_request_from_spawn_ms": 1808407,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079583061.8281,
+  "type": "result",
+  "duration_ms": 22391,
+  "uuid": "95aff115-72dc-4444-9bd9-222ed2a5bf5d",
+  "_skill": "creating-change-records",
+  "_arm": "C2_description_only",
+  "_trial": 2,
+  "_input_spec_sha256": "42f79f9bf6b811045a2c9da2b108f4c83785fd0fa905bb101ea46006354bf3a9"
+}

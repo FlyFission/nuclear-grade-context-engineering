@@ -109,8 +109,9 @@ def main() -> int:
         for s in skills
     }
 
-    def comparison(hi: str, lo: str) -> dict | None:
-        pairs = [(s, score[s][hi] - score[s][lo]) for s in skills
+    def comparison(hi: str, lo: str, subset: list[str] | None = None) -> dict | None:
+        pool = skills if subset is None else subset
+        pairs = [(s, score[s][hi] - score[s][lo]) for s in pool
                  if hi in score[s] and lo in score[s]]
         if not pairs:
             return None
@@ -126,7 +127,35 @@ def main() -> int:
             "losers": sorted(s for s, d in pairs if d <= 0),
         }
 
+    # Instrument-validity gate.
+    #
+    # A ceiling (every arm at 1.00) and a floor (every arm at 0.00) are the same
+    # failure: the scenario cannot express a difference, so the arms' equality
+    # says nothing about the skills. v1 shipped a headline number without
+    # noticing 13 ceilings; this makes that impossible to repeat by classifying
+    # every skill before any pooled statistic is computed, and reporting the
+    # primary test over informative skills only.
+    #
+    # PARTIAL rate is tracked alongside because it is a third way to lose
+    # resolution: if the grader answers PARTIAL to almost everything, every arm
+    # lands near 0.5 and real differences are compressed out of view. That is a
+    # property of the criteria's wording, not of the skills.
+    validity: dict[str, str] = {}
+    for s in skills:
+        vals = [score[s][a] for a in arms_present if a in score[s]]
+        if vals and min(vals) >= 0.95:
+            validity[s] = "ceiling"
+        elif vals and max(vals) <= 0.05:
+            validity[s] = "floor"
+        else:
+            validity[s] = "informative"
+    informative = [s for s in skills if validity[s] == "informative"]
+    partial_rate = sum(1 for r in rows if r["verdict"] == "PARTIAL") / max(1, len(rows))
+
     primary = comparison("C4_full_skill", "C1_generic_nudge")
+    primary_informative = comparison(
+        "C4_full_skill", "C1_generic_nudge", subset=informative
+    )
     secondary = [c for c in (
         comparison("C4_full_skill", "C0_bare"),
         comparison("C1_generic_nudge", "C0_bare"),
@@ -155,6 +184,36 @@ def main() -> int:
              "from any of them:\n")
     L.append(f"> {GENERIC_NUDGE}\n")
 
+    L.append("## Instrument validity\n")
+    L.append(
+        "A scenario where every arm scores 1.00 (ceiling) or every arm scores 0.00\n"
+        "(floor) cannot express a difference between arms. Equality there is a\n"
+        "property of the scenario, not a finding about the skills. Every skill is\n"
+        "classified before any pooled statistic is computed, and the primary test is\n"
+        "reported over informative skills only.\n"
+    )
+    counts = {k: sum(1 for v in validity.values() if v == k)
+              for k in ("informative", "ceiling", "floor")}
+    L.append(f"- Informative: **{counts['informative']}/{len(skills)}**")
+    L.append(f"- Ceiling (all arms >= 0.95): **{counts['ceiling']}**")
+    L.append(f"- Floor (all arms <= 0.05): **{counts['floor']}**")
+    L.append(f"- PARTIAL verdict rate: **{partial_rate:.0%}** of {len(rows)} gradings")
+    L.append("")
+    for kind in ("ceiling", "floor"):
+        named = [s for s in skills if validity[s] == kind]
+        if named:
+            L.append(f"{kind.title()} skills, excluded from the primary test: "
+                     + ", ".join(f"`{s}`" for s in named) + "\n")
+    if partial_rate > 0.5:
+        L.append(
+            f"> **Resolution warning.** {partial_rate:.0%} of gradings are PARTIAL, so\n"
+            f"> most cells sit near 0.5 regardless of arm and real differences are\n"
+            f"> compressed out of view. This is a property of how the pass criteria are\n"
+            f"> worded, not of the skills. Treat any null result from this pool as\n"
+            f"> **inconclusive rather than negative** until the criteria are rewritten to\n"
+            f"> be cleanly yes/no decidable.\n"
+        )
+
     L.append("## Primary result\n")
     if primary:
         L.append(
@@ -170,22 +229,56 @@ def main() -> int:
         L.append(f"- Two-sided paired permutation test "
                  f"({PERMUTATIONS:,} resamples, seed {SEED}): **p = {primary['p_perm']:.4f}**")
         L.append("")
+        if primary_informative and primary_informative["n"] != primary["n"]:
+            pi = primary_informative
+            L.append(
+                f"Restricted to the {pi['n']} informative skills (ceilings and floors\n"
+                f"removed): mean **{pi['mean_diff']:+.3f}**, "
+                f"{pi['pos']} better / {pi['neg']} worse / {pi['ties']} tied, "
+                f"sign p = {pi['p_sign']:.4f}, permutation p = {pi['p_perm']:.4f}.\n"
+            )
+        L.append("")
         # Ties are separated into ceiling and non-ceiling before any of them is
         # described as a skill "failing to beat" the control. A tie at 1.00 means
         # BOTH arms scored perfectly and the scenario cannot show a difference --
         # that is a measurement limit, not a finding about the skill. Lumping the
         # two kinds of tie together would read as 15 skills underperforming when
         # the data says nothing of the sort.
-        ceiling, real_ties = [], []
+        # Losses and ties are separated first. `losers` holds every skill with a
+        # non-positive difference, so treating the whole list as "ties" would
+        # print a skill that genuinely lost under a "tied" heading -- and would
+        # pair with an unconditional "never worse" claim that is simply false
+        # whenever any skill lost. Both are decided from the data here.
+        ceiling, real_ties, losses = [], [], []
         for s in primary["losers"]:
             c1 = score[s].get("C1_generic_nudge", 0.0)
             c4 = score[s].get("C4_full_skill", 0.0)
-            (ceiling if c1 >= 1.0 and c4 >= 1.0 else real_ties).append((s, c1, c4))
+            if c4 < c1:
+                losses.append((s, c1, c4))
+            elif c1 >= 1.0 and c4 >= 1.0:
+                ceiling.append((s, c1, c4))
+            else:
+                real_ties.append((s, c1, c4))
 
-        L.append(
-            f"C4 is **never worse** than C1 on any of the {primary['n']} skills. The "
-            f"{primary['ties']} ties break down as follows, and the distinction matters:\n"
-        )
+        if primary["neg"] == 0:
+            L.append(
+                f"C4 is **never worse** than C1 on any of the {primary['n']} skills. The "
+                f"{primary['ties']} ties break down as follows, and the distinction "
+                f"matters:\n"
+            )
+        else:
+            L.append(
+                f"C4 scores **lower** than C1 on {primary['neg']} of the {primary['n']} "
+                f"skills, and ties on {primary['ties']}:\n"
+            )
+        if losses:
+            L.append(
+                f"**{len(losses)} skills where the full skill scored BELOW the generic "
+                f"control**, which is a result against the skills and is reported as such:\n"
+            )
+            for s, c1, c4 in losses:
+                L.append(f"- `{s}` (C1 {c1:.2f} → C4 {c4:.2f})")
+            L.append("")
         if ceiling:
             L.append(
                 f"**{len(ceiling)} ties at the ceiling** — both arms scored 1.00, so the "

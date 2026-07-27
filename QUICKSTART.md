@@ -95,7 +95,9 @@ flowchart TD
     Q2 -->|already went wrong| Incident[Incident pattern]
 ```
 
-When in doubt, start with Standard and keep the packet thin.
+If the mode is genuinely unclear after checking consequence, reversibility, and
+unknowns, use Standard until the uncertainty is resolved. Do not raise the mode
+just because the work is large; rigor follows stakes, not effort.
 
 ## 4. Create the packet
 

@@ -40,7 +40,7 @@
 
 ## Required links
 
-- Related PR/issue: PR from `docs/daily-1pct-20260728-live-token-source`
+- Related PR/issue: [PR #88](https://github.com/FlyFission/nuclear-grade-context-engineering/pull/88)
 - Relevant changed files: `CORE.md`, `risk.md`, `proof.md`
 - CI run / test output / eval report / screenshot / log: local results summarized above; GitHub CI after PR creation
 - If AI-assisted: this record discloses authorship and residual coupling; reviewer and CI can reproduce the decisive checks.

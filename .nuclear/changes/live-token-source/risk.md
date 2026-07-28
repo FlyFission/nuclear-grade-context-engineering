@@ -8,7 +8,7 @@
 ## Change
 
 - Slug: `live-token-source`
-- PR / issue: PR from `docs/daily-1pct-20260728-live-token-source`
+- PR / issue: [PR #88](https://github.com/FlyFission/nuclear-grade-context-engineering/pull/88)
 - Owner: FlyFission
 - Date: 2026-07-28
 - Summary: Replace stale undated token totals in `CORE.md` with the command that produces live totals and a link to explicitly dated snapshots.
@@ -50,7 +50,7 @@ No Standard trigger is present: no users, data, security, permissions, dependenc
 ## Required links
 
 - Packet: `.nuclear/changes/live-token-source/`
-- Related PR/issue: PR from `docs/daily-1pct-20260728-live-token-source`
+- Related PR/issue: [PR #88](https://github.com/FlyFission/nuclear-grade-context-engineering/pull/88)
 - Proof record: `proof.md`
 - Relevant source-map/crosswalk if invoked: not invoked
 

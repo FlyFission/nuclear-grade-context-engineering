@@ -12,7 +12,12 @@ nuclear-grade-mcp = "nuclear_grade.mcp_server:main"
 
 [project.optional-dependencies]
 mcp = [
-  "mcp>=1.0",
+  # Upper bound is load-bearing, not caution: mcp 2.0.0 removed
+  # `mcp.server.fastmcp`, which `nuclear_grade/mcp_server.py` imports, so an
+  # unbounded `>=1.0` resolves to a release the server cannot start on.
+  # Migrating to the 2.x API is a real change, not a pin bump -- until that is
+  # done deliberately, this keeps resolution on the API the code targets.
+  "mcp>=1.0,<2",
 ]
 dev = [
   "pytest>=8",

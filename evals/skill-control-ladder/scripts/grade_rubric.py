@@ -120,13 +120,22 @@ def main() -> int:
     rubrics = json.loads(RUBRICS_PATH.read_text())
     out_path = LADDER_DIR / "data" / args.out if args.out else OUT_PATH
 
-    prior = {}
-    if out_path.exists():
+    # Successful rows are also persisted to a sidecar so that a handful of
+    # transient grader failures does not discard an otherwise complete batch.
+    # Refusing to publish a partial authoritative file is correct -- downstream
+    # statistics take their denominator from it -- but throwing away 396 good
+    # gradings because 9 calls timed out is not, and on a 405-cell batch it makes
+    # the retry loop nearly impossible to converge.
+    partial_path = out_path.with_suffix(".partial.json")
+    prior: dict[tuple[str, str, int], dict] = {}
+    for src in (partial_path, out_path):
+        if not src.exists():
+            continue
         try:
-            for r in json.loads(out_path.read_text()):
+            for r in json.loads(src.read_text()):
                 prior[(r["skill"], r["arm"], r["trial"])] = r
         except (json.JSONDecodeError, OSError):
-            prior = {}
+            continue
 
     rows, jobs, incomplete = [], [], []
     for skill in sorted(TASKS):
@@ -192,13 +201,16 @@ def main() -> int:
             print(f"[{done}/{len(jobs)}] {skill}/{arm}/t{trial} -> "
                   f"{rows[-1]['checks_met']}/{len(checks)}", file=sys.stderr)
 
+    rows.sort(key=lambda r: (r["skill"], r["arm"], r["trial"]))
     if failed:
-        print(f"{failed} grading call(s) failed; NOT writing a partial file. Re-run.",
-              file=sys.stderr)
+        partial_path.write_text(json.dumps(rows, indent=2) + "\n")
+        print(f"{failed} grading call(s) failed; kept {len(rows)} good row(s) in "
+              f"{partial_path.name} and did NOT write the authoritative file. "
+              f"Re-run to grade only the {failed} missing cell(s).", file=sys.stderr)
         return 1
 
-    rows.sort(key=lambda r: (r["skill"], r["arm"], r["trial"]))
     out_path.write_text(json.dumps(rows, indent=2) + "\n")
+    partial_path.unlink(missing_ok=True)
     print(f"Wrote {len(rows)} rows to {out_path}", file=sys.stderr)
     return 0
 

@@ -905,14 +905,14 @@ def handle_tokens(args: argparse.Namespace) -> int:
     budgets = load_budgets(repo)
 
     skills = sorted(report.of_kind("skill"), key=lambda f: f.body_tokens, reverse=True)
-    print("Skill token cost (description = always-loaded, body = on-invocation):")
+    print("Skill token cost (description = catalog metadata, body = on selection):")
     print(f"  {'description':>11}  {'body':>6}  skill")
     for skill in skills:
         print(f"  {skill.description_tokens:>11}  {skill.body_tokens:>6}  {skill.name}")
     print(
         f"\nSkill totals: descriptions {report.skill_description_total} tokens "
-        f"(always loaded), bodies {report.skill_body_total} tokens "
-        f"(loaded only when the skill fires)."
+        f"(host may shorten or omit), bodies {report.skill_body_total} tokens "
+        f"(loaded when selected)."
     )
 
     commands = report.of_kind("command")

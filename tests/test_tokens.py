@@ -75,7 +75,7 @@ def test_build_report_derives_skills_dynamically_from_tree():
 
     assert skill_names == found_on_disk
     assert len(skill_names) == len(found_on_disk)
-    # Every skill carries both an always-loaded description and an on-invocation body.
+    # Every skill carries both catalog metadata and an on-selection body.
     for skill in report.of_kind("skill"):
         assert skill.description_tokens > 0, skill.name
         assert skill.body_tokens > 0, skill.name
@@ -183,8 +183,9 @@ def test_tokens_command_reports_and_passes_on_accepted_corpus():
     result = run_ng("tokens", str(ROOT))
 
     assert result.returncode == 0, result.stderr
-    assert "always-loaded" in result.stdout
-    assert "on-invocation" in result.stdout
+    assert "catalog metadata" in result.stdout
+    assert "on selection" in result.stdout
+    assert "host may shorten or omit" in result.stdout
     assert "OK: token budget" in result.stdout
 
 

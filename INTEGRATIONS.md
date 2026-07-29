@@ -7,14 +7,16 @@ Windsurf, and VS Code.
 ## How it works
 
 A Nuclear-grade skill is a plain `SKILL.md` file with a `name` and a
-`description` in its frontmatter. Every modern agent tool reads the
-`description` of each installed skill and the model itself pulls the full skill
-in when a request matches — no dispatcher, no daemon, no per-prompt wiring. The
-**`description` is the integration**. The same files work unmodified across
-tools; "installing" just means placing them where each tool looks.
+`description` in its frontmatter. Supported agent tools use that metadata to
+route requests to the full skill — no Nuclear-grade dispatcher, daemon, or
+per-prompt wiring. Exact catalog rendering is host-dependent: a host may shorten
+descriptions or omit entries under its context budget. The same files work
+unmodified across tools; "installing" just means placing them where each tool
+looks. See the [skill authoring contract](docs/05-reference/skill-authoring-contract.md)
+for the portable boundary.
 
-That is also why this is lean: only the short descriptions are ever
-always-loaded; a skill's body is read **only when that skill fires**.
+That progressive-disclosure shape is what keeps the integration lean: compact
+routing metadata first, then the selected skill body when the host supports it.
 
 ## Install per tool
 

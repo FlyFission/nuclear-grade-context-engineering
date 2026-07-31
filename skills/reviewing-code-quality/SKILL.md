@@ -7,7 +7,7 @@ description: Reviews a diff or module for slipping standards, favoring deletion 
 
 ## Overview
 
-Standards drift in code is the slow buildup of complexity. Files grow until no one can hold them in their head. Layers get added that do not pull their weight. Logic for one feature leaks into shared code. Clever, hard-to-follow code replaces plain, direct code. Each step looks fine on its own. Added up, they make a system no one can maintain. This review holds the line and keeps standards rising. Its strongest move is deletion: prefer removing structure over moving it around. It ends in one honest verdict, not a softened summary. A review that always says "looks good" is not a control.
+Standards drift in code is the slow buildup of complexity. Files grow until no one can hold them in their head. Layers get added that do not pull their weight. Logic for one feature leaks into shared code. Clever, hard-to-follow code replaces plain, direct code. Each step looks fine on its own. Added up, they make a system no one can maintain. This review holds the line and keeps standards rising. Its strongest move is deletion: prefer removing structure over moving it around. It ends in one honest verdict, not a softened summary. A review that always says "looks good" is not a control. The cost is not only human: a controlled minimal-pair study found a coding agent on cleaner code used roughly 7-8% fewer tokens and revisited already-edited files about a third less often, at an unchanged pass rate -- so drift is also a standing tax on every future agent run (boundary and vendor affiliation in `docs/02-operating-system/token-burn-control.md`).
 
 ## Decision contract
 
@@ -24,6 +24,7 @@ Standards drift in code is the slow buildup of complexity. Files grow until no o
 - Logic for one feature may be leaking into shared, core, or framework code.
 - A rewrite is proposed and you need to judge whether it removes complexity or just moves it.
 - An agent wrote code fast and the question is whether anyone can maintain it.
+- The work is in Sweeper posture -- simplification, unshipping, or performance work -- where deletion can outrun the baseline (see `docs/02-operating-system/archetype-lens.md`).
 
 ## When Not to Use
 
@@ -74,6 +75,8 @@ Standards drift in code is the slow buildup of complexity. Files grow until no o
 - "It is only a little over the limit." Limits exist because little overages are how files become unreadable.
 - "Rewriting it would touch a lot." Moving complexity is not removing it. Ask what would delete the need.
 - "The author is experienced." The review checks the code, not the author.
+- "The agent wrote it and CI is green." Green is a check, and a check is not a verdict. The checks that exist did not fail; that is a different claim from the code being maintainable.
+- "Cleanup is cheap, it is only structure." Deletion without a baseline is a behavior change wearing a hygiene label. Record the known-good version first.
 
 ## Red Flags
 

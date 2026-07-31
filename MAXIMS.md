@@ -65,6 +65,29 @@ not say the evidence is correct. The judgment is a human's, supported by
 
 ---
 
+> **Quality is the system of checks that produces evidence. The verdict is the decision someone
+> makes from it. Accountability is being able to explain that verdict later.**
+
+Three different things, and most arguments about "quality" are really about which one is
+missing. A check can pass, fail, or be inconclusive — it cannot accept anything. A verdict has a
+name attached; that is what separates it from a summary. And a verdict nobody can reconstruct
+six months later was never accountable, only convenient. Under AI authorship the split gets
+sharper: the checks scale with the agent, the verdict does not. *(See
+[`docs/02-operating-system/quality-verdict-accountability.md`](docs/02-operating-system/quality-verdict-accountability.md).)*
+
+---
+
+> **Clean code did not make the agent smarter. It made the same result cheaper to reach.**
+
+A controlled minimal-pair study found cleaner code left a coding agent's pass rate unchanged —
+under one percent difference — while cutting tokens by roughly 7–8% and file revisits by about a
+third. Read it as a cost-and-attention result, not a capability result. It is an argument for
+clean code that survives contact with the evidence, which is more than the capability version
+would have. *(See
+[`docs/02-operating-system/token-burn-control.md`](docs/02-operating-system/token-burn-control.md).)*
+
+---
+
 > **The agent drafts; the human approves.**
 
 The intended loop is *user prompt → agent drafts the change record → human edits and approves

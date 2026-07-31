@@ -17,6 +17,8 @@ human judgment decides engineering adequacy
 validator checks whether the packet exposes the evidence needed for that judgment
 ```
 
+This is the Quality/Verdict split stated in validator terms: the checker is part of the *system of checks that produces evidence*, never the *decision made from it*. The full three-way separation — quality, verdict, accountability — is in [`quality-verdict-accountability.md`](quality-verdict-accountability.md).
+
 ---
 
 ## 2. Activation threshold

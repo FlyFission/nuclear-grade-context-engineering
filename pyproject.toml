@@ -12,6 +12,10 @@ nuclear-grade-mcp = "nuclear_grade.mcp_server:main"
 
 [project.optional-dependencies]
 mcp = [
+  # Upper-bounded deliberately: mcp 2.0.0 removed `mcp.server.fastmcp`, which
+  # `nuclear_grade/mcp_server.py` imports, so an unpinned resolve breaks the
+  # server and the mcp-smoke CI job. Lift the bound with the 2.x port, not before.
+  # (The constraint itself landed separately as #90; this line keeps the rationale.)
   "mcp>=1.0,<2",
 ]
 dev = [

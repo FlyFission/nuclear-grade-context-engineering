@@ -11,6 +11,7 @@ Portable command prompt generated from `skills/reviewing-code-quality/SKILL.md`.
 - Logic for one feature may be leaking into shared, core, or framework code.
 - A rewrite is proposed and you need to judge whether it removes complexity or just moves it.
 - An agent wrote code fast and the question is whether anyone can maintain it.
+- The work is in Sweeper posture -- simplification, unshipping, or performance work -- where deletion can outrun the baseline (see `docs/02-operating-system/archetype-lens.md`).
 
 ## Do not use when
 

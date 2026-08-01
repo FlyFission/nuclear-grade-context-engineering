@@ -149,6 +149,13 @@ reason in:
   embeddings miss; semantic search catches concepts that grep misses. Use both before
   trusting either.
 
+- **The code's own cleanliness is part of the retrieval cost.** A controlled minimal-pair study
+  found an agent working on cleaner code revisited files it had already edited roughly a third
+  less often, at an unchanged pass rate — fewer re-reads competing for the same window. It is an
+  attention-budget result, not a capability one, and it comes from vendor-affiliated authors on
+  six repository pairs; the boundary is stated in
+  [`token-burn-control.md`](token-burn-control.md).
+
 This repo stays tool-agnostic: these are selection rules for whoever builds the pack, not a
 required indexing stack.
 

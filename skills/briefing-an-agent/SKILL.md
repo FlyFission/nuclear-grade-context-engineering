@@ -43,7 +43,7 @@ A good brief is how you supply competence and clarity so the agent can decide we
 1. Name the role, the question to decide, and the goal. Carry the goal anchor (the goal, the signs of success, and the non-goals, meaning what is out of scope) so it survives a context reset. Name who is affected by the work and anyone who must be consulted, so the brief carries the stakes, not just the task. See `staying-on-mission`.
 2. Include only the record files, affected files, source rows, and evidence commands needed for the next decision.
 3. State the last action that finished, what conditions changed, the most important next action, the likely mistake, and how to guard against it.
-4. State the current phase: explore, candidate, audit, or accept.
+4. State the current phase: explore, candidate, audit, or accept, and name the **archetype** the brief puts the agent in. A briefing verb chooses a posture whether or not you say so -- "clean this up" is Sweeper, whose characteristic drift is deletion without a baseline; "make it work" is Builder, whose drift is volume outrunning review. Naming it puts the drift on the record before the agent starts. See `docs/02-operating-system/archetype-lens.md`.
 5. State the agent's power over files, commands, the network, credentials, approvals, and the release.
 6. State the claims that are off limits, the targets not to touch, and when to stop.
 7. Link the context pack back to the record and the mode rules that apply.
@@ -52,6 +52,7 @@ A good brief is how you supply competence and clarity so the agent can decide we
 
 - A context-pack section or file.
 - Clear limits on the agent's power.
+- The archetype the brief places the agent in, and the drift that posture is prone to.
 - The next action and the evidence required.
 - The last action that finished and the conditions that changed, when this brief follows earlier work in the same task.
 
@@ -102,7 +103,7 @@ Inputs:
 - required evidence: <commands/links/reviews>
 - loaded instruction files: <AGENTS.md / CLAUDE.md / .github/copilot-instructions.md / tool rules in force, with precedence or "none known">
 
-Return a short context pack. Include the mode, the decision question, the goal, the work phase, a risk summary, a basis summary, the evidence required, the loaded instruction files in force and which one wins on conflict, the limits on what the agent may do, the claims it must not make, the open gaps, the last action completed, what has changed, the critical next action, and the next action. If responsibility is changing hands rather than starting fresh, use the `handing-off-work` prompt instead.
+Return a short context pack. Include the mode, the decision question, the goal, the work phase, the archetype the brief places the agent in and its characteristic drift, a risk summary, a basis summary, the evidence required, the loaded instruction files in force and which one wins on conflict, the limits on what the agent may do, the claims it must not make, the open gaps, the last action completed, what has changed, the critical next action, and the next action. If responsibility is changing hands rather than starting fresh, use the `handing-off-work` prompt instead.
 ```
 
 ## Source-lineage note

@@ -86,6 +86,8 @@ Delivery metrics (DORA: lead time, deployment frequency, change fail rate, faile
 
 Research on AI-assisted development finds that AI amplifies an organization's existing strengths and weaknesses: weak engineering systems get weaker faster, strong ones scale better. That makes this discipline more relevant, not less. Treat AI output as a hypothesis; require human review for AI-authored critical changes; record why generated code was accepted; and never let AI increase code volume faster than review, testing, and ownership can absorb.
 
+AI-authored code is no longer a marginal share of the work. A 2026 developer survey (n > 1,100, run by a code-quality vendor, self-reported rather than measured from telemetry) reports that roughly 42% of committed code is already AI-generated or significantly assisted, projected by respondents to reach about 65% by 2027. The same survey reports the gap that matters more than the volume: 96% do not fully trust AI-generated code to be functionally correct, only about half always verify it before committing, and 38% say reviewing AI code takes *more* effort than reviewing a colleague's. Treat the exact figures as survey self-report, not measurement; the shape — authorship outrunning verification — is the thing the last paragraph's final clause was already about. The absorption limit is not a philosophical position any more; it is the reported operating condition. See `../02-operating-system/quality-verdict-accountability.md` for the split this forces between the checks, the decision, and the record.
+
 ---
 
 ## Index

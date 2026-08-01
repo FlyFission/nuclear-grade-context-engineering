@@ -8,6 +8,20 @@ This is not just cost control: model recall measurably degrades as context grows
 
 ---
 
+## Cleanliness is a context cost
+
+The context an agent spends is not only what you hand it. It is also what the code makes it re-read.
+
+A controlled minimal-pair study of a coding agent — 660 trials over 33 tasks across six repository pairs matched on architecture, dependencies, and external behavior but differing in static-analysis violations and cognitive complexity — found that cleaner code did **not** change the agent's pass rate. The difference was under one percent. What changed was the operating footprint: roughly 7–8% fewer tokens, about 11% less reasoning effort, and roughly a third fewer revisits to files the agent had already edited.
+
+Read it as a cost-and-attention result, not a capability result. Clean code did not make the agent smarter; it made the same outcome cheaper to reach. That is the honest version, and it is the one that belongs in this doc rather than in a quality doc — the mechanism is attention budget, not correctness. Fewer revisits means fewer re-reads competing for the same window, which is the same argument [`context-window-discipline.md`](context-window-discipline.md) makes from the other direction.
+
+**Boundary.** One agent, six repository pairs, the authors' benchmark — not a promise about any workload. The authors are affiliated with a code-quality vendor whose product the finding favors; that is disclosed here rather than assumed away, on the same principle this repo applies to everyone else's evidence (see [`actor-evidence-independence.md`](actor-evidence-independence.md)). The source is registered in [`../00-standards-foundation/source-map.md`](../00-standards-foundation/source-map.md).
+
+The practical consequence is small and worth stating plainly, and worth understating: the case for `reviewing-code-quality` is no longer only that the next human change stays cheap. On the pairs that were studied, the agent's run was also cheaper at the same pass rate — which is a reason to count agent cost among the things drift damages. It is not a prediction about your next run. One study on one agent cannot tell you what a particular future change will cost, and an unchanged *aggregate* pass rate does not mean an unchanged outcome on any individual task.
+
+---
+
 ## Context rule
 
 Agents should read:

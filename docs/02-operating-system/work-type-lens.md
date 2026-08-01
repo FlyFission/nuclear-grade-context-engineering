@@ -2,6 +2,8 @@
 
 **Purpose:** Classify what *kind* of change this is, so the front-door questions match the work. The work type is orthogonal to the Quick/Standard/Nuclear rigor mode: the mode grades how much rigor a change earns by consequence; the work type sets which questions and outputs matter by kind. A brownfield change can be Quick; a greenfield change can be Standard.
 
+It is also orthogonal to the **archetype lens** (`archetype-lens.md`), which names the posture the work is being done in and the drift that posture produces. Work type says what the change *is*; archetype says how it is being *approached*. Ask both.
+
 Use this from `questioning-attitude`, before picking a mode in `rating-change-risk`.
 
 ## The four types

@@ -91,11 +91,35 @@ text that no longer exists in the repo. `run_ladder.py` verifies each candidate
 against the pilot's own recorded input-spec hash rather than trusting the
 filename.
 
+## Results
+
+Three pools, two grading methods, one measured grader baseline.
+
+| Pool | What it asks | C4 − C1 | p (perm) |
+|---|---|---|---|
+| `v1` (27 skills) | do skills beat prompting on the pilot's scenarios? | **+0.136** | **0.0008** |
+| `hard` (7 skills) | …on scenarios pre-screened to be hard for the control? | −0.065 | 0.31 |
+| `negative` (29 skills) | do skills over-fire where they declare they should not? | +0.034 | 0.25 |
+
+All three use rubric scoring. On `negative` the direction is inverted by
+construction: checks score proportionality, so a *lower* C4 would have been the
+cost finding. It did not appear.
+
+The supportable claim is **"these skills beat strong generic prompting on
+scenarios where a difference is measurable, without a detectable over-firing
+cost"** — not "these skills work". The hard pool is the reason for the
+qualifier, and it is underpowered rather than contradictory.
+
+Supporting numbers:
+
+- A strong generic paragraph *alone* buys **+0.037, p=0.42** — so the effect is
+  not "any instruction helps".
+- Grader reliability: **κ=0.814** test-retest, **κ=0.782** cross-model
+  ([`GRADER-RELIABILITY-hard.md`](GRADER-RELIABILITY-hard.md)).
+- Compression: five bullets retain ~94% of the effect at 12% of the text.
+
 ## What this does NOT measure
 
-- **False positives.** Every scenario is a trigger case where firing the skill
-  is correct. Nothing here measures the cost of a skill firing on a trivial
-  change where the right answer is to stay light.
 - **Skill selection.** Arms inject one skill directly into the system prompt,
   bypassing retrieval. In real use the model sees all 29 descriptions and must
   pick. Trigger precision/recall across the full library is unmeasured — which
@@ -105,8 +129,9 @@ filename.
   whole library loaded.
 - **Anything beyond Sonnet**, one scenario per skill, and 3 trials per cell.
 
-`verifying-final-artifacts` has no scenario in the pool and is therefore absent
-from every number here.
+`verifying-final-artifacts` and `reviewing-code-quality` have no trigger-case
+scenario and so are absent from the `v1` and `hard` numbers. Both are covered in
+the `negative` pool, which is built from every skill on disk.
 
 Results: [`REPORT.md`](REPORT.md) (generated — rerun `analyze_ladder.py` rather
 than editing it).

@@ -39,7 +39,7 @@ Claim: The revised Quickstart guidance is consistent with the canonical risk ski
 
 - Status: pass
 - Actual result: 15 targeted public-doc tests passed; full pytest passed; Ruff reported `All checks passed!`; `ng doctor`, token budget, flagship strict-custody validation, and `git diff --check` passed.
-- Evidence link or artifact path: this packet, the commit diff, and forthcoming PR checks
+- Evidence link or artifact path: this packet, the commit diff, and this PR's CI checks
 - If failed/gap: not applicable
 
 ## Reviewer note
@@ -50,7 +50,7 @@ Claim: The revised Quickstart guidance is consistent with the canonical risk ski
 
 ## Required links
 
-- Related PR/issue: PR to be opened from `docs/daily-1pct-20260727-sharp-start`
+- Related PR/issue: #87
 - Relevant changed files: `QUICKSTART.md`, `risk.md`, `proof.md`
 - CI run / test output / eval report / screenshot / log: local command results summarized above; GitHub CI pending PR creation
 - If AI-assisted: link to AI scope or independent check note: this proof discloses actor coupling; PR review and CI are the independent/reproducible check

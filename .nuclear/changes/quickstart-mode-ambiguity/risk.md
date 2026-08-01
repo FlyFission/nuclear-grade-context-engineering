@@ -3,7 +3,7 @@
 ## Selected mode
 
 - **Mode:** Quick
-- **Why this mode:** One public-guidance sentence changes; the edit is local, immediately reversible, and directly checkable against the canonical risk skill.
+- **Why this mode:** One public-guidance sentence is changed; the edit is local, immediately reversible, and directly checkable against the canonical risk skill.
 
 **Purpose:** Decide whether a small change can safely stay in Quick mode, and name the proof it needs.
 
@@ -18,7 +18,7 @@
 ## Change
 
 - Slug: `quickstart-mode-ambiguity`
-- PR / issue: PR to be opened from `docs/daily-1pct-20260727-sharp-start`
+- PR / issue: #87
 - Owner: FlyFission
 - Date: 2026-07-27
 - Summary: Replace a blanket "start with Standard" fallback with the repo's existing stakes-based ambiguity rule.
@@ -68,7 +68,7 @@ Move up to Standard if any of these are true:
 ## Required links
 
 - Packet: `.nuclear/changes/quickstart-mode-ambiguity/`
-- Related PR/issue: PR to be opened
+- Related PR/issue: #87
 - Proof record: `proof.md`
 - Relevant source-map/crosswalk if invoked: none; this aligns existing repo doctrine
 

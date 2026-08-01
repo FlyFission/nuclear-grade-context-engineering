@@ -83,7 +83,8 @@ A controlled minimal-pair study found cleaner code left a coding agent's pass ra
 under one percent difference — while cutting tokens by roughly 7–8% and file revisits by about a
 third. Read it as a cost-and-attention result, not a capability result. It is an argument for
 clean code that survives contact with the evidence, which is more than the capability version
-would have. *(See
+would have. The authors are affiliated with a code-quality vendor whose product the finding
+favors; that is disclosed wherever the numbers appear, including here. *(See
 [`docs/02-operating-system/token-burn-control.md`](docs/02-operating-system/token-burn-control.md).)*
 
 ---

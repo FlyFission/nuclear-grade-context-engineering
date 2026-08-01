@@ -13,7 +13,7 @@ Record what was checked, how, and what the check did and did not establish.
 | V-3 | The archetype lens changes a decision | `archetype-lens.md` carries a mode-floor column for all five archetypes plus the re-grade-on-shift rule and the agent-briefing rule | Present | pass |
 | V-4 | Cherny's framing preserved, repo extension not attributed to him | Source-lineage note states the drift/mode-floor/skill mapping is this repo's authored extension | Present | pass |
 | V-5 | Token figures never appear without the pass-rate caveat | Scripted scan of every occurrence of `7.1%`, `8.5%`, `7–8%`, `34%` across `docs/`, `skills/`, `MAXIMS.md`, `CORE.md`, checking a ±2-line window for "pass rate" | 5 of 5 occurrences OK, 0 misses | pass |
-| V-6 | Vendor affiliation disclosed wherever the statistics are cited | Scan of the six citing files for a vendor disclosure | 6 of 6 disclosed | pass |
+| V-6 | Vendor affiliation disclosed wherever the statistics are cited | Scan of the citing files for a vendor disclosure | 7 of 7 disclosed, including `MAXIMS.md` inline after review | pass |
 | V-7 | The three sources are registered under existing citation discipline | New rows in `source-map.md` Tier 6 (Sonar survey), Tier 9 (arXiv:2605.20049), Tier 11 (Cherny), plus a standing vendor-affiliation note under Tier 6 and three `source-to-concept-crosswalk.md` rows | Present | pass |
 | V-8 | No new skill added; skill-count invariant intact | `ls -d skills/*/` = 29 (the count `main` arrived at via #81); no skill folder added or removed by this change | 29 folders, unchanged by this PR | pass |
 | V-9 | Full test suite | `python -m pytest -q` | 238 passed, 1 skipped | pass |
@@ -35,7 +35,7 @@ Record what was checked, how, and what the check did and did not establish.
 
 **V-14 is a real gap, not a formality.** This sandbox's network policy denies CONNECT to all three source hosts, so the URLs could not be fetched directly from here. The figures themselves are corroborated (V-15), but *link liveness* is unverified from this environment. A reviewer with unrestricted egress should confirm all four URLs before merge. This is recorded as `gap` rather than `pass` because "the search engine showed me the content" is not the same evidence as "the link resolves."
 
-**Partial: the second maxim carries the caveat but not the affiliation.** `MAXIMS.md` states the pass-rate caveat inline and points to `token-burn-control.md`, which carries the vendor disclosure. Judged acceptable for a deliberately short quotable entry with a one-click pointer; noted so a reviewer can disagree.
+**Closed: the second maxim now carries the affiliation, not just the caveat.** `MAXIMS.md` originally stated the pass-rate caveat inline and left the vendor disclosure one click away in `token-burn-control.md`. That was recorded here as a partial, judged acceptable for a short quotable entry, and explicitly flagged so a reviewer could disagree. An automated review pass did disagree, on the correct ground: `source-map.md` asserts the affiliation is disclosed *at every citation point*, and the maxim was a citation point. The disclosure is now inline. Recorded rather than quietly amended — the invitation to disagree is only worth something if the disagreement changes the artifact.
 
 ## What this verification does not establish
 

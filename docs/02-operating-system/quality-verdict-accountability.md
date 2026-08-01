@@ -23,7 +23,7 @@ The three terms have separate machinery, which is the clearest sign they are sep
 | Collapse | What it looks like | Where the doctrine already refuses it |
 |---|---|---|
 | **Quality mistaken for Verdict** | "CI is green, so we ship." A green pipeline says the checks that exist did not fail. It does not say the checks that exist were the right ones. | [`../../MAXIMS.md`](../../MAXIMS.md) — "CI passing is not a release decision"; [`validators.md`](validators.md) §1 |
-| **Verdict without Quality** | A signature on top of nothing — confident acceptance with no evidence underneath. | `reviewing-code-quality` returns INCONCLUSIVE precisely to refuse this, and must name the missing evidence |
+| **Verdict without Quality** | A signature on top of nothing — confident acceptance with no evidence underneath. | [`../../skills/reviewing-code-quality/SKILL.md`](../../skills/reviewing-code-quality/SKILL.md) returns INCONCLUSIVE precisely to refuse this, and must name the missing evidence |
 | **Verdict without Accountability** | The decision was fine at the time and cannot be reconstructed now. Discovered at the incident review, which is the worst moment to discover it. | [`change-control-packets.md`](change-control-packets.md), [`../../skills/proving-claims/SKILL.md`](../../skills/proving-claims/SKILL.md) |
 | **Accountability without Verdict** | A complete, tidy record of a decision nobody actually made. Process theater. | [`modes.md`](modes.md) — the mode exists to force a stated decision, not to generate files |
 

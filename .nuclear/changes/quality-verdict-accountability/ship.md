@@ -8,7 +8,7 @@ State the release decision, what backs it, and what stays open.
 
 **ship-with-named-risk.**
 
-The change is additive documentation. All deterministic checks pass on the current tree: 316 passed and 1 skipped, ruff clean, `doctor` OK, token budget OK, command parity restored after regeneration, and no skill added or removed (29, matching `main`). The claims each trace to a public source, and every citation carries its boundary.
+The change is additive documentation. All deterministic checks pass on the current tree: 317 collected with 0 failures, ruff clean, `doctor` OK, token budget OK, command parity restored after regeneration, and no skill added or removed (29, matching `main`). The claims each trace to a public source, and every citation carries its boundary.
 
 It is not a plain `ship` because two of the three new sources come from a single commercial vendor whose product category both findings favor, and because link liveness could not be verified from this environment. Those are named below rather than absorbed into a clean verdict.
 
@@ -30,7 +30,17 @@ This verdict is evidentiary acceptance only. Merge authority stays with a human 
 
 ## Rollback
 
-Documentation only; every edit is additive and reverts with normal git history. The one generated artifact (`commands/ng-code-review.md`) is reproducible with `python tools/ng.py gen-commands .`.
+**Documentation and packet edits.** Additive; they revert with normal git history. The one generated artifact (`commands/ng-code-review.md`) is reproducible with `python tools/ng.py gen-commands .`.
+
+**The `pyproject.toml` constraint is not documentation and needs its own handling.** Reverting it to `mcp>=1.0` restores the resolution that breaks `mcp-smoke`, so a plain revert re-opens the fault this change closed. Two supported paths, depending on why the bound is being removed:
+
+| Reason the bound must go | Correct move | Not this |
+|---|---|---|
+| A 2.x port of `nuclear_grade/mcp_server.py` lands | Lift the ceiling to `mcp>=2` (or a range the ported code supports) **in the same change as the port**, so the constraint and the code that depends on it move together | Removing the bound ahead of the port |
+| An advisory lands against the 1.x line | Treat as an incident, not a rollback: the port becomes urgent, and the extra should be marked unavailable rather than left resolving to a vulnerable line | Widening the range and hoping resolution avoids 1.x |
+| The reviewer prefers this repair as its own PR | Revert only the `pyproject.toml` hunk from this branch; nothing else in this change depends on it | Reverting the whole change |
+
+The constraint is a controlled item under `docs/02-operating-system/controlled-items.md`, so whichever path is taken updates the baseline rather than being handled as an untracked edit.
 
 ## Baseline trigger
 

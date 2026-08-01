@@ -17,7 +17,7 @@ Record what was checked, how, and what the check did and did not establish.
 | V-6a | The earlier weak form of V-6 | Original scan tested only whether the word "vendor" appeared anywhere in the file | **Produced a false all-clear** — see the note below | superseded |
 | V-7 | The three sources are registered under existing citation discipline | New rows in `source-map.md` Tier 6 (Sonar survey), Tier 9 (arXiv:2605.20049), Tier 11 (Cherny), plus a standing vendor-affiliation note under Tier 6 and three `source-to-concept-crosswalk.md` rows | Present | pass |
 | V-8 | No new skill added; skill-count invariant intact | `ls -d skills/*/` = 29 (the count `main` arrived at via #81); no skill folder added or removed by this change | 29 folders, unchanged by this PR | pass |
-| V-9 | Full test suite **on the tree being accepted** | `python -m pytest -q`, re-run after the rebase and after the review fixes | 316 passed, 1 skipped (317 collected) | pass |
+| V-9 | Full test suite **on the tree being accepted** | `python -m pytest -q`, re-run after the rebase and each review round | **317 collected, 0 failed.** Passed/skipped split is environment-dependent — see the note below | pass |
 | V-10 | Lint | `python -m ruff check .` | All checks passed | pass |
 | V-11 | Repo health and internal link resolution | `python tools/ng.py doctor .` | `OK: Nuclear-grade doctor` | pass |
 | V-12 | Token budget not inflated by the new doctrine | `python tools/ng.py tokens .` | `OK: token budget` | pass |
@@ -43,6 +43,17 @@ Record what was checked, how, and what the check did and did not establish.
 The lesson is the one this packet is about. A check that greps for a keyword measures vocabulary, not the claim; it produced a green result while the claim was false. That is the quality/verdict collapse in miniature, inside the packet that defines it.
 
 **Source statuses were downgraded after review.** The Sonar and arXiv rows were registered `verified-public` while V-14 recorded that their URLs were never fetched. `source-map.md` defines `verified-public` as *the public page/link checked*, so the rows asserted something the packet simultaneously denied. Both now sit at `public-url-needed` with a status note stating the promotion condition. Corroborating the figures through secondary coverage supports the numbers; it does not discharge a link-checked status. Different claims.
+
+**The recorded suite result is now stated as an invariant, because the raw counts are not one.** V-9 first recorded a pre-rebase count, which a reviewer correctly rejected. The correction recorded `316 passed, 1 skipped` — and a second review pass rejected *that*, reporting `315 passed, 2 skipped` from the same tree. Both numbers are real. The suite has exactly two `importorskip` gates:
+
+| Gate | Location | Skips when |
+|---|---|---|
+| `mcp` | `tests/test_mcp_server.py:106` | the optional `mcp` extra is not installed |
+| `yaml` | `tests/test_ng_cli.py:503` | PyYAML is not installed |
+
+The authoring environment has PyYAML but not `mcp` → 316 passed, 1 skipped. An environment with neither → 315 passed, 2 skipped. Nothing about the tree differs; only what is installed around it.
+
+So the passed/skipped split was never the right thing to record — it is a property of the runner, not of the candidate. What is stable is **317 collected and 0 failed**, and that is what V-9 now asserts. A reviewer reproducing this should compare those two figures, not the split.
 
 ## What this verification does not establish
 
@@ -83,7 +94,7 @@ Every row classifies as **self-check**. The deterministic checks feel independen
 ## Commands, evals, and reviews
 
 ```bash
-python -m pytest -q                    # 316 passed, 1 skipped (317 collected)
+python -m pytest -q                    # 317 collected, 0 failed (see note on the skip split)
 python -m ruff check .                 # All checks passed
 python tools/ng.py doctor .            # OK: Nuclear-grade doctor
 python tools/ng.py tokens .            # OK: token budget

@@ -54,6 +54,19 @@ _POOLS = {
         "report": LADDER_DIR / "REPORT-hard.md",
         "adopt_pilot": False,
     },
+    # False-positive pool. Every scenario sits squarely inside the territory the
+    # skill's own frontmatter says it should NOT be used for, and every rubric
+    # check is phrased so that "met" means the response stayed proportionate.
+    # A LOWER score for the full skill than for the generic control is therefore
+    # a measured cost, not a measured benefit -- the direction of a good result
+    # is inverted relative to the other two pools.
+    "negative": {
+        "tasks": LADDER_DIR / "data" / "negative-pool" / "selected_tasks.json",
+        "runs": LADDER_DIR / "data" / "negative-pool" / "runs",
+        "graded": LADDER_DIR / "data" / "negative-pool" / "graded.json",
+        "report": LADDER_DIR / "REPORT-negative.md",
+        "adopt_pilot": False,
+    },
 }
 if POOL not in _POOLS:
     raise SystemExit(f"unknown NG_LADDER_POOL={POOL!r}; expected one of {sorted(_POOLS)}")

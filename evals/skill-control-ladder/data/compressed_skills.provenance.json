@@ -87,6 +87,10 @@
     "body_sha256": "6fb55f5796d798971d5b10fa1966d725d12fc5945c8d49dcf3f5ad12139b448f",
     "compressor_model": "claude-sonnet-5"
   },
+  "reviewing-code-quality": {
+    "body_sha256": "1fc6e5597f37b5e659b4a59ded371f3960b3771fb3bb9a9a7cc14eeddebbc2e2",
+    "compressor_model": "claude-sonnet-5"
+  },
   "staying-on-mission": {
     "body_sha256": "1f310919b8e1c81d41a59f5c7cb6bdbaa553ff216ec3387f9b75379b33ac7bd1",
     "compressor_model": "claude-sonnet-5"
@@ -101,6 +105,10 @@
   },
   "using-nuclear-grade": {
     "body_sha256": "671a79d742f46918431f7a7a15b6dbb50f56735c004a9565e3dbdf72fc5003b7",
+    "compressor_model": "claude-sonnet-5"
+  },
+  "verifying-final-artifacts": {
+    "body_sha256": "55df28fc747a785d87f6714d87cfa5e07f3b95c15f13b71ff3e480c8c4d846ee",
     "compressor_model": "claude-sonnet-5"
   },
   "vetting-outside-code-and-models": {

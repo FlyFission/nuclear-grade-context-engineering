@@ -27,13 +27,14 @@ Sequence the work and name the review checkpoints.
 | 11 | Record the verdict and the standing gaps | `ship.md` | done |
 | 12 | Rebase onto `main` after it advanced 8 commits; correct every skill-count claim and wire in the new `verifying-final-artifacts` skill and `decision-authority.md` template | `CORE.md`, `archetype-lens.md`, `quality-verdict-accountability.md`, packet | done |
 | 13 | Repair the unrelated `mcp-smoke` CI break by upper-bounding the optional extra (owner-approved; see `risk.md` scope note) | `pyproject.toml` | done |
+| 14 | Wire the archetype lens into the skills that claim it, after review showed the front door was advertised but not implemented (owner-approved) | `questioning-attitude`, `rating-change-risk`, `briefing-an-agent`, regenerated cards, `tests/fixtures/command_prompts.json` | done |
 
 ## Deliberately not done
 
 - **No new skill.** Cost would span `EXPECTED_SKILLS`, `SKILLS.md`, plugin catalogs, both eval manifests, a generated command card, the `GOLDEN` parity snapshot, and the skill counts in `CORE.md`/`README.md`/`INSTALL.md`. Decisive objection: `README.md` still claims "28 of 28 skills show a measured behavior change versus a plain prompt," and the repo now ships 29 skills after #81 added `verifying-final-artifacts`. Adding another unbenchmarked skill would widen a gap between the shipped count and the benchmarked count that the efficacy claim depends on. Precedent is explicit — `CORE.md` already refused a skill for workflow-architecture, "its home is the doctrine page, not a new `SKILL.md`."
-- **No packet-template or context-pack schema change.** An archetype field in `templates/` was considered and dropped: the lens changes a mode decision at the front door, which is where it earns its keep. Adding a field to every packet would be process weight without a new decision.
+- **No packet-template or context-pack schema change.** An archetype field in `templates/` was considered and dropped: the lens changes a mode decision at the front door, which is where it earns its keep. Adding a field to every packet would be process weight without a new decision. (`briefing-an-agent` now names the archetype in the context pack it *builds*, which is the front-door instruction, not a schema field on the template.)
 - **No README.md headline section.** The triad lands in `CORE.md` and `MAXIMS.md`, which is where the repo states its principles.
-- **No edit to the `## Prompt` block** of `reviewing-code-quality`, so `commands/ng-code-review.md` and its golden snapshot stay valid.
+- **No edit to the `## Prompt` block** of `reviewing-code-quality`, so `commands/ng-code-review.md` and its golden snapshot stay valid. Task 14 *did* edit the Prompt blocks of `questioning-attitude` and `briefing-an-agent`; both cards were regenerated and the golden fixture updated, with the key set and key order asserted unchanged so only the two intended prompts moved.
 
 ## Required links
 

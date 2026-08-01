@@ -27,13 +27,15 @@
 | `skills/reviewing-code-quality/SKILL.md` | skill | Sweeper trigger, two rationalizations, the agent-cost argument | repo |
 | `docs/01-field-guide/leadership-and-high-reliability.md`, `docs/02-operating-system/token-burn-control.md`, `context-window-discipline.md`, `actor-evidence-independence.md`, `validators.md`, `work-type-lens.md`, `agents/judge.md`, `docs/01-field-guide/source-to-concept-crosswalk.md` | doctrine | Placement of the evidence and cross-wiring | repo |
 | `pyproject.toml` (optional `mcp` extra) | dependency constraint | Unrelated CI repair folded in with owner approval — see the scope note below | repo |
+| `skills/questioning-attitude`, `skills/rating-change-risk`, `skills/briefing-an-agent` | skills (distributed by `ng install`) | Implement the archetype lens at the front door it claims; added after review, owner-approved | repo |
+| `commands/ng-question.md`, `commands/ng-context-pack.md`, `tests/fixtures/command_prompts.json` | generated + fixture | Regenerated projections and the golden prompt snapshot, following the two edited `## Prompt` blocks | repo |
 
 ## Threshold screen
 
 | Dimension | Low / medium / high | Notes |
 |---|---|---|
 | Consequence | medium | Changes the repo's headline vocabulary and adds externally sourced public claims; no production system |
-| Reversibility | high | Documentation only; reverts with normal git history |
+| Reversibility | high | Docs, skills and packet revert with normal git history. The `pyproject.toml` constraint is the one edit a plain revert would mishandle — reverting it re-opens the `mcp-smoke` break; see the rollback table in `ship.md` |
 | Detectability | medium | A mis-stated statistic or a dropped caveat shows only on careful read |
 | Exposure | high | Public repo; adopters quote `MAXIMS.md` and `CORE.md` directly |
 | Uncertainty | medium | Two of three new sources are vendor-authored and unreplicated |
@@ -51,7 +53,7 @@ Mixing an unrelated repair into a doctrine change is normally the wrong shape. I
 - **Mode:** Standard
 - Why this mode: the change edits public headline docs and introduces external statistical claims a future maintainer or adopter could rely on. The activation screen's "will someone rely on the claim?" question answers yes.
 - Why lighter mode is not enough: the near-identical `context-window-discipline` packet ran Quick, but that change added no headline-doc claims and no vendor-affiliated statistics. A Quick record would not preserve the claim-to-source trace this change specifically needs, and the change is itself about accountability.
-- Why heavier mode is not yet required: no production system, dependency, credential, permission, safety, or regulatory control changes; no new gate is introduced.
+- Why heavier mode is not yet required: no production system, credential, permission, safety, or regulatory control changes, and no new gate. The one dependency edit tightens an existing optional constraint rather than adding a supplier or widening trust — recorded in the affected items above and in `verification.md`'s dependency table.
 
 ## Immediate proof obligations
 

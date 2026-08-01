@@ -2,7 +2,7 @@
 
 **Purpose:** Separate three things this repository already does but has been naming inconsistently. Most arguments about "quality" are actually arguments about which of these three is missing.
 
-**Rule:** A check produces evidence. A person produces a verdict. A packet is what lets that verdict be explained later. Never let one of the three stand in for another.
+**Rule:** A check produces evidence. A verdict is *owned* by a person — who may delegate producing it, including to an agent, but never delegates being answerable for it. A packet is what lets that verdict be explained later. Never let one of the three stand in for another.
 
 ---
 
@@ -10,7 +10,7 @@
 
 **Quality is a system of checks that produces evidence.** Tests, linters, type checks, `tools/ng_validate.py`, CI, review passes. Quality is a *system*, not a feeling and not a score — it is the machinery whose output is evidence. A check can pass, fail, or be inconclusive. It cannot accept anything. See [`validators.md`](validators.md).
 
-**Verdict is the accountable decision made from that evidence.** Ship / block / defer / ship-with-named-risk on a release; VERIFIED / NOT VERIFIED / INCONCLUSIVE on a review. A verdict has a name attached to it. That is the whole difference: evidence is produced, a verdict is *owned*. See [`../../agents/judge.md`](../../agents/judge.md), [`../../skills/checking-release-readiness/SKILL.md`](../../skills/checking-release-readiness/SKILL.md), and [`../../skills/reviewing-code-quality/SKILL.md`](../../skills/reviewing-code-quality/SKILL.md).
+**Verdict is the accountable decision made from that evidence.** Ship / block / defer / ship-with-named-risk on a release; VERIFIED / NOT VERIFIED / INCONCLUSIVE on a review. A verdict has a name attached to it — the name of whoever is answerable for it, which is not always whoever produced it. That is the whole difference: evidence is produced, a verdict is *owned*. See [`../../agents/judge.md`](../../agents/judge.md), [`../../skills/checking-release-readiness/SKILL.md`](../../skills/checking-release-readiness/SKILL.md), and [`../../skills/reviewing-code-quality/SKILL.md`](../../skills/reviewing-code-quality/SKILL.md).
 
 **Accountability is the ability to explain and stand behind the verdict later.** Not who gets blamed — whether the reasoning can be reconstructed months later by someone who was not there. It lives in the packet: `trace.md`, `verification.md`, `ship.md`, the evidence custody record, and the coupling profile. See [`actor-evidence-independence.md`](actor-evidence-independence.md).
 

@@ -18,7 +18,7 @@ Read it as a cost-and-attention result, not a capability result. Clean code did 
 
 **Boundary.** One agent, six repository pairs, the authors' benchmark — not a promise about any workload. The authors are affiliated with a code-quality vendor whose product the finding favors; that is disclosed here rather than assumed away, on the same principle this repo applies to everyone else's evidence (see [`actor-evidence-independence.md`](actor-evidence-independence.md)). The source is registered in [`../00-standards-foundation/source-map.md`](../00-standards-foundation/source-map.md).
 
-The practical consequence is small and worth stating plainly: the case for `reviewing-code-quality` is no longer only that the next human change stays cheap. The next *agent* change is measurably cheaper too, at the same pass rate.
+The practical consequence is small and worth stating plainly, and worth understating: the case for `reviewing-code-quality` is no longer only that the next human change stays cheap. On the pairs that were studied, the agent's run was also cheaper at the same pass rate — which is a reason to count agent cost among the things drift damages. It is not a prediction about your next run. One study on one agent cannot tell you what a particular future change will cost, and an unchanged *aggregate* pass rate does not mean an unchanged outcome on any individual task.
 
 ---
 

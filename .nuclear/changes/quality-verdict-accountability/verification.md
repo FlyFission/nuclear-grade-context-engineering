@@ -27,6 +27,8 @@ Record what was checked, how, and what the check did and did not establish.
 | V-16 | This packet satisfies Standard mode including custody disclosure | `python tools/ng.py validate .nuclear/changes/quality-verdict-accountability --strict-custody` | `OK` | pass |
 | V-17 | The `mcp` upper bound repairs `mcp-smoke` | Clean venv: `pip install -e ".[mcp]"` then `pytest tests/test_mcp_server.py -q` | mcp resolved to 1.29.0; 13 passed | pass |
 | V-18 | The `mcp` break is not caused by this change | `git diff --name-only origin/main..HEAD` before the pin showed markdown only; `main`'s head last passed CI 2026-07-25, before mcp 2.0.0 | Confirmed pre-existing | pass |
+| V-19 | The archetype lens is implemented at the front door it claims, not only described | `questioning-attitude` names the archetype in Process, Outputs and its Prompt; `rating-change-risk` names the mode floor and the re-grade rule; `briefing-an-agent` names it in Process, Outputs and its Prompt | Present in all three | pass |
+| V-20 | Wiring the skills moved only what was intended | Regenerated cards, then rebuilt the golden fixture asserting the key set and key order unchanged | 2 prompts changed (`ng-question.md`, `ng-context-pack.md`); 4-line fixture diff; parity tests pass | pass |
 
 ## Notes on the failed and partial checks
 
@@ -54,6 +56,10 @@ The lesson is the one this packet is about. A check that greps for a keyword mea
 The authoring environment has PyYAML but not `mcp` → 316 passed, 1 skipped. An environment with neither → 315 passed, 2 skipped. Nothing about the tree differs; only what is installed around it.
 
 So the passed/skipped split was never the right thing to record — it is a property of the runner, not of the candidate. What is stable is **317 collected and 0 failed**, and that is what V-9 now asserts. A reviewer reproducing this should compare those two figures, not the split.
+
+**The lens was advertised before it was implemented.** `archetype-lens.md` said "use this from `questioning-attitude` … before picking a mode in `rating-change-risk`" while neither skill mentioned archetypes. A reviewer caught it and named the consequence precisely: `ng install` distributes **skills**, not doctrine pages, so for adopters entering through the installed-skill path the lens did not exist at all. The precedent was against me — the work-type lens is carried inline in `questioning-attitude`'s Process, Outputs *and* Prompt, which is exactly why it reaches those adopters. All three named skills are now wired the same way.
+
+This is the load-bearing test from `basis.md` (REQ-003) applied properly. A mode floor written only in a doctrine page changes a decision for readers of that page; the repo's own rule is that rigor which changes no decision should be cut. The lens was one review away from being decorative for most of its audience.
 
 ## What this verification does not establish
 

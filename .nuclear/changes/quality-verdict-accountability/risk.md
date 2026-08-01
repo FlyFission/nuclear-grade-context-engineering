@@ -44,6 +44,8 @@
 
 ## Scope note — the folded-in CI repair
 
+**Since split out (#90).** The `mcp>=1.0,<2` constraint described here was extracted into its own change and merged first as #90, so after rebasing on `main` this PR no longer changes the constraint itself — only the explanatory comment above it remains. The account below is retained as background on why the bound exists (V-17/V-18); the reviewer's preference for handling the repair separately is now satisfied.
+
 CI on this branch failed `mcp-smoke` for a reason this change did not cause. The optional extra was declared `mcp>=1.0` with no upper bound; `mcp` 2.0.0 removed `mcp.server.fastmcp`, which `nuclear_grade/mcp_server.py` imports. Verified in a clean environment: `mcp>=1.0` resolves to 2.0.0 and the import fails; `mcp>=1.0,<2` resolves to 1.29.0 and the job's 13 tests pass. `main` last went green on 2026-07-25, before 2.0.0 was picked up, and would fail identically if re-run today.
 
 Mixing an unrelated repair into a doctrine change is normally the wrong shape. It is done here because the owner was asked and chose it over a separate PR: the break is repo-wide, the fix is one constraint, and leaving it would keep both this branch and `main` red. The 2.x port is **not** attempted here and is not a hidden part of this change.

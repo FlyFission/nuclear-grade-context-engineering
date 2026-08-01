@@ -15,7 +15,7 @@
 
 - Command/check/eval/review: inspect the focused diff; run `python tools/ng.py tokens .`, `python -m pytest tests/test_public_docs.py -q`, and `git diff --check`.
 - Environment: clean disposable clone of `origin/main`, Python 3.12.
-- Inputs/fixtures: current 29 checked-in skill directories and repository prose.
+- Inputs/fixtures: the checked-in skill directories and repository prose as counted live by `python tools/ng.py tokens .` (no hard-coded total).
 - Expected result: counter passes and reports current totals; targeted docs tests and diff check pass.
 - Self-check used? yes; target: `CORE.md` measurement paragraph only.
 - Reproducible by the reviewer (command/artifact), not just the author's narration? yes; all commands use checked-in files.

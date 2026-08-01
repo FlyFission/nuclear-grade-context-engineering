@@ -68,7 +68,13 @@ skills/<skill-name>/
   assets/       templates or fixtures the skill emits
 ```
 
-The metadata (the frontmatter) is always loaded. The `SKILL.md` body loads when the skill triggers. The `references/`, `scripts/`, and `assets/` folders load only when the skill needs them. Packaged wheels bundle the whole skill directory, so these subfolders travel with the skill.
+Treat the frontmatter as a routing index, not guaranteed context. Hosts may shorten descriptions or
+omit entries when their catalog budget is tight; Codex, for example, now [drops descriptions before
+entries](https://github.com/openai/codex/pull/34738) and [warns when the visible catalog is
+reduced](https://github.com/openai/codex/pull/34997). Make the name useful without its description,
+front-load the description's discriminating trigger, and do not assume every enabled skill is visible
+to the model. The `SKILL.md` body and optional folders load only after selection. Packaged wheels
+bundle the whole skill directory, so these subfolders travel with the skill.
 
 ## Writing rules
 

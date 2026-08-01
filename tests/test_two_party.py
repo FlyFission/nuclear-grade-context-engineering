@@ -50,6 +50,32 @@ def test_self_verified_claim_blocks(tmp_path):
     assert any("independent second party" in m for m in messages)
 
 
+def test_multi_letter_claim_with_description_is_checked(tmp_path):
+    pkt = _packet(
+        tmp_path,
+        "| REQ-001 workspace boundary | m | c | pass | e | - |\n",
+        AUTH_HEADER + "| REQ-001 workspace boundary | ben | ben |\n",
+    )
+    messages: list[str] = []
+    check_two_party(pkt, messages)
+    assert any("REQ-001" in m and "independent second party" in m for m in messages)
+
+
+def test_qualified_row_does_not_drop_base_pass_status(tmp_path):
+    # A base `pass` row and a later qualified row normalize to the same id;
+    # the weaker qualified status must not overwrite the load-bearing pass,
+    # or the independence check would be silently skipped.
+    pkt = _packet(
+        tmp_path,
+        "| REQ-001 | m | c | pass | e | - |\n"
+        "| REQ-001 (live install) | m | c | deferred | e | - |\n",
+        AUTH_HEADER + "| REQ-001 | ben | ben |\n",
+    )
+    messages: list[str] = []
+    check_two_party(pkt, messages)
+    assert any("REQ-001" in m and "independent second party" in m for m in messages)
+
+
 def test_missing_authorship_table_is_flagged(tmp_path):
     pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n")
     messages: list[str] = []

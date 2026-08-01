@@ -12,7 +12,7 @@ nuclear-grade-mcp = "nuclear_grade.mcp_server:main"
 
 [project.optional-dependencies]
 mcp = [
-  "mcp>=1.0",
+  "mcp>=1.0,<2",
 ]
 dev = [
   "pytest>=8",

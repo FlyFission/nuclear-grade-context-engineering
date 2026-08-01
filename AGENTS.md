@@ -6,6 +6,7 @@ The idea is simple. Keep a questioning attitude. Use small habits from Human Per
 ## Default behavior
 
 - Start with this file and the right change record. Follow links into `README.md` or `WORKFLOWS.md` only when the task needs them; do not preload either wholesale.
+- Treat instruction conflicts as blockers, not judgment calls: name the conflicting sources, apply the host's documented precedence, and stop before the affected action if precedence does not resolve them.
 - Use the lightest mode that is still honest. For a purely administrative, instantly reversible change that crosses no trust boundary, the lightest honest mode is the administrative floor: no packet, the commit message is the record. Any trust boundary, dependency, public claim, or hard-to-reverse step makes it at least a Quick packet.
 - Tie every claim to evidence.
 - Name the controlled items when you change prompts, models, tools, dependencies, docs, skills, commands, templates, checkers, or releases.

@@ -14,22 +14,24 @@ as an optional accuracy cross-check but is never required by the gate.
 > **Why this exists.** This project preaches *measure, don't assume* and *enforce with
 > code, not prompts*, yet until now it had no measurement or gate on the token cost of its
 > own skills. PR #7 dropped a "progressive disclosure" token refactor on the judgment that
-> the always-loaded cost is the skill descriptions (already lean), not the bodies. That
+> the catalog-metadata cost is the skill descriptions (already lean), not the bodies. That
 > call was made by estimate. This audit settles it with data — and the data confirms it.
 
 ## Headline finding: #7 was right, now with numbers
 
-Skills load in two stages, and the two stages cost very differently:
+Skills are packaged in two stages, and the two stages cost very differently. The table measures the
+full eligible surfaces, not a promise about what every host sends to the model: hosts may shorten
+descriptions, omit catalog entries, or load bodies differently under their own context budgets.
 
 | Cost | What loads | When | Tokens | Share |
 |---|---|---|---|---|
-| **Always-loaded** | frontmatter `description` (×23 skills) | every routing decision | **2,361** | **7.2%** |
-| **On-invocation** | skill body | only when that one skill fires | 30,222 | 92.8% |
+| **Catalog metadata** | frontmatter `description` (×23 skills) | eligible at routing time | **2,361** | **7.2%** |
+| **On selection** | skill body | when that skill fires | 30,222 | 92.8% |
 
-The always-loaded surface a routing agent pays on *every* turn is just **2,361 tokens —
+The full catalog-metadata surface is just **2,361 tokens —
 about 103 per skill** — and is bounded by the contract test at 80–500 characters per
 description. The 30,222 tokens of bodies are real, but an agent reads **one** body when a
-skill fires, not all 23. So the "always-loaded cost is lean; bodies aren't the always-on
+skill fires, not all 23. So the "catalog-metadata cost is lean; bodies aren't the catalog
 cost" conclusion from #7 holds up under measurement. The body cuts that #7 weighed remain
 a *judgment* trade, not a measured win — which is why this PR ships measurement only and
 defers any body edits.
@@ -42,12 +44,12 @@ cards. Current reproducible aggregates (`python tools/ng.py tokens .`):
 
 | Surface | Count | Tokens | Notes |
 |---|---|---|---|
-| Skill descriptions | 27 | 2,812 | always-loaded; avg ~104, still bounded 80–500 chars |
-| Skill bodies | 27 | 35,366 | on-invocation; one body loads when a skill fires; heaviest 2,641 (`organizing-project-folders`) |
+| Skill descriptions | 27 | 2,812 | catalog metadata; avg ~104, still bounded 80–500 chars |
+| Skill bodies | 27 | 35,366 | on selection; heaviest 2,641 (`organizing-project-folders`) |
 | Command cards | 26 | 23,392 | largest 1,406 (`ng-folders.md`), within the 1,600 budget |
 | All measured prose | | ~219,600 | onboarding / reference / worked examples / doctrine |
 
-The headline conclusion is unchanged: the always-loaded surface is the lean descriptions
+The headline conclusion is unchanged: the catalog-metadata surface is the lean descriptions
 (~104 tokens each), not the bodies, and the budget gate stays green. The historical baseline
 below is the original 2026-05 23-skill snapshot, kept for provenance.
 
@@ -56,16 +58,16 @@ below is the original 2026-05 23-skill snapshot, kept for provenance.
 Every skill now carries a five-field `## Decision contract` receipt -- claim checked,
 artifact observed, decision affected (with a `block`/`warn`/`observe` tier), failure
 class, and next action -- enforced by `ng doctor` and `tests/test_skill_contracts.py`.
-The receipt lives in the body, not the always-loaded `description`, so it costs tokens
+The receipt lives in the body, not the catalog `description`, so it costs tokens
 only when a skill fires:
 
 | Surface | Count | Tokens | Change | Notes |
 |---|---|---|---|---|
-| Skill descriptions | 27 | 2,814 | +2 | always-loaded; unchanged by design -- the receipt is body-only |
-| Skill bodies | 27 | 44,024 | +8,658 | on-invocation; one body loads when a skill fires; heaviest 2,875 (`organizing-project-folders`) |
+| Skill descriptions | 27 | 2,814 | +2 | catalog metadata; unchanged by design -- the receipt is body-only |
+| Skill bodies | 27 | 44,024 | +8,658 | on selection; heaviest 2,875 (`organizing-project-folders`) |
 
-The always-loaded surface a routing agent pays on every turn is unchanged (2,812 ->
-2,814), which confirms the receipt sits in the on-invocation tier where it was placed on
+The full catalog-metadata surface is unchanged (2,812 ->
+2,814), which confirms the receipt sits in the on-selection tier where it was placed on
 purpose. The budget gate stays green: the heaviest body, `organizing-project-folders`,
 is 2,875 against the 3,000 `skill_body_max`, leaving ~125 headroom -- and it is also the
 heaviest `warn` body, i.e. the standing relocation candidate the existence-decision
@@ -77,8 +79,8 @@ need.
 
 | Surface | Files | Tokens | Notes |
 |---|---|---|---|
-| Skill descriptions | 23 | 2,361 | always-loaded; avg 103, max 140 |
-| Skill bodies | 23 | 30,222 | on-invocation; avg 1,314, max 2,641 |
+| Skill descriptions | 23 | 2,361 | catalog metadata; avg 103, max 140 |
+| Skill bodies | 23 | 30,222 | on selection; avg 1,314, max 2,641 |
 | Command cards | 22 | 19,923 | avg 906, max 1,406 (`ng-folders.md`) |
 | Templates | 23 | 18,969 | repetitive by design (form scaffolds) |
 | Docs (top-level + `docs/` tree) | 87 | 123,142 | onboarding / reference / worked examples |
@@ -190,7 +192,7 @@ dispositioned:
   varies by source lineage, so collapsing it to one linked source would force every reader
   (human or agent) to hold a second file just for the boundary. Not collapsed.
 - **Heaviest skill bodies — cuts deferred as optional, evidence-triggered.** The
-  always-loaded cost is already small and per-signal cost is already tight, so trims are a
+  catalog-metadata cost is already small and per-signal cost is already tight, so trims are a
   quality nicety, not a budget need. Trim a body only when a specific section is shown to
   mislead or bloat — not as a sweep. The budget gate prevents regression in the meantime.
 - **`core-source-rationale.md` relocation — kept as an open option, deferred.** It remains a

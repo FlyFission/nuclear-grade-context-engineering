@@ -50,7 +50,12 @@ def parse_claim_status(verification_text: str) -> dict[str, str]:
             continue
         status = next((c.lower() for c in cells[1:] if c.lower() in known), None)
         if status is not None:
-            out[claim_id] = status
+            # When a base row and a qualified row share a normalized id (e.g.
+            # `REQ-001` and `REQ-001 (live install)`), keep the load-bearing
+            # `pass` so a weaker later row cannot silently drop the independence
+            # check this module exists to enforce.
+            if claim_id not in out or status == "pass":
+                out[claim_id] = status
     return out
 
 

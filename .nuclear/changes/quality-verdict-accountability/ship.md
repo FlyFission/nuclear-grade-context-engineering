@@ -8,7 +8,7 @@ State the release decision, what backs it, and what stays open.
 
 **ship-with-named-risk.**
 
-The change is additive documentation. All deterministic checks pass: 238 tests green, ruff clean, `doctor` OK, token budget OK, command parity restored after regeneration, and no skill added or removed (29, matching `main`). The claims each trace to a public source, and every citation carries its boundary.
+The change is additive documentation. All deterministic checks pass on the current tree: 316 passed and 1 skipped, ruff clean, `doctor` OK, token budget OK, command parity restored after regeneration, and no skill added or removed (29, matching `main`). The claims each trace to a public source, and every citation carries its boundary.
 
 It is not a plain `ship` because two of the three new sources come from a single commercial vendor whose product category both findings favor, and because link liveness could not be verified from this environment. Those are named below rather than absorbed into a clean verdict.
 
@@ -21,6 +21,7 @@ It is not a plain `ship` because two of the three new sources come from a single
 | The archetype source is a social-media post | Cited as `supporting-context` only, with a mirror recorded | The post being deleted, leaving no canonical reference |
 | The archetype→mode-floor mapping is new and unvalidated | It is stated as this repo's authored extension, not as an external claim | First self-assessment cycle showing it changed no real grading decision — that would make it decorative, and decorative rigor should be cut |
 | The `mcp` extra is now capped below 2.x, so the repo is pinned to a superseded major line | The cap restores a broken CI job today and narrows rather than widens what is accepted. The alternative — porting `mcp_server.py` to the 2.x API — is real code work outside this change's scope and needs its own packet | A 2.x port landing, or a security advisory against the 1.x line. Either should lift the bound rather than raise it silently |
+| Advisories against `mcp` 1.x were not checked | The pin was made to repair CI, not as a supplier trust decision, and `mcp` was already an accepted optional dependency. But holding a superseded major line without checking its advisory status is a real gap, not a formality — see the dependency table in `verification.md` | Any advisory against 1.x; that turns the bound from a repair into a liability and forces the 2.x port |
 | An unrelated repair rides in a doctrine PR | The owner was asked and chose this over a separate PR; the break is repo-wide and the fix is one constraint. Argued in `risk.md`, not silently absorbed | If a reviewer prefers the split, the `pyproject.toml` change lifts out cleanly as its own commit |
 
 ## Apply-clearance

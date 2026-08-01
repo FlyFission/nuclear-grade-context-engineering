@@ -16,7 +16,7 @@ Record what was checked, how, and what the check did and did not establish.
 | V-6 | Vendor affiliation disclosed wherever the statistics are cited | Scan of the citing files for a vendor disclosure | 7 of 7 disclosed, including `MAXIMS.md` inline after review | pass |
 | V-7 | The three sources are registered under existing citation discipline | New rows in `source-map.md` Tier 6 (Sonar survey), Tier 9 (arXiv:2605.20049), Tier 11 (Cherny), plus a standing vendor-affiliation note under Tier 6 and three `source-to-concept-crosswalk.md` rows | Present | pass |
 | V-8 | No new skill added; skill-count invariant intact | `ls -d skills/*/` = 29 (the count `main` arrived at via #81); no skill folder added or removed by this change | 29 folders, unchanged by this PR | pass |
-| V-9 | Full test suite | `python -m pytest -q` | 238 passed, 1 skipped | pass |
+| V-9 | Full test suite **on the tree being accepted** | `python -m pytest -q`, re-run after the rebase and after the review fixes | 316 passed, 1 skipped (317 collected) | pass |
 | V-10 | Lint | `python -m ruff check .` | All checks passed | pass |
 | V-11 | Repo health and internal link resolution | `python tools/ng.py doctor .` | `OK: Nuclear-grade doctor` | pass |
 | V-12 | Token budget not inflated by the new doctrine | `python tools/ng.py tokens .` | `OK: token budget` | pass |
@@ -76,7 +76,7 @@ Every row classifies as **self-check**. The deterministic checks feel independen
 ## Commands, evals, and reviews
 
 ```bash
-python -m pytest -q                    # 238 passed, 1 skipped
+python -m pytest -q                    # 316 passed, 1 skipped (317 collected)
 python -m ruff check .                 # All checks passed
 python tools/ng.py doctor .            # OK: Nuclear-grade doctor
 python tools/ng.py tokens .            # OK: token budget
@@ -101,7 +101,17 @@ python tools/ng.py validate .nuclear/changes/quality-verdict-accountability --st
 
 ## Security / dependency / supply-chain checks
 
-Not applicable — no dependency, model, API, permission, or build change. Three external URLs were added as citations only; none is fetched at runtime.
+**One dependency constraint changed.** This section originally read "not applicable"; that was written before the `mcp` pin was folded in and was left stale, making the packet internally contradictory against V-17, V-18, and `risk.md`. Corrected here.
+
+| Item | What the check establishes | Status |
+|---|---|---|
+| `mcp` optional extra, `>=1.0` → `>=1.0,<2` | The bound **narrows** the accepted set; it admits no version the previous constraint did not already allow. Resolution verified in a clean venv: unbounded → 2.0.0 (import of `mcp.server.fastmcp` fails), bounded → 1.29.0 (import succeeds, 13 tests pass) | pass |
+| Supply-chain posture of the pinned line | Not re-vetted. `mcp` was already an accepted optional dependency of this repo; this change constrains which of its versions are used, it does not introduce a new supplier, and no new trust decision was made | not applicable — no new supplier |
+| Known advisories against `mcp` 1.x | **Not checked.** The pin holds the repo on a superseded major line, so an advisory against 1.x would make the bound a liability rather than a repair | **gap** — carried to `ship.md`; re-check when the 2.x port is scheduled |
+| Base install | Unchanged. The base package still has zero runtime dependencies; `mcp` remains opt-in behind the extra | pass |
+| Three new external URLs | Citations only. None is fetched at runtime, by the package or by CI | pass |
+
+The one skip in V-9 is `tests/test_mcp_server.py::test_build_server_registers_expected_tools`, `importorskip`-gated on `mcp` not being installed in the base environment. It is not skipped in CI's `mcp-smoke` job, which installs the extra and exercises the server — that job is the evidence for the pin (V-17).
 
 ## Required links
 

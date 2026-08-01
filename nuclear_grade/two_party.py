@@ -29,7 +29,13 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-_CLAIM_ID = re.compile(r"^[A-Z]-?\d+$")
+_CLAIM_ID = re.compile(r"^(?P<id>[A-Z][A-Z0-9]*-?\d+)(?:\s|$)")
+
+
+def _claim_id(cell: str) -> str | None:
+    """Return the leading claim id, allowing a short description after it."""
+    match = _CLAIM_ID.match(cell)
+    return match.group("id") if match else None
 
 
 def parse_claim_status(verification_text: str) -> dict[str, str]:
@@ -40,11 +46,16 @@ def parse_claim_status(verification_text: str) -> dict[str, str]:
         if "|" not in line:
             continue
         cells = [c.strip() for c in line.strip().strip("|").split("|")]
-        if len(cells) < 2 or not _CLAIM_ID.match(cells[0]):
+        if len(cells) < 2 or (claim_id := _claim_id(cells[0])) is None:
             continue
         status = next((c.lower() for c in cells[1:] if c.lower() in known), None)
         if status is not None:
-            out[cells[0]] = status
+            # When a base row and a qualified row share a normalized id (e.g.
+            # `REQ-001` and `REQ-001 (live install)`), keep the load-bearing
+            # `pass` so a weaker later row cannot silently drop the independence
+            # check this module exists to enforce.
+            if claim_id not in out or status == "pass":
+                out[claim_id] = status
     return out
 
 
@@ -63,9 +74,9 @@ def parse_authorship(verification_text: str) -> dict[str, tuple[str, str]]:
         if not in_section or "|" not in line:
             continue
         cells = [c.strip() for c in line.strip().strip("|").split("|")]
-        if len(cells) < 3 or not _CLAIM_ID.match(cells[0]):
+        if len(cells) < 3 or (claim_id := _claim_id(cells[0])) is None:
             continue
-        out[cells[0]] = (cells[1].lower(), cells[2].lower())
+        out[claim_id] = (cells[1].lower(), cells[2].lower())
     return out
 
 

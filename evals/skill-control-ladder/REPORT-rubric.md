@@ -95,7 +95,7 @@ carrying token cost without a measured behavioral effect.
 | `C1_generic_nudge` | 78 | $0.0471 | 1,774 | 0.770 (95% CI 0.58–0.89) |
 | `C2_description_only` | 61 | $0.0472 | 1,818 | 0.840 (95% CI 0.66–0.93) |
 | `C3_compressed` | 126 | $0.0524 | 1,953 | 0.858 (95% CI 0.68–0.94) |
-| `C4_full_skill` | 1,085 | $0.0574 | 1,888 | 0.905 (95% CI 0.74–0.97) |
+| `C4_full_skill` | 1,100 | $0.0574 | 1,888 | 0.905 (95% CI 0.74–0.97) |
 
 ## Per-skill scores (descriptive, not 27 hypotheses)
 

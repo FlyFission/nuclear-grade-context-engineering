@@ -67,7 +67,7 @@
   "fast_mode_disabled_reason": "sdk_opt_in_required",
   "subtype": "success",
   "api_error_status": null,
-  "result": "I don't see an `apiTimeout` reference or a `.env.dev` file anywhere in this project directory (`/home/user/nuclear-grade-context-engineering/evals/skill-control-ladder/data/negative-pool/work/responding-to-incidents_C3_compressed_2`).\n\nA couple possibilities:\n1. Your actual project lives elsewhere, and Claude Code is currently pointed at a different working directory.\n2. The startup script reads the env var via `os.environ`/`process.env` with a different casing/prefix than `apiTimeout` (e.g. `API_TIMEOUT`).\n\nCould you tell me the path to the project (or the startup script file) so I can look in the right place? Once I find the reference, the fix itself is simple \u2014 just change `apiTimeout` to `api_timeout` wherever the script reads it.",
+  "result": "I don't see an `apiTimeout` reference or a `.env.dev` file anywhere in this project directory (`./evals/skill-control-ladder/data/negative-pool/work/responding-to-incidents_C3_compressed_2`).\n\nA couple possibilities:\n1. Your actual project lives elsewhere, and Claude Code is currently pointed at a different working directory.\n2. The startup script reads the env var via `os.environ`/`process.env` with a different casing/prefix than `apiTimeout` (e.g. `API_TIMEOUT`).\n\nCould you tell me the path to the project (or the startup script file) so I can look in the right place? Once I find the reference, the fix itself is simple \u2014 just change `apiTimeout` to `api_timeout` wherever the script reads it.",
   "ttft_ms": 1851,
   "ttft_stream_ms": 1182,
   "time_to_request_ms": 37,

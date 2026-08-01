@@ -79,7 +79,7 @@
   "fast_mode_disabled_reason": "sdk_opt_in_required",
   "subtype": "success",
   "api_error_status": null,
-  "result": "No matches found in the current project directory for `apiTimeout`. A few things to check on your end:\n\n1. **Which file/repo is this in?** If it's outside `/home/user/nuclear-grade-context-engineering/evals/skill-control-ladder/data/negative-pool/work/responding-to-incidents_C4_full_skill_3`, point me to the path and I'll search there.\n2. It's also worth double-checking the startup script for how it reads env vars \u2014 e.g. `os.environ[\"apiTimeout\"]` vs `os.getenv(\"apiTimeout\")`, or a config loader that uppercases/transforms keys (some frameworks expect `API_TIMEOUT` for env vars, not `api_timeout`).\n\nOnce you tell me the file path (or if it's in a different directory), I'll update the reference to `api_timeout` directly.",
+  "result": "No matches found in the current project directory for `apiTimeout`. A few things to check on your end:\n\n1. **Which file/repo is this in?** If it's outside `./evals/skill-control-ladder/data/negative-pool/work/responding-to-incidents_C4_full_skill_3`, point me to the path and I'll search there.\n2. It's also worth double-checking the startup script for how it reads env vars \u2014 e.g. `os.environ[\"apiTimeout\"]` vs `os.getenv(\"apiTimeout\")`, or a config loader that uppercases/transforms keys (some frameworks expect `API_TIMEOUT` for env vars, not `api_timeout`).\n\nOnce you tell me the file path (or if it's in a different directory), I'll update the reference to `api_timeout` directly.",
   "ttft_ms": 3312,
   "ttft_stream_ms": 2459,
   "time_to_request_ms": 29,

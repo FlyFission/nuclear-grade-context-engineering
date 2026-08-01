@@ -67,7 +67,7 @@
       "tool_use_id": "toolu_01JzgjYv9aeDow1Un3QQdF9F",
       "tool_input": {
         "pattern": "packet",
-        "path": "/home/user/nuclear-grade-context-engineering/evals/skill-control-ladder/data/work",
+        "path": "./evals/skill-control-ladder/data/work",
         "output_mode": "files_with_matches",
         "head_limit": 20
       }

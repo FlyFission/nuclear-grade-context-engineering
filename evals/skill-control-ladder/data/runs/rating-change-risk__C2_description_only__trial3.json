@@ -67,7 +67,7 @@
       "tool_use_id": "toolu_01PVCT465ZbP6c2QN8u8R57i",
       "tool_input": {
         "pattern": "rating-change-risk",
-        "path": "/home/user/nuclear-grade-context-engineering",
+        "path": ".",
         "output_mode": "files_with_matches"
       }
     }

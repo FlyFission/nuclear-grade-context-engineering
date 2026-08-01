@@ -67,7 +67,7 @@
       "tool_use_id": "toolu_01LxYN8z2UJ4iB3rxad84zz1",
       "tool_input": {
         "pattern": "change record",
-        "path": "/home/user/nuclear-grade-context-engineering",
+        "path": ".",
         "output_mode": "files_with_matches",
         "head_limit": 20
       }

@@ -73,7 +73,7 @@
       "tool_name": "Glob",
       "tool_use_id": "toolu_01DF83dW6ejXHJ2BBN9uGJjo",
       "tool_input": {
-        "pattern": "/home/user/**/skills/**/SKILL.md"
+        "pattern": "~/**/skills/**/SKILL.md"
       }
     }
   ],

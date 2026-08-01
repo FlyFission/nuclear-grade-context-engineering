@@ -67,7 +67,7 @@
       "tool_use_id": "toolu_01Y4ismEbJSfZ5qeELHqRiS8",
       "tool_input": {
         "pattern": "NUCLEAR-GRADE",
-        "path": "/home/user/nuclear-grade-context-engineering",
+        "path": ".",
         "output_mode": "files_with_matches",
         "head_limit": 20
       }
@@ -77,7 +77,7 @@
       "tool_use_id": "toolu_018voAoZXr2ZjrVf4CFV3LUD",
       "tool_input": {
         "pattern": "add-dark-mode-toggle",
-        "path": "/home/user",
+        "path": "~",
         "output_mode": "files_with_matches",
         "head_limit": 20
       }

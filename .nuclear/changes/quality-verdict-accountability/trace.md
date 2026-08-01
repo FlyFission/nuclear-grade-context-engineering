@@ -23,7 +23,7 @@ Link each claim the change makes to its basis, its implementation, and its evide
 | ~42% of committed code AI-generated or significantly assisted; ~65% projected by 2027 | Sonar 2026 State of Code Developer Survey (n > 1,100) — https://www.sonarsource.com/state-of-code-developer-survey-report.pdf | public-url-needed; vendor-run, self-reported; URL not fetched (V-14) |
 | 96% do not fully trust AI code's functional correctness; ~48% always verify; 38% find review costlier | same survey | public-url-needed; vendor-run, self-reported; URL not fetched (V-14) |
 | Cleaner code: pass rate unchanged (<1%), ~7.1% fewer input tokens, ~8.5% fewer output tokens, ~11% less reasoning effort, ~34% fewer already-edited-file revisits; 660 trials, 33 tasks, 6 repo pairs | Trivedi & Schmitt, arXiv:2605.20049 — https://arxiv.org/abs/2605.20049 | public-url-needed; authors affiliated with SonarSource; URL not fetched (V-14) |
-| Prototyper / Builder / Sweeper / Grower / Maintainer, as patterns of work rather than job titles | Boris Cherny (Head of Claude Code, Anthropic), public post July 2026 — https://x.com/bcherny/status/2071379474277613732 | supporting-context; primary but low-stability |
+| Prototyper / Builder / Sweeper / Grower / Maintainer, as patterns of work rather than job titles | Boris Cherny (Head of Claude Code, Anthropic), public post 2026-06-28 — https://x.com/bcherny/status/2071379474277613732 | supporting-context; primary but low-stability; date taken from the status ID, not from secondary coverage |
 | Archetype → characteristic drift → mode floor → skill mapping | **this repository's authored extension** | not attributed to any external source |
 
 ## Gaps

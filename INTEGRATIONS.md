@@ -144,15 +144,16 @@ Code/Copilot need full extension repackaging.
   Core 7 from [`CORE.md`](CORE.md) — 8 skills.
 - `--full`: every skill.
 
-Each run prints the **always-on description cost** of what it installed (≈100
-tokens per skill), so you can keep context lean. Re-running updates in place.
+Each run prints the **catalog-metadata description cost** of what it installed
+(≈100 tokens per skill; a host may shorten or omit descriptions under context
+pressure), so you can keep context lean. Re-running updates in place.
 
 ### CLI vs skills vs MCP — what costs context
 
-| Surface | Always-on cost | When you pay |
+| Surface | Standing catalog cost | When you pay |
 |---|---|---|
 | **CLI** (`ng …` run via the shell) | ~0 | only the command + its output, on demand |
-| **Skills** (`SKILL.md`) | each skill's short `description` | full body only when the skill fires |
+| **Skills** (`SKILL.md`) | each skill's short `description` (a host may shorten or omit it under pressure) | full body only on selection |
 | **MCP server** | every tool's name + description + JSON schema | loaded for the whole session whether used or not |
 
 Ranking, lean to heavy: **CLI ≈ Skills ≪ MCP**. Nuclear-grade therefore ships
@@ -190,7 +191,7 @@ server when an agent needs to execute the checks.
 ## Verify it worked
 
 1. `python tools/ng.py install codex --core --dry-run --dest /tmp/ng-skills`
-   prints the file list and the always-on cost without writing.
+   prints the file list and the catalog-metadata cost without writing.
 2. After a real install, ask the agent something that should route — e.g.
    *"I'm about to change auth"* — and confirm it reaches for
    `using-nuclear-grade` / `questioning-attitude` on its own.

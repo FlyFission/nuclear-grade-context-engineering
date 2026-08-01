@@ -5,9 +5,9 @@ What this measures
 The token weight the repo's own prose carries, separated into the two costs an
 agent actually pays:
 
-- **catalog-metadata** -- a skill's frontmatter ``description``, which is eligible
+- **catalog metadata** -- a skill's frontmatter ``description``, which is eligible
   for the host's routing catalog but may be shortened or omitted under pressure; and
-- **on-selection** -- a skill's body, read when that skill is selected.
+- **on selection** -- a skill's body, read when that skill is selected.
 
 It also reports a **redundancy index** (identical boilerplate blocks and how many
 files each spans) and **tokens-per-decision-signal** for skills that back a worked
@@ -113,8 +113,8 @@ def tiktoken_count(text: str, encoding: str = "o200k_base") -> int | None:
 def split_frontmatter(text: str) -> tuple[str, str]:
     """Return ``(description, body)`` for a skill file.
 
-    ``description`` is the frontmatter ``description`` value (the catalog-metadata
-    cost); ``body`` is everything after the closing ``---`` (the on-selection
+    ``description`` is the frontmatter ``description`` value (the catalog metadata
+    cost); ``body`` is everything after the closing ``---`` (the on selection
     cost). Files without frontmatter return ``("", whole-text)``.
     """
 
@@ -144,8 +144,8 @@ class FileTokens:
     path: str  # repo-relative
     kind: str  # "skill" | "command" | "template" | "doc"
     name: str  # skill/command short name, or file name
-    description_tokens: int  # catalog-metadata cost (skills only; 0 otherwise)
-    body_tokens: int  # on-selection cost
+    description_tokens: int  # catalog metadata cost (skills only; 0 otherwise)
+    body_tokens: int  # on selection cost
     total_tokens: int
 
 

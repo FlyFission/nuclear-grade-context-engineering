@@ -75,7 +75,9 @@ def test_build_report_derives_skills_dynamically_from_tree():
 
     assert skill_names == found_on_disk
     assert len(skill_names) == len(found_on_disk)
-    # Every skill carries both catalog metadata and an on-selection body.
+    # Each on-disk skill file has a non-empty frontmatter description and body,
+    # so the token report measures both (a host may still shorten or omit the
+    # description at load time -- that is not what this on-disk count asserts).
     for skill in report.of_kind("skill"):
         assert skill.description_tokens > 0, skill.name
         assert skill.body_tokens > 0, skill.name

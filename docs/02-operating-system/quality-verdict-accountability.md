@@ -14,6 +14,8 @@
 
 **Accountability is the ability to explain and stand behind the verdict later.** Not who gets blamed — whether the reasoning can be reconstructed months later by someone who was not there. It lives in the packet: `trace.md`, `verification.md`, `ship.md`, the evidence custody record, and the coupling profile. See [`actor-evidence-independence.md`](actor-evidence-independence.md).
 
+**An agent can be delegated the verdict. It cannot be delegated the accountability.** Decision rights may be placed at the edge for reversible, well-evidenced work — that is [`deciding-who-decides`](../../skills/deciding-who-decides/SKILL.md), and the PROVE judge stage is what it looks like in tool form. What does not move with the delegation is the standing behind the call: a named human remains accountable for placing the decision there and for what comes out. This is why the three terms scale differently. Quality scales with the agent. Verdict can be placed. **Accountability never moves** — which is the whole reason it is a separate term rather than a synonym for the other two.
+
 The three terms have separate machinery, which is the clearest sign they are separate things. Quality is checked by `ng validate` and CI. The verdict's *placement* — who holds prepare, recommend, verify, validate, verdict, accept, apply, reopen, and close, and on which evidence — is recorded in [`../../templates/standard/decision-authority.md`](../../templates/standard/decision-authority.md) and structurally checked by `ng validate <packet> --strict-authority`. Accountability's machinery is `--strict-custody`. None of the three checks substitutes for either of the others, and none of them decides adequacy.
 
 ---

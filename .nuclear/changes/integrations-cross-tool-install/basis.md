@@ -47,7 +47,7 @@ What must not happen?
 |---|---|---|---|---|
 | Each tool auto-loads `SKILL.md` by description | fact | official docs for each tool | a tool drops the Agent Skills standard | FlyFission |
 | Each tool's skills directory is as documented | fact (except VS Code user path) | official docs; VS Code user path is best-known | a tool relocates its skills directory | FlyFission |
-| `mcp>=1.0` is installable and exposes FastMCP | fact | PyPI shows 1.0.0..1.27.2; verified in a clean venv | `mcp` removes FastMCP or changes the API | FlyFission |
+| `mcp>=1.0,<2` is installable and exposes FastMCP | local proof | the v2.0.0 release directs unmigrated users to keep a `<2` bound; verified with the latest matching v1 in a clean environment | the project deliberately migrates to `MCPServer` on v2 | FlyFission |
 
 ## Grounding status
 
@@ -73,7 +73,7 @@ Use this section only when activated.
 
 | Dependency/model/service | Intended use | Consequence if wrong/unavailable/compromised | Evidence or compensating control | Revalidation trigger |
 |---|---|---|---|---|
-| `mcp` (Python SDK) | run the optional MCP server | only MCP users affected; the base install is unaffected | optional extra; pinned `mcp>=1.0`; the `mcp-smoke` CI job | a new major of `mcp` or a FastMCP API change |
+| `mcp` (Python SDK) | run the optional MCP server | only MCP users affected; the base install is unaffected | optional extra; bounded to `mcp>=1.0,<2`; the `mcp-smoke` CI job | a deliberate v2 migration or a FastMCP API change on v1 |
 
 ## Derived requirements or claims
 

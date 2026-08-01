@@ -160,11 +160,11 @@ Vendor each Core skill as a file (e.g. `skills/<name>/SKILL.md`) so its **body l
 the skill fires**. In always-on context put only a **one-line pointer per skill** — the
 description-sized cost.
 
-The framework's own measurement (see [`docs/05-reference/skills-token-audit.md`](docs/05-reference/skills-token-audit.md)):
-the 29 skill descriptions sit at ~104 tokens each (gated 80-500 characters), and the ~35k of
-skill *bodies* are loaded only on invocation. Pasting a fat doctrine block into always-on
-context multiplies that cost across every subagent in a fan-out. The framework rejects that
-pattern by measurement.
+Run `python tools/ng.py tokens .` for the live measurement; the dated snapshots and method live
+in [`docs/05-reference/skills-token-audit.md`](docs/05-reference/skills-token-audit.md). The
+descriptions are the bounded always-loaded surface; skill *bodies* load only on invocation.
+Pasting a fat doctrine block into always-on context multiplies that cost across every subagent
+in a fan-out. The framework rejects that pattern by measurement.
 
 ---
 

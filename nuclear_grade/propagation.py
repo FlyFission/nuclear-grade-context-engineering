@@ -39,7 +39,13 @@ STATUS_RANK: dict[str, int | None] = {
 
 PROMOTABLE_RANK = 3  # only an all-pass packet promotes
 
-_CLAIM_ID = re.compile(r"^[A-Z]-?\d+$")
+_CLAIM_ID = re.compile(r"^(?P<id>[A-Z][A-Z0-9]*-?\d+)(?:\s|$)")
+
+
+def _claim_id(cell: str) -> str | None:
+    """Return the leading claim id, allowing a short description after it."""
+    match = _CLAIM_ID.match(cell)
+    return match.group("id") if match else None
 
 
 def parse_claim_statuses(verification_text: str) -> list[tuple[str, str]]:
@@ -54,13 +60,13 @@ def parse_claim_statuses(verification_text: str) -> list[tuple[str, str]]:
         if "|" not in line:
             continue
         cells = [c.strip() for c in line.strip().strip("|").split("|")]
-        if len(cells) < 2 or not _CLAIM_ID.match(cells[0]):
+        if len(cells) < 2 or (claim_id := _claim_id(cells[0])) is None:
             continue
         status = next(
             (c.lower() for c in cells[1:] if c.lower() in STATUS_RANK), None
         )
         if status is not None:
-            results.append((cells[0], status))
+            results.append((claim_id, status))
     return results
 
 
@@ -73,7 +79,7 @@ def _deferred_section_ids(verification_text: str) -> set[str]:
             in_deferred = "deferred" in line.lower()
             continue
         if in_deferred:
-            ids.update(re.findall(r"[A-Z]-?\d+", line))
+            ids.update(re.findall(r"\b[A-Z][A-Z0-9]*-?\d+\b", line))
     return ids
 
 

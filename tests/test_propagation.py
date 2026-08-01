@@ -36,8 +36,12 @@ def test_effective_status_is_the_minimum():
 
 
 def test_parse_reads_claim_and_status():
-    text = TABLE_HEADER + "| C-001 | m | c | pass | e | - |\n"
-    assert parse_claim_statuses(text) == [("C-001", "pass")]
+    text = (
+        TABLE_HEADER
+        + "| C-001 | m | c | pass | e | - |\n"
+        + "| REQ-002 keeps writes bounded | m | c | gap | e | tbd |\n"
+    )
+    assert parse_claim_statuses(text) == [("C-001", "pass"), ("REQ-002", "gap")]
 
 
 def test_all_pass_promotes(tmp_path):
@@ -79,6 +83,17 @@ def test_acknowledged_deferred_promotes(tmp_path):
         tmp_path,
         "| C-001 | m | c | pass | e | None |\n| C-002 | m | c | deferred | e | later |\n",
         deferred="## Deferred items\n\n- C-002: parked pending vendor data; tracked in issue 12.\n",
+    )
+    messages: list[str] = []
+    check_promotion(pkt, messages)
+    assert messages == []
+
+
+def test_multi_letter_deferred_id_is_acknowledged(tmp_path):
+    pkt = _packet(
+        tmp_path,
+        "| REQ-003 integration | m | c | planned | e | later |\n",
+        deferred="## Deferred items\n\n- REQ-003: waiting for schema normalization.\n",
     )
     messages: list[str] = []
     check_promotion(pkt, messages)

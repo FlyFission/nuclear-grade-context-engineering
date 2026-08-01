@@ -10,6 +10,11 @@ benchmark, a certification, a safety claim, or a production-readiness claim.
 See the self-audit in "How this holds up against industry practice" below
 before treating any single result as settled.
 
+**Run date:** July 2026 (the bulk of the runs are dated 2026-07-03/04; individual
+raw transcripts under `data/` carry their own run dates). This pilot covers the 28
+skills in the catalog at that time and is a historical snapshot, not evidence for
+skills added later.
+
 **Relationship to the other comparison in this repo:**
 [`docs/03-worked-examples/skill-workflow-comparison/`](../../docs/03-worked-examples/skill-workflow-comparison/)
 is a qualitative, author-judged comparison of 12 realistic changes done with

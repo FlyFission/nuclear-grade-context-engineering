@@ -41,6 +41,10 @@ Plain-language decoding of Nuclear-grade terms and idioms. The skills and docs u
 | Provenance versus custody | Provenance records where an artifact came from and how it was produced; custody records who controlled generation, selection, transformation, capture, retention, and presentation. Neither alone establishes truth or adequacy. |
 | Protected gate versus uncoupled evidence path | A gate can be protected from editing while still consuming only evidence selected and narrated by the change actor. Gate integrity and evidence-path coupling are separate control questions. |
 | Verdict / apply-clearance | An implementation primitive that separates an evidentiary acceptance decision from present authorization to apply it in a specific operational context. It is useful but not claimed as a standalone invention. |
+| Quality | The system of checks that produces evidence — tests, linters, type checks, the validator, CI, review passes. A system, not a score. It produces evidence; it does not accept anything. |
+| Verdict | The accountable decision made from that evidence, carrying a name: ship / block / defer / ship-with-named-risk, or VERIFIED / NOT VERIFIED / INCONCLUSIVE. Evidence is produced; a verdict is owned. |
+| Accountability | The ability to explain and stand behind a verdict later — whether the reasoning can be reconstructed by someone who was not there. Not the same as blame. |
+| Archetype | The posture work is being done in — Prototyper, Builder, Sweeper, Grower, Maintainer — which predicts the drift to expect and sets a mode floor. A pattern of work, not a job title. |
 
 ## Idioms used in the skills
 
@@ -55,6 +59,8 @@ Plain-language decoding of Nuclear-grade terms and idioms. The skills and docs u
 | "Prefer boring over clever" | Direct, obvious code beats clever indirection that is hard to read later. |
 | "Prefer deletion over rearrangement" | The strongest fix for complexity is removing structure, not moving it around. |
 | "Green CI is not a release argument" | Passing tests do not, by themselves, justify shipping. |
+| "A check is not a verdict" | A check produces evidence and stops there. Someone still has to decide, and own the decision. |
+| "The archetype changed, so the grade changes" | When exploration becomes a promise mid-change, re-rate the mode — the diff did not change, but the stakes did. |
 | "Confidence is not a source" | An agent sounding sure is not evidence; verify the fact. |
 | "Front door" (questioning attitude) | The first skill to apply before building: challenge assumptions. |
 | "Normalization of deviance" | Letting standards slip one accepted exception at a time until the exception is the norm. |

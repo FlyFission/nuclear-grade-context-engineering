@@ -26,6 +26,8 @@ The gate may be protected from direct editing and still receive no signal that e
 
 This does not mean agent-produced evidence is useless. It means its custody and residual coupling must be visible before a reviewer decides how much weight to give it.
 
+**The field data says this is the common condition, not the edge case.** A 2026 developer survey (n > 1,100, vendor-run and self-reported rather than measured) reports that about 42% of committed code is already AI-generated or significantly assisted, that 96% of developers do not fully trust that code to be functionally correct, and that only about half always verify it before committing. Distrust is nearly universal and verification is not — which is what step 7 above describes when it happens at scale. Treat the figures as survey self-report; they establish prevalence, not mechanism. The mechanism evidence is in section 5 and in the judge-bias sources in `../00-standards-foundation/source-map.md`.
+
 ---
 
 ## 2. Self-modification and evidence custody are different

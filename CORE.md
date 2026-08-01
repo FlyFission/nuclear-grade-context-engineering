@@ -60,6 +60,15 @@ Scan the triggers. For every "yes," invoke that cluster. Default is Core only.
 | Repo layout / structure decision, visible code-quality drift in a diff, or a deliverable that is a produced artifact whose correctness lives in the rendered output (figure, PDF, SVG, screenshot, build, deployed response) | **Hygiene** | [`organizing-project-folders`](skills/organizing-project-folders/SKILL.md), [`reviewing-code-quality`](skills/reviewing-code-quality/SKILL.md), [`verifying-final-artifacts`](skills/verifying-final-artifacts/SKILL.md) |
 | Planning a multi-stage AI / agentic workflow (workspace, orchestration, repo convention) | **Workflow architecture** — a composing path, not a new cluster (see [`docs/02-operating-system/agentic-workflow-architecture.md`](docs/02-operating-system/agentic-workflow-architecture.md)) | [`organizing-project-folders`](skills/organizing-project-folders/SKILL.md), [`breaking-down-the-work`](skills/breaking-down-the-work/SKILL.md), [`briefing-an-agent`](skills/briefing-an-agent/SKILL.md), [`recording-what-an-agent-did`](skills/recording-what-an-agent-did/SKILL.md) |
 
+**Two front-door lenses run before the matrix, not as clusters.** Ask what *kind* of change this
+is ([`docs/02-operating-system/work-type-lens.md`](docs/02-operating-system/work-type-lens.md))
+and what *posture* it is being done in
+([`docs/02-operating-system/archetype-lens.md`](docs/02-operating-system/archetype-lens.md) —
+Prototyper, Builder, Sweeper, Grower, Maintainer). Each archetype has a characteristic drift and
+a mode floor, and when the archetype shifts mid-change — the prototype somebody decides to ship —
+the change gets re-graded even though the diff did not move. Both lenses are doctrine pages, not
+skills; they shape the questions and the mode, then hand off to the matrix below.
+
 All 29 skills are accounted for: 7 Core + 21 ancillary across 5 clusters + 1 router
 ([`using-nuclear-grade`](skills/using-nuclear-grade/SKILL.md)). The workflow-architecture
 trigger above composes existing skills rather than adding a sixth cluster or a new skill — its
@@ -160,11 +169,11 @@ Vendor each Core skill as a file (e.g. `skills/<name>/SKILL.md`) so its **body l
 the skill fires**. In always-on context put only a **one-line pointer per skill** — the
 description-sized cost.
 
-The framework's own measurement (see [`docs/05-reference/skills-token-audit.md`](docs/05-reference/skills-token-audit.md)):
-the 29 skill descriptions sit at ~104 tokens each (gated 80-500 characters), and the ~35k of
-skill *bodies* are loaded only on invocation. Pasting a fat doctrine block into always-on
-context multiplies that cost across every subagent in a fan-out. The framework rejects that
-pattern by measurement.
+Run `python tools/ng.py tokens .` for the live measurement; the dated snapshots and method live
+in [`docs/05-reference/skills-token-audit.md`](docs/05-reference/skills-token-audit.md). The
+descriptions are the bounded always-loaded surface; skill *bodies* load only on invocation.
+Pasting a fat doctrine block into always-on context multiplies that cost across every subagent
+in a fan-out. The framework rejects that pattern by measurement.
 
 ---
 
@@ -193,6 +202,14 @@ plus [`checking-release-readiness`](skills/checking-release-readiness/SKILL.md) 
 review. See [`docs/02-operating-system/validators.md`](docs/02-operating-system/validators.md)
 ("human judgment decides engineering adequacy; the validator checks whether the packet exposes
 the evidence needed for that judgment").
+
+That split is the whole spine, and it has three parts, not two. **Quality** is the system of
+checks that produces evidence. **Verdict** is the accountable decision made from that evidence.
+**Accountability** is being able to explain and stand behind that verdict later. The validator
+is the first; the Core 7 and a named human are the second; the packet is the third. Under AI
+authorship the split matters more, not less — the checks scale with the agent and the verdict
+does not. See
+[`docs/02-operating-system/quality-verdict-accountability.md`](docs/02-operating-system/quality-verdict-accountability.md).
 
 ---
 

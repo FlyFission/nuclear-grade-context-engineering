@@ -583,7 +583,7 @@ def test_install_reports_always_on_cost(tmp_path):
     result = run_ng("install", "codex", "--dest", str(tmp_path / "skills"))
 
     assert result.returncode == 0, result.stderr
-    assert "always-on description cost" in result.stdout
+    assert "catalog-metadata description cost" in result.stdout
 
 
 def test_install_is_idempotent_update(tmp_path):

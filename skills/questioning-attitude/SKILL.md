@@ -43,7 +43,7 @@ This is the front door. Before an agent builds, merges, or releases, find the re
 1. Restate the change as one clear question that evidence could prove right or wrong. Name the value it should deliver and to whom, and the cost of not doing it — so a clean proof of a change that delivers the wrong value is caught here, not after release.
 2. List the assumptions that have to be true for the change to work.
 3. Sort what you know into facts, assumptions, unknowns, and "how good is this source?"
-4. Spot the uncertainty, the danger words, the warning signs, the steps where mistakes are likely, and any hidden reasons this should be treated as a standard change. Name the work type — greenfield, brownfield, defect-fix, refactor-migration — and apply every type that fits, because more than one can (a production defect fix is brownfield and defect-fix; a live migration is brownfield and refactor-migration). Ask the questions every applicable type forces: brownfield and migration force blast-radius and rollback-of-state questions; a defect forces a reproduction and a regression guard; greenfield forces interface and acceptance questions. Work type is orthogonal to the Quick/Standard/Nuclear mode, which grades rigor, not kind. See `docs/02-operating-system/work-type-lens.md`.
+4. Spot the uncertainty, the danger words, the warning signs, the steps where mistakes are likely, and any hidden reasons this should be treated as a standard change. Name the work type — greenfield, brownfield, defect-fix, refactor-migration — and apply every type that fits, because more than one can (a production defect fix is brownfield and defect-fix; a live migration is brownfield and refactor-migration). Ask the questions every applicable type forces: brownfield and migration force blast-radius and rollback-of-state questions; a defect forces a reproduction and a regression guard; greenfield forces interface and acceptance questions. Work type is orthogonal to the Quick/Standard/Nuclear mode, which grades rigor, not kind. See `docs/02-operating-system/work-type-lens.md`. Then name the **archetype** — the posture the work is being done in: Prototyper, Builder, Sweeper, Grower, or Maintainer — because each drifts a particular way and carries a mode floor (a Prototyper's low floor holds only while shipping is an explicit non-goal; Sweeper and Maintainer start at Standard and Nuclear-on-trust-bearing). Archetype is a pattern of work, not a job title, and it can change mid-change — when it does, re-grade, because the promise moved even if the diff did not. See `docs/02-operating-system/archetype-lens.md`.
 5. Ask what evidence would change the decision. If nothing could change it, the question is not useful yet.
 6. Check the facts before you trust memory, confidence, or anything an agent generated.
 7. Name the conditions that should make you pause, hold, or escalate.
@@ -57,6 +57,7 @@ This is the front door. Before an agent builds, merges, or releases, find the re
 - The triggers for choosing a mode or escalating.
 - The evidence you need before you execute, verify, review, decide, or save the version.
 - The work type(s), and the questions every applicable type forces.
+- The archetype (posture), the drift it is prone to, and the mode floor it implies.
 - The one fact that would change the decision.
 
 ## Verification
@@ -103,6 +104,7 @@ Inputs:
 Return:
 - the decision question in one sentence
 - the work type(s), all that apply (a production defect is brownfield and defect-fix), and the questions each forces
+- the archetype (Prototyper, Builder, Sweeper, Grower, Maintainer), the drift that posture is prone to, and the mode floor it implies
 - the evidence that would change the decision
 - the assumptions that must be true
 - known facts, unknowns, danger words, and worries about how good the sources are

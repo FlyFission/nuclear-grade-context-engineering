@@ -7,7 +7,7 @@ description: Picks Quick, Standard, or a stronger human-reviewed mode based on c
 
 ## Overview
 
-Sort the change before you build it. That way the care you take matches the stakes and the evidence the change needs. The result is a mode choice, tied to the decision question, what the change must prove, and the triggers to escalate. Choosing the mode is how Nuclear-grade *tailors* rigor to stakes — the same idea project-management practice calls tailoring; see `docs/02-operating-system/risk-tiers-and-modes.md`. Mode is about how much rigor; it is orthogonal to the work type (greenfield, brownfield, defect-fix, or refactor-migration), which is classified upstream in `questioning-attitude` and shapes which questions you ask. See `docs/02-operating-system/work-type-lens.md`.
+Sort the change before you build it. That way the care you take matches the stakes and the evidence the change needs. The result is a mode choice, tied to the decision question, what the change must prove, and the triggers to escalate. Choosing the mode is how Nuclear-grade *tailors* rigor to stakes — the same idea project-management practice calls tailoring; see `docs/02-operating-system/risk-tiers-and-modes.md`. Mode is about how much rigor; it is orthogonal to the work type (greenfield, brownfield, defect-fix, or refactor-migration), which is classified upstream in `questioning-attitude` and shapes which questions you ask. See `docs/02-operating-system/work-type-lens.md`. The archetype classified there sets a **floor** under the mode you pick (see `docs/02-operating-system/archetype-lens.md`); if the archetype shifts mid-change -- the prototype someone decides to ship -- re-grade, because the stakes moved even though the diff did not.
 
 ## Decision contract
 
@@ -46,14 +46,15 @@ Sort the change before you build it. That way the care you take matches the stak
 1. Restate the decision question and the evidence bar it needs. Grade the change itself, not the standing item it touches -- a routine file can receive a high-stakes change (auth, payments, an irreversible migration); take the higher of the two.
 2. Judge the dominant three first -- consequence, how easy it is to undo, and how much is unknown -- then pull in who is exposed, how easily a failure would be caught, dependency trust, and how much power the agent has only if one of the three is unclear or a trap surface fires. Weigh them together: an easy-to-undo, known-pattern change is not high-rigor even at high consequence. Raise the mode when the affected component carries a live deficiency, a recent incident, or recurring escaped defects -- past performance is part of the stakes. Derive the grade in two directions so it is defensible, not asserted from effort: top-down (the worst credible outcome this could cause) and bottom-up (if this specific edit fails, what breaks).
 3. Name the work mode: routine, known procedure, new or uncertain, interrupted or resumed, or a critical action.
-4. Choose Quick only for local, easy-to-undo, easy-to-prove work that adds no new trust boundary.
-5. Choose Standard when the change is user-visible or lasting, or touches dependencies, permissions, data, AI, operations, or a release.
-6. Mark Nuclear, Incident, Research Board, or Release as human-reviewed patterns when they apply.
-7. Record the triggers to escalate and the least proof required; when the tier is genuinely unclear, raise it -- over-grading costs minutes, under-grading can cost the release.
+4. **Apply the archetype floor before choosing.** The posture named in `questioning-attitude` sets a floor the mode cannot go under: Sweeper and Builder start at Standard, Maintainer at Nuclear on trust-bearing surfaces, and a Prototyper's low floor holds only while shipping is an explicit non-goal. Going under a floor needs a stated reason, not silence. If the archetype shifted mid-change -- the prototype someone decided to ship -- re-grade from the new posture, because the stakes moved even though the diff did not. See `docs/02-operating-system/archetype-lens.md`.
+5. Choose Quick only for local, easy-to-undo, easy-to-prove work that adds no new trust boundary, and only if no archetype floor forbids it.
+6. Choose Standard when the change is user-visible or lasting, or touches dependencies, permissions, data, AI, operations, or a release.
+7. Mark Nuclear, Incident, Research Board, or Release as human-reviewed patterns when they apply.
+8. Record the triggers to escalate and the least proof required; when the tier is genuinely unclear, raise it -- over-grading costs minutes, under-grading can cost the release.
 
 ## Outputs
 
-- The chosen mode.
+- The chosen mode, and the archetype floor it had to clear.
 - The decision question and the evidence bar.
 - The reason for the mode.
 - The change-record files required.
@@ -93,10 +94,12 @@ Inputs:
 - Request or diff: <paste/link>
 - Affected files/assets: <list>
 - Impact on users, security, dependencies, data, AI behavior, or release: <known facts>
+- Archetype (posture) this work is in, if known: Prototyper / Builder / Sweeper / Grower / Maintainer
 
 Return:
 - the decision question and the proof that must clear before work goes on
-- the chosen mode: Quick, Standard, or a stronger mode that a human reviews
+- the archetype floor that applies (Sweeper and Builder start at Standard; Maintainer at Nuclear on trust-bearing surfaces; a Prototyper's low floor holds only while shipping is an explicit non-goal)
+- the chosen mode: Quick, Standard, or a stronger mode that a human reviews -- it must clear that floor, or state the reason for going under it
 - how bad it is if wrong, how easy to undo, how exposed, how easy to catch, how uncertain
 - the work mode and which safety habit (HPI) to use: none, context pack, handoff, self-check, an independent check, a record of lessons from real operation (OPEX), or a trust check
 - the assumptions or facts that drove the mode choice

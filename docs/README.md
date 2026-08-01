@@ -33,6 +33,8 @@ These docs have two parts. First, learn how to use the workflow. Second, look up
 | Budget and order an agent's context window | [`02-operating-system/context-window-discipline.md`](02-operating-system/context-window-discipline.md) |
 | Keep durable memory retrievable across runs | [`02-operating-system/durable-memory.md`](02-operating-system/durable-memory.md) |
 | Classify the kind of change (work type) | [`02-operating-system/work-type-lens.md`](02-operating-system/work-type-lens.md) |
+| Separate the checks, the decision, and the record | [`02-operating-system/quality-verdict-accountability.md`](02-operating-system/quality-verdict-accountability.md) |
+| Name the posture the work is being done in (archetype) | [`02-operating-system/archetype-lens.md`](02-operating-system/archetype-lens.md) |
 | Run an incident, track deficiencies | [`02-operating-system/incident-response.md`](02-operating-system/incident-response.md), [`02-operating-system/deficiency-register.md`](02-operating-system/deficiency-register.md) |
 | Periodically self-assess the method | [`02-operating-system/program-self-assessment.md`](02-operating-system/program-self-assessment.md) |
 | Understand CLI behavior | [`05-reference/cli-reference.md`](05-reference/cli-reference.md) |

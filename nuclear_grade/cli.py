@@ -618,8 +618,9 @@ def handle_install(args: argparse.Namespace) -> int:
     if code != 0:
         return code
 
-    # The honest always-on cost: the sum of the installed skills' descriptions,
-    # which a routing agent reads every session whether or not a skill fires.
+    # The catalog-metadata cost: the sum of the installed skills' descriptions,
+    # which a host may place in its routing catalog -- and may shorten or omit
+    # under context pressure. Bodies are read on selection.
     standing = sum(
         count_tokens(split_frontmatter((SKILLS / name / "SKILL.md").read_text(encoding="utf-8"))[0])
         for name in names
@@ -627,7 +628,7 @@ def handle_install(args: argparse.Namespace) -> int:
     label = TOOL_LABELS[args.tool]
     verb = "would install" if args.dry_run else "installed"
     print(f"\n{verb} {len(names)} skill(s) ({profile} profile) for {label} -> {dest}")
-    print(f"always-on description cost: ~{standing} tokens (skill bodies load only when a skill fires)")
+    print(f"catalog-metadata description cost: ~{standing} tokens (a host may shorten or omit descriptions under context pressure; bodies load on selection)")
     if profile == "core":
         print("re-run with --full for all skills; re-run anytime to update.")
     if args.tool not in VERIFIED_TOOLS and args.dest is None:
@@ -905,14 +906,14 @@ def handle_tokens(args: argparse.Namespace) -> int:
     budgets = load_budgets(repo)
 
     skills = sorted(report.of_kind("skill"), key=lambda f: f.body_tokens, reverse=True)
-    print("Skill token cost (description = always-loaded, body = on-invocation):")
+    print("Skill token cost (description = catalog metadata, body = on selection):")
     print(f"  {'description':>11}  {'body':>6}  skill")
     for skill in skills:
         print(f"  {skill.description_tokens:>11}  {skill.body_tokens:>6}  {skill.name}")
     print(
         f"\nSkill totals: descriptions {report.skill_description_total} tokens "
-        f"(always loaded), bodies {report.skill_body_total} tokens "
-        f"(loaded only when the skill fires)."
+        f"(host may shorten or omit), bodies {report.skill_body_total} tokens "
+        f"(loaded when selected)."
     )
 
     commands = report.of_kind("command")

@@ -48,7 +48,15 @@ Re-open this packet if: either statistical finding is replicated or contradicted
 
 ## Monitoring
 
-None applicable — no runtime behavior changes.
+The doctrine and packet edits change no runtime behavior and need none. **The `mcp` constraint does**, and the named-risk table above says an advisory against the 1.x line would change this decision — a trigger with no way to discover it is not a control, so it gets one here.
+
+| What to watch | Why | How | Owner |
+|---|---|---|---|
+| Advisories against `mcp` 1.x | The bound holds the optional server on a superseded major line; an advisory turns the repair into a liability and forces the 2.x port | Whatever dependency-advisory path the repo already trusts (GitHub Dependabot alerts on the repo, or `pip-audit` in the `mcp-smoke` job — the job already installs the extra, so it is the natural place) | Repo maintainer |
+| `mcp` 2.x becoming the only supported line | Upstream may stop patching 1.x, which converts a deferred port into an urgent one | Release notes on the next `mcp-smoke` failure, or a periodic check at `program-self-assessment.md` cadence | Repo maintainer |
+| `mcp-smoke` failing again after the bound | Would indicate the constraint stopped being sufficient — a 1.x release breaking the same import, or a transitive shift | Already covered: the job runs on every PR and on pushes to `main` | CI |
+
+Note that the first two rows are **not implemented by this change** — they name what should watch the trigger, not a monitor this PR installs. Recording an unimplemented monitoring path is more honest than claiming none is needed, but it is not the same as having one; if the maintainer wants the advisory check enforced rather than intended, that is a follow-up with its own packet.
 
 ## Required links
 

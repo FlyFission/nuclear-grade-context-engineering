@@ -314,10 +314,13 @@ def main() -> int:
             L.append("")
         if ceiling:
             L.append(
-                f"**{len(ceiling)} ties at the ceiling** — both arms scored 1.00, so the "
-                f"scenario is too easy to separate them. These are *uninformative*, not "
-                f"negative: the scenario cannot show a difference that may well exist. They "
-                f"are the top priority for harder replacement scenarios.\n"
+                f"**{len(ceiling)} ties at the C1/C4 ceiling** — both of the two arms "
+                f"being compared scored 1.00, so this scenario cannot separate them. Note "
+                f"this is a *looser* condition than the validity gate's ceiling above, "
+                f"which requires ALL five arms to be maxed; a scenario can pin C1 and C4 "
+                f"at 1.00 while a weaker arm still scores below, which is why the two "
+                f"counts differ. Either way the C4-vs-C1 comparison learns nothing here, "
+                f"and these are the top priority for harder replacement scenarios.\n"
             )
             L.append("> " + ", ".join(f"`{s}`" for s, _, _ in ceiling) + "\n")
         if real_ties:

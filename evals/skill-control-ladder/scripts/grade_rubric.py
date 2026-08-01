@@ -112,6 +112,9 @@ def main() -> int:
     ap.add_argument("--model", default=GRADER_MODEL,
                     help="grader model; vary it to measure cross-model agreement")
     ap.add_argument("--out", default=None, help="override output path")
+    # Pools need not run every arm (the negative pool omits C2), and grading
+    # must not demand transcripts a pool deliberately never produced.
+    ap.add_argument("--arms", nargs="*", default=list(ARMS), choices=list(ARMS))
     args = ap.parse_args()
 
     if not RUBRICS_PATH.exists():
@@ -144,7 +147,7 @@ def main() -> int:
             continue
         checks = rubrics[skill]["checks"]
         rh = rubric_hash(checks, args.model)
-        for arm in ARMS:
+        for arm in args.arms:
             for trial in range(1, TRIALS + 1):
                 p = run_path(skill, arm, trial)
                 if not p.exists():

@@ -80,15 +80,34 @@ def compare(base: dict, other: dict, label: str) -> dict:
     }
 
 
+MAX_GRADER_ATTEMPTS = 5
+
+
 def run_grader(model: str, out_name: str) -> Path:
     """Delegate to grade_rubric.py so reliability is measured on the EXACT
-    grading path used to produce results, not a reimplementation of it."""
+    grading path used to produce results, not a reimplementation of it.
+
+    Retried because grade_rubric.py exits non-zero whenever ANY call in the
+    batch fails transiently, and on a 100+ cell batch that is close to routine.
+    Each retry is cheap and strictly monotonic: successful rows persist to the
+    sidecar, so an attempt only re-grades the cells still missing. Without this
+    the whole reliability measurement aborts on a single timeout.
+    """
     path = LADDER_DIR / "data" / out_name
-    subprocess.run(
-        [sys.executable, "grade_rubric.py", "--model", model, "--out", out_name],
-        check=True, cwd=str(Path(__file__).resolve().parent),
+    for attempt in range(1, MAX_GRADER_ATTEMPTS + 1):
+        proc = subprocess.run(
+            [sys.executable, "grade_rubric.py", "--model", model, "--out", out_name],
+            cwd=str(Path(__file__).resolve().parent),
+        )
+        if proc.returncode == 0:
+            return path
+        print(f"  grading attempt {attempt}/{MAX_GRADER_ATTEMPTS} for {model} "
+              f"incomplete; retrying the missing cells", file=sys.stderr)
+    raise SystemExit(
+        f"{out_name}: still incomplete after {MAX_GRADER_ATTEMPTS} attempts. "
+        f"Partial rows are preserved in {path.with_suffix('.partial.json').name}; "
+        f"re-run to continue rather than starting over."
     )
-    return path
 
 
 def main() -> int:

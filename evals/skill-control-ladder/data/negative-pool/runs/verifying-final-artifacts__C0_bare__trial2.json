@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 8727,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.022320299999999998,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2002,
+    "cache_read_input_tokens": 6271,
+    "output_tokens": 514,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2002,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 514,
+        "cache_read_input_tokens": 6271,
+        "cache_creation_input_tokens": 2002,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2002
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 641,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007109999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 514,
+      "cacheReadInputTokens": 6271,
+      "cacheCreationInputTokens": 2002,
+      "webSearchRequests": 0,
+      "costUSD": 0.021609299999999998,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I can review the logic here, but you've only pasted the \"after\" version \u2014 I don't have the original nested if/else to diff against, so I can't confirm nothing changed. Could you paste the before code too?\n\nIn the meantime, one thing worth flagging in this version on its own: if `name` is non-empty but becomes all-whitespace after `.strip()` (e.g. `\"   \"`), it falls through to `return name`, returning an empty string rather than `\"unknown\"`. Depending on your original logic, that might be a behavior change \u2014 worth checking if the old code stripped before the emptiness check.",
+  "ttft_ms": 4401,
+  "ttft_stream_ms": 1110,
+  "time_to_request_ms": 69,
+  "time_to_request_from_spawn_ms": 1782800,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594777076.9424,
+  "type": "result",
+  "duration_ms": 14493,
+  "uuid": "9d522144-e852-4e93-9dd7-3484b0fc3393",
+  "_skill": "verifying-final-artifacts",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "bb106a0d218aebe759ff56591f6baebf898ef17c1482610a4f0c9ed3c51ab910"
+}

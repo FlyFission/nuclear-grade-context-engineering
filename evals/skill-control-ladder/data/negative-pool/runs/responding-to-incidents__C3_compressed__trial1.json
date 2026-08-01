@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 12258,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0333306,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2724,
+    "cache_read_input_tokens": 23372,
+    "output_tokens": 619,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2724,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 232,
+        "cache_read_input_tokens": 8634,
+        "cache_creation_input_tokens": 370,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 370
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 597,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000672,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 619,
+      "cacheReadInputTokens": 23372,
+      "cacheCreationInputTokens": 2724,
+      "webSearchRequests": 0,
+      "costUSD": 0.032658599999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't see `apiTimeout`/`api_timeout` or a `.env.dev` file anywhere in this repo (`/home/user/nuclear-grade-context-engineering/evals/skill-control-ladder/data/negative-pool/work/responding-to-incidents_C3_compressed_1`). A couple possibilities:\n\n1. Your project lives elsewhere \u2014 if so, point me at the correct directory/repo and I'll fix it there.\n2. The startup script reads the env var by a different name (e.g., it might load it via a config loader/schema rather than referencing the string directly) \u2014 if you can paste the error traceback or the relevant script snippet, I can pinpoint the exact line to update.\n\nWhich is it?",
+  "ttft_ms": 1231,
+  "ttft_stream_ms": 827,
+  "time_to_request_ms": 52,
+  "time_to_request_from_spawn_ms": 1682288,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594676678.1367,
+  "type": "result",
+  "duration_ms": 10322,
+  "uuid": "f35c5674-fd3c-4299-aa14-fb0a6c18088c",
+  "_skill": "responding-to-incidents",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "9838deb5cec5711e100f56295b443e16a69908272ef32030f8f892df04c94043"
+}

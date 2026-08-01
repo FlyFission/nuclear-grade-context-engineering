@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 8272,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.041087399999999996,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 4467,
+    "cache_read_input_tokens": 27248,
+    "output_tokens": 360,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4467,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 70,
+        "cache_read_input_tokens": 10619,
+        "cache_creation_input_tokens": 128,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 128
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 588,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006929999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 360,
+      "cacheReadInputTokens": 27248,
+      "cacheCreationInputTokens": 4467,
+      "webSearchRequests": 0,
+      "costUSD": 0.0403944,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "There's no `analytics.py` file in this repository, and no occurrences of `usrCnt` anywhere. This looks like this may be the wrong directory/project \u2014 could you confirm the path, or point me to the right repo?",
+  "ttft_ms": 1340,
+  "ttft_stream_ms": 845,
+  "time_to_request_ms": 33,
+  "time_to_request_from_spawn_ms": 1858683,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594852893.8193,
+  "type": "result",
+  "duration_ms": 7443,
+  "uuid": "22b81bc1-62d8-478e-a2dd-2a5a6feaeafc",
+  "_skill": "briefing-an-agent",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "9d8b9c52f2ee41bb77cd003e27bc240ec15bd4bd8c5c513f1f5c940b14fb10ba"
+}

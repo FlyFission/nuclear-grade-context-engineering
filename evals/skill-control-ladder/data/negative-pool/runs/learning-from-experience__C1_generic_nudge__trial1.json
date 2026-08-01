@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 17264,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0368574,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2706,
+    "cache_read_input_tokens": 23148,
+    "output_tokens": 867,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2706,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 355,
+        "cache_read_input_tokens": 8501,
+        "cache_creation_input_tokens": 485,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 485
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 579,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000654,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 867,
+      "cacheReadInputTokens": 23148,
+      "cacheCreationInputTokens": 2706,
+      "webSearchRequests": 0,
+      "costUSD": 0.0362034,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't currently have a shell/git tool available in this session \u2014 only file search/read tools (Glob, Grep, Read), and the working directory appears empty, so I can't inspect or run `git` commands here.\n\nTo fix this yourself once you have terminal access, the safe approach is:\n\n1. Find the commit with the debug print: `git log --oneline`\n2. If it's the **most recent commit**, remove the print line, then:\n   ```\n   git add -A\n   git commit --amend --no-edit\n   ```\n3. If it's **further back** (with commits after it), use interactive rebase to `edit` that commit:\n   ```\n   git rebase -i <commit>^\n   # mark it 'edit', save\n   # remove the print line\n   git add -A\n   git commit --amend --no-edit\n   git rebase --continue\n   ```\n\nSince nothing's pushed, this is fully safe to rewrite. Let me know if you'd like to paste `git log --oneline` output or the diff \u2014 I can tell you exactly which commit/lines to fix once I can see them, or if you get a tool/terminal connected here I can run it directly.",
+  "ttft_ms": 1253,
+  "ttft_stream_ms": 889,
+  "time_to_request_ms": 35,
+  "time_to_request_from_spawn_ms": 1514303,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594508791.412,
+  "type": "result",
+  "duration_ms": 17971,
+  "uuid": "16d2050a-8462-4672-91bd-95f2e2775329",
+  "_skill": "learning-from-experience",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "b73661e1f33c26cdbdf52b4b289d4900aeafdcdccec5c44cdbbe4b947dc51a8b"
+}

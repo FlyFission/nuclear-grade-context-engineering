@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 16504,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.032314499999999996,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2698,
+    "cache_read_input_tokens": 23225,
+    "output_tokens": 565,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2698,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 89,
+        "cache_read_input_tokens": 8549,
+        "cache_creation_input_tokens": 429,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 429
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 596,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006659999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 565,
+      "cacheReadInputTokens": 23225,
+      "cacheCreationInputTokens": 2698,
+      "webSearchRequests": 0,
+      "costUSD": 0.031648499999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory appears to be empty \u2014 there are no files here, so I can't find the script you're referring to.\n\nCould you tell me the filename (or path) of the script with the `tmp` \u2192 `rowCount` rename? Once I have that, I can grep it for any leftover `tmp` references.",
+  "ttft_ms": 1268,
+  "ttft_stream_ms": 896,
+  "time_to_request_ms": 35,
+  "time_to_request_from_spawn_ms": 1623794,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594617956.8164,
+  "type": "result",
+  "duration_ms": 18446,
+  "uuid": "730e7ebb-f9d0-414a-a0a7-1df542eca936",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C1_generic_nudge",
+  "_trial": 2,
+  "_input_spec_sha256": "ea91e78369b524cc518d634ccc5ae440586ae9da99a4a52d63925ca0bde18bbd"
+}

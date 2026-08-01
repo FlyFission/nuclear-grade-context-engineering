@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 8359,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.026621099999999998,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2487,
+    "cache_read_input_tokens": 23377,
+    "output_tokens": 266,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2487,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 66,
+        "cache_read_input_tokens": 8641,
+        "cache_creation_input_tokens": 126,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 126
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 588,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000678,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 266,
+      "cacheReadInputTokens": 23377,
+      "cacheCreationInputTokens": 2487,
+      "webSearchRequests": 0,
+      "costUSD": 0.0259431,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I couldn't find `analytics.py` anywhere in this repo, and there's no `usrCnt` variable in the codebase either. Could you double-check the file path, or point me to the right directory/repo?",
+  "ttft_ms": 1403,
+  "ttft_stream_ms": 978,
+  "time_to_request_ms": 141,
+  "time_to_request_from_spawn_ms": 1313618,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594302855.0615,
+  "type": "result",
+  "duration_ms": 7254,
+  "uuid": "f376fae9-5e9d-4733-85c6-f37306dc4f72",
+  "_skill": "briefing-an-agent",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "155d44522f0cb5babf5226edaf756b1a320c0e7d459fe6db64f35b3545d7bcb4"
+}

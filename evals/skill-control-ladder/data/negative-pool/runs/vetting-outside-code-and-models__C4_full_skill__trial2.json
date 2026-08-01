@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 13603,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.043055500000000003,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 4543,
+    "cache_read_input_tokens": 27155,
+    "output_tokens": 465,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4543,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 98,
+        "cache_read_input_tokens": 10534,
+        "cache_creation_input_tokens": 289,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 289
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 573,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006580000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 465,
+      "cacheReadInputTokens": 27155,
+      "cacheCreationInputTokens": 4543,
+      "webSearchRequests": 0,
+      "costUSD": 0.042397500000000005,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Confirmed clean \u2014 no matches for `calcTotal` anywhere in the repo (case-sensitive or case-insensitive), so the two callers you already updated were the only ones. This is a same-repo, self-contained rename with no outside claims involved, so no supplier-trust write-up is needed here.",
+  "ttft_ms": 1301,
+  "ttft_stream_ms": 913,
+  "time_to_request_ms": 53,
+  "time_to_request_from_spawn_ms": 1812568,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594805433.0193,
+  "type": "result",
+  "duration_ms": 14714,
+  "uuid": "b7c8eb1a-320f-4cd3-88c5-76f463698397",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "bd2b4b943d794d2824ba83c05047d48a6b1708178ed53dcc205019e5cf10d02d"
+}

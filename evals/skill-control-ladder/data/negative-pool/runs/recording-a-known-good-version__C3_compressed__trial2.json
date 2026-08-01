@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 12346,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0339822,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2766,
+    "cache_read_input_tokens": 32304,
+    "output_tokens": 467,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2766,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 88,
+        "cache_read_input_tokens": 8859,
+        "cache_creation_input_tokens": 187,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 187
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 596,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006659999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 467,
+      "cacheReadInputTokens": 32304,
+      "cacheCreationInputTokens": 2766,
+      "webSearchRequests": 0,
+      "costUSD": 0.0333162,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "It looks like the working directory here doesn't contain any files \u2014 the repo appears empty from my end, so I can't locate the script you're referring to. Could you tell me the file path (relative to the repo root), or paste the diff/file contents so I can check for leftover `tmp` references?",
+  "ttft_ms": 2120,
+  "ttft_stream_ms": 1734,
+  "time_to_request_ms": 28,
+  "time_to_request_from_spawn_ms": 1628582,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594622676.6345,
+  "type": "result",
+  "duration_ms": 11342,
+  "uuid": "7dcc3f4c-1b1c-404a-9ab1-123b417da9c5",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "ea100b02591594f0597ab2e141ae15f59239b9bdc61dd2e99cfe54e2094d414a"
+}

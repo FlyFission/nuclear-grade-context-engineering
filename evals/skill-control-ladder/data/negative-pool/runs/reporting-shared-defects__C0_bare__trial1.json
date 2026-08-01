@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 12129,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0375723,
+  "usage": {
+    "input_tokens": 10,
+    "cache_creation_input_tokens": 2637,
+    "cache_read_input_tokens": 40121,
+    "output_tokens": 599,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2637,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 136,
+        "cache_read_input_tokens": 8675,
+        "cache_creation_input_tokens": 233,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 233
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 599,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006990000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 10,
+      "outputTokens": 599,
+      "cacheReadInputTokens": 40121,
+      "cacheCreationInputTokens": 2637,
+      "webSearchRequests": 0,
+      "costUSD": 0.0368733,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I can't find `utils.py` or a `format_date` function anywhere in this working directory \u2014 it appears to be empty (no files at all match, even with a broad search).\n\nCould you double-check the path, or is this function perhaps in a different repo/directory that isn't the current working directory (`.../work/reporting-shared-defects_C0_bare_1`)? If you paste the function content here, I can spot the off-by-one bug directly.",
+  "ttft_ms": 1404,
+  "ttft_stream_ms": 963,
+  "time_to_request_ms": 37,
+  "time_to_request_from_spawn_ms": 1653867,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594648096.103,
+  "type": "result",
+  "duration_ms": 12307,
+  "uuid": "95fa2987-0747-4aad-8c65-63702a6d38c8",
+  "_skill": "reporting-shared-defects",
+  "_arm": "C0_bare",
+  "_trial": 1,
+  "_input_spec_sha256": "bdf2e29049ef7b3ae0c3ff22bbaa43654851216721dc18b0a73e96e4cd3d7fcf"
+}

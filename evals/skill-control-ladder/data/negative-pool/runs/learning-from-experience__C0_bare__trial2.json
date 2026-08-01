@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 12888,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.026704000000000002,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2062,
+    "cache_read_input_tokens": 14470,
+    "output_tokens": 622,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2062,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 544,
+        "cache_read_input_tokens": 8199,
+        "cache_creation_input_tokens": 134,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 134
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 579,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000649,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 622,
+      "cacheReadInputTokens": 14470,
+      "cacheCreationInputTokens": 2062,
+      "webSearchRequests": 0,
+      "costUSD": 0.026055000000000002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "It looks like I don't currently have access to a shell/edit tool in this session \u2014 only file search and read tools are available, so I can't run `git log`, `git rebase`, or edit files directly right now.\n\nThat said, here's how you can quickly fix this yourself since nothing's pushed:\n\n**If the print statement is in the most recent commit:**\n```bash\n# Remove the print line from the file, then:\ngit add <file>\ngit commit --amend --no-edit\n```\n\n**If it's a few commits back:**\n```bash\ngit log --oneline   # find the commit hash with the debug print\ngit rebase -i <hash>^   # mark that commit as \"edit\"\n# remove the print line, then:\ngit add <file>\ngit commit --amend --no-edit\ngit rebase --continue\n```\n\nIf you paste the output of `git log --oneline -5` and `git status`, I can tell you exactly which commands to run for your specific situation.",
+  "ttft_ms": 2352,
+  "ttft_stream_ms": 1657,
+  "time_to_request_ms": 46,
+  "time_to_request_from_spawn_ms": 1508210,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594502071.8545,
+  "type": "result",
+  "duration_ms": 13383,
+  "uuid": "65764d2d-3fc1-452e-bce0-11a1b073f3c8",
+  "_skill": "learning-from-experience",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "d285c065b1a4047ef537aee9256cc5f644264d1cc21ca8e33b6d848247704bae"
+}

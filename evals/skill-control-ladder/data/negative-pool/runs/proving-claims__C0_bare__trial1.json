@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 9178,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.028489599999999997,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2421,
+    "cache_read_input_tokens": 23002,
+    "output_tokens": 426,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2421,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 104,
+        "cache_read_input_tokens": 8541,
+        "cache_creation_input_tokens": 151,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 151
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 575,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000655,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 426,
+      "cacheReadInputTokens": 23002,
+      "cacheCreationInputTokens": 2421,
+      "webSearchRequests": 0,
+      "costUSD": 0.0278346,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory is empty \u2014 there's no repo, no CONTRIBUTING.md, and no PR here for me to check or merge. Can you point me to the actual repo/PR you're referring to? I'd still want to glance at the diff myself before merging, just to confirm it's really a single-character fix and nothing else snuck in.",
+  "ttft_ms": 3292,
+  "ttft_stream_ms": 1636,
+  "time_to_request_ms": 27,
+  "time_to_request_from_spawn_ms": 1559246,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594553758.9612,
+  "type": "result",
+  "duration_ms": 10234,
+  "uuid": "a2fb7394-aafe-41e3-812a-4c627fe0701d",
+  "_skill": "proving-claims",
+  "_arm": "C0_bare",
+  "_trial": 1,
+  "_input_spec_sha256": "766c0df5a317085e69808dae5873e109388e51faa4c914ff97621bf687115a22"
+}

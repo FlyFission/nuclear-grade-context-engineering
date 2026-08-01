@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 12733,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0516583,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 5187,
+    "cache_read_input_tokens": 39821,
+    "output_tokens": 525,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 5187,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 162,
+        "cache_read_input_tokens": 11359,
+        "cache_creation_input_tokens": 108,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 108
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000691,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 525,
+      "cacheReadInputTokens": 39821,
+      "cacheCreationInputTokens": 5187,
+      "webSearchRequests": 0,
+      "costUSD": 0.0509673,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I can't find any README file in this repository at all \u2014 no matches for the typo text, and no `README*` file anywhere in the tree.\n\nBefore I fix anything, I want to flag this rather than guess: it's possible you're thinking of a different repo/branch, or the README lives somewhere I'm not seeing. Can you confirm the file path? I don't want to create a new README with placeholder content that isn't actually the fix you're asking for.",
+  "ttft_ms": 2826,
+  "ttft_stream_ms": 2427,
+  "time_to_request_ms": 40,
+  "time_to_request_from_spawn_ms": 1613836,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594608149.7554,
+  "type": "result",
+  "duration_ms": 12968,
+  "uuid": "9c5ca3b2-52e0-4ecf-bf9b-c82955db9cba",
+  "_skill": "rating-change-risk",
+  "_arm": "C4_full_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "54a2b2ee16dd0d35090ca5219db1a94eb442e97b31d6bd3a4c25210862dc0dbd"
+}

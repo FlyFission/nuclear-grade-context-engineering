@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 9984,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0311332,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2746,
+    "cache_read_input_tokens": 23714,
+    "output_tokens": 458,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2746,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 170,
+        "cache_read_input_tokens": 8872,
+        "cache_creation_input_tokens": 154,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 154
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 575,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000655,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 458,
+      "cacheReadInputTokens": 23714,
+      "cacheCreationInputTokens": 2746,
+      "webSearchRequests": 0,
+      "costUSD": 0.0304782,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "There's no `CONTRIBUTING.md` in this repo, and I can't see a diff to check \u2014 I don't have visibility into your PR itself (this is likely on GitHub/GitLab, not in this local working directory).\n\nSince I can't independently verify the diff, I'd say: quickly eyeball it yourself before merging \u2014 just confirm the file diff shows only that single word changed and nothing else (no whitespace/line-ending changes, no other lines touched). If you've already looked at it and it's a one-line diff, go ahead.",
+  "ttft_ms": 1987,
+  "ttft_stream_ms": 819,
+  "time_to_request_ms": 26,
+  "time_to_request_from_spawn_ms": 1571073,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594565531.9038,
+  "type": "result",
+  "duration_ms": 11061,
+  "uuid": "99f19437-56e9-4bbc-aae2-e43b908e57e8",
+  "_skill": "proving-claims",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "4b9f718023ebc726c59538e392347c0fffba9602a1c186c1ac6b85c7a02e80eb"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 7572,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0406569,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 4442,
+    "cache_read_input_tokens": 27213,
+    "output_tokens": 342,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4442,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 72,
+        "cache_read_input_tokens": 10584,
+        "cache_creation_input_tokens": 138,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 138
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 588,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006929999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 342,
+      "cacheReadInputTokens": 27213,
+      "cacheCreationInputTokens": 4442,
+      "webSearchRequests": 0,
+      "costUSD": 0.039963900000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I couldn't find `analytics.py` anywhere in this repo, and there's no `usrCnt` occurrence either \u2014 this looks like it's from a different project. Can you confirm the path, or is this meant to be a new file?",
+  "ttft_ms": 1256,
+  "ttft_stream_ms": 868,
+  "time_to_request_ms": 45,
+  "time_to_request_from_spawn_ms": 1310814,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594303219.1355,
+  "type": "result",
+  "duration_ms": 6565,
+  "uuid": "d007f672-47af-49b3-b5f0-a188a8552c52",
+  "_skill": "briefing-an-agent",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "9d8b9c52f2ee41bb77cd003e27bc240ec15bd4bd8c5c513f1f5c940b14fb10ba"
+}

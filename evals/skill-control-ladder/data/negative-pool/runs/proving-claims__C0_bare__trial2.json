@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 15551,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0354943,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2572,
+    "cache_read_input_tokens": 31361,
+    "output_tokens": 665,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2572,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 173,
+        "cache_read_input_tokens": 8519,
+        "cache_creation_input_tokens": 324,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 324
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 575,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000655,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 665,
+      "cacheReadInputTokens": 31361,
+      "cacheCreationInputTokens": 2572,
+      "webSearchRequests": 0,
+      "costUSD": 0.034839300000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This working directory is empty \u2014 there's no CONTRIBUTING.md file here at all, so I can't find the diff you're referring to. A few possibilities:\n\n1. The changes exist elsewhere (different branch, different directory, or only in your editor/local uncommitted state not visible to me here).\n2. Wrong working directory got passed to me.\n\nCan you point me to where the change actually lives (repo path or paste the diff), or confirm which directory I should be looking in? I don't want to give you a go-ahead on a change I haven't actually seen.",
+  "ttft_ms": 2476,
+  "ttft_stream_ms": 1704,
+  "time_to_request_ms": 130,
+  "time_to_request_from_spawn_ms": 1561837,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594556292.4119,
+  "type": "result",
+  "duration_ms": 15957,
+  "uuid": "b9244433-8521-4004-b258-7817817ea34e",
+  "_skill": "proving-claims",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "766c0df5a317085e69808dae5873e109388e51faa4c914ff97621bf687115a22"
+}

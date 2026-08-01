@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 12823,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0344295,
+  "usage": {
+    "input_tokens": 10,
+    "cache_creation_input_tokens": 2530,
+    "cache_read_input_tokens": 40035,
+    "output_tokens": 434,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2530,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 80,
+        "cache_read_input_tokens": 8644,
+        "cache_creation_input_tokens": 157,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 157
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 599,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006990000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 10,
+      "outputTokens": 434,
+      "cacheReadInputTokens": 40035,
+      "cacheCreationInputTokens": 2530,
+      "webSearchRequests": 0,
+      "costUSD": 0.033730500000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I checked this working directory and it looks empty \u2014 there's no `utils.py` or `format_date` function here (nor any files at all in this repo). Could you double check you're pointing me at the right directory, or paste the function directly so I can look at the loop logic?",
+  "ttft_ms": 1719,
+  "ttft_stream_ms": 1168,
+  "time_to_request_ms": 135,
+  "time_to_request_from_spawn_ms": 1654374,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594648448.084,
+  "type": "result",
+  "duration_ms": 11909,
+  "uuid": "d5beadf0-fbeb-46e2-a01f-a2531557b221",
+  "_skill": "reporting-shared-defects",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "bdf2e29049ef7b3ae0c3ff22bbaa43654851216721dc18b0a73e96e4cd3d7fcf"
+}

@@ -1,39 +1,82 @@
 {
-  "is_error": true,
-  "duration_api_ms": 0,
-  "num_turns": 1,
-  "stop_reason": "stop_sequence",
+  "is_error": false,
+  "duration_api_ms": 6951,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
   "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
-  "total_cost_usd": 0,
+  "total_cost_usd": 0.04549810000000001,
   "usage": {
-    "input_tokens": 0,
-    "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 0,
-    "output_tokens": 0,
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 5806,
+    "cache_read_input_tokens": 18227,
+    "output_tokens": 301,
     "server_tool_use": {
       "web_search_requests": 0,
       "web_fetch_requests": 0
     },
     "service_tier": "standard",
     "cache_creation": {
-      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 5806,
       "ephemeral_5m_input_tokens": 0
     },
-    "inference_geo": "",
-    "iterations": [],
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 217,
+        "cache_read_input_tokens": 11947,
+        "cache_creation_input_tokens": 139,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 139
+        },
+        "type": "message"
+      }
+    ],
     "speed": "standard"
   },
-  "modelUsage": {},
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 592,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000667,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 301,
+      "cacheReadInputTokens": 18227,
+      "cacheCreationInputTokens": 5806,
+      "webSearchRequests": 0,
+      "costUSD": 0.044831100000000006,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
   "permission_denials": [],
-  "terminal_reason": "api_error",
+  "terminal_reason": "completed",
   "fast_mode_state": "off",
   "fast_mode_disabled_reason": "sdk_opt_in_required",
   "subtype": "success",
   "api_error_status": null,
-  "result": "API Error: Unable to connect to API: Self-signed certificate detected. Check your proxy or corporate SSL certificates",
+  "result": "I couldn't find `LoginForm.jsx` in this repo, so here's the snippet based on your description \u2014 paste it in and I'll adjust if the actual code differs.\n\n```jsx\nconst [rememberMe, setRememberMe] = useState(false);\n```\n\n```jsx\n<label>\n  <input\n    type=\"checkbox\"\n    checked={rememberMe}\n    onChange={(e) => setRememberMe(e.target.checked)}\n  />\n  Remember me\n</label>\n```\n\nAnd in the submit handler, add it to the existing call:\n\n```jsx\nawait login(email, password, rememberMe);\n```\n\nAdjust the `login()` args to match your actual signature/param order.",
+  "ttft_ms": 1620,
+  "ttft_stream_ms": 926,
+  "time_to_request_ms": 48,
+  "time_to_request_from_spawn_ms": 1851231,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594845621.7573,
   "type": "result",
-  "duration_ms": 145,
-  "uuid": "9f8533b9-e247-4a39-885b-7d70fa05adf3",
+  "duration_ms": 6742,
+  "uuid": "0d2e37e9-fab7-4c39-889a-8a891533f4a6",
   "_skill": "breaking-down-the-work",
   "_arm": "C4_full_skill",
   "_trial": 2,

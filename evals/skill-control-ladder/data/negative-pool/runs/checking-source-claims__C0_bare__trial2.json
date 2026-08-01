@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 11563,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0323763,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2535,
+    "cache_read_input_tokens": 31471,
+    "output_tokens": 469,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2535,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 48,
+        "cache_read_input_tokens": 8559,
+        "cache_creation_input_tokens": 247,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 247
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 601,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006659999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 469,
+      "cacheReadInputTokens": 31471,
+      "cacheCreationInputTokens": 2535,
+      "webSearchRequests": 0,
+      "costUSD": 0.0317103,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory appears to be empty \u2014 I don't see any files in this repo. Could you paste the helper function directly, or let me know the file path where you added it?",
+  "ttft_ms": 1335,
+  "ttft_stream_ms": 954,
+  "time_to_request_ms": 38,
+  "time_to_request_from_spawn_ms": 1348748,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594343261.9983,
+  "type": "result",
+  "duration_ms": 10570,
+  "uuid": "28cb47e4-9c24-45d5-b37d-85f93e2e2cfd",
+  "_skill": "checking-source-claims",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "c9d9515ec2f166d7c8b20873bfcf478f5c797af0969fd76523ef5af36eb1f88c"
+}

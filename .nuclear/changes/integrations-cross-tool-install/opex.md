@@ -16,9 +16,9 @@
 
 ## Required links
 
-- Baseline record: `ship.md`
-- Related packet / issue / incident: this packet; PR #89 failed MCP smoke
-- Verification evidence: MCP Python SDK v2.0.0 release and this PR's `mcp-smoke`
+- Baseline record: `.nuclear/changes/integrations-cross-tool-install/ship.md`
+- Related packet / issue / incident: `.nuclear/changes/integrations-cross-tool-install/`; PR #89 failed MCP smoke
+- Verification evidence: `.nuclear/changes/integrations-cross-tool-install/verification.md`; MCP Python SDK v2.0.0 release and this PR's `mcp-smoke`
 
 ## Exit criteria
 

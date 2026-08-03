@@ -82,24 +82,32 @@ carrying token cost without a measured behavioral effect.
 | `C1_generic_nudge` | 78 | $0.0572 | 2,201 | 0.571 (95% CI 0.25–0.84) |
 | `C2_description_only` | 60 | $0.0565 | 2,192 | 0.560 (95% CI 0.24–0.84) |
 | `C3_compressed` | 129 | $0.0589 | 2,158 | 0.598 (95% CI 0.27–0.86) |
-| `C4_full_skill` | 997 | $0.0792 | 2,723 | 0.506 (95% CI 0.21–0.80) |
+| `C4_full_skill` | 1,039 | $0.0792 | 2,723 | 0.506 (95% CI 0.21–0.80) |
 
-## Per-skill scores (descriptive, not 27 hypotheses)
+## Per-skill scores
 
-Mean score over 3 trials, 0–1. These are **not** individually significance-
-tested: at n=3 per cell no per-skill test can survive correction, which is
-the lesson `STATISTICAL_ANALYSIS.md` already recorded. Read them as effect
-sizes for triage, not as verdicts.
+Mean score over 3 trials, 0–1. **A per-skill delta smaller than ±0.19 is not distinguishable from grader noise** —
+measured from duplicate gradings of identical transcripts (90th-pct cell noise 0.133, scaled by sqrt(2) for a two-cell difference). Rows inside that band are marked `noise` and carry no
+information about the skill in either direction; do not act on them, and do
+not read a sign as a direction.
 
-| Skill | `C0` | `C1` | `C2` | `C3` | `C4` | C4−C1 |
+This band is not a formality. An earlier reading of this table treated small
+negative deltas as harmful skills and small C4−C3 gaps as removable prose;
+both were entirely inside the noise floor and both recommendations were wrong.
+The pooled tests above are unaffected — they aggregate every skill and carry
+their own permutation p-values.
+
+**2 of 7 skills** have a C4−C1 delta that clears the floor. The other 5 are undetermined at n=3 — that is a statement about the sample size, not about the skills.
+
+| Skill | `C0` | `C1` | `C2` | `C3` | `C4` | C4−C1 vs noise floor |
 |---|---|---|---|---|---|---|
-| `briefing-an-agent` | 0.33 | 0.56 | 0.11 | 0.50 | 0.28 | -0.28 ⚠️ |
-| `checking-release-readiness` | 0.94 | 0.72 | 0.72 | 0.89 | 0.78 | +0.06 |
-| `checking-what-a-change-affects` | 0.17 | 0.28 | 0.22 | 0.22 | 0.22 | -0.06 ⚠️ |
-| `creating-change-records` | 0.67 | 0.67 | 0.94 | 0.72 | 0.56 | -0.11 ⚠️ |
-| `rating-change-risk` | 0.67 | 0.78 | 0.72 | 0.72 | 0.78 | +0.00 |
-| `responding-to-incidents` | 0.93 | 0.80 | 0.93 | 0.87 | 0.93 | +0.13 |
-| `vetting-outside-code-and-models` | 0.07 | 0.20 | 0.27 | 0.27 | 0.00 | -0.20 ⚠️ |
+| `briefing-an-agent` | 0.33 | 0.56 | 0.11 | 0.50 | 0.28 | -0.28 · **HURTS** |
+| `checking-release-readiness` | 0.94 | 0.72 | 0.72 | 0.89 | 0.78 | +0.06 · noise |
+| `checking-what-a-change-affects` | 0.17 | 0.28 | 0.22 | 0.22 | 0.22 | -0.06 · noise |
+| `creating-change-records` | 0.67 | 0.67 | 0.94 | 0.72 | 0.56 | -0.11 · noise |
+| `rating-change-risk` | 0.67 | 0.78 | 0.72 | 0.72 | 0.78 | +0.00 · noise |
+| `responding-to-incidents` | 0.93 | 0.80 | 0.93 | 0.87 | 0.93 | +0.13 · noise |
+| `vetting-outside-code-and-models` | 0.07 | 0.20 | 0.27 | 0.27 | 0.00 | -0.20 · **HURTS** |
 
 ## Limitations
 

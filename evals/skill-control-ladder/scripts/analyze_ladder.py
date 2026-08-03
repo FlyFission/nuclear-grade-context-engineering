@@ -49,6 +49,26 @@ SCORE = {"YES": 1.0, "PARTIAL": 0.5, "NO": 0.0}
 PERMUTATIONS = 100_000
 SEED = 20260726  # fixed so the reported p-value is reproducible, not resampled
 
+# Empirical noise floor for a PER-SKILL delta, measured -- not assumed.
+#
+# The hard pool was graded twice by the same model on byte-identical transcripts
+# (data/rubric-graded-hard.json vs ...-retest.json). Across those 35 (skill, arm)
+# cells, regrading alone moved a cell's mean score by up to 0.167, with a 90th
+# percentile of 0.133. A C4-C1 delta is a DIFFERENCE of two independently graded
+# cells, so pure-noise movement scales by ~sqrt(2): 0.133 * 1.414 = 0.189.
+#
+# This exists because the per-skill table was previously read as a triage list
+# and produced two recommendations that the data did not support: four skills
+# called "harmful" on deltas of one check in fifteen, and a proposal to cut
+# ~14,000 words of skill text on C4-C3 gaps that were entirely inside this floor.
+# Pooled tests are unaffected -- they aggregate 27 skills and have their own
+# permutation p-values -- but no single skill's delta means anything below this.
+PER_SKILL_NOISE_FLOOR = 0.189
+NOISE_FLOOR_SOURCE = (
+    "measured from duplicate gradings of identical transcripts "
+    "(90th-pct cell noise 0.133, scaled by sqrt(2) for a two-cell difference)"
+)
+
 
 def sign_test(diffs: list[float]) -> tuple[int, int, int, float]:
     """Two-sided exact binomial test on the direction of paired differences.
@@ -364,18 +384,39 @@ def main() -> int:
         )
     L.append("")
 
-    L.append("## Per-skill scores (descriptive, not 27 hypotheses)\n")
-    L.append("Mean score over 3 trials, 0–1. These are **not** individually significance-\n"
-             "tested: at n=3 per cell no per-skill test can survive correction, which is\n"
-             "the lesson `STATISTICAL_ANALYSIS.md` already recorded. Read them as effect\n"
-             "sizes for triage, not as verdicts.\n")
-    header = "| Skill | " + " | ".join(f"`{a.split('_')[0]}`" for a in arms_present) + " | C4−C1 |"
+    L.append("## Per-skill scores\n")
+    L.append(
+        f"Mean score over 3 trials, 0–1. **A per-skill delta smaller than "
+        f"±{PER_SKILL_NOISE_FLOOR:.2f} is not distinguishable from grader noise** —\n"
+        f"{NOISE_FLOOR_SOURCE}. Rows inside that band are marked `noise` and carry no\n"
+        f"information about the skill in either direction; do not act on them, and do\n"
+        f"not read a sign as a direction.\n\n"
+        f"This band is not a formality. An earlier reading of this table treated small\n"
+        f"negative deltas as harmful skills and small C4−C3 gaps as removable prose;\n"
+        f"both were entirely inside the noise floor and both recommendations were wrong.\n"
+        f"The pooled tests above are unaffected — they aggregate every skill and carry\n"
+        f"their own permutation p-values.\n"
+    )
+    resolved = [s for s in skills
+                if abs(score[s].get("C4_full_skill", 0) - score[s].get("C1_generic_nudge", 0))
+                > PER_SKILL_NOISE_FLOOR]
+    L.append(f"**{len(resolved)} of {len(skills)} skills** have a C4−C1 delta that clears the "
+             f"floor. The other {len(skills) - len(resolved)} are undetermined at n=3 — that is a "
+             f"statement about the sample size, not about the skills.\n")
+    header = "| Skill | " + " | ".join(f"`{a.split('_')[0]}`" for a in arms_present) + " | C4−C1 vs noise floor |"
     L.append(header)
     L.append("|---" * (len(arms_present) + 2) + "|")
     for s in skills:
         cells = " | ".join(f"{score[s][a]:.2f}" if a in score[s] else "—" for a in arms_present)
         delta = (score[s].get("C4_full_skill", 0) - score[s].get("C1_generic_nudge", 0))
-        flag = " ⚠️" if delta <= 0 else ""
+        # Label against the measured floor rather than against zero. Flagging on
+        # sign alone is what turned one-check flips into "harmful skills".
+        if abs(delta) <= PER_SKILL_NOISE_FLOOR:
+            flag = " · noise"
+        elif delta > 0:
+            flag = " · **helps**"
+        else:
+            flag = " · **HURTS**"
         L.append(f"| `{s}` | {cells} | {delta:+.2f}{flag} |")
     L.append("")
 

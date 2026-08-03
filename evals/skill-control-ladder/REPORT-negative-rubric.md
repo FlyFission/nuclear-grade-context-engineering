@@ -101,46 +101,54 @@ carrying token cost without a measured behavioral effect.
 | `C0_bare` | 0 | $0.0275 | 404 | 0.789 (95% CI 0.61–0.90) |
 | `C1_generic_nudge` | 78 | $0.0289 | 447 | 0.768 (95% CI 0.59–0.88) |
 | `C3_compressed` | 127 | $0.0304 | 450 | 0.789 (95% CI 0.61–0.90) |
-| `C4_full_skill` | 1,102 | $0.0424 | 429 | 0.802 (95% CI 0.63–0.91) |
+| `C4_full_skill` | 1,122 | $0.0424 | 429 | 0.802 (95% CI 0.63–0.91) |
 
-## Per-skill scores (descriptive, not 27 hypotheses)
+## Per-skill scores
 
-Mean score over 3 trials, 0–1. These are **not** individually significance-
-tested: at n=3 per cell no per-skill test can survive correction, which is
-the lesson `STATISTICAL_ANALYSIS.md` already recorded. Read them as effect
-sizes for triage, not as verdicts.
+Mean score over 3 trials, 0–1. **A per-skill delta smaller than ±0.19 is not distinguishable from grader noise** —
+measured from duplicate gradings of identical transcripts (90th-pct cell noise 0.133, scaled by sqrt(2) for a two-cell difference). Rows inside that band are marked `noise` and carry no
+information about the skill in either direction; do not act on them, and do
+not read a sign as a direction.
 
-| Skill | `C0` | `C1` | `C3` | `C4` | C4−C1 |
+This band is not a formality. An earlier reading of this table treated small
+negative deltas as harmful skills and small C4−C3 gaps as removable prose;
+both were entirely inside the noise floor and both recommendations were wrong.
+The pooled tests above are unaffected — they aggregate every skill and carry
+their own permutation p-values.
+
+**5 of 29 skills** have a C4−C1 delta that clears the floor. The other 24 are undetermined at n=3 — that is a statement about the sample size, not about the skills.
+
+| Skill | `C0` | `C1` | `C3` | `C4` | C4−C1 vs noise floor |
 |---|---|---|---|---|---|
-| `breaking-down-the-work` | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 ⚠️ |
-| `briefing-an-agent` | 0.60 | 0.60 | 0.60 | 0.60 | +0.00 ⚠️ |
-| `checking-legal-and-safety-wording` | 0.73 | 0.67 | 0.93 | 0.93 | +0.27 |
-| `checking-release-readiness` | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 ⚠️ |
-| `checking-source-claims` | 0.60 | 0.67 | 0.67 | 0.67 | +0.00 ⚠️ |
-| `checking-what-a-change-affects` | 0.47 | 0.40 | 0.40 | 0.60 | +0.20 |
-| `choosing-what-to-control` | 1.00 | 1.00 | 1.00 | 0.93 | -0.07 ⚠️ |
-| `closing-stale-packets` | 0.60 | 0.73 | 0.67 | 0.67 | -0.07 ⚠️ |
-| `creating-change-records` | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 ⚠️ |
-| `deciding-who-decides` | 0.80 | 0.80 | 0.80 | 0.80 | +0.00 ⚠️ |
-| `declaring-intent` | 0.80 | 0.80 | 0.80 | 0.80 | +0.00 ⚠️ |
-| `double-checking-before-acting` | 0.67 | 0.67 | 0.47 | 0.27 | -0.40 ⚠️ |
-| `handing-off-work` | 0.67 | 0.53 | 0.67 | 0.60 | +0.07 |
-| `learning-from-experience` | 0.80 | 0.67 | 0.87 | 0.73 | +0.07 |
-| `organizing-project-folders` | 1.00 | 0.93 | 1.00 | 1.00 | +0.07 |
-| `proving-claims` | 0.47 | 0.53 | 0.73 | 1.00 | +0.47 |
-| `questioning-attitude` | 0.60 | 0.60 | 0.47 | 0.53 | -0.07 ⚠️ |
-| `rating-change-risk` | 0.80 | 0.60 | 0.80 | 0.73 | +0.13 |
-| `recording-a-known-good-version` | 0.53 | 0.53 | 0.53 | 0.73 | +0.20 |
-| `recording-what-an-agent-did` | 0.67 | 0.80 | 0.80 | 0.73 | -0.07 ⚠️ |
-| `reporting-shared-defects` | 0.80 | 0.80 | 0.80 | 0.80 | +0.00 ⚠️ |
-| `responding-to-incidents` | 0.80 | 0.80 | 0.80 | 0.73 | -0.07 ⚠️ |
-| `reviewing-code-quality` | 1.00 | 0.93 | 1.00 | 0.93 | +0.00 ⚠️ |
-| `staying-on-mission` | 0.80 | 0.80 | 0.73 | 0.80 | +0.00 ⚠️ |
-| `stress-testing-agent-changes` | 0.80 | 0.80 | 0.80 | 0.80 | +0.00 ⚠️ |
-| `tracking-deficiencies` | 0.93 | 0.87 | 1.00 | 1.00 | +0.13 |
-| `using-nuclear-grade` | 1.00 | 1.00 | 0.87 | 1.00 | +0.00 ⚠️ |
-| `verifying-final-artifacts` | 0.93 | 0.80 | 0.80 | 0.87 | +0.07 |
-| `vetting-outside-code-and-models` | 1.00 | 0.93 | 0.87 | 1.00 | +0.07 |
+| `breaking-down-the-work` | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 · noise |
+| `briefing-an-agent` | 0.60 | 0.60 | 0.60 | 0.60 | +0.00 · noise |
+| `checking-legal-and-safety-wording` | 0.73 | 0.67 | 0.93 | 0.93 | +0.27 · **helps** |
+| `checking-release-readiness` | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 · noise |
+| `checking-source-claims` | 0.60 | 0.67 | 0.67 | 0.67 | +0.00 · noise |
+| `checking-what-a-change-affects` | 0.47 | 0.40 | 0.40 | 0.60 | +0.20 · **helps** |
+| `choosing-what-to-control` | 1.00 | 1.00 | 1.00 | 0.93 | -0.07 · noise |
+| `closing-stale-packets` | 0.60 | 0.73 | 0.67 | 0.67 | -0.07 · noise |
+| `creating-change-records` | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 · noise |
+| `deciding-who-decides` | 0.80 | 0.80 | 0.80 | 0.80 | +0.00 · noise |
+| `declaring-intent` | 0.80 | 0.80 | 0.80 | 0.80 | +0.00 · noise |
+| `double-checking-before-acting` | 0.67 | 0.67 | 0.47 | 0.27 | -0.40 · **HURTS** |
+| `handing-off-work` | 0.67 | 0.53 | 0.67 | 0.60 | +0.07 · noise |
+| `learning-from-experience` | 0.80 | 0.67 | 0.87 | 0.73 | +0.07 · noise |
+| `organizing-project-folders` | 1.00 | 0.93 | 1.00 | 1.00 | +0.07 · noise |
+| `proving-claims` | 0.47 | 0.53 | 0.73 | 1.00 | +0.47 · **helps** |
+| `questioning-attitude` | 0.60 | 0.60 | 0.47 | 0.53 | -0.07 · noise |
+| `rating-change-risk` | 0.80 | 0.60 | 0.80 | 0.73 | +0.13 · noise |
+| `recording-a-known-good-version` | 0.53 | 0.53 | 0.53 | 0.73 | +0.20 · **helps** |
+| `recording-what-an-agent-did` | 0.67 | 0.80 | 0.80 | 0.73 | -0.07 · noise |
+| `reporting-shared-defects` | 0.80 | 0.80 | 0.80 | 0.80 | +0.00 · noise |
+| `responding-to-incidents` | 0.80 | 0.80 | 0.80 | 0.73 | -0.07 · noise |
+| `reviewing-code-quality` | 1.00 | 0.93 | 1.00 | 0.93 | +0.00 · noise |
+| `staying-on-mission` | 0.80 | 0.80 | 0.73 | 0.80 | +0.00 · noise |
+| `stress-testing-agent-changes` | 0.80 | 0.80 | 0.80 | 0.80 | +0.00 · noise |
+| `tracking-deficiencies` | 0.93 | 0.87 | 1.00 | 1.00 | +0.13 · noise |
+| `using-nuclear-grade` | 1.00 | 1.00 | 0.87 | 1.00 | +0.00 · noise |
+| `verifying-final-artifacts` | 0.93 | 0.80 | 0.80 | 0.87 | +0.07 · noise |
+| `vetting-outside-code-and-models` | 1.00 | 0.93 | 0.87 | 1.00 | +0.07 · noise |
 
 ## Limitations
 

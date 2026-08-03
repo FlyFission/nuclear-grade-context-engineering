@@ -13,7 +13,7 @@
 ## Proof summary
 
 - Change slug: `sharpen-scope-boundaries`
-- Proof owner: Hermes Agent
+- Proof owner: change actor
 - Date/time: 2026-07-01
 - Risk record: `risk.md`
 
@@ -24,7 +24,7 @@ Claim: The README now adds only narrow scope-sharpening language, and the Quick 
 ## Method
 
 - Command/check/eval/review: inspect `git diff`; run `git diff --check`; run `python tools/ng.py validate .nuclear/changes/sharpen-scope-boundaries`
-- Environment: WSL checkout at `/mnt/e/Hermes/03_Projects/nuclear-grade-context-engineering`, branch `docs/sharpen-scope-boundaries`
+- Environment: local WSL checkout of the repository, branch `docs/sharpen-scope-boundaries`
 - Inputs/fixtures: `README.md`, `.nuclear/changes/sharpen-scope-boundaries/risk.md`, `.nuclear/changes/sharpen-scope-boundaries/proof.md`
 - Expected result: Diff is limited to README plus this Quick packet; whitespace check passes; validator returns OK.
 - Self-check used? yes; target if yes: stop if the diff touches code, templates, permissions, dependencies, or release posture.

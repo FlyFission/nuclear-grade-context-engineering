@@ -19,7 +19,7 @@
 
 - Slug: `sharpen-scope-boundaries`
 - PR / issue: not opened yet
-- Owner: Hermes Agent
+- Owner: change actor
 - Date: 2026-07-01
 - Summary: Add concise README language for minimum sufficient context, agent context files as operating-envelope items, and a clear boundary that the repo is not an agent runtime/task manager/approval/observability platform.
 

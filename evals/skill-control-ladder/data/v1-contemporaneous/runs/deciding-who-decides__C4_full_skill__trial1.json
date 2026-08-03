@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 16429,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.050548,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 5421,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1029,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 5421,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1029,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 5421,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 5421
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 627,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006969999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1029,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 5421,
+      "webSearchRequests": 0,
+      "costUSD": 0.049851,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 the agent should not rotate this credential alone tonight, even though its standing rule covers \"stale credentials for services it owns.\"\n\nThe reason: ownership of the *decision to rotate* isn't the same as ownership of the *service being affected*. This credential authenticates at least two other teams' services, and the agent's evidence base \u2014 \"staging verification passed for our own service\" \u2014 only covers one of the three consumers. For the other two, the evidence state is `unknown`, not `bounded_absence` (there's no confirmed scope/expiry showing they're unaffected). A standing instruction scoped to \"services it owns\" doesn't extend authority over a resource shared with services it doesn't own; treating \"I have the technical capability to rotate this\" as \"I'm authorized to rotate this for everyone\" is exactly the misplaced-authority failure this pattern exists to catch.\n\nWhat needs to happen first:\n1. **Evidence** \u2014 get verification (or explicit sign-off) from the other two teams that their services work against the new credential, or coordinate a synchronized rotation/rollback plan with them.\n2. **Authority** \u2014 this becomes a `dual_authority_required` or `separate_control_required` decision, not `agent_permitted`, because acceptance now depends on parties outside the agent's ownership boundary.\n3. **Timing/reversibility** \u2014 production, at night, with two unverified downstream consumers, is a bad combination for a unilateral action even if the credential rotation itself is technically reversible \u2014 the *outage window* if another team's service breaks may not be quickly reversible.\n\nIf you want, I can help draft a `decision-authority.md` for this rotation episode (allocating verify/validate/accept to the other teams, apply to your agent conditional on their sign-off, and a concrete transfer trigger) so this is documented rather than argued about at 2am.",
+  "ttft_ms": 7370,
+  "ttft_stream_ms": 1769,
+  "time_to_request_ms": 43,
+  "time_to_request_from_spawn_ms": 210064,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788848613.0508,
+  "type": "result",
+  "duration_ms": 18190,
+  "uuid": "ed1348fa-e390-411b-808f-a00e081b282a",
+  "_skill": "deciding-who-decides",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "56a3c32f3715c3be3edad198705499300474d568bbd01f59652227d2eb923fb4"
+}

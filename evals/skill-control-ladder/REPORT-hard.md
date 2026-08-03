@@ -99,24 +99,38 @@ carrying token cost without a measured behavioral effect.
 | `C1_generic_nudge` | 78 | $0.0572 | 2,201 | 0.429 (95% CI 0.16–0.75) |
 | `C2_description_only` | 60 | $0.0565 | 2,192 | 0.452 (95% CI 0.17–0.77) |
 | `C3_compressed` | 129 | $0.0589 | 2,158 | 0.429 (95% CI 0.16–0.75) |
-| `C4_full_skill` | 997 | $0.0792 | 2,723 | 0.405 (95% CI 0.14–0.73) |
+| `C4_full_skill` | 1,039 | $0.0792 | 2,723 | 0.405 (95% CI 0.14–0.73) |
 
-## Per-skill scores (descriptive, not 27 hypotheses)
+## Per-skill scores
 
-Mean score over 3 trials, 0–1. These are **not** individually significance-
-tested: at n=3 per cell no per-skill test can survive correction, which is
-the lesson `STATISTICAL_ANALYSIS.md` already recorded. Read them as effect
-sizes for triage, not as verdicts.
+Mean score over 3 trials, 0–1, with a 95% percentile bootstrap interval on
+C4−C1 (10,000 resamples of trials within each arm, seed fixed).
 
-| Skill | `C0` | `C1` | `C2` | `C3` | `C4` | C4−C1 |
+**No per-skill helps/hurts verdict is issued.** A bootstrap over three trials
+is itself unreliable: when all three trials happen to agree, it reports an
+artificially tight interval because it can only resample the values it saw.
+So an interval excluding zero here is a weak signal, not a verdict, and a
+wide one is a reliable statement that nothing can be concluded.
+An earlier version of this report classified skills against a hardcoded
+threshold and produced two claims the data did not support — four skills
+called harmful on one-check flips, and a proposal to delete ~14,000 words of
+skill text. Both were retracted. Intervals replace the threshold so the same
+over-reading is not available.
+
+The pooled tests above are unaffected: they aggregate every skill and carry
+their own permutation p-values.
+
+**0 of 7 skills** have a C4−C1 interval excluding zero. Treat even those as provisional: one scenario, three trials, and criteria authored inside this repository.
+
+| Skill | `C0` | `C1` | `C2` | `C3` | `C4` | C4−C1 [95% CI] |
 |---|---|---|---|---|---|---|
-| `briefing-an-agent` | 0.33 | 0.33 | 0.00 | 0.33 | 0.17 | -0.17 ⚠️ |
-| `checking-release-readiness` | 0.67 | 0.50 | 0.50 | 0.50 | 0.50 | +0.00 ⚠️ |
-| `checking-what-a-change-affects` | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | +0.00 ⚠️ |
-| `creating-change-records` | 0.50 | 0.50 | 0.67 | 0.50 | 0.50 | +0.00 ⚠️ |
-| `rating-change-risk` | 0.67 | 0.50 | 0.50 | 0.50 | 0.50 | +0.00 ⚠️ |
-| `responding-to-incidents` | 0.83 | 0.67 | 1.00 | 0.83 | 1.00 | +0.33 |
-| `vetting-outside-code-and-models` | 0.50 | 0.50 | 0.50 | 0.33 | 0.17 | -0.33 ⚠️ |
+| `briefing-an-agent` | 0.33 | 0.33 | 0.00 | 0.33 | 0.17 | -0.17 [-0.50, +0.17] · spans 0 |
+| `checking-release-readiness` | 0.67 | 0.50 | 0.50 | 0.50 | 0.50 | +0.00 [+0.00, +0.00] · spans 0 |
+| `checking-what-a-change-affects` | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | +0.00 [+0.00, +0.00] · spans 0 |
+| `creating-change-records` | 0.50 | 0.50 | 0.67 | 0.50 | 0.50 | +0.00 [+0.00, +0.00] · spans 0 |
+| `rating-change-risk` | 0.67 | 0.50 | 0.50 | 0.50 | 0.50 | +0.00 [+0.00, +0.00] · spans 0 |
+| `responding-to-incidents` | 0.83 | 0.67 | 1.00 | 0.83 | 1.00 | +0.33 [+0.00, +0.50] · spans 0 |
+| `vetting-outside-code-and-models` | 0.50 | 0.50 | 0.50 | 0.33 | 0.17 | -0.33 [-0.50, +0.00] · spans 0 |
 
 ## Limitations
 

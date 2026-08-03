@@ -89,44 +89,58 @@ carrying token cost without a measured behavioral effect.
 | `C1_generic_nudge` | 78 | $0.0471 | 1,774 | 0.716 (95% CI 0.53–0.85) |
 | `C2_description_only` | 61 | $0.0472 | 1,818 | 0.802 (95% CI 0.62–0.91) |
 | `C3_compressed` | 126 | $0.0524 | 1,953 | 0.883 (95% CI 0.71–0.96) |
-| `C4_full_skill` | 1,085 | $0.0574 | 1,888 | 0.938 (95% CI 0.78–0.98) |
+| `C4_full_skill` | 1,100 | $0.0574 | 1,888 | 0.938 (95% CI 0.78–0.98) |
 
-## Per-skill scores (descriptive, not 27 hypotheses)
+## Per-skill scores
 
-Mean score over 3 trials, 0–1. These are **not** individually significance-
-tested: at n=3 per cell no per-skill test can survive correction, which is
-the lesson `STATISTICAL_ANALYSIS.md` already recorded. Read them as effect
-sizes for triage, not as verdicts.
+Mean score over 3 trials, 0–1, with a 95% percentile bootstrap interval on
+C4−C1 (10,000 resamples of trials within each arm, seed fixed).
 
-| Skill | `C0` | `C1` | `C2` | `C3` | `C4` | C4−C1 |
+**No per-skill helps/hurts verdict is issued.** A bootstrap over three trials
+is itself unreliable: when all three trials happen to agree, it reports an
+artificially tight interval because it can only resample the values it saw.
+So an interval excluding zero here is a weak signal, not a verdict, and a
+wide one is a reliable statement that nothing can be concluded.
+An earlier version of this report classified skills against a hardcoded
+threshold and produced two claims the data did not support — four skills
+called harmful on one-check flips, and a proposal to delete ~14,000 words of
+skill text. Both were retracted. Intervals replace the threshold so the same
+over-reading is not available.
+
+The pooled tests above are unaffected: they aggregate every skill and carry
+their own permutation p-values.
+
+**6 of 27 skills** have a C4−C1 interval excluding zero. Treat even those as provisional: one scenario, three trials, and criteria authored inside this repository.
+
+| Skill | `C0` | `C1` | `C2` | `C3` | `C4` | C4−C1 [95% CI] |
 |---|---|---|---|---|---|---|
-| `breaking-down-the-work` | 1.00 | 0.83 | 1.00 | 1.00 | 1.00 | +0.17 |
-| `briefing-an-agent` | 0.83 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 ⚠️ |
-| `checking-legal-and-safety-wording` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 ⚠️ |
-| `checking-release-readiness` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 ⚠️ |
-| `checking-source-claims` | 0.50 | 0.67 | 0.50 | 1.00 | 1.00 | +0.33 |
-| `checking-what-a-change-affects` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 ⚠️ |
-| `choosing-what-to-control` | 0.50 | 0.67 | 0.50 | 1.00 | 1.00 | +0.33 |
-| `closing-stale-packets` | 0.50 | 0.00 | 0.67 | 0.67 | 0.83 | +0.83 |
-| `creating-change-records` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 ⚠️ |
-| `deciding-who-decides` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 ⚠️ |
-| `declaring-intent` | 0.33 | 0.33 | 0.67 | 0.50 | 0.83 | +0.50 |
-| `double-checking-before-acting` | 0.83 | 0.67 | 0.67 | 1.00 | 1.00 | +0.33 |
-| `handing-off-work` | 0.00 | 0.17 | 0.17 | 0.33 | 0.50 | +0.33 |
-| `learning-from-experience` | 0.50 | 0.33 | 0.33 | 1.00 | 1.00 | +0.67 |
-| `organizing-project-folders` | 0.33 | 0.50 | 0.50 | 0.33 | 0.50 | +0.00 ⚠️ |
-| `proving-claims` | 0.67 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 ⚠️ |
-| `questioning-attitude` | 0.50 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 ⚠️ |
-| `rating-change-risk` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 ⚠️ |
-| `recording-a-known-good-version` | 0.00 | 0.00 | 0.67 | 0.33 | 1.00 | +1.00 |
-| `recording-what-an-agent-did` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 ⚠️ |
-| `reporting-shared-defects` | 0.50 | 0.67 | 0.50 | 1.00 | 1.00 | +0.33 |
-| `responding-to-incidents` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 ⚠️ |
-| `staying-on-mission` | 0.83 | 0.33 | 0.83 | 1.00 | 1.00 | +0.67 |
-| `stress-testing-agent-changes` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 ⚠️ |
-| `tracking-deficiencies` | 0.50 | 0.50 | 0.83 | 1.00 | 1.00 | +0.50 |
-| `using-nuclear-grade` | 0.00 | 0.67 | 0.83 | 0.67 | 0.67 | +0.00 ⚠️ |
-| `vetting-outside-code-and-models` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 ⚠️ |
+| `breaking-down-the-work` | 1.00 | 0.83 | 1.00 | 1.00 | 1.00 | +0.17 [+0.00, +0.50] · spans 0 |
+| `briefing-an-agent` | 0.83 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |
+| `checking-legal-and-safety-wording` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |
+| `checking-release-readiness` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |
+| `checking-source-claims` | 0.50 | 0.67 | 0.50 | 1.00 | 1.00 | +0.33 [+0.00, +0.50] · spans 0 |
+| `checking-what-a-change-affects` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |
+| `choosing-what-to-control` | 0.50 | 0.67 | 0.50 | 1.00 | 1.00 | +0.33 [+0.00, +0.50] · spans 0 |
+| `closing-stale-packets` | 0.50 | 0.00 | 0.67 | 0.67 | 0.83 | +0.83 [+0.50, +1.00] |
+| `creating-change-records` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |
+| `deciding-who-decides` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |
+| `declaring-intent` | 0.33 | 0.33 | 0.67 | 0.50 | 0.83 | +0.50 [+0.17, +0.83] |
+| `double-checking-before-acting` | 0.83 | 0.67 | 0.67 | 1.00 | 1.00 | +0.33 [+0.00, +1.00] · spans 0 |
+| `handing-off-work` | 0.00 | 0.17 | 0.17 | 0.33 | 0.50 | +0.33 [+0.00, +0.50] · spans 0 |
+| `learning-from-experience` | 0.50 | 0.33 | 0.33 | 1.00 | 1.00 | +0.67 [+0.50, +1.00] |
+| `organizing-project-folders` | 0.33 | 0.50 | 0.50 | 0.33 | 0.50 | +0.00 [+0.00, +0.00] · spans 0 |
+| `proving-claims` | 0.67 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |
+| `questioning-attitude` | 0.50 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |
+| `rating-change-risk` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |
+| `recording-a-known-good-version` | 0.00 | 0.00 | 0.67 | 0.33 | 1.00 | +1.00 [+1.00, +1.00] |
+| `recording-what-an-agent-did` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |
+| `reporting-shared-defects` | 0.50 | 0.67 | 0.50 | 1.00 | 1.00 | +0.33 [+0.00, +0.50] · spans 0 |
+| `responding-to-incidents` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |
+| `staying-on-mission` | 0.83 | 0.33 | 0.83 | 1.00 | 1.00 | +0.67 [+0.50, +1.00] |
+| `stress-testing-agent-changes` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |
+| `tracking-deficiencies` | 0.50 | 0.50 | 0.83 | 1.00 | 1.00 | +0.50 [+0.50, +0.50] |
+| `using-nuclear-grade` | 0.00 | 0.67 | 0.83 | 0.67 | 0.67 | +0.00 [-0.67, +0.50] · spans 0 |
+| `vetting-outside-code-and-models` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |
 
 ## Limitations
 

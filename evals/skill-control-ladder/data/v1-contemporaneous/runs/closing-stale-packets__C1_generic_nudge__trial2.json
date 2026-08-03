@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 15189,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.036600099999999997,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2757,
+    "cache_read_input_tokens": 23657,
+    "output_tokens": 808,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2757,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 550,
+        "cache_read_input_tokens": 8762,
+        "cache_creation_input_tokens": 275,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 275
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 748,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000823,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 808,
+      "cacheReadInputTokens": 23657,
+      "cacheCreationInputTokens": 2757,
+      "webSearchRequests": 0,
+      "costUSD": 0.0357771,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory appears empty, so I can't inspect the actual tool or packet files \u2014 I'll answer based on what you've described.\n\nSince `add-dark-mode-toggle` was deliberately deprioritized (design never finalized the palette, team decided not to pursue it this quarter) and nothing from it merged, it's genuinely dead work, not a stalled-but-valid packet like `refactor-auth-flow`. The right move is to **delete the packet folder** rather than try to fix it up to pass validation:\n\n- It still has placeholder text in every file \u2014 there's no real content worth preserving.\n- Three weeks of inactivity plus an explicit team decision means it's not \"in progress,\" it's abandoned.\n- If you want a record that dark mode was considered, that belongs in meeting notes or an issue tracker, not as a lingering packet the health checker has to flag every run.\n\nIf your team's convention is to keep a paper trail of abandoned ideas instead of deleting, some tools support an `archived`/`ignored` status (e.g., moving it to an `archive/` subfolder or adding a marker file) so it's excluded from the active status report but not lost. Since I can't see your tool's actual conventions from here, check whether it has an archive mechanism \u2014 otherwise, straightforward deletion is correct.\n\nFor `refactor-auth-flow`, since it's actively being worked on, leave it as-is (the `invalid` tag is accurate and expected until your teammate adds the missing file) \u2014 that's not noise, that's a true signal.\n\nWant me to look at the actual tool/repo if you can point me to the right directory, or should I just proceed with deleting the `add-dark-mode-toggle` packet folder once you confirm its path?",
+  "ttft_ms": 2280,
+  "ttft_stream_ms": 1598,
+  "time_to_request_ms": 44,
+  "time_to_request_from_spawn_ms": 138450,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788776999.5222,
+  "type": "result",
+  "duration_ms": 15169,
+  "uuid": "8eb3965e-cc2a-431c-9b26-5a7eb6e90a52",
+  "_skill": "closing-stale-packets",
+  "_arm": "C1_generic_nudge",
+  "_trial": 2,
+  "_input_spec_sha256": "64e5a906a5e816e3e9dd1b7900262f854498c1721b33630e0afc0e709052810d"
+}

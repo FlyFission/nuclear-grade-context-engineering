@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 19846,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.032902,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2148,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1160,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2148,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1160,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2148,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2148
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1160,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2148,
+      "webSearchRequests": 0,
+      "costUSD": 0.032178,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 don't cut production over this week. Marketing claims (\"99.9% accuracy,\" \"SOC2 compliant,\" case studies) aren't evidence of how the API performs on *your* content and edge cases, and moderation failures have real safety/trust/legal blast radius if you're wrong.\n\nBefore switching, I'd want:\n- **Verify SOC2, don't take it on faith** \u2014 ask for the actual SOC2 Type II report (Type I just means controls exist, not that they were tested over time), and check it covers the moderation service itself, not just their infra.\n- **Test against your own labeled data** \u2014 \"99.9% accuracy\" is meaningless without knowing their test set, class balance, and what counts as a \"miss.\" Run it against a sample of your real traffic (including your known hard cases/adversarial content) and compare precision/recall to your current provider.\n- **Check the case studies critically** \u2014 do those customers have similar content types/volume to you, and are the results third-party verified or vendor-written?\n- **Shadow it first** \u2014 run the new API in parallel (log-only, not decisioning) against live traffic for a week or two before it touches production, so you catch failure modes before users do.\n\nGiven the pricing is attractive, this is worth pursuing \u2014 just not as a same-week production cutover. Want help drafting a shadow-mode test harness or an eval script to compare the two providers on a sample of your data?",
+  "ttft_ms": 12253,
+  "ttft_stream_ms": 1847,
+  "time_to_request_ms": 392,
+  "time_to_request_from_spawn_ms": 95676,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788730608.4905,
+  "type": "result",
+  "duration_ms": 18678,
+  "uuid": "00619df1-233b-4866-b6cf-9f58d6dfb20d",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "0980d4b71b4f129757bf2710680f0332a851e731cd0194b13b08f6f02d9eaa4e"
+}

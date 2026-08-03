@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 13877,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0326278,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2555,
+    "cache_read_input_tokens": 14796,
+    "output_tokens": 804,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2555,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 589,
+        "cache_read_input_tokens": 8516,
+        "cache_creation_input_tokens": 319,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 319
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 702,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000787,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 804,
+      "cacheReadInputTokens": 14796,
+      "cacheCreationInputTokens": 2555,
+      "webSearchRequests": 0,
+      "costUSD": 0.0318408,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No, you're not good yet \u2014 you've only fixed your own bot, but you found a defect in a shared artifact that three other teams still depend on as-is. A local override with a code comment doesn't help anyone who doesn't read your repo.\n\nHere's what's still open:\n\n1. **File a bug against `prompt-common` itself** with the actual fix, not just a local workaround. Your local override should ideally become a PR/patch to the shared package so it gets fixed at the source, not forked three more times.\n2. **Notify the other three teams (sales, onboarding, internal-tools) directly** \u2014 this is a security-relevant leak (internal tool/DB query identifiers exposed to customers), not just a cosmetic bug. A comment in your own repo doesn't reach them. Whatever your org uses for this (Slack, issue tracker, on-call channel) \u2014 flag it explicitly and describe: the trigger condition (long conversations hitting the truncation edge case), the impact (internal tool names leaking to customers), and your local fix as a reference.\n3. **Check if this needs escalation as a security/privacy issue**, not just a bug ticket \u2014 internal tool/query identifiers leaking to end users could be a disclosure concern depending on what those names reveal (schema, infra, vendor names). If your org has a security team or incident process for data exposure, loop them in so they can judge whether affected teams need to check logs for past leaks.\n4. **Confirm the fix in `prompt-common` actually resolves it for everyone**, then make sure sales/onboarding/internal-tools update to the patched version \u2014 don't just assume they'll pick it up.\n\nThe core issue: right now the only trace of this bug is a comment in your codebase that only your team will ever read. The other teams are actively shipping the same defect to customers today. That needs to reach them, not just be documented locally.",
+  "ttft_ms": 2051,
+  "ttft_stream_ms": 944,
+  "time_to_request_ms": 37,
+  "time_to_request_from_spawn_ms": 193519,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788831776.7593,
+  "type": "result",
+  "duration_ms": 14852,
+  "uuid": "bd654895-22c1-4313-b234-b3e80d34cc55",
+  "_skill": "reporting-shared-defects",
+  "_arm": "C2_description_only",
+  "_trial": 2,
+  "_input_spec_sha256": "31499170666ed5715e065795f4fb06bdfe3f4b79c2c199215d21e1bda620c6c9"
+}

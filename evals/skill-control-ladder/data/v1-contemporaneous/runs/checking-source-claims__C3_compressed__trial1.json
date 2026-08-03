@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 13185,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.034508199999999996,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2607,
+    "cache_read_input_tokens": 23524,
+    "output_tokens": 740,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2607,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 500,
+        "cache_read_input_tokens": 8757,
+        "cache_creation_input_tokens": 130,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 130
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 626,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000691,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 740,
+      "cacheReadInputTokens": 23524,
+      "cacheCreationInputTokens": 2607,
+      "webSearchRequests": 0,
+      "costUSD": 0.03381719999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The repo is empty, so there's no existing source-map or crosswalk to check this against \u2014 but based on the rules you've laid out, this sentence needs changes before publishing. Two issues:\n\n**1. \"Fully compliant with the framework\" \u2014 remove/reword.**\nNIST SP 800-61 is a public source, so citing it is fine, but \"fully compliant\" is a formal-assurance/certification claim. Unless you've actually gone through a compliance audit or attestation process, this should be reworded as influence/lineage, not compliance. E.g.:\n\n> \"Our workflow is informed by the incident-response lifecycle described in NIST SP 800-61.\"\n\n**2. The uncited conference talk \u2014 cannot go in as a source.**\n\"A great talk... though we don't have a link or citation\" is a non-public, unverifiable source. It can't be presented as something the methodology follows or draws lineage from without a citation. Options:\n- Drop it entirely.\n- If you can track down the talk/speaker/conference, cite it properly and reword as inspiration (not compliance) \u2014 e.g., \"we also drew inspiration from SRE practices discussed in industry talks on incident response.\"\n- If you genuinely can't verify it, leave it out rather than publish an uncited claim.\n\n**Suggested rewrite:**\n> \"Our workflow is informed by the incident-response lifecycle in NIST SP 800-61, with additional influence from common SRE incident-response practices.\"\n\nWant me to drop this into an actual docs file? If you point me to the file/directory, I can make the edit directly.",
+  "ttft_ms": 1503,
+  "ttft_stream_ms": 783,
+  "time_to_request_ms": 33,
+  "time_to_request_from_spawn_ms": 117648,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788756083.8967,
+  "type": "result",
+  "duration_ms": 13370,
+  "uuid": "b98fea20-ce20-49f2-a5b3-eab51da34ecd",
+  "_skill": "checking-source-claims",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "816d8328c3274e31acdf44845fd8edbea3111d76b8c8281ab0f5c639fa38bbd7"
+}

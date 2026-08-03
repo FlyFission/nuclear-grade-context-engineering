@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import random
 import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -44,6 +45,7 @@ from ladder_common import (
 
 WORK_DIR = RUNS_DIR.parent / "work"
 MEAN_COST_USD = 0.0436  # observed mean of the 162 existing pilot calls
+SHUFFLE_SEED = 20260803  # fixed so the interleaved execution order is reproducible
 
 
 def try_adopt_pilot(skill: str, arm: str, trial: int, spec_hash: str) -> dict | None:
@@ -156,6 +158,11 @@ def main() -> int:
             return 2
 
     jobs = [(s, a, t) for s in args.skills for a in args.arms for t in range(1, TRIALS + 1)]
+    # Seeded shuffle so arms are interleaved across the batch rather than executed
+    # in per-skill blocks. If the serving backend drifts mid-run, block execution
+    # would alias that drift onto whichever arm happened to run first; shuffling
+    # spreads it across all arms instead. Seeded so the order is reproducible.
+    random.Random(SHUFFLE_SEED).shuffle(jobs)
 
     if args.dry_run:
         cached = adoptable = fresh = 0

@@ -54,6 +54,26 @@ _POOLS = {
         "report": LADDER_DIR / "REPORT-hard.md",
         "adopt_pilot": False,
     },
+    # Contemporaneous re-run of the v1 scenarios. Identical tasks to `v1`, but
+    # NO pilot adoption: every arm is generated fresh in one interleaved batch.
+    #
+    # This exists because `v1` is confounded. All 81 of its C0 cells and 69 of 81
+    # C4 cells are transcripts adopted from a pilot run weeks earlier, while every
+    # C1/C2/C3 cell was generated later. `claude-sonnet-5` is an alias to a hosted
+    # model, not an immutable binary, so the input-spec hash can prove the prompt
+    # and flags were identical but cannot prove the serving backend was. The v1
+    # headline therefore cannot be attributed solely to skill content, and the
+    # claim that "only the appended text varies" is false of that data.
+    #
+    # `v1` is retained unchanged as the preliminary, cost-saving analysis. This
+    # pool is the confirmatory one.
+    "v1c": {
+        "tasks": PILOT_DATA / "all_skill_tasks.json",
+        "runs": LADDER_DIR / "data" / "v1-contemporaneous" / "runs",
+        "graded": LADDER_DIR / "data" / "v1-contemporaneous" / "graded.json",
+        "report": LADDER_DIR / "REPORT-v1c.md",
+        "adopt_pilot": False,
+    },
     # False-positive pool. Every scenario sits squarely inside the territory the
     # skill's own frontmatter says it should NOT be used for, and every rubric
     # check is phrased so that "met" means the response stayed proportionate.

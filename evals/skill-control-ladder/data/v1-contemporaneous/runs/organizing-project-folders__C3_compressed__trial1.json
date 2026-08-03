@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 34048,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0543454,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2760,
+    "cache_read_input_tokens": 14898,
+    "output_tokens": 2173,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2760,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1883,
+        "cache_read_input_tokens": 8618,
+        "cache_creation_input_tokens": 422,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 422
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 634,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000709,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2173,
+      "cacheReadInputTokens": 14898,
+      "cacheCreationInputTokens": 2760,
+      "webSearchRequests": 0,
+      "costUSD": 0.0536364,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This working directory appears to be empty (no files found), so I can't inspect the actual `misc`/`utils` contents here \u2014 I'll work from your description, but the concrete file listing would let me finalize exact placements rather than guess.\n\n**Proposed disposition rules** (apply each file in `misc`/`utils` against these \u2014 every file needs to satisfy exactly one):\n\n| Current dumping-ground content | Where it goes | Why |\n|---|---|---|\n| Config templates | `config/templates/` (or per-service `<service>/config/` if only one consumer) | Has a clear single purpose; earn its own home |\n| One-off migration scripts (already run) | `scripts/migrations/archive/<yyyy-mm-dd>-<description>/` | Historical record, not active tooling \u2014 separate from scripts still in use |\n| Archived compliance reports | Probably **not the code repo at all** \u2014 move to your document/compliance system (Drive, Confluence, etc.), or if they must stay, `docs/compliance/archive/` with a README stating retention policy | Reports aren't code; keeping them in-repo just recreates the dumping-ground problem |\n| Shared helpers used by 2 services | Promote to a real shared package: `libs/shared/<name>/` or `packages/shared-<name>/` with its own README and tests | It has a real multi-consumer contract \u2014 it's \"earned\" its own module, unlike single-use utils |\n| Old meeting notes | Delete from repo, or move to wiki/Drive | Not code, not a build artifact \u2014 has no reason to live in the codebase |\n| `utils/` grab-bag (~30 files) | No replacement `utils` folder. Each file either: (a) used by exactly one service \u2192 move into that service's own `utils/` or `internal/` subfolder, (b) used by 2+ services \u2192 promote to `libs/<domain>/` (e.g. `libs/dates/`, `libs/strings/`), (c) unused \u2192 delete | A generic `utils` is banned by design \u2014 it has no single reason to change, so it always regrows into a dumping ground |\n\n**Top-level shape this produces:**\n```\nlibs/            # promoted, multi-consumer shared code, one subfolder per concern\n  shared/<name>/\n  dates/\nscripts/\n  migrations/\n    archive/\nconfig/\n  templates/\ndocs/\n  compliance/archive/   # only if it truly must live in-repo\n<service-a>/\n  internal/utils/       # single-service-only helpers, co-located\n<service-b>/\n  internal/utils/\n```\n\nEach non-trivial folder above gets a short README stating its purpose and what belongs there, so it doesn't silently become the next `misc`.\n\n**Before I finalize:** can you share the actual file listing (or a directory tree) of `misc` and `utils`? I want to sort every one of the ~77 files into a bucket rather than leave anything ambiguous, and flag any that don't cleanly fit one of these rules for your call.",
+  "ttft_ms": 3390,
+  "ttft_stream_ms": 2282,
+  "time_to_request_ms": 646,
+  "time_to_request_from_spawn_ms": 95032,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788730626.9746,
+  "type": "result",
+  "duration_ms": 35751,
+  "uuid": "2c336bdb-fbf5-46ed-a430-f56b1b2b4c4e",
+  "_skill": "organizing-project-folders",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "475e9ddd5fc99b90d48ebac64620a0817620f7aac0af09487fa0f2266cb01a3c"
+}

@@ -86,28 +86,34 @@ carrying token cost without a measured behavioral effect.
 
 ## Per-skill scores
 
-Mean score over 3 trials, 0–1. **A per-skill delta smaller than ±0.19 is not distinguishable from grader noise** —
-measured from duplicate gradings of identical transcripts (90th-pct cell noise 0.133, scaled by sqrt(2) for a two-cell difference). Rows inside that band are marked `noise` and carry no
-information about the skill in either direction; do not act on them, and do
-not read a sign as a direction.
+Mean score over 3 trials, 0–1, with a 95% percentile bootstrap interval on
+C4−C1 (10,000 resamples of trials within each arm, seed fixed).
 
-This band is not a formality. An earlier reading of this table treated small
-negative deltas as harmful skills and small C4−C3 gaps as removable prose;
-both were entirely inside the noise floor and both recommendations were wrong.
-The pooled tests above are unaffected — they aggregate every skill and carry
+**No per-skill helps/hurts verdict is issued.** A bootstrap over three trials
+is itself unreliable: when all three trials happen to agree, it reports an
+artificially tight interval because it can only resample the values it saw.
+So an interval excluding zero here is a weak signal, not a verdict, and a
+wide one is a reliable statement that nothing can be concluded.
+An earlier version of this report classified skills against a hardcoded
+threshold and produced two claims the data did not support — four skills
+called harmful on one-check flips, and a proposal to delete ~14,000 words of
+skill text. Both were retracted. Intervals replace the threshold so the same
+over-reading is not available.
+
+The pooled tests above are unaffected: they aggregate every skill and carry
 their own permutation p-values.
 
-**2 of 7 skills** have a C4−C1 delta that clears the floor. The other 5 are undetermined at n=3 — that is a statement about the sample size, not about the skills.
+**1 of 7 skills** have a C4−C1 interval excluding zero. Treat even those as provisional: one scenario, three trials, and criteria authored inside this repository.
 
-| Skill | `C0` | `C1` | `C2` | `C3` | `C4` | C4−C1 vs noise floor |
+| Skill | `C0` | `C1` | `C2` | `C3` | `C4` | C4−C1 [95% CI] |
 |---|---|---|---|---|---|---|
-| `briefing-an-agent` | 0.33 | 0.56 | 0.11 | 0.50 | 0.28 | -0.28 · **HURTS** |
-| `checking-release-readiness` | 0.94 | 0.72 | 0.72 | 0.89 | 0.78 | +0.06 · noise |
-| `checking-what-a-change-affects` | 0.17 | 0.28 | 0.22 | 0.22 | 0.22 | -0.06 · noise |
-| `creating-change-records` | 0.67 | 0.67 | 0.94 | 0.72 | 0.56 | -0.11 · noise |
-| `rating-change-risk` | 0.67 | 0.78 | 0.72 | 0.72 | 0.78 | +0.00 · noise |
-| `responding-to-incidents` | 0.93 | 0.80 | 0.93 | 0.87 | 0.93 | +0.13 · noise |
-| `vetting-outside-code-and-models` | 0.07 | 0.20 | 0.27 | 0.27 | 0.00 | -0.20 · **HURTS** |
+| `briefing-an-agent` | 0.33 | 0.56 | 0.11 | 0.50 | 0.28 | -0.28 [-0.44, -0.06] |
+| `checking-release-readiness` | 0.94 | 0.72 | 0.72 | 0.89 | 0.78 | +0.06 [-0.06, +0.17] · spans 0 |
+| `checking-what-a-change-affects` | 0.17 | 0.28 | 0.22 | 0.22 | 0.22 | -0.06 [-0.17, +0.06] · spans 0 |
+| `creating-change-records` | 0.67 | 0.67 | 0.94 | 0.72 | 0.56 | -0.11 [-0.28, +0.06] · spans 0 |
+| `rating-change-risk` | 0.67 | 0.78 | 0.72 | 0.72 | 0.78 | +0.00 [-0.22, +0.17] · spans 0 |
+| `responding-to-incidents` | 0.93 | 0.80 | 0.93 | 0.87 | 0.93 | +0.13 [+0.00, +0.20] · spans 0 |
+| `vetting-outside-code-and-models` | 0.07 | 0.20 | 0.27 | 0.27 | 0.00 | -0.20 [-0.40, +0.00] · spans 0 |
 
 ## Limitations
 

@@ -67,7 +67,7 @@
       "tool_use_id": "toolu_018Sp2Wruae8ZtSJJTZUASY7",
       "tool_input": {
         "pattern": "*",
-        "path": "/home/user/nuclear-grade-context-engineering/evals/skill-control-ladder/data/work"
+        "path": "./evals/skill-control-ladder/data/work"
       }
     }
   ],

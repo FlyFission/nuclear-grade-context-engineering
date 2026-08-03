@@ -67,7 +67,7 @@
       "tool_use_id": "toolu_01NhtoWhE3H6mYP7MDciLbBX",
       "tool_input": {
         "pattern": "**/tools/ng.py",
-        "path": "/home/user/nuclear-grade-context-engineering"
+        "path": "."
       }
     },
     {
@@ -75,7 +75,7 @@
       "tool_use_id": "toolu_01BYddHRdcoVZtzUXpx86CLv",
       "tool_input": {
         "pattern": "**/templates",
-        "path": "/home/user/nuclear-grade-context-engineering"
+        "path": "."
       }
     }
   ],

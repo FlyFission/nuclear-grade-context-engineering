@@ -77,7 +77,7 @@
       "tool_use_id": "toolu_01MJr4hpxC9UkkLKy6QLH5nH",
       "tool_input": {
         "pattern": "NUCLEAR-GRADE-CLOSED",
-        "path": "/home/user",
+        "path": "~",
         "output_mode": "files_with_matches",
         "head_limit": 20
       }

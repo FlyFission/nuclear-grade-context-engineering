@@ -67,7 +67,7 @@
       "tool_use_id": "toolu_01Y43xANG9MYn6AqLJgu1dbg",
       "tool_input": {
         "pattern": "NIST SP 800-61",
-        "path": "/home/user/nuclear-grade-context-engineering",
+        "path": ".",
         "output_mode": "files_with_matches"
       }
     },
@@ -76,7 +76,7 @@
       "tool_use_id": "toolu_01KENKcWddYYHg632qHCempK",
       "tool_input": {
         "pattern": "**/source-map.md",
-        "path": "/home/user/nuclear-grade-context-engineering"
+        "path": "."
       }
     }
   ],

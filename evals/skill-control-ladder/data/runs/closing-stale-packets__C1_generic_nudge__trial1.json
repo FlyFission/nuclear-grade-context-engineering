@@ -67,7 +67,7 @@
       "tool_use_id": "toolu_01PcCWTWrLT8Pcuxj3cLZQfv",
       "tool_input": {
         "pattern": "add-dark-mode-toggle",
-        "path": "/home/user/nuclear-grade-context-engineering",
+        "path": ".",
         "output_mode": "files_with_matches"
       }
     }

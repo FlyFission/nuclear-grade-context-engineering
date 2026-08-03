@@ -67,7 +67,7 @@
   "fast_mode_disabled_reason": "sdk_opt_in_required",
   "subtype": "success",
   "api_error_status": null,
-  "result": "I don't see `apiTimeout`/`api_timeout` or a `.env.dev` file anywhere in this repo (`/home/user/nuclear-grade-context-engineering/evals/skill-control-ladder/data/negative-pool/work/responding-to-incidents_C3_compressed_1`). A couple possibilities:\n\n1. Your project lives elsewhere \u2014 if so, point me at the correct directory/repo and I'll fix it there.\n2. The startup script reads the env var by a different name (e.g., it might load it via a config loader/schema rather than referencing the string directly) \u2014 if you can paste the error traceback or the relevant script snippet, I can pinpoint the exact line to update.\n\nWhich is it?",
+  "result": "I don't see `apiTimeout`/`api_timeout` or a `.env.dev` file anywhere in this repo (`./evals/skill-control-ladder/data/negative-pool/work/responding-to-incidents_C3_compressed_1`). A couple possibilities:\n\n1. Your project lives elsewhere \u2014 if so, point me at the correct directory/repo and I'll fix it there.\n2. The startup script reads the env var by a different name (e.g., it might load it via a config loader/schema rather than referencing the string directly) \u2014 if you can paste the error traceback or the relevant script snippet, I can pinpoint the exact line to update.\n\nWhich is it?",
   "ttft_ms": 1231,
   "ttft_stream_ms": 827,
   "time_to_request_ms": 52,

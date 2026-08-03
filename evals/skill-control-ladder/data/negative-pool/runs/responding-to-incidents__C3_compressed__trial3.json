@@ -67,7 +67,7 @@
   "fast_mode_disabled_reason": "sdk_opt_in_required",
   "subtype": "success",
   "api_error_status": null,
-  "result": "I couldn't find `apiTimeout`, `api_timeout`, or a `.env.dev` file anywhere in this repo (`/home/user/nuclear-grade-context-engineering/evals/skill-control-ladder/data/negative-pool/work/responding-to-incidents_C3_compressed_3`). A few possibilities:\n\n- The env file/script live outside this working directory (e.g., a different project folder).\n- The variable is read via a config loader with a different name (e.g., `API_TIMEOUT`, `apitimeout`).\n\nCan you tell me the path to the project/script this belongs to, or paste the exact error message/traceback? That'll let me find the right reference to update.",
+  "result": "I couldn't find `apiTimeout`, `api_timeout`, or a `.env.dev` file anywhere in this repo (`./evals/skill-control-ladder/data/negative-pool/work/responding-to-incidents_C3_compressed_3`). A few possibilities:\n\n- The env file/script live outside this working directory (e.g., a different project folder).\n- The variable is read via a config loader with a different name (e.g., `API_TIMEOUT`, `apitimeout`).\n\nCan you tell me the path to the project/script this belongs to, or paste the exact error message/traceback? That'll let me find the right reference to update.",
   "ttft_ms": 1639,
   "ttft_stream_ms": 936,
   "time_to_request_ms": 38,

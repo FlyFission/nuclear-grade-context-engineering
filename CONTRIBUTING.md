@@ -25,9 +25,11 @@ python -m ruff check .
 python tools/ng.py doctor .
 python tools/ng.py tokens .
 python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions --strict-custody
+git diff --check
 ```
 
-These are the fast local checks shared with CI; the workflow remains the source of truth.
+The first five commands are the fast local checks shared with CI; `git diff --check`
+catches whitespace errors in the proposed diff. The workflow remains the source of truth.
 
 Also scan new public docs for overclaiming. Lean on phrases like:
 

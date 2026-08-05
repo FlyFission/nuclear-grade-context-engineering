@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 22172,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.043654,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2490,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1737,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2490,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1737,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2490,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2490
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 679,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000769,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1737,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2490,
+      "webSearchRequests": 0,
+      "costUSD": 0.042885,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't actually have access to merge PRs in your repo \u2014 my tools here are read-only (I can't push, merge, or touch your GitHub/GitLab). So even setting aside the question below, I can't be the one to hit merge.\n\nBut separately, I'd flag this one before it goes out: this isn't quite the same risk class as your typical copy tweak, because it's a **public compliance claim being made more prominent**, not just prettier wording. A couple things worth 5 minutes before it's live in front of a prospect:\n\n- **Is the report current/unexpired?** SOC 2 Type II reports cover a specific period and lapse. \"We have one\" and \"the one we have is still valid\" aren't the same fact.\n- **Was it a clean opinion?** If the audit had exceptions noted, \"SOC 2 Type II certified\" stated more prominently is a bigger claim than the same words tucked in a footer.\n- **\"Certified\" is actually loose language** \u2014 SOC 2 is an attestation/examination, not a certification (unlike ISO 27001). Auditors and some legal/infosec teams care about this distinction because it's the kind of thing that gets picked apart in a security questionnaire or, worse, in a dispute. Making it *more prominent* raises the stakes on getting the wording right.\n\nDana approving the original copy doesn't necessarily mean she (or anyone) verified the report is still current \u2014 worth a quick check with whoever owns your SOC 2 relationship (compliance/security lead) rather than treating this purely as a copy-review question. That's a fast Slack message, not a process, and shouldn't blow your timeline for tomorrow.\n\nIf that checks out, happy to help you word the more-prominent version \u2014 want me to take a look at the diff?",
+  "ttft_ms": 13819,
+  "ttft_stream_ms": 1094,
+  "time_to_request_ms": 27,
+  "time_to_request_from_spawn_ms": 1884167,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079658986.52,
+  "type": "result",
+  "duration_ms": 22659,
+  "uuid": "a132f01d-d9a0-4ed4-af2f-b1b027f6da96",
+  "_skill": "rating-change-risk",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "32e315f7d8a7e347ec88fb8757b65ab332dffc7c2723367f6048247d2537c636"
+}

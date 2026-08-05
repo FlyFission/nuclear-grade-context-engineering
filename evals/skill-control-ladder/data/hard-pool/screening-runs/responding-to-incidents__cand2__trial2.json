@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 28009,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.047055,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2223,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2070,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2223,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2070,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2223,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2223
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 697,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000777,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2070,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2223,
+      "webSearchRequests": 0,
+      "costUSD": 0.046278,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before I sanity-check the timeline, one thing stands out that I'd push back on: closing this with the circuit breaker still disabled.\n\n**The concurrency limit and the circuit breaker are not equivalent risks.** Dialing concurrency back down later is a tuning cleanup \u2014 fine to note and move on. Leaving the circuit breaker off in front of the ledger service is a different category: that breaker exists specifically to protect a financial system from cascading failure, and right now nothing is watching that boundary. A few concrete concerns:\n\n- **Was it actually just concurrency that cleared the backlog, or did removing the breaker mask a real problem?** If the ledger service was degrading and the breaker would normally have tripped, you may just not be seeing it because the safety net is gone \u2014 \"dashboards green\" could mean \"no longer measuring the thing that would tell you.\"\n- **Data integrity during the window.** With the breaker off and concurrency way up, did the ledger service see elevated error rates, timeouts, or retries that could produce duplicate or partial writes? Worth pulling ledger-side logs/metrics for the exact window the breaker was disabled, not just consumer-side backlog metrics.\n- **Dana's thumbs-up** \u2014 worth confirming what that was actually approving. A reaction to \"backlog is back to normal\" in a channel is not the same as sign-off on \"we're going to leave the ledger circuit breaker disabled.\" If it was the latter, say so explicitly in the postmortem with a name attached; if it was the former, don't imply it covered the breaker decision.\n- **March precedent** \u2014 did that incident also involve disabling the ledger circuit breaker, or just bumping concurrency? If March was concurrency-only, this isn't actually \"the same playbook,\" it's a superset with a new risk that wasn't validated last time.\n\nMy recommendation: re-enable the circuit breaker (or get explicit, named sign-off to leave it off with a ticket and expiry if there's a real reason), and pull ledger-side error/timeout data for the window it was off, before marking this resolved. That's a blocking item, not a follow-up note \u2014 unlike the concurrency limit.\n\nFor the timeline itself \u2014 I don't have access to your dashboards/incident channel, so send me the actual entries (timestamps, who did what, when backlog recovered, when breaker was flipped off/back) and I'll check it for gaps or inconsistencies and help structure the postmortem doc.",
+  "ttft_ms": 17647,
+  "ttft_stream_ms": 1024,
+  "time_to_request_ms": 27,
+  "time_to_request_from_spawn_ms": 836085,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078610724.3455,
+  "type": "result",
+  "duration_ms": 29088,
+  "uuid": "677a05f5-f896-4ab0-aeeb-c26e15d86fbf",
+  "_spec": "3b410e53de72044d1b3b6f6c3f865ea00bcfca3135c6ba585ff0a760cb0f7116",
+  "_skill": "responding-to-incidents",
+  "_cand": 2,
+  "_trial": 2
+}

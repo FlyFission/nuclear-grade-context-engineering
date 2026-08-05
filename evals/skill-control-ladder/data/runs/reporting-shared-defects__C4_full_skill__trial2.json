@@ -1,0 +1,81 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 13342,
+  "duration_api_ms": 12518,
+  "ttft_ms": 5252,
+  "ttft_stream_ms": 1231,
+  "time_to_request_ms": 62,
+  "time_to_request_from_spawn_ms": 820518,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121383783.8372,
+  "num_turns": 1,
+  "result": "No \u2014 patching your own bot fixed one of four consumers; the other three (sales, onboarding, internal-tools) are still shipping the same leak and don't know it exists. A code comment in your repo won't reach them since they don't read your codebase.\n\nWhat's still needed:\n\n1. **File a shared-defect report** against `prompt-common` itself (not just your bot's repo): the truncation-edge-case bug, that it leaks internal tool/DB-query identifiers to customers, and your fix as the proposed patch or workaround.\n2. **Notify the other three teams directly** \u2014 not just \"eventually they'll pick up the fix.\" Message sales, onboarding, and internal-tools owners with: what happens, when it triggers (long conversations hitting the truncation edge case), and your working fix they can apply immediately while `prompt-common` gets patched upstream.\n3. **Name an owner and open a tracking ticket** for actually merging the fix into `prompt-common` upstream (ideally you, since you already wrote the fix) so it doesn't live only as a local override in your fork.\n4. **Escalate** \u2014 this leaks internal tool identifiers to customers, which is a data-exposure/security issue, not just a formatting bug. It should get flagged to whoever owns security/incident review for `prompt-common`, not handled as a routine PR.\n5. **Log it in your OPEX/deficiency tracking** if you maintain one, so \"shared prompt leaked internal identifiers\" isn't just tribal knowledge in a code comment.\n\nThe local fix and the outward notice are two separate obligations \u2014 you've done the first, not the second yet.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0386134,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 4022,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 842,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4022,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 842,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 4022,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4022
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 702,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000787,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 842,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 4022,
+      "webSearchRequests": 0,
+      "costUSD": 0.037826399999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "2d2a73b3-6900-4e7b-8ac0-ea0b89a9ff88",
+  "_skill": "reporting-shared-defects",
+  "_condition": "with_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "7912033376cc4af1f6ec5fb29b3e2ec73aa9d4ae41ee51ac2c01006fd37cf04d",
+  "_arm": "C4_full_skill",
+  "_reused_from": "evals/skill-benchmark-pilot/data/all-skills-pilot/runs/reporting-shared-defects__with_skill__trial2.json"
+}

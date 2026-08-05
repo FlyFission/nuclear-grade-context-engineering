@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 15535,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0346689,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2588,
+    "cache_read_input_tokens": 23433,
+    "output_tokens": 756,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2588,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 476,
+        "cache_read_input_tokens": 8671,
+        "cache_creation_input_tokens": 197,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 197
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000753,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 756,
+      "cacheReadInputTokens": 23433,
+      "cacheCreationInputTokens": 2588,
+      "webSearchRequests": 0,
+      "costUSD": 0.0339159,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory is empty \u2014 no existing changelog, ADR folder, or known-good-version format to follow. A few things I need before drafting this record, since it's meant to be the thing you roll back to and trust later:\n\n1. **PR #482 details** \u2014 I don't have access to the actual diff/description. Can you paste the PR link or its contents (files changed, config/version pins)?\n2. **Eval suite numbers** \u2014 \"improved over baseline\" needs actual numbers (precision/recall before vs. after, dataset used, sample size) for this to be a real audit trail rather than a vague assertion.\n3. **What else changed** \u2014 was it *only* the embedding model dependency bump, or did other code ship in the same release? A known-good record should scope exactly what's being vouched for.\n4. **Where this record should live** \u2014 since the repo is empty, do you want a markdown file (e.g., `docs/known-good-versions.md` or `CHANGELOG.md`), or is this going into an internal wiki/ticket instead?\n\nOne flag: \"everything looks stable so far\" after one hour in production is a thin basis for calling this **accepted/known-good** \u2014 that status usually implies it's cleared some soak time or monitoring threshold, not just \"no alarms yet.\" I'd suggest we either wait for a defined observation window before marking it accepted, or explicitly caveat the record as \"provisionally accepted, pending N hours/days of production monitoring\" with a follow-up date to confirm. Want me to draft it that way?",
+  "ttft_ms": 1570,
+  "ttft_stream_ms": 865,
+  "time_to_request_ms": 60,
+  "time_to_request_from_spawn_ms": 1251475,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789889898.7117,
+  "type": "result",
+  "duration_ms": 16185,
+  "uuid": "68fcc2be-8ce2-4f03-90e5-4b8de774128b",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C1_generic_nudge",
+  "_trial": 2,
+  "_input_spec_sha256": "13f564a9c4bcdabb0a423cb502716f2481aaa6be65ac7018f17eaaceb72bba36"
+}

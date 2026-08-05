@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 20559,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.041697399999999996,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2591,
+    "cache_read_input_tokens": 14928,
+    "output_tokens": 1398,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2591,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1229,
+        "cache_read_input_tokens": 8648,
+        "cache_creation_input_tokens": 223,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 223
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000691,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1398,
+      "cacheReadInputTokens": 14928,
+      "cacheCreationInputTokens": 2591,
+      "webSearchRequests": 0,
+      "costUSD": 0.0410064,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 this shouldn't ship yet. Two blocking gaps make this unsafe regardless of green CI:\n\n**Why \"green CI\" + \"engineer says ready\" isn't sufficient evidence**\n- CI tests typically validate application logic, not migration behavior on production-scale data, index build times, or lock contention during the migration itself.\n- PG12\u219215 carries real behavioral risk beyond your own changes: query planner differences, default config changes (e.g., `default_statistics_target`, JIT), and extension/operator compatibility \u2014 things a green suite won't surface.\n- The engineer's self-assessment in the PR description is a claim, not verification. Someone other than the author should confirm the actual evidence (query plans before/after, index validation, staging run against a prod-like dataset).\n\n**Hard blockers**\n1. **No rollback plan.** A database migration with index changes on your primary user DB is exactly the irreversible/trust-bearing case where rollback must be pre-built and tested *before* merge \u2014 not improvised if something breaks in production this afternoon.\n2. **No monitoring for this migration.** Without alerts on query latency, error rates, lock waits, or index usage tied to this change, you won't know it's failing until users notice.\n\n**Verdict: BLOCK** \u2014 do not merge/deploy today.\n\nWhat's needed to unblock:\n- Rollback script (or documented down-migration/backup+restore procedure) tested on staging\n- Monitoring/alerts scoped to the affected tables/queries (latency, error rate, lock waits) active before deploy\n- Confirm someone besides the author reviewed actual migration evidence (staging run, plan diffs), not just the PR narrative\n\nOnce those exist, this is a reasonable candidate for a ship-with-named-risk if any residual risk remains (e.g., \"planner behavior on X query is unverified at scale\"), with a named owner and an explicit abort trigger for the deploy window.",
+  "ttft_ms": 2926,
+  "ttft_stream_ms": 1777,
+  "time_to_request_ms": 69,
+  "time_to_request_from_spawn_ms": 484435,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789122187.8743,
+  "type": "result",
+  "duration_ms": 21061,
+  "uuid": "bb7adf1b-cd77-4b89-a1d8-d33bda9bc18a",
+  "_skill": "checking-release-readiness",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "ce61a7db835d338265dde44d389788f65737eaf670032e880cd4ac5a11c3f07d"
+}

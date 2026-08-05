@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 33688,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0642121,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 3138,
+    "cache_read_input_tokens": 24067,
+    "output_tokens": 2494,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3138,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1884,
+        "cache_read_input_tokens": 9189,
+        "cache_creation_input_tokens": 229,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 229
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 656,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000736,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2494,
+      "cacheReadInputTokens": 24067,
+      "cacheCreationInputTokens": 3138,
+      "webSearchRequests": 0,
+      "costUSD": 0.06347610000000001,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A one-line diff size is the wrong signal here \u2014 what matters is that you're changing the decision-maker behind autonomous financial approvals, and \"cost review\" answers a business question, not a safety one. A skeptical reviewer six months from now won't be able to tell from that sentence whether refund decisions got worse, more exploitable, or just cheaper.\n\n**This should go through Standard mode, not Quick**, given the blast radius (real money, autonomous, customer-facing). Quick's proof.md alone can't carry evidence of behavioral parity between two different models on a judgment task \u2014 that needs its own trace back to actual test results.\n\nWhat each file needs to actually contain:\n\n- **basis.md** \u2014 Why Provider B, concretely: the cost numbers, but also what \"cost review\" evaluated vs. didn't (did it include a behavior/accuracy check, or just $/token?).\n- **risk.md** \u2014 What can go wrong when the decision-maker changes: false-approve rate (money out the door), false-deny rate (customer harm), susceptibility to prompt injection/jailbreak in refund requests, edge cases (partial refunds, policy exceptions, ambiguous claims), and latency/availability differences that could affect SLAs.\n- **plan.md** \u2014 How the swap was rolled out: shadow mode (new model scores real requests without acting, compared against old model/ground truth) before cutover, staged rollout %, or hard cutover with rollback trigger.\n- **trace.md** \u2014 Each risk item linked to the specific eval or test that addresses it. This is the part that turns \"we swapped models\" into \"we checked whether it mattered.\"\n- **verification.md** \u2014 The actual evidence: results from running both models against a fixed set of refund cases (ideally including known edge cases and adversarial prompts), with approve/deny agreement rate and any divergences reviewed by a human. State pass/fail/gap per risk item \u2014 don't just say \"looked fine.\"\n- **ship.md** \u2014 Sign-off, monitoring plan post-swap (e.g., watching approval rate and $ volume for anomalies), and rollback procedure if metrics drift.\n\nThe one thing I'd push back hardest on: shipping without any behavioral comparison between the two models on actual refund decisions. If that data doesn't exist yet, that's the gap to close before merging, not after.\n\nWant me to scaffold this out as an actual change record (once there's a repo/tooling to work in \u2014 this directory is currently empty)?",
+  "ttft_ms": 5664,
+  "ttft_stream_ms": 834,
+  "time_to_request_ms": 132,
+  "time_to_request_from_spawn_ms": 640928,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025519542.8635,
+  "type": "result",
+  "duration_ms": 34904,
+  "uuid": "bfb4a4bd-7d42-4454-91ed-18ec37fd3eb5",
+  "_skill": "creating-change-records",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "ff5de9f7a5ee523cf4a3a91878157a2f11385b1b7f347001aeae3ba3ca88356c"
+}

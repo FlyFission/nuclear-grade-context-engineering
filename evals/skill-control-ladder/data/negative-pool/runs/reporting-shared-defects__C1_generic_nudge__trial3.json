@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 10250,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.027926100000000002,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2548,
+    "cache_read_input_tokens": 23237,
+    "output_tokens": 330,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2548,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 55,
+        "cache_read_input_tokens": 8563,
+        "cache_creation_input_tokens": 265,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 265
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 599,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006990000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 330,
+      "cacheReadInputTokens": 23237,
+      "cacheCreationInputTokens": 2548,
+      "webSearchRequests": 0,
+      "costUSD": 0.027227099999999997,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't see a `utils.py` or `format_date` function anywhere in this repo \u2014 could you double check you're pointing me at the right directory/branch, or paste the function here?",
+  "ttft_ms": 1620,
+  "ttft_stream_ms": 980,
+  "time_to_request_ms": 29,
+  "time_to_request_from_spawn_ms": 1660489,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594654910.8628,
+  "type": "result",
+  "duration_ms": 7746,
+  "uuid": "aac1b397-6a38-4fcb-a770-9df94fd944f1",
+  "_skill": "reporting-shared-defects",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "1efd751f739d1df332945a5b038b613cd2cf8ea2ea4b26703306a36d86bb9040"
+}

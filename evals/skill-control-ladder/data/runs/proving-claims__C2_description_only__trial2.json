@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 28135,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.05266180000000001,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2715,
+    "cache_read_input_tokens": 14626,
+    "output_tokens": 2085,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2715,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1490,
+        "cache_read_input_tokens": 8346,
+        "cache_creation_input_tokens": 649,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 649
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 617,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000697,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2085,
+      "cacheReadInputTokens": 14626,
+      "cacheCreationInputTokens": 2715,
+      "webSearchRequests": 0,
+      "costUSD": 0.051964800000000005,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before writing this up, one flag: with only \"I ran the tests myself\" and \"I reviewed my own diff,\" the evidence doesn't actually support the claim as worded. \"Safe and fully backward compatible\" is an unbounded, strong claim for payment code \u2014 and both pieces of evidence come from you alone, with no independent verification. Here's an honest trace, and I'd recommend narrowing the claim rather than dressing up thin evidence.\n\n## Claim \u2192 Evidence Trace\n\n| Claim | Evidence | Status | Gap |\n|---|---|---|---|\n| Existing behavior is unbroken for currently-tested paths | Full existing test suite run, all green | Supported | Only as strong as the suite's coverage \u2014 doesn't establish coverage extends to the refactored paths |\n| No regressions were introduced by the diff | Self-review of the diff, line-by-line | Weak / self-reported | Author review isn't independent verification; self-review reliably misses assumptions the author already holds |\n| \"Safe\" | \u2014 | Not supported | No error-path, failure-mode, or rollback testing mentioned |\n| \"Fully backward compatible\" | \u2014 | Not supported | No definition given (API contract? DB schema? webhook payloads? idempotency keys?) and no evidence checking any of those explicitly |\n| New/changed logic is correct | Existing tests (not new ones) | Gap | If the refactor changed logic, existing tests may not exercise new code paths at all |\n\n## What's missing to support the claim as written\n- **New tests for the refactored paths** \u2014 not just old tests passing, but tests that specifically exercise what changed.\n- **An independent reviewer** \u2014 someone other than you confirming the diff, ideally someone who knows the payment module well.\n- **A concrete definition of \"backward compatible\"** \u2014 e.g., same public API signatures, same DB schema/migrations, same external webhook/callback formats, same idempotency behavior.\n- **Evidence for payment-specific risk areas**: currency/rounding, idempotency, retries, partial failures, concurrency \u2014 these are exactly where refactors silently break behavior in a way unit tests miss.\n\n## Suggested PR wording (matches actual evidence)\n\n> **Evidence**\n> - Full existing test suite passes (all green) after the refactor \u2014 [link to CI run, not just local]\n> - Diff self-reviewed line-by-line\n>\n> **Not yet verified**\n> - No new tests were added specifically targeting the refactored code paths\n> - No independent code review has occurred yet\n> - Backward compatibility has not been explicitly checked against [API contracts / DB schema / webhook payloads \u2014 pick what applies]\n>\n> Requesting a reviewer to focus on [list refactored files/paths] given the above gaps before we call this backward-compatible.\n\nThis is more credible to reviewers than an unqualified \"safe and fully backward compatible\" claim, and it tells them exactly where to focus. Want me to tighten this into your actual PR template, or do you have a CI link / list of specific files changed I should fold in?",
+  "ttft_ms": 6773,
+  "ttft_stream_ms": 1036,
+  "time_to_request_ms": 54,
+  "time_to_request_from_spawn_ms": 893603,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025772162.2754,
+  "type": "result",
+  "duration_ms": 29137,
+  "uuid": "99cc1941-7a9d-4b03-afeb-7cbb0a87e601",
+  "_skill": "proving-claims",
+  "_arm": "C2_description_only",
+  "_trial": 2,
+  "_input_spec_sha256": "a83bef5b5d66ef487c55ed91b0d6bc52cc72a4f902d2b2a9c1cf2f2bf967da32"
+}

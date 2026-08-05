@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 7752,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.020294100000000002,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2113,
+    "cache_read_input_tokens": 14477,
+    "output_tokens": 173,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2113,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 52,
+        "cache_read_input_tokens": 8206,
+        "cache_creation_input_tokens": 178,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 178
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 173,
+      "cacheReadInputTokens": 14477,
+      "cacheCreationInputTokens": 2113,
+      "webSearchRequests": 0,
+      "costUSD": 0.019628100000000002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    },
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 586,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000666,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No remaining references to `calcTax` anywhere in the repo \u2014 you're clear to commit.",
+  "ttft_ms": 1143,
+  "ttft_stream_ms": 762,
+  "time_to_request_ms": 39,
+  "time_to_request_from_spawn_ms": 1696182,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594690660.122,
+  "type": "result",
+  "duration_ms": 6414,
+  "uuid": "3945c2f9-a8aa-4777-beec-871013149f03",
+  "_skill": "reviewing-code-quality",
+  "_arm": "C0_bare",
+  "_trial": 3,
+  "_input_spec_sha256": "88e653c20e5a3630672d3d4648dd91119c71a323862b89d25f59aa2e7a457882"
+}

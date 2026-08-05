@@ -1,0 +1,94 @@
+{
+  "is_error": false,
+  "duration_api_ms": 19598,
+  "num_turns": 7,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.05164719999999999,
+  "usage": {
+    "input_tokens": 12,
+    "cache_creation_input_tokens": 3467,
+    "cache_read_input_tokens": 51444,
+    "output_tokens": 979,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3467,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 108,
+        "cache_read_input_tokens": 9492,
+        "cache_creation_input_tokens": 255,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 255
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 581,
+      "outputTokens": 22,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000691,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 12,
+      "outputTokens": 979,
+      "cacheReadInputTokens": 51444,
+      "cacheCreationInputTokens": 3467,
+      "webSearchRequests": 0,
+      "costUSD": 0.05095619999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [
+    {
+      "tool_name": "Grep",
+      "tool_use_id": "toolu_014TYSwpwNaoyznBgAuXgHfx",
+      "tool_input": {
+        "pattern": "retryCount",
+        "path": "/",
+        "output_mode": "files_with_matches"
+      }
+    }
+  ],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory appears to be empty \u2014 there's no PKT-118 packet, no login rate limiter files, and no `retryCount` variable anywhere I can find.\n\nCould you confirm the path to the diff/files you have open? It's possible I'm pointed at the wrong directory, or the packet hasn't been created/saved yet on disk.",
+  "ttft_ms": 5026,
+  "ttft_stream_ms": 1872,
+  "time_to_request_ms": 56,
+  "time_to_request_from_spawn_ms": 1405694,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594399965.7495,
+  "type": "result",
+  "duration_ms": 19539,
+  "uuid": "eec34844-1a88-4415-acdf-607343ed5861",
+  "_skill": "closing-stale-packets",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "1e0115e544c027b72713868ca14b8967dc0abcac641866f1a3cab3561798dad3"
+}

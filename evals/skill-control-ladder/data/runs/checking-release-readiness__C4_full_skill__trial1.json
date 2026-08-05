@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 18129,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.05284230000000001,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 4824,
+    "cache_read_input_tokens": 17051,
+    "output_tokens": 1205,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4824,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 976,
+        "cache_read_input_tokens": 10771,
+        "cache_creation_input_tokens": 333,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 333
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000696,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1205,
+      "cacheReadInputTokens": 17051,
+      "cacheCreationInputTokens": 4824,
+      "webSearchRequests": 0,
+      "costUSD": 0.05214630000000001,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 this should be **blocked**, not shipped this afternoon. Green CI and the author's own \"ready to go\" note aren't release-readiness evidence; they don't cover leftover risk, rollback, or monitoring, and a decision read off the author's own write-up is downstream of the same mistake it's supposed to check.\n\n**Why this specific change is high-stakes:** primary user database, major version jump (12\u219215), index changes. That combination is trust-bearing and low-reversibility \u2014 if something goes wrong post-deploy, you're not looking at a code revert, you're looking at a database in a partially-migrated or degraded state.\n\n**Two hard blockers:**\n\n1. **No rollback/restore path.** For a schema/index migration on the primary user DB, \"roll back\" isn't a `git revert` \u2014 you need a tested down-migration, or a verified backup/restore point, or both, plus a decision on what happens to writes that occurred after the migration if you have to roll back. Right now if this migration causes a problem in prod, there is no stated way to recover. That alone is enough to block.\n\n2. **No monitoring for the migration itself.** Green CI tells you the migration *ran* in a test environment. It doesn't tell you query latency didn't regress, index bloat/lock contention didn't spike, connection pool behavior under PG15 is stable, or replication (if any) caught up. Without alerts scoped to this change, you'd find out about a problem from user complaints, not from a dashboard.\n\n**What CI green + author sign-off actually gives you:** evidence that the migration executes without error and existing tests pass. It does not answer \"is it safe to run against production data, and can we recover if not\" \u2014 that's the actual decision question, and it's currently unanswered.\n\n**Before shipping, you need:**\n- A tested rollback/restore path (down-migration script, or a verified prod backup + documented restore procedure with an RTO you're willing to accept)\n- Monitoring/alerts for the specific risk surface: query latency on the affected tables/indexes, error rates, connection/lock metrics \u2014 active *before* deploy, not added after\n- A named owner for the deploy window who can pull the trigger on rollback, and a defined abort trigger (e.g., \"p95 latency on X query >N ms for 5 min\" or \"error rate spike on Y endpoint\")\n- Someone other than the migration author to independently confirm the rollback path actually works (test it, don't just write it)\n\nIf rollback and monitoring can be stood up today, this could still go out this afternoon. If not, defer to a window where they can be \u2014 deploying a major-version DB migration with no way back and no eyes on it is the kind of gap that turns into a multi-hour incident rather than a quick fix.\n\nWant me to help draft the rollback plan or the specific alerts/thresholds for this migration?",
+  "ttft_ms": 2728,
+  "ttft_stream_ms": 908,
+  "time_to_request_ms": 90,
+  "time_to_request_from_spawn_ms": 478802,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025357424.2815,
+  "type": "result",
+  "duration_ms": 18575,
+  "uuid": "2656e7f6-b815-416e-b36e-a2e33dfb32ff",
+  "_skill": "checking-release-readiness",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "bae7b4b4280755dae9e6fb19a3751e253b9934cbcebc15f91e20e63979e651e4"
+}

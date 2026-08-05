@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 26158,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.049275299999999994,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2356,
+    "cache_read_input_tokens": 14721,
+    "output_tokens": 1997,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2356,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1857,
+        "cache_read_input_tokens": 8441,
+        "cache_creation_input_tokens": 195,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 195
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 676,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007559999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1997,
+      "cacheReadInputTokens": 14721,
+      "cacheCreationInputTokens": 2356,
+      "webSearchRequests": 0,
+      "costUSD": 0.0485193,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Since this working directory doesn't contain the actual billing repo, I'll write the handoff note as text you can drop into a doc, Slack, or a `HANDOFF.md` in the `oauth-migration` branch \u2014 let me know if you want me to create that file. Fill in the bracketed specifics (PR links, service names, contacts) since I don't have access to those from here.\n\n---\n\n## Handoff: OAuth2 Migration \u2014 Billing Service Auth\n\n**Owner (out):** Benjamin Huffer (benjaminhuffer1@gmail.com) \u2014 back **2026-08-02**\n**Owner (in):** [teammate name] \u2014 first time on this project, no prior context\n**Branch:** `oauth-migration`\n**Status as of:** 2026-07-26 (day before handoff)\n\n### 1. What's done\n- Auth middleware rewritten for OAuth2 \u2014 merged to `oauth-migration`.\n- Token-refresh logic rewritten for OAuth2 \u2014 merged to `oauth-migration`.\n- Unit tests passing for both of the above.\n- **Not yet done:** integration/end-to-end testing against downstream services, since they haven't been migrated yet.\n\n### 2. What's NOT done (remaining scope)\n- [ ] Migrate the 3 downstream services still calling the old API-key auth endpoints:\n  1. [service name] \u2014 [status/notes]\n  2. [service name] \u2014 [status/notes]\n  3. [service name] \u2014 [status/notes]\n- [ ] Update production config to point at the new OAuth2 flow (not started \u2014 currently prod still runs old auth entirely).\n- [ ] Rotate/retire the old API keys (not started \u2014 **do this last, see constraint below**).\n\n### 3. Critical constraint \u2014 do not break this\n**The old API keys must stay active until all 3 downstream services are migrated to OAuth2.** If the keys are rotated or disabled before that, those services' requests will start failing with 401s in production. There is no flag or fallback protecting against this \u2014 it's a hard ordering dependency: downstream migration \u2192 then key rotation, never the reverse.\n\n### 4. Authority limits \u2014 check before acting\nGiven you're new to this project, please **hold off and check with me (or [backup contact/on-call/lead]) before**:\n- Touching production config for auth.\n- Rotating or disabling any old API keys.\n- Merging anything into `main`/deploying \u2014 `oauth-migration` has not been deployed anywhere yet, only unit-tested locally/CI.\n\nYou're free to continue migrating the downstream services and iterating on the branch without checking in \u2014 that's the expected next step.\n\n### 5. Where to look / open evidence\n- Branch: `oauth-migration` \u2014 [link]\n- PRs already merged (middleware + token refresh): [links]\n- Downstream services' current auth calls \u2014 search for calls to the old API-key endpoint(s): [old endpoint name/path]\n- No tickets/tracking issue exists yet for the 3 downstream migrations \u2014 [create one / link if it exists]\n\n### 6. If something breaks while I'm out\n- I'm unreachable during the trip (back 2026-08-02). Escalate to [backup contact / on-call].\n- If old keys get rotated by accident or downstream 401s appear, the immediate fix is reverting the key rotation, not migrating the downstream service under pressure.\n\n---\n\nWant me to save this as a file (and where), or adjust anything \u2014 e.g., do you have the downstream service names and a backup contact handy so I can fill those in?",
+  "ttft_ms": 1431,
+  "ttft_stream_ms": 729,
+  "time_to_request_ms": 58,
+  "time_to_request_from_spawn_ms": 784448,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025663120.4722,
+  "type": "result",
+  "duration_ms": 26765,
+  "uuid": "4d04c714-0eaa-49eb-87a8-0582a1a97afe",
+  "_skill": "handing-off-work",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "069a3cad5969cd02cf089969cc5ecebaf6f957303631046dcbc3d623eb2430cc"
+}

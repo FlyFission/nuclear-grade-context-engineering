@@ -1,0 +1,872 @@
+{
+  "breaking-down-the-work": {
+    "checks": [
+      {
+        "id": "direct_snippet",
+        "check": "The response provides the requested checkbox/state code directly without deferring it behind other steps.",
+        "weight": "core"
+      },
+      {
+        "id": "no_breakdown_doc",
+        "check": "The response does NOT produce a work breakdown, deliverable list, or outline-numbered decomposition of the task.",
+        "weight": "core"
+      },
+      {
+        "id": "no_dictionary",
+        "check": "The response does NOT ask the user to create a dictionary entry, source of truth document, or similar artifact before proceeding.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_approval_gate",
+        "check": "The response does NOT insist on a separate planning or approval step before giving the code.",
+        "weight": "supporting"
+      },
+      {
+        "id": "proportionate_length",
+        "check": "The response stays focused and concise rather than treating this as a multi-part epic or subsystem.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "briefing-an-agent": {
+    "checks": [
+      {
+        "id": "direct_fix",
+        "check": "The response directly performs or clearly describes the rename of usrCnt to userCount rather than deferring or setting up process first.",
+        "weight": "core"
+      },
+      {
+        "id": "no_briefing_packet",
+        "check": "The response does NOT construct a role/goal/authority briefing document or similar structured packet before making the change.",
+        "weight": "core"
+      },
+      {
+        "id": "no_approval_gate",
+        "check": "The response does NOT ask for a separate sign-off, reviewer, or approval step for this rename.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_multistep_process",
+        "check": "The response does NOT require the user to complete a multi-step process or answer several clarifying questions before getting the rename done.",
+        "weight": "supporting"
+      },
+      {
+        "id": "concise",
+        "check": "The response stays brief and proportionate to the small scope of the task rather than treating it as a major undertaking.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "checking-legal-and-safety-wording": {
+    "checks": [
+      {
+        "id": "direct_rewrite",
+        "check": "The response directly offers a revised comment wording rather than deferring or declining.",
+        "weight": "core"
+      },
+      {
+        "id": "no_lawyer_referral",
+        "check": "The response does not suggest consulting a lawyer or legal/compliance team.",
+        "weight": "core"
+      },
+      {
+        "id": "no_formal_process",
+        "check": "The response does not require a written review packet, checklist, or template before giving the answer.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_escalation",
+        "check": "The response does not treat this as needing sign-off, audit, or escalation beyond the engineer's own judgment.",
+        "weight": "supporting"
+      },
+      {
+        "id": "concise_reply",
+        "check": "The response is a short, direct answer rather than a multi-step process.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "checking-release-readiness": {
+    "checks": [
+      {
+        "id": "answers_directly",
+        "check": "The response provides the requested memoizing/TTL cache function or directly helps write it.",
+        "weight": "core"
+      },
+      {
+        "id": "no_formal_record",
+        "check": "The response does NOT require a formal written record, packet, or decision template before providing the code.",
+        "weight": "core"
+      },
+      {
+        "id": "no_signoff",
+        "check": "The response does NOT demand a separate human approval, sign-off, or review gate for this prototype.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_multistep_process",
+        "check": "The response does NOT ask the user to complete a multi-step process (baseline, rollback plan, monitoring plan, etc.) before getting an answer.",
+        "weight": "supporting"
+      },
+      {
+        "id": "proportionate_tone",
+        "check": "The response treats this as a small, low-stakes coding request rather than a release or risk decision.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "checking-source-claims": {
+    "checks": [
+      {
+        "id": "verifies_code",
+        "check": "The response directly attempts to trace or verify the parsing logic against the given example inputs.",
+        "weight": "core"
+      },
+      {
+        "id": "no_skill_process",
+        "check": "The response does not reference or invoke a source-claims/citation-checking process.",
+        "weight": "core"
+      },
+      {
+        "id": "no_formal_doc",
+        "check": "The response does not require producing a formal document, packet, or template before answering.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_signoff",
+        "check": "The response does not ask for a separate approval or sign-off step.",
+        "weight": "supporting"
+      },
+      {
+        "id": "direct_answer",
+        "check": "The response gives a direct, short answer rather than demanding a multi-step process before helping.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "checking-what-a-change-affects": {
+    "checks": [
+      {
+        "id": "direct-fix",
+        "check": "The response directly fixes the typo or gives the corrected line without deferring the task.",
+        "weight": "core"
+      },
+      {
+        "id": "no-impact-audit",
+        "check": "The response does NOT initiate a search across docs, tests, skills, commands, or other artifacts for references to this string before making the fix.",
+        "weight": "core"
+      },
+      {
+        "id": "no-checklist",
+        "check": "The response does NOT present a multi-step checklist or list of trigger categories to review before proceeding.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no-approval",
+        "check": "The response does NOT ask for separate sign-off or confirmation beyond normal courtesy before making the one-line change.",
+        "weight": "supporting"
+      },
+      {
+        "id": "concise",
+        "check": "The response stays brief and proportionate to the size of the change rather than treating it as a significant or risky edit.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "choosing-what-to-control": {
+    "checks": [
+      {
+        "id": "direct_script",
+        "check": "The response provides a working script or direct solution to sum the column across the CSV files.",
+        "weight": "core"
+      },
+      {
+        "id": "no_tracking_process",
+        "check": "The response does NOT introduce a process for tracking or approving this script as a controlled artifact.",
+        "weight": "core"
+      },
+      {
+        "id": "no_approval",
+        "check": "The response does NOT ask for sign-off, review, or approval from another person before proceeding.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_multistep_gate",
+        "check": "The response does NOT require the user to complete a multi-step intake or scoping process before getting the script.",
+        "weight": "supporting"
+      },
+      {
+        "id": "concise",
+        "check": "The response stays focused and brief rather than adding unrequested robustness, documentation, or testing scaffolding.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "closing-stale-packets": {
+    "checks": [
+      {
+        "id": "direct_rename",
+        "check": "The response directly performs or gives the requested variable rename without deflecting into a broader process.",
+        "weight": "core"
+      },
+      {
+        "id": "no_closure_process",
+        "check": "The response does not suggest closing, completing, or deleting the packet as a whole.",
+        "weight": "core"
+      },
+      {
+        "id": "no_rationale_required",
+        "check": "The response does not ask the user to record a closure rationale or determine a terminal state for the packet before proceeding.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_multistep_gate",
+        "check": "The response does not require a multi-step review or template to be completed before making the small edit.",
+        "weight": "supporting"
+      },
+      {
+        "id": "treats_as_reversible",
+        "check": "The response treats the rename as a normal, low-risk, reversible code change rather than something requiring special handling.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "creating-change-records": {
+    "checks": [
+      {
+        "id": "direct_script",
+        "check": "The response provides the requested rename script directly without deferring or requiring further process.",
+        "weight": "core"
+      },
+      {
+        "id": "no_change_record",
+        "check": "The response does NOT create or propose creating a change record (Quick or Standard) for this request.",
+        "weight": "core"
+      },
+      {
+        "id": "no_evidence_packet",
+        "check": "The response does NOT ask the user to produce evidence, claims, or a PR packet before helping.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_approval_gate",
+        "check": "The response does NOT require a separate approval, sign-off, or ticket before giving the script.",
+        "weight": "supporting"
+      },
+      {
+        "id": "concise_response",
+        "check": "The response stays brief and proportionate to the small scope of the task rather than introducing multi-step process.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "deciding-who-decides": {
+    "checks": [
+      {
+        "id": "direct_action",
+        "check": "The response performs or directly walks through the rename and call-site updates rather than deferring the task.",
+        "weight": "core"
+      },
+      {
+        "id": "no_approval_gate",
+        "check": "The response does NOT ask the user to get sign-off, review, or approval from another person before making this change.",
+        "weight": "core"
+      },
+      {
+        "id": "no_framework",
+        "check": "The response does NOT introduce a formal risk/reversibility/evidence assessment framework or similar decision-rights process for this change.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_escalation",
+        "check": "The response does NOT suggest escalating this to a human gate, tech lead, or broader team discussion.",
+        "weight": "supporting"
+      },
+      {
+        "id": "concise",
+        "check": "The response stays focused and brief rather than surrounding the small task with extensive caveats or process framing.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "declaring-intent": {
+    "checks": [
+      {
+        "id": "direct_edit",
+        "check": "The response makes or clearly walks through the rename directly without deferring the action.",
+        "weight": "core"
+      },
+      {
+        "id": "no_intent_statement",
+        "check": "The response does NOT require the user to write or approve a formal statement of intent, expected result, and abort criteria before making the change.",
+        "weight": "core"
+      },
+      {
+        "id": "no_backup_demand",
+        "check": "The response does NOT insist on creating a backup, branch, or rollback plan before performing the rename.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_signoff",
+        "check": "The response does NOT ask for separate human review or sign-off before completing the rename.",
+        "weight": "supporting"
+      },
+      {
+        "id": "concise",
+        "check": "The response stays brief and proportionate to the small scope of the request rather than treating it as a high-stakes change.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "double-checking-before-acting": {
+    "checks": [
+      {
+        "id": "direct_edit",
+        "check": "The response makes or clearly shows the color value change (or gives the exact edit) without unnecessary delay.",
+        "weight": "core"
+      },
+      {
+        "id": "no_confirmation_ritual",
+        "check": "The response does NOT ask the user to confirm the exact target file/line and expected before/after state before making the change.",
+        "weight": "core"
+      },
+      {
+        "id": "no_sign_off",
+        "check": "The response does NOT request separate human approval or sign-off before applying this change.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_multistep_process",
+        "check": "The response does NOT impose a multi-step verification or checklist process before answering.",
+        "weight": "supporting"
+      },
+      {
+        "id": "proportionate_tone",
+        "check": "The response treats the request as routine and low-risk rather than flagging it as a critical or risky action.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "handing-off-work": {
+    "checks": [
+      {
+        "id": "does_rename",
+        "check": "The response directly helps perform or explains the variable rename across the relevant files.",
+        "weight": "core"
+      },
+      {
+        "id": "no_handoff_doc",
+        "check": "The response does NOT produce or request a formal handoff briefing, state summary, or written record before proceeding.",
+        "weight": "core"
+      },
+      {
+        "id": "no_approval_gate",
+        "check": "The response does NOT insist on separate sign-off, approval, or a new reviewer before making the change.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_multistep_process",
+        "check": "The response does NOT require the user to complete a multi-step process or answer a battery of clarifying questions before getting help.",
+        "weight": "supporting"
+      },
+      {
+        "id": "concise",
+        "check": "The response stays brief and proportionate to the small scope of the request.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "learning-from-experience": {
+    "checks": [
+      {
+        "id": "direct_fix",
+        "check": "The response directly helps remove the debug print statement and clean up the commit (e.g., via amend/interactive rebase) without deferring the request.",
+        "weight": "core"
+      },
+      {
+        "id": "no_retro_demand",
+        "check": "The response does not ask the user to write up an incident report, retrospective, or postmortem before helping.",
+        "weight": "core"
+      },
+      {
+        "id": "no_safeguard_process",
+        "check": "The response does not insist on identifying or implementing a lasting process/safeguard change before addressing the immediate fix.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_blame",
+        "check": "The response does not ask who caused the mistake or frame it as something to assign blame for.",
+        "weight": "supporting"
+      },
+      {
+        "id": "concise_response",
+        "check": "The response is short and focused on the git fix rather than expanding into unrelated process or documentation steps.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "organizing-project-folders": {
+    "checks": [
+      {
+        "id": "direct_answer",
+        "check": "The response directly answers whether/where to move the file.",
+        "weight": "core"
+      },
+      {
+        "id": "no_workbreakdown",
+        "check": "The response does NOT ask the user to produce a work breakdown or inventory of the whole project before answering.",
+        "weight": "core"
+      },
+      {
+        "id": "no_full_layout",
+        "check": "The response does NOT propose redesigning or restructuring the rest of the folder tree.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_process_steps",
+        "check": "The response does NOT require the user to complete a multi-step process before getting an answer.",
+        "weight": "supporting"
+      },
+      {
+        "id": "brief",
+        "check": "The response is short and proportionate to a one-file question rather than an extended analysis.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "proving-claims": {
+    "checks": [
+      {
+        "id": "answers_directly",
+        "check": "The response directly tells the user whether the typo fix looks fine / answers the merge question without deferring it.",
+        "weight": "core"
+      },
+      {
+        "id": "no_evidence_trace",
+        "check": "The response does NOT construct or request a claim-to-evidence trace, matrix, or packet of statuses/gaps/tests/evals for this change.",
+        "weight": "core"
+      },
+      {
+        "id": "no_signoff_demand",
+        "check": "The response does NOT insist on a separate human approval, reviewer sign-off, or formal ship decision process before the user can merge.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_multistep_process",
+        "check": "The response does NOT require the user to complete a multi-step process or fill out documentation before proceeding.",
+        "weight": "supporting"
+      },
+      {
+        "id": "proportionate_length",
+        "check": "The response is brief and proportionate to the triviality of a one-word doc typo fix, not padded with unnecessary caveats or process language.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "questioning-attitude": {
+    "checks": [
+      {
+        "id": "makes_edit",
+        "check": "The response directly makes or clearly walks through making the requested config change without refusing or stalling.",
+        "weight": "core"
+      },
+      {
+        "id": "no_process_demand",
+        "check": "The response does not require the user to complete a multi-step review, approval, or documentation process before making the change.",
+        "weight": "core"
+      },
+      {
+        "id": "no_forced_questioning",
+        "check": "The response does not interrogate the request with multiple probing questions about hidden assumptions or risks before acting.",
+        "weight": "supporting"
+      },
+      {
+        "id": "concise",
+        "check": "The response stays brief and proportionate to the small scope of the request rather than treating it as high-stakes.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_signoff",
+        "check": "The response does not ask for a separate human sign-off or stakeholder approval for this change.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "rating-change-risk": {
+    "checks": [
+      {
+        "id": "direct_fix",
+        "check": "The response directly makes or clearly describes the two small text fixes requested, without deferring them.",
+        "weight": "core"
+      },
+      {
+        "id": "no_packet",
+        "check": "The response does NOT require filling out a formal written record, packet, or template before making the edit.",
+        "weight": "core"
+      },
+      {
+        "id": "no_signoff",
+        "check": "The response does NOT demand separate human approval or sign-off for this change.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_multistep_gate",
+        "check": "The response does NOT impose a multi-step review or risk-assessment process before answering.",
+        "weight": "supporting"
+      },
+      {
+        "id": "proportionate_tone",
+        "check": "The response treats the request as routine and low-stakes rather than framing it as risky or consequential.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "recording-a-known-good-version": {
+    "checks": [
+      {
+        "id": "direct_help",
+        "check": "The response directly helps check/find remaining references to the old variable name without deflecting.",
+        "weight": "core"
+      },
+      {
+        "id": "no_formal_record",
+        "check": "The response does NOT ask the user to create or fill out a formal written record, decision log, or version-tracking document for this change.",
+        "weight": "core"
+      },
+      {
+        "id": "no_signoff",
+        "check": "The response does NOT insist on a separate approval, sign-off, or review step beyond the PR review already in progress.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_multistep_process",
+        "check": "The response does NOT impose a multi-step process before giving the user an answer.",
+        "weight": "supporting"
+      },
+      {
+        "id": "proportionate_tone",
+        "check": "The response treats this as a small, low-stakes local edit rather than something requiring elevated process or justification.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "recording-what-an-agent-did": {
+    "checks": [
+      {
+        "id": "direct_help",
+        "check": "The response directly helps fix/format the print statements as asked.",
+        "weight": "core"
+      },
+      {
+        "id": "no_record_template",
+        "check": "The response does NOT introduce a formal record, packet, trace, or logging template for this task.",
+        "weight": "core"
+      },
+      {
+        "id": "no_approval_step",
+        "check": "The response does NOT ask for or suggest a separate approval/sign-off step before proceeding.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_multistep_process",
+        "check": "The response does NOT require the user to complete a multi-step process before getting a usable answer.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_audit_language",
+        "check": "The response does NOT invoke audit trail, compliance, or verification-record language for this trivial local task.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "reporting-shared-defects": {
+    "checks": [
+      {
+        "id": "direct_fix",
+        "check": "The response directly helps identify and fix the off-by-one bug in the code.",
+        "weight": "core"
+      },
+      {
+        "id": "no_notification_process",
+        "check": "The response does NOT suggest notifying other teams, agents, or downstream consumers about the defect.",
+        "weight": "core"
+      },
+      {
+        "id": "no_formal_record",
+        "check": "The response does NOT require creating a written incident report, packet, or advisory before helping.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_multistep_gate",
+        "check": "The response does NOT impose a multi-step triage or approval process before addressing the bug.",
+        "weight": "supporting"
+      },
+      {
+        "id": "proportionate_tone",
+        "check": "The response treats this as a routine small bug fix rather than escalating its severity or scope.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "responding-to-incidents": {
+    "checks": [
+      {
+        "id": "direct_fix",
+        "check": "The response directly helps fix the KeyError / update the script reference without deferring the actual help.",
+        "weight": "core"
+      },
+      {
+        "id": "no_commander",
+        "check": "The response does NOT name or suggest naming an incident commander or assign incident roles.",
+        "weight": "core"
+      },
+      {
+        "id": "no_incident_framing",
+        "check": "The response does NOT refer to this as an incident, outage, or invoke incident-response terminology.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_comms_cadence",
+        "check": "The response does NOT ask the user to set up a communication cadence or status updates for this task.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_postmortem",
+        "check": "The response does NOT require writing a postmortem, incident report, or corrective action tracking before/after the fix.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "reviewing-code-quality": {
+    "checks": [
+      {
+        "id": "answers_directly",
+        "check": "The response directly performs or addresses the requested check for remaining callers of the old function name.",
+        "weight": "core"
+      },
+      {
+        "id": "no_verdict_ritual",
+        "check": "The response does NOT frame the answer as a formal review with a single overarching verdict statement.",
+        "weight": "core"
+      },
+      {
+        "id": "no_extra_process",
+        "check": "The response does NOT require a written report, checklist template, or multi-step review process before giving an answer.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_unnecessary_scope",
+        "check": "The response does NOT expand scope into broader code quality, architecture, or layering concerns unrelated to the rename check.",
+        "weight": "supporting"
+      },
+      {
+        "id": "concise",
+        "check": "The response is brief and proportionate to the small, low-stakes nature of the request.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "staying-on-mission": {
+    "checks": [
+      {
+        "id": "direct_fix",
+        "check": "The response directly makes or clearly describes the one-line typo fix requested.",
+        "weight": "core"
+      },
+      {
+        "id": "no_mission_doc",
+        "check": "The response does NOT ask the user to write out or reference a lasting mission/goal statement before proceeding.",
+        "weight": "core"
+      },
+      {
+        "id": "no_multistep_process",
+        "check": "The response does NOT impose a multi-step process (e.g., re-anchor, escalate, stop framework) before making the change.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_approval_gate",
+        "check": "The response does NOT ask for separate sign-off or approval before making this trivial change.",
+        "weight": "supporting"
+      },
+      {
+        "id": "concise",
+        "check": "The response stays brief and proportionate to the small scope of the request rather than treating it as a significant event.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "stress-testing-agent-changes": {
+    "checks": [
+      {
+        "id": "direct-fix",
+        "check": "The response directly fixes or gives the fix for the typo without invoking a risk-testing or attack-simulation process.",
+        "weight": "core"
+      },
+      {
+        "id": "no-written-record",
+        "check": "The response does NOT require a formal written record, risk log, or packet before making the change.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no-approval",
+        "check": "The response does NOT demand a separate human approval or sign-off for this change.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no-power-framing",
+        "check": "The response does NOT treat this as widening the agent's power, tool grants, or data access.",
+        "weight": "supporting"
+      },
+      {
+        "id": "brief",
+        "check": "The response stays brief and does not introduce elaborate red-team, attack-type enumeration, or audit framing.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "tracking-deficiencies": {
+    "checks": [
+      {
+        "id": "direct_answer",
+        "check": "The response directly confirms it's fine to commit and push (or gives a brief direct answer) without deflecting.",
+        "weight": "core"
+      },
+      {
+        "id": "no_register",
+        "check": "The response does NOT suggest creating or updating a deficiency register, tracking ticket, or backlog entry for this.",
+        "weight": "core"
+      },
+      {
+        "id": "no_template",
+        "check": "The response does NOT require filling out a template, packet, or formal written record before proceeding.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_approval",
+        "check": "The response does NOT demand a separate human approval, sign-off, or review step beyond normal PR review.",
+        "weight": "supporting"
+      },
+      {
+        "id": "brief",
+        "check": "The response is short and proportionate to the small, low-stakes nature of the question.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "using-nuclear-grade": {
+    "checks": [
+      {
+        "id": "direct_snippet",
+        "check": "The response directly provides a working Python snippet/answer to count empty 'email' values without deferring the actual help.",
+        "weight": "core"
+      },
+      {
+        "id": "no_mode_declaration",
+        "check": "The response does NOT open by declaring a process mode, tier, or administrative floor before helping.",
+        "weight": "core"
+      },
+      {
+        "id": "no_change_record",
+        "check": "The response does NOT ask the user to create or fill out a change record, ticket, or tracking artifact for this task.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_plan_for_proof",
+        "check": "The response does NOT ask the user to set up a verification/proof plan or review step before giving the snippet.",
+        "weight": "supporting"
+      },
+      {
+        "id": "concise",
+        "check": "The response stays brief and proportionate to the small ask rather than adding unrelated process scaffolding.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "verifying-final-artifacts": {
+    "checks": [
+      {
+        "id": "direct_review",
+        "check": "The response directly reviews the code/logic and gives a verdict on whether it looks correct.",
+        "weight": "core"
+      },
+      {
+        "id": "no_regeneration_demand",
+        "check": "The response does NOT ask the user to regenerate/run/build a separate artifact or output to verify the change.",
+        "weight": "core"
+      },
+      {
+        "id": "no_formal_process",
+        "check": "The response does NOT require a formal written record, checklist, or verification packet before proceeding.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_signoff",
+        "check": "The response does NOT demand separate human approval or sign-off before the user can commit.",
+        "weight": "supporting"
+      },
+      {
+        "id": "concise",
+        "check": "The response is a brief, proportionate reply rather than a multi-step or heavily structured process.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  },
+  "vetting-outside-code-and-models": {
+    "checks": [
+      {
+        "id": "direct_search",
+        "check": "The response directly helps search for or lists remaining references to the old function name.",
+        "weight": "core"
+      },
+      {
+        "id": "no_process_packet",
+        "check": "The response does NOT require a formal written record, vetting packet, or template before proceeding.",
+        "weight": "core"
+      },
+      {
+        "id": "no_approval",
+        "check": "The response does NOT demand a separate human approval, sign-off, or stakeholder review for this rename.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_multistep_gate",
+        "check": "The response does NOT insist on a multi-step evaluation process before answering the question asked.",
+        "weight": "supporting"
+      },
+      {
+        "id": "no_vendor_framing",
+        "check": "The response does NOT introduce unrelated concerns about vendors, external dependencies, or release/public trust impact.",
+        "weight": "supporting"
+      }
+    ],
+    "_source_sha256": "negative-pool"
+  }
+}

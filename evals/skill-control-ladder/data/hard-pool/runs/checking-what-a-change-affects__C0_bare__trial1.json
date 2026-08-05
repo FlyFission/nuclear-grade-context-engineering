@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 21622,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.049728400000000006,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2826,
+    "cache_read_input_tokens": 32128,
+    "output_tokens": 1490,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2826,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 946,
+        "cache_read_input_tokens": 8942,
+        "cache_creation_input_tokens": 155,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 155
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 680,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00076,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 1490,
+      "cacheReadInputTokens": 32128,
+      "cacheCreationInputTokens": 2826,
+      "webSearchRequests": 0,
+      "costUSD": 0.0489684,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The repo here is empty, so I can't actually inspect the schema, validator, or configs you're describing \u2014 worth flagging in case you meant to point me at a different directory.\n\nBased on the pattern alone, a few things beyond \"swap the string everywhere in this repo\" that are easy to miss on a field rename like this:\n\n- **Already-deployed customer configs not in this repo.** If any live customers already have `graceperiod_days` in production configs (not just the sample ones checked in), a hard rename breaks them unless the validator accepts both names for a transition period or you have a migration step.\n- **Serialization/API boundaries.** If this field crosses a wire format (API request/response, DB column, exported config), renaming in the schema without a compat shim or migration will break anything still sending the old key \u2014 including whatever the customer onboarding call tomorrow depends on if they've been given the old template previously.\n- **Docs/guides outside the repo.** Anything customer-facing (support KB, PDF onboarding packets, API reference hosted elsewhere) that isn't part of this rename PR.\n- **The apikey\u2192api_key precedent isn't strong evidence of safety here** unless that field had the same exposure (i.e., was it also external-facing/persisted, or purely internal?). Worth a quick gut-check on that difference specifically, not just \"same pattern, went fine.\"\n\nIf none of those apply \u2014 it's purely internal, nothing's persisted with the old name, and no external consumer references it \u2014 then this is straightforward and you're fine to ship. Given the timing pressure (tomorrow's call), I'd double-check the \"already deployed with old name\" question specifically before merging.",
+  "ttft_ms": 1860,
+  "ttft_stream_ms": 786,
+  "time_to_request_ms": 28,
+  "time_to_request_from_spawn_ms": 1720916,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079495674.9575,
+  "type": "result",
+  "duration_ms": 21577,
+  "uuid": "03e27949-5223-41cd-b5c3-56b6bcca91da",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C0_bare",
+  "_trial": 1,
+  "_input_spec_sha256": "0495c7c119fa7bb7d20d051fc74f4181cbdfc304daf4b501d059d37edb2b1f1f"
+}

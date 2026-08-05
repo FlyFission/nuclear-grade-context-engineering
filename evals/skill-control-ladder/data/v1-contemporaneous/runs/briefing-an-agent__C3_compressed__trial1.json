@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 41694,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0722586,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2811,
+    "cache_read_input_tokens": 23752,
+    "output_tokens": 3170,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2811,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2740,
+        "cache_read_input_tokens": 8967,
+        "cache_creation_input_tokens": 124,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 124
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 624,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000699,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 3170,
+      "cacheReadInputTokens": 23752,
+      "cacheCreationInputTokens": 2811,
+      "webSearchRequests": 0,
+      "costUSD": 0.0715596,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "One thing to flag before the briefing itself: handing an agent unsupervised write access to a **production** database overnight for a schema change + backfill is the riskiest part of this plan, not the coding. I've written the briefing so it forces the agent through a safe path (backup \u2192 staging/dry-run \u2192 additive migration \u2192 batched backfill \u2192 human gate before touching prod, or at minimum hard guardrails if it must touch prod directly). Adjust the bracketed placeholders for your actual stack.\n\n---\n\n## Briefing: Add `email_verified` to `users`\n\n**Role:** You are making a schema change, backfill, and endpoint update to a production Node.js backend database. Nobody will be reviewing your actions in real time tonight. Because of that, you must be conservative: prefer reversible, additive, observable steps over anything destructive or one-way.\n\n**Goal**\n1. Add a nullable `email_verified` boolean column to `users`.\n2. Backfill it for existing rows using this heuristic: `[fill in \u2014 e.g. \"signup_source = 'google_oauth' or 'github_oauth' \u2192 true; signup_source = 'email' \u2192 false\"]`.\n3. Update the signup endpoint (`[path]`) so newly created users get `email_verified` set correctly at creation time.\n\n**Non-goals:** Do not touch unrelated tables, do not change auth/session logic, do not modify existing user data other than the new column, do not delete or rename anything.\n\n---\n\n### Hard constraints (do not deviate)\n\n1. **No direct hand-edits to production data.** All schema and data changes go through the project's migration tool (`[e.g. knex/prisma/sequelize/typeorm migrations]`), committed as files, never ad-hoc SQL run against prod.\n2. **Backup first.** Before running anything against production, trigger/confirm a fresh database snapshot or export. Do not proceed if you cannot verify a backup exists and is restorable.\n3. **Staging before prod.** Run the full migration + backfill + endpoint change against staging (or a prod clone) first. Only proceed to production if staging succeeds and row counts / sample checks match expectations.\n4. **Additive-only migration.** The new column must be added as `NULLABLE` (no default that locks the table, no `NOT NULL` constraint yet). Do not alter or drop existing columns.\n5. **Batch the backfill.** Update rows in batches (e.g. 1,000\u20135,000 at a time) with a short delay between batches, not a single `UPDATE users SET ...` across the whole table. Log progress (rows updated / total) as you go.\n6. **Idempotent and resumable.** The backfill must be safe to re-run (e.g. `WHERE email_verified IS NULL`) in case it's interrupted partway.\n7. **No `NOT NULL` / index / constraint changes tonight.** Leave tightening the schema (e.g. adding `NOT NULL DEFAULT false`) as a follow-up PR for a human to run once backfill is confirmed complete \u2014 don't do it in the same unattended session.\n8. **Least-privilege credentials.** Use a DB role scoped to this task if one exists; do not escalate permissions.\n9. **Stop and do not proceed on any of these:**\n   - Backup/snapshot cannot be confirmed.\n   - Staging run produces unexpected row counts, errors, or the heuristic can't classify a meaningful fraction of users (log these as \"unknown\" rather than guessing).\n   - Migration tool reports a lock timeout or the table is large enough that the migration risks a long table lock \u2014 pause and leave a note instead of forcing it.\n   - Anything requires deleting, dropping, or overwriting existing non-null data.\n10. **No destructive git operations.** Commit work incrementally on a feature branch, do not force-push, do not merge to main/deploy automatically \u2014 open a PR for the schema + backfill + endpoint change and stop there. **Do not deploy to production yourself.**\n\n### Step-by-step\n\n1. Read existing migration files to match naming/style conventions.\n2. Write a migration adding `email_verified BOOLEAN NULL` to `users`.\n3. Write a backfill script (separate from the migration, run manually or as a one-off script) implementing the heuristic, batched and logged as above.\n4. Update the signup endpoint to set `email_verified` explicitly based on signup source at creation time.\n5. Add/update tests for the signup endpoint covering each signup source path.\n6. Run the migration + backfill script against staging (or a local copy seeded from a recent prod snapshot). Record: total users, count backfilled per heuristic branch, count left `NULL`/unknown.\n7. Open a PR with: the migration, the backfill script, the endpoint change, tests, and a summary of the staging results.\n8. **Stop here.** Do not run the migration or backfill against the production database yourself unless you have been explicitly told production credentials + a confirmed backup are available for this run \u2014 in that case, run it, then report row counts and any anomalies, and still leave deployment/verification sign-off to a human.\n\n### What \"done\" looks like\n\n- PR open with migration, backfill script, endpoint change, and tests.\n- A written summary: how many existing users were classified into each heuristic bucket, how many were left unclassified, and why.\n- No production `NOT NULL` constraint added yet.\n- Clear note on what a human should check/do next (e.g. review the \"unknown\" bucket, decide on a default, then tighten the column).\n\n---\n\nWant me to also draft the actual migration/backfill script logic once you tell me the ORM/migration tool and the exact heuristic mapping (which `signup_source` values \u2192 true/false)?",
+  "ttft_ms": 3718,
+  "ttft_stream_ms": 793,
+  "time_to_request_ms": 30,
+  "time_to_request_from_spawn_ms": 861175,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789499755.4578,
+  "type": "result",
+  "duration_ms": 42542,
+  "uuid": "cbe4a08f-84dc-4a64-9f82-e1f9986c5bb6",
+  "_skill": "briefing-an-agent",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "ea5a309c6f7a4ec19e56599a18bd7e958b93be47a33945fac998fab1887114ad"
+}

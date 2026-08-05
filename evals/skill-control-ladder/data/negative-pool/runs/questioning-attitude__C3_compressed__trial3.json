@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 15609,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0362503,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2970,
+    "cache_read_input_tokens": 32711,
+    "output_tokens": 528,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2970,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 76,
+        "cache_read_input_tokens": 9110,
+        "cache_creation_input_tokens": 140,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 140
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 588,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000673,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 528,
+      "cacheReadInputTokens": 32711,
+      "cacheCreationInputTokens": 2970,
+      "webSearchRequests": 0,
+      "costUSD": 0.0355773,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This repo is empty \u2014 there's no `src/config/dashboard.ts` or anything else in it (a glob for all files returns nothing). Can you confirm you're pointing me at the right directory/repo, or is this project not checked out yet?",
+  "ttft_ms": 1445,
+  "ttft_stream_ms": 716,
+  "time_to_request_ms": 30,
+  "time_to_request_from_spawn_ms": 1589921,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594584388.582,
+  "type": "result",
+  "duration_ms": 13207,
+  "uuid": "c0651208-ac2b-4807-afb6-ce2d1af79cda",
+  "_skill": "questioning-attitude",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "419dc2fd599d689f63d51d019b610895bcd4e13a540f1c7906697eea5cc8966b"
+}

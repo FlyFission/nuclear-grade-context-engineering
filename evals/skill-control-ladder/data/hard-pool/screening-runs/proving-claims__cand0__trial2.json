@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 28793,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.05237699999999999,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2241,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2417,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2241,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2417,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2241,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2241
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 706,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000786,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2417,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2241,
+      "webSearchRequests": 0,
+      "costUSD": 0.05159099999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before drafting, one thing needs to be flagged: the claim as worded \u2014 **\"All customer PII is encrypted at rest\"** \u2014 isn't actually supported by the evidence you've described. The re-encrypt-on-next-update migration means rows that never get updated (closed accounts, dormant users, etc.) stay plaintext indefinitely. That's not a small caveat \u2014 it directly contradicts \"all.\" If this goes into the release review as-is, someone could reasonably rely on it being fully true when it isn't yet.\n\nHere's the trace row with that gap made explicit rather than buried:\n\n**Status:** Partial \u2014 not Verified/Pass. Write path is covered; existing data is not.\n\n**Gap:**\n- No backfill: PII rows written before this rollout remain unencrypted until their *next* update. Rows that are rarely/never touched (inactive accounts, closed records) may stay plaintext indefinitely with no forcing function or deadline to convert them.\n- No current measurement of encrypted vs. plaintext row counts in prod \u2014 we don't actually know what fraction of \"all customer PII\" is encrypted today.\n- No verification against live data \u2014 tests confirm the write path *behaves* correctly, not that data at rest in prod is in the claimed state.\n\n**Tests:**\n- AES-256 write path unit tests \u2014 green in CI. Confirms new/updated writes are encrypted correctly.\n- Missing: integration/prod query verifying actual encrypted-vs-plaintext row counts.\n- Missing: coverage of key management (rotation, access control) if that's part of the \"encrypted at rest\" claim's scope.\n\n**Non-claims:**\n- Does not claim all existing PII is currently encrypted \u2014 only that new/updated writes will be, going forward.\n- Does not claim a timeline or deadline for full legacy coverage.\n- Does not claim independent security audit/pen test \u2014 Priya's sign-off is a PR code review, not a controls audit.\n- Does not claim outcome parity with the billing service rollout \u2014 different service, different data profile, cited as precedent for approach only, not as verification evidence for this claim.\n\n**Recommendation:** either reword the claim to match what's actually true today (e.g., \"New and updated customer PII is encrypted at rest; legacy data migration is in progress with no backfill, completion timeline TBD\") or keep the current wording but attach this gap prominently so reviewers aren't misled. I'd push for the reword \u2014 \"all\" is a strong word to walk back later if this surfaces in an audit.",
+  "ttft_ms": 19798,
+  "ttft_stream_ms": 748,
+  "time_to_request_ms": 31,
+  "time_to_request_from_spawn_ms": 665167,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078440002.7205,
+  "type": "result",
+  "duration_ms": 31020,
+  "uuid": "c66b72f1-019c-4d58-a7e3-9e006a67892f",
+  "_spec": "4639696e9af9dfdf5d678b63f2c3672e7ec8b932aea95133c0fcd5cce21bb6fe",
+  "_skill": "proving-claims",
+  "_cand": 0,
+  "_trial": 2
+}

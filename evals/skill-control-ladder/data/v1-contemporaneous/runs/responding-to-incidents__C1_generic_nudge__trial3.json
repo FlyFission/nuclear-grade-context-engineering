@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 21934,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.038407,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2227,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1492,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2227,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1492,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2227,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2227
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 675,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007750000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1492,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2227,
+      "webSearchRequests": 0,
+      "costUSD": 0.037632,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Roll back now via the CD pipeline. Don't let the DBA run the ALTER TABLE first.\n\n**Why:** Rollback is fast (90s), well-understood, and undoes both suspects at once \u2014 you don't need to have root-caused it before restoring service. The DBA's live `ALTER TABLE ... DROP/rebuild INDEX` on production during an active outage is comparatively higher risk and slower: depending on the DB engine and rebuild method, that can hold locks on `orders` and block writes entirely, potentially turning a checkout outage into a full table outage with an unpredictable duration \u2014 and it's based on confidence, not confirmed root cause. During a P1, restoring service beats debugging in prod.\n\n**Right now:**\n1. One person (ideally the EM or whoever's designated) becomes incident commander and says explicitly \"we are rolling back, nobody makes other prod changes until it's confirmed\" \u2014 three people proposing different prod actions concurrently in the channel is itself a risk (a DBA schema change landing mid-rollback could produce a confusing, hard-to-diagnose mixed state).\n2. Kick off the rollback immediately.\n3. Watch error rate/checkout success recover. If it doesn't fully recover, that tells you the index isn't the (only) cause and you still haven't touched prod schema.\n4. Once stable, do root cause analysis (logs, the new worker's behavior, EXPLAIN plans on the old vs new index) in staging, and only then have the DBA apply a validated index change with a proper online/concurrent rebuild and a rollback plan of its own.\n\nWant help drafting the incident channel message or a rollback checklist?",
+  "ttft_ms": 12926,
+  "ttft_stream_ms": 850,
+  "time_to_request_ms": 27,
+  "time_to_request_from_spawn_ms": 236467,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788875075.5168,
+  "type": "result",
+  "duration_ms": 20854,
+  "uuid": "4b06cdab-a19a-42c9-8a54-dde834ba636a",
+  "_skill": "responding-to-incidents",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "699aa95ac6c37d2c981e1e38aa5723016ca5167fc3b8d6e961c8ec9efef4d5c7"
+}

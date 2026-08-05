@@ -1,0 +1,94 @@
+{
+  "is_error": false,
+  "duration_api_ms": 31760,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0614536,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 3758,
+    "cache_read_input_tokens": 32762,
+    "output_tokens": 1882,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3758,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 695,
+        "cache_read_input_tokens": 9120,
+        "cache_creation_input_tokens": 918,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 918
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 748,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000823,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 1882,
+      "cacheReadInputTokens": 32762,
+      "cacheCreationInputTokens": 3758,
+      "webSearchRequests": 0,
+      "costUSD": 0.06063059999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [
+    {
+      "tool_name": "Grep",
+      "tool_use_id": "toolu_01KLihs3Dc4m8M8oUxgZhDGY",
+      "tool_input": {
+        "pattern": "add-dark-mode-toggle",
+        "path": "<sandbox-path>",
+        "output_mode": "files_with_matches"
+      }
+    }
+  ],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Since there's no actual `ng` tool or packet files in this directory, I'll answer based on the situation you've described.\n\n**Close `add-dark-mode-toggle` with a recorded rationale \u2014 don't delete it.**\n\nReasoning:\n- It's genuinely abandoned (scaffold-only, untouched for three weeks, nothing merged), so it does need to reach a terminal state \u2014 leaving it as `scaffold` is exactly the noise you want gone.\n- But this wasn't just neglect \u2014 there was an explicit team decision *not* to pursue dark mode this quarter, pending the design team finalizing the color palette. That's real context worth preserving: if someone revisits dark mode next quarter, they (or you) will want to know it was deliberately deferred, not that it silently died or was rejected outright.\n- Deleting the packet would erase that decision trail. Closing it with a rationale like *\"Deferred \u2014 design has not finalized the color palette; team decided not to pursue this quarter (see [meeting date])\"* keeps the history honest and gives future-you the \"why\" without the packet cluttering active status checks.\n\nFor `refactor-auth-flow`: leave it alone entirely. It's actively being worked on by a teammate \u2014 the missing-file `invalid` tag is just because the work isn't finished, not because it's abandoned. This is explicitly the case the skill says not to touch.\n\nIf you point me at the actual packet files/tool (or grant access to the directory containing them), I can run the close command and write the rationale for you.",
+  "ttft_ms": 3202,
+  "ttft_stream_ms": 2459,
+  "time_to_request_ms": 567,
+  "time_to_request_from_spawn_ms": 94928,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788730646.1514,
+  "type": "result",
+  "duration_ms": 32632,
+  "uuid": "b9eda948-59d5-4174-b6fd-2fb06878deb8",
+  "_skill": "closing-stale-packets",
+  "_arm": "C2_description_only",
+  "_trial": 2,
+  "_input_spec_sha256": "46fb51598673e8e765a801adeea814bb1b035054f2d38133b5487d736eb7770d"
+}

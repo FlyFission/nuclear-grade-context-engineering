@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 25304,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0448164,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2653,
+    "cache_read_input_tokens": 14798,
+    "output_tokens": 1578,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2653,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1213,
+        "cache_read_input_tokens": 8518,
+        "cache_creation_input_tokens": 415,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 415
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 702,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000777,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1578,
+      "cacheReadInputTokens": 14798,
+      "cacheCreationInputTokens": 2653,
+      "webSearchRequests": 0,
+      "costUSD": 0.0440394,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 you're not done, and I'd treat this as more than a nit. A few gaps:\n\n**The core problem isn't fixed, only hidden from you.** Sales, onboarding, and internal-tools are still shipping the same leak in production. Your local override plus a code comment only informs people who read your bot's repo \u2014 the other three teams have no visibility into that and no reason to look.\n\n**This is a live data-leak bug, not just a formatting quirk.** It's exposing internal tool/DB identifiers to customers today, in three bots you don't control. That's worth escalating with some urgency, not filing away as \"handled on our side.\"\n\nWhat I'd actually do:\n1. **Report it upstream in `prompt-common`'s own tracker**, with the repro (the truncation edge case that triggers it) \u2014 not just a comment in your fork.\n2. **Directly notify the other three teams** (ping the owners, don't rely on them stumbling onto it) \u2014 they need to know now, independent of whether/when upstream gets fixed.\n3. **Push the fix upstream**, not just locally. A silently forked template means four copies can now drift, and the other teams stay vulnerable until someone tells them to override too. Submit your fix as a PR/patch to `prompt-common` if you can.\n4. **Check whether it's already leaked** \u2014 if this is a real production bug that's been live, it's worth a quick log check across the four bots to see if internal identifiers have actually gone out to customers already. That may need security/incident-response involvement depending on your org's policies, especially since this affects bots outside your team's ownership.\n\nWant help drafting the upstream fix/PR or the notification to the other teams?",
+  "ttft_ms": 5071,
+  "ttft_stream_ms": 1415,
+  "time_to_request_ms": 57,
+  "time_to_request_from_spawn_ms": 1054512,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025933098.3572,
+  "type": "result",
+  "duration_ms": 23831,
+  "uuid": "8924c655-145c-4e56-a22e-7ad6af23603c",
+  "_skill": "reporting-shared-defects",
+  "_arm": "C1_generic_nudge",
+  "_trial": 2,
+  "_input_spec_sha256": "7b751a3ea055f01711c4aeef851f9e1cab80281b5104369665d78a55644ede6b"
+}

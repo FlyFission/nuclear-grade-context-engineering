@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 9611,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0304948,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2674,
+    "cache_read_input_tokens": 23576,
+    "output_tokens": 447,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2674,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 157,
+        "cache_read_input_tokens": 8734,
+        "cache_creation_input_tokens": 220,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 220
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 575,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000655,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 447,
+      "cacheReadInputTokens": 23576,
+      "cacheCreationInputTokens": 2674,
+      "webSearchRequests": 0,
+      "costUSD": 0.0298398,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't see a CONTRIBUTING.md (or any PR/diff) in this repository \u2014 this working directory doesn't seem to be where that change lives, so I can't check the diff myself from here.\n\nQuickly checking the actual diff yourself (`git diff` or the PR view) before merging costs nothing and confirms it's really a one-line typo fix with no accidental extra changes \u2014 worth doing regardless of what I can see. If you paste the diff here I'm happy to verify it for you too.",
+  "ttft_ms": 2986,
+  "ttft_stream_ms": 1432,
+  "time_to_request_ms": 58,
+  "time_to_request_from_spawn_ms": 1565896,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594558993.7075,
+  "type": "result",
+  "duration_ms": 10149,
+  "uuid": "45e2ff7c-ded7-4ff4-90d2-1e28cffa5c94",
+  "_skill": "proving-claims",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "4b9f718023ebc726c59538e392347c0fffba9602a1c186c1ac6b85c7a02e80eb"
+}

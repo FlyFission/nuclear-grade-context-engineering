@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 49446,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0874805,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3850,
+    "cache_read_input_tokens": 14765,
+    "output_tokens": 3949,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3850,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2408,
+        "cache_read_input_tokens": 8485,
+        "cache_creation_input_tokens": 1645,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1645
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 624,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000704,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 3949,
+      "cacheReadInputTokens": 14765,
+      "cacheCreationInputTokens": 3850,
+      "webSearchRequests": 0,
+      "costUSD": 0.0867765,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Empty working directory \u2014 no existing codebase here to inspect, so I'll write a stack-agnostic briefing with placeholders you fill in.\n\nOne thing up front: I'd strongly avoid letting the agent run the actual writes against **production** unattended overnight. The safer split is: agent prepares and tests everything (migration, backfill script, endpoint change) against staging/a prod clone, opens a PR, and leaves the actual production execution \u2014 or at minimum the backfill run \u2014 for a human to trigger, possibly with an approval gate the agent must wait on. If you truly need it to run end-to-end overnight with nobody watching, the briefing below builds in the guardrails that make an irreversible mistake unlikely, but you should read the \"Approval gates\" section and decide if you want to relax any of those into \"just do it.\"\n\nHere's the briefing:\n\n---\n\n## Briefing: Add `email_verified` column to `users`\n\n### 1. Goal\n1. Add a nullable `email_verified` boolean column to the `users` table (production DB).\n2. Backfill it for existing users using this heuristic: **[YOU MUST FILL THIS IN \u2014 e.g., \"signup_source = 'google_oauth' or 'github_oauth' \u2192 true; signup_source = 'email_password' \u2192 false; unknown/null source \u2192 false\"]**.\n3. Update the signup endpoint (`[PATH]`) so new signups set `email_verified` correctly at creation time.\n\n### 2. Non-goals (do not do these)\n- Do not enforce `email_verified` anywhere else in the app (no new auth checks, no gating features on it). This task is additive only.\n- Do not touch any other column, table, or endpoint.\n- Do not rename, drop, or alter existing columns.\n- Do not delete or update any row outside the `users` table.\n- Do not add a `NOT NULL` constraint or default that requires a table rewrite/lock unless you've confirmed table size and lock behavior first.\n\n### 3. Scope of authority\n**Allowed:**\n- Read schema/migrations, write a new migration file using the project's existing migration tool (don't hand-roll raw ALTER statements if a framework is in use).\n- Write/modify the backfill script as a standalone, idempotent script (not inline in the migration `up()` if the table is large \u2014 see \u00a75).\n- Modify the signup endpoint handler and its tests.\n- Run the test suite, run migrations/backfill against a **local or staging** database.\n- Commit to a new branch and open a PR.\n\n**Forbidden without explicit human approval:**\n- Running the migration or backfill against the **production** database.\n- Any `git push --force`, rebase of shared branches, or merging to main.\n- Modifying CI/CD config, IAM/DB credentials, or infra-as-code.\n- Any command that could lock or scan the full `users` table if it has >~100k rows (check row count first \u2014 see \u00a75).\n\n**Do-not-touch:** any file outside `[relevant service directory]`; any `.env`/secrets file; any other table's migrations.\n\n### 4. Approval gates (stop and wait \u2014 or use the fallback if truly unattended)\nStop before each of these and either wait for human sign-off, or if running fully unattended, only proceed if every item in the pre-flight checklist for that gate is satisfied and logged:\n\n- **Gate A \u2014 before running the migration on production:** confirm a recent backup/snapshot exists, confirm the migration is additive-only (nullable column, no default requiring rewrite), confirm `down()`/rollback migration exists and was tested.\n- **Gate B \u2014 before running the backfill on production:** confirm the heuristic was validated on a sample of staging data and matches expectations, confirm the backfill is idempotent (safe to re-run) and batched (see \u00a75), confirm a dry-run (count of rows that would be set true/false, no writes) was executed and the numbers look sane.\n- **Gate C \u2014 before merging/deploying the signup endpoint change:** confirm tests pass and cover both the verified and unverified signup paths.\n\nIf any pre-flight check fails, **do not proceed** \u2014 stop, write up what failed in the handoff notes, and leave production untouched.\n\n### 5. Production DB safety requirements\n- **Migration:** add column as `NULLABLE`, no default value requiring a full table rewrite. Write and test the `down()` migration.\n- **Backfill:** run as a separate script from the schema migration, not inside the same transaction/migration step. Batch updates (e.g., 500\u20135,000 rows per batch with a short sleep between batches) to avoid long locks or replication lag. Make it idempotent \u2014 re-running it should be a no-op for already-set rows (`WHERE email_verified IS NULL`).\n- **Reversibility:** because the column starts nullable, rollback is just dropping the column \u2014 confirm that's acceptable (no other code will have started depending on it).\n- **No downtime assumption:** verify the ALTER TABLE won't hold a long lock on your DB engine/version for the actual table size \u2014 check row count before running anything on prod.\n\n### 6. Heuristic definition\nWrite the exact mapping from `signup_source` values \u2192 `email_verified` value in the migration/backfill script as a comment, and list it in the PR description. Flag any `signup_source` values encountered in the data that weren't anticipated instead of silently defaulting them.\n\n### 7. Testing requirements before opening the PR\n- Unit tests for the signup endpoint covering each signup source path.\n- Backfill script tested against a local/staging copy with realistic data, including a dry-run mode that reports counts without writing.\n- Migration tested up and down locally.\n\n### 8. Handoff notes (leave this for the morning regardless of how far you got)\nAt the end of the run (whether finished, blocked, or stopped at a gate), write a summary to `[e.g. AGENT_NOTES.md or PR description]` including:\n- What was completed vs. what's waiting on approval.\n- The exact heuristic mapping used and row counts per bucket from the dry-run.\n- Any unexpected `signup_source` values found.\n- Any gate that wasn't cleared, and why.\n- Commands that still need to be run manually, if any.\n\n---\n\nFill in the bracketed placeholders (heuristic rules, endpoint path, migration tool), and let me know if you want me to relax Gate A/B into a full auto-run \u2014 I'd only recommend that if the `users` table is small and you have automated backups you trust.",
+  "ttft_ms": 17366,
+  "ttft_stream_ms": 927,
+  "time_to_request_ms": 72,
+  "time_to_request_from_spawn_ms": 372525,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025251324.1287,
+  "type": "result",
+  "duration_ms": 50611,
+  "uuid": "ea9bf93b-76da-4a43-93ba-c94fba3bf777",
+  "_skill": "briefing-an-agent",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "ea5a309c6f7a4ec19e56599a18bd7e958b93be47a33945fac998fab1887114ad"
+}

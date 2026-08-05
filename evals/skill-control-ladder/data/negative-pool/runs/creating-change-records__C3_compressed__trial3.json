@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 6454,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0255165,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2549,
+    "cache_read_input_tokens": 14825,
+    "output_tokens": 338,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2549,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 205,
+        "cache_read_input_tokens": 8545,
+        "cache_creation_input_tokens": 284,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 284
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 613,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000693,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 338,
+      "cacheReadInputTokens": 14825,
+      "cacheCreationInputTokens": 2549,
+      "webSearchRequests": 0,
+      "costUSD": 0.024823500000000002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No problem \u2014 here's a short script you can drop in your downloads folder and run once:\n\n```python\nimport os\n\nfolder = os.path.expanduser(\"~/Downloads\")\n\nfor name in os.listdir(folder):\n    if name.startswith(\"tmp_\"):\n        src = os.path.join(folder, name)\n        dst = os.path.join(folder, name[len(\"tmp_\"):])\n        os.rename(src, dst)\n        print(f\"{name} -> {name[len('tmp_'):]}\")\n```\n\nSave it as `rename.py` and run `python rename.py`. Adjust the `folder` path if your Downloads directory is elsewhere.",
+  "ttft_ms": 2012,
+  "ttft_stream_ms": 837,
+  "time_to_request_ms": 38,
+  "time_to_request_from_spawn_ms": 1435210,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594429646.297,
+  "type": "result",
+  "duration_ms": 6973,
+  "uuid": "0fc53539-e4b3-42a8-b2d7-2d9172031b8d",
+  "_skill": "creating-change-records",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "0a252446157babf1d55e85742bd6a6b719880c60cc57e3c49484af25e2e9db3a"
+}

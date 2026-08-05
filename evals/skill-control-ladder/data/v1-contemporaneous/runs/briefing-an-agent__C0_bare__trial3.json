@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 24754,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.046875,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2507,
+    "cache_read_input_tokens": 23170,
+    "output_tokens": 1610,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2507,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1189,
+        "cache_read_input_tokens": 8646,
+        "cache_creation_input_tokens": 132,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 132
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 624,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000714,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1610,
+      "cacheReadInputTokens": 23170,
+      "cacheCreationInputTokens": 2507,
+      "webSearchRequests": 0,
+      "costUSD": 0.046161,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The directory is empty, so this briefing will be generic \u2014 you'll want to adapt file paths and tool names to your actual repo before handing it off.\n\nBefore the briefing itself: running an unattended agent against a **production database** overnight is the highest-risk part of this plan, independent of how good the instructions are. A few things worth deciding now, not delegating to the agent:\n\n1. **Does it actually need production access?** Ideally the agent works against a staging DB / a production replica snapshot, and a human applies the final migration in the morning after reviewing the diff and backfill results.\n2. **If it must touch prod directly**, it should have a DB user with only the privileges needed (ALTER on that table, UPDATE on that table) \u2014 not full admin \u2014 so a mistake has a bounded blast radius.\n3. **Backup verification** \u2014 confirm backups/PITR are actually working before the run, not just assumed.\n\nIf you're set on it touching prod, here's a briefing that builds in stop conditions and reversibility rather than trusting the agent's judgment in the moment:\n\n---\n\n**Task: Add `email_verified` to `users`, backfill, update signup endpoint**\n\n**Scope \u2014 do exactly this, nothing else:**\n1. Add nullable/defaulted `email_verified` boolean column to `users` via a migration (use the project's existing migration tool, e.g. Knex/Sequelize/Prisma \u2014 don't hand-write raw ALTER statements against prod).\n2. Backfill existing rows using this heuristic: [you fill in \u2014 e.g. \"signup_source = 'google_oauth' or 'github_oauth' \u2192 true, 'email_password' \u2192 false\"].\n3. Update the signup endpoint to set `email_verified` correctly for new signups per the same source rules.\n\n**Guardrails \u2014 stop and do not proceed if any of these fail:**\n- Do not run migrations or backfills directly against production. Run against staging (or a same-schema copy) first, verify row counts and spot-check ~20 rows against the heuristic by hand, and only then apply to production.\n- Take a fresh backup/snapshot immediately before touching production and confirm it succeeded before proceeding.\n- The migration must be additive and reversible: nullable column, no dropped/renamed columns, a working `down` migration.\n- Backfill must run in batches with a WHERE clause limiting scope (e.g. `WHERE email_verified IS NULL LIMIT n`), not a single unbounded UPDATE across the whole table.\n- Never touch prod outside of the migration/backfill scripts \u2014 no ad hoc manual UPDATE/DELETE statements.\n- If any step errors, or actual row counts don't match expected counts, **stop immediately and do not retry or improvise a fix.** Leave the DB in whatever state it's in and log exactly what happened.\n\n**Required before finishing:**\n- Write a short log/report: migration file(s) added, exact heuristic logic used, number of rows backfilled per category, any rows that didn't match any heuristic rule (and how they were handled \u2014 should default to `false`/unverified, never guessed as `true`).\n- Open a PR rather than pushing to main; do not merge or deploy without human review.\n- Do not run this against production without the migration + backfill script having been reviewed in the PR first, even if staging tests pass.\n\n**Explicitly out of scope:** don't touch other columns/tables, don't refactor unrelated signup logic, don't add auth/verification-email-sending logic beyond setting this flag.\n\n---\n\nWant me to fill in the actual heuristic rules based on your `signup_source` values, or tailor the guardrails section once you tell me what migration tool and CI/PR setup you're using?",
+  "ttft_ms": 3990,
+  "ttft_stream_ms": 793,
+  "time_to_request_ms": 34,
+  "time_to_request_from_spawn_ms": 905269,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789543782.3994,
+  "type": "result",
+  "duration_ms": 25338,
+  "uuid": "5c175402-d7d1-479e-bb1e-d5d3914b37c6",
+  "_skill": "briefing-an-agent",
+  "_arm": "C0_bare",
+  "_trial": 3,
+  "_input_spec_sha256": "b02bda04281bd15438d18e8634924a0871200eb60a75a14c5ef425ab9360b774"
+}

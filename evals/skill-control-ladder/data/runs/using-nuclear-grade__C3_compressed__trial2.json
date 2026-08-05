@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 18067,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.050725400000000004,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 3536,
+    "cache_read_input_tokens": 33878,
+    "output_tokens": 1242,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3536,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 350,
+        "cache_read_input_tokens": 9583,
+        "cache_creation_input_tokens": 233,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 233
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 607,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000692,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 1242,
+      "cacheReadInputTokens": 33878,
+      "cacheCreationInputTokens": 3536,
+      "webSearchRequests": 0,
+      "costUSD": 0.050033400000000006,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This working directory is completely empty \u2014 no `package.json`, no source files, nothing at all (not even a `.git` folder showing up via glob). There's nothing here for me to edit.\n\nBefore I do anything, I want to flag: you framed this as a quick \"just make the change\" request, but it actually crosses two boundaries that require a paper trail regardless of size \u2014 it's a **dependency bump** and a **change to the model's system prompt** (which affects model/agent behavior). Per my guardrails, that combination forces a Standard-plus review, not a quick edit-and-merge \u2014 even at 5 minutes and two lines.\n\nCould you point me to the correct repo/directory that contains your `package.json` and the system prompt template? Once I have that, I'll:\n1. Bump `openai` from `4.2.0` to `4.3.1`\n2. Add your new instruction to the prompt template\n3. Write a minimal change record noting what changed and why (so the prompt edit gets eyes on it before merge, since it changes model behavior)\n\nWhat's the correct path, and what's the new instruction you want added to the system prompt?",
+  "ttft_ms": 5214,
+  "ttft_stream_ms": 1970,
+  "time_to_request_ms": 67,
+  "time_to_request_from_spawn_ms": 1207991,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785026086136.3853,
+  "type": "result",
+  "duration_ms": 17207,
+  "uuid": "9f16b712-c790-4ace-81bf-258eff0f54c3",
+  "_skill": "using-nuclear-grade",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "315a75bab79c59ab48d8f68dbecde3491af5b46e8e1622b0eb9726a9a4689fa5"
+}

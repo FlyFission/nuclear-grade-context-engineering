@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 33040,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0520428,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2375,
+    "cache_read_input_tokens": 14556,
+    "output_tokens": 2178,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2375,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1929,
+        "cache_read_input_tokens": 8285,
+        "cache_creation_input_tokens": 361,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 361
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000744,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2178,
+      "cacheReadInputTokens": 14556,
+      "cacheCreationInputTokens": 2375,
+      "webSearchRequests": 0,
+      "costUSD": 0.0512988,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Here's a draft postmortem, plus the fixes that actually address the root cause (not just \"tell people not to use `--no-verify`\").\n\n## Postmortem: Hardcoded API Key Exposed in Production\n\n**Date of incident:** [fill in \u2014 ~July 27\u201330, 2026 based on \"three days before audit caught it\"]\n**Date discovered:** [fill in]\n**Severity:** [e.g., SEV-2 \u2014 credential exposure, no confirmed exploitation]\n**Status:** Resolved \u2014 key rotated\n\n### Summary\nA commit containing a hardcoded API key was pushed to `main` and deployed to production, where it remained live for three days before being caught by a routine security audit. The commit bypassed the local pre-commit secrets-scanning hook via `git commit --no-verify` because the hook was failing (for reasons not yet root-caused) and the engineer was under time pressure to ship before a deadline.\n\n### Timeline\n| Time | Event |\n|---|---|\n| [date] | Engineer's pre-commit secrets-scanning hook fails on branch |\n| [date] | Engineer runs `git commit --no-verify`, pushes to branch |\n| [date] | PR merged to `main`, deployed to production |\n| [date, +3 days] | Routine security audit discovers hardcoded key in codebase |\n| [date] | Key rotated |\n\n### Impact\n- API key exposed in the repository (and likely in deploy artifacts/logs) for 3 days.\n- [State whether you confirmed no unauthorized use of the key during that window \u2014 this matters and should be explicit either way.]\n- No customer-facing outage.\n\n### Root Cause\nThe **only** control preventing hardcoded secrets from reaching `main` was a client-side pre-commit hook, which is opt-in by design \u2014 any engineer can skip it locally with `--no-verify`, and there was no server-side enforcement to catch a skip.\n\n### Contributing Factors\n1. **Single point of failure**: secrets scanning ran only pre-commit, not in CI or at the merge/push gate.\n2. **No visibility**: bypassing the hook produced no alert or signal to anyone else.\n3. **Unclear hook failure**: the engineer didn't know why the hook was failing (false positive? real finding? tooling bug?) and had no fast path to resolve or escalate it.\n4. **Deadline pressure**: the process gave the engineer only two options \u2014 miss the deadline or bypass the check \u2014 with no faster legitimate path.\n5. **PR review didn't catch it**: [worth asking \u2014 did anyone review the diff? was the key not obviously a secret, or did review not happen/wasn't thorough?]\n\n### Corrective Actions\n\n**Must fix (prevents recurrence directly):**\n- [ ] **Add server-side secret scanning as a required check.** Run the same (or a stronger) scanner in CI on every PR, and make it a required status check for merging to `main` via branch protection. This closes the `--no-verify` loophole entirely \u2014 you can't bypass a check that runs after push.\n- [ ] **Enable GitHub/GitLab native secret scanning + push protection** if you're on a platform that supports it \u2014 this can block the push itself, not just flag it after the fact.\n- [ ] **Rotate/audit any other secrets committed around the same time** by that engineer or others who may have also used `--no-verify` \u2014 check your git logs for `--no-verify` usage isn't logged locally, but you can check for commits that merged despite known hook-failure periods, or just do a full-history secret scan if you haven't already.\n\n**Should fix (addresses contributing factors):**\n- [ ] Log or alert when `--no-verify` is used (some teams add a `commit-msg` or server-side `pre-receive` hook that flags this, though it's not foolproof \u2014 the CI gate above is the real fix).\n- [ ] Give engineers a fast, documented escalation path when a security hook fails and they believe it's a false positive (e.g., a Slack channel with a fast-response owner) so \"bypass and ship\" isn't the only option under time pressure.\n- [ ] Add a step in PR review checklist/culture: reviewers explicitly check for hardcoded credentials, not just rely on tooling.\n- [ ] Consider a secrets manager / env-var injection pattern so there's less occasion for API keys to end up in code at all.\n\n**Process/culture:**\n- [ ] Reinforce (without blaming the individual) that a shipped deadline is never worth a security bypass \u2014 but pair that message with actually removing the incentive to bypass, since the tooling gap is the real cause here.\n\n### Lessons Learned\nClient-side hooks are a convenience/early-warning layer, not a security boundary \u2014 they're opt-in by nature. The actual security boundary needs to be server-side (CI required checks + branch protection), so that \"just ship it\" is never able to skip the safety net.\n\n---\n\nWant me to:\n1. Save this as a file in the repo (e.g., `docs/postmortems/2026-07-api-key-exposure.md`)?\n2. Fill in specific dates/severity if you give me them?\n3. Actually help implement the CI secret-scanning gate / branch protection config for this repo?",
+  "ttft_ms": 4123,
+  "ttft_stream_ms": 2267,
+  "time_to_request_ms": 33,
+  "time_to_request_from_spawn_ms": 601666,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789240126.8318,
+  "type": "result",
+  "duration_ms": 31850,
+  "uuid": "e1134fb4-bbb0-4f1d-a118-073c7a47ae5a",
+  "_skill": "learning-from-experience",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "732f4a063690261b250008fa75ea9050938f44e7b57fea7668adca6e8cbd36ae"
+}

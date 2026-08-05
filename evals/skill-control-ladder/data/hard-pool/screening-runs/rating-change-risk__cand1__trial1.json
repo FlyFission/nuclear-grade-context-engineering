@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 34283,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.062160900000000005,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2745,
+    "cache_read_input_tokens": 32283,
+    "output_tokens": 2349,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2745,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2034,
+        "cache_read_input_tokens": 8886,
+        "cache_creation_input_tokens": 139,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 139
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 672,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007469999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 2349,
+      "cacheReadInputTokens": 32283,
+      "cacheCreationInputTokens": 2745,
+      "webSearchRequests": 0,
+      "costUSD": 0.0614139,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't see a `.github/workflows/` directory in this repo (it looks empty) \u2014 if the workflow file lives in a different repo, point me to it, or paste the relevant YAML and I'll check syntax/trigger conditions directly.\n\nIn the meantime, based on your description, a few things I'd want resolved before merging regardless of what the YAML looks like \u2014 these aren't syntax issues, they're structural risks in the approach:\n\n**1. Shared `NPM_TOKEN` across packages is the biggest issue.** If this workflow (or its dependency install/build steps) is ever compromised \u2014 malicious dependency with a postinstall script, a PR that sneaks in a modified step, a compromised action in the chain \u2014 the attacker doesn't just get publish rights to this package, they get it to *every* package that shares this token. You're widening the blast radius of one secret with every package you add to it. Best practice is a per-package granular npm token scoped to publish-only on that one package, not a shared org-wide token. Worth checking whether npm's granular access tokens are an option here.\n\n**2. What exactly triggers the publish?** \"On merge to main\" is risky if that means *any* merge, not just intentional releases. If someone merges a fix that doesn't bump the version, does it fail loudly, or silently publish a duplicate/stale version? Better pattern: gate on a version bump in `package.json` actually changing (compare against the last published version), or trigger off tag/GitHub Release creation instead of every merge \u2014 that gives you an explicit, deliberate publish signal rather than an implicit one.\n\n**3. No unpublish safety net.** Unlike your old manual step, a bad auto-publish goes out immediately with no human in the loop to catch it. npm's unpublish window is 72 hours and after that you're stuck deprecating, not removing. If there's any manual QA step people currently do between merge and publish, this removes it entirely.\n\n**4. \"CI green + Marcus approved the YAML\"** confirms syntax and that reviewers looked at it \u2014 it doesn't tell you whether the trigger conditions are right or whether the token scope is appropriate. Those are the two things I'd actually want a second pair of eyes on before this goes live, separate from the YAML review.\n\nThe two existing auto-publish setups working fine for months is reasonable precedent for the *mechanism*, but each additional package added to a shared token compounds risk rather than being independently low-risk \u2014 worth a quick gut check with whoever owns npm publish access on whether a shared token is the intended pattern going forward or something that grew organically and should be tightened.\n\nIf you share the actual workflow YAML I can check the trigger/permissions/token-scoping specifics directly.",
+  "ttft_ms": 1231,
+  "ttft_stream_ms": 906,
+  "time_to_request_ms": 57,
+  "time_to_request_from_spawn_ms": 748009,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078522840.0266,
+  "type": "result",
+  "duration_ms": 35170,
+  "uuid": "36c64c8e-1f4c-4db9-98bd-3288f00d6d7e",
+  "_spec": "35237ac86ff098b1e7a8a505be58a234a19788fb6b2f71d8c6dcdc6027566d07",
+  "_skill": "rating-change-risk",
+  "_cand": 1,
+  "_trial": 1
+}

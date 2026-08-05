@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 28924,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.05515389999999999,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2634,
+    "cache_read_input_tokens": 14713,
+    "output_tokens": 2280,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2634,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1907,
+        "cache_read_input_tokens": 8433,
+        "cache_creation_input_tokens": 481,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 481
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2280,
+      "cacheReadInputTokens": 14713,
+      "cacheCreationInputTokens": 2634,
+      "webSearchRequests": 0,
+      "costUSD": 0.054429899999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Here's a postmortem template you can fill in with the exact facts, plus the prevention plan \u2014 which is really the important part here, since a write-up alone won't stop a repeat.\n\n## Incident write-up template\n\n```\n# Postmortem: Hardcoded API Key Committed to Production\n\n## Summary\nAn engineer bypassed the pre-commit secrets-scanning hook using `git commit\n--no-verify` in order to meet a deadline. The commit contained a hardcoded\nAPI key, merged to main, and was live in production for 3 days before a\nroutine security audit detected it. The key was rotated immediately upon\ndiscovery.\n\n## Timeline (UTC)\n- [DATE/TIME] \u2014 Pre-commit secrets-scanning hook fails on engineer's branch\n- [DATE/TIME] \u2014 Engineer commits with `--no-verify`, pushes, PR merged to main\n- [DATE/TIME] \u2014 Change deployed to production\n- [DATE/TIME] \u2014 Security audit identifies exposed key\n- [DATE/TIME] \u2014 Key rotated\n- [DATE/TIME] \u2014 Incident declared / write-up started\n\n## Impact\n- Key exposed: [which service/key, scope of access it granted]\n- Exposure window: ~3 days in production, additionally exposed in git\n  history on a public/internal remote since the merge\n- Evidence of misuse: [checked access logs? none found / found]\n- Blast radius: [what could an attacker have done with this key]\n\n## Root cause\nThe pre-commit secrets-scanning hook was the *only* control preventing\nsecrets from being committed, and it is a local, opt-in check that any\nengineer can bypass with `--no-verify`.\n\n## Contributing factors\n- No server-side (CI/branch-protection) secret scan to catch what\n  --no-verify skips\n- Time pressure from a deadline incentivized bypassing safety tooling\n- No alerting when --no-verify is used on a push to a protected branch\n- [Why did the hook fail in the first place? False positive, or was it\n  correctly flagging the real key? This matters \u2014 if it was a false\n  positive, the engineer's workaround is more understandable and points\n  to a linter tuning problem, not just a process problem.]\n\n## Corrective actions\nSee prevention plan below.\n```\n\nA few facts I don't have \u2014 worth filling in before you circulate this: the exact key/service, whether logs show any unauthorized use during the 3-day window, and **whether the hook failure was a true positive or a false positive**. That last one matters a lot for how you frame this \u2014 if the linter was throwing false positives, the fix isn't just \"stop people from using --no-verify,\" it's also \"fix the linter so people aren't incentivized to bypass it.\"\n\n## Prevention plan (the part that actually matters)\n\nThe core problem: **your only secrets control was client-side and opt-out**. Fix that structurally, don't just tell people not to use `--no-verify`.\n\n1. **Add a server-side secrets scan as a required CI check** (e.g., gitleaks or trufflehog in GitHub Actions/CI), on every PR and on pushes to main. This can't be bypassed by `--no-verify` because it runs after the push, not before the commit.\n2. **Turn on branch protection on main**: require that CI check to pass before merge, no exceptions even for admins if possible. This is the actual fix \u2014 it makes the previous incident structurally impossible, not just less likely.\n3. **Scan for secrets already in git history**, not just new commits \u2014 the key may still be recoverable from old commits even after rotation. Run a full-history scan now.\n4. **If the local hook has false positives**, tune it \u2014 a linter people don't trust gets bypassed. Track false-positive rate and treat a high rate as a bug, not a nag.\n5. **Alert on `--no-verify` usage**, if feasible (some CI setups can detect a push where the pre-commit hook was clearly skipped, e.g. via commit trailers or a required hook-signature check) \u2014 optional, lower priority than #1/#2.\n6. Add secrets-in-code to onboarding/security training, but treat this as a backstop, not the primary control \u2014 the CI gate is what actually prevents recurrence.\n\nWant me to write these up as an actual CI workflow file (e.g., a gitleaks GitHub Actions job) for this repo, or is the incident in a different repo you'll apply this to separately?",
+  "ttft_ms": 3360,
+  "ttft_stream_ms": 798,
+  "time_to_request_ms": 51,
+  "time_to_request_from_spawn_ms": 800092,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025678768.263,
+  "type": "result",
+  "duration_ms": 29340,
+  "uuid": "2b366aec-8e36-4b7e-97b1-522f6bb863b1",
+  "_skill": "learning-from-experience",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "8115015f04d9fa09099815a984c692c5813de3d958a57bf85de3810fe2dff5da"
+}

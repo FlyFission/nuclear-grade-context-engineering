@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 14357,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.035228999999999996,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2317,
+    "cache_read_input_tokens": 22930,
+    "output_tokens": 917,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2317,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 651,
+        "cache_read_input_tokens": 8447,
+        "cache_creation_input_tokens": 141,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 141
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000675,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 917,
+      "cacheReadInputTokens": 22930,
+      "cacheCreationInputTokens": 2317,
+      "webSearchRequests": 0,
+      "costUSD": 0.034554,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory here is empty, so I can't inspect the actual serializer or search for consumers of `total`. That said, I'd push back on \"quick to land\" regardless of what the diff shows.\n\nThe diff size (one line) doesn't measure blast radius \u2014 it measures effort. For a **public** API field, changing `total` \u2192 `order_total` is a breaking change for every external client parsing that response: dashboards, third-party integrations, mobile apps, webhooks, SDKs, monitoring/alerting on that field, etc. None of that shows up in your local diff or grep of your own codebase, because those consumers live outside the repo.\n\nBefore merging, I'd want to know:\n- Is `total` documented as a stable public contract (OpenAPI spec, published docs)?\n- Do you have external consumers you don't control, or is \"public\" more aspirational and everything is internal-only right now?\n- Is there an API versioning scheme you could use (e.g., only change it in `v2`)?\n\nIf it's truly public and already has outside consumers, the safer path is usually: add `order_total` alongside `total`, deprecate `total` with a sunset date, then remove it later \u2014 rather than a same-line rename. If you can point me at the actual repo (this directory seems empty), I can check whether internal callers/tests reference `total` too.",
+  "ttft_ms": 1832,
+  "ttft_stream_ms": 1087,
+  "time_to_request_ms": 31,
+  "time_to_request_from_spawn_ms": 986803,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789625336.5906,
+  "type": "result",
+  "duration_ms": 14916,
+  "uuid": "2cdeddc4-7ce3-47aa-ad50-b0415b092592",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "581b390a7362e2d0a87fb4c66e8520a94f8c3f8435fce82769190f642498763b"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 11570,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0272134,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2420,
+    "cache_read_input_tokens": 23198,
+    "output_tokens": 335,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2420,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 111,
+        "cache_read_input_tokens": 8546,
+        "cache_creation_input_tokens": 154,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 154
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 581,
+      "outputTokens": 22,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000691,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 335,
+      "cacheReadInputTokens": 23198,
+      "cacheCreationInputTokens": 2420,
+      "webSearchRequests": 0,
+      "costUSD": 0.0265224,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I can't find any occurrence of `retryCount` anywhere in this repo, nor any files related to a login rate limiter \u2014 the working tree also has no matching filenames. Can you double check you're pointing me at the right repo/branch, or point me to the specific file(s) with your in-progress diff? I don't want to guess and edit the wrong thing.",
+  "ttft_ms": 1584,
+  "ttft_stream_ms": 1232,
+  "time_to_request_ms": 40,
+  "time_to_request_from_spawn_ms": 1402203,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594396479.3052,
+  "type": "result",
+  "duration_ms": 11877,
+  "uuid": "dac5cac6-5428-437c-9fd9-bf6c9a40cabd",
+  "_skill": "closing-stale-packets",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "8cebace8043ab15354f39ba0d13b241e7857ca2ddeeb2c9ddb01830fc7d83aef"
+}

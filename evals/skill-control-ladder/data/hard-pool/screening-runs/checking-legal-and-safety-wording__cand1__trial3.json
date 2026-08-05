@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 17970,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.034971999999999996,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2238,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1259,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2238,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1259,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2238,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2238
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 689,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000769,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1259,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2238,
+      "webSearchRequests": 0,
+      "costUSD": 0.034203,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The wording doesn't match the architecture you described, and this is worth flagging before Friday regardless of what legal's skim caught \u2014 a security-claims problem, not a copy-polish problem.\n\n**The core issue:** \"Not even we can read them\" is a specific technical claim \u2014 it means the plaintext is only ever accessible to the client, and you (the provider) structurally cannot decrypt it even if compelled. What you described is the opposite of that:\n\n- Files are encrypted client-side, yes \u2014 but then decrypted and handled via **envelope encryption with a KMS-managed key**. That means *you* hold (or control) the key that unwraps the data key.\n- The \"restore a deleted file\" feature is the tell: for that to work, your backend must be able to decrypt file contents on demand. If you can restore it, you can read it.\n- That's **encryption at rest with server-side key management**, which is a legitimate and common security posture \u2014 but it is not end-to-end encryption in any standard sense (NIST, EFF, or how customers/regulators will read the term).\n\n**Why this matters more than \"just wording\":**\n- If a customer, journalist, or regulator asks \"can Company X read my files?\" the honest answer is yes, via KMS-mediated access \u2014 and that contradicts a public claim on your hero section.\n- This is the kind of gap that shows up in breach disclosures, FTC/state AG unfair-or-deceptive-practices complaints, or class actions (see: several companies sued/settled over \"we can't read your data\" claims that turned out to have server-side key access). A clean pen test and green CI don't cover this \u2014 they test whether the encryption *works*, not whether the *marketing claim about who holds the keys* is true.\n- \"Legal already skimmed the page for other issues\" \u2014 worth explicitly asking legal to review *this specific sentence* against the actual key-custody model, since a skim for \"other issues\" may not have cross-checked the crypto architecture against the copy.\n\n**What I'd recommend instead**, in order of preference:\n1. **Reword to match reality:** \"Your files are encrypted end-to-end in transit and encrypted at rest with enterprise-grade key management \u2014 protected from unauthorized access at every step.\" Still punchy, still true.\n2. **If marketing wants the \"we can't read them\" claim**, that requires actually removing server-side decrypt capability (customer-held keys, no KMS access to plaintext) \u2014 which conflicts with the restore-deleted-file feature as designed. That's an architecture decision, not a copy edit.\n3. At minimum, don't ship the current sentence as-is without a named legal/security sign-off on that exact claim, given the gap.\n\nWant me to draft 2-3 alternate hero lines that stay punchy but are accurate to the KMS/envelope-encryption model?",
+  "ttft_ms": 5490,
+  "ttft_stream_ms": 1105,
+  "time_to_request_ms": 29,
+  "time_to_request_from_spawn_ms": 495699,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078270527.2185,
+  "type": "result",
+  "duration_ms": 18350,
+  "uuid": "bfd446fb-6dae-4fd4-9c43-c608875ce080",
+  "_spec": "dd92a83a3ff8ce478749507b247113f50079838ffe4115a1c753e2f993fb4f71",
+  "_skill": "checking-legal-and-safety-wording",
+  "_cand": 1,
+  "_trial": 3
+}

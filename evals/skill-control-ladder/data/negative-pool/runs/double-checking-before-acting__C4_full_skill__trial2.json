@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 10090,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.03848510000000001,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 3938,
+    "cache_read_input_tokens": 25907,
+    "output_tokens": 428,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3938,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 84,
+        "cache_read_input_tokens": 9918,
+        "cache_creation_input_tokens": 300,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 300
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 567,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000647,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 428,
+      "cacheReadInputTokens": 25907,
+      "cacheCreationInputTokens": 3938,
+      "webSearchRequests": 0,
+      "costUSD": 0.0378381,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "There's no `styles.css` file in this repo, and no occurrence of `#3366cc` anywhere in it. This directory doesn't seem to contain the project you're referring to \u2014 could you confirm the file path or check that you're pointing me at the right repo/branch?",
+  "ttft_ms": 1823,
+  "ttft_stream_ms": 886,
+  "time_to_request_ms": 52,
+  "time_to_request_from_spawn_ms": 1481566,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594475738.256,
+  "type": "result",
+  "duration_ms": 9125,
+  "uuid": "b4d16608-c80f-4b7c-9df8-642756907b84",
+  "_skill": "double-checking-before-acting",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "34d2d9cab1e0d33df327ce2d65e1350be9653dfabc103d797a890e4e5c68e1c9"
+}

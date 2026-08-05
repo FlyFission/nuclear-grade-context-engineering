@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 30400,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0572501,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2742,
+    "cache_read_input_tokens": 23547,
+    "output_tokens": 2197,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2742,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1789,
+        "cache_read_input_tokens": 8762,
+        "cache_creation_input_tokens": 260,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 260
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 676,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000761,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2197,
+      "cacheReadInputTokens": 23547,
+      "cacheCreationInputTokens": 2742,
+      "webSearchRequests": 0,
+      "costUSD": 0.0564891,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Since the repo here is empty (no actual code to inspect), I'll draft the handoff note from what you've told me, with placeholders for the details only you know (service names, contacts, return date). Fill those in before sending.\n\n---\n\n## Handoff: OAuth2 Migration \u2014 Billing Service Auth\n\n**Owner:** Ben (benjaminhuffer1@gmail.com) \u2014 on vacation Aug 4\u2013[return date], reachable [emergency-only? not at all?]\n**Branch:** `oauth-migration`\n**Date written:** 2026-08-03\n\n### \u26a0\ufe0f Critical constraint \u2014 read this first\n**Do not rotate or deactivate the old API keys, and do not touch production auth config, until all three downstream services are migrated to OAuth2.** The old and new auth systems must run in parallel during the transition. If the old keys are rotated early, the un-migrated downstream services will start failing with 401s in production.\n\n### What's done\n- Auth middleware rewritten for OAuth2 \u2014 merged to `oauth-migration`\n- Token-refresh logic rewritten \u2014 merged to `oauth-migration`\n- Both have passing unit tests\n\n### What's NOT done\n- **Three downstream services still call the old API-key auth endpoints** and have not been migrated: [name them here \u2014 this is the most important gap for your teammate to have]\n- Production config has not been touched \u2014 old auth path is still what's live\n- Old API keys have not been rotated (intentionally \u2014 see constraint above)\n\n### Suggested next steps for whoever picks this up\n1. Get oriented: review the merged changes on `oauth-migration` (middleware + token-refresh) and their tests.\n2. Identify and migrate the three downstream services, one at a time, to call the new OAuth2 endpoints instead of the old API-key ones.\n3. After each service migration, verify it against the new auth path (staging if available) before moving to the next.\n4. Only once **all three** are confirmed migrated: update production config to point at the new auth system, then rotate/retire the old API keys.\n5. Do not skip straight to step 4 \u2014 that's the step that breaks things if done early.\n\n### Open questions / things I couldn't fill in for you\n- Names/repos of the three downstream services\n- Whether there's a staging environment to validate against before prod\n- Rollback plan if a downstream migration goes wrong mid-week\n- Who else has context on this (in case your teammate needs a second opinion while you're out)\n\n---\n\nWant me to save this as a file (e.g. `HANDOFF.md`) in the repo, and do you want to fill in the service names and other blanks now so it's complete before you go?",
+  "ttft_ms": 2297,
+  "ttft_stream_ms": 808,
+  "time_to_request_ms": 31,
+  "time_to_request_from_spawn_ms": 1506612,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785790145182.2678,
+  "type": "result",
+  "duration_ms": 29528,
+  "uuid": "859820f3-570b-46e1-ae0f-30f2f44ce5a7",
+  "_skill": "handing-off-work",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "c4df2ff62dae413d11231740340738f11821088fd9d355374d4984f400eea1bf"
+}

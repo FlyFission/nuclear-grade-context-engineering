@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 25928,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0506583,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3098,
+    "cache_read_input_tokens": 14881,
+    "output_tokens": 1793,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3098,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1124,
+        "cache_read_input_tokens": 8601,
+        "cache_creation_input_tokens": 777,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 777
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 624,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000699,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1793,
+      "cacheReadInputTokens": 14881,
+      "cacheCreationInputTokens": 3098,
+      "webSearchRequests": 0,
+      "costUSD": 0.0499593,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Two risks stand out as the priority to test before Friday: **prompt injection \u2192 tool misuse**, since ticket text is untrusted customer input that could instruct the agent to do things like issue refund promises, add unauthorized recipients/CC, or exfiltrate data via the email body \u2014 and it has a live `send_email` tool with real side effects; and **data leakage**, since giving the agent read access to the *full* customer table (not just the ticket-filer's own record) means a manipulated or buggy prompt could cause it to include another customer's order history in an email. The tradeoff: scoping data access down to just the requesting customer's row and adding a pre-send check (human approval, or at minimum an automated filter blocking any customer ID/PII in the draft that doesn't match the ticket's owner) closes most of this, but costs either latency (human-in-loop) or engineering time (output filter) before Friday.\n\nWant me to actually run through the fuller check \u2014 simulate a few injection payloads against the ticket-reading flow, verify the data scoping, and write up findings \u2014 or do you just want the risk list for now?",
+  "ttft_ms": 8149,
+  "ttft_stream_ms": 1834,
+  "time_to_request_ms": 35,
+  "time_to_request_from_spawn_ms": 525269,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789163724.7014,
+  "type": "result",
+  "duration_ms": 28731,
+  "uuid": "43856655-a811-4931-a651-d66a719a73c9",
+  "_skill": "stress-testing-agent-changes",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "61f19da893177db372df25a96de77f997ac9056dc707cb4a951abb2b4472ebfb"
+}

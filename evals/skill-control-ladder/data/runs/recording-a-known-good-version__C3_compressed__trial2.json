@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 47725,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0846509,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2918,
+    "cache_read_input_tokens": 32453,
+    "output_tokens": 3775,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2918,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 3311,
+        "cache_read_input_tokens": 8864,
+        "cache_creation_input_tokens": 334,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 334
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000758,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 3775,
+      "cacheReadInputTokens": 32453,
+      "cacheCreationInputTokens": 2918,
+      "webSearchRequests": 0,
+      "costUSD": 0.08389289999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't have write access to files in this environment (no Edit/Write tool), and this repo is currently empty \u2014 no `controlled-items.md`, `verification.md`, `ship.md`, or PR #482 diff/eval report for me to read. So I can draft the record as text below, but I can't independently verify several of your claims, and I want to flag that before you file this as \"known-good.\"\n\n**Two things worth resolving before this gets locked in as a rollback baseline:**\n\n1. **I can't see PR #482 or the eval results directly.** Everything below about scope and eval numbers is based on your description, not verified evidence. If you can point me at the PR diff and the eval report (paste them, or tell me where they live in the repo), I'll fold in actual numbers/links instead of placeholders.\n2. **Embedding model swaps often aren't cleanly revertible by code rollback alone.** If `embed-v2` outputs are being written into a vector index/cache/store, rolling back the *code* to v2.2.x won't restore known-good behavior unless the v1 embeddings/index are also still intact and re-activated. Worth confirming explicitly, since this is the exact thing a \"what can we roll back to\" record needs to get right \u2014 otherwise the baseline is misleading.\n\nThis also touches production-facing recommendation quality for real users, so I'd treat it as more than a routine dependency bump \u2014 worth a second pair of eyes (whoever owns the recommendation service) rather than just this doc.\n\n---\n\nHere's the draft, with `[VERIFY]` markers on anything I couldn't confirm myself:\n\n```markdown\n# Known-Good Version Record: v2.3.0\n\n## Identity\n- Version: v2.3.0\n- PR: #482 [VERIFY: link/commit SHA to fill in]\n- Deployed to production: 2026-07-26, ~1 hour before this record\n- Rebuild command: [VERIFY \u2014 confirm v2.3.0 is buildable from a clean checkout\n  of the tagged commit alone, with no manual/undocumented steps]\n\n## What changed\n- Embedding model dependency: embed-v1 -> embed-v2\n- [VERIFY: any other changes bundled in this release \u2014 config, infra,\n  schema/index changes needed to support embed-v2]\n\n## Why accepted\n- New eval suite run against embed-v2: precision and recall both improved\n  vs. prior baseline (embed-v1). [VERIFY: link to eval report/numbers]\n- QA sign-off: [VERIFY: who signed off, date, any conditions attached]\n- Production stability: stable for ~1 hour post-deploy as of this writing\n  (short window \u2014 note freshness below)\n\n## Controlled items included\n- [ ] embed-v2 model artifact/version pin: [VERIFY exact version/hash]\n- [ ] Any re-indexing of stored embeddings from v1 -> v2 [VERIFY: done? in\n      progress? not needed?]\n- [ ] Eval suite version used for sign-off: [VERIFY]\n\n## Controlled items deliberately excluded\n- [VERIFY: anything intentionally left out of this release, e.g. embed-v1\n  removal, deprecated fallback paths]\n\n## Rollback caveat\n- [VERIFY] Confirm whether rolling back code to pre-v2.3.0 also requires\n  reverting/keeping available any v1-embedding data or index state. If\n  embed-v2 embeddings have overwritten or replaced v1 data in place,\n  code rollback alone will NOT restore known-good behavior \u2014 document\n  the actual safe rollback procedure here, not just \"revert the PR.\"\n\n## Accepted residual gaps\n- Production soak time is only ~1 hour at time of writing \u2014 [owner: TBD]\n  should confirm no gaps in longer-tail traffic patterns (e.g. cold-start\n  users, rare categories) before this is treated as fully proven.\n- [VERIFY: any other known gaps QA or eng flagged but accepted]\n\n## Re-baseline triggers\n- Any further embedding model change (e.g. embed-v3)\n- Any change to the recommendation ranking/scoring logic\n- If production issues surface that implicate embed-v2 behavior\n- [VERIFY: add team-specific triggers, e.g. scheduled quarterly review]\n\n## Escalation note\nThis version affects customer-facing recommendation output in production.\nRecommend explicit sign-off from the recommendation service owner (not\njust QA) before this record is treated as the authoritative rollback\ntarget, given the short stability window and unresolved rollback caveat\nabove.\n```\n\nWant me to fill in the `[VERIFY]` sections once you share the PR diff/eval report, or do you want to answer those inline here and I'll finalize the text?",
+  "ttft_ms": 1897,
+  "ttft_stream_ms": 1129,
+  "time_to_request_ms": 64,
+  "time_to_request_from_spawn_ms": 1010130,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025887478.4604,
+  "type": "result",
+  "duration_ms": 48311,
+  "uuid": "e787380a-825e-4aab-82fb-ae807d144da7",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "15a6ce4cf7708cdad5ccf21f02b242e4ec8887a93ead0c6966ee50af92dc3bd6"
+}

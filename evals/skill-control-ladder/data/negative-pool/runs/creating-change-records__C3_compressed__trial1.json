@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 8923,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.025508500000000003,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2406,
+    "cache_read_input_tokens": 14825,
+    "output_tokens": 395,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2406,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 308,
+        "cache_read_input_tokens": 8545,
+        "cache_creation_input_tokens": 141,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 141
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 613,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000688,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 395,
+      "cacheReadInputTokens": 14825,
+      "cacheCreationInputTokens": 2406,
+      "webSearchRequests": 0,
+      "costUSD": 0.024820500000000002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Here's a short script \u2014 save it as `rename_tmp.py` anywhere and run it once:\n\n```python\nimport os\nfrom pathlib import Path\n\nfolder = Path.home() / \"Downloads\"\n\nfor f in folder.glob(\"tmp_*\"):\n    new_name = f.name.removeprefix(\"tmp_\")\n    f.rename(f.with_name(new_name))\n    print(f\"{f.name} -> {new_name}\")\n```\n\nRun it with `python rename_tmp.py`. It only touches files starting with `tmp_` in your Downloads folder, so nothing else gets renamed.",
+  "ttft_ms": 1977,
+  "ttft_stream_ms": 743,
+  "time_to_request_ms": 25,
+  "time_to_request_from_spawn_ms": 1432115,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594426632.8315,
+  "type": "result",
+  "duration_ms": 8512,
+  "uuid": "56379063-7b82-492f-a4fd-20127d1bfb00",
+  "_skill": "creating-change-records",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "0a252446157babf1d55e85742bd6a6b719880c60cc57e3c49484af25e2e9db3a"
+}

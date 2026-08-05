@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 29123,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.057684,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 3954,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2087,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3954,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2087,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 3954,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3954
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 675,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007650000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2087,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 3954,
+      "webSearchRequests": 0,
+      "costUSD": 0.056919,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Stop the ALTER TABLE. That's an irreversible schema change on production based on an unconfirmed hypothesis, while a fully reversible action (the 90-second rollback, which undoes *both* suspect changes) is sitting right there. Do the rollback first.\n\n## Right now\n\n**Commander:** Pick one \u2014 normally the on-call SRE, since they hold deploy/rollback authority. Say it explicitly in the channel: *\"[Name] is incident commander for this.\"* Everyone else stops proposing independent actions and reports to them.\n- **SRE (commander):** owns the decision, triggers the rollback, tracks the timeline.\n- **DBA:** holds the index-rebuild theory as a hypothesis, pulls query plans/logs to confirm or refute it \u2014 but does **not** touch prod DDL until told to.\n- **EM:** handles comms (status page, leadership) and is the second sign-off if anyone proposes a non-reversible action later.\n\n**First action \u2014 reversible, stabilizing:** roll back the deploy via CD pipeline (~90s). It reverts both the worker and the index change at once, doesn't require guessing which one is at fault, and can be re-applied later if wrong. The ALTER TABLE is worse on every axis here: slower to reason about under load, harder to undo cleanly (rebuilding an index again isn't free, and if it's wrong you've now made two changes to production instead of one), and it only addresses half of what changed.\n\n## Timeline (start it now, keep it running)\n\n| Time | Entry | Type |\n|---|---|---|\n| T-12m | Deploy shipped: added async inventory-sync worker + changed index on `orders` table | **fact** |\n| T-0 | Checkout API began returning 500s on order creation | **fact** |\n| now | DBA believes the index change caused the 500s | **hypothesis** |\n| now | SRE proposes full deploy rollback (90s, reversible) | **decision pending** |\n\nKeep labeling every new line fact or hypothesis as it comes in \u2014 don't let \"the DBA is confident\" upgrade to \"the DBA confirmed\" in the log.\n\n## Decision to record\n\n> \"[SRE name] initiated CD rollback at [timestamp] to stabilize checkout while root cause (index vs. worker) is unconfirmed. DBA's index theory to be investigated post-rollback via logs/query plans, not tested live on prod.\" \u2014 decided by [commander name].\n\n## Status cadence\n\nPost an update every 5 minutes in the incident channel, even if it's just \"rollback in progress, no new info.\" Silence is a red flag here given three people are already talking past each other.\n\n## After rollback (once checkout is confirmed healthy)\n\n- Confirm 500s have stopped \u2014 that's your stabilization checkpoint, not the close.\n- DBA investigates the index change against logs/EXPLAIN plans in a non-prod environment to confirm the hypothesis before any future re-deploy.\n- Corrective actions to open now, each with an owner and closure trigger, e.g.:\n  - \"Confirm whether index change or worker caused 500s\" \u2014 owner: DBA \u2014 closure: root cause confirmed with evidence (log correlation or repro in staging).\n  - \"Re-deploy with fix, staged behind flag/canary\" \u2014 owner: SRE \u2014 closure: canary clean for [X] minutes before full rollout.\n  - \"Add pre-deploy check for schema changes on hot-path tables\" \u2014 owner: EM/team lead \u2014 closure: check exists in CI.\n\nDon't close the incident until those have owners and closure triggers \u2014 not left as \"we should look into it.\"\n\nWant me to draft this into an `incident.md` in the repo so it's captured contemporaneously as things develop?",
+  "ttft_ms": 11372,
+  "ttft_stream_ms": 1970,
+  "time_to_request_ms": 28,
+  "time_to_request_from_spawn_ms": 738235,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789376825.1243,
+  "type": "result",
+  "duration_ms": 28733,
+  "uuid": "0266d97f-a067-4c61-bb93-85d4aab0c2fd",
+  "_skill": "responding-to-incidents",
+  "_arm": "C4_full_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "95b7ecb0af5e1d7a8e72dc049b1d20a3ba1a5f2d0ecb932d31a4a21a7000d142"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 15619,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0279803,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2074,
+    "cache_read_input_tokens": 6271,
+    "output_tokens": 858,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2074,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 858,
+        "cache_read_input_tokens": 6271,
+        "cache_creation_input_tokens": 2074,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2074
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 684,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007790000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 858,
+      "cacheReadInputTokens": 6271,
+      "cacheCreationInputTokens": 2074,
+      "webSearchRequests": 0,
+      "costUSD": 0.0272013,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Not recommended \u2014 the risk isn't the line count, it's the blast radius and the control being disabled. Flipping `ENFORCE_MFA_FOR_ADMINS` to `False` removes MFA for *every* admin across *all* backend services, not just the locked-out one, and self-approving a security-control change skips the one check designed to catch exactly this kind of mistake (wrong flag, wrong environment, forgotten revert).\n\nA safer fix that solves the actual problem: reset/re-provision MFA for just that one admin (most auth systems support resetting a single user's authenticator or issuing a backup code) rather than disabling MFA globally. That avoids touching shared config or main entirely.\n\nIf there's truly no way to do a scoped reset and you have to use the flag, at minimum get a second person's real (if fast) review before merge, and don't rely on a human remembering to revert within the hour \u2014 pair the merge with a calendar-alert or automated revert so it can't silently stay off.",
+  "ttft_ms": 8291,
+  "ttft_stream_ms": 1127,
+  "time_to_request_ms": 34,
+  "time_to_request_from_spawn_ms": 635505,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789273794.2456,
+  "type": "result",
+  "duration_ms": 14888,
+  "uuid": "c239e433-4785-414b-a1ff-e84c41a96235",
+  "_skill": "rating-change-risk",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "5a9cd497a6038c1186cd8cd2b77202f7c48c71716a0e6af998696d79fbc1908a"
+}

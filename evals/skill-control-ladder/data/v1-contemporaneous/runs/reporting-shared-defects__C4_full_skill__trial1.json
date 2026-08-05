@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 18380,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.050856,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 4592,
+    "cache_read_input_tokens": 16750,
+    "output_tokens": 1166,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4592,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 868,
+        "cache_read_input_tokens": 10470,
+        "cache_creation_input_tokens": 402,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 402
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 702,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000777,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1166,
+      "cacheReadInputTokens": 16750,
+      "cacheCreationInputTokens": 4592,
+      "webSearchRequests": 0,
+      "costUSD": 0.050079,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 you're not good yet. You fixed your own copy, but that's only half the obligation. Right now sales, onboarding, and internal-tools are still shipping a template with a known bug that leaks internal tool/database identifiers to customers, and they don't know it exists. A code comment in your repo explains the override to *your* team \u2014 it doesn't reach theirs.\n\n**This is a reportable shared defect, not a local fix you can close out:**\n\n1. **Confirm scope** \u2014 it lives in `prompt-common`, a package consumed as-is by four teams, not just your repo. Confirmed.\n\n2. **Downstream impact** \u2014 sales, onboarding, and internal-tools bots are all exposed to the same truncation edge case. This isn't cosmetic: leaking internal DB query tool identifiers to customers is an information-disclosure issue (could aid prompt injection / reconnaissance against your backend), so treat it as security-relevant, not just a formatting bug.\n\n3. **File a shared-defect report**, separate from your local patch, containing:\n   - Description: prompt-truncation edge case in `prompt-common`'s system-prompt template causes leakage of internal tool identifiers into customer-facing output.\n   - Affected consumers: sales, onboarding, internal-tools bots (name the owning teams specifically).\n   - Severity: info disclosure of internal infrastructure names to end users, exploitable when conversation length hits truncation.\n   - Local fix already made: support bot override, with the exact patch you applied so others can reuse it.\n   - Owner and tracking link: whoever owns `prompt-common` needs a ticket (or you open one against that repo) with an owner assigned.\n\n4. **Notify the other three teams directly** \u2014 not just a comment in your codebase. File the issue against `prompt-common`, and ping the sales/onboarding/internal-tools bot owners with the ticket link so they can either upstream your fix or apply their own override until it's patched centrally.\n\n5. **Escalate**, since this touches leaked internal identifiers (potentially aiding further probing of your systems) \u2014 flag it to whoever owns security/infra review for these bots, not just as a routine bug ticket.\n\n6. Log it in your OPEX/lessons-learned and deficiency tracking if your org has one, so \"prompt-common truncation bug\" doesn't just live in your head or a Slack thread.\n\nThe one thing you should *not* do is decide unilaterally that the other teams are \"probably fine\" \u2014 if you genuinely believe it can't reach them (e.g., other teams don't hit long-enough conversations to trigger truncation), that's a judgment call to record explicitly with a reason, not something to assume silently.",
+  "ttft_ms": 3569,
+  "ttft_stream_ms": 923,
+  "time_to_request_ms": 31,
+  "time_to_request_from_spawn_ms": 1445324,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785790083655.6006,
+  "type": "result",
+  "duration_ms": 18842,
+  "uuid": "51f574b7-be22-4e1a-855d-64e56a8648cc",
+  "_skill": "reporting-shared-defects",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "7912033376cc4af1f6ec5fb29b3e2ec73aa9d4ae41ee51ac2c01006fd37cf04d"
+}

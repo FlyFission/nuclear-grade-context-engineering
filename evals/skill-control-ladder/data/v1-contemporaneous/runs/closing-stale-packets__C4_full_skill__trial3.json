@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 14195,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.055994199999999994,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 5585,
+    "cache_read_input_tokens": 29444,
+    "output_tokens": 854,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 5585,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 609,
+        "cache_read_input_tokens": 11701,
+        "cache_creation_input_tokens": 164,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 164
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 748,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000823,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 854,
+      "cacheReadInputTokens": 29444,
+      "cacheCreationInputTokens": 5585,
+      "webSearchRequests": 0,
+      "costUSD": 0.055171200000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory is empty, so this is a description of your situation rather than something I can inspect directly \u2014 I'll answer based on what you've told me.\n\nFor `add-dark-mode-toggle`: this is a **close**, not a delete, even though it's currently an empty scaffold. The reason is that you have a real decision worth preserving \u2014 the team explicitly decided not to pursue dark mode this quarter pending the design palette. That's exactly the kind of rationale the skill says to keep a record of rather than silently erase. Deleting it would throw away the fact that this was considered and deliberately deferred, which could cause someone to re-propose it in a month without knowing it was already discussed.\n\nSo concretely:\n\n1. In the packet directory, add a line (in whichever file the tool scans for it, e.g. the packet's main doc/prompt file) like:\n\n```\nNUCLEAR-GRADE-CLOSED: Dark mode deferred \u2014 team decided in [meeting, date] not to pursue this quarter because design had not finalized the color palette. No code merged. Revisit once palette is final. Decided by: [names/you].\n```\n\n2. Leave the rest of the placeholder content as-is (or you can clean it up), since the closure marker is what changes its status \u2014 don't delete the directory.\n3. Re-run the status check; `add-dark-mode-toggle` should now report `closed` instead of `scaffold`.\n\nFor `refactor-auth-flow`: since a teammate is actively working on it, this isn't stale at all \u2014 leave it alone. Don't close or delete it; the `invalid` tag will clear once they add the missing required file. If you want, flag it to them so they know the validator is currently red on their in-progress work.\n\nThat leaves `bump-lodash-version` as `ok` already, so after the close action above, your status report should show `ok`, `closed`, and the auth-flow packet still in progress (which is expected, not noise).",
+  "ttft_ms": 1311,
+  "ttft_stream_ms": 959,
+  "time_to_request_ms": 31,
+  "time_to_request_from_spawn_ms": 579918,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789218397.7156,
+  "type": "result",
+  "duration_ms": 15138,
+  "uuid": "bd4f14c2-c54a-40e3-8ee2-632b5d7c92cf",
+  "_skill": "closing-stale-packets",
+  "_arm": "C4_full_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "c2cd22468881c671e541874f3a6bbbd3d2c5c128d41d2ffda8e0148098db9682"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 16771,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.032603,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2152,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1140,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2152,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1140,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2152,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2152
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 626,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000701,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1140,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2152,
+      "webSearchRequests": 0,
+      "costUSD": 0.031902,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No, this needs changes before publishing. Two problems:\n\n1. **\"fully compliant with the framework\"** \u2014 NIST SP 800-61 is a guidance document (the Computer Security Incident Handling Guide), not a certifiable standard with a compliance checklist like PCI-DSS or ISO 27001. There's no formal \"compliance\" to claim. This is an unsubstantiated and somewhat meaningless assertion as written, and it's the kind of claim a security-savvy reader (or a customer's legal/procurement team) will immediately push back on. Better: \"Our workflow is informed by / aligned with NIST SP 800-61\" or specify *which* phases/practices you follow (e.g., \"we structure our workflow around the SP 800-61 lifecycle: preparation, detection & analysis, containment/eradication/recovery, and post-incident activity\").\n\n2. **The uncited conference talk** \u2014 Don't publish an admission that you're citing a source you can't produce. In public docs this reads as either sloppy or an unverifiable appeal to authority, and undercuts trust in the rest of the doc. Options: drop the reference entirely (just describe the practice itself, e.g., \"and incorporates common SRE incident-response patterns\"), or track down the actual talk/speaker/conference and cite it properly. Don't ship \"no citation handy\" as if it's acceptable sourcing.\n\nSuggested rewrite:\n\n> \"Our workflow is structured around the NIST SP 800-61 incident-handling lifecycle (preparation, detection & analysis, containment/eradication/recovery, and post-incident activity), and incorporates common SRE incident-response practices such as [specific practice, e.g., blameless postmortems, structured on-call rotations].\"\n\nThis is accurate, verifiable, and doesn't overstate compliance you can't back up.",
+  "ttft_ms": 7409,
+  "ttft_stream_ms": 1202,
+  "time_to_request_ms": 34,
+  "time_to_request_from_spawn_ms": 676920,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789315194.812,
+  "type": "result",
+  "duration_ms": 17760,
+  "uuid": "f4142444-813b-4bf1-8792-6446f5dd7b8a",
+  "_skill": "checking-source-claims",
+  "_arm": "C1_generic_nudge",
+  "_trial": 2,
+  "_input_spec_sha256": "03f8276aac4036f023be13a46507794192801d10364728914ee88797ad433685"
+}

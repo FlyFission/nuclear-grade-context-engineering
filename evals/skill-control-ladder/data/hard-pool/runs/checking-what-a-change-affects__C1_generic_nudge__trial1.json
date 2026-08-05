@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 26855,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.049876199999999996,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 3076,
+    "cache_read_input_tokens": 32704,
+    "output_tokens": 1388,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3076,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 754,
+        "cache_read_input_tokens": 9111,
+        "cache_creation_input_tokens": 245,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 245
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 680,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007650000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 1388,
+      "cacheReadInputTokens": 32704,
+      "cacheCreationInputTokens": 3076,
+      "webSearchRequests": 0,
+      "costUSD": 0.0491112,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory is empty \u2014 there's no repo checked out here for me to inspect, so I can't actually verify the scope of this rename myself. I'll answer based on what you've described and known risks with this class of change.\n\nGiven that, here's what I'd want confirmed before merging, based purely on the pattern you're describing (a JSON/YAML schema field rename):\n\n**The `apikey`\u2192`api_key` precedent is a reason for caution, not comfort.** A rename to an *internal* implementation identifier (function/variable name) is safe because nothing external depends on it. A rename to a **schema field name** is a wire-format/API contract change. If `apikey` was also a schema field and that went out cleanly, you may have gotten lucky, or there's tooling (aliasing, migration) already in place that you're not attributing credit to.\n\nBefore merging, check:\n\n1. **Is this schema field consumed by anything outside this repo?** If customers, partners, or other services send/store configs with `graceperiod_days`, renaming it breaks their existing configs with no warning \u2014 a validator will now reject a previously-valid field name (or worse, silently ignore it and fall back to a default).\n2. **Do you have any configs at rest** (customer-provided, in a database, in S3, in a config management system) that were populated using the old field name? A green test suite only covers what's in your test fixtures/sample configs \u2014 not production or customer data.\n3. **Backward compatibility**: does the validator need to accept both `graceperiod_days` (deprecated) and `grace_period_days` for some transition window, rather than a hard cutover? That's the standard pattern for renaming a public-facing schema field.\n4. **Given the timing** \u2014 a customer onboarding call tomorrow \u2014 is that customer going to be given a template with the new field name, and do they have any existing config referencing the old one? If they're a *new* customer with a fresh template, low risk. If they're mid-migration, this could break their call.\n5. **Versioning**: should this bump a schema version number so consumers can detect the change, rather than a silent rename?\n\nI can't check any of this without access to the actual repo contents (the working directory here is empty). Can you point me to the correct path, or confirm: is `graceperiod_days` purely internal-config (never sent/received across a service boundary or handled by external tooling), or could an external party have configs keyed on the old name?",
+  "ttft_ms": 7672,
+  "ttft_stream_ms": 895,
+  "time_to_request_ms": 36,
+  "time_to_request_from_spawn_ms": 1735265,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079510111.8357,
+  "type": "result",
+  "duration_ms": 26020,
+  "uuid": "6ed75f54-2ff2-45aa-b380-7bd3b09965be",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "4ee1a6ff8c86a5b43c9e32348128441c4590ac175d07d24171b4f0a2384023cf"
+}

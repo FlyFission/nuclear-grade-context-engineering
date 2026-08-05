@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 34013,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0697158,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 3947,
+    "cache_read_input_tokens": 24926,
+    "output_tokens": 2515,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3947,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 958,
+        "cache_read_input_tokens": 10082,
+        "cache_creation_input_tokens": 145,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 145
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 728,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000813,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2515,
+      "cacheReadInputTokens": 24926,
+      "cacheCreationInputTokens": 3947,
+      "webSearchRequests": 0,
+      "costUSD": 0.0689028,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "There's no code in this repo to inspect, so I'll go on what you've described. Here's what I'd flag before merging:\n\n**The core problem: your test doesn't validate the thing this tool exists for.**\n\nYou diffed trace files from three runs that *completed* and compared them byte-for-byte. That tells you the happy path is unaffected \u2014 which makes sense, because on clean completion the recorder almost certainly does a final flush regardless of interval/batch size, so the buffer empties out either way. But the recorder's stated purpose is reconstructing what happened when a run **dies unexpectedly**. That's precisely the scenario your test didn't exercise, and it's the scenario most sensitive to this change:\n\n- With 2s/50-event flush, an unclean death (OOM kill, segfault, host eviction, panic) loses at most ~2s or 50 events of buffered-but-unwritten data.\n- With 30s/500-event flush, the same crash can now lose up to 30s or 500 events \u2014 which, depending on how chatty a run is, could be the *entire* sequence of tool calls leading up to the crash. That's exactly the data on-call needs.\n\n**What I'd actually want to see before shipping:**\n1. A test that `kill -9`s (or otherwise ungracefully terminates) an agent run mid-execution, at both configs, and compares how much trailing trace data survives. That's the real regression test, not a diff of successful runs.\n2. Confirmation of whether there's a signal handler / crash hook that force-flushes on SIGTERM, panic, etc. \u2014 and if so, whether it covers the failure modes you actually see in prod (OOM kills and hard crashes typically bypass any handler).\n3. Some sense of how many events a typical run emits in 30s. If it's less than 500, you're not just risking losing \"up to 500 events\" \u2014 you may be risking losing the *whole run's history* on crash, not just a tail.\n\n**A middle ground worth considering:** keep the time/size batching for cost savings, but flush immediately (or after a much smaller count) around specific decision points \u2014 e.g., before/after tool calls \u2014 since those are exactly the events this recorder was built to preserve. You'd keep most of the 90% savings from batching routine telemetry while not gutting the crash-forensics guarantee.\n\nOne more thing: since this changes the debugging tool's reliability characteristics right before an on-call handoff, I'd make sure whoever's on call today knows traces can now lag up to 30s/500 events behind a crash \u2014 that's a meaningful caveat if they're relying on this to triage an incident tonight.\n\nI wouldn't block on cost savings being wrong \u2014 they're probably right \u2014 but I'd hold the merge until you've actually tested the crash path, since that's the one CI, Priya's review, and your diff all missed.",
+  "ttft_ms": 17928,
+  "ttft_stream_ms": 1179,
+  "time_to_request_ms": 24,
+  "time_to_request_from_spawn_ms": 773008,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078547871.5034,
+  "type": "result",
+  "duration_ms": 34830,
+  "uuid": "7467258e-b4ee-42b4-801a-60b98673e07f",
+  "_spec": "b27abc77a959666e4992193a88f86082b85ce8177f2c4de01f7df3a447ec0f09",
+  "_skill": "recording-what-an-agent-did",
+  "_cand": 0,
+  "_trial": 1
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 43768,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0639648,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2601,
+    "cache_read_input_tokens": 23456,
+    "output_tokens": 2705,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2601,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2432,
+        "cache_read_input_tokens": 8733,
+        "cache_creation_input_tokens": 148,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 148
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 634,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000729,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2705,
+      "cacheReadInputTokens": 23456,
+      "cacheCreationInputTokens": 2601,
+      "webSearchRequests": 0,
+      "costUSD": 0.06323580000000001,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Since this repo doesn't have `misc` or `utils` present here, I'm working from your description. Here's a proposed layout for the `misc` folder, since I can bucket it from what you described:\n\n```\nconfig/\n  templates/            # config templates, one file per service/env, kept with a README noting which services consume each\n\nscripts/\n  migrations/\n    archive/            # completed one-off migration scripts, dated filenames (YYYY-MM-DD-description.ext) so they sort chronologically and stay auditable\n\ndocs/\n  compliance/\n    archive/            # archived compliance reports, dated filenames, README notes retention/expiry policy\n\nshared/\n  <domain-name>/        # e.g. shared/auth, shared/formatting \u2014 the helper functions used by two services get promoted here as a real internal library, not left loose. Group by what they do (domain), not by \"shared\" alone.\n\n  (old meeting notes \u2192 don't keep these in the repo at all; move to your wiki/drive. If there's a reason to keep them versioned, docs/meeting-notes/archive/ with dated filenames, but this is usually not code-repo material)\n```\n\nRationale in one line each:\n- **config/templates**: templates change with deploy/config concerns, not code logic \u2014 group by \"what happens to it\" (consumed at deploy time).\n- **scripts/migrations/archive**: one-off scripts are done, not live tooling; archiving them separately from any recurring maintenance scripts keeps `scripts/` navigable.\n- **docs/compliance/archive**: these are records, not code \u2014 belong under docs, sorted by date, not mixed with active configs.\n- **shared/\\<domain\\>**: two-service reuse is exactly the signal to promote helpers into a proper shared package, but bucketed by domain (e.g. `shared/validation`, `shared/http`) rather than one flat \"shared\" dump \u2014 otherwise you just recreate `utils`.\n\nFor `utils`, I can't propose real buckets without seeing what the ~30 files actually do \u2014 \"unrelated helpers\" could split many different ways (by domain, by consuming service, by data type). Could you share a file listing (`ls utils/` or similar), or a rough sense of what several of them do? That'll let me group them by what changes together instead of guessing generic categories like `utils/string`, `utils/date` that might not match your actual files.",
+  "ttft_ms": 1633,
+  "ttft_stream_ms": 918,
+  "time_to_request_ms": 35,
+  "time_to_request_from_spawn_ms": 520867,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789159279.7473,
+  "type": "result",
+  "duration_ms": 47581,
+  "uuid": "702f9364-9ff3-411d-b04c-f9f899ed7fd4",
+  "_skill": "organizing-project-folders",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "211db5615828214564220e6f8ce44b5397bbe645e0066b145fbe80cd1cc22859"
+}

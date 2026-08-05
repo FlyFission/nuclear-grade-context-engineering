@@ -1,0 +1,81 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 21054,
+  "duration_api_ms": 20647,
+  "ttft_ms": 2269,
+  "ttft_stream_ms": 1182,
+  "time_to_request_ms": 98,
+  "time_to_request_from_spawn_ms": 805134,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121368392.0354,
+  "num_turns": 1,
+  "result": "This directory is empty, so I don't have access to the actual PR #482 diff, eval suite output, or config files. I'll draft the record with the details you've given me, but I've flagged a few spots where I need real numbers/links from you rather than guessing.\n\n---\n\n## Known-Good Version Record: v2.3.0\n\n**Status:** ACCEPTED \u2014 Rollback Target\n**Date recorded:** 2026-07-03\n**Recorded by:** [your name]\n\n### Summary\nVersion 2.3.0 of the recommendation service upgraded the embedding model dependency from `embed-v1` to `embed-v2`. This is the current production version and is designated as the known-good rollback point.\n\n### What's in this version\n- **Change:** Embedding model dependency upgraded `embed-v1` \u2192 `embed-v2`\n- **PR:** #482\n- **Deployed to production:** 2026-07-03, ~1 hour prior to this record (~08:15 UTC \u2014 *confirm exact timestamp*)\n- **Other changes in this release:** *[list any additional changes bundled into v2.3.0 besides the embedding upgrade, if any]*\n\n### Why we're accepting it\n- QA signed off after running the new eval suite: *[eval suite name/location]*\n- Precision improved vs. prior baseline: *[baseline value] \u2192 [new value]*\n- Recall improved vs. prior baseline: *[baseline value] \u2192 [new value]*\n- Production stability check post-deploy: no incidents/alerts in the first hour of live traffic\n\n### Rollback reference\n- **Previous known-good version:** *[version tag, e.g. v2.2.x]*\n- **Rollback procedure:** *[link to runbook, or: revert PR #482 / redeploy prior artifact tag]*\n- **Dependencies to revert if rolling back:** `embed-v2` \u2192 `embed-v1`\n\n### Monitoring\n- Dashboards/alerts to watch for regressions: *[links]*\n- Owner/on-call for this release: *[name]*\n\n---\n\nFill in the bracketed items (exact metric numbers, eval suite reference, timestamp, rollback runbook link, on-call owner) and let me know where you'd like this saved \u2014 I don't see a project repo in this directory, so point me to the right path (e.g. a `docs/` or `runbooks/` folder) and I'll write the file.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.03757869999999999,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 1879,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 1632,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1879,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 1632,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1879,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1879
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007629999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 1632,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1879,
+      "webSearchRequests": 0,
+      "costUSD": 0.03681569999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "292164e6-4755-4e10-b85b-87ca054e0a88",
+  "_skill": "recording-a-known-good-version",
+  "_condition": "without_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "b00ed13376e4e28e7ec5157895d628a4e31a3b7a8e20ba81876ce12a164456da",
+  "_arm": "C0_bare",
+  "_reused_from": "evals/skill-benchmark-pilot/data/all-skills-pilot/runs/recording-a-known-good-version__without_skill__trial2.json"
+}

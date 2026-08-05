@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 38070,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.074662,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 4738,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2905,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4738,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2905,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 4738,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4738
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 679,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000769,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2905,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 4738,
+      "webSearchRequests": 0,
+      "costUSD": 0.073893,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Two things before I'd act on this.\n\n**I can't merge it here** \u2014 this environment only gives me file-read/search tools, no shell or git access, so I couldn't push/merge even if it were ready.\n\n**More importantly, I don't think this is a plain \"just merge it\" copy tweak, and here's why.**\n\n**Decision question:** Is the SOC 2 claim, made *more prominent* on a public security page, accurate enough to survive the scrutiny it's now inviting?\n\nThis isn't the administrative floor. A typo or dead-link fix is; a compliance/certification claim on a security page is explicitly called out as a tripwire \u2014 \"docs can make public claims.\" The fact that the underlying fact (you have a report) isn't new doesn't matter; you're changing its *prominence and framing* in direct response to a competitor getting called out for the same category of claim. That context is a reason for *more* scrutiny, not less \u2014 it means people are actively checking this stuff right now.\n\n**Why Quick isn't enough here (Standard fits better):**\n- **Consequence:** \"SOC 2 Type II certified\" is a common phrasing mistake \u2014 SOC 2 is an *attestation report*, not a certification (there's no certifying body). If that's what the copy says, amplifying it increases legal/compliance exposure right as scrutiny in your space is rising.\n- **Reversibility:** The JSX revert is trivial, but the exposure isn't \u2014 if a prospect acts on this claim in tomorrow's sales call (screenshots it, cites it in a security questionnaire), reverting the text afterward doesn't undo that.\n- **Detectability:** A wrong or stale claim (expired report, wrong scope, wrong report type) typically surfaces later \u2014 during a customer's security review or an actual audit \u2014 not immediately.\n- **Who actually approved it:** Dana approving as copy owner covers tone/wording, not whether the claim is current, correctly scoped, and correctly termed. That's a different reviewer (whoever owns the SOC 2 report \u2014 security/compliance).\n\n**Recommended mode: Standard**, not Quick. Least proof needed before it ships:\n1. Confirm with whoever owns the actual SOC 2 report that it's current (not expired) and that \"Type II certified\" is the correct terminology your auditors/legal are comfortable with \u2014 a one-line Slack confirmation is enough, this doesn't need a full review cycle.\n2. Have that same person (not Dana, unless she owns compliance) sign off on the final wording.\n\nThat's a same-day check, not a blocker for tomorrow's call \u2014 but I'd get it before this goes live rather than merge on the \"we've shipped dozens of copy PRs like this\" precedent, since none of those dozens were amplifying a compliance claim during a period when your category is actively getting scrutinized for exactly this.\n\nWant me to flag the specific line for you, or do you have the diff text so I can point at the exact phrase in question?",
+  "ttft_ms": 24750,
+  "ttft_stream_ms": 1241,
+  "time_to_request_ms": 34,
+  "time_to_request_from_spawn_ms": 1891874,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079666671.1636,
+  "type": "result",
+  "duration_ms": 39024,
+  "uuid": "2e76204b-b8dc-40c3-aff8-fa625ab56d20",
+  "_skill": "rating-change-risk",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "54edfa36de1336ceff2b66e647cab1040a697ad90db32f54d42a08dcd1535af8"
+}

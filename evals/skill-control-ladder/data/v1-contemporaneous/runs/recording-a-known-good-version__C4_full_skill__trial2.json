@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 34766,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.06533900000000001,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3873,
+    "cache_read_input_tokens": 16070,
+    "output_tokens": 2434,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3873,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2180,
+        "cache_read_input_tokens": 9790,
+        "cache_creation_input_tokens": 363,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 363
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2434,
+      "cacheReadInputTokens": 16070,
+      "cacheCreationInputTokens": 3873,
+      "webSearchRequests": 0,
+      "costUSD": 0.064581,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    },
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000758,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This repo doesn't contain the upstream artifacts this skill expects (`controlled-items.md`, `change-impact.md`, `verification.md`, `ship.md`) or any existing baseline file, so I can't link to prior evidence \u2014 I'll draft the record from what you've told me and flag the gaps that need filling in before this counts as a real baseline (per the skill: don't claim acceptance where evidence is missing).\n\nA few things worth naming as open gaps rather than glossing over:\n\n- **\"Stable so far\" = ~1 hour of production observation.** That's a very short window for a model-dependency swap that changes ranking behavior \u2014 worth flagging explicitly as an accepted (not resolved) risk with a re-check trigger, not folded into \"looks fine.\"\n- **Embedding model swaps have hidden scope.** Did `embed-v2` require re-embedding existing stored vectors/indices, or are old `embed-v1` vectors still live anywhere (cache, search index, offline batch jobs)? If so, that's either in-scope or needs to be an explicit exclusion.\n- **Rollback path.** \"Known-good to roll back to\" implies embed-v1 is still viable to revert to \u2014 is that actually true, or did the v1 model get decommissioned/index dropped, making rollback non-trivial?\n\nHere's a draft \u2014 please fill in the bracketed items:\n\n```markdown\n# Baseline: recommendation-service v2.3.0\n\n## Identity\n- Version: v2.3.0\n- Source: PR #482 (merge commit: [FILL IN SHA])\n- Deployed: 2026-08-03, ~1 hour ago, production\n- Recorded by: benjaminhuffer1@gmail.com\n\n## Included (controlled items)\n- Embedding model dependency: embed-v1 -> embed-v2 (pinned version: [FILL IN])\n- [Any other deps/config/prompts/templates changed in this PR \u2014 FILL IN]\n\n## Excluded / explicitly out of scope\n- [FILL IN: e.g. \"downstream service X still consumes embed-v1 vectors from\n  cache Y until it re-embeds on its own schedule\" \u2014 or state \"none, full cutover\"]\n\n## Evidence\n- Verification: new eval suite \u2014 precision and recall improved vs. prior\n  baseline. [Link to eval report/run: FILL IN]\n- Ship decision: [Link to ship.md / approval record: FILL IN]\n- Change impact assessment: [Link to change-impact.md: FILL IN \u2014 did anyone\n  document downstream consumers of embeddings/ranking output?]\n\n## Accepted gaps (owner required for each)\n- Production observation window at time of recording is only ~1 hour;\n  eval-suite results are offline/pre-deploy, not yet confirmed against live\n  traffic patterns. Owner: [FILL IN]\n- [Rollback viability to embed-v1 \u2014 confirm whether old model/index is still\n  available or was decommissioned. Owner: FILL IN]\n- [Any other known unknowns]\n\n## Re-check / re-baseline triggers\n- Live metrics (latency, error rate, recommendation quality/CTR) diverge from\n  eval-suite expectations within [FILL IN observation period, e.g. 48-72h]\n- embed-v2 receives a further version bump\n- Any downstream consumer is found still depending on embed-v1 outputs\n- A near-miss or incident touches the recommendation pipeline\n```\n\nWhat's missing that I should fill in: the merge commit SHA, the eval report link, whether there's a separate ship/change-impact doc (or was approval informal, e.g. Slack/PR comment?), and the rollback-viability answer. Also \u2014 should the observation window before you'd consider this \"confirmed\" be 24h, 48h, something else?",
+  "ttft_ms": 1854,
+  "ttft_stream_ms": 946,
+  "time_to_request_ms": 26,
+  "time_to_request_from_spawn_ms": 1121332,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789759796.0002,
+  "type": "result",
+  "duration_ms": 29038,
+  "uuid": "c0f094a9-1ca8-421d-a1c4-95e58634765e",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "d28c9c68b0162373c880502a64ded3327b05d69b5d07552dc4b6ca7244d9047a"
+}

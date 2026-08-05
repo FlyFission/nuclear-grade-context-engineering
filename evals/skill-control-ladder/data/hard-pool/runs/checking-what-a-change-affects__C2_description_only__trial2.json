@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 25374,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.048176899999999995,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2725,
+    "cache_read_input_tokens": 14733,
+    "output_tokens": 1775,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2725,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1327,
+        "cache_read_input_tokens": 8453,
+        "cache_creation_input_tokens": 552,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 552
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 680,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007700000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1775,
+      "cacheReadInputTokens": 14733,
+      "cacheCreationInputTokens": 2725,
+      "webSearchRequests": 0,
+      "costUSD": 0.0474069,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A few things worth checking before merging, beyond what you listed:\n\n- **Configs outside the repo.** Sample configs in the repo are covered, but if any customers or environments already have live configs written with `graceperiod_days` (e.g. anything already handed to the customer for tomorrow's onboarding, staging/prod configs, cached templates), the validator will now reject them. Green tests won't catch this since your test fixtures presumably got renamed in lockstep with the code.\n- **Whether this field is externally exposed.** If `graceperiod_days` appears in an API request/response body, a config export format, or a schema version that's been published/versioned externally, this is a breaking contract change for anyone already integrated \u2014 not just an internal rename. Worth checking if `apikey -> api_key` had the same exposure, or if it was purely internal (that would explain why it went smoothly with no backward-compat work).\n- **Schema version/changelog.** If your schema template has a version number or is published anywhere customers reference directly, bump it and note the breaking rename \u2014 otherwise consumers pinned to the old schema get silently broken configs.\n- **Migration or alias.** Given the timing (customer call tomorrow), consider whether the validator should accept `graceperiod_days` as a deprecated alias for one release rather than hard-breaking it immediately \u2014 cheap insurance if there's any chance an existing config still uses the old name.\n\nIf none of those apply here (purely internal schema, no external consumers yet, no versioning), then you're clear to ship as-is.",
+  "ttft_ms": 6101,
+  "ttft_stream_ms": 1393,
+  "time_to_request_ms": 52,
+  "time_to_request_from_spawn_ms": 1743976,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079518770.5093,
+  "type": "result",
+  "duration_ms": 25870,
+  "uuid": "c63228ae-c2d3-4eb0-a48f-bcd1a2577d78",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C2_description_only",
+  "_trial": 2,
+  "_input_spec_sha256": "e16f85a1d28361ab14c162644e0072e834ca7a9d63a53916bede0960c3938ab6"
+}

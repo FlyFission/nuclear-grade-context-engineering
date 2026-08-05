@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 36621,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0649605,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2611,
+    "cache_read_input_tokens": 23565,
+    "output_tokens": 2761,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2611,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2558,
+        "cache_read_input_tokens": 8765,
+        "cache_creation_input_tokens": 126,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 126
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 692,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007920000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2761,
+      "cacheReadInputTokens": 23565,
+      "cacheCreationInputTokens": 2611,
+      "webSearchRequests": 0,
+      "costUSD": 0.06416849999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I looked for an existing change-record template or system in this repo but it's empty, so I don't have a prior format to copy from \u2014 I'll draft the record as text below. Before I do, one thing needs to be corrected in the framing, not just noted as an aside.\n\n**The returns-page issue isn't a footnote \u2014 it changes what this record should say.**\n\nBecause `OrderStatusBanner` is shared, this PR *does* change what renders on the returns page, even though no returns-page file is in the diff. \"That page isn't touched in this PR\" is true of the code paths changed, but not true of the rendered output \u2014 the blast radius includes both pages. That matters for two reasons:\n\n1. **Evidence gap**: the visual regression snapshots are green presumably because they only cover the checkout confirmation page. If there's no snapshot test rendering `OrderStatusBanner` in the returns context, \"all green\" hasn't actually verified the returns page didn't change \u2014 it just hasn't been asked the question.\n2. **Copy correctness, not just visual regression**: \"Thanks for your order!\" doesn't make sense in a returns flow \u2014 customers there are processing a return, not placing an order. That's a real content bug this PR would introduce silently, independent of whether pixels match a snapshot.\n\nGiven that, I'd push back on filing this as a straight copy of the last five Quick-change tweaks \u2014 those presumably didn't touch a component shared across unrelated flows. Two reasonable paths:\n\n- **Fast path**: pull up the returns page locally/staging, confirm the banner text there, and if it's now wrong, scope the fix (pass explicit copy as a prop for each context) before merging. This is probably a 10-15 min fix, doable before tomorrow's email.\n- **If you want to ship as-is**: the change record needs to say so honestly \u2014 e.g. \"also changes returns-page confirmation banner via shared component; not covered by visual regression; content team has not reviewed that context\" \u2014 rather than \"copy-only, no functional change.\" That's the kind of thing that shouldn't be Quick-change if the returns-page impact hasn't been reviewed by anyone.\n\nWant me to draft the record with the caveat spelled out, or do you want to check the returns-page rendering first and scope the change properly?",
+  "ttft_ms": 1526,
+  "ttft_stream_ms": 832,
+  "time_to_request_ms": 33,
+  "time_to_request_from_spawn_ms": 611138,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078385381.074,
+  "type": "result",
+  "duration_ms": 37321,
+  "uuid": "881eb02f-81b8-4fdc-836b-138e86b4ef32",
+  "_spec": "b04db176d007d9c9d5d8ebddb5ae30074f30a03fb792d213f6f9bea2d253b387",
+  "_skill": "creating-change-records",
+  "_cand": 2,
+  "_trial": 3
+}

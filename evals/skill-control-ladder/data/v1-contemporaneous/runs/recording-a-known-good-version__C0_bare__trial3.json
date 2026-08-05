@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 23708,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0463286,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2565,
+    "cache_read_input_tokens": 23292,
+    "output_tokens": 1545,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2565,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1209,
+        "cache_read_input_tokens": 8707,
+        "cache_creation_input_tokens": 129,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 129
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000758,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1545,
+      "cacheReadInputTokens": 23292,
+      "cacheCreationInputTokens": 2565,
+      "webSearchRequests": 0,
+      "costUSD": 0.045570599999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The repo's empty, so there's no existing template to match \u2014 I'll draft the record inline and you can tell me where it should live (e.g. `docs/known-good-versions.md`) or adjust before I write it to a file.\n\nA few gaps I filled with placeholders \u2014 fill in or correct these:\n\n---\n\n## Known-Good Version Record: v2.3.0\n\n**Status:** Accepted / Known-good\n**Date recorded:** 2026-08-03\n**Recorded by:** benjaminhuffer1@gmail.com\n\n### What's in this version\n- **Change:** Upgraded embedding model dependency from `embed-v1` to `embed-v2` in the recommendation service.\n- **Shipped via:** PR #482\n- **Deployed to production:** 2026-08-03 (~1 hour prior to this record), currently stable.\n- **Previous known-good version:** `v2.2.x` *(fill in exact tag \u2014 this is the rollback target if v2.3.0 needs to be reverted)*\n\n### Why we're accepting it\n- QA signed off on the release.\n- New eval suite run against `embed-v2` showed both precision and recall improved over the prior (`embed-v1`) baseline.\n- No stability issues observed in the first hour of production traffic.\n\n### Rollback guidance\nIf issues surface with `v2.3.0` in production, roll back to `v2.2.x` (last known-good prior to this change), which used `embed-v1`.\n\n### Open items to fill in for a complete record\n- Exact prior version tag/commit being superseded\n- Link/path to the eval suite results (numbers, not just \"improved\") \u2014 worth capturing the actual precision/recall deltas now, while fresh, in case you need to defend this decision later\n- Name of QA reviewer who signed off\n- Git commit SHA / tag for v2.3.0\n- Any known risks or caveats from the `embed-v2` upgrade (e.g. latency/cost differences, deprecation timeline for `embed-v1`)\n\n---\n\nWant me to write this to a file once you've filled in the gaps, or would you rather I search for the actual PR/eval data first if it's accessible from this machine (e.g. via `gh pr view 482`)?",
+  "ttft_ms": 2282,
+  "ttft_stream_ms": 1616,
+  "time_to_request_ms": 97,
+  "time_to_request_from_spawn_ms": 1420952,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785790058437.7578,
+  "type": "result",
+  "duration_ms": 21684,
+  "uuid": "25087d6c-8554-44b4-a0ab-90a93ee6ca18",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C0_bare",
+  "_trial": 3,
+  "_input_spec_sha256": "b00ed13376e4e28e7ec5157895d628a4e31a3b7a8e20ba81876ce12a164456da"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 20198,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.039123000000000005,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2132,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1583,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2132,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1583,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2132,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2132
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 626,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000696,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1583,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2132,
+      "webSearchRequests": 0,
+      "costUSD": 0.038427,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 I'd hold this one back. Two problems:\n\n1. **\"Fully compliant with the framework\"** is a strong, checkable claim. NIST SP 800-61 isn't something you're \"certified\" against \u2014 there's no formal compliance body \u2014 so \"fully compliant\" reads as marketing rather than substantiated fact. If a customer, auditor, or security researcher takes that claim at face value (e.g., cites it in a vendor risk questionnaire) and later finds gaps, that's a credibility and potentially liability problem. Unless someone has actually mapped your workflow phase-by-phase against the standard (Preparation, Detection & Analysis, Containment/Eradication/Recovery, Post-Incident Activity) and can defend that mapping, soften it to something like \"follows the incident-response lifecycle described in NIST SP 800-61 Rev. 2\" \u2014 accurate and still credible without over-claiming. Also worth specifying the revision (Rev. 1 vs. Rev. 2 vs. the newer Rev. 3 draft), since they differ.\n\n2. **The uncited conference talk shouldn't ship as-is.** Publicly admitting \"we don't have a link or citation for it handy\" undermines the rigor of the whole methodology section and reads as unprofessional in a doc meant to build trust. Either track down the actual talk/speaker and cite it properly, or drop the reference \u2014 don't publish an acknowledged-but-unverifiable source.\n\nRecommendation: get an actual citation or cut it, and route the \"fully compliant\" language past whoever owns compliance claims (legal/security) before it goes out, since that's the kind of statement people build decisions on.",
+  "ttft_ms": 13488,
+  "ttft_stream_ms": 1110,
+  "time_to_request_ms": 61,
+  "time_to_request_from_spawn_ms": 485083,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025361182.7078,
+  "type": "result",
+  "duration_ms": 21367,
+  "uuid": "54486c48-26af-4830-a528-3d355a7f2885",
+  "_skill": "checking-source-claims",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "03f8276aac4036f023be13a46507794192801d10364728914ee88797ad433685"
+}

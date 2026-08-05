@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 6134,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0237131,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2405,
+    "cache_read_input_tokens": 14817,
+    "output_tokens": 277,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2405,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 180,
+        "cache_read_input_tokens": 8537,
+        "cache_creation_input_tokens": 148,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 148
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 606,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006709999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 277,
+      "cacheReadInputTokens": 14817,
+      "cacheCreationInputTokens": 2405,
+      "webSearchRequests": 0,
+      "costUSD": 0.0230421,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No CSVs in this directory, so you'll need to fill in the folder path and column name. Here's a quick script:\n\n```python\nimport csv, glob\n\nFOLDER = \"path/to/your/csvs\"\nCOLUMN = \"your_column_name\"\n\ntotal = 0\nfor f in glob.glob(f\"{FOLDER}/*.csv\"):\n    with open(f) as fh:\n        for row in csv.DictReader(fh):\n            total += float(row[COLUMN])\n\nprint(total)\n```\n\nJust swap in your folder path and column name, then `python script.py`.",
+  "ttft_ms": 1739,
+  "ttft_stream_ms": 942,
+  "time_to_request_ms": 52,
+  "time_to_request_from_spawn_ms": 1393610,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594388110.2576,
+  "type": "result",
+  "duration_ms": 6481,
+  "uuid": "6516c809-2c2c-4621-bb66-1e81598e1672",
+  "_skill": "choosing-what-to-control",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "5a4dab5b6f1d615904058968f8ccd427f238f9d83b1d33952da4a295767587d6"
+}

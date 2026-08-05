@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 20550,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.039321400000000006,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2572,
+    "cache_read_input_tokens": 14818,
+    "output_tokens": 1243,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2572,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1033,
+        "cache_read_input_tokens": 8538,
+        "cache_creation_input_tokens": 314,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 314
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 702,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000787,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1243,
+      "cacheReadInputTokens": 14818,
+      "cacheCreationInputTokens": 2572,
+      "webSearchRequests": 0,
+      "costUSD": 0.0385344,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 patching your own bot and leaving a comment only fixes the symptom for your team. The root cause is still live in `prompt-common`, and the other three teams (sales, onboarding, internal-tools) are running it unpatched with no idea their bots can leak internal DB tool identifiers to customers under the same truncation condition. That's a real customer-facing information disclosure risk sitting in production right now.\n\nYou should:\n\n1. **Report it upstream** \u2014 file an issue/ticket against `prompt-common` itself with repro steps (the truncation edge case), root cause, and your fix. A local override in your repo isn't discoverable by the other teams.\n2. **Notify the other three teams directly** \u2014 a comment in your codebase doesn't reach them. Ping the sales, onboarding, and internal-tools owners (Slack/ticket) so they can assess exposure and patch or verify they're affected.\n3. **Push the fix into `prompt-common`**, not just your local override, so all four consumers get it in one place instead of each team independently rediscovering and patching the same bug.\n4. **Check if it's already leaked** \u2014 worth having someone check logs/traces for the other three bots to see if internal tool names have already surfaced in customer-facing responses, since this may need incident/security handling depending on what \"internal tool identifiers\" expose (e.g., DB schema/query tooling names could aid probing).\n\nGiven it's a shared package with a customer-facing leak, treat this less like \"I fixed my instance\" and more like a vulnerability disclosure to the other consumers.",
+  "ttft_ms": 2513,
+  "ttft_stream_ms": 1475,
+  "time_to_request_ms": 41,
+  "time_to_request_from_spawn_ms": 1091674,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789730246.911,
+  "type": "result",
+  "duration_ms": 21627,
+  "uuid": "7a239b63-0210-4b9e-8868-2b3a3bd2e8bc",
+  "_skill": "reporting-shared-defects",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "7b751a3ea055f01711c4aeef851f9e1cab80281b5104369665d78a55644ede6b"
+}

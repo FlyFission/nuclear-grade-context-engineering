@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 30849,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0620765,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 3118,
+    "cache_read_input_tokens": 24025,
+    "output_tokens": 2358,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3118,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1614,
+        "cache_read_input_tokens": 9252,
+        "cache_creation_input_tokens": 146,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 146
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 688,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000773,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2358,
+      "cacheReadInputTokens": 24025,
+      "cacheCreationInputTokens": 3118,
+      "webSearchRequests": 0,
+      "costUSD": 0.061303500000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before I touch anything \u2014 I don't have a checkout service or retry-lib usage in this workspace to swap (directory's empty), so let me flag something more important first: this plan has two unverified assumptions stacked on top of each other, and the EOD deadline is pressuring us to skip verifying both.\n\n**1. Root cause isn't confirmed.** Nobody has reproduced the timeout under controlled load. \"Swap the retry lib\" only fixes anything if retry-lib's behavior (backoff curve, retry ceiling, connection/thread handling) is actually what's causing the timeouts \u2014 as opposed to, say, downstream payment-processor latency, connection pool exhaustion, or thread starvation upstream of any retry logic. If it's the latter, swapping libraries changes nothing and we burn the EOD window without a fix.\n\n**2. \"Drop-in, exact same behavior, just faster\" is unverified.** It's a claim from memory about a different codebase at a different company, and nobody has read retrypro's docs or source yet. For payment retry logic specifically, the details that differ between retry libraries are exactly the ones that matter: what exceptions count as retryable, backoff/jitter algorithm, idempotency-key handling, max-retry ceiling, and thread/connection pool behavior. A mismatch on any of these could produce duplicate charges or worse timeouts \u2014 not something you want to discover in production on a payment path.\n\n**The one fact that would change this:** does a reproduced load test show the timeouts correlate with retry-lib's own overhead/backoff behavior (vs. something upstream/downstream of it)? If yes, swap-and-test is reasonable. If no one can show that, this fix is a guess dressed up as urgency.\n\nGiven the deadline, a faster path that's still safe: spend 30\u201360 min reproducing the timeout under load and checking metrics (is time spent in retry-lib's backoff, or in the DB/HTTP call it's wrapping?), and pull up retrypro's actual docs/changelog next to retry-lib's config for the retryable-exception list and idempotency handling. That's still doable today and tells us whether this is the real fix or a distraction from it.\n\nCan you point me at the actual repo/service (or paste the current retry-lib usage and any logs/metrics from the incident)? I can help root-cause it and compare the libraries properly rather than implementing a swap on faith.",
+  "ttft_ms": 7481,
+  "ttft_stream_ms": 945,
+  "time_to_request_ms": 65,
+  "time_to_request_from_spawn_ms": 929149,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025807483.7412,
+  "type": "result",
+  "duration_ms": 31398,
+  "uuid": "94589397-eaea-44b6-9146-63cbc43ca972",
+  "_skill": "questioning-attitude",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "122195109c8bdf30d58c81ef3f4baf8b1909f2a15f525dfca9d0698e7aca35aa"
+}

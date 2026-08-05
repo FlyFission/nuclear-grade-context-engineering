@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 21049,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.038265,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2195,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1496,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2195,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1496,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2195,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2195
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 675,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007650000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1496,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2195,
+      "webSearchRequests": 0,
+      "costUSD": 0.0375,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "**Right now, in order:**\n\n1. **Name an incident commander immediately** \u2014 pick one person (typically the on-call SRE) to make the call and have everyone else stop proposing/executing actions in parallel. Three people acting independently on a live prod incident is how a bad outage becomes a worse one.\n\n2. **Stabilize first: trigger the CD rollback, not the ALTER TABLE.** Reasons:\n   - It's **reversible and fast** (90s) vs. the DBA's fix, which is a live schema change on a production table that's actively taking traffic \u2014 that carries real risk of locking/blocking under load and could take longer than expected or fail outright.\n   - \"The DBA is confident\" is a **hypothesis**, not a confirmed root cause yet. You have two changes in this deploy (new async worker + index change) and only 12 minutes of data. The rollback undoes *both* candidate causes at once without needing to first prove which one is guilty.\n   - Rollback restores known-good state; the ALTER TABLE is a new, untested action taken under pressure on a system already in a degraded/erroring state.\n\n3. **Communicate the decision once, clearly, in the channel**: \"IC is [name]. We are rolling back via CD now, ETA 90s. Do not run the index change against prod until rollback is confirmed and we've assessed.\" This stops the DBA from executing concurrently with the rollback (which would make it much harder to tell what fixed or broke things).\n\n4. **After rollback completes, verify**: confirm checkout order-creation succeeds and error rate returns to baseline before declaring it resolved.\n\n5. **Then investigate root cause safely** \u2014 the DBA can test the index hypothesis against a staging/replica copy of the `orders` table, and the worker change should be reviewed separately, before either is reintroduced.\n\n6. Once stable, post a brief update to stakeholders (and customer-facing status page if you have one), and open a corrective-action item to re-attempt the deploy with the index change and worker validated independently, plus a postmortem on why two risky changes shipped in one deploy.\n\n**Bottom line: roll back now \u2014 it's faster, fully reversible, and doesn't require betting on an unconfirmed root cause during an active outage.**",
+  "ttft_ms": 9714,
+  "ttft_stream_ms": 1391,
+  "time_to_request_ms": 46,
+  "time_to_request_from_spawn_ms": 1401755,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785790040147.5269,
+  "type": "result",
+  "duration_ms": 20344,
+  "uuid": "86415469-bd8d-4af8-8d30-c2e5097c9f3b",
+  "_skill": "responding-to-incidents",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "802483c74153d39e8741bcd4e4c41a6c97f9d4540fd87e7bc4abc16db6165dff"
+}

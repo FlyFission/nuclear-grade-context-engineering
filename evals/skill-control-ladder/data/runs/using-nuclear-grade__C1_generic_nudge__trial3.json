@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 9039,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.031058000000000002,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2539,
+    "cache_read_input_tokens": 23330,
+    "output_tokens": 541,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2539,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 256,
+        "cache_read_input_tokens": 8673,
+        "cache_creation_input_tokens": 146,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 146
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 607,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000692,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 541,
+      "cacheReadInputTokens": 23330,
+      "cacheCreationInputTokens": 2539,
+      "webSearchRequests": 0,
+      "costUSD": 0.030365999999999997,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory appears to be completely empty \u2014 there's no `package.json`, no source files, nothing at all in this repo.\n\nSo I can't make this edit here: there's no existing `openai` dependency to bump and no system prompt template to update. A couple of possibilities:\n\n1. This isn't the right directory/repo \u2014 you may need to point me at the correct project path.\n2. The repo hasn't been cloned/initialized here yet.\n\nCan you confirm the correct path, or let me know if I should initialize something new? Also, one flag for when we do get to the real files: bumping a dependency and editing the system prompt sent to the model are logically unrelated changes \u2014 even though both are small, I'd still suggest keeping them as separate commits (or PRs) so the prompt change can be reviewed/reverted independently of the version bump.",
+  "ttft_ms": 1187,
+  "ttft_stream_ms": 823,
+  "time_to_request_ms": 106,
+  "time_to_request_from_spawn_ms": 1195718,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785026073267.455,
+  "type": "result",
+  "duration_ms": 9341,
+  "uuid": "3ba63fba-10da-4cf6-82c6-77a334b0227c",
+  "_skill": "using-nuclear-grade",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "b17ad0392cfe87e79b57e6b6b1a955875f5a5f3c55dede94225dcb2d9c3b3b24"
+}

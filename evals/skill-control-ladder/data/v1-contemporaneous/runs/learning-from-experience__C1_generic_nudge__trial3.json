@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 44111,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0715789,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2828,
+    "cache_read_input_tokens": 14733,
+    "output_tokens": 3297,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2828,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2774,
+        "cache_read_input_tokens": 8453,
+        "cache_creation_input_tokens": 655,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 655
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 3297,
+      "cacheReadInputTokens": 14733,
+      "cacheCreationInputTokens": 2828,
+      "webSearchRequests": 0,
+      "costUSD": 0.0708549,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Here's a blameless postmortem draft plus a concrete remediation plan. I've flagged a few open questions you'll need to fill in before this is final, since they change what the real root cause is.\n\n---\n\n## Incident Postmortem: Hardcoded API Key Merged to Production\n\n**Status:** Draft \u2014 needs input on open questions below\n**Severity:** [fill in \u2014 e.g., SEV-3, credential exposure, no confirmed exploitation]\n**Date of incident:** [date key was pushed] | **Date detected:** [audit date] | **Date resolved:** [rotation date]\n**Author:** [you] | **Reviewers:** [engineer involved, team lead]\n\n### Summary\nAn engineer's branch failed the pre-commit secrets-scanning hook. Under time pressure to meet a deadline, they bypassed it with `git commit --no-verify` and pushed. The commit, containing a hardcoded API key, was merged to `main` and ran in production for 3 days before a routine security audit discovered it. The key was rotated immediately upon discovery.\n\n### Impact\n- Hardcoded API key live in production for ~3 days.\n- [Fill in: what did this key grant access to? Any evidence of unauthorized use in that window \u2014 check access logs for the key during the exposure period before closing this out.]\n- No customer-facing outage. Credential exposure only, addressed by rotation.\n\n### Timeline\n- **T0:** Engineer commits code; pre-commit secrets-scanning hook fails.\n- **T0:** Engineer runs `git commit --no-verify`, bypassing the hook.\n- **T0:** Branch pushed and PR merged to `main`. [Was this PR reviewed/approved by someone else? If so, why didn't review catch a hardcoded key?]\n- **T0 \u2192 T3 days:** Key live in production, undetected.\n- **T3 days:** Routine security audit flags the exposed key.\n- **T3 days + \u0394:** Key rotated.\n\n### Root Cause\nThe proximate cause is the `--no-verify` bypass. But the **real root cause is architectural**: your only secrets-scanning control was a client-side pre-commit hook, which is opt-in by design \u2014 any engineer can skip it locally, and nothing downstream re-checks it. A single point of enforcement that lives entirely on the developer's machine is not a control, it's a suggestion.\n\n### Open questions (need answers before action items are final)\n1. **Was the pre-commit hook failing on a true positive or a false positive?** If engineers frequently hit false positives from this linter, that's a strong contributing factor \u2014 people bypass checks they've learned to distrust. If it was a true positive (i.e., it correctly caught the real key), that's a straightforward \"correct tool, no backstop\" case.\n2. **Was this PR code-reviewed before merge?** If yes, review also missed it \u2014 that's a second control failure worth its own action item.\n3. **Is branch protection enabled on `main`** requiring passing status checks before merge? If CI didn't run the same scan the pre-commit hook ran, that's the gap.\n4. **How was the key actually used** during the 3-day window \u2014 any anomalous access in logs? Determines whether this closes as \"credential exposure, no impact\" or needs broader IR.\n\n---\n\n## Recommendations (in priority order)\n\n### Immediate (this week)\n- **Confirm rotation is complete and old key is fully revoked**, not just replaced \u2014 check for any services/configs still referencing the old key.\n- **Pull access logs for the exposed key's window** to rule out misuse before closing the incident.\n- **Grep git history on `main`** for other potential hardcoded secrets using a tool like `trufflehog` or `gitleaks` against full history, not just HEAD \u2014 if one slipped through, others may have too.\n\n### Short-term (this sprint)\n- **Move secret scanning server-side.** Add the same scanner as a required CI check (GitHub Actions / GitLab CI) that runs on every push and PR, independent of what happens on the developer's laptop. This is the single most important fix \u2014 it makes `--no-verify` irrelevant to whether the key reaches `main`.\n- **Enable branch protection on `main`**: require the secrets-scan CI check (and existing test/lint checks) to pass before merge is allowed, and require at least one review.\n- **Enable a push-protection style scanner if your git host supports it** (e.g., GitHub secret scanning push protection, GitGuardian) \u2014 these block the push itself server-side before code ever lands, rather than just failing a check after the fact.\n- **Fix or tune the pre-commit linter** based on the answer to open question #1 \u2014 if it has a false-positive problem, that needs fixing regardless, or people will keep routing around it.\n\n### Process / culture (ongoing)\n- **Don't rely on `--no-verify` being rare through goodwill alone.** Since the server-side check above makes bypass ineffective, you don't need to ban `--no-verify` outright \u2014 but make it clear in team norms that bypassing a *local* check is fine only because CI is the real gate now.\n- **Add a lightweight rule:** any PR that bypassed a local hook check should be flagged for reviewers (e.g., have CI comment on the PR if the hook was skipped), so it gets extra scrutiny rather than sailing through silently.\n- **Secrets should never be hardcoded in the first place** \u2014 pair this with a push toward a secrets manager (e.g., Vault, AWS Secrets Manager, or even basic env-var injection via your CI/CD) so there's less temptation to hardcode a key \"just for now\" under deadline pressure. Worth a short follow-up doc on where secrets currently live in the codebase/config.\n- **Blameless framing:** the engineer's bypass was a symptom of pressure + an easily-bypassable control, not a standalone failure. The fix is systemic (server-side enforcement), not \"tell people not to do that again.\"\n\n---\n\nWant me to turn this into a file (e.g., `POSTMORTEM.md`) in a specific repo, or is this meant to be pasted into an internal doc/ticketing tool? Also let me know the answers to the open questions above and I'll fold them in.",
+  "ttft_ms": 4774,
+  "ttft_stream_ms": 1118,
+  "time_to_request_ms": 33,
+  "time_to_request_from_spawn_ms": 493421,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789131898.5134,
+  "type": "result",
+  "duration_ms": 44301,
+  "uuid": "850fa955-f7b0-4773-9eb0-bc70dd7fd635",
+  "_skill": "learning-from-experience",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "8115015f04d9fa09099815a984c692c5813de3d958a57bf85de3810fe2dff5da"
+}

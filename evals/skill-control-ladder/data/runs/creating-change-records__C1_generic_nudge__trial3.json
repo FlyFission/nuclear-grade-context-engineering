@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 30760,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.05412259999999999,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2520,
+    "cache_read_input_tokens": 14732,
+    "output_tokens": 2256,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2520,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1958,
+        "cache_read_input_tokens": 8452,
+        "cache_creation_input_tokens": 348,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 348
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 656,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000731,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2256,
+      "cacheReadInputTokens": 14732,
+      "cacheCreationInputTokens": 2520,
+      "webSearchRequests": 0,
+      "costUSD": 0.0533916,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The one-line diff is misleading you about the blast radius. A model swap on a system that autonomously moves customer money isn't a code change with a trivial diff \u2014 it's a change to an opaque decision-maker, and the risk lives entirely in behavior you haven't observed yet. \"Swapped model per cost review\" tells a future reviewer *what* happened but nothing about whether it was *safe*, and refunds already auto-approved can't be clawed back once issued.\n\nWhat you actually need is a **model change record** (think: mini decision doc, not a PR sentence), linked from the PR, containing:\n\n**1. Exact change, pinned**\n- Old model ID and new model ID, including version/snapshot (not just \"GPT-x\" or \"Claude-x\" \u2014 the specific dated snapshot). Provider auto-updates on unpinned aliases are a classic way this kind of record goes stale/wrong.\n\n**2. Why, with substance**\n- The actual cost numbers driving this, and confirmation that cost was the *only* variable being optimized \u2014 reviewers need to know nothing else (latency, capability) was traded off implicitly.\n\n**3. Evaluation evidence comparing old vs. new on the real task**\n- Same eval set (ideally including real historical refund cases, not synthetic ones) run through both models with the *actual production prompt/tools*, not the raw model.\n- Metrics that matter for this task specifically: false-approve rate (agent approves a refund it shouldn't \u2014 the costly failure mode), false-deny rate, behavior on edge cases (large amounts, repeat requesters, policy-ambiguous cases, adversarial/prompt-injection attempts to talk the agent into an approval).\n- Any known behavioral differences between the two providers relevant to instruction-following or refusal tendencies \u2014 these are documented to differ across providers and matter a lot for an approve/deny agent.\n\n**4. Rollout plan and reversibility**\n- Was this shadow-tested or canaried before full cutover, or is it an instant 100% switch? For an autonomous financial-approval agent, instant full cutover without a canary is itself a decision that needs to be justified and recorded.\n- Explicit rollback trigger and procedure (what metric threshold reverts it, and how fast).\n\n**5. Monitoring plan post-launch**\n- What's being watched afterward (approval rate, $ volume approved, dispute/chargeback rate) and for how long before this is considered \"settled.\"\n\n**6. Sign-off**\n- Who approved this given the financial/compliance exposure \u2014 this shouldn't be an engineering-only call if the eval results are thin or nonexistent.\n\nThe test for whether the record is adequate: a skeptical reviewer in six months should be able to answer \"did we actually check this model behaves the same or better on the approve/deny decision before shipping, or did we just assume it because the API is compatible?\" If the record can't answer that, it's not a record, it's a changelog entry.\n\nIf there's real time pressure, the minimum viable version is items 1, 3, and 4 \u2014 the pinned model IDs, *some* eval comparison on real refund cases, and a rollback trigger. Shipping with literally nothing beyond \"cost review\" on an autonomous money-moving agent is the part I'd push back on with your manager, not the speed.",
+  "ttft_ms": 3951,
+  "ttft_stream_ms": 1043,
+  "time_to_request_ms": 41,
+  "time_to_request_from_spawn_ms": 615072,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025493783.7947,
+  "type": "result",
+  "duration_ms": 31677,
+  "uuid": "3205d297-77e1-4c3d-bad2-6d0a2ce27e4c",
+  "_skill": "creating-change-records",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "4546ee653a44bd61beba656a58752ac4f42e8dd9893c59e7ee4c436cd0c43067"
+}

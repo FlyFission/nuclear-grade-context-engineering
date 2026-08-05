@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 18745,
+  "num_turns": 8,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0736753,
+  "usage": {
+    "input_tokens": 12,
+    "cache_creation_input_tokens": 6258,
+    "cache_read_input_tokens": 64901,
+    "output_tokens": 1063,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 6258,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 129,
+        "cache_read_input_tokens": 12194,
+        "cache_creation_input_tokens": 344,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 344
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 581,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006760000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 12,
+      "outputTokens": 1063,
+      "cacheReadInputTokens": 64901,
+      "cacheCreationInputTokens": 6258,
+      "webSearchRequests": 0,
+      "costUSD": 0.0729993,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory appears to be empty \u2014 there's no `retryCount` variable, no login rate limiter code, and no PKT-118 packet or diff anywhere in this repo that I can find.\n\nCould you point me to the file(s) or confirm the diff is somewhere else (e.g., a different branch, an uncommitted stash, or a path outside this directory)? I don't want to guess at code that isn't here.",
+  "ttft_ms": 2413,
+  "ttft_stream_ms": 1241,
+  "time_to_request_ms": 29,
+  "time_to_request_from_spawn_ms": 1413358,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594407852.2834,
+  "type": "result",
+  "duration_ms": 18868,
+  "uuid": "d056c5b1-cd08-41d7-82b7-a5620c993d96",
+  "_skill": "closing-stale-packets",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "db0f2ff57ed6a960617abf8851df0067d5ab2b8f1c5a88dca8e282e58eb1b618"
+}

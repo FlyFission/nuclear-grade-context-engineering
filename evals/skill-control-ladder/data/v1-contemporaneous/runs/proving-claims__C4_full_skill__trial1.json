@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 28405,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.059662,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 4525,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1995,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4525,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1995,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 4525,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4525
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 617,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000697,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1995,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 4525,
+      "webSearchRequests": 0,
+      "costUSD": 0.058965,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The claim \"safe and fully backward compatible\" is broader than your evidence supports, and for payment processing specifically I wouldn't write it that way. Here's why, then a rewrite.\n\n**The gap:** both pieces of evidence you have \u2014 running the test suite yourself and reviewing your own diff \u2014 come from the same actor (you) who wrote the change. That's a legitimate self-check, but it's not independent verification. For a load-bearing claim on a payment module, \"safe and fully backward compatible\" needs someone other than the author to have exercised or reviewed it, or you need to be explicit that independent verification hasn't happened yet. A green test run only proves what the existing tests check \u2014 it doesn't prove backward compatibility for cases the suite doesn't cover (e.g., old client payloads, legacy API versions, edge cases in currency/rounding, idempotency behavior, DB schema assumptions).\n\n**Suggested evidence section:**\n\n```\n## Evidence\n\n**Claim: existing test suite passes against the refactored code**\n- Status: pass (self-verified)\n- Evidence: `<test command>` run locally, all N tests green \u2014 [link to log/CI run if available]\n- Note: run by the author; not yet independently re-run by a reviewer or CI-from-clean-checkout\n\n**Claim: diff reviewed for correctness**\n- Status: self-review only\n- Evidence: line-by-line review by the author before push\n- Note: this is a self-check, not a substitute for reviewer sign-off\n\n**Claim: fully backward compatible**\n- Status: gap \u2014 not yet independently verified\n- What's covered: existing test suite behavior is unchanged\n- What's NOT covered: no independent review yet; no explicit compatibility test cases added for [old API versions / legacy payloads / edge cases you know are risky]; no independent re-run of the suite by someone else or fresh CI\n\n## Ask for reviewers\nPlease independently re-run the test suite from a clean checkout and review the diff, particularly around [call out the riskiest parts of the refactor]. I'd treat the backward-compatibility claim as unverified until that happens.\n```\n\nThis gives reviewers something they can trust *because* it tells them exactly what's proven and what isn't, rather than a blanket assurance backed only by your own work. If you want, tell me what the refactor actually touches (interfaces, DB schema, external API contracts) and I can help you identify specific compatibility test cases to close the gap before merge.",
+  "ttft_ms": 15279,
+  "ttft_stream_ms": 1073,
+  "time_to_request_ms": 35,
+  "time_to_request_from_spawn_ms": 727065,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789365669.2993,
+  "type": "result",
+  "duration_ms": 27517,
+  "uuid": "0dae869a-42c7-4586-9b4b-f558d6cbd87a",
+  "_skill": "proving-claims",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "8cd93abb9bf584a6a8b2d6026ecb8b290f73525140c10b7a042570ed17826884"
+}

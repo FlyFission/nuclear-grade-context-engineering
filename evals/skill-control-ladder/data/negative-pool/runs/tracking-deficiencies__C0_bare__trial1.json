@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 6050,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0182523,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1940,
+    "cache_read_input_tokens": 6271,
+    "output_tokens": 271,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1940,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 271,
+        "cache_read_input_tokens": 6271,
+        "cache_creation_input_tokens": 1940,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1940
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00066,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 271,
+      "cacheReadInputTokens": 6271,
+      "cacheCreationInputTokens": 1940,
+      "webSearchRequests": 0,
+      "costUSD": 0.017592299999999998,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "That's fine \u2014 deleting a stray `print()` debug statement and re-running tests is exactly the right cleanup, and it's normal to fold it into your regular commit rather than making a separate one, unless your team prefers isolating debug cleanup for a cleaner diff/history.\n\nA couple of quick things worth double-checking before you push:\n\n- **Diff review**: run `git diff` (or `git status` + diff) to confirm only the intended change is there \u2014 no other leftover debug lines, commented-out code, or unrelated edits snuck in.\n- **Search for siblings**: quickly grep for other stray `print(` (or `console.log`, `debugger`, etc. depending on language) in the files you touched, in case there's more than one you missed.\n\nWant me to run a quick `git diff` and grep for other leftover debug statements in your changed files before you push?",
+  "ttft_ms": 4987,
+  "ttft_stream_ms": 656,
+  "time_to_request_ms": 29,
+  "time_to_request_from_spawn_ms": 1751891,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594746126.5618,
+  "type": "result",
+  "duration_ms": 8858,
+  "uuid": "47978a01-e817-4f25-aa04-b6910f1a4157",
+  "_skill": "tracking-deficiencies",
+  "_arm": "C0_bare",
+  "_trial": 1,
+  "_input_spec_sha256": "0eec2f8cf39ba9704da2ae6ff28badc1d7ab8e1a1ce984a8d3fc63944cde622f"
+}

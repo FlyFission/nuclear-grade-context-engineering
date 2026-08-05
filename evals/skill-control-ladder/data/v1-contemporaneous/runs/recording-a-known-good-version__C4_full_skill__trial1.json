@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 27345,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0634525,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 4222,
+    "cache_read_input_tokens": 26215,
+    "output_tokens": 1965,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4222,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1409,
+        "cache_read_input_tokens": 10145,
+        "cache_creation_input_tokens": 357,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 357
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007629999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1965,
+      "cacheReadInputTokens": 26215,
+      "cacheCreationInputTokens": 4222,
+      "webSearchRequests": 0,
+      "costUSD": 0.06268950000000001,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory is empty \u2014 there's no existing `controlled-items.md`, `change-impact.md`, `verification.md`, or `ship.md` to link into this baseline. Since the skill requires the record to point to real evidence rather than assert it, I need a few concrete details before I draft `baseline.md`:\n\n1. **Exact commit SHA** for the PR #482 merge (or is the PR number + branch the identifier you want to use)?\n2. **Verification evidence** \u2014 where does the eval suite report live (a link, file path, or dashboard), and what were the actual precision/recall numbers vs. the prior baseline?\n3. **Scope** \u2014 did this release touch anything besides the `embed-v1` \u2192 `embed-v2` swap (e.g., re-indexing, config/threshold changes, downstream ranking code)? Anything intentionally *not* included (e.g., a related model or service left on the old version)?\n4. **Accepted gaps** \u2014 is there anything QA didn't cover (e.g., cold-start users, specific segments, latency/cost impact of the new model) that you're knowingly accepting as risk? Who owns that gap if it needs follow-up?\n5. **Re-check triggers** \u2014 besides \"production degrades,\" should this baseline be invalidated by things like: `embed-v2` receiving a further vendor update, a new eval suite version, or a specific monitoring threshold being crossed?\n\nIf some of these don't apply or don't exist yet, just say so and I'll record them as explicit gaps rather than leaving them implied.",
+  "ttft_ms": 1699,
+  "ttft_stream_ms": 993,
+  "time_to_request_ms": 31,
+  "time_to_request_from_spawn_ms": 920681,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789559029.186,
+  "type": "result",
+  "duration_ms": 27959,
+  "uuid": "b7de5d78-37d6-4372-9e7e-064f0866e4e5",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "d28c9c68b0162373c880502a64ded3327b05d69b5d07552dc4b6ca7244d9047a"
+}

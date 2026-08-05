@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 38828,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.07476529999999999,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 3651,
+    "cache_read_input_tokens": 24591,
+    "output_tokens": 2976,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3651,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1719,
+        "cache_read_input_tokens": 9800,
+        "cache_creation_input_tokens": 131,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 131
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 694,
+      "outputTokens": 26,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000824,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2976,
+      "cacheReadInputTokens": 24591,
+      "cacheCreationInputTokens": 3651,
+      "webSearchRequests": 0,
+      "costUSD": 0.07394129999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I can't actually sign off on this \u2014 the repo here is empty, so I have nothing to verify against, and even if it weren't, \"small diff + green CI + prior approval\" doesn't cover the specific risk this changelog note introduces.\n\n**The concern isn't the diff size, it's the new default behavior.** Turning on automatic retries for timeouts by default in a *payments* SDK is a meaningfully different risk category than a typical bug-fix bump, because of one question the changelog snippet doesn't answer: when a request to create a charge/payment intent times out on the client side but actually succeeded on Stripe's end, does the retry reuse the same idempotency key (safe) or does it fire a new request (duplicate charge)?\n\nThat's not something your existing test suite would have caught \u2014 \"payment integration tests are green\" almost certainly means happy-path success, not \"simulated timeout after the charge already landed server-side, verify no duplicate.\" That's a new code path 3.5.0 just turned on, so a passing suite that predates it isn't real evidence either way.\n\nThree things I'd want answered before merging, not after:\n\n1. **Idempotency guarantee on retry** \u2014 does stripe-node-lite auto-generate/reuse an idempotency key per logical call (safe) or per HTTP attempt (unsafe)? This determines whether flash-sale traffic spikes now risk double-charging customers, which is the exact scenario you're bumping this for.\n2. **Retry stacking** \u2014 does checkout service already wrap Stripe calls in its own timeout/retry logic? If so, the SDK's new default retries could compound with yours during a spike \u2014 the opposite of the resilience win you're expecting, and it'd show up as a thundering-herd/rate-limit problem specifically under the load conditions you're targeting.\n3. **shipping-rates isn't a valid precedent** unless it was also making mutating charge/payment calls rather than reads \u2014 retry-on-timeout risk is completely different for a read (shipping rate lookup) than a write that moves money.\n\nIf you can confirm idempotency keys are handled correctly on retry and there's no double retry-wrapper in checkout, I'd be comfortable with this. If you can't confirm that tonight, the safer move is either explicitly disabling the new auto-retry via config until it's verified, or merging with retries on but adding a monitoring/alert on duplicate-charge rate for the first 24h post-release. Given it's a payments path going out before a flash-sale-heavy weekend, I wouldn't treat \"small diff, approved this morning\" as sufficient on its own.",
+  "ttft_ms": 12775,
+  "ttft_stream_ms": 1386,
+  "time_to_request_ms": 45,
+  "time_to_request_from_spawn_ms": 519944,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078294443.3623,
+  "type": "result",
+  "duration_ms": 39511,
+  "uuid": "3ccdf9d5-f393-47e2-93ff-61c7253828f4",
+  "_spec": "1ede86bfd3680c91ca88f7f37ea15a01463d81b166e10a183d60aafdbfc43f0b",
+  "_skill": "checking-release-readiness",
+  "_cand": 1,
+  "_trial": 2
+}

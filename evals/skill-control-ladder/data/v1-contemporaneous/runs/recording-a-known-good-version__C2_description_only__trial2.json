@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 29628,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.05555379999999999,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2576,
+    "cache_read_input_tokens": 23456,
+    "output_tokens": 2152,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2576,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1906,
+        "cache_read_input_tokens": 8727,
+        "cache_creation_input_tokens": 129,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 129
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007629999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2152,
+      "cacheReadInputTokens": 23456,
+      "cacheCreationInputTokens": 2576,
+      "webSearchRequests": 0,
+      "costUSD": 0.054790799999999994,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The repo is empty, so there's no existing template or prior known-good records to match \u2014 I'll draft this from scratch based on what you've told me. A few notes before the draft:\n\n- I don't have independent access to PR #482, the eval suite output, or QA's sign-off \u2014 everything below comes from your description. I've marked the spots that need real numbers/names/links so the record is actually verifiable later, not just asserted.\n- \"Stable for an hour\" is a thin observation window for a rollback-reference record. I'd suggest either waiting for a longer soak (e.g., 24h) before calling it accepted, or explicitly recording it as \"accepted pending a monitoring window\" with a follow-up date to confirm.\n\nDraft:\n\n---\n\n## Known-Good Version Record: v2.3.0 \u2014 Recommendation Service\n\n**Status:** Accepted (production) \u2014 *pending 24h stability confirmation*\n**Recorded:** 2026-08-03 by benjaminhuffer1@gmail.com\n**Deployed:** 2026-08-03, ~1 hour prior to this record, via PR #482\n\n### What's in this version\n- Embedding model dependency upgraded: `embed-v1` \u2192 `embed-v2`\n- [commit SHA / tag for v2.3.0 \u2014 fill in]\n- [any other changes bundled in PR #482, if not solely the model upgrade]\n\n### Why this version is trusted\n- New eval suite run against `embed-v2` showed improved precision and recall vs. the prior baseline (`embed-v1`).\n  - Precision: [prior] \u2192 [new]\n  - Recall: [prior] \u2192 [new]\n  - Eval suite version/link: [fill in]\n- QA sign-off: [name/team] approved on [date], based on the above eval results.\n- Production deploy has been stable for ~1 hour post-release (no alerts/errors observed as of this record).\n\n### Rollback reference\n- Last known-good version prior to this: [v2.2.x \u2014 commit/tag]\n- Rollback path: revert PR #482 / redeploy [prior tag], reverting to `embed-v1`.\n\n### What would make this record out of date\n- Any production incident, elevated error rate, or degraded recommendation quality traced to `embed-v2` after this record.\n- Drift discovered between eval suite results and real production behavior (e.g., precision/recall gains not holding up under live traffic).\n- `embed-v2` itself being deprecated, patched, or replaced upstream.\n- A future eval suite change that invalidates this baseline comparison.\n\n---\n\nTo finalize this, can you give me:\n1. The actual precision/recall numbers (before/after) and a link to the eval suite results?\n2. Who signed off on QA, and the commit SHA/tag for v2.3.0?\n3. The prior known-good version to reference for rollback?\n4. Where you'd like this saved (e.g., a `docs/` or `CHANGELOG`-style file \u2014 the repo currently has none)?",
+  "ttft_ms": 1631,
+  "ttft_stream_ms": 892,
+  "time_to_request_ms": 33,
+  "time_to_request_from_spawn_ms": 859305,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789497826.1514,
+  "type": "result",
+  "duration_ms": 28679,
+  "uuid": "8cdb59f4-ae2f-48ea-84e1-294d096f4a10",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C2_description_only",
+  "_trial": 2,
+  "_input_spec_sha256": "e4b397fecb333c773679ae125a0df3e537437af52fae1a737ef0b4cd0d8c29c8"
+}

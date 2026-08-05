@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 24927,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0550862,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 3564,
+    "cache_read_input_tokens": 24634,
+    "output_tokens": 1702,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3564,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 787,
+        "cache_read_input_tokens": 9584,
+        "cache_creation_input_tokens": 260,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 260
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 679,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000764,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1702,
+      "cacheReadInputTokens": 24634,
+      "cacheCreationInputTokens": 3564,
+      "webSearchRequests": 0,
+      "costUSD": 0.0543222,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This working directory is empty \u2014 there's no marketing site repo here and no diff was actually attached to your message, so there's nothing for me to merge even mechanically.\n\nBut separately, I'd want to pause on this one regardless of repo access, and here's why:\n\n**\"SOC 2 Type II certified\" is a public compliance claim, not routine copy.** Even though the underlying fact (you have a report) isn't changing, this category is different from typical marketing copy for two reasons:\n\n1. **Precision matters legally.** SOC 2 doesn't have \"certification\" \u2014 AICPA auditors issue an *attestation report*, not a certificate. \"Certified\" is a common but technically incorrect claim that some companies have gotten scrutiny for. If the current copy already says \"certified,\" that's worth fixing while you're in there, not amplifying.\n2. **Making it more prominent changes its risk profile**, even if the words are similar. A quiet mention and a call-out banner get different scrutiny from prospects, auditors, and (if ever relevant) regulators/lawyers \u2014 especially since your stated motivation is a competitor getting called out for exactly this kind of claim.\n\nDana approving the original copy for a background mention doesn't necessarily cover a more prominent, sales-facing claim \u2014 that's a different decision, even if it reuses her words.\n\n**What I'd suggest instead of merging on your say-so:**\n- Get eyes from whoever owns your actual SOC 2 report/compliance function (security, legal, or whoever manages the audit) \u2014 just to confirm \"certified\" is the term they're comfortable with and the report is current/unqualified.\n- If that's already been done and I just don't have visibility into it, tell me and share the actual diff/PR link \u2014 I'm glad to review the JSX and help you get it merged today.\n\nPoint me to the actual repo (or paste the diff) and let me know if compliance/legal has signed off on the wording, and I can move quickly from there.",
+  "ttft_ms": 9156,
+  "ttft_stream_ms": 867,
+  "time_to_request_ms": 29,
+  "time_to_request_from_spawn_ms": 1886211,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079661029.7107,
+  "type": "result",
+  "duration_ms": 25699,
+  "uuid": "7186b703-9faa-4957-9be7-ee19d8bc042c",
+  "_skill": "rating-change-risk",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "32e315f7d8a7e347ec88fb8757b65ab332dffc7c2723367f6048247d2537c636"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 17475,
+  "num_turns": 6,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0454423,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 3125,
+    "cache_read_input_tokens": 23991,
+    "output_tokens": 1246,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3125,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 705,
+        "cache_read_input_tokens": 9085,
+        "cache_creation_input_tokens": 320,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 320
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 702,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000787,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1246,
+      "cacheReadInputTokens": 23991,
+      "cacheCreationInputTokens": 3125,
+      "webSearchRequests": 0,
+      "costUSD": 0.044655299999999995,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No, you're not done \u2014 patching your own bot only fixed one of four consumers. This is a shared-defect situation, not a closed issue.\n\n**What's still outstanding:**\n\n1. **Fix isn't shared, only worked around.** Your override lives in the support bot's codebase; `prompt-common` itself still ships the bug. Sales, onboarding, and internal-tools are still exposed every time the truncation edge case triggers.\n\n2. **Notify the other three teams directly.** A code comment in your repo won't reach them \u2014 they don't read your codebase. Send them (or the `prompt-common` maintainer/owner) an explicit notice covering:\n   - **What**: formatting bug in the shared system-prompt template that can leak internal tool/DB-identifier names into customer-facing output under long-conversation truncation.\n   - **Severity**: this is a security/data-exposure issue (internal tool identifiers leaking to customers), not just a cosmetic bug \u2014 flag it as such, not low-priority.\n   - **Trigger condition**: long conversations hitting the truncation edge case, so they can reproduce/verify.\n   - **Workaround**: your local override, as a stopgap they can apply themselves.\n   - **Fix**: ideally a proper patch landed in `prompt-common` upstream (see #3), with an owner and tracking link.\n\n3. **Fix `prompt-common` upstream**, not just your local copy \u2014 otherwise every future consumer of that package inherits the bug too. File an issue/PR against the shared package itself.\n\n4. **Log this as a shared-defect report**, tied to whatever incident/OPEX record and deficiency register your org uses, so it's tracked to resolution across all four teams rather than just closed on your end.\n\nGiven this leaks internal tool/database identifiers to customers, I'd treat it as a security-relevant disclosure and escalate rather than let it sit as a quiet heads-up \u2014 especially since sales, onboarding, and internal-tools bots are exposed right now and don't know it.\n\nDo you want help drafting the notification (bug report + severity + workaround) to send to the other teams, or drafting the upstream fix/PR for `prompt-common`?",
+  "ttft_ms": 2354,
+  "ttft_stream_ms": 833,
+  "time_to_request_ms": 46,
+  "time_to_request_from_spawn_ms": 1075964,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025954545.6475,
+  "type": "result",
+  "duration_ms": 15639,
+  "uuid": "538174f8-54c4-4002-ab1e-da85a9ebc144",
+  "_skill": "reporting-shared-defects",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "41b168ac7a01b0726b5ab40da47d1fee99d3879be53c9e916b56f862c83f6eb1"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 24761,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.052276,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2701,
+    "cache_read_input_tokens": 23590,
+    "output_tokens": 1881,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2701,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1510,
+        "cache_read_input_tokens": 8857,
+        "cache_creation_input_tokens": 124,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 124
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 680,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00076,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1881,
+      "cacheReadInputTokens": 23590,
+      "cacheCreationInputTokens": 2701,
+      "webSearchRequests": 0,
+      "costUSD": 0.051516,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't have the actual repo contents here (it's empty in this environment), so I can't grep for other references myself \u2014 but based on what you've described, a few things are worth checking before merge, beyond docs/schema/validator/samples:\n\n1. **Backward compatibility for existing customer configs.** This is the big one, especially with an onboarding call tomorrow: if any customer already has a config file with `graceperiod_days` (in production, in a saved template they got from you, in a support ticket example), does the validator now reject it outright, or is there an alias/deprecation shim? A hard rename with no back-compat could break existing customers the moment this ships \u2014 which is a worse outcome than the typo.\n\n2. **Is this field exposed externally** \u2014 API request/response bodies, exported config downloads, webhook payloads? If so, external integrations (not just files in this repo) reference the old name and your test suite won't catch that.\n\n3. **Precedent check on `apikey` \u2192 `api_key`:** did that migration ship a compatibility alias, or was it a flag day? \"Went smoothly\" for that one doesn't tell you whether it was smooth *because* of an alias, or smooth *because* nothing external depended on it yet. Worth confirming which, since it determines whether you can copy the pattern safely here.\n\n4. **Storage/DB migration** \u2014 if configs are persisted (DB column, stored JSON blob, cache), a schema template + validator rename doesn't touch already-persisted data.\n\n5. **Other repos/services** that consume this schema (SDKs, CLI tools, other microservices) \u2014 \"full test suite is green\" only covers this repo.\n\n6. **CHANGELOG/release notes** entry, since this is a field rename that could be breaking for someone.\n\nGiven the deadline, I'd specifically confirm #1 and #3 before merging \u2014 if there's any chance a live customer config uses the old field name, ship with a deprecation alias (accept both, warn on old) rather than a hard cutover.",
+  "ttft_ms": 1724,
+  "ttft_stream_ms": 998,
+  "time_to_request_ms": 64,
+  "time_to_request_from_spawn_ms": 1744022,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079518743.7102,
+  "type": "result",
+  "duration_ms": 25985,
+  "uuid": "63bb3928-aac2-4d89-ae99-679c5fb272e9",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "e16f85a1d28361ab14c162644e0072e834ca7a9d63a53916bede0960c3938ab6"
+}

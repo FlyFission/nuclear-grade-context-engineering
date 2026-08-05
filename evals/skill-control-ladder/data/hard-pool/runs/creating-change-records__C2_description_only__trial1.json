@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 39605,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0772442,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 3583,
+    "cache_read_input_tokens": 33854,
+    "output_tokens": 2985,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3583,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1801,
+        "cache_read_input_tokens": 9616,
+        "cache_creation_input_tokens": 247,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 247
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 701,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000791,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 2985,
+      "cacheReadInputTokens": 33854,
+      "cacheCreationInputTokens": 3583,
+      "webSearchRequests": 0,
+      "costUSD": 0.0764532,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before I set this up \u2014 the order of events you described has build #9012 happening, and then a rebase-and-repush last night. If that CI run was against the pre-rebase commit, it doesn't actually cover the code that's now on the PR (post-rebase), and \"fully tested and ready to merge\" wouldn't be a claim that evidence backs, even though the rebase itself was clean.\n\nCan you confirm the commit SHA for build #9012 matches PR #4821's current HEAD (i.e., CI re-ran after the repush, not before)? If CI hasn't re-run against the rebased commit yet, that's worth triggering now rather than skipping given the 5pm window \u2014 a one-line constant change is low risk, but merging on stale CI evidence isn't really \"nothing scary,\" it's just a different kind of risk.\n\nOnce that's confirmed, I'm also not able to actually write the change record file in this session \u2014 I only have read/search tools available here, not file-write access \u2014 so you'll need to create it directly or point me to wherever this session should have that access.",
+  "ttft_ms": 10370,
+  "ttft_stream_ms": 1234,
+  "time_to_request_ms": 61,
+  "time_to_request_from_spawn_ms": 1807959,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079582769.574,
+  "type": "result",
+  "duration_ms": 40235,
+  "uuid": "d29cb653-d3fa-4c47-b811-087d5ab4ffff",
+  "_skill": "creating-change-records",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "42f79f9bf6b811045a2c9da2b108f4c83785fd0fa905bb101ea46006354bf3a9"
+}

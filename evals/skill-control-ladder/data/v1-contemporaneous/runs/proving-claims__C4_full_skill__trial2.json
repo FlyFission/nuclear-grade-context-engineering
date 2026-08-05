@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 21330,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.050296999999999994,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 4525,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1371,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4525,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1371,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 4525,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4525
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 617,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000692,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1371,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 4525,
+      "webSearchRequests": 0,
+      "costUSD": 0.049604999999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A few issues with that wording before I draft anything: \"safe and fully backward compatible\" is an unscoped, absolute claim on a payment-processing module, but your evidence is entirely self-generated \u2014 you ran the tests yourself and reviewed your own diff. That's a self-check, not independent verification, and self-checks shouldn't be presented as proof that stands on its own for a claim this consequential (money-handling code). Reviewers reading \"safe and fully backward compatible\" backed by \"I checked it myself\" have no independent basis to trust it.\n\nWhat I'd suggest instead: write the evidence section to state exactly what you did and what it covers, flag what it doesn't cover, and let the backward-compatibility conclusion be something reviewers arrive at themselves once they've verified \u2014 not something you assert for them.\n\nHere's a draft:\n\n---\n\n**Evidence**\n\n- Ran the existing test suite locally: `<command>` \u2014 all tests passing (`<N> passed, 0 failed`). This exercises `<what the suite actually covers \u2014 e.g. happy-path charge/refund flows, existing API contracts>`.\n- Reviewed the full diff line-by-line myself before pushing. This is a self-check by the author, not an independent review.\n\n**Known gaps**\n\n- No independent reviewer has verified backward compatibility yet \u2014 this PR is pending that review.\n- `<list anything the existing suite doesn't cover, e.g. concurrent payment edge cases, currency rounding, webhook retry behavior, any changed error codes/response shapes>` \u2014 not yet covered by tests; call out explicitly if these are unchanged by design or need new test cases.\n- No explicit backward-compatibility test cases (e.g. old client payloads against new code paths) were added \u2014 the existing suite tests current behavior but wasn't written to catch compat regressions specifically.\n\n**Ask for reviewers**\n\nPlease verify backward compatibility independently, particularly around `<the riskiest changed surfaces \u2014 API shapes, DB schema, external webhook/callback contracts, idempotency keys, etc.>`.\n\n---\n\nWant me to fill in the specifics (test command, coverage areas, changed surfaces)? If you tell me what actually changed in the diff, I can help identify which parts are the real backward-compat risk areas so the gaps list is concrete instead of generic.",
+  "ttft_ms": 9325,
+  "ttft_stream_ms": 1079,
+  "time_to_request_ms": 27,
+  "time_to_request_from_spawn_ms": 163122,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788801729.4404,
+  "type": "result",
+  "duration_ms": 21557,
+  "uuid": "08f847eb-0063-457b-9fd6-d0a8090c09cd",
+  "_skill": "proving-claims",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "8cd93abb9bf584a6a8b2d6026ecb8b290f73525140c10b7a042570ed17826884"
+}

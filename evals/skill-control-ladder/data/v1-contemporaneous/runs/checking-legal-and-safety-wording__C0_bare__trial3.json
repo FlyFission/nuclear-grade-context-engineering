@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 18287,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.034471299999999996,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1994,
+    "cache_read_input_tokens": 6271,
+    "output_tokens": 1329,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1994,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1329,
+        "cache_read_input_tokens": 6271,
+        "cache_creation_input_tokens": 1994,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1994
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 615,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000685,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1329,
+      "cacheReadInputTokens": 6271,
+      "cacheCreationInputTokens": 1994,
+      "webSearchRequests": 0,
+      "costUSD": 0.0337863,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 this wording has real legal exposure. Three problems:\n\n1. **\"MIT license... so it's safe for production\"** \u2014 non sequitur, and actually contradicted by the license itself. MIT explicitly disclaims all warranties and liability (\"THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND...\"). Tying license type to safety implies a guarantee the license text itself disclaims \u2014 that's the kind of inconsistency legal reviewers flag immediately.\n\n2. **\"Passed all our internal tests\"** \u2014 vague and unverifiable as written. If true, fine, but \"all our internal tests\" invites the question \"which tests, covering what?\" If this isn't backed by public test docs/CI badges, it reads as unsubstantiated marketing puffery attached to a security-sensitive product.\n\n3. **\"Fully compliant with PCI security standards\"** \u2014 this is the one to stop and fix before anything else. PCI DSS compliance isn't a property a library can self-declare \u2014 it's a formal assessment (QSA audit, Report on Compliance / Attestation of Compliance) of an *environment* that handles cardholder data, not a code library in isolation. Unless you've actually undergone that assessment and hold current attestation documents, stating \"fully compliant with PCI\" is a false compliance claim. That's a serious liability risk: downstream users may rely on it for their own PCI scope decisions, and if there's ever a breach, an unsubstantiated compliance claim in your README is exactly the kind of thing that turns into a lawsuit or regulatory issue.\n\n**Recommendation for legal:** strip the safety/compliance assertions entirely unless you have documentation to back them, and replace with accurate, defensible language, e.g.:\n\n> \"PayCheck is released under the MIT license (see LICENSE). It is provided as-is, without warranty; see the license for details. PayCheck implements [specific validation logic \u2014 e.g., card number format/Luhn checks], but achieving PCI DSS compliance is the responsibility of the system integrating it. Consult your QSA or compliance team when incorporating PayCheck into a cardholder-data environment.\"\n\nThat's accurate, keeps the marketing tone reasonable, and removes the claims most likely to create liability. Send this back to legal/marketing before publishing.",
+  "ttft_ms": 7507,
+  "ttft_stream_ms": 1046,
+  "time_to_request_ms": 28,
+  "time_to_request_from_spawn_ms": 1504067,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785790142593.883,
+  "type": "result",
+  "duration_ms": 18186,
+  "uuid": "45ec4252-4dfa-4144-b684-667f267b1f86",
+  "_skill": "checking-legal-and-safety-wording",
+  "_arm": "C0_bare",
+  "_trial": 3,
+  "_input_spec_sha256": "3e54219157eaaff87521fbea2208e384859bf120583aa2695a8273fe246683f7"
+}

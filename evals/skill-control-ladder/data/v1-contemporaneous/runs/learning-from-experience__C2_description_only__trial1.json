@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 49027,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.074107,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2687,
+    "cache_read_input_tokens": 14680,
+    "output_tokens": 3522,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2687,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 3087,
+        "cache_read_input_tokens": 8400,
+        "cache_creation_input_tokens": 567,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 567
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007390000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 3522,
+      "cacheReadInputTokens": 14680,
+      "cacheCreationInputTokens": 2687,
+      "webSearchRequests": 0,
+      "costUSD": 0.073368,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Here's a draft. The core issue isn't that the engineer bypassed the hook \u2014 it's that your only secrets-scanning control was one a developer could unilaterally disable under deadline pressure, with no backstop.\n\n## Incident Report: Hardcoded API Key Merged to Production\n\n**Date of incident:** [fill in \u2014 commit date]\n**Detected:** Routine security audit, ~3 days post-merge\n**Resolved:** Key rotated same day as detection\n**Severity:** [e.g. Sev-2] \u2014 credential exposed in production for 3 days, no confirmed exploitation\n\n### Summary\nAn engineer's commit failed the pre-commit secrets-scanning hook. Under time pressure to ship before a deadline, they ran `git commit --no-verify`, bypassing the check, and pushed. The commit \u2014 containing a hardcoded API key \u2014 merged to `main` and ran in production for 3 days before being caught by a routine security audit. The key was rotated immediately upon discovery.\n\n### Impact\n- API key exposed in the git history and production for ~3 days.\n- [Add: was the key exposure in a public repo, internal only, blast radius/scope of what it granted access to, any evidence of misuse from logs.]\n\n### Timeline\n- **T-0:** Pre-commit secrets hook fails on engineer's branch.\n- **T-0:** Engineer runs `git commit --no-verify`, commits, pushes.\n- **T-0 to T-1:** PR reviewed and merged to `main` (hook failure not visible to reviewer).\n- **T-0 + 3 days:** Security audit flags the hardcoded key.\n- **Same day:** Key rotated.\n\n### Root cause\nThe secrets-scanning control existed only as a local pre-commit hook. Pre-commit hooks are client-side and opt-out by design (`--no-verify`) \u2014 they're a convenience for developers, not an enforcement mechanism. There was no server-side check (CI, branch protection, or platform-native secret scanning) that would have caught the same key on push or at merge time. Once the local check was skipped, nothing else in the pipeline was positioned to catch it.\n\n### Contributing factors\n- No CI job re-running the secrets scan on push/PR, so the bypass was invisible to reviewers and to `main`.\n- No branch protection rule requiring a passing security check before merge.\n- Deadline pressure gave the engineer a strong incentive to route around a failing check with no faster alternative (e.g., a way to flag \"this looks like a false positive, need eyes\") other than skip-and-ship.\n- The hook was failing in the first place \u2014 worth confirming whether it was a true positive that got ignored, or a flaky/broken check, since a hook that cries wolf trains people to bypass it.\n- The secret was hardcoded at all, rather than pulled from a secrets manager \u2014 meaning even a clean scan wouldn't fix the underlying pattern.\n\n### Corrective actions\n\n| # | Action | Priority | Why it matters |\n|---|--------|----------|-----------------|\n| 1 | Add the same (or equivalent) secrets scan as a **required CI check** on every push/PR, blocking merge on failure | Must | This is the actual fix \u2014 it can't be bypassed with `--no-verify` since it runs server-side |\n| 2 | Turn on branch protection on `main` requiring that check to pass | Must | Closes the gap where a failed/bypassed check still merges |\n| 3 | Enable your platform's native secret scanning + push protection (e.g., GitHub Advanced Security secret scanning) as a second, independent layer | Should | Defense in depth \u2014 catches known credential patterns even if your custom linter has a gap |\n| 4 | Investigate why the hook was failing on that branch | Should | If it was a false positive, that's a linter problem worth fixing directly; if it was a true positive, that's the more important finding |\n| 5 | Document an escalation path for a legitimately broken/false-positive hook (e.g., ping security on-call for a reviewed override) instead of defaulting to `--no-verify` | Should | Gives people under pressure a faster *safe* path instead of an unsafe one |\n| 6 | Scan the existing codebase/history for other hardcoded secrets, not just new commits | Should | This incident is evidence the pattern may exist elsewhere |\n| 7 | Move this and other API keys into a secrets manager/vault rather than embedding in code | Should | Removes the root pattern, not just the detection gap |\n| 8 | Where feasible, prefer short-lived/rotatable credentials over long-lived static keys | Nice to have | Shrinks blast radius if a future leak does happen |\n\n### What this isn't\nThis isn't about the engineer's judgment \u2014 a bypassable local hook plus deadline pressure will produce this outcome eventually regardless of who's on the keyboard. The fix is structural: make the control server-side and non-optional, and give people a fast legitimate path when a check is genuinely wrong.\n\n---\n\nWant me to save this as a markdown file (e.g. `postmortem-2026-XX-XX-hardcoded-key.md`) somewhere in this repo, or is this destined for a different doc/ticket system? I can also tighten it into a shorter Slack-postable version if that's more useful for kicking off the retro.",
+  "ttft_ms": 4151,
+  "ttft_stream_ms": 1531,
+  "time_to_request_ms": 39,
+  "time_to_request_from_spawn_ms": 121842,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788760369.5564,
+  "type": "result",
+  "duration_ms": 50159,
+  "uuid": "b8763512-22d9-4f6f-a3a7-3396c7467f2c",
+  "_skill": "learning-from-experience",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "4dbea7cefe1c8425ec97d7d54173d4fc3fc08bc958b4043160ef0219e4a03c7a"
+}

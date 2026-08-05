@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 35736,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.06834789999999999,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 3321,
+    "cache_read_input_tokens": 24253,
+    "output_tokens": 2690,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3321,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1759,
+        "cache_read_input_tokens": 9460,
+        "cache_creation_input_tokens": 141,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 141
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 688,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000778,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2690,
+      "cacheReadInputTokens": 24253,
+      "cacheCreationInputTokens": 3321,
+      "webSearchRequests": 0,
+      "costUSD": 0.06756989999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This repo is empty \u2014 there's no checkout service or retry-lib code here to swap, so I can't make this change as literally described. But separate from that, I'd flag this plan before touching payment code even if the repo existed.\n\n**The swap is being justified by a claim, not a diagnosis.** Nobody has confirmed the retry library is *why* checkout is timing out. \"Drop-in replacement, same behavior, just faster\" is one engineer's recollection from a different job/system, unverified against retrypro's actual source or docs. Two things could go wrong precisely because of that gap:\n\n1. **If the retry lib isn't the bottleneck**, swapping it does nothing for the timeouts (connection pool exhaustion, DB contention, or a degraded payment gateway are just as plausible) \u2014 you ship risk today and still miss EOD with a fix.\n2. **If \"faster\" means more aggressive retries with less backoff/jitter**, and the real cause is a downstream payment gateway already struggling under load, a faster retry lib can *increase* pressure on it \u2014 thundering herd \u2014 making timeouts worse, not better.\n\nFor payment retry logic specifically, \"same behavior\" is a strong claim that needs checking, not assuming: idempotency-key handling, what counts as a retryable error, max retry budget, and backoff/jitter strategy all differ between retry libraries in ways that matter a lot here. A mismatch on idempotency handling under a swap made same-day, without tests, is the kind of thing that turns abandoned carts into duplicate charges \u2014 a worse outcome than the one you're fixing.\n\n**The one fact that would change this:** where the time is actually going during a timeout \u2014 inside the retry loop itself, or waiting on a downstream dependency. That's answerable from existing traces/logs for the last two days without writing a line of new code, and it's what tells you whether retrypro is even the right lever.\n\nI'd rather help with that first \u2014 pull the timeout traces to localize where the time goes, and/or write a load test that reproduces the timeout so any fix (retry-lib swap or otherwise) can be verified before merge. Want me to start there?",
+  "ttft_ms": 8527,
+  "ttft_stream_ms": 876,
+  "time_to_request_ms": 56,
+  "time_to_request_from_spawn_ms": 1075394,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789713803.4175,
+  "type": "result",
+  "duration_ms": 36208,
+  "uuid": "74ca03ff-178a-44e3-8759-b56d8035831b",
+  "_skill": "questioning-attitude",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "122195109c8bdf30d58c81ef3f4baf8b1909f2a15f525dfca9d0698e7aca35aa"
+}

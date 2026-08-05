@@ -1,0 +1,93 @@
+{
+  "is_error": false,
+  "duration_api_ms": 36693,
+  "num_turns": 6,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0643606,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2962,
+    "cache_read_input_tokens": 32492,
+    "output_tokens": 2408,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2962,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1835,
+        "cache_read_input_tokens": 9114,
+        "cache_creation_input_tokens": 128,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 128
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 607,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000697,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 2408,
+      "cacheReadInputTokens": 32492,
+      "cacheCreationInputTokens": 2962,
+      "webSearchRequests": 0,
+      "costUSD": 0.0636636,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [
+    {
+      "tool_name": "Glob",
+      "tool_use_id": "toolu_019EnotqcSjYcFHoKJC3UEja",
+      "tool_input": {
+        "pattern": "**/CLAUDE.md",
+        "path": "<sandbox-path>"
+      }
+    }
+  ],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory here is empty \u2014 I don't see a `package.json` or any prompt template file to edit. Before I touch anything, two things:\n\n**Mode:** I'd treat the dependency bump alone as Quick (patch version, mechanical, nothing to review), but the system prompt edit is a behavior-affecting change to what gets sent to the model \u2014 that pushes this pair toward Standard-plus, since it needs at least a one-line record of *what* instruction is being added and *why*, plus a quick proof (e.g., one test run showing the new instruction does what you intend) before merge. I'd suggest keeping it in the same PR but noting the prompt change separately so it's not just riding along on a routine version bump.\n\nCan you point me to the actual file paths (`package.json` and the system prompt template file)? And what's the new instruction line you want added \u2014 I'll make sure it's testable before we call it done.",
+  "ttft_ms": 2263,
+  "ttft_stream_ms": 814,
+  "time_to_request_ms": 101,
+  "time_to_request_from_spawn_ms": 454956,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789092867.5225,
+  "type": "result",
+  "duration_ms": 36593,
+  "uuid": "76222efc-d454-4de4-a627-2148c6178603",
+  "_skill": "using-nuclear-grade",
+  "_arm": "C2_description_only",
+  "_trial": 2,
+  "_input_spec_sha256": "49a01bec4e54568d7af751729e41660ee715fb9b2e49d07086725e909769f6bb"
+}

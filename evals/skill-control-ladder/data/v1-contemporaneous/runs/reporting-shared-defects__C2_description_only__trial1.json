@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 20377,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0382228,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2460,
+    "cache_read_input_tokens": 14796,
+    "output_tokens": 1215,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2460,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1041,
+        "cache_read_input_tokens": 8516,
+        "cache_creation_input_tokens": 224,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 224
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 702,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000787,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1215,
+      "cacheReadInputTokens": 14796,
+      "cacheCreationInputTokens": 2460,
+      "webSearchRequests": 0,
+      "costUSD": 0.037435800000000005,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 a local override with a comment only protects your bot. The other three teams are still shipping a template that can leak internal tool/DB identifiers to customers, and they don't know it. A few things to do:\n\n1. **Report it upstream, not just locally.** File an issue/ticket against `prompt-common` itself describing the truncation edge case and the leak, and ideally submit your fix as a PR/patch to the shared package so all four consumers get the real fix instead of each team needing its own override.\n\n2. **Proactively notify sales, onboarding, and internal-tools directly** \u2014 don't wait for them to discover it via the upstream fix. Since this is a customer-facing leak of internal identifiers (not just a cosmetic bug), a heads-up now is warranted rather than routine changelog discovery later.\n\n3. **Assess severity/exposure.** Check whether this has already leaked in production for any of the other three bots (or yours, before your patch). If real customers received internal tool/DB identifiers, that may cross into a security/data-exposure issue worth looping in your security team, not just a normal bug.\n\n4. **Add a regression test** for the truncation edge case in `prompt-common`'s test suite so it can't silently reappear if someone reverts or reworks the template later.\n\nYour local override is a fine stopgap, but the underlying defect is still live for 3/4 of the consumers of that shared artifact \u2014 the fix needs to land upstream (or at minimum be flagged to the owning teams) for this to actually be resolved.",
+  "ttft_ms": 2994,
+  "ttft_stream_ms": 1631,
+  "time_to_request_ms": 191,
+  "time_to_request_from_spawn_ms": 342794,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788979450.6404,
+  "type": "result",
+  "duration_ms": 20271,
+  "uuid": "8313e9ac-6b7a-450c-a4f9-c8810be0f141",
+  "_skill": "reporting-shared-defects",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "31499170666ed5715e065795f4fb06bdfe3f4b79c2c199215d21e1bda620c6c9"
+}

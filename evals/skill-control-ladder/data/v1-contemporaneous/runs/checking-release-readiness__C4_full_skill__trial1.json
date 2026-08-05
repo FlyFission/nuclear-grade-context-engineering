@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 18019,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0515543,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 4710,
+    "cache_read_input_tokens": 17071,
+    "output_tokens": 1164,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4710,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1015,
+        "cache_read_input_tokens": 10791,
+        "cache_creation_input_tokens": 199,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 199
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000701,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1164,
+      "cacheReadInputTokens": 17071,
+      "cacheCreationInputTokens": 4710,
+      "webSearchRequests": 0,
+      "costUSD": 0.050853300000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 this isn't ready to ship. Two of the release-readiness skill's explicit red flags are present here:\n\n**Block. Here's why:**\n\n1. **No rollback/restore path.** A Postgres 12\u219215 migration with index changes on the primary user database is hard to reverse \u2014 once traffic hits PG15 with new index structures, \"roll back\" isn't just `git revert`. You need a concrete plan: can you point back at a PG12 replica, do you have a pre-migration snapshot, is there a maintenance window to fall back into? Without this written down, you have no safe abort path if something breaks in production.\n\n2. **No monitoring for the actual risk.** \"Green CI\" tells you the migration *ran*, not that it's *safe under production load*. PG12\u219215 + index changes are exactly the kind of change where query plans can shift, index bloat/rebuild can eat resources, or a previously-fine query becomes a sequential scan. You need alerts on query latency, error rate, and index usage tied to this release before you deploy \u2014 not generic dashboards you'd have anyway.\n\n3. **The readiness claim is coming from the wrong place.** \"CI is green\" and \"the engineer says it's ready\" are both the author's own narrative about their own work \u2014 that's not independent evidence, it's the same source twice. Someone other than the author (or an independent check) should confirm the migration was tested against realistic data volume/query patterns, not just that it executed.\n\n**What \"ship\" would need first:**\n- A rollback plan someone has actually written down and ideally tested (even a manual runbook is better than nothing) \u2014 owner named.\n- 2-3 specific alerts/dashboards scoped to this migration (query latency, connection errors, index scan stats) active *before* you deploy, not added reactively after something breaks.\n- A named owner for the deploy window who has authority to trigger the rollback, and a stated abort trigger (e.g., \"p99 latency >Xms for 5 min \u2192 roll back\").\n\n**Recommended call:** defer the production deploy until rollback + monitoring exist \u2014 this could plausibly still happen today if the team moves fast, but \"this afternoon\" shouldn't mean \"skip the two things that let you recover if it goes wrong.\" If there's real time pressure, a **ship-with-named-risk** is only defensible if someone with the authority to own that risk explicitly accepts \"no rollback path\" in writing \u2014 not by default.",
+  "ttft_ms": 1939,
+  "ttft_stream_ms": 815,
+  "time_to_request_ms": 35,
+  "time_to_request_from_spawn_ms": 997086,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789635673.4338,
+  "type": "result",
+  "duration_ms": 19530,
+  "uuid": "d2d4620a-ad2c-4d1b-b4ea-51c43e7c54ee",
+  "_skill": "checking-release-readiness",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "bae7b4b4280755dae9e6fb19a3751e253b9934cbcebc15f91e20e63979e651e4"
+}

@@ -1,0 +1,81 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 44748,
+  "duration_api_ms": 45625,
+  "ttft_ms": 1891,
+  "ttft_stream_ms": 1165,
+  "time_to_request_ms": 45,
+  "time_to_request_from_spawn_ms": 2069732,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783122633022.3564,
+  "num_turns": 5,
+  "result": "I don't have a file-write tool available in this session, so here's the drafted record as markdown you can save as `baseline.md`. I've filled in what you told me and flagged the pieces I don't have evidence for as open gaps rather than assuming they're fine.\n\n---\n\n# Baseline: Recommendation Service v2.3.0\n\n**Status:** Accepted (known-good) \u2014 recorded 2026-07-03, ~1 hour post-deploy\n**Recorded by:** benjaminhuffer1@gmail.com\n\n## Identity\n\n- **Version:** v2.3.0\n- **Source:** PR #482\n- **Merge commit:** \u26a0\ufe0f *not provided \u2014 add the exact SHA merged to main/deploy branch here.* A baseline tied only to a PR number, not a commit SHA, can't be reliably rebuilt if the branch moves or the PR is later amended.\n- **Deployed to:** production\n- **Deploy time:** ~2026-07-03, 1 hour prior to this record\n\n## Included (in scope, accepted)\n\n- Embedding model dependency upgraded: `embed-v1` \u2192 `embed-v2`\n- New eval suite used for sign-off, reporting improved precision and recall vs. prior baseline\n\n## Excluded / explicitly out of scope\n\n\u26a0\ufe0f Not specified yet. Call out anything PR #482 touched but that wasn't part of the accepted change (e.g., unrelated refactors, config changes, other dependency bumps), or state \"no exclusions \u2014 full PR diff is in scope.\"\n\n## Evidence links\n\n| Item | Link/reference | Status |\n|---|---|---|\n| Controlled items record | \u2014 | \u26a0\ufe0f missing |\n| Change impact record | \u2014 | \u26a0\ufe0f missing |\n| Verification / eval report | \u2014 | \u26a0\ufe0f missing \u2014 \"precision and recall improved\" needs the actual numbers/thresholds and report link |\n| Ship decision | \u2014 | \u26a0\ufe0f missing |\n| Rollback target | `embed-v1` at [prior release tag] | \u26a0\ufe0f tag not specified |\n\n## Accepted gaps (owner required for each)\n\n1. **Merge commit SHA not recorded** \u2014 Owner: TBD. Add before this baseline is relied on for rollback.\n2. **Verification evidence not linked** \u2014 the eval suite results (precision/recall deltas, sample size, dataset) aren't attached, only summarized verbally. Owner: TBD.\n3. **Rollback plan unverified** \u2014 is `embed-v1` still deployable as-is (model artifact, config, downstream vector dimension compatibility), or would rolling back require additional work? Owner: TBD.\n4. **Short observation window** \u2014 only ~1 hour of production signal at time of recording. Stability under real traffic patterns (peak load, edge-case inputs) is not yet confirmed.\n5. **Downstream consumer impact** \u2014 if `embed-v2` changes vector dimensionality/format, any dependent indices, caches, or services consuming these embeddings aren't confirmed compatible. Owner: TBD.\n\n## Re-record / re-check triggers\n\n- Any incident, regression, or anomaly traced to `embed-v2` behavior in production.\n- 24\u201348 hours of production monitoring data becomes available (latency, error rate, recommendation quality signals) \u2014 re-confirm or downgrade this baseline based on real traffic, not just the 1-hour snapshot.\n- `embed-v1` is deprecated/removed upstream, invalidating it as a rollback target.\n- Any downstream service reports incompatibility with `embed-v2` output format.\n- The eval suite itself changes (new dataset, new metric) \u2014 re-run against this version before trusting future comparisons.\n\n---\n\nCan you send me the merge commit SHA and a link to the eval report so I can fill in the gaps marked above? Also worth confirming: is `embed-v1` still cleanly deployable as a rollback target right now?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0976524,
+  "usage": {
+    "input_tokens": 149,
+    "cache_creation_input_tokens": 5625,
+    "cache_read_input_tokens": 48758,
+    "output_tokens": 3205,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 5625,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 31,
+        "output_tokens": 1406,
+        "cache_read_input_tokens": 11586,
+        "cache_creation_input_tokens": 311,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 311
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000753,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 149,
+      "outputTokens": 3205,
+      "cacheReadInputTokens": 48758,
+      "cacheCreationInputTokens": 5625,
+      "webSearchRequests": 0,
+      "costUSD": 0.09689940000000001,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "395ab494-0087-4167-b220-c8fa519bfd40",
+  "_skill": "recording-a-known-good-version",
+  "_condition": "with_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "d28c9c68b0162373c880502a64ded3327b05d69b5d07552dc4b6ca7244d9047a",
+  "_arm": "C4_full_skill",
+  "_reused_from": "evals/skill-benchmark-pilot/data/all-skills-pilot/runs/recording-a-known-good-version__with_skill__trial2.json"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 30407,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.059317199999999994,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2815,
+    "cache_read_input_tokens": 23444,
+    "output_tokens": 2308,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2815,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1808,
+        "cache_read_input_tokens": 8679,
+        "cache_creation_input_tokens": 416,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 416
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 676,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007559999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2308,
+      "cacheReadInputTokens": 23444,
+      "cacheCreationInputTokens": 2815,
+      "webSearchRequests": 0,
+      "costUSD": 0.058561199999999994,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Here's a handoff note. I don't have your repo's actual file/commit details available in this environment (the working directory here is empty), so I've drafted it from what you told me \u2014 fill in the bracketed placeholders before sending.\n\n---\n\n## Handoff: OAuth2 Migration for Billing Service Auth\n\n**Branch:** `oauth-migration`\n**Owner while I'm out:** [teammate name]\n**I'm out:** [tomorrow's date] \u2013 [return date], reachable: [yes/no \u2014 see \"Emergency contact\" below]\n\n### Status: IN PROGRESS \u2014 not safe to deploy yet\n\n**Done and merged to `oauth-migration`:**\n- OAuth2 auth middleware\n- Token-refresh logic\n- Unit tests passing for both\n\n**NOT done:**\n- 3 downstream services still call the old API-key auth endpoints and have not been migrated: [name them]\n- Production config has not been touched\n- Old API keys have **not** been rotated\n\n### \u26a0\ufe0f Critical constraint \u2014 read before touching anything\n\n**Do not rotate or revoke the old API keys, and do not disable the old auth endpoints, until all 3 downstream services are migrated.** They still depend on the old keys. If the keys are rotated early, those services will start failing with 401s in production.\n\nThis is the one thing most likely to cause an incident while I'm out \u2014 please don't let anyone rotate keys \"for security cleanup\" without checking this note first.\n\n### Suggested next steps\n1. Migrate the 3 downstream services to OAuth2, one at a time: [list them, with any known order/priority or ticket links]\n2. Verify each downstream service against the new middleware \u2014 [note whether there's a staging/sandbox for this]\n3. Only after all 3 are confirmed working on OAuth2: update production config, then rotate/deactivate the old API keys\n4. [Any rollback plan if the OAuth2 middleware misbehaves in prod?]\n\n### Open gaps I don't have context on \u2014 worth confirming with the team before proceeding\n- Does [teammate] have the necessary production access/permissions to make this change?\n- Is there a tracking ticket/issue for the 3 downstream services and their migration status?\n- Is there an on-call or second reviewer they should loop in given they're new to this project?\n- What's the rollback plan if something breaks after a downstream service is migrated?\n\n### Emergency contact\n[State clearly: are you reachable in a limited capacity, or fully off? If fully off, name a backup approver for anything risky like production config changes or key rotation.]\n\n---\n\nA few things worth tightening before you send this: name the three downstream services and their migration order, confirm your teammate has prod access, and decide on a backup contact for anything that can't wait a week \u2014 otherwise \"don't rotate the keys\" is the only real safeguard in place while you're gone. Want me to fold in those specifics once you have them?",
+  "ttft_ms": 1603,
+  "ttft_stream_ms": 888,
+  "time_to_request_ms": 66,
+  "time_to_request_from_spawn_ms": 774669,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025653372.9797,
+  "type": "result",
+  "duration_ms": 31479,
+  "uuid": "53e580a8-dee5-4722-8248-8cf069aa4e54",
+  "_skill": "handing-off-work",
+  "_arm": "C1_generic_nudge",
+  "_trial": 2,
+  "_input_spec_sha256": "c4df2ff62dae413d11231740340738f11821088fd9d355374d4984f400eea1bf"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 33069,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0622005,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 3097,
+    "cache_read_input_tokens": 24075,
+    "output_tokens": 2371,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3097,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1664,
+        "cache_read_input_tokens": 9231,
+        "cache_creation_input_tokens": 146,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 146
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 728,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000813,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2371,
+      "cacheReadInputTokens": 24075,
+      "cacheCreationInputTokens": 3097,
+      "webSearchRequests": 0,
+      "costUSD": 0.061387500000000005,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't see the recorder code in this repo (search came back empty), so this is based on what you've described \u2014 worth double-checking against the actual implementation before you ship.\n\n**The main gap: your validation doesn't test the scenario this recorder exists for.**\n\nYou built this specifically so that when a run dies unexpectedly, you can see the tool calls leading up to the crash. Your test was three sample runs diffed byte-for-byte \u2014 presumably runs that completed normally. That validates correctness of output, not survivability of a crash. With the new settings, up to 30 seconds (or 499 events, whichever hits first) can sit unflushed in memory at any moment. That's precisely the tail of data an on-call engineer needs when a run dies mid-flight, and it's precisely the data this change puts at risk.\n\nBefore merging, I'd check:\n\n1. **Is there a flush-on-exit/crash path?** (signal handler, `atexit`, exception wrapper that force-flushes before the process dies). If yes, it covers graceful termination and many caught exceptions, but not OOM kills, SIGKILL, host eviction, hard segfaults \u2014 the ungraceful crashes are exactly the ones this recorder is meant for.\n2. **Actually test a hard kill.** Run an agent, `kill -9` it mid-run at various points with the new 30s/500-event settings, and check what's recoverable from the trace store. That's the real acceptance test here, not a diff of successful runs.\n3. **Batch size vs. interval interaction under load.** Crashes often correlate with high tool-call volume (retries, error loops) \u2014 exactly when you'd hit 500 events before the 30s timer, but also exactly when you have the most unflushed data if you crash mid-batch.\n\nGreen CI and Priya's sign-off likely covered \"does this produce identical output for happy-path runs,\" not \"does this preserve the crash forensics window\" \u2014 worth flagging that distinction to her explicitly, since it's a different question than what a one-line diff review usually catches.\n\nIf the crash-kill test shows meaningful data loss, a middle ground (e.g., smaller batch/interval, or an immediate flush triggered by anomaly signals like tool errors) would keep most of the cost savings without gutting the one property that justified building this thing.",
+  "ttft_ms": 7175,
+  "ttft_stream_ms": 984,
+  "time_to_request_ms": 24,
+  "time_to_request_from_spawn_ms": 780154,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078554979.0063,
+  "type": "result",
+  "duration_ms": 33495,
+  "uuid": "ce3648b9-671b-4aab-93d0-1ba7aa3d3526",
+  "_spec": "b27abc77a959666e4992193a88f86082b85ce8177f2c4de01f7df3a447ec0f09",
+  "_skill": "recording-what-an-agent-did",
+  "_cand": 0,
+  "_trial": 2
+}

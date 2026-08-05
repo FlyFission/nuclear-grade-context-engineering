@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 26993,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.055252899999999994,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3478,
+    "cache_read_input_tokens": 14763,
+    "output_tokens": 1945,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3478,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 721,
+        "cache_read_input_tokens": 8483,
+        "cache_creation_input_tokens": 1275,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1275
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 679,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000769,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1945,
+      "cacheReadInputTokens": 14763,
+      "cacheCreationInputTokens": 3478,
+      "webSearchRequests": 0,
+      "costUSD": 0.0544839,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Two things before I'd act on this, even setting aside that this session has no repo checked out and no write/git tools \u2014 so I literally can't merge anything from here regardless.\n\n**The substantive concern isn't the diff size, it's the claim.**\n\n- \"SOC 2 Type II certified\" is arguably inaccurate wording regardless of prominence \u2014 SOC 2 is an *attestation/audit report*, not a certification (there's no certifying body). Auditors don't \"certify\" you; they issue a report. This distinction gets scrutinized by security-savvy prospects and occasionally by FTC/false-advertising claims. If the new copy repeats or amplifies \"certified,\" you're baking that imprecision into a more visible spot.\n- Making a compliance claim *more prominent*, right after a competitor got publicly called out for lacking one, is a higher-scrutiny moment, not a lower one \u2014 prospects and possibly the competitor's supporters may go looking for exactly this kind of imprecision.\n- Two things worth a 5-minute check before it ships: (1) is the report current \u2014 Type II reports cover a specific audit period and go stale; if it's expired, \"certified\" prominently on the page is a real liability; (2) Dana approved as the copy's original author, but elevating a compliance claim's prominence is a different risk category than routine marketing copy \u2014 that's usually a legal/compliance sign-off, not a copywriter sign-off, even if the underlying fact (\"we have a report\") hasn't changed.\n\nI'd send Dana or whoever owns compliance a one-line Slack ping \u2014 \"confirming SOC 2 Type II report is current and 'certified' is the term legal wants us using before we make this more prominent\" \u2014 before it goes live. That's a few minutes, not a review cycle, and covers you if anyone challenges the sales call claim.\n\nIf you paste the actual diff and confirm the report's current, I'm glad to review the wording itself \u2014 just can't execute the merge from this environment.",
+  "ttft_ms": 13991,
+  "ttft_stream_ms": 856,
+  "time_to_request_ms": 31,
+  "time_to_request_from_spawn_ms": 764473,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078539297.6936,
+  "type": "result",
+  "duration_ms": 27077,
+  "uuid": "de9b213b-c14e-4bd3-917a-d8c402959e4f",
+  "_spec": "082abe73bb4cf269442fcee707e8ad858d5e144da28659e4578f514634e5e71c",
+  "_skill": "rating-change-risk",
+  "_cand": 2,
+  "_trial": 1
+}

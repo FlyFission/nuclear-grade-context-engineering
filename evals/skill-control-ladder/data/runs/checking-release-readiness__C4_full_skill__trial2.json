@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 16671,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0526795,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 4910,
+    "cache_read_input_tokens": 17055,
+    "output_tokens": 1158,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4910,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 847,
+        "cache_read_input_tokens": 10775,
+        "cache_creation_input_tokens": 415,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 415
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000721,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1158,
+      "cacheReadInputTokens": 17055,
+      "cacheCreationInputTokens": 4910,
+      "webSearchRequests": 0,
+      "costUSD": 0.0519585,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No, this isn't ready to ship \u2014 block it. Here's why, walking through the release-readiness checks:\n\n**Green CI \u2260 release readiness.** CI tells you the code works in isolation; it says nothing about leftover risk, rollback, or monitoring in production.\n\n**\"The engineer says it's ready\" is not evidence.** That's the actor's own narrative about their own work \u2014 a decision read off it is downstream of the same mistake it's trying to check. For a DB engine major-version migration with index changes touching your primary user database, you need primary evidence: a tested migration dry-run against a prod-like copy, query plan comparisons for the changed indexes, and confirmation of PG12\u2192PG15 breaking changes reviewed (e.g., changed planner defaults, removed features) \u2014 not just a PR description.\n\n**Two hard blockers, both named explicitly in the escalation criteria:**\n1. **No rollback/restore path.** For a database engine migration, \"rollback\" isn't `git revert` \u2014 you need a tested plan for reverting schema/index changes and, worse case, restoring the DB to pre-migration state (e.g., point-in-time recovery target, or a pre-migration snapshot with a defined RPO/RTO). Rollback being vague or missing is a listed red flag on its own.\n2. **No monitoring specific to this change.** Index changes and a major PG version bump can silently degrade query performance or change lock behavior. Without alerts on query latency, error rates, replication lag, and lock contention scoped to this migration, you won't know it's failing until users notice.\n\n**Consequence-specific coupling:** this is trust-bearing infrastructure work (primary user database) \u2014 the author, reviewer, and verdict owner shouldn't be the same person, and \"ready to go\" from the author alone doesn't meet that bar.\n\n**Recommended path:**\n- **Decision: block**, not defer \u2014 you have a concrete, closeable gap list, not an open-ended unknown.\n- Owner: assign someone other than the migration author to write and test the rollback/restore plan and stand up the monitoring before this goes near production.\n- Recheck trigger: rollback plan tested + monitoring live + a second reviewer confirms evidence (not just the description) \u2192 then re-evaluate for ship this afternoon or slip to a window with support coverage.\n\nIf you want, I can help draft the rollback plan structure or the specific alerts to add for this migration.",
+  "ttft_ms": 3567,
+  "ttft_stream_ms": 1001,
+  "time_to_request_ms": 198,
+  "time_to_request_from_spawn_ms": 480317,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025357994.05,
+  "type": "result",
+  "duration_ms": 17560,
+  "uuid": "bc74766b-cc34-42f0-a272-00eb13ce1450",
+  "_skill": "checking-release-readiness",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "bae7b4b4280755dae9e6fb19a3751e253b9934cbcebc15f91e20e63979e651e4"
+}

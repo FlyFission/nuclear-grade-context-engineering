@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 16929,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.041757,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2602,
+    "cache_read_input_tokens": 23520,
+    "output_tokens": 1225,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2602,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 987,
+        "cache_read_input_tokens": 8753,
+        "cache_creation_input_tokens": 129,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 129
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 626,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000696,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1225,
+      "cacheReadInputTokens": 23520,
+      "cacheCreationInputTokens": 2602,
+      "webSearchRequests": 0,
+      "costUSD": 0.041061,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No, it needs changes before publishing. Two issues:\n\n**1. \"Fully compliant with the framework\" \u2014 remove this.**\nNIST SP 800-61 is a public, citable reference, but \"fully compliant\" is a formal-assurance/certification claim. Unless you've actually gone through a compliance assessment, this overstates it and creates real exposure if a customer or auditor takes it literally. Reword as influence/alignment instead:\n\n> \"Our workflow follows the incident-response lifecycle described in NIST SP 800-61.\"\n\n**2. The uncited conference talk \u2014 cut it or genericize it.**\n\"A great talk we saw... but don't have a link for\" isn't a verifiable public source, so it can't be cited as direct lineage in public docs. Either:\n- Drop the sentence entirely, or\n- Soften it to general, unattributed inspiration with no implied authority: \"...and general SRE incident-response practices.\"\n\n**Suggested replacement:**\n> \"Our workflow follows the incident-response lifecycle described in NIST SP 800-61, and draws additional inspiration from common SRE incident-response practices.\"\n\nIf your legal/compliance team actually wants to claim NIST alignment or compliance, that needs formal review before it goes in public docs \u2014 I'd flag it to them rather than assert it in the copy.",
+  "ttft_ms": 1649,
+  "ttft_stream_ms": 961,
+  "time_to_request_ms": 62,
+  "time_to_request_from_spawn_ms": 1335798,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789974363.9941,
+  "type": "result",
+  "duration_ms": 17571,
+  "uuid": "c5947db2-66c9-4a3c-82b3-4a03b3467654",
+  "_skill": "checking-source-claims",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "816d8328c3274e31acdf44845fd8edbea3111d76b8c8281ab0f5c639fa38bbd7"
+}

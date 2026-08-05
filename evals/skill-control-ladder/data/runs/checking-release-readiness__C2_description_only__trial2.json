@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 20575,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.044029900000000004,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2739,
+    "cache_read_input_tokens": 14643,
+    "output_tokens": 1498,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2739,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 950,
+        "cache_read_input_tokens": 8363,
+        "cache_creation_input_tokens": 656,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 656
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000721,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1498,
+      "cacheReadInputTokens": 14643,
+      "cacheCreationInputTokens": 2739,
+      "webSearchRequests": 0,
+      "costUSD": 0.043308900000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 this isn't ready to ship as-is. A Postgres major-version migration with index changes is high blast-radius and hard to reverse, and two of the standard readiness gates are missing:\n\n**What you have:**\n- CI green (tests pass, but this only validates logic/schema correctness in test conditions, not production-scale migration behavior, timing, or index performance under real load)\n- Author sign-off (not independent verification)\n\n**What's missing \u2014 and why it matters here:**\n- **Rollback plan**: For a PG12\u219215 migration with index changes, \"no rollback script\" usually means the only fallback is restoring from backup or a point-in-time recovery, which is slow and risky mid-incident. You need at minimum: a tested downgrade/rollback path, or explicit acknowledgment that rollback = restore-from-backup with an estimated RTO.\n- **Monitoring**: No new alerts means if something goes wrong (query plan regressions from index changes, replication lag, connection pool issues from version differences), you'll find out from users, not dashboards. You'd want alerts on query latency/error rate, index bloat, connection errors, and replication status at minimum.\n\n**Recommendation: defer merge/deploy until:**\n1. A rollback plan exists and has been reasoned through (even if \"restore from backup,\" know the RTO and who owns triggering it)\n2. Basic monitoring/alerts are in place for the migration window (query latency, error rates, replication health)\n3. Ideally, this has been tested against a production-like data volume/index cardinality \u2014 CI green on small test fixtures doesn't validate index rebuild time or lock duration on a real dataset\n\nIf the team wants to ship today anyway, that's a **ship-with-risk** call, not a clean ship \u2014 it should be made explicitly by whoever owns the on-call/incident response, with the gaps above documented so they're deliberate rather than accidental.",
+  "ttft_ms": 7017,
+  "ttft_stream_ms": 2643,
+  "time_to_request_ms": 33,
+  "time_to_request_from_spawn_ms": 458208,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025337162.5667,
+  "type": "result",
+  "duration_ms": 21918,
+  "uuid": "131578b8-7df2-4963-a647-5d2d5f725911",
+  "_skill": "checking-release-readiness",
+  "_arm": "C2_description_only",
+  "_trial": 2,
+  "_input_spec_sha256": "4c5434dd7600e98e140efbad25bbb80d0fd4a2ac2b3a91a3dac8f02f2ed1b3cb"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 19496,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0368313,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2380,
+    "cache_read_input_tokens": 14641,
+    "output_tokens": 1158,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2380,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 983,
+        "cache_read_input_tokens": 8370,
+        "cache_creation_input_tokens": 281,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 281
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 702,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000777,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1158,
+      "cacheReadInputTokens": 14641,
+      "cacheCreationInputTokens": 2380,
+      "webSearchRequests": 0,
+      "costUSD": 0.0360543,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 patching your own bot only fixes your instance. The bug still lives in the shared `prompt-common` package, so the other three teams' bots are still leaking internal tool identifiers to customers in production, and they don't know it. A code comment in your own repo won't reach them.\n\nWhat I'd do next:\n\n1. **Notify the other teams directly** \u2014 Slack/email/ticket to sales, onboarding, and internal-tools owners today. This is a live data-leak (internal tool/infra names surfacing in customer-facing output), not just a formatting quirk, so treat it with urgency.\n2. **File the bug against `prompt-common` itself** (issue tracker for that package), not just in your own repo \u2014 so it's tracked centrally, has an owner, and shows up for anyone who searches the package's issues later.\n3. **Check with your security/incident-response process** if one exists \u2014 leaking internal tool identifiers to customers may qualify as a disclosure incident worth a formal writeup, even if minor, especially since it's already happened in production (yours) and may have happened in others'.\n4. **Upstream your fix** \u2014 since you already have a working patched version, consider submitting it as a PR to `prompt-common` so all four teams get the real fix via the shared package instead of four different local overrides drifting over time.\n5. **Ask if anyone should audit logs** for the other three bots to see if the leak has already occurred there, since they've been running the buggy version this whole time.\n\nThe local override was the right stopgap for your own bot, but the shared defect needs to be reported and fixed at the source \u2014 otherwise it's only a matter of time before it surfaces for sales, onboarding, or internal-tools too.",
+  "ttft_ms": 2168,
+  "ttft_stream_ms": 1023,
+  "time_to_request_ms": 32,
+  "time_to_request_from_spawn_ms": 1450559,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785790089023.0513,
+  "type": "result",
+  "duration_ms": 20241,
+  "uuid": "11fa222e-503d-48a0-8af8-1c2ab68b9bc5",
+  "_skill": "reporting-shared-defects",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "b3a554a796b4e07bd2a3fcae74463c2756324149deb2ffe57ddca4c03c6f34d9"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 11365,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0376846,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2869,
+    "cache_read_input_tokens": 32532,
+    "output_tokens": 661,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2869,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 221,
+        "cache_read_input_tokens": 9009,
+        "cache_creation_input_tokens": 140,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 140
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 672,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000772,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 661,
+      "cacheReadInputTokens": 32532,
+      "cacheCreationInputTokens": 2869,
+      "webSearchRequests": 0,
+      "costUSD": 0.0369126,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This working directory is completely empty \u2014 there's no `/deploy-checklist` command file, no README, nothing at all in this repo yet. I can't verify or review a change that doesn't exist here.\n\nA few possibilities:\n1. You're working in a different repo/branch than the one I have access to.\n2. The files haven't been created/committed yet in this checkout.\n3. This is a fresh clone and something didn't sync.\n\nCan you confirm the correct path or point me to the actual command file? I don't want to sign off on \"nothing else worth touching\" without actually being able to see the diff and search for other references (e.g., other docs, CI configs, or scripts that might hardcode `/deploy-checklist`).",
+  "ttft_ms": 1946,
+  "ttft_stream_ms": 1214,
+  "time_to_request_ms": 35,
+  "time_to_request_from_spawn_ms": 557217,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078332042.0981,
+  "type": "result",
+  "duration_ms": 12755,
+  "uuid": "3232ca8d-da40-4e0d-b05b-05ae72e74b44",
+  "_spec": "7abe69dc998df92685d2f78a65d5dee0a9d50e21e600d81846032220e6527fbe",
+  "_skill": "checking-what-a-change-affects",
+  "_cand": 0,
+  "_trial": 3
+}

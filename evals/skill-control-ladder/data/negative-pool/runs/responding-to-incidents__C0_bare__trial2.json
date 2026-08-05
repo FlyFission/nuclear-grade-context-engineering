@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 10128,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.030430199999999998,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2465,
+    "cache_read_input_tokens": 22884,
+    "output_tokens": 539,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2465,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 184,
+        "cache_read_input_tokens": 8393,
+        "cache_creation_input_tokens": 343,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 343
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 597,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000672,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 539,
+      "cacheReadInputTokens": 22884,
+      "cacheCreationInputTokens": 2465,
+      "webSearchRequests": 0,
+      "costUSD": 0.0297582,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I searched this repo but couldn't find `apiTimeout` (or a case-insensitive variant) anywhere, nor a `.env.dev` file \u2014 so the project/script you're describing isn't in this working directory.\n\nCould you either:\n1. Point me to the correct project directory, or\n2. Paste the relevant snippet from the startup script that reads `apiTimeout`?\n\nOnce I can see it, the fix is simple \u2014 just change the key lookup from `apiTimeout` to `api_timeout` (and update anywhere else it's referenced, like config parsing or type definitions).",
+  "ttft_ms": 1269,
+  "ttft_stream_ms": 895,
+  "time_to_request_ms": 25,
+  "time_to_request_from_spawn_ms": 1673261,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594667670.365,
+  "type": "result",
+  "duration_ms": 10482,
+  "uuid": "b6b18b7e-f8c9-4d5b-ad6f-4e188766c76c",
+  "_skill": "responding-to-incidents",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "63e468e68dfa69b13e152f461da3b08888e64049558fcde9a33fd55ac9a708df"
+}

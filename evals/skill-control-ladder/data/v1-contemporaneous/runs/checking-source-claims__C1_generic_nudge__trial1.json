@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 16941,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.032843,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2152,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1156,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2152,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1156,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2152,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2152
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 626,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000701,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1156,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2152,
+      "webSearchRequests": 0,
+      "costUSD": 0.032142,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No, this needs changes before publishing. Two issues:\n\n1. **\"Fully compliant with the framework\"** \u2014 NIST SP 800-61 is a guidance document, not a certifiable standard, so \"compliance\" is an ambiguous, unverifiable claim. If a customer or auditor takes this literally and finds gaps (e.g., you don't cover every phase/recommendation in the doc), it's a credibility and potential liability problem. Safer wording: \"follows the incident-response lifecycle described in NIST SP 800-61\" or \"is aligned with NIST SP 800-61\" \u2014 only use \"compliant\" if you can point to a specific control-by-control mapping backing it up.\n\n2. **The uncited SRE talk** \u2014 an admittedly-uncited reference (\"we don't have a link... handy\") adds no value in public docs and looks unpolished. Either track down the actual source and cite it properly, or just cut the mention entirely.\n\nRecommend rewriting to something like: \"Our workflow follows the incident-response lifecycle described in NIST SP 800-61, incorporating practices commonly used in SRE incident management.\" Want me to draft a fuller version once I know what's actually implemented?",
+  "ttft_ms": 10815,
+  "ttft_stream_ms": 1311,
+  "time_to_request_ms": 41,
+  "time_to_request_from_spawn_ms": 1029121,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789667344.6248,
+  "type": "result",
+  "duration_ms": 16882,
+  "uuid": "c93e0e4c-9370-4425-ad02-40456936a3b4",
+  "_skill": "checking-source-claims",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "03f8276aac4036f023be13a46507794192801d10364728914ee88797ad433685"
+}

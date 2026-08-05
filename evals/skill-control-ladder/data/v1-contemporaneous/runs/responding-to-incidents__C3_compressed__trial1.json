@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 19211,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.035432,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2297,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1266,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2297,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1266,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2297,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2297
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 675,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007700000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1266,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2297,
+      "webSearchRequests": 0,
+      "costUSD": 0.034662,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Right now you have three people proposing actions simultaneously with no single decision-maker \u2014 that's the actual emergency, not which fix is correct.\n\n**1. Name an IC immediately.** Given the on-call SRE is already the designated incident owner, they should take IC unless the EM explicitly takes it and says so out loud in the channel. Whoever it is, say it explicitly: \"X is IC, all actions go through X.\" DBA and EM become responders/advisors, not independent actors.\n\n**2. Stabilize with the reversible action: roll back the deploy.**\n- The rollback (~90s) undoes *both* changes at once, so you don't need to know which one caused the 500s to stop the bleeding.\n- The DBA's \"confident root cause\" is a hypothesis, not a confirmed fact \u2014 you're 12 minutes in, no root-cause analysis has happened yet.\n- `ALTER TABLE` drop/rebuild on a live, already-degraded production `orders` table is a much higher-blast-radius, harder-to-reverse action (rebuild can lock/lock-contend the table, take unpredictable time under load, and can't be trivially undone if it makes things worse). Running it *instead of* the fast reversible rollback, on an unconfirmed cause, is backwards.\n\nSo: IC calls the rollback now, DBA's ALTER TABLE is blocked until after the system is stable and the index really is confirmed as the cause.\n\n**3. After rollback, confirm before any DB surgery.** If errors stop, that's evidence but doesn't tell you which of the two changes (worker or index) was responsible \u2014 check DB error logs / query plans for actual proof before anyone touches the index in prod. If the DBA still wants to rebuild the index afterward, that's a controlled, low-stakes change against a healthy system, not an in-incident action.\n\n**4. Start a shared timeline now**, tagging entries as `[FACT]` or `[HYPOTHESIS]` \u2014 e.g. \"[FACT] 500s started ~12 min ago following deploy X\" vs \"[HYPOTHESIS] DBA believes index change is root cause.\" This stops the current mix of speculation and observation from blending in the channel.\n\n**5. IC posts a status update now** (\"rolling back deploy, ETA 90s, investigating root cause after\") and commits to a fixed cadence (e.g. every 10\u201315 min) even if nothing changes.\n\nBottom line: name the IC, roll back immediately as the safe reversible stabilizer, hold the ALTER TABLE until the cause is confirmed post-stabilization.",
+  "ttft_ms": 6358,
+  "ttft_stream_ms": 860,
+  "time_to_request_ms": 29,
+  "time_to_request_from_spawn_ms": 400968,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789039517.4353,
+  "type": "result",
+  "duration_ms": 19693,
+  "uuid": "ee78c5d8-4708-4292-81fc-91ad8ad43961",
+  "_skill": "responding-to-incidents",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "ec256cbf31b1a43218fe214a6cadbb50a5720e38ac147a3c0f0fc317a053952e"
+}

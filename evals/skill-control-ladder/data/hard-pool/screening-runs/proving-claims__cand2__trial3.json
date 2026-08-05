@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 30400,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.05596399999999999,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2209,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2672,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2209,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2672,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2209,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2209
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 675,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00074,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2672,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2209,
+      "webSearchRequests": 0,
+      "costUSD": 0.055223999999999995,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before drafting this, one thing worth flagging directly: as written, none of the three evidence items actually verify the claim. Here's the row, plus why.\n\n| Field | Content |\n|---|---|\n| **Claim** | New checkout flow is accessible to screen reader users. |\n| **Status** | **Unverified** \u2014 evidence supports code-level cleanliness, not screen reader usability |\n| **Tests / Evidence** | 1. axe-core scan in CI, 0 violations. 2. Designer (Dana) walkthrough confirming visual/component match to existing accessible library. 3. Same component set shipped on account settings page last month, no complaints. |\n| **Gaps** | \u2022 No manual test with an actual screen reader (NVDA/JAWS/VoiceOver) on the checkout flow itself. axe-core only catches automatically-detectable issues \u2014 it's well documented to cover roughly 30\u201340% of WCAG success criteria. It cannot detect broken focus order, missing/incorrect live-region announcements for dynamic content, illogical reading order, or error messages that aren't programmatically associated with their fields.<br>\u2022 Dana's sign-off was a visual/design QA pass against the component library, not a screen-reader-driven test. No indication Dana used or is a screen reader user.<br>\u2022 Checkout has interaction patterns account settings likely doesn't: multi-step validation, dynamic total/price updates, payment step transitions \u2014 exactly where accessible base components can still fail in composition even when each component is individually accessible.<br>\u2022 \"No complaints\" on the prior shipment isn't accessibility evidence \u2014 screen reader users are a small, self-selecting population and silence isn't validation. |\n| **Non-claims** | This evidence does **not** establish: actual screen reader compatibility, WCAG conformance level, keyboard-only navigation end-to-end, or correct announcement of dynamic/error content. |\n\n**Recommendation:** Either (a) run a 30\u201360 min manual screen reader pass (VoiceOver on Mac is fastest to set up) through the real checkout flow \u2014 happy path plus a validation error \u2014 before Friday, or (b) if there's no time, reword the release packet claim to something evidence actually backs, e.g. *\"Automated accessibility scan passed with zero violations; manual screen reader verification not yet performed.\"* Shipping the current claim as-is overstates what's been checked.\n\nWant me to draft the reworded claim language for option (b), or a quick manual test checklist for option (a)?",
+  "ttft_ms": 21428,
+  "ttft_stream_ms": 1105,
+  "time_to_request_ms": 29,
+  "time_to_request_from_spawn_ms": 685291,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078459989.2952,
+  "type": "result",
+  "duration_ms": 33886,
+  "uuid": "34aed5e4-208c-4d33-a62a-14aa61a36dc7",
+  "_spec": "2dd20e1a1df2574786ec8a2114ce82b00fd841e01acb77b0cc792a69fcf2d2ee",
+  "_skill": "proving-claims",
+  "_cand": 2,
+  "_trial": 3
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 19395,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.04370160000000001,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 3014,
+    "cache_read_input_tokens": 23902,
+    "output_tokens": 1181,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3014,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 693,
+        "cache_read_input_tokens": 9008,
+        "cache_creation_input_tokens": 286,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 286
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 634,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000714,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1181,
+      "cacheReadInputTokens": 23902,
+      "cacheCreationInputTokens": 3014,
+      "webSearchRequests": 0,
+      "costUSD": 0.04298760000000001,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This working directory is actually empty \u2014 there's no `misc`, `utils`, or any other files here, so I can't inspect what's really in those 47+30 files to derive folders from actual content/dependencies.\n\nSince a good structure needs to map to your actual work breakdown (not guesses), I need a bit more from you before proposing folders:\n\n1. **A file listing** (even just `ls misc/ utils/` output, or a rough categorized list) \u2014 the five categories you mentioned (config templates, migration scripts, compliance reports, shared helpers, meeting notes) are a good start, but are those genuinely disjoint, or do some files straddle categories?\n2. **Which \"two different services\"** consume the shared helpers in `misc` \u2014 are they in this same repo (monorepo) or separate repos? That determines whether \"shared helpers\" becomes its own top-level package or moves into each service.\n3. **Existing top-level conventions** \u2014 what does the rest of the repo look like today (e.g., do you already have `services/`, `scripts/`, `docs/`)? I don't want to invent a structure that conflicts with what's already there.\n4. **Are the migration scripts one-off/completed, or do new ones get added regularly?** (Determines whether they're archived or need a living `migrations/` home with a disposition rule.)\n\nGiven what you've described, my likely direction (pending your answers) is:\n\n- `scripts/migrations/` \u2014 one-off scripts, one reason to change (run once, then archived)\n- `docs/compliance/archive/` \u2014 archived reports, dated `YYYY-MM-DD` filenames\n- `docs/meeting-notes/archive/` or delete if no one references them\n- `packages/shared/` (or under the two consuming services if truly only 2, tightly coupled) \u2014 the shared helpers, since \"used by two services\" often means it deserves a single home with an owner, not a dumping ground\n- `config/templates/` \u2014 config templates\n- Delete `misc` and `utils` as top-level names entirely (they fail the \"one reason to change\" test by definition)\n\nCan you share the actual file names/categories (or paste `ls`) so I can map each one to a real folder instead of guessing?",
+  "ttft_ms": 2106,
+  "ttft_stream_ms": 1423,
+  "time_to_request_ms": 38,
+  "time_to_request_from_spawn_ms": 1074968,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789713515.6106,
+  "type": "result",
+  "duration_ms": 18211,
+  "uuid": "19fab523-977f-4357-84d4-fde27c3fbe93",
+  "_skill": "organizing-project-folders",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "475e9ddd5fc99b90d48ebac64620a0817620f7aac0af09487fa0f2266cb01a3c"
+}

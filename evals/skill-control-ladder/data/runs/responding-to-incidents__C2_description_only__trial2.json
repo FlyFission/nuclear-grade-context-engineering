@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 18504,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.035019999999999996,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2175,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1288,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2175,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1288,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2175,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2175
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 675,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00076,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1288,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2175,
+      "webSearchRequests": 0,
+      "costUSD": 0.03426,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "**Right now: roll back the deploy. Don't run the ALTER TABLE.**\n\nReasoning, fast:\n\n1. **Stop the crosstalk first.** Three people proposing different actions in parallel is how incidents get worse. Designate the EM (or whoever's most available) as incident commander for this call \u2014 one decision-maker, everyone else feeds them info. Say it explicitly in the channel: \"X is IC, all actions go through X.\"\n\n2. **Reversible action wins under uncertainty.** The DBA's theory is a hypothesis, not a confirmed fact \u2014 you're 12 minutes in, and the deploy also shipped a new async worker that hasn't been ruled out. Dropping/rebuilding an index live on a production table that's already erroring under load risks locking contention and could make it worse, and it only addresses one of two suspects. The rollback undoes *both* changes in ~90 seconds and gets you back to a known-good state. That's the stabilize move.\n\n3. **Do it now, investigate after.** Trigger the rollback immediately. Once checkout is healthy again, confirm via logs/metrics that errors stopped at rollback (not something else), then let the DBA test the index rebuild against a replica or staging with production-like data to actually confirm root cause before it goes anywhere near prod again.\n\n4. **Set a communication cadence.** Have the IC post a short update every 5 minutes (\"rollback triggered, ETA 90s\" \u2192 \"errors dropped to zero, monitoring\" \u2192 etc.) so the channel stops being three people talking past each other.\n\nOnce you're stable, happy to help draft the timeline and root-cause investigation plan (worker vs. index) for the postmortem.",
+  "ttft_ms": 10936,
+  "ttft_stream_ms": 2482,
+  "time_to_request_ms": 174,
+  "time_to_request_from_spawn_ms": 1093353,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025972102.2075,
+  "type": "result",
+  "duration_ms": 18847,
+  "uuid": "4bcb94a1-e632-4cf2-878e-cc05854e7bdf",
+  "_skill": "responding-to-incidents",
+  "_arm": "C2_description_only",
+  "_trial": 2,
+  "_input_spec_sha256": "802483c74153d39e8741bcd4e4c41a6c97f9d4540fd87e7bc4abc16db6165dff"
+}

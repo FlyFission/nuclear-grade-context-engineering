@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 41884,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0711982,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 3187,
+    "cache_read_input_tokens": 23774,
+    "output_tokens": 2946,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3187,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2065,
+        "cache_read_input_tokens": 9099,
+        "cache_creation_input_tokens": 368,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 368
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 656,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000736,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2946,
+      "cacheReadInputTokens": 23774,
+      "cacheCreationInputTokens": 3187,
+      "webSearchRequests": 0,
+      "costUSD": 0.0704622,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This should be a **Standard change record**, not a one-line PR note \u2014 and not because of the diff size, but because of the blast radius. A one-line config change that swaps the model behind an agent that autonomously approves refunds is a *behavioral* change to a money-moving system, not a config tweak. \"Swapped model per cost review\" gives a future reviewer zero ability to judge whether it was safe.\n\nWhat the record needs to contain so someone can actually audit this in six months:\n\n**1. What changed, precisely**\n- Provider/model IDs on both sides (pinned versions, not just \"GPT-x\" \u2014 exact snapshot), and where else in the codebase that ID is referenced (prompts, output parsers, tool schemas may be tuned to the old model's quirks).\n\n**2. Why, with numbers**\n- The actual cost review data (cost/latency delta) \u2014 not just \"cheaper.\"\n\n**3. Evidence the new model behaves equivalently on the thing that matters**\n- Offline replay: same historical refund requests through both models, diffed on approve/deny/escalate decisions.\n- Breakdown of any *new* false approvals (money lost) vs false denials (customer friction) \u2014 these aren't symmetric costs, so a net \"similar accuracy\" number isn't enough.\n- Adversarial/injection resistance check \u2014 different models have different susceptibility to being talked into approving refunds via crafted customer messages. This is the most common way an LLM swap silently degrades a safety-critical agent.\n- Structured-output/tool-call reliability (does it still respect approval limits, required fields, refusal behavior) as strictly as the old model.\n\n**4. Rollout and rollback plan**\n- Staged (shadow mode or % canary) rather than instant 100% cutover, with explicit rollback trigger and confirmation that rollback really is as trivial as the forward change.\n\n**5. Post-launch monitoring**\n- What's watched afterward (approval rate drift, $ volume auto-approved, escalation/chargeback rate) and for how long, with an owner and alert threshold.\n\n**6. Sign-off**\n- Given this moves money autonomously, engineering sign-off alone is probably not sufficient \u2014 likely needs risk/finance/product owner acknowledgment, and the record should show who approved and on what basis.\n\nThe diff being one line is exactly why this is worth flagging to your manager: the *risk* isn't visible in the code review, so the risk has to live somewhere else \u2014 the change record is that \"somewhere else.\"\n\nWant me to scaffold the actual Standard change record file? If you point me to where change records live in your repo (or the template you use), I'll draft it with these sections filled in from what you already know, and flag the gaps (eval results, rollout plan, monitoring) you still need to fill in before shipping.",
+  "ttft_ms": 5288,
+  "ttft_stream_ms": 907,
+  "time_to_request_ms": 121,
+  "time_to_request_from_spawn_ms": 640321,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025519096.0864,
+  "type": "result",
+  "duration_ms": 42687,
+  "uuid": "a9c5da85-2836-4b95-aac7-b055e36710e2",
+  "_skill": "creating-change-records",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "a5e3eca321fe02f530a96247bd792b8f13259e823fa3d5c6cea880f7be8bc00e"
+}

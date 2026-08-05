@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 26653,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0409513,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1982,
+    "cache_read_input_tokens": 6271,
+    "output_tokens": 1765,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1982,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1765,
+        "cache_read_input_tokens": 6271,
+        "cache_creation_input_tokens": 1982,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1982
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 617,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000697,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1765,
+      "cacheReadInputTokens": 6271,
+      "cacheCreationInputTokens": 1982,
+      "webSearchRequests": 0,
+      "costUSD": 0.0402543,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before drafting, one flag: \"safe and fully backward compatible\" is a strong, unconditional claim, but the evidence you've listed \u2014 a test run you performed yourself, and a self-review \u2014 is inherently self-reported and unverified by anyone else. For a payments module specifically, that gap matters: your own review can't catch what you didn't think to check, and a local/self-run green suite doesn't rule out environment-specific results or gaps in test coverage for backward-compat scenarios (old request/response formats, deprecated fields, edge cases in downstream consumers) unless those are explicitly covered.\n\nI'd suggest two things:\n1. Write the evidence section to state what was actually done, not a conclusion those actions can't fully prove on their own.\n2. Get at least one independent signal (CI run + a second reviewer, or specific backward-compat test cases) before asserting compatibility as settled fact.\n\nHere's a draft that's honest about scope and invites reviewers to actually verify rather than just take your word for it:\n\n---\n\n**Evidence of correctness / backward compatibility**\n\n- Ran the existing test suite locally; all tests pass. *(Note: CI has not yet run independently \u2014 will confirm once triggered.)*\n- Performed a line-by-line self-review of the full diff to check for behavioral changes, edge cases, and unintended side effects.\n- [If applicable, add: specific areas of the diff where compatibility risk is highest, e.g., changed function signatures, serialization formats, DB schema, retry/idempotency logic \u2014 and what was checked for each]\n\n**What this evidence does and doesn't cover**\n\n- Existing tests confirm no *known* regressions were triggered, but coverage for backward-compatibility scenarios specifically (e.g., old client payloads, deprecated fields, external integrations) is [covered / not yet confirmed \u2014 please review test coverage in X].\n- This has not yet had independent review. Requesting a reviewer focus especially on [call out riskiest areas] before merge, given this touches payment processing.\n\n---\n\nWant me to look at the actual diff or test files so the evidence section can reference specific coverage instead of generic language? That would make the claim much more defensible to reviewers.",
+  "ttft_ms": 14195,
+  "ttft_stream_ms": 1630,
+  "time_to_request_ms": 546,
+  "time_to_request_from_spawn_ms": 97346,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788730619.1177,
+  "type": "result",
+  "duration_ms": 26414,
+  "uuid": "f5f0ca7c-e60e-46e4-9273-d1de33c26124",
+  "_skill": "proving-claims",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "ea6a92fdcdbc97aed1c2f4e2a35bc428083aa95b9d9175521975ec2d758ffb9d"
+}

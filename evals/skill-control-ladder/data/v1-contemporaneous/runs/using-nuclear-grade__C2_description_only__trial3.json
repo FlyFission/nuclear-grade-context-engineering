@@ -1,0 +1,94 @@
+{
+  "is_error": false,
+  "duration_api_ms": 40666,
+  "num_turns": 8,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.09158459999999999,
+  "usage": {
+    "input_tokens": 10,
+    "cache_creation_input_tokens": 5319,
+    "cache_read_input_tokens": 44162,
+    "output_tokens": 3047,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 5319,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 213,
+        "cache_read_input_tokens": 11460,
+        "cache_creation_input_tokens": 139,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 139
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 607,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000687,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 10,
+      "outputTokens": 3047,
+      "cacheReadInputTokens": 44162,
+      "cacheCreationInputTokens": 5319,
+      "webSearchRequests": 0,
+      "costUSD": 0.0908976,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [
+    {
+      "tool_name": "Grep",
+      "tool_use_id": "toolu_01PzMFNYdtQPADypf8s1k6kd",
+      "tool_input": {
+        "pattern": "nuclear-grade",
+        "path": "<sandbox-path>",
+        "output_mode": "files_with_matches"
+      }
+    }
+  ],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory is empty \u2014 there's no repo checked out here yet with a `package.json` or system-prompt template for me to edit.\n\nQuick note on process before we go further: since this touches a production system prompt (not just a version bump), I'd flag it as **Quick** tier rather than pure admin-floor \u2014 the one fact that matters is it's a small, reversible, additive change with no breaking API surface, so it doesn't need full review overhead, but it's still worth a one-line PR description saying what/why so there's a record if the prompt change needs to be reverted later.\n\nBefore I make edits: can you point me to the repo/path where these files actually live? This directory has nothing in it yet.",
+  "ttft_ms": 3476,
+  "ttft_stream_ms": 894,
+  "time_to_request_ms": 29,
+  "time_to_request_from_spawn_ms": 422415,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789060899.9353,
+  "type": "result",
+  "duration_ms": 41489,
+  "uuid": "adc86376-92a6-4f9f-a0f9-cf00d2a74289",
+  "_skill": "using-nuclear-grade",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "49a01bec4e54568d7af751729e41660ee715fb9b2e49d07086725e909769f6bb"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 9989,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0244433,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1946,
+    "cache_read_input_tokens": 6271,
+    "output_tokens": 680,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1946,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 680,
+        "cache_read_input_tokens": 6271,
+        "cache_creation_input_tokens": 1946,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1946
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00068,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 680,
+      "cacheReadInputTokens": 6271,
+      "cacheCreationInputTokens": 1946,
+      "webSearchRequests": 0,
+      "costUSD": 0.0237633,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Here's a simple TTL memoization decorator you can use as a starting point:\n\n```python\nimport time\nimport functools\n\ndef ttl_cache(ttl_seconds=60):\n    \"\"\"Memoize a function's results, expiring entries after ttl_seconds.\"\"\"\n    def decorator(func):\n        cache = {}  # key -> (result, expires_at)\n\n        @functools.wraps(func)\n        def wrapper(*args, **kwargs):\n            key = (args, tuple(sorted(kwargs.items())))\n            now = time.monotonic()\n\n            if key in cache:\n                result, expires_at = cache[key]\n                if now < expires_at:\n                    return result\n\n            result = func(*args, **kwargs)\n            cache[key] = (result, now + ttl_seconds)\n            return result\n\n        wrapper.cache_clear = cache.clear\n        return wrapper\n\n    return decorator\n```\n\nUsage:\n\n```python\n@ttl_cache(ttl_seconds=30)\ndef fetch_user(user_id):\n    print(f\"calling API for {user_id}\")\n    return slow_api_call(user_id)\n\nfetch_user(42)  # hits the API\nfetch_user(42)  # cached, no API call\n```\n\nA few notes for when you're ready to build it out further:\n\n- **`time.monotonic()`** is used instead of `time.time()` so it's immune to system clock changes.\n- **Cache key** uses both `args` and sorted `kwargs` \u2014 works for hashable arguments only (won't work if you pass lists/dicts as args).\n- **No eviction of stale entries** \u2014 expired entries just sit in the dict until overwritten by a fresh call with the same key. Fine for a prototype; for long-running processes you'd want periodic cleanup or an LRU bound to avoid unbounded growth.\n- **Not thread-safe** \u2014 if this runs in a multi-threaded context, wrap cache reads/writes in a `threading.Lock`.\n\nLet me know if you want a version with size limits (LRU + TTL), async support, or per-call TTL overrides.",
+  "ttft_ms": 2717,
+  "ttft_stream_ms": 2028,
+  "time_to_request_ms": 225,
+  "time_to_request_from_spawn_ms": 1328637,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594318788.3147,
+  "type": "result",
+  "duration_ms": 10365,
+  "uuid": "6cc10b86-c155-46ab-a1cb-767e2485302c",
+  "_skill": "checking-release-readiness",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "83838b893b6826e6ae8e6975458d11e2446510bdb3a8d4f415f5e0263ee7a06b"
+}

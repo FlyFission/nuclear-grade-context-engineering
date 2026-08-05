@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 13518,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.027615999999999998,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2322,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 738,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2322,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 738,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2322,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2322
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 738,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2322,
+      "webSearchRequests": 0,
+      "costUSD": 0.026892,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 don't cut over this week based on the vendor's marketing page alone.\n\n**The core problem:** \"99.9% accuracy,\" \"SOC2 compliant,\" and case studies are vendor-asserted claims, not evidence you've verified. For content moderation specifically, the characteristics that actually matter to you are things like: false-negative rate on the categories you legally/contractually must catch (CSAM, self-harm, hate speech, etc.), false-positive rate on your actual traffic distribution, latency/throughput under your load, and how it handles edge cases and adversarial inputs your users generate. A generic \"99.9% accuracy\" number tells you almost nothing about any of that \u2014 it's likely measured on their own benchmark, not your data.\n\n**What I'd do before switching:**\n1. **Shadow-test it first.** Run the new API in parallel against production traffic (or a representative sample) for a period, without acting on its decisions, and diff its output against your current provider and/or human-reviewed ground truth. This is the only way to know real precision/recall on *your* content.\n2. **Verify SOC2 independently.** Ask for the actual SOC2 Type II report (not the badge) \u2014 Type I just attests controls exist at a point in time, Type II shows they operated effectively over a period. Check the audit scope and exceptions noted.\n3. **Get case study customers' actual experience if possible**, or at least treat them as marketing, not verification \u2014 they're inherently cherry-picked.\n4. **Define your rollback plan and blast radius** \u2014 if this pipeline gates what users see or triggers account actions, a bad week of misclassification could mean legal exposure, user harm, or trust damage that's hard to undo.\n5. **Set a re-check trigger** \u2014 if you do adopt it, note that any model/API version change from the vendor should retrigger a mini re-validation, since \"99.9% accuracy\" can silently drift.\n\nThe pricing advantage is real and worth pursuing, but the fix isn't \"switch now, verify later\" \u2014 it's a shadow-test cycle first, which for a moderation pipeline you can likely run in 1-2 weeks in parallel with your existing provider at low risk. Given the compressed timeline pressure, want help designing a shadow-test harness or a checklist for the vendor asserted call?",
+  "ttft_ms": 12468,
+  "ttft_stream_ms": 986,
+  "time_to_request_ms": 34,
+  "time_to_request_from_spawn_ms": 155640,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788794041.2905,
+  "type": "result",
+  "duration_ms": 12545,
+  "uuid": "a245fc83-b14d-4292-abea-d6d1ffb5b764",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "1004d8043388a980ff198f473bf17ce798d01dc2bbf467baa2c742776c2a2102"
+}

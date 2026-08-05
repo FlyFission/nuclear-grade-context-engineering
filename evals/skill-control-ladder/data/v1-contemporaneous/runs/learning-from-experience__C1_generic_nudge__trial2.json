@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 37259,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.060784899999999996,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2714,
+    "cache_read_input_tokens": 14733,
+    "output_tokens": 2623,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2714,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2214,
+        "cache_read_input_tokens": 8453,
+        "cache_creation_input_tokens": 541,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 541
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2623,
+      "cacheReadInputTokens": 14733,
+      "cacheCreationInputTokens": 2714,
+      "webSearchRequests": 0,
+      "costUSD": 0.0600609,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This repo doesn't have any pre-commit/CI config in it \u2014 it's not the actual codebase where this happened \u2014 so I can't inspect your real hook/pipeline setup. I'll draft the write-up based on what you've described, and you can slot in specifics (tool names, repo, PR link) where I've left placeholders.\n\n## Draft Postmortem\n\n**Title:** Hardcoded API key committed to main via `--no-verify` bypass\n**Date of incident:** [commit date] \u00b7 **Date detected:** [audit date] \u00b7 **Date resolved:** [key rotated]\n**Severity:** [e.g. SEV-2 \u2014 credential exposure, no confirmed misuse]\n**Status:** Resolved (key rotated); follow-ups pending\n\n### Summary\nAn engineer's commit was blocked by the secrets-scanning pre-commit hook. Under time pressure to ship before a deadline, they bypassed the check with `git commit --no-verify` and pushed. The commit, containing a hardcoded API key, was merged to `main` and remained live in production for approximately three days until a routine security audit flagged it. The key was rotated immediately upon discovery.\n\n### Timeline\n- **[Day 0]** Pre-commit hook fails on secrets-scanning check.\n- **[Day 0]** Engineer bypasses with `--no-verify`, pushes branch.\n- **[Day 0]** PR merged to `main` \u2014 *(open question: did anyone review the diff, or was it fast-tracked/self-merged?)*\n- **[Day 0]** Deployed to production.\n- **[Day 3]** Routine security audit discovers the exposed key.\n- **[Day 3]** Key rotated.\n\n### Root Cause\nThe secrets-scanning control existed only as a local pre-commit hook, which is opt-in by design \u2014 any engineer can bypass it with `--no-verify`, and nothing downstream re-checked for secrets before merge or deploy.\n\n### Contributing Factors\n- No server-side enforcement (branch protection / CI check) mirroring the pre-commit rule, so a bypass at commit time was never caught again.\n- No PR review step that would plausibly have caught a hardcoded key, or review didn't flag it.\n- Deadline pressure created an incentive to bypass a safety control rather than fix or escalate the failing check.\n- Unclear whether the failing lint was a true positive (real secret) or a false positive the engineer didn't have time to triage \u2014 this matters for the fix.\n\n### Impact\n- API key live in a public/internal-facing path in production for ~3 days.\n- **Not yet stated: was the key's usage audited for unauthorized access during the exposure window?** This should be confirmed before closing the incident \u2014 rotating the key stops future misuse but doesn't tell you if it was already misused.\n\n### Corrective Actions\n\n**Immediate / must-have (closes the actual gap that let this ship):**\n1. Add server-side secrets scanning as a **required CI check** on the PR/merge path (e.g., gitleaks, trufflehog, or your existing linter run in CI) so a local `--no-verify` bypass can't reach `main`. Enable branch protection requiring this check to pass.\n2. Add secrets scanning as a required check at the deploy/CD stage too, as defense in depth.\n\n**Process:**\n3. Require at least one reviewer approval on PRs to `main` (if not already enforced) \u2014 a second set of eyes is a reasonable backstop for exactly this kind of thing.\n4. Define an explicit escalation path for \"the linter is blocking me and I don't understand why\" \u2014 e.g., ping #security-eng or a designated on-call \u2014 so the answer to time pressure isn't \"bypass,\" it's \"get quick help.\"\n\n**Culture/incentive:**\n5. Discuss with the team (not just the individual) that shipping-under-deadline pressure should not include disabling safety checks unilaterally. This is a systems/incentives conversation, not a blame conversation \u2014 the engineer had no CI backstop, so a local bypass was a single point of failure by design.\n\n**Hygiene:**\n6. Audit whether this key (and other secrets in the codebase) should be hardcoded at all \u2014 move to a secrets manager / environment injection at deploy time rather than in source.\n7. Confirm access logs for the exposed key were reviewed for the exposure window, not just that it was rotated.\n\n---\n\nA few things I'd flag before you finalize this:\n- **Item 6/7 (log review) is the biggest open gap** \u2014 \"we rotated the key\" tells you future risk is closed, not whether the key was actually abused during those 3 days. I'd get that confirmed and stated explicitly in the writeup, since it changes the severity classification.\n- If this goes in front of the engineer's manager or is used for a performance conversation, I'd keep the framing on the missing CI backstop (a systemic gap that made a single bypass consequential) rather than individual blame \u2014 that's also just more likely to get you the CI fix landed without the next engineer under deadline pressure doing the same thing quietly.\n\nWant me to turn this into a file in your actual repo (if you point me to it), or adjust the format/severity scale to match a template you already use?",
+  "ttft_ms": 3410,
+  "ttft_stream_ms": 1229,
+  "time_to_request_ms": 100,
+  "time_to_request_from_spawn_ms": 365357,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789003468.71,
+  "type": "result",
+  "duration_ms": 37412,
+  "uuid": "48bdd26e-5d6a-4c17-965e-5338b616838f",
+  "_skill": "learning-from-experience",
+  "_arm": "C1_generic_nudge",
+  "_trial": 2,
+  "_input_spec_sha256": "8115015f04d9fa09099815a984c692c5813de3d958a57bf85de3810fe2dff5da"
+}

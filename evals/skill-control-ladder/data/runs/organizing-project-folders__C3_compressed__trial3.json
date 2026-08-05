@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 16187,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0421126,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2802,
+    "cache_read_input_tokens": 23662,
+    "output_tokens": 1165,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2802,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 838,
+        "cache_read_input_tokens": 8784,
+        "cache_creation_input_tokens": 298,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 298
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 634,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000709,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1165,
+      "cacheReadInputTokens": 23662,
+      "cacheCreationInputTokens": 2802,
+      "webSearchRequests": 0,
+      "costUSD": 0.0414036,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory is actually empty \u2014 there's no `misc` or `utils` folder here for me to inspect, so I'm working purely from your description. That's fine for a proposal, but a few things would change the answer, so let me ask before designing anything:\n\n1. **Is this a single production codebase, or does it also contain agent/workflow pipelines** (numbered stages, etc.)? Your description sounds like a standard app/service repo.\n2. Roughly how many **services** share the \"shared helper functions\" \u2014 just the two you mentioned, or more across the repo?\n3. Do the **migration scripts** run once-and-done, or do you still run them periodically (e.g., data backfills)?\n4. Are the **compliance reports** something you're legally required to retain, or just historical reference?\n\nWith that said, here's a structure that fits what you've described, which you can correct:\n\n```\nconfig/\n  templates/                 # config templates (env, service configs, etc.)\n\nscripts/\n  migrations/\n    2024/\n    2025/\n    README.md                # what a migration script is, when it's safe to delete\n\nshared/\n  <lib-name>/                # each shared helper module, one per concern\n    README.md                # what it does, which services depend on it\n\ndocs/\n  compliance/\n    archive/\n      2024/\n      2025/\n  meeting-notes/\n    archive/\n      2024/\n      2025/\n```\n\nKey decisions behind this:\n- **`misc` and `utils` both disappear.** Every file should have exactly one reason to live somewhere; \"doesn't obviously belong elsewhere\" isn't a reason.\n- **Shared helpers get promoted out of `utils`** into `shared/<lib-name>/`, one folder per cohesive concern (e.g. `shared/date-formatting/`, `shared/http-retry/`), not one grab-bag. If a \"helper\" is only used by one service, it should move into that service's own folder, not stay shared.\n- **Migration scripts** go under `scripts/migrations/`, dated/numbered so it's obvious which have already run and can be archived vs. deleted.\n- **Compliance reports and meeting notes** are historical records, not code \u2014 they belong in `docs/`, archived by year, not mixed with active config or scripts.\n- Each new folder gets a short README stating its purpose and disposition rule (what belongs, what doesn't, when to delete).\n\nOnce you confirm the actual folder/file listing (or paste `ls misc utils`), I can map every one of the ~77 files to a specific destination instead of a generic bucket, and flag any that don't cleanly fit so you can make the call rather than me guessing.",
+  "ttft_ms": 1434,
+  "ttft_stream_ms": 718,
+  "time_to_request_ms": 41,
+  "time_to_request_from_spawn_ms": 874185,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025753001.6917,
+  "type": "result",
+  "duration_ms": 16919,
+  "uuid": "a7621a1f-4224-433d-9963-4a94a9bb4423",
+  "_skill": "organizing-project-folders",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "475e9ddd5fc99b90d48ebac64620a0817620f7aac0af09487fa0f2266cb01a3c"
+}

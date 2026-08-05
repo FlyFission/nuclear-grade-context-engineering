@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 32924,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.05559370000000001,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2740,
+    "cache_read_input_tokens": 14939,
+    "output_tokens": 2259,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2740,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1948,
+        "cache_read_input_tokens": 8659,
+        "cache_creation_input_tokens": 361,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 361
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 700,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000775,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2259,
+      "cacheReadInputTokens": 14939,
+      "cacheCreationInputTokens": 2740,
+      "webSearchRequests": 0,
+      "costUSD": 0.054818700000000005,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This PR bundles three changes that look small in diff size but are large in blast radius, and they interact with each other in a way that's easy to lose track of. Here's what I'd control before merging, not just smoke-test.\n\n**1. The new `issue_refund(amount, order_id)` tool \u2014 agent power increase**\n- Owner: whoever owns the agent's tool registry / backend.\n- Current state: no such capability exists.\n- Intended state: agent can unilaterally move up to $50 without a human.\n- What can drift silently: the $50 cap itself (is it enforced server-side, or just a prompt instruction the model could be talked out of via prompt injection in a customer message?), whether it's per-transaction or cumulative per-customer/day, whether it's idempotent (can it be called twice for the same order?), and whether there's an audit log of every autonomous refund.\n- Re-check trigger: any change to the cap, any change to how the tool validates `order_id`, any report of unexpected refund volume, any change to the model powering the bot (a \"more proactive\" prompt on a different/upgraded model could behave very differently).\n\n**2. The system prompt wording change (\"more proactive\")**\n- Owner: same as above.\n- This is the part most likely to cause silent drift, because \"proactive\" is vague and its effect on tool-calling behavior isn't something you can read off the diff \u2014 you have to test it against the new refund tool specifically, not just smoke-test general chat.\n- What to check: does \"proactive\" make the bot more willing to *offer and execute* refunds rather than wait to be asked? That's the actual risk surface, since you just gave it a financial tool in the same PR.\n- Re-check trigger: any future prompt edit, since prompt behavior isn't version-pinned the way code is \u2014 it needs eval-style regression testing (e.g., a fixed set of refund-request transcripts) to catch drift, not just a human reading the diff.\n\n**3. The help-center article edit \u2014 public claim now decoupled from reality**\n- Owner: whoever owns customer-facing docs (may be a different team than engineering).\n- This is the red flag: you're deleting a public promise (\"a human always reviews refunds\") in the same PR that makes it false. If these three changes ever get reverted or modified independently later (e.g., someone bumps the refund cap to $200 in a follow-up PR, or someone reverts the tool for a bug but forgets the doc), the doc and the actual system behavior can silently diverge in either direction \u2014 customers could be told humans review refunds when they don't, or vice versa.\n- Control point: the doc claim and the tool's actual limits should be linked (comment/ticket reference, or ideally the cap value pulled from a shared constant/config referenced in both, or at minimum a linked tracking issue) so a future change to one triggers review of the other.\n\n**What I'd actually do before merging:**\n- Split \"smoke test\" into: (a) does the tool call succeed under normal input, and (b) adversarial test \u2014 can a customer talk the \"more proactive\" bot into approving a refund it shouldn't (wrong order, refund for undelivered complaint, social engineering), since prompt+tool interaction is exactly where these agents fail.\n- Confirm the $50 cap and any rate/frequency limit are enforced in code, not just implied by the prompt.\n- Confirm there's a log/alert on every autonomous refund issuance, ideally reviewable by a human even if not gating.\n- Get sign-off from whoever owns the help-center content, not just eng \u2014 that's a public trust claim, not an implementation detail, and shouldn't ride along in an engineering PR without their explicit review.\n\nGiven three artifact kinds are involved (prompt, tool/code, public doc) and they're coupled, this is a case where a short `change-impact.md` linking the three (owner, current/intended state, evidence, re-check trigger for each) is worth more than the smoke test \u2014 want me to draft one?",
+  "ttft_ms": 4249,
+  "ttft_stream_ms": 927,
+  "time_to_request_ms": 35,
+  "time_to_request_from_spawn_ms": 1355568,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789993846.9272,
+  "type": "result",
+  "duration_ms": 34000,
+  "uuid": "a8f5f8b8-fe70-4811-8cf4-0ef01b4a1585",
+  "_skill": "choosing-what-to-control",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "16e259e61a9eae86cad0d81b949de6b57648450bba2b720162f649a77de49b71"
+}

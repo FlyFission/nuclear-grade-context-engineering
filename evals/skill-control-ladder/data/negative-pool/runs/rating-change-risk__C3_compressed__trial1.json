@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 12022,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0379658,
+  "usage": {
+    "input_tokens": 10,
+    "cache_creation_input_tokens": 2979,
+    "cache_read_input_tokens": 41986,
+    "output_tokens": 451,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2979,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 93,
+        "cache_read_input_tokens": 9126,
+        "cache_creation_input_tokens": 133,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 133
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000701,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 10,
+      "outputTokens": 451,
+      "cacheReadInputTokens": 41986,
+      "cacheCreationInputTokens": 2979,
+      "webSearchRequests": 0,
+      "costUSD": 0.0372648,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This working directory appears to be completely empty \u2014 there's no README, no CONTRIBUTING.md, no files at all. I can't find anything to fix here.\n\nCan you confirm this is the right repo/path? If the README lives elsewhere, point me to it and I'll make both one-line fixes.",
+  "ttft_ms": 1272,
+  "ttft_stream_ms": 845,
+  "time_to_request_ms": 67,
+  "time_to_request_from_spawn_ms": 1607368,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594601688.828,
+  "type": "result",
+  "duration_ms": 12681,
+  "uuid": "942bbaed-83ec-4352-aba1-e55ffadd4035",
+  "_skill": "rating-change-risk",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "b3845cd57fe340f37f322b776c5eed9a39107cff4e02507d1fceb0cb6af899f4"
+}

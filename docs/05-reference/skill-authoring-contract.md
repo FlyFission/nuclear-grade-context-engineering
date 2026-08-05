@@ -4,11 +4,23 @@
 
 ## Required structure
 
-Every skill lives at:
+Every promoted skill lives at:
 
 ```text
 skills/<skill-name>/SKILL.md
 ```
+
+`skill-catalog.json` is the semantic registry. Every entry declares:
+
+- `status`: `promoted`, `beta`, `deprecated`, or `retired`;
+- `invocation`: `model`, `user`, or `both`;
+- `role`: `router`, `orchestrator`, `discipline`, or `reference`;
+- `path`, and an optional promoted command mapping;
+- `replacement` when the status is `deprecated`.
+
+Only `promoted` entries may live under plugin-discoverable `skills/`, publish commands, or enter default/full installs. Put beta and deprecated bodies outside that tree (`skills-beta/` and `skills-deprecated/`) so a host cannot bypass the registry by auto-discovering folders. Retired entries may preserve metadata without shipping a body. `nuclear-grade.yaml` keeps flat `skills` and `command_map` compatibility projections; CI requires exact parity with the registry.
+
+Invocation describes who may select the instructions, not what the instructions may do. It grants no file, tool, network, credential, approval, merge, deployment, or release authority. User-invoked orchestrators may gather consequential decisions; model-invoked disciplines should run without manufacturing unnecessary approval loops.
 
 The file must include:
 
@@ -75,6 +87,8 @@ reduced](https://github.com/openai/codex/pull/34997). Make the name useful witho
 front-load the description's discriminating trigger, and do not assume every enabled skill is visible
 to the model. The `SKILL.md` body and optional folders load only after selection. Packaged wheels
 bundle the whole skill directory, so these subfolders travel with the skill.
+
+A command-backed skill normally keeps its ready-to-paste command under `## Prompt`. For a measured progressive-disclosure case, the exact prompt may instead live at `assets/command-prompt.md`; `SKILL.md` must link it through `## Command prompt asset`. `nuclear_grade.gen_commands.prompt_from_skill` rejects an inline-plus-asset duplicate and preserves generated-card parity. Keep runtime controls, decision contracts, escalation boundaries, and compact red flags in `SKILL.md`; move only material needed after selection. An asset reduces default selected-skill context, not packaged bytes.
 
 ## Writing rules
 

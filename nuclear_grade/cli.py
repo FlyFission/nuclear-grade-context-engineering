@@ -27,6 +27,7 @@ from nuclear_grade.ng_validate import (
     has_closure_note,
     validate_packet,
 )
+from nuclear_grade.skill_catalog import CatalogError, load_catalog, load_yaml_projections
 from nuclear_grade.tokens import (
     build_report,
     check_budgets,
@@ -40,6 +41,8 @@ from nuclear_grade.tokens import (
 PACKAGE_DIR = Path(__file__).resolve().parent
 REPO_ROOT = PACKAGE_DIR.parent
 BUNDLED_ROOT = PACKAGE_DIR / "_bundled"
+CATALOG_ROOT = REPO_ROOT if (REPO_ROOT / "skill-catalog.json").is_file() else BUNDLED_ROOT
+SKILL_CATALOG = load_catalog(CATALOG_ROOT)
 
 
 def _resolve_resource_root(name: str) -> Path:
@@ -89,20 +92,11 @@ MODE_FILES = {
 
 # --- `ng install`: cross-tool skill distribution --------------------------------
 # Skills auto-surface in each tool by their frontmatter `description` (the model
-# picks them when a request matches); installing is just placing the same SKILL.md
-# files where the tool looks for them. The lean `--core` profile ships the
-# always-first router plus the Core 7 dispositions (see CORE.md); `--full` ships
-# every skill under skills/*/.
-CORE_SKILLS = (
-    "using-nuclear-grade",  # the always-first router
-    "questioning-attitude",
-    "rating-change-risk",
-    "proving-claims",
-    "double-checking-before-acting",
-    "staying-on-mission",
-    "checking-release-readiness",
-    "learning-from-experience",
-)
+# picks them when a request matches). The lean ``--core`` profile is declared in
+# skill-catalog.json and ships the always-first router plus the Core 7 dispositions;
+# ``--full`` ships every promoted skill. Lifecycle status, not folder enumeration,
+# controls both profiles.
+CORE_SKILLS = tuple(entry.id for entry in SKILL_CATALOG.profile("core"))
 
 INSTALL_TOOLS = ("codex", "claude", "cursor", "windsurf", "vscode")
 TOOL_LABELS = {
@@ -591,10 +585,19 @@ def install_dest(tool: str, scope: str, repo: Path) -> Path:
 
 def handle_install(args: argparse.Namespace) -> int:
     if args.full:
-        names = [path.parent.name for path in sorted(SKILLS.glob("*/SKILL.md"))]
+        names = [entry.id for entry in SKILL_CATALOG.promoted]
         profile = "full"
     else:
-        names = list(CORE_SKILLS)
+        promoted = {entry.id for entry in SKILL_CATALOG.promoted}
+        names = [name for name in CORE_SKILLS if name in promoted]
+        missing_core = sorted(set(CORE_SKILLS) - promoted)
+        if missing_core:
+            print(
+                "core profile references non-promoted or missing skill(s): "
+                + ", ".join(missing_core),
+                file=sys.stderr,
+            )
+            return 2
         profile = "core"
 
     missing = [name for name in names if not (SKILLS / name / "SKILL.md").is_file()]
@@ -913,8 +916,14 @@ def handle_tokens(args: argparse.Namespace) -> int:
     print(
         f"\nSkill totals: descriptions {report.skill_description_total} tokens "
         f"(host may shorten or omit), bodies {report.skill_body_total} tokens "
-        f"(loaded when selected)."
+        f"(loaded when selected), body p95 {report.skill_body_p95}."
     )
+    if (repo / "skill-catalog.json").is_file():
+        core_description, core_body = report.profile_totals("core")
+        print(
+            f"Core profile: descriptions {core_description} tokens, "
+            f"selected bodies {core_body} tokens."
+        )
 
     commands = report.of_kind("command")
     if commands:
@@ -1140,6 +1149,23 @@ def collect_doctor_failures(repo: Path) -> list[str]:
 
     if not catalog.exists():
         failures.append("missing nuclear-grade.yaml")
+
+    lifecycle_catalog = None
+    try:
+        lifecycle_catalog = load_catalog(repo)
+    except CatalogError as exc:
+        failures.extend(str(exc).splitlines())
+    if lifecycle_catalog is not None and catalog.exists():
+        projected_skills, projected_commands = load_yaml_projections(repo)
+        promoted_ids = [entry.id for entry in lifecycle_catalog.promoted]
+        if projected_skills != promoted_ids:
+            failures.append(
+                "nuclear-grade.yaml skills projection differs from promoted skill-catalog.json entries"
+            )
+        if projected_commands != lifecycle_catalog.command_map:
+            failures.append(
+                "nuclear-grade.yaml command_map projection differs from skill-catalog.json"
+            )
 
     if not skills_dir.exists():
         failures.append(f"missing skills directory: {skills_dir.name}")

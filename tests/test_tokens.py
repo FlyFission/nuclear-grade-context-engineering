@@ -87,6 +87,13 @@ def test_repo_passes_its_own_token_budget():
     report = tokens.build_report(ROOT)
     budgets = tokens.load_budgets(ROOT)
 
+    assert report.skill_description_total > 0
+    assert report.skill_body_total > 0
+    assert report.command_total > 0
+    assert report.skill_body_p95 > 0
+    core_description, core_body = report.profile_totals("core")
+    assert core_description > 0
+    assert core_body > 0
     assert tokens.check_budgets(report, budgets) == [], "accepted corpus must start green"
 
 
@@ -115,6 +122,38 @@ def test_gate_has_teeth_when_a_file_exceeds_budget(tmp_path):
 
     assert violations
     assert any("skill_body_max" in v for v in violations)
+
+
+def test_aggregate_gate_fires_when_individually_valid_files_exceed_product_budget(tmp_path):
+    skills = tmp_path / "skills"
+    for index in range(3):
+        skill_dir = skills / f"skill-{index}"
+        skill_dir.mkdir(parents=True)
+        (skill_dir / "SKILL.md").write_text(
+            "---\n"
+            f"name: skill-{index}\n"
+            "description: short routing description\n"
+            "---\n\n# Demo\n\n" + ("bounded body words " * 80) + "\n",
+            encoding="utf-8",
+        )
+
+    report = tokens.build_report(tmp_path)
+    budgets = dict(tokens.DEFAULT_BUDGETS)
+    budgets.update(
+        {
+            "description_max": 1000,
+            "skill_body_max": 1000,
+            "skill_description_total_max": 10,
+            "skill_body_total_max": 100,
+            "skill_body_p95_max": 1000,
+            "command_total_max": 1000,
+        }
+    )
+    violations = tokens.check_budgets(report, budgets)
+
+    assert any("skill_description_total_max" in violation for violation in violations)
+    assert any("skill_body_total_max" in violation for violation in violations)
+    assert not any("skill_body_max" in violation and "total" not in violation for violation in violations)
 
 
 def test_redundancy_index_fires_when_a_block_is_over_repeated(tmp_path):

@@ -41,6 +41,52 @@ The fix is to expose evidence custody and reduce actor–evidence coupling at tr
 
 These eight are the everyday form of the loop. For standard and high-consequence work the same loop fans out into eleven beats (`Question -> Discover -> Specify -> Plan -> Execute -> Verify -> Review -> Decide -> Baseline -> Operate -> Learn`), splitting Question into Question/Discover, Specify into Specify/Plan, and Decide into Review/Decide. Same control points, more beats. Those eleven beats also carry a memory handle: **PROVE** (Plan · Run · Observe · Verdict · Educate), or just **PRO** (Plan · Run · Operate) zoomed out; see [`docs/diagrams.md`](docs/diagrams.md).
 
+## One lifecycle, several views
+
+These labels are projections of one lifecycle, not competing state machines:
+
+| View | Purpose | Crosswalk |
+|---|---|---|
+| eight control points | everyday decision and control loop | Question; Specify; Execute; Verify; Decide; Baseline; Operate; Learn |
+| eleven beats | expanded Standard work | Question + Discover; Specify + Plan; Execute; Verify; Review + Decide; Baseline; Operate; Learn |
+| PROVE | memory handle for the same movement | Plan = Question through Plan; Run = Execute; Observe = Verify and Review; Verdict = Decide and Baseline; Educate = Operate and Learn |
+| work phases | artifact maturity, not another control loop | `explore -> candidate -> audit -> accept`; promotion into `accept` happens only at the relevant Verify/Review/Decide boundary |
+
+Name the view a record uses, then stay in it unless a crosswalk is needed. Do not force an agent to translate labels at every step.
+
+## Engineering build track
+
+The control loop says **where** decisions and proof occur. This optional build track supplies concrete methods inside Discover through Review. It adds no mode or mandatory phase; use only the on-ramp whose uncertainty is present.
+
+### Discover
+
+- Run a domain-model pass when entities, terms, invariants, or ownership are unclear.
+- Run an architecture/seam pass when module boundaries or the public seam are unclear.
+- Use an isolated prototype when conversation cannot settle one interaction, state, visual, or business-logic question. A prototype answers one question, remains outside production, and becomes cited evidence rather than silently becoming the implementation.
+
+### Specify
+
+Use a **decision frontier**. Retrieve facts autonomously. Batch independent consequential choices with a recommendation, alternatives, evidence, and downstream impact. Hide dependent choices until prerequisites resolve. Leave reversible mechanical choices delegated.
+
+### Plan
+
+Plan dependency-aware vertical slices. The first slice is a **tracer bullet** through the real path. Every slice names its blockers, public seam, integrated proof, and rollback or stop condition. Do not plan all tests first and all implementation later when behavior can be proved one slice at a time.
+
+### Execute
+
+Where a stable seam exists, work red before green through the public seam, one behavior slice at a time. Existing accepted specs, interfaces, ADRs, and repository conventions may establish the seam without another human interruption. Run narrow checks continuously and integrated verification at the end.
+
+### Review
+
+Keep two axes distinct:
+
+- **Spec review:** does the implementation satisfy the accepted requirement and claim-to-evidence contract? Use `proving-claims`.
+- **Standards review:** is the implementation maintainable, bounded, secure, and consistent with repository standards? Use `reviewing-code-quality`.
+
+Preserve separate findings when consequence warrants independent reviewers. `checking-release-readiness` owns the release recommendation; review does not silently merge itself.
+
+At the end of Discover, Specify, Plan, Execute, and Review, make a **phase-boundary context decision**: Continue with primary context, start fresh, hand off, delegate a bounded subtask, or compact. Name the authoritative artifact and revision for the next phase, and state whether it receives primary evidence, a lossy summary, or both.
+
 ## Two speeds, one loop
 
 For AI agents, we add a few small habits from Human Performance Improvement (HPI). Brief the work first. Double-check risky actions. Hand off cleanly. Get a second set of eyes when needed. Decide on the careful side. Learn from near misses.

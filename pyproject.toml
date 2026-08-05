@@ -35,6 +35,7 @@ packages = ["nuclear_grade"]
 "templates" = "nuclear_grade/_bundled/templates"
 "skills" = "nuclear_grade/_bundled/skills"
 "commands" = "nuclear_grade/_bundled/commands"
+"skill-catalog.json" = "nuclear_grade/_bundled/skill-catalog.json"
 
 [tool.hatch.build.targets.sdist]
 include = [
@@ -42,6 +43,7 @@ include = [
   "/templates",
   "/skills",
   "/commands",
+  "/skill-catalog.json",
   "/tests",
   "/tools",
   "/docs",

@@ -156,17 +156,19 @@ def test_skill_evaluation_prompts_cover_every_skill():
         assert block.count("Should not trigger:") >= 2
 
 
-def test_using_nuclear_grade_forces_classification_and_trip_wire():
-    """The router must force a spoken risk classification (a declaration of intent)
-    and MUST-promote the cheap 'it's only small' traps; guard that directive
-    behavior against silent regression. See
-    .nuclear/changes/directive-dispatcher-skill/."""
-    # Case-insensitive so a capitalization tweak does not fail the contract,
-    # while the classify-first move and the trip-wire must stay present.
+def test_using_nuclear_grade_allows_read_only_preflight_before_mutation_gate():
+    """The router may inspect enough evidence to classify honestly, but mode and
+    controlling fact must be declared before the first mutation or external side
+    effect. See .nuclear/changes/matt-skill-lifecycle-and-flow/."""
     text = (SKILLS_DIR / "using-nuclear-grade" / "SKILL.md").read_text(encoding="utf-8").lower()
 
-    assert "classify first" in text, "router must lead with a mandatory classification"
-    assert "declaration of intent" in text, "classification is a declaration, not a permission request"
+    assert "bounded read-only preflight" in text
+    assert "before the first mutation" in text
+    assert "external side effect" in text
+    assert "credential use" in text
+    assert "publication" in text
+    assert "release action" in text
+    assert "declaration of intent" in text
     assert "standard-plus" in text and "must" in text, "router must MUST-promote, not merely suggest"
 
     traps = ("authentication", "dependency manifest", "model id", ".github/", "public wording", "migration")

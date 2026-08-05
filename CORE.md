@@ -114,20 +114,17 @@ user prompt
 The human is editor and approver, not typist. This is what makes Quick mode feel like a
 speed-up rather than a tax.
 
-For a Standard change the loop runs in **stages, with a gate between each** — the agent
-drafts a phase, the human approves it, and only then does the next phase open:
+For a Standard change the loop still protects requirements, design, and implementation boundaries, but it uses a **frontier review** instead of making the human schedule every reversible step. The agent drafts all currently independent consequential decisions together, retrieves missing facts autonomously, and includes its recommendation, alternatives, evidence, and downstream impact. Dependent decisions wait until their prerequisites resolve. **Reversible mechanical choices** stay delegated.
 
 ```text
-requirements draft -> human approves
-  -> design draft   -> human approves
-  -> tasks/plan draft -> human approves
-  -> agent builds against the approved spec
+current decision frontier
+  -> requirements/design choices that can be decided now
+  -> human approves, revises, or holds the consequential choices
+  -> agent resolves dependencies and opens the next frontier
+  -> agent builds against the accepted spec and named proof
 ```
 
-Staging keeps a late discovery from silently rewriting an earlier decision, and it gives
-the human a small, reviewable artifact at each step instead of one large one at the end.
-The gates map to the `plan.md` review checkpoints (Requirements approved / Design approved
-/ Tasks approved).
+Separate checkpoints remain when a decision materially changes scope, architecture, authority, trust, or release evidence. A small Standard change may combine requirements, design, and plan into one review when the choices are independent and readable. Staging exists to prevent a late discovery from silently rewriting an earlier decision, not to turn the human into a workflow scheduler. The accepted frontier maps into the `plan.md` review checkpoints and preserves who approved what.
 
 **Caution.** An agent that drafts its own spec *and* self-validates it against a structural
 check is the "ships green by editing its own test" trap in new clothing. Trust-bearing specs

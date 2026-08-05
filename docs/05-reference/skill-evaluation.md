@@ -28,6 +28,20 @@ If a skill changes decisions but says so only in vague prose, amend its receipt 
 
 `ng decisions` prints the operator receipt (`block`/`warn`) and, with `--all`, the `observe`-tier skills held in telemetry; `ng tokens` reports tokens-per-decision-signal for the worked examples. Together they point a reviewer at the skills paying the most prose for the least decision movement.
 
+## Catalog-level routing evaluation
+
+Per-skill trigger and near-miss rows answer whether one named skill should fire. They do not penalize a model for also selecting several unnecessary neighboring skills. `evals/skill-routing-scenarios.jsonl` therefore records required and allowed skill sets for the close-neighbor and composition cases that matter.
+
+```bash
+# Validate lifecycle and scenario contracts only:
+python tools/ng_skill_catalog_route_score.py
+
+# Score a recorded host/provider run:
+python tools/ng_skill_catalog_route_score.py --observed <observed-routes.jsonl>
+```
+
+The scorer reports required-skill recall, unnecessary-selection precision, exact case matches, false positives, and misses. An observed row is `{"id": "catalog-001", "loaded_skills": ["using-nuclear-grade", "rating-change-risk"]}`. Unknown skills, duplicate rows, and run/manifest mismatches fail closed. A manifest-only pass proves structure, not live model routing. Preserve the host, provider/model, catalog revision, and raw observations when using a scored run as promotion evidence.
+
 ## Prompt Bank
 
 ### `questioning-attitude`

@@ -4,6 +4,8 @@ A skill is a self-contained set of instructions an agent can follow. Each one li
 
 For directional pilot evidence on the 28 skills included in the July 2026 run — with real cost/token data and blind grading — see [`evals/skill-benchmark-pilot/`](evals/skill-benchmark-pilot/). It is a historical snapshot, not evidence for every skill now in the catalog.
 
+`skill-catalog.json` is the machine-readable lifecycle and invocation registry. Only `promoted` skills appear in the table and plugin-discoverable `skills/` tree. `beta`, `deprecated`, and `retired` entries stay out of default installs; deprecated entries must name a promoted replacement. `model`, `user`, and `both` identify who may select a skill, not what authority it receives. The flat lists in `nuclear-grade.yaml` remain checked compatibility projections.
+
 ## The skills
 
 | Skill | Use it when | What you get |

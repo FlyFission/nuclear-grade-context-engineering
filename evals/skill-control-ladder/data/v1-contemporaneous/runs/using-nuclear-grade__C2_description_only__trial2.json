@@ -67,7 +67,7 @@
       "tool_use_id": "toolu_019EnotqcSjYcFHoKJC3UEja",
       "tool_input": {
         "pattern": "**/CLAUDE.md",
-        "path": "/home/user/nuclear-grade-context-engineering"
+        "path": "<sandbox-path>"
       }
     }
   ],

@@ -235,6 +235,22 @@ def run_subject(scenario: str, appended: str, cwd: Path) -> dict:
         return {"type": "error", "error": f"{type(e).__name__}: {e}"}
 
 
+# Absolute sandbox paths leak into transcripts because the subject model reports
+# its working directory. The repo forbids them in committed files
+# (tests/test_public_docs.py), and the first fix for this scrubbed transcripts
+# AFTER they had been graded -- which silently broke the grade-to-transcript hash
+# lineage for 7 rows. Sanitizing at WRITE time makes the committed text and the
+# graded text the same string by construction, so that class of defect cannot
+# recur.
+_PATH_RE = re.compile(r"/(?:home|Users|tmp)/[^\s\"'`),\]}]*")
+
+
+def sanitize(text: str) -> str:
+    """Replace absolute sandbox paths with a stable placeholder. Deterministic:
+    the same input always yields the same output, so hashes stay reproducible."""
+    return _PATH_RE.sub("<sandbox-path>", text)
+
+
 def read_skill(skill: str) -> str:
     return (SKILLS_ROOT / skill / "SKILL.md").read_text()
 

@@ -67,7 +67,7 @@
       "tool_use_id": "toolu_01PzMFNYdtQPADypf8s1k6kd",
       "tool_input": {
         "pattern": "nuclear-grade",
-        "path": "/home/user",
+        "path": "<sandbox-path>",
         "output_mode": "files_with_matches"
       }
     }

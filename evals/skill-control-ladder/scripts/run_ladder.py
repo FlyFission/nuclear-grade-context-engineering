@@ -41,6 +41,7 @@ from ladder_common import (
     load_compressions,
     pilot_spec_hash,
     run_path,
+    sanitize,
 )
 
 WORK_DIR = RUNS_DIR.parent / "work"
@@ -131,6 +132,8 @@ def run_one(skill: str, arm: str, trial: int, compressions: dict[str, str]) -> d
     record["_arm"] = arm
     record["_trial"] = trial
     record["_input_spec_sha256"] = spec_hash
+    # Sanitize BEFORE persisting so the committed bytes are the graded bytes.
+    record = json.loads(sanitize(json.dumps(record, indent=2)))
     out_path.write_text(json.dumps(record, indent=2))
     return record
 

@@ -67,7 +67,7 @@
       "tool_use_id": "toolu_013RGaT9EKKrEnupBnB6DDDN",
       "tool_input": {
         "pattern": "using-nuclear-grade",
-        "path": "/home/user/nuclear-grade-context-engineering",
+        "path": "<sandbox-path>",
         "output_mode": "files_with_matches"
       }
     }

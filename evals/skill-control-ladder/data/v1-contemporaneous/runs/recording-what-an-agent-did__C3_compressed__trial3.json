@@ -67,7 +67,7 @@
       "tool_use_id": "toolu_01Lbm7gyj1rsB3Xugt6WhDMz",
       "tool_input": {
         "pattern": "**/basis.md",
-        "path": "/home/user/nuclear-grade-context-engineering"
+        "path": "<sandbox-path>"
       }
     },
     {
@@ -75,7 +75,7 @@
       "tool_use_id": "toolu_013gsxEQL4PbxqJMMXMyGYkX",
       "tool_input": {
         "pattern": "**/ng.py",
-        "path": "/home/user/nuclear-grade-context-engineering"
+        "path": "<sandbox-path>"
       }
     },
     {
@@ -83,7 +83,7 @@
       "tool_use_id": "toolu_01K6K2B9DaodXQYN7b5UhzGF",
       "tool_input": {
         "pattern": "**/*",
-        "path": "/home/user/nuclear-grade-context-engineering/evals/skill-control-ladder/data/v1-contemporaneous/work"
+        "path": "<sandbox-path>"
       }
     }
   ],

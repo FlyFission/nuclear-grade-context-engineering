@@ -11,7 +11,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 | REQ-001 | local proof | deterministic test + review | bounded read-only preflight allowed; mutation/side-effect gate remains mandatory | pass | E-001 | provider review pending |
 | REQ-002 | local proof | deterministic test | registry is complete, unique, typed, and path-valid | pass | E-002 | provider review pending |
 | REQ-003 | local proof | adversarial deterministic test | beta/deprecated leakage and bad replacements fail with diagnostics | pass | E-003 | wheel smoke passed |
-| REQ-004 | local proof | deterministic scorer | misses and extra skills lower metrics and fail exact routes | pass | E-004 | live host routing remains deferred |
+| REQ-004 | local proof | deterministic scorer | misses and extra skills lower metrics; configured thresholds govern scored-run exit status | pass | E-004 | live host routing remains deferred |
 | REQ-005 | local proof | deterministic budget mutation test | aggregate/profile overages fail | pass | E-005 | none |
 | REQ-006 | local proof | parity + token measurement | generated commands unchanged in meaning; decisions remain; selected load drops | pass | E-006 | selected skill-body catalog dropped 1,477 tokens (2.35%); behavior evidence remains bounded to fixtures/pilot |
 | REQ-007 | source claim + local proof | doc contract + review | on-ramps are conditional and do not add mandatory phases | pass | E-007 | provider review pending |

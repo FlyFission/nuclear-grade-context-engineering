@@ -32,7 +32,7 @@ class RoutingScore:
     true_positive: int
     false_positive: int
     false_negative: int
-    exact_cases: int
+    acceptable_cases: int
     total_cases: int
     failures: tuple[str, ...]
 
@@ -47,8 +47,10 @@ class RoutingScore:
         return self.true_positive / denominator if denominator else 1.0
 
     @property
-    def exact_rate(self) -> float:
-        return self.exact_cases / self.total_cases if self.total_cases else 1.0
+    def acceptable_rate(self) -> float:
+        """Share of routes satisfying required-subset and allowed-superset constraints."""
+
+        return self.acceptable_cases / self.total_cases
 
 
 def _jsonl(path: Path) -> list[tuple[int, object]]:
@@ -132,6 +134,8 @@ def load_scenarios(path: Path, catalog: SkillCatalog) -> tuple[RoutingScenario, 
             )
         )
 
+    if not scenarios:
+        errors.append(f"{path}: at least one routing scenario is required")
     if errors:
         raise RoutingEvalError("invalid routing scenarios:\n- " + "\n- ".join(errors))
     return tuple(scenarios)
@@ -185,10 +189,13 @@ def score_routes(
 ) -> RoutingScore:
     """Score required recall and unnecessary selection, case by case."""
 
+    if not scenarios:
+        raise RoutingEvalError("at least one routing scenario is required")
+
     true_positive = 0
     false_positive = 0
     false_negative = 0
-    exact_cases = 0
+    acceptable_cases = 0
     failures: list[str] = []
 
     for scenario in scenarios:
@@ -204,7 +211,7 @@ def score_routes(
         false_negative += len(missing)
         false_positive += len(unnecessary)
         if not missing and not unnecessary:
-            exact_cases += 1
+            acceptable_cases += 1
         if missing:
             failures.append(
                 f"{scenario.id}: missing required skill(s): {', '.join(sorted(missing))}"
@@ -218,7 +225,7 @@ def score_routes(
         true_positive=true_positive,
         false_positive=false_positive,
         false_negative=false_negative,
-        exact_cases=exact_cases,
+        acceptable_cases=acceptable_cases,
         total_cases=len(scenarios),
         failures=tuple(failures),
     )

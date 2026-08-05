@@ -207,8 +207,11 @@ def _validate_semantics(
     for profile_name, profile_ids in profiles.items():
         if profile_name == "full":
             errors.append("profile name 'full' is reserved for all promoted skills")
+        if not profile_ids:
+            errors.append(f"profile {profile_name!r} must not be empty")
         if len(profile_ids) != len(set(profile_ids)):
             errors.append(f"profile {profile_name!r} contains duplicate skill ids")
+        profile_entries: list[SkillEntry] = []
         for skill_id in profile_ids:
             entry = by_id.get(skill_id)
             if entry is None:
@@ -216,6 +219,18 @@ def _validate_semantics(
             elif entry.status != "promoted":
                 errors.append(
                     f"profile {profile_name!r} references non-promoted skill {skill_id!r}"
+                )
+            else:
+                profile_entries.append(entry)
+        if profile_name == "core":
+            routers = [
+                entry
+                for entry in profile_entries
+                if entry.role == "router" and entry.invocation in {"model", "both"}
+            ]
+            if len(routers) != 1:
+                errors.append(
+                    "profile 'core' must contain exactly one promoted model-routable router"
                 )
 
 

@@ -40,7 +40,7 @@ python tools/ng_skill_catalog_route_score.py
 python tools/ng_skill_catalog_route_score.py --observed <observed-routes.jsonl>
 ```
 
-The scorer reports required-skill recall, unnecessary-selection precision, exact case matches, false positives, and misses. An observed row is `{"id": "catalog-001", "loaded_skills": ["using-nuclear-grade", "rating-change-risk"]}`. Unknown skills, duplicate rows, and run/manifest mismatches fail closed. A manifest-only pass proves structure, not live model routing. Preserve the host, provider/model, catalog revision, and raw observations when using a scored run as promotion evidence.
+The scorer reports required-skill recall, unnecessary-selection precision, acceptable-route rate, false positives, and misses. A route is acceptable when it includes every required skill and no skill outside the scenario's allowed set; optional allowed skills therefore do not make a route fail. An observed row is `{"id": "catalog-001", "loaded_skills": ["using-nuclear-grade", "rating-change-risk"]}`. Unknown skills, duplicate rows, empty manifests, and run/manifest mismatches fail closed. Threshold flags control whether a non-perfect scored run exits successfully; their defaults remain `1.0`. A manifest-only pass proves structure, not live model routing. Preserve the host, provider/model, catalog revision, and raw observations when using a scored run as promotion evidence.
 
 ## Prompt Bank
 

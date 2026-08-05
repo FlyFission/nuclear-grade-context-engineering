@@ -7,7 +7,7 @@
 | REQ-001 | `basis.md` | router skill, contract tests, related docs | `verification.md` E-001 | pass |
 | REQ-002 | `basis.md` | lifecycle registry/module | `verification.md` E-002 | pass |
 | REQ-003 | `basis.md` | installer/package filtering and negative fixtures | `verification.md` E-003 | pass |
-| REQ-004 | `basis.md` | catalog-level route scenarios and exact-set scorer | `verification.md` E-004 | pass; live run deferred |
+| REQ-004 | `basis.md` | catalog-level route scenarios and acceptable-route scorer | `verification.md` E-004 | pass; live run deferred |
 | REQ-005 | `basis.md` | aggregate token/profile budgets | `verification.md` E-005 | pass |
 | REQ-006 | `basis.md` | compact skill assets/references and generator fallback | `verification.md` E-006 | pass |
 | REQ-007 | `basis.md` | workflow/doctrine/template adapters | `verification.md` E-007 | pass |

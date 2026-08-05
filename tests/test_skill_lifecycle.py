@@ -20,11 +20,23 @@ def _write_skill(root: Path, name: str, bucket: str = "skills") -> str:
     return rel
 
 
-def _write_catalog(root: Path, entries: list[dict]) -> None:
+def _write_catalog(root: Path, entries: list[dict], profiles: dict[str, list[str]] | None = None) -> None:
+    payload: dict[str, object] = {"schema_version": 1, "skills": entries}
+    if profiles is not None:
+        payload["profiles"] = profiles
     (root / "skill-catalog.json").write_text(
-        json.dumps({"schema_version": 1, "skills": entries}, indent=2) + "\n",
+        json.dumps(payload, indent=2) + "\n",
         encoding="utf-8",
     )
+
+
+def test_non_promoted_lifecycle_trees_are_bundled_for_wheel_validation():
+    pyproject = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
+
+    assert '"skills-beta" = "nuclear_grade/_bundled/skills-beta"' in pyproject
+    assert '"skills-deprecated" = "nuclear_grade/_bundled/skills-deprecated"' in pyproject
+    assert (ROOT / "skills-beta").is_dir()
+    assert (ROOT / "skills-deprecated").is_dir()
 
 
 def test_repository_catalog_is_complete_and_matches_compatibility_projections():
@@ -132,6 +144,37 @@ def test_catalog_rejects_unknown_enum_and_missing_skill_path(tmp_path):
     assert "invalid invocation" in message
     assert "invalid role" in message
     assert "missing skill file" in message
+
+
+def test_core_profile_requires_router_and_non_empty_selection(tmp_path):
+    router_path = _write_skill(tmp_path, "router")
+    helper_path = _write_skill(tmp_path, "helper")
+    entries = [
+        {
+            "id": "router",
+            "path": router_path,
+            "status": "promoted",
+            "invocation": "model",
+            "role": "router",
+            "command": None,
+        },
+        {
+            "id": "helper",
+            "path": helper_path,
+            "status": "promoted",
+            "invocation": "model",
+            "role": "discipline",
+            "command": None,
+        },
+    ]
+
+    _write_catalog(tmp_path, entries, profiles={"core": []})
+    with pytest.raises(CatalogError, match="profile 'core' must not be empty"):
+        load_catalog(tmp_path)
+
+    _write_catalog(tmp_path, entries, profiles={"core": ["helper"]})
+    with pytest.raises(CatalogError, match="profile 'core' must contain exactly one promoted model-routable router"):
+        load_catalog(tmp_path)
 
 
 def test_catalog_rejects_promoted_folder_not_registered(tmp_path):

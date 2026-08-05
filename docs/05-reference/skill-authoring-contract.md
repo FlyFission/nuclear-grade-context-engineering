@@ -18,7 +18,7 @@ skills/<skill-name>/SKILL.md
 - `path`, and an optional promoted command mapping;
 - `replacement` when the status is `deprecated`.
 
-Only `promoted` entries may live under plugin-discoverable `skills/`, publish commands, or enter default/full installs. Put beta and deprecated bodies outside that tree (`skills-beta/` and `skills-deprecated/`) so a host cannot bypass the registry by auto-discovering folders. Retired entries may preserve metadata without shipping a body. `nuclear-grade.yaml` keeps flat `skills` and `command_map` compatibility projections; CI requires exact parity with the registry.
+Only `promoted` entries may live under plugin-discoverable `skills/`, publish commands, or enter default/full installs. Put beta and deprecated bodies outside that tree (`skills-beta/` and `skills-deprecated/`) so a host cannot bypass the registry by auto-discovering folders. Wheel builds bundle those non-discoverable trees solely so the complete catalog remains loadable and diagnosable; installers still copy only promoted profile members. Retired entries may preserve metadata without shipping a body. `nuclear-grade.yaml` keeps flat `skills` and `command_map` compatibility projections; CI requires exact parity with the registry.
 
 Invocation describes who may select the instructions, not what the instructions may do. It grants no file, tool, network, credential, approval, merge, deployment, or release authority. User-invoked orchestrators may gather consequential decisions; model-invoked disciplines should run without manufacturing unnecessary approval loops.
 

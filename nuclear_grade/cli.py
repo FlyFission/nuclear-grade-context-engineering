@@ -7,6 +7,7 @@ engineering adequacy, safety, security, compliance, or verification and validati
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import re
 import shutil
@@ -42,7 +43,12 @@ PACKAGE_DIR = Path(__file__).resolve().parent
 REPO_ROOT = PACKAGE_DIR.parent
 BUNDLED_ROOT = PACKAGE_DIR / "_bundled"
 CATALOG_ROOT = REPO_ROOT if (REPO_ROOT / "skill-catalog.json").is_file() else BUNDLED_ROOT
-SKILL_CATALOG = load_catalog(CATALOG_ROOT)
+
+
+def _load_distribution_catalog():
+    """Load catalog lazily so diagnostics and help survive a malformed catalog."""
+
+    return load_catalog(CATALOG_ROOT)
 
 
 def _resolve_resource_root(name: str) -> Path:
@@ -95,8 +101,8 @@ MODE_FILES = {
 # picks them when a request matches). The lean ``--core`` profile is declared in
 # skill-catalog.json and ships the always-first router plus the Core 7 dispositions;
 # ``--full`` ships every promoted skill. Lifecycle status, not folder enumeration,
-# controls both profiles.
-CORE_SKILLS = tuple(entry.id for entry in SKILL_CATALOG.profile("core"))
+# controls both profiles. Catalog loading stays inside commands so malformed metadata
+# cannot block `--help` or `doctor` at module import time.
 
 INSTALL_TOOLS = ("codex", "claude", "cursor", "windsurf", "vscode")
 TOOL_LABELS = {
@@ -112,6 +118,7 @@ TOOL_LABELS = {
 # unverified tools print a "verify / override with --dest" note so a wrong default
 # is obvious and recoverable rather than silently writing to the wrong place.
 VERIFIED_TOOLS = frozenset({"codex", "claude", "cursor", "windsurf"})
+INSTALL_MANIFEST = ".nuclear-grade-install.json"
 
 REQUIRED_PUBLIC_FILES = (
     "README.md",
@@ -584,20 +591,17 @@ def install_dest(tool: str, scope: str, repo: Path) -> Path:
 
 
 def handle_install(args: argparse.Namespace) -> int:
+    try:
+        skill_catalog = _load_distribution_catalog()
+    except CatalogError as exc:
+        print(str(exc), file=sys.stderr)
+        return 2
+
     if args.full:
-        names = [entry.id for entry in SKILL_CATALOG.promoted]
+        names = [entry.id for entry in skill_catalog.promoted]
         profile = "full"
     else:
-        promoted = {entry.id for entry in SKILL_CATALOG.promoted}
-        names = [name for name in CORE_SKILLS if name in promoted]
-        missing_core = sorted(set(CORE_SKILLS) - promoted)
-        if missing_core:
-            print(
-                "core profile references non-promoted or missing skill(s): "
-                + ", ".join(missing_core),
-                file=sys.stderr,
-            )
-            return 2
+        names = [entry.id for entry in skill_catalog.profile("core")]
         profile = "core"
 
     missing = [name for name in names if not (SKILLS / name / "SKILL.md").is_file()]
@@ -608,6 +612,46 @@ def handle_install(args: argparse.Namespace) -> int:
     repo = args.repo.resolve()
     dest = Path(args.dest).expanduser().resolve() if args.dest is not None else install_dest(args.tool, args.scope, repo)
 
+    manifest_path = dest / INSTALL_MANIFEST
+    if manifest_path.is_file():
+        try:
+            installed_state = json.loads(manifest_path.read_text(encoding="utf-8"))
+            previous_names = installed_state["skills"]
+            if (
+                installed_state.get("schema_version") != 1
+                or not isinstance(previous_names, list)
+                or any(
+                    not isinstance(name, str)
+                    or not name
+                    or Path(name).name != name
+                    or name in {".", ".."}
+                    for name in previous_names
+                )
+            ):
+                raise ValueError("invalid install manifest shape")
+        except (OSError, json.JSONDecodeError, KeyError, TypeError, ValueError) as exc:
+            print(
+                f"cannot reconcile previous Nuclear-grade install at {dest}: {exc}; "
+                f"inspect or remove {manifest_path}",
+                file=sys.stderr,
+            )
+            return 2
+        stale = sorted(
+            name for name in set(previous_names) - set(names) if (dest / name).exists()
+        )
+        if stale:
+            print(
+                "previously installed skill(s) are no longer in the selected profile: "
+                + ", ".join(stale),
+                file=sys.stderr,
+            )
+            print(
+                "remove those installer-owned directories after review, then rerun install; "
+                "Nuclear-grade will not delete host files automatically",
+                file=sys.stderr,
+            )
+            return 2
+
     # Reuse apply_writes for dry-run, parent creation, and copy. An install is an
     # update, so overwrite refreshes existing skill files when re-run.
     writes: list[PlannedWrite] = [PlannedWrite(dest, is_dir=True)]
@@ -616,6 +660,17 @@ def handle_install(args: argparse.Namespace) -> int:
         writes.append(PlannedWrite(dest / name, is_dir=True))
         for src in sorted(path for path in skill_dir.rglob("*") if path.is_file()):
             writes.append(PlannedWrite(dest / name / src.relative_to(skill_dir), source=src))
+    writes.append(
+        PlannedWrite(
+            manifest_path,
+            content=json.dumps(
+                {"schema_version": 1, "profile": profile, "skills": names},
+                indent=2,
+                sort_keys=True,
+            )
+            + "\n",
+        )
+    )
 
     code = apply_writes(writes, dry_run=args.dry_run, overwrite=True)
     if code != 0:

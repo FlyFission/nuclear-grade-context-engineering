@@ -28,7 +28,7 @@ Nuclear-grade has stronger evidence, custody, decision, and release controls tha
 |---|---|---|---|
 | Read-only discovery is blocked by the router | insufficiency | risk classification is guessed from thin context | router contract and regression test |
 | A beta or deprecated skill ships by default | fault | unproven skill enters routing surface | lifecycle validator and package tests |
-| Routing scorer ignores extra loaded skills | fault | over-triggering appears successful | exact-set metrics and adversarial tests |
+| Routing scorer ignores extra loaded skills | fault | over-triggering appears successful | required/allowed-set metrics and adversarial tests |
 | Aggregate context grows through many compliant files | insufficiency | catalog becomes cognitively expensive | product-level token budgets and mutation tests |
 | Compact skill drops a decision control | fault | context savings weaken evidence or authority | old/new contract checks, command parity, behavior fixtures |
 | Workflow additions create a second operating system | insufficiency | agents face more ceremony and aliases | one crosswalk; adapters inside existing beats |
@@ -57,7 +57,7 @@ Nuclear-grade has stronger evidence, custody, decision, and release controls tha
 | REQ-001 | The router permits bounded read-only preflight and requires mode declaration before mutation or external side effect. | evidence-led classification | revised skill, tests, docs | focused and full pytest |
 | REQ-002 | One host-neutral registry records status, invocation, role, command, and path for every skill. | explicit invocation/lifecycle | `skill-catalog.json` plus validator | lifecycle tests and doctor |
 | REQ-003 | Only promoted skills enter default/full installs and plugin-discoverable promoted paths; beta/deprecated states have fail-closed rules. | no catalog leakage | lifecycle helpers and package tests | synthetic negative tests |
-| REQ-004 | Catalog routing scenarios compare exact expected skill sets and report precision, recall, exact matches, false positives, and misses. | retrieval separate from behavior | executable scorer and overlap scenarios | scorer tests and manifest run |
+| REQ-004 | Catalog routing scenarios compare required and allowed skill constraints and report precision, recall, acceptable routes, false positives, and misses. | retrieval separate from behavior | executable scorer and overlap scenarios | scorer tests and manifest run |
 | REQ-005 | Aggregate profile/catalog budgets complement per-file maxima. | product context economy | token report and budget gates | mutation tests and live token run |
 | REQ-006 | A compact pilot uses progressive disclosure without changing command semantics or decision receipts. | measured compression | command assets/references and generator fallback | command parity, token delta, output fixtures |
 | REQ-007 | Existing workflow gains prototype, decision-frontier, tracer-bullet/TDD, two-axis review, phase-boundary context, and deep-seam on-ramps without new mandatory phases. | concrete build mechanics | doctrine/template edits | public-doc tests and review |

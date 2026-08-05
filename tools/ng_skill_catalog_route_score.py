@@ -25,6 +25,13 @@ from nuclear_grade.routing_eval import load_observed, load_scenarios, score_rout
 from nuclear_grade.skill_catalog import load_catalog
 
 
+def _unit_interval(value: str) -> float:
+    parsed = float(value)
+    if not 0.0 <= parsed <= 1.0:
+        raise argparse.ArgumentTypeError("threshold must be between 0 and 1")
+    return parsed
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--repo", type=Path, default=Path("."))
@@ -34,9 +41,9 @@ def main() -> int:
         default=Path("evals/skill-routing-scenarios.jsonl"),
     )
     parser.add_argument("--observed", type=Path)
-    parser.add_argument("--min-precision", type=float, default=1.0)
-    parser.add_argument("--min-recall", type=float, default=1.0)
-    parser.add_argument("--min-exact-rate", type=float, default=1.0)
+    parser.add_argument("--min-precision", type=_unit_interval, default=1.0)
+    parser.add_argument("--min-recall", type=_unit_interval, default=1.0)
+    parser.add_argument("--min-acceptable-rate", type=_unit_interval, default=1.0)
     args = parser.parse_args()
 
     repo = args.repo.resolve()
@@ -61,7 +68,8 @@ def main() -> int:
         "Catalog routing: "
         f"precision={report.precision:.3f} "
         f"recall={report.recall:.3f} "
-        f"exact={report.exact_cases}/{report.total_cases} ({report.exact_rate:.3f}) "
+        f"acceptable={report.acceptable_cases}/{report.total_cases} "
+        f"({report.acceptable_rate:.3f}) "
         f"false_positive={report.false_positive} false_negative={report.false_negative}"
     )
 
@@ -72,13 +80,14 @@ def main() -> int:
         )
     if report.recall < args.min_recall:
         threshold_failures.append(f"recall {report.recall:.3f} is below {args.min_recall:.3f}")
-    if report.exact_rate < args.min_exact_rate:
+    if report.acceptable_rate < args.min_acceptable_rate:
         threshold_failures.append(
-            f"exact rate {report.exact_rate:.3f} is below {args.min_exact_rate:.3f}"
+            f"acceptable rate {report.acceptable_rate:.3f} is below "
+            f"{args.min_acceptable_rate:.3f}"
         )
     for failure in threshold_failures:
         print(f"- {failure}")
-    return 0 if not report.failures and not threshold_failures else 1
+    return 0 if not threshold_failures else 1
 
 
 if __name__ == "__main__":

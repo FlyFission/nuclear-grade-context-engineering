@@ -1,4 +1,5 @@
 import json
+import sys
 from pathlib import Path
 
 import pytest
@@ -10,6 +11,7 @@ from nuclear_grade.routing_eval import (
     score_routes,
 )
 from nuclear_grade.skill_catalog import load_catalog
+from tools import ng_skill_catalog_route_score as score_cli
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -78,7 +80,7 @@ def test_exact_set_scorer_counts_misses_overtriggering_and_exact_routes(tmp_path
     assert report.true_positive == 2
     assert report.false_negative == 1
     assert report.false_positive == 1
-    assert report.exact_cases == 1
+    assert report.acceptable_cases == 1
     assert report.total_cases == 2
     assert report.precision == pytest.approx(2 / 3)
     assert report.recall == pytest.approx(2 / 3)
@@ -124,6 +126,56 @@ def test_observed_routes_fail_closed_on_unknown_missing_and_duplicate_rows(tmp_p
     assert "unknown skill" in message
     assert "duplicate observed id" in message
     assert "no matching scenario" in message
+
+
+def test_cli_thresholds_can_intentionally_accept_nonperfect_observations(tmp_path, monkeypatch):
+    cases = tmp_path / "cases.jsonl"
+    observed = tmp_path / "observed.jsonl"
+    cases.write_text(
+        json.dumps(
+            {
+                "id": "a",
+                "prompt": "classify",
+                "required_skills": ["rating-change-risk"],
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    observed.write_text(json.dumps({"id": "a", "loaded_skills": []}) + "\n", encoding="utf-8")
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "ng_skill_catalog_route_score.py",
+            "--repo",
+            str(ROOT),
+            "--cases",
+            str(cases),
+            "--observed",
+            str(observed),
+            "--min-recall",
+            "0",
+            "--min-acceptable-rate",
+            "0",
+        ],
+    )
+
+    assert score_cli.main() == 0
+
+
+def test_scenario_manifest_rejects_zero_scenarios(tmp_path):
+    catalog = load_catalog(ROOT)
+    path = tmp_path / "cases.jsonl"
+    path.write_text("\n", encoding="utf-8")
+
+    with pytest.raises(RoutingEvalError, match="at least one routing scenario"):
+        load_scenarios(path, catalog)
+
+
+def test_score_routes_rejects_zero_scenarios():
+    with pytest.raises(RoutingEvalError, match="at least one routing scenario"):
+        score_routes((), {})
 
 
 def test_scenario_rejects_non_model_routable_or_allowed_without_required(tmp_path):

@@ -34,6 +34,7 @@ These are portable command prompts: plain Markdown prompt cards you can paste in
 | [`ng-deficiency`](commands/ng-deficiency.md) | A known problem will outlive a single change and must be owned, not normalized | A deficiency entry, aged and dispositioned |
 | [`ng-report-defect`](commands/ng-report-defect.md) | A defect you found lives in a shared or supplied artifact others depend on, not just your copy | An outward notice to the affected consumers, plus the local fix |
 | [`ng-verify-artifact`](commands/ng-verify-artifact.md) | The deliverable is a produced artifact (figure, PDF, SVG, screenshot, build, deployed response) and correctness lives in the rendered output | The freshly regenerated artifact, findings tied to the observed output, and one verdict |
+| [`ng-panel`](commands/ng-panel.md) | A trust-bearing or irreversible verdict rests on one reviewer and you need checks that can fail differently | A panel record with each seat's diversity axis, preserved dissent, panel health, and host-verified findings |
 
 ## How the prompt cards are made
 

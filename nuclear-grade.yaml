@@ -67,6 +67,7 @@ skills:
   - tracking-deficiencies
   - reporting-shared-defects
   - verifying-final-artifacts
+  - running-a-review-panel
 commands:
   - ng-question.md
   - ng-classify.md
@@ -96,6 +97,7 @@ commands:
   - ng-deficiency.md
   - ng-report-defect.md
   - ng-verify-artifact.md
+  - ng-panel.md
 command_map:
   # The semantic skill -> command pairing the generator projects each card from
   # (see nuclear_grade/gen_commands.py and `ng gen-commands`). Declared here, not
@@ -130,6 +132,7 @@ command_map:
   tracking-deficiencies: ng-deficiency
   reporting-shared-defects: ng-report-defect
   verifying-final-artifacts: ng-verify-artifact
+  running-a-review-panel: ng-panel
 token_budgets:
   # Per-file token ceilings enforced by `ng tokens` (see nuclear_grade/tokens.py).
   # Seeded above the measured maxima with headroom, so the gate blocks regression,

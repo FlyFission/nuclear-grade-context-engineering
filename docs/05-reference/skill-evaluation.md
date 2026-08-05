@@ -274,6 +274,16 @@ If a skill changes decisions but says so only in vague prose, amend its receipt 
 - Should not trigger: Review this refactor of the data layer for standards drift; there is no rendered output involved.
 - Should not trigger: Map the safety claims in this change record to their evidence.
 
+### `running-a-review-panel`
+
+- Should trigger: One reviewer cleared the credential-rotation change and it cannot be undone once it runs; I want checks that can fail differently before we accept that verdict.
+- Should trigger: Four agents all approved this migration plan, but they were the same model on the same brief — how much is that worth?
+- Should trigger: Set up an independent second opinion on this authorization redesign, and tell me where the reviewers actually disagreed instead of averaging them.
+- Should trigger: Our second opinion came back clean, but two of the reviewers timed out and the report does not mention it.
+- Should not trigger: Give this one-line typo fix in the README a quick sanity check.
+- Should not trigger: Read this diff for oversized files and needless abstraction layers.
+- Should not trigger: Stabilize the outage first and write the timeline afterward.
+
 ## Source-lineage note
 
 This evaluation prompt bank is an original Nuclear-grade artifact informed by public skill-authoring practice: concise skills, realistic trigger prompts, baseline-vs-skill comparison, and iterative trigger-description improvement. It does not create formal assurance, compliance, certification, safety, security, or regulatory adequacy.

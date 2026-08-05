@@ -81,6 +81,8 @@ it runs, or whether its verdict is accepted.*
   actor that produced the change.
 - [`program-self-assessment.md`](program-self-assessment.md) — independent review scaled to
   release-bearing outcomes.
+- [`../../skills/running-a-review-panel/SKILL.md`](../../skills/running-a-review-panel/SKILL.md)
+  — the named-diversity-axis rule turned into a procedure, for verdicts that earn a panel.
 - [`../../skills/deciding-who-decides/SKILL.md`](../../skills/deciding-who-decides/SKILL.md),
   [`../../skills/double-checking-before-acting/SKILL.md`](../../skills/double-checking-before-acting/SKILL.md)
   — placing authority and getting a forceful backup.

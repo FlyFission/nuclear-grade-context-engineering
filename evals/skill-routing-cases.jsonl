@@ -156,3 +156,9 @@
 {"id": "verifying-final-artifacts-trigger-04", "skill": "verifying-final-artifacts", "prompt": "Regenerate the built UI screen and compare the screenshot against the reference design.", "expected": "trigger"}
 {"id": "verifying-final-artifacts-not-trigger-01", "skill": "verifying-final-artifacts", "prompt": "Refactor this helper function for readability.", "expected": "not-trigger"}
 {"id": "verifying-final-artifacts-not-trigger-02", "skill": "verifying-final-artifacts", "prompt": "Map these release claims to their supporting evidence.", "expected": "not-trigger"}
+{"id": "running-a-review-panel-trigger-01", "skill": "running-a-review-panel", "prompt": "One reviewer cleared this irreversible credential rotation; I want checks that can fail differently before we accept that verdict.", "expected": "trigger"}
+{"id": "running-a-review-panel-trigger-02", "skill": "running-a-review-panel", "prompt": "Four agents approved this migration plan, but they were the same model on the same brief. How much is that agreement worth?", "expected": "trigger"}
+{"id": "running-a-review-panel-trigger-03", "skill": "running-a-review-panel", "prompt": "Get an independent second opinion on this authorization redesign and show me where the reviewers disagreed instead of averaging them.", "expected": "trigger"}
+{"id": "running-a-review-panel-trigger-04", "skill": "running-a-review-panel", "prompt": "The second opinion came back clean, but two reviewers timed out and the report never mentions it.", "expected": "trigger"}
+{"id": "running-a-review-panel-nontrigger-01", "skill": "running-a-review-panel", "prompt": "Give this one-line README typo fix a quick sanity check.", "expected": "not-trigger"}
+{"id": "running-a-review-panel-nontrigger-02", "skill": "running-a-review-panel", "prompt": "Read this diff for oversized files and needless abstraction layers.", "expected": "not-trigger"}

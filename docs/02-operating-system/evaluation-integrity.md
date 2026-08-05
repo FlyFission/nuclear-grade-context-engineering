@@ -82,6 +82,11 @@ The honest limit is the same one the [`judge`](../../agents/judge.md) already st
 shares one biased brief is not three independent views, it is one view voiced three times. Diversity
 of *brief and model*, not just of *instance*, is what buys the reduction in correlated error.
 
+The procedure for building one — declaring each seat's diversity axis, freezing the packet, running
+the independent pass and the anonymized challenge round, recording panel health beside the result,
+and verifying every finding against live source — is
+[`running-a-review-panel`](../../skills/running-a-review-panel/SKILL.md).
+
 ---
 
 ## 5. Exit criteria

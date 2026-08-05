@@ -1,5 +1,6 @@
 import re
 from pathlib import Path
+from urllib.parse import unquote
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -90,6 +91,20 @@ NEGATIVE_CONTEXT = (
 def test_public_top_level_docs_exist():
     for public_doc in PUBLIC_DOCS:
         assert (ROOT / public_doc).exists(), f"missing {public_doc}"
+
+
+def test_local_markdown_links_resolve():
+    """Keep file moves from silently breaking the repository's navigation."""
+    for doc in ROOT.rglob("*.md"):
+        text = doc.read_text(encoding="utf-8")
+        for raw_target in re.findall(r"\]\(([^)]+)\)", text):
+            target = raw_target.strip().split(maxsplit=1)[0].strip("<>")
+            path = unquote(target.split("#", 1)[0])
+            if not path or path.startswith(("http://", "https://", "mailto:")):
+                continue
+
+            resolved = ROOT / path.lstrip("/") if path.startswith("/") else doc.parent / path
+            assert resolved.exists(), f"{doc.relative_to(ROOT)} links to missing {target}"
 
 
 def test_public_docs_contain_no_internal_residue():

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 47445,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0733742,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2336,
+    "cache_read_input_tokens": 14524,
+    "output_tokens": 3619,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2336,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 3317,
+        "cache_read_input_tokens": 8253,
+        "cache_creation_input_tokens": 354,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 354
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 624,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000704,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 3619,
+      "cacheReadInputTokens": 14524,
+      "cacheCreationInputTokens": 2336,
+      "webSearchRequests": 0,
+      "costUSD": 0.0726702,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "One thing worth flagging before the briefing itself: giving an unattended agent live write access to production overnight is the riskiest part of this plan, independent of how good the instructions are. The safest structure is to have the agent do everything (migration, backfill script, endpoint change) against **staging/a prod snapshot**, validate results, and leave the actual production migration + backfill run as a gated step you approve in the morning \u2014 rather than letting it execute against prod with nobody watching. I've built that gate into the briefing below; you can remove it if you're confident, but I'd recommend keeping it.\n\nHere's the briefing:\n\n---\n\n## Task Briefing: `email_verified` column \u2014 users table\n\n### Objective\n1. Add nullable `email_verified` boolean column to `users`.\n2. Backfill existing rows using a signup-source heuristic.\n3. Update the signup endpoint to set it correctly for new signups.\n\n### Hard constraints (do not violate)\n- **No destructive SQL.** No `DROP`, `TRUNCATE`, or unscoped `DELETE`/`UPDATE`. The migration must be additive only (new nullable column, sensible default, no touching existing columns).\n- **Every migration needs a working `down`/rollback.** Test the rollback, not just the up.\n- **Take a verified backup/snapshot before touching production**, and confirm it's restorable before running anything against prod.\n- **Do not execute the production backfill or deploy the endpoint change autonomously.** Prepare everything, validate it on staging or a prod data snapshot, then stop and leave a summary for me to review and manually trigger the production run and deploy in the morning.\n- **Least privilege:** use a DB role scoped to `users` table read/write for the backfill; no superuser/admin connection.\n- **No schema/data changes outside `users.email_verified`.**\n- **Code changes go through a normal PR**, not a direct commit/push to a production or main branch.\n\n### Step-by-step\n\n**1. Migration**\n- Add `email_verified BOOLEAN DEFAULT false` (nullable, or default `false` \u2014 pick one and document why) via your existing migration framework.\n- Write and test the down-migration.\n- Run it on staging/local first; confirm no lock contention issues if the users table is large (use `ADD COLUMN ... DEFAULT` semantics appropriate to the DB engine \u2014 e.g. Postgres 11+ handles this without a full table rewrite; verify for your DB).\n\n**2. Heuristic definition**\n- I have not specified the exact heuristic. Before writing backfill logic, enumerate the known signup sources in the codebase (e.g. `oauth_google`, `oauth_github`, `email_password`, `invite`, etc.) and propose a mapping (e.g. OAuth signups \u2192 verified, since the provider already confirmed the email; password signups \u2192 not verified unless a verification event exists in `email_verifications` table or similar).\n- **Do not guess silently** \u2014 write the proposed heuristic and its rationale into a markdown file (`BACKFILL_HEURISTIC.md`) in the PR so I can review the logic itself, not just the code.\n\n**3. Backfill script**\n- Idempotent and resumable \u2014 safe to re-run, only touches rows where `email_verified IS NULL`.\n- Batched (e.g. 1,000\u20135,000 rows per transaction) with a short pause between batches to avoid replication lag / lock contention on a live table.\n- Ship a `--dry-run` mode that logs counts per heuristic bucket without writing.\n- Log: rows scanned, rows updated per bucket, elapsed time, any rows that don't match any heuristic rule (these should be left `NULL`, not guessed).\n\n**4. Validation**\n- Run dry-run against staging or a prod snapshot.\n- Spot-check a sample (20\u201350 rows) per bucket manually against known-good data if available, and report the sample in the summary.\n- Report total counts: how many verified / unverified / unresolved, and what % of users that represents.\n\n**5. Signup endpoint update**\n- Set `email_verified` based on the same logic path used going forward (e.g. `true` on OAuth signup, `false` pending explicit verification for password signup).\n- Add/update tests covering each signup source.\n- Open a PR \u2014 do not merge.\n\n**6. Stop conditions \u2014 halt and report instead of proceeding if:**\n- The dry-run's \"unresolved\" bucket is larger than expected (e.g. >5% of users) \u2014 this likely means the heuristic is missing a signup source.\n- Any migration or backfill step errors out.\n- Row counts before/after don't reconcile.\n- Anything requires elevated DB permissions beyond what was granted.\n\n### End-of-run deliverable\nA single summary (`OVERNIGHT_SUMMARY.md`) containing:\n- Migration file + rollback, tested status.\n- `BACKFILL_HEURISTIC.md` with the proposed rules and rationale.\n- Backfill script + dry-run results (bucket counts, sample rows).\n- Link to the open PR for the endpoint change.\n- Explicit statement: **\"Production migration and backfill have NOT been run. Awaiting approval.\"**\n- Any errors, ambiguities, or open questions encountered.\n\n---\n\nWant me to adjust the risk tolerance (e.g. you're fine with it actually running against prod autonomously), or tailor this to your specific migration tool/DB (Postgres, Knex, Prisma, Sequelize, etc.) if you tell me what you're using?",
+  "ttft_ms": 4326,
+  "ttft_stream_ms": 1035,
+  "time_to_request_ms": 28,
+  "time_to_request_from_spawn_ms": 949246,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789587796.7908,
+  "type": "result",
+  "duration_ms": 46320,
+  "uuid": "38ceaed6-57a9-485f-8218-802609462dfb",
+  "_skill": "briefing-an-agent",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "b02bda04281bd15438d18e8634924a0871200eb60a75a14c5ef425ab9360b774"
+}

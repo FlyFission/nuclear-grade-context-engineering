@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 34136,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0514601,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2785,
+    "cache_read_input_tokens": 23947,
+    "output_tokens": 1782,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2785,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1588,
+        "cache_read_input_tokens": 8899,
+        "cache_creation_input_tokens": 166,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 166
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1782,
+      "cacheReadInputTokens": 23947,
+      "cacheCreationInputTokens": 2785,
+      "webSearchRequests": 0,
+      "costUSD": 0.0506421,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    },
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 748,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0008179999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Close it \u2014 don't delete it. Even though every file still has placeholder text, you have a real rationale worth preserving (explicit team decision, blocked on design finalizing the palette, nothing merged), so this fits \"close\" rather than \"delete\" under the prefer-closing rule.\n\nAdd a closure line to the packet (in whatever file the tool reads for status, typically the packet's main file) like:\n\n```\nNUCLEAR-GRADE-CLOSED: Not pursuing dark mode this quarter \u2014 design hasn't finalized the color palette. Decided in team meeting [date]. No code merged. Replacement: none (may revisit once palette is finalized). Decided by: [name/team].\n```\n\nFill in the actual date and decider name so there's an audit trail. After that, `ng status .` should report it as `closed` instead of `scaffold`, which resolves the noise without erasing the reasoning.\n\nLeave `refactor-auth-flow` alone \u2014 it's active work, not stale; it'll clear to `ok` once your teammate adds the missing file.",
+  "ttft_ms": 1386,
+  "ttft_stream_ms": 975,
+  "time_to_request_ms": 46,
+  "time_to_request_from_spawn_ms": 1209725,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789848282.4539,
+  "type": "result",
+  "duration_ms": 26826,
+  "uuid": "f5352508-dc3c-4168-a0ff-0f79eba32c1b",
+  "_skill": "closing-stale-packets",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "9158a8eeba31bd6599daae93ed82fc9b643498d2a53280ab59cdac230fb4ad66"
+}

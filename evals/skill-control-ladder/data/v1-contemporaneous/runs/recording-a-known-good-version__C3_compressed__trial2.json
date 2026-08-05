@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 17314,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0419117,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2772,
+    "cache_read_input_tokens": 32609,
+    "output_tokens": 981,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2772,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 680,
+        "cache_read_input_tokens": 8932,
+        "cache_creation_input_tokens": 120,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 120
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000758,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 981,
+      "cacheReadInputTokens": 32609,
+      "cacheCreationInputTokens": 2772,
+      "webSearchRequests": 0,
+      "costUSD": 0.0411537,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory is completely empty \u2014 no repo files, no PR #482 record, no prior controlled-items/change-impact/verification/ship docs to link to, and no eval suite results I can inspect directly.\n\nBefore I draft this, a few things concern me about calling this \"accepted/known-good\" right now:\n\n1. **No artifacts to verify against.** I can't see PR #482, the eval suite output, or any prior baseline in this repo, so I can't confirm the version is exactly rebuildable from its commit, or check what controlled items (model weights, config, dependency versions) are actually included/excluded.\n2. **\"An hour ago\" and \"looks stable so far\"** \u2014 a model swap (embed-v1 \u2192 embed-v2) changes the *meaning* of vectors, which can affect anything relying on embedding stability (caches, ANN indexes, downstream consumers comparing old vs. new embeddings). Offline precision/recall gains don't guarantee production behavior holds up over more traffic and time.\n\nGiven the guidance to escalate when a baseline touches customers or production behavior, and to flag as unrebuildable if evidence is missing, I'd recommend not finalizing this as \"known-good\" yet. Instead, I can draft it now as a **candidate/provisional baseline**, with:\n- Exact commit SHA for PR #482 (you'll need to give me that, or point me to the repo with history)\n- What's included/excluded (embed-v2 version pin, any migration of existing embeddings/index, config changes)\n- The eval suite results and what they did/didn't cover (e.g., did it test the production serving path, not just offline batch eval?)\n- A defined **soak period** (e.g., 24-48h of production stability) as the trigger before promoting it to \"accepted\"\n- Named owner and re-check triggers (e.g., \"if embedding-dependent cache hit rate drops\" or \"if downstream consumer X reports drift\")\n\nDo you want me to draft it this way \u2014 as a provisional record pending a short soak period \u2014 and can you point me to the actual repo/commit for PR #482 so I can pull real details instead of placeholders?",
+  "ttft_ms": 1917,
+  "ttft_stream_ms": 835,
+  "time_to_request_ms": 28,
+  "time_to_request_from_spawn_ms": 1306037,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789944346.5037,
+  "type": "result",
+  "duration_ms": 18246,
+  "uuid": "ba0b19c9-3326-438b-8d5d-bd5960412f71",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "15a6ce4cf7708cdad5ccf21f02b242e4ec8887a93ead0c6966ee50af92dc3bd6"
+}

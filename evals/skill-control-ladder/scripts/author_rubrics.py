@@ -34,11 +34,11 @@ import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-from ladder_common import LADDER_DIR, MAX_WORKERS, POOL, TASKS
+from ladder_common import LADDER_DIR, MAX_WORKERS, POOL, RUBRIC_POOL, TASKS
 
 AUTHOR_MODEL = "claude-sonnet-5"
 MIN_CHECKS, MAX_CHECKS = 4, 6
-OUT_PATH = LADDER_DIR / "data" / f"rubrics-{POOL}.json"
+OUT_PATH = LADDER_DIR / "data" / f"rubrics-{RUBRIC_POOL}.json"
 
 SCHEMA = json.dumps({
     "type": "object",

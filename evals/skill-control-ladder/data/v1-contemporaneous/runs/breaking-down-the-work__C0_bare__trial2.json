@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 31627,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.048359,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2417,
+    "cache_read_input_tokens": 14570,
+    "output_tokens": 1917,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2417,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1583,
+        "cache_read_input_tokens": 8299,
+        "cache_creation_input_tokens": 389,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 389
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 644,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000719,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1917,
+      "cacheReadInputTokens": 14570,
+      "cacheCreationInputTokens": 2417,
+      "webSearchRequests": 0,
+      "costUSD": 0.047639999999999995,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "## Breakdown\n\n**Dependency shape:** Usage Tracking \u2192 Billing Engine \u2192 Invoice Generator \u2192 (Payment Vault for charging), with the Admin Dashboard reading from all four. That means Usage Tracking and the Payment Vault can start immediately with no blockers; Billing Engine needs a usage data contract; Invoice Generator needs a billing engine contract; Dashboard needs read APIs from everything else (can build against mocks first).\n\n| Piece | Owns | Depends on (contract only, not implementation) |\n|---|---|---|\n| **Usage-Tracking Service** | Ingesting/aggregating usage events per team/account | none \u2014 start first |\n| **Payment-Method Vault** | Storing/tokenizing payment methods, PCI boundary, processor integration | none \u2014 start first |\n| **Billing Engine** | Rating usage \u2192 charges, plan/pricing rules | Usage-tracking's event schema |\n| **Invoice Generator** | Turning charges into invoices, line items, PDF/email delivery, triggering charge via Vault | Billing Engine's charge output schema |\n| **Admin Dashboard** | Read-only views of bills/invoices/usage for internal admins | Read APIs from the other four (can mock early) |\n\n**Suggested sequencing:** kick off Usage-Tracking and Payment-Method Vault today with no dependencies. In parallel, have Billing Engine and Invoice Generator owners agree on the usage-event and charge-output schemas this week so all four can build against contracts instead of waiting on each other. Dashboard can start against mocked APIs immediately.\n\n**One thing worth doing before you assign work:** the multi-currency deferral needs to be written down somewhere the team can see it \u2014 a scope note, ticket, or short decision doc \u2014 not just known to leadership. Without it, it's easy for the Billing Engine or Invoice Generator owners to end up designing for currency fields \"just in case,\" or for the Dashboard to add a currency selector nobody asked for. A one-line explicit scope statement (e.g., \"all amounts USD-only this release; currency field deferred to [future release]\") in the relevant tickets avoids that. Want me to draft that as a short scope doc or as text you can paste into each ticket?",
+  "ttft_ms": 4293,
+  "ttft_stream_ms": 966,
+  "time_to_request_ms": 38,
+  "time_to_request_from_spawn_ms": 632121,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789270604.2158,
+  "type": "result",
+  "duration_ms": 28121,
+  "uuid": "f73299f7-4e64-4b2c-9217-a0129e5c5682",
+  "_skill": "breaking-down-the-work",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "7a45fc5d03f7629c53718913665efe9aecdfa0f62a3bd334cc7d6dbf33e2366d"
+}

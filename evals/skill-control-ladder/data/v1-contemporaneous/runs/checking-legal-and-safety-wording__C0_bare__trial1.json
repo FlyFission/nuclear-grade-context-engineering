@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 25144,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0501148,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2932,
+    "cache_read_input_tokens": 14536,
+    "output_tokens": 1831,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2932,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 945,
+        "cache_read_input_tokens": 8265,
+        "cache_creation_input_tokens": 938,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 938
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 615,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000685,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1831,
+      "cacheReadInputTokens": 14536,
+      "cacheCreationInputTokens": 2932,
+      "webSearchRequests": 0,
+      "costUSD": 0.0494298,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The repo is empty, so I'm evaluating the wording on its own \u2014 no test results or PCI documentation exist here to back it up. This draft has real problems and I wouldn't publish it as-is:\n\n**1. \"MIT license... so it's open and safe for anyone to use in production\"**\nThis is a non sequitur that actively contradicts the license itself. The MIT license's whole second half is a warranty disclaimer \u2014 \"THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND.\" Permissive licensing has nothing to do with safety or fitness for purpose; it just means users are free to use/modify/redistribute it. Claiming \"safe... for production payment systems\" undercuts your own disclaimer and reads as a safety/fitness representation you probably don't want to be on the hook for.\n\n**2. \"Passed all our internal tests\"**\nAn absolute claim (\"all\") about \"internal\" tests is vague and unverifiable to readers, but the bigger issue is it's often paired with the PCI claim to imply a level of assurance that internal testing alone doesn't provide. If test coverage is real and specific (e.g., \"500+ unit and integration tests covering X, Y, Z\"), say that concretely instead of an unqualified absolute.\n\n**3. \"Fully compliant with PCI security standards\" \u2014 this is the one to flag hardest**\nThis is a serious problem, not just a wording nit:\n- PCI DSS compliance is a formal, audited status (typically via QSA assessment or self-assessment questionnaire) that applies to *entities and environments* that store/process/transmit cardholder data \u2014 not to a standalone open-source code library. A library can be *designed to help build* PCI-compliant systems, but it cannot itself \"be PCI compliant\" in isolation.\n- Unless you've actually gone through a real PCI DSS assessment and have a Report on Compliance or equivalent, this is an unsubstantiated compliance claim. That's a false-advertising exposure, and if a downstream user suffers a breach and points to this claim, it could be used against you.\n\n**Recommendation:** Don't publish as written. Suggest replacing with something accurate and defensible, e.g.:\n\n> \"PayCheck is released under the MIT license (see LICENSE for full terms, including the disclaimer of warranties). It is covered by our internal test suite [describe scope if you want to cite it]. PayCheck is designed to help developers build PCI DSS\u2013compliant payment systems, but using this library does not by itself make your system PCI compliant \u2014 compliance depends on your full implementation and environment, and requires your own assessment.\"\n\nGiven the PCI language specifically, I'd loop in whoever handles compliance/security certifications (not just legal) before this goes out \u2014 that's the line most likely to create real liability.",
+  "ttft_ms": 9711,
+  "ttft_stream_ms": 979,
+  "time_to_request_ms": 39,
+  "time_to_request_from_spawn_ms": 1402100,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785790040374.8818,
+  "type": "result",
+  "duration_ms": 25879,
+  "uuid": "06287c74-fef1-4c51-a456-8cae9e2d0697",
+  "_skill": "checking-legal-and-safety-wording",
+  "_arm": "C0_bare",
+  "_trial": 1,
+  "_input_spec_sha256": "3e54219157eaaff87521fbea2208e384859bf120583aa2695a8273fe246683f7"
+}

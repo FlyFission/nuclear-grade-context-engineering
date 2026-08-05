@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 16371,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.033241299999999994,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1994,
+    "cache_read_input_tokens": 6271,
+    "output_tokens": 1247,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1994,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1247,
+        "cache_read_input_tokens": 6271,
+        "cache_creation_input_tokens": 1994,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1994
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 615,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000685,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1247,
+      "cacheReadInputTokens": 6271,
+      "cacheCreationInputTokens": 1994,
+      "webSearchRequests": 0,
+      "costUSD": 0.032556299999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No, that wording has real legal exposure \u2014 worth flagging back to legal/marketing before it ships. Two problems stand out:\n\n**1. \"MIT license... so it's open and safe for anyone to use in production payment systems\"**\nThis directly contradicts the MIT license itself, which explicitly disclaims all warranties and fitness for purpose (\"THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND...\"). MIT is about permissive *reuse rights*, not a safety or quality certification. Stating it's \"safe... for production payment systems\" is an affirmative safety claim that:\n- Isn't supported by the license grant\n- Could be read as an express warranty, undermining the \"AS IS\" disclaimer you're relying on for liability protection\n- Sets up reliance claims if something goes wrong in a downstream payment system\n\n**2. \"fully compliant with PCI security standards\"**\nThis is the bigger risk. PCI DSS compliance is validated by a Qualified Security Assessor (QSA) against a specific merchant/processor's entire cardholder data environment \u2014 it's not a property a standalone open-source library can hold or self-certify. A library can be *designed to help* a compliant system, but it can't itself \"be PCI compliant.\" This kind of unverified compliance claim is the sort of thing that draws FTC false-advertising scrutiny and creates outsized liability if a downstream user's breach gets traced back to reliance on this claim.\n\n**\"Passed all our internal tests\"** is fine as a factual statement but should stay narrowly scoped (what tests, what they cover) rather than implying a security guarantee.\n\n**Suggested direction for legal/marketing:**\n- Drop the \"safe for production\" and \"PCI compliant\" claims entirely, or\n- Replace with something factual and bounded, e.g.: *\"PayCheck is released under the MIT license (see LICENSE for full terms, including the disclaimer of warranties). It includes an automated test suite covering [X]. It is not independently certified for PCI DSS compliance \u2014 users integrating PayCheck into a cardholder data environment remain responsible for their own PCI DSS validation.\"*\n\nI'd send this back to legal/marketing rather than publish as-is \u2014 this isn't a wording nitpick, it's an unsupported compliance claim plus a warranty-adjacent statement sitting next to a license that disclaims warranties.",
+  "ttft_ms": 6454,
+  "ttft_stream_ms": 888,
+  "time_to_request_ms": 26,
+  "time_to_request_from_spawn_ms": 1359533,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789998032.9404,
+  "type": "result",
+  "duration_ms": 17244,
+  "uuid": "e45e37ff-2b80-487a-8300-bdf086ac8468",
+  "_skill": "checking-legal-and-safety-wording",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "3e54219157eaaff87521fbea2208e384859bf120583aa2695a8273fe246683f7"
+}

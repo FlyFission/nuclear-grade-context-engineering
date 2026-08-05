@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 24904,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.046959299999999995,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2869,
+    "cache_read_input_tokens": 23901,
+    "output_tokens": 1452,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2869,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1051,
+        "cache_read_input_tokens": 8975,
+        "cache_creation_input_tokens": 174,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 174
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 702,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000777,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1452,
+      "cacheReadInputTokens": 23901,
+      "cacheCreationInputTokens": 2869,
+      "webSearchRequests": 0,
+      "costUSD": 0.046182299999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 you're not done yet. A local override plus a code comment only protects your own bot; the defect itself still lives in `prompt-common` and the other three teams are actively shipping it without knowing. Fixing your copy and the outward notice are two separate obligations, and right now you've only done the first.\n\nWhat's still missing:\n\n1. **Notify the other consumers.** Sales, onboarding, and internal-tools are all using the same broken template and don't know it exists. Each team/owner should get: what the bug is (truncation edge case causing internal tool/DB-query identifiers to leak into customer-facing output), severity, and the fix/workaround (your patched template, or a pointer to it), with a tracking link.\n\n2. **Escalate, don't just notify quietly.** This is a security/data-disclosure issue \u2014 internal tool and database query identifiers leaking to end users is exactly the kind of thing that should go through your security or incident process, not just a Slack message to the other teams. If any of those bots are customer-facing (sales, support already were), this could mean the leak has already happened in production for them too \u2014 worth checking logs/eyeballing recent conversations if you can.\n\n3. **Fix it upstream, not just locally.** A local override in your bot means `prompt-common` itself is still broken for everyone else, and any future consumer of the package inherits the bug by default. The real fix belongs in `prompt-common`, with your override removed once that ships \u2014 otherwise you've forked the template indefinitely.\n\n4. **Record it as a shared-defect report**, linked to whatever incident/OPEX tracking and deficiency register your org uses, so there's a durable record of the defect, who was notified, and when it was actually fixed upstream \u2014 not just a code comment that only your team will ever read.\n\nDo you want help drafting the notification (bug description, severity, repro/trigger condition, workaround) to send to the other three teams and/or security?",
+  "ttft_ms": 4144,
+  "ttft_stream_ms": 1248,
+  "time_to_request_ms": 32,
+  "time_to_request_from_spawn_ms": 532788,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789171321.757,
+  "type": "result",
+  "duration_ms": 23428,
+  "uuid": "13d09143-3c8f-41aa-baf1-038a3b3bf818",
+  "_skill": "reporting-shared-defects",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "41b168ac7a01b0726b5ab40da47d1fee99d3879be53c9e916b56f862c83f6eb1"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 15307,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.047014400000000005,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 4104,
+    "cache_read_input_tokens": 16008,
+    "output_tokens": 1125,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4104,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 574,
+        "cache_read_input_tokens": 9728,
+        "cache_creation_input_tokens": 656,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 656
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 626,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000701,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1125,
+      "cacheReadInputTokens": 16008,
+      "cacheCreationInputTokens": 4104,
+      "webSearchRequests": 0,
+      "costUSD": 0.046313400000000005,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No, that sentence needs changes before it goes out \u2014 it has two separate lineage problems:\n\n**1. \"fully compliant with the framework\" (NIST SP 800-61)**\nNIST SP 800-61 is a real, public, citable source \u2014 fine to reference. But \"fully compliant\" is a compliance/certification claim, not an influence claim. NIST SP 800-61 isn't something a toolkit can be formally certified against (there's no accrediting body checking this), so asserting compliance overstates your lineage to it. Reword as influence:\n\n> \"Our workflow is informed by / draws on the incident-handling lifecycle in NIST SP 800-61.\"\n\n**2. The uncited conference talk**\nAn unlinked, unverifiable source (\"we don't have a link or citation for it handy\") can't be presented as direct lineage in public docs \u2014 it fails the \"verified-public\" bar. Either:\n- track down the talk and cite it, or\n- downgrade it to vague supporting context: \"informed by common SRE practices,\" without claiming a specific unverified source, or\n- drop the line entirely until you can verify it.\n\n**Suggested rewrite:**\n\n> \"Our workflow is informed by the incident-handling lifecycle described in NIST SP 800-61, and draws on general SRE practices.\"\n\nThis keeps NIST as an honest influence, drops the unsupportable \"fully compliant\" claim, and removes the unverifiable citation \u2014 so a hostile reader can't accuse you of a false compliance claim or an uncited source presented as fact.",
+  "ttft_ms": 5234,
+  "ttft_stream_ms": 835,
+  "time_to_request_ms": 30,
+  "time_to_request_from_spawn_ms": 1458065,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785790096590.2449,
+  "type": "result",
+  "duration_ms": 17217,
+  "uuid": "6f1e8a47-5dcc-4af6-8393-7609c2c54a04",
+  "_skill": "checking-source-claims",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "9aa5c5133970a254ce9137b4668d3bd29f89d02c44a08957844e02c9d38aa2c5"
+}

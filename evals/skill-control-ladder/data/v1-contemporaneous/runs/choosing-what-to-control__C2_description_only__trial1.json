@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 39992,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.05705099999999999,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2186,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2751,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2186,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2751,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2186,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2186
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 700,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00078,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2751,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2186,
+      "webSearchRequests": 0,
+      "costUSD": 0.05627099999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A \"40 line diff, quick smoke test\" framing hides that you're bundling three separately-risky changes with very different owners and failure modes. Treat them as three things to track, not one:\n\n**1. The `issue_refund` tool \u2014 this is the real risk, and a smoke test won't cover it**\n- This is a new autonomous financial capability, not a feature tweak. Track it like you'd track any code that moves money without a human in the loop:\n  - **Authorization boundary as a controlled value**: the `$50` cap and whatever eligibility logic exists (valid `order_id`, no duplicate refunds, etc.) need to be pinned and reviewed every time they change \u2014 a future PR that bumps it to $75 or loosens validation shouldn't get waved through as \"just a number.\"\n  - **Adversarial testing, not smoke testing**: does the bot only call this when it *should*? Can a customer talk it into issuing a refund via prompt injection, social engineering in chat, or crafted order data? You need a standing eval suite for this, not a one-off manual check.\n  - **Audit trail**: every call needs logged inputs (amount, order_id, transcript/reasoning that triggered it), so if something goes wrong later you can reconstruct why.\n  - **Kill switch**: ability to disable the tool independently of the prompt wording and docs, so if it misbehaves in production you're not forced into a full revert.\n  - **Velocity/anomaly monitoring**: $50 x many refunds is real money; someone should be watching aggregate volume, not just individual calls.\n  - **Sign-off from whoever owns financial risk** (finance/support ops), not just engineering \u2014 this isn't a code-correctness decision.\n\n**2. The system prompt wording (\"more proactive\")**\n- Vague on its own, but it's not independent of #1 \u2014 \"more proactive\" plus a new self-service refund tool plausibly means the agent issues more refunds than before, faster. Track the prompt as a versioned, reviewable artifact, and note in the PR *why* this wording was chosen relative to the new tool, so a later reviewer doesn't have to guess whether they're linked.\n\n**3. The public help-center edit**\n- Deleting \"a human always reviews refunds before they are issued\" is a customer-facing claim change, not a docs cleanup. It needs to be reviewed by whoever owns customer trust/comms, not just merged alongside code. Two things to keep in sync going forward:\n  - The doc must accurately reflect current behavior (it currently will, once this ships) \u2014 but if the refund cap or auto-approval logic changes later, this doc needs to change too, and nothing today links those two files together. That link needs to live somewhere (changelog entry, code comment pointing to the doc, or a test that fails if one changes without the other).\n  - Consider whether the new doc should *positively* state the actual limits (e.g., \"refunds under $50 may be approved automatically; larger refunds are reviewed by a person\") rather than just deleting the old sentence \u2014 silence here reads as a downgrade in transparency.\n\n**Bottom line for the merge itself**: don't let line count stand in for risk. Split review responsibility \u2014 engineering can approve the code, but the refund authorization boundary and the customer-facing claim need explicit sign-off from finance/support leadership before this goes out, and you want adversarial refund-abuse tests and volume monitoring in place before merge, not after.",
+  "ttft_ms": 24159,
+  "ttft_stream_ms": 1097,
+  "time_to_request_ms": 36,
+  "time_to_request_from_spawn_ms": 366836,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789004568.5107,
+  "type": "result",
+  "duration_ms": 41170,
+  "uuid": "fd11b272-964c-4755-ac78-ccdeff9eab15",
+  "_skill": "choosing-what-to-control",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "9d23836dc38aee412ba4b94aeb50fbcac54b1182e832a2e8e8ef833c367bbcac"
+}

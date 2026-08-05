@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 26075,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.04912899999999999,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2124,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2254,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2124,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2254,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2124,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2124
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 615,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000685,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2254,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2124,
+      "webSearchRequests": 0,
+      "costUSD": 0.048443999999999994,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Short answer: no, this shouldn't go out as written \u2014 it has three separate claims that overreach beyond what's actually verifiable, and one that directly contradicts the license it's citing.\n\n**1. \"MIT license... so it's open and safe for anyone to use in production payment systems\"**\nThis treats the license as if it were a safety/fitness endorsement. It's the opposite: MIT's license text explicitly disclaims all warranties and states the software is provided \"AS IS,\" with no fitness-for-purpose guarantee. Saying MIT = \"safe for production payment systems\" contradicts the license you're literally shipping the code under, and reads as an express safety claim that could be used against you if something goes wrong in a customer's payment flow.\n\n**2. \"It has passed all our internal tests\"**\nNot dangerous on its own, but vague and unverifiable as written \u2014 \"all\" and \"internal\" invite the question \"tested for what, by whom, against what criteria?\" If you want to keep this, point to something concrete (CI badge, test coverage %, a link to the test suite) rather than an unqualified claim.\n\n**3. \"fully compliant with PCI security standards\"**\nThis is the one to fix before anything else. PCI DSS compliance is a formal, audited status \u2014 normally assessed by a QSA or via a Self-Assessment Questionnaire \u2014 and it applies to how an *entity* handles cardholder data in its actual deployment, not to a code library in isolation. A library can be built to *help* PCI-compliant implementations, but it can't itself be \"fully compliant\" unless someone has actually run that audit. Unless you have a real PCI attestation to point to, this line is a false certification claim \u2014 exactly the kind of thing that creates liability if a customer relies on it and later gets breached or audited.\n\n**Suggested rewrite** (fill in the bracketed parts with what's actually true):\n\n> PayCheck is released under the MIT license \u2014 free and open to use, modify, and distribute, provided \"as is\" with no warranty, as set out in the license terms. It is covered by [our automated test suite / X% test coverage \u2014 link], and is designed to support PCI DSS\u2013compliant implementations. PayCheck itself has not been independently audited or certified for PCI compliance; achieving PCI DSS compliance depends on how the library is configured and deployed within your own systems.\n\nBefore publishing, I'd confirm with whoever owns security/compliance whether there's an actual PCI audit or attestation on record \u2014 if there is, cite it specifically (assessor, scope, date); if not, drop the compliance claim entirely rather than soften it.",
+  "ttft_ms": 16790,
+  "ttft_stream_ms": 721,
+  "time_to_request_ms": 55,
+  "time_to_request_from_spawn_ms": 1247905,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789886196.2893,
+  "type": "result",
+  "duration_ms": 26787,
+  "uuid": "c29984b1-a3c5-4e28-b22c-3b181e2cea7b",
+  "_skill": "checking-legal-and-safety-wording",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "d4071e64a8bd1cbcbe3a7e13679c0d60537e54c0d20951703d0ecbdcd84d5505"
+}

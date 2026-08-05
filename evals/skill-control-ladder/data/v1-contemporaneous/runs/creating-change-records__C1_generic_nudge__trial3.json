@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 31333,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.051433000000000006,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2192,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2377,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2192,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2377,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2192,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2192
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 656,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000736,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2377,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2192,
+      "webSearchRequests": 0,
+      "costUSD": 0.050697000000000006,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The one-line diff is misleading you about the size of this change. The model ID is one line, but the thing you're actually changing is the judgment engine behind autonomous financial decisions \u2014 different providers/models differ in instruction-following, refusal behavior, numeric reasoning, and susceptibility to prompt injection from refund-request text. \"Swapped model per cost review\" tells a future reviewer nothing about whether that judgment was validated.\n\nWhat you actually want is a short **decision record** (ADR-style), linked from the PR but living somewhere durable like `docs/decisions/`, not just in commit history. For this specific change, it should contain:\n\n**1. Exact scope**\n- Old model ID and new model ID, including specific version/snapshot (not just \"Provider B\" \u2014 providers update models under the same name).\n- Confirm whether this is *only* the model swap, or whether prompt/system instructions were also touched to accommodate the new model.\n\n**2. Risk classification**\n- State explicitly that this agent autonomously approves customer refunds with no human in the loop (or note what human checkpoints exist), so this is flagged as a high-risk change even though the diff is trivial.\n\n**3. Evaluation evidence**\n- Results of running the new model against a held-out set of historical refund decisions, compared to (a) the old model's decisions and (b) ground truth/human-reviewed outcomes.\n- Metrics that matter for this use case: approval rate, dollar amount approved, false-approve rate on requests that should've been denied, and any change in behavior on edge cases (e.g., ambiguous or borderline refund justifications).\n- Pass/fail thresholds that were defined *before* the eval ran, not judged after the fact.\n\n**4. Guardrail confirmation**\n- Confirmation that deterministic guardrails (dollar limits, escalation rules, rate limits) are enforced outside the model and unaffected by the swap \u2014 and if the model is itself the primary safety mechanism, that's worth flagging as a design risk independent of this change.\n\n**5. Prompt-injection / adversarial check**\n- Since refund requests likely include free-text from customers, note whether the new model's resistance to injected instructions in that text was tested.\n\n**6. Sign-off**\n- Who approved this from a risk/finance standpoint, not just an engineering manager approving for cost. Six months from now, the key question is \"did anyone with risk ownership actually see this,\" and that needs a name attached, not just \"manager said ship it.\"\n\n**7. Rollback and monitoring plan**\n- How to revert to Provider A quickly, and what metric/alert would trigger that (e.g., spike in approved refund dollars, spike in disputes/chargebacks) in the days after launch, with an owner watching it.\n\nIf the eval in #3 doesn't exist yet, that's the actual blocker \u2014 everything else is just documenting a decision that hasn't been validated. Want help drafting the ADR template or setting up the historical eval comparison?",
+  "ttft_ms": 19653,
+  "ttft_stream_ms": 1031,
+  "time_to_request_ms": 39,
+  "time_to_request_from_spawn_ms": 1059804,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789698350.6958,
+  "type": "result",
+  "duration_ms": 30267,
+  "uuid": "d38808ea-f2af-47cf-beed-9ef90763f8e9",
+  "_skill": "creating-change-records",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "4546ee653a44bd61beba656a58752ac4f42e8dd9893c59e7ee4c436cd0c43067"
+}

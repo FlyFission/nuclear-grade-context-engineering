@@ -101,6 +101,14 @@ ADOPT_PILOT = _CFG["adopt_pilot"]
 
 COMPRESSIONS_PATH = LADDER_DIR / "data" / "compressed_skills.json"
 
+# Pools that share a scenario set must share its rubric. `v1c` re-runs the v1
+# scenarios contemporaneously, so it is graded with the v1 rubric rather than a
+# freshly authored one -- otherwise the comparison between them would confound
+# "did the effect replicate" with "was it graded differently", which is exactly
+# the question the rerun exists to isolate. One file, one source of truth, no
+# copy that can drift.
+RUBRIC_POOL = {"v1c": "v1"}.get(POOL, POOL)
+
 # Held identical to the skill-benchmark-pilot all-skills run so that its cached
 # C0/C4 transcripts remain valid members of this ladder rather than a separate,
 # non-comparable batch. Changing any of these invalidates that reuse -- the hash

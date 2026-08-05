@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 13485,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0270946,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2373,
+    "cache_read_input_tokens": 23022,
+    "output_tokens": 350,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2373,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 92,
+        "cache_read_input_tokens": 8522,
+        "cache_creation_input_tokens": 122,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 122
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 607,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000682,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 350,
+      "cacheReadInputTokens": 23022,
+      "cacheCreationInputTokens": 2373,
+      "webSearchRequests": 0,
+      "costUSD": 0.0264126,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This working directory appears to be completely empty \u2014 there's no `package.json`, no source files, nothing matching any pattern. I can't make either edit here since the files don't exist in this repo/directory.\n\nCan you confirm the correct path to the project, or check that you're pointing me at the right working directory?",
+  "ttft_ms": 1861,
+  "ttft_stream_ms": 1515,
+  "time_to_request_ms": 29,
+  "time_to_request_from_spawn_ms": 1062497,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789700916.6077,
+  "type": "result",
+  "duration_ms": 12383,
+  "uuid": "36438c46-56c9-438d-9df3-f1e2ccf57cf8",
+  "_skill": "using-nuclear-grade",
+  "_arm": "C0_bare",
+  "_trial": 3,
+  "_input_spec_sha256": "a56d99f578deb15dd62e240941e3ff5875360d21f6a8fb432cfb7879e1ace337"
+}

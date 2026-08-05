@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 12749,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.027778,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2174,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 808,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2174,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 808,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2174,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2174
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 808,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2174,
+      "webSearchRequests": 0,
+      "costUSD": 0.027054,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 don't cut production over this week based on vendor marketing alone. \"99.9% accuracy\" and case studies are self-reported claims, not evidence about how the API performs on *your* content, your edge cases, or adversarial inputs, and moderation failures (false negatives on harmful content, false positives that censor legitimate content) can have real user-safety and legal/reputational consequences that are hard to walk back once live.\n\nBefore any production cutover:\n\n1. **Verify the compliance claims independently** \u2014 ask for the actual SOC2 report (Type II, not just a badge), not just the marketing page.\n2. **Run your own eval** \u2014 a representative sample of your real traffic (including known edge cases, adversarial/borderline content, and your worst historical incidents) scored against both the old and new API, comparing precision/recall, not just headline accuracy.\n3. **Shadow-test, don't hot-swap** \u2014 run the new API in parallel/shadow mode against live traffic for a couple weeks, diffing decisions against your current provider, before routing any real moderation decisions through it.\n4. **Check operational specifics** \u2014 latency, uptime SLA, rate limits, incident response/support commitments, and what happens on API failure (fail-open vs fail-closed matters a lot for moderation).\n\nIf pricing is the main driver, the cost savings won't matter much if you have to reverse course after a moderation failure. A phased rollout (shadow \u2192 limited category \u2192 full) with your own data is the low-risk path \u2014 happy to help set up an eval harness or shadow-comparison script if useful.",
+  "ttft_ms": 4394,
+  "ttft_stream_ms": 771,
+  "time_to_request_ms": 26,
+  "time_to_request_from_spawn_ms": 1232048,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789870453.565,
+  "type": "result",
+  "duration_ms": 13752,
+  "uuid": "0adf362c-5596-46ed-8885-667e0b23f929",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "18d2ee05b64b0e7761a276b206d50734d1bba70b467234fb7cb019d0e50fc967"
+}

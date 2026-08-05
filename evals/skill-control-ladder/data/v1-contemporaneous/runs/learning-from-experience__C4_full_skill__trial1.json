@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 60512,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.12222910000000001,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 6660,
+    "cache_read_input_tokens": 27957,
+    "output_tokens": 4876,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 6660,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2713,
+        "cache_read_input_tokens": 11088,
+        "cache_creation_input_tokens": 1852,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1852
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 4876,
+      "cacheReadInputTokens": 27957,
+      "cacheCreationInputTokens": 6660,
+      "webSearchRequests": 0,
+      "costUSD": 0.1215051,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "One important classification note before the write-up: running `git commit --no-verify` to bypass a *security* gate (not just a style linter) is a **willful violation** under the no-blame framework, not an honest slip \u2014 the engineer knowingly disabled the control. No-blame still applies to how you *fix* the control (don't punish the person), but this should be logged as a finding, not softened into \"just a mistake,\" and it should get a second independent reviewer given it touched credentials/production.\n\nOne thing I need you to confirm before I finalize root cause: **do you know why the secrets-scanning check was actually failing?** Most likely it was correctly flagging the hardcoded key itself (i.e., the tool worked and was overridden) \u2014 but it's also possible it was a flaky/false-positive failure unrelated to the real secret. This changes the finding materially, so flag it if you know.\n\nHere's a draft OPEX record based on what you've told me \u2014 I've left that one field open pending your answer.\n\n---\n\n## OPEX Record: Hardcoded API Key Merged to Main via `--no-verify` Bypass\n\n**Date of event:** ~2026-07-27 (one week prior to report)\n**Date discovered:** during routine security audit, ~2026-07-30 (3 days post-merge)\n**Date recorded:** 2026-08-03\n**Severity:** High \u2014 live credential exposed in production for 3 days\n**Classification:** Willful violation (control was knowingly bypassed under time pressure), not an honest error. No-blame applies to the fix; the bypass itself is a finding requiring an owned corrective action, not a \"mistake\" writeoff.\n\n### 1. Actual condition vs. standard\n- **Standard:** Every commit must pass the secrets-scanning pre-commit hook before merging to a protected branch. This is the sole automated control in the pipeline for catching hardcoded credentials pre-merge.\n- **Actual:** An engineer's pre-commit secrets scan failed. Instead of fixing the finding or escalating, they ran `git commit --no-verify` and pushed directly, bypassing the only gate in place. The commit \u2014 containing a hardcoded API key \u2014 merged to `main` and was live in production for 3 days before being caught by an unrelated, manual routine audit.\n\n### 2. Evidence\n- Git history shows the commit was made with `--no-verify` (visible via `git log` / hook bypass, or engineer's own account).\n- The API key was present in the merged diff on `main`.\n- Audit finding dated ~3 days after merge; key rotated same day as discovery.\n\n### 3. Impact\n- Live API key exposed in a public/shared repo state (or at minimum, in production) for 3 days.\n- Unknown blast radius: no confirmation yet on whether the key was accessed by unauthorized parties during the exposure window (recommend checking access/usage logs for that key over the 3-day window as part of close-out).\n- Rotated on discovery \u2014 immediate correction complete.\n\n### 4. Root cause (not just the symptom)\nThe proximate cause is the individual bypass. But the **root cause is architectural**: your only defense against hardcoded secrets was a *client-side, locally-bypassable* git hook, with:\n- No server-side / CI-enforced equivalent check on the PR or at merge time.\n- No branch protection requiring that check to pass before merge to `main`.\n- No continuous or push-time secret scanning to catch what slips through review.\n- No friction, logging, or approval requirement around using `--no-verify` on a security-relevant check specifically (as opposed to, say, a style linter, where bypass is more benign).\n- Detection depended entirely on a periodic manual audit rather than an automated, near-real-time control \u2014 hence the 3-day dwell time.\n\nA single engineer under deadline pressure was able to single-handedly remove your only safeguard. That's the weak control, independent of who did it or why.\n\n### 5. Weak / missing controls identified\n| # | Gap | Consequence |\n|---|---|---|\n| 1 | Secret scanning enforced only client-side (pre-commit hook) | Trivially bypassed with `--no-verify`; not actually a gate |\n| 2 | No required CI status check for secret scanning on PRs | Nothing stopped the merge even after bypass |\n| 3 | No branch protection rule requiring that check to pass | `main` accepted the merge unconditionally |\n| 4 | No server-side/push-time secret scanning or provider push-protection | Nothing caught it before code became live |\n| 5 | No detection loop faster than the periodic manual audit cadence | 3-day exposure window instead of minutes/hours |\n| 6 | No policy/logging around bypassing a *security* gate specifically | Bypass had zero friction or visibility until the audit |\n\n### 6. Candidate durable fixes\n1. **Add secret scanning as a required CI check** (e.g., gitleaks/TruffleHog/provider-native scanning) that runs server-side on every PR \u2014 independent of local hooks, so `--no-verify` can't remove it.\n2. **Enable branch protection on `main`** requiring that check to pass before merge (no admin override without explicit, logged justification).\n3. **Enable push-protection / server-side secret scanning** (e.g., GitHub secret scanning push protection, or equivalent) so a detected secret blocks the push itself, not just the local commit.\n4. **Keep the pre-commit hook** as a fast local pre-check for developer convenience, but stop treating it as *the* control \u2014 it's now a courtesy, not a gate.\n5. **Add a policy control**: any use of `--no-verify` (or equivalent bypass) on a security-tagged hook requires either (a) the finding is a confirmed false positive with a one-line justification in the PR description, or (b) explicit reviewer/lead sign-off logged in the PR. This applies the \"escalate instead of bypass\" norm without blocking people who hit real false positives.\n6. **Shorten detection cadence**: move from \"periodic manual audit only\" to continuous automated scanning of the default branch, so dwell time drops from days to near-real-time.\n\n### 7. Owner and verification\n- **Owner:** _(assign \u2014 likely eng lead or security/platform team responsible for CI config and branch protection)_\n- **Due date:** propose 2 weeks out for items 1\u20133 (CI check + branch protection + push protection), since these are the highest-leverage fixes and directly close the gap that let this happen.\n- **Verification:** confirm via a test PR containing a dummy fake secret that (a) local hook fails, (b) CI check independently fails and blocks merge even if `--no-verify` is used locally, (c) branch protection prevents merge without the check passing.\n- **Recheck trigger:** re-verify this control on any change to CI config, branch protection settings, or git hosting provider migration.\n\n### 8. Escalation\n- This touched credentials and production \u2014 per your policies this should go to whoever owns security/credential incident response, and get a second independent reviewer on the fix given it's a repeated-risk category (security gate bypass).\n- Recommend also checking whether other engineers have used `--no-verify` recently (`git log` doesn't record this directly, but you could add hook-bypass logging going forward per fix #5) to see if this is a one-off or a pattern of gate fatigue.\n\n---\n\nLet me know:\n1. Whether the hook was failing because it correctly caught the real secret, or something else \u2014 I'll tighten the root cause section accordingly.\n2. Who should own the fix and whether you want this saved as a file in the repo (e.g., `docs/opex/2026-08-hardcoded-api-key.md`) or just handed off as-is.",
+  "ttft_ms": 3329,
+  "ttft_stream_ms": 1182,
+  "time_to_request_ms": 53,
+  "time_to_request_from_spawn_ms": 1323760,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789962306.2554,
+  "type": "result",
+  "duration_ms": 61531,
+  "uuid": "737a9a51-3d94-4ba3-ab29-378372bc502d",
+  "_skill": "learning-from-experience",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "cfa4f74e9bb2cb7d8f393262df0498ea8e7f19457f4949e786b26109f3bd0c3c"
+}

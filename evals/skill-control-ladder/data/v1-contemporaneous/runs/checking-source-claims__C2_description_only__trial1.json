@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 20814,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.042055300000000004,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2417,
+    "cache_read_input_tokens": 14651,
+    "output_tokens": 1497,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2417,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1221,
+        "cache_read_input_tokens": 8371,
+        "cache_creation_input_tokens": 326,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 326
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 626,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000691,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1497,
+      "cacheReadInputTokens": 14651,
+      "cacheCreationInputTokens": 2417,
+      "webSearchRequests": 0,
+      "costUSD": 0.0413643,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 two issues need fixing before this goes out:\n\n1. **\"fully compliant with the framework\"** \u2014 NIST SP 800-61 is guidance, not a certifiable standard with a checklist you pass/fail. There's no formal compliance mechanism to point to, so \"fully compliant\" is a claim you can't actually back up if someone asks how compliance was verified. Safer phrasing: \"our workflow follows the guidance in NIST SP 800-61\" or \"is aligned with NIST SP 800-61\" \u2014 unless you actually have a control-by-control mapping you can show, in which case say that explicitly.\n\n2. **The uncited conference talk** \u2014 publishing \"we drew inspiration from a talk but can't say which one\" is a source claim you can't substantiate. Either track down the speaker/talk and cite it properly, or drop the specific reference and just say something like \"informed by general SRE incident-response practices\" without pointing to an unidentifiable source.\n\nSuggested rewrite:\n\n> \"Our workflow follows the guidance in NIST SP 800-61 and incorporates general SRE incident-response practices.\"\n\nIf you do remember the talk/speaker, it's worth 5 minutes to find it \u2014 a proper citation is stronger than vague \"inspired by\" language either way.",
+  "ttft_ms": 3004,
+  "ttft_stream_ms": 815,
+  "time_to_request_ms": 59,
+  "time_to_request_from_spawn_ms": 622503,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789260973.2915,
+  "type": "result",
+  "duration_ms": 21368,
+  "uuid": "84e486b3-d24f-4268-93f4-f2d9116fdc9b",
+  "_skill": "checking-source-claims",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "dc224e83e17a7a412635dbf5ade817c9ff63ce0f3e168e22e3ec24c6f14d3c78"
+}

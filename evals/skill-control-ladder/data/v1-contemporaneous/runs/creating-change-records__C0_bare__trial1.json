@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 32379,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.05771149999999999,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3336,
+    "cache_read_input_tokens": 14575,
+    "output_tokens": 2171,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3336,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 977,
+        "cache_read_input_tokens": 8304,
+        "cache_creation_input_tokens": 1303,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1303
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 656,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000746,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2171,
+      "cacheReadInputTokens": 14575,
+      "cacheCreationInputTokens": 3336,
+      "webSearchRequests": 0,
+      "costUSD": 0.056965499999999995,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No existing ADR/changelog convention in this repo, so here's what I'd actually push for \u2014 the diff size is irrelevant; what matters is that the *decision boundary* of an autonomous refund-approver can shift silently even when the code doesn't. A one-line PR description gives a future reviewer zero ability to tell whether that happened.\n\n**The record should be an eval-backed decision record, not a diff description.** Contents:\n\n1. **Why, precisely** \u2014 \"cost review\" plus the actual numbers (cost/latency delta) and who signed off on trading cost for a behavior change in a money-moving agent.\n\n2. **Blast radius as of this change** \u2014 what the agent can currently do unattended (refund $ caps, tool access, any human-in-the-loop thresholds). This anchors how much scrutiny is warranted.\n\n3. **Pre-swap baseline** \u2014 Provider A's performance on a representative eval set: correct approve/deny decisions, dollar-amount accuracy, edge cases (partial refunds, policy exceptions), and adversarial cases (prompt injection via customer-supplied text, attempts to manipulate the agent into approving out-of-policy refunds).\n\n4. **Post-swap results on the same eval set** \u2014 Provider B run against identical cases, with a diff of *which specific cases changed outcome*, not just an aggregate pass rate. Aggregate scores can hide a new failure mode (e.g., Provider B being more persuadable by manipulated input) even while overall accuracy looks the same or better.\n\n5. **Regressions found and disposition** \u2014 anything that changed for the worse, and whether it was fixed, mitigated, or knowingly accepted (with rationale and who accepted the risk).\n\n6. **Guardrails status** \u2014 confirmation that caps/limits/human-review thresholds were not implicitly relying on Provider-A-specific behavior, and are unchanged or explicitly updated.\n\n7. **Rollback plan** \u2014 how to revert, and what production signal (refund $ velocity, dispute rate, anomaly alerts) would trigger it.\n\n8. **Post-launch monitoring** \u2014 what's being watched, for how long, by whom, after the swap goes live.\n\n9. **Reproducibility** \u2014 link/reference to the eval harness and dataset used, so someone in six months can rerun it rather than trust a summary.\n\n10. **Sign-off** \u2014 engineering plus whoever owns financial/customer risk for this agent (not just the PR approver).\n\nThe one-liner \"swapped model per cost review\" is fine as the *commit message*. What needs to exist is the linked eval report (even a short one) showing #3 and #4 actually happened before merge. If that eval doesn't exist yet, that's the real finding here \u2014 the \"one-line change\" framing is masking that no one has verified the new model approves/denies refunds the same way.\n\nWant me to draft this as a template (e.g., a `CHANGES.md`/ADR entry) you can drop in and fill with your eval numbers?",
+  "ttft_ms": 14057,
+  "ttft_stream_ms": 894,
+  "time_to_request_ms": 63,
+  "time_to_request_from_spawn_ms": 598288,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789236487.5833,
+  "type": "result",
+  "duration_ms": 32063,
+  "uuid": "086d1a41-7025-4f5c-b069-297bf95277bb",
+  "_skill": "creating-change-records",
+  "_arm": "C0_bare",
+  "_trial": 1,
+  "_input_spec_sha256": "b54e097736e485dc9d873df0ab0013c6ebc994406abbe3e1e01d0a5c614488ab"
+}

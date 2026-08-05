@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 37684,
+  "num_turns": 6,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0750274,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 5203,
+    "cache_read_input_tokens": 27718,
+    "output_tokens": 2316,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 5203,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1327,
+        "cache_read_input_tokens": 11188,
+        "cache_creation_input_tokens": 295,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 295
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 656,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000736,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2316,
+      "cacheReadInputTokens": 27718,
+      "cacheCreationInputTokens": 5203,
+      "webSearchRequests": 0,
+      "costUSD": 0.0742914,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A one-line config diff and a one-line PR description both undersell the actual risk here. What matters for record-keeping isn't the size of the diff, it's the blast radius and reversibility: you're changing the model that autonomously decides whether to give customers money, and a different model can have materially different judgment, refusal behavior, and failure modes even with identical prompts. \"Cost review\" as a stated reason also tells a future reviewer nothing about whether anyone checked the new model's refund-approval behavior before shipping.\n\n**Mode: Standard, not Quick.** Quick (`risk.md` + `proof.md`) is for changes where a single pass/fail check answers the reviewer's question. Here the real question is \"did the new model's decision behavior stay within acceptable bounds for autonomous financial approval,\" which needs a documented before/after comparison, not just a green check. Standard needs six files:\n\n- **`risk.md`** \u2014 states this is an autonomous agent making real financial decisions (refund approvals), names the actual risk (behavior drift from the model swap, not the code change itself), and records the mode decision with reasoning.\n- **`basis.md`** \u2014 what the change must prove: that Provider B approves/denies refunds consistent with policy and with Provider A's observed behavior on a representative case set, not just \"it compiles and deploys.\"\n- **`plan.md`** \u2014 the plan for validating the swap: eval set of refund scenarios (including edge cases \u2014 high-value, ambiguous fraud signals, policy-boundary cases), how outputs from both models get compared, rollback plan if Provider B behaves worse.\n- **`trace.md`** \u2014 links each claim (\"approval rate matches baseline,\" \"no new false-approve cases,\" \"latency/cost within bounds\") to the actual evidence: eval run output, diff report, dashboard link.\n- **`verification.md`** \u2014 the executed proof: eval results, any regressions found, explicit pass/fail/gap labels per check, not just \"looks fine.\"\n- **`ship.md`** \u2014 the release decision itself: who approved it, what monitoring/alerting is in place post-swap (e.g., watching approval-rate and dollar-volume anomalies), and the rollback trigger/criteria.\n\nThe record should also note source lineage for the eval set (where the test refund cases came from \u2014 production sample, synthetic, or both) since that's exactly what a skeptical reviewer will question six months from now if a bad-approval incident happens.\n\nWant me to run `python tools/ng.py new <slug> --mode standard` and draft these six files with you, or do you want to gather the eval/comparison evidence first and fill them in after?",
+  "ttft_ms": 8623,
+  "ttft_stream_ms": 862,
+  "time_to_request_ms": 28,
+  "time_to_request_from_spawn_ms": 794755,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789433333.7227,
+  "type": "result",
+  "duration_ms": 34860,
+  "uuid": "a177db34-276e-4c26-9417-d8ddde9c00ad",
+  "_skill": "creating-change-records",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "d34833729a77f62c818b6c95866bf607e2d7312595419bce930936a6ccbfd925"
+}

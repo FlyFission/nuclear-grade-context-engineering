@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 23299,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.055569099999999996,
+  "usage": {
+    "input_tokens": 10,
+    "cache_creation_input_tokens": 3418,
+    "cache_read_input_tokens": 41027,
+    "output_tokens": 1460,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3418,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 441,
+        "cache_read_input_tokens": 8988,
+        "cache_creation_input_tokens": 701,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 701
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 748,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000823,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 10,
+      "outputTokens": 1460,
+      "cacheReadInputTokens": 41027,
+      "cacheCreationInputTokens": 3418,
+      "webSearchRequests": 0,
+      "costUSD": 0.0547461,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory is empty, so I don't have the actual packets folder or tool config to inspect \u2014 this is really a judgment call based on what you've told me.\n\nRecommendation: delete the `add-dark-mode-toggle` packet entirely, not just relabel it.\n\nReasoning:\n- It's still scaffold (placeholder text, untouched for 3 weeks) \u2014 nothing real was ever built.\n- Nothing from it merged.\n- There's an explicit team decision not to pursue dark mode this quarter, so it's not \"paused\" or \"deferred,\" it's dead for now.\n\nThat's different from `refactor-auth-flow`: that one shows as invalid (missing file) but is actively being worked on, so leaving it as-is (noisy \"invalid\" tag included) is correct \u2014 the noise there is expected WIP churn, not a stale artifact. Don't touch that one.\n\nIf your team wants a paper trail for \"we considered this, decided not to do it,\" you could instead move the packet to an `archive/` folder (if your tool supports excluding that from the scan) rather than `rm -rf` it \u2014 but since design may revisit the color palette later and someone might want to resurrect the sketch, that's worth a quick check with you before I take either action.\n\nWant me to locate the actual packets folder (it's not in this working directory) and delete or archive it, or would you rather just do it yourself now that you have the plan?",
+  "ttft_ms": 1450,
+  "ttft_stream_ms": 1074,
+  "time_to_request_ms": 101,
+  "time_to_request_from_spawn_ms": 36178,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785895686020.0771,
+  "type": "result",
+  "duration_ms": 24397,
+  "uuid": "7be9aaf7-d83f-49cc-99e0-4bd6de4543c9",
+  "_skill": "closing-stale-packets",
+  "_arm": "C0_bare",
+  "_trial": 3,
+  "_input_spec_sha256": "c7b969208c21fce55b015164e122a7b731e61587a6cee605024ad3dfbc60dc72"
+}

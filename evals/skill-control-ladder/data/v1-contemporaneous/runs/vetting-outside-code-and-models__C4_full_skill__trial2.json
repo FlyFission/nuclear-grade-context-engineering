@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 27503,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.05173489999999999,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 4620,
+    "cache_read_input_tokens": 16713,
+    "output_tokens": 1218,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4620,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 855,
+        "cache_read_input_tokens": 10433,
+        "cache_creation_input_tokens": 467,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 467
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1218,
+      "cacheReadInputTokens": 16713,
+      "cacheCreationInputTokens": 4620,
+      "webSearchRequests": 0,
+      "costUSD": 0.051015899999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    },
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000719,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 don't cut production over this week. Here's why, and what would actually let you proceed.\n\n**The problem:** everything you have \u2014 \"99.9% accuracy,\" \"SOC2 compliant,\" \"enterprise-grade safety,\" case studies \u2014 is vendor marketing, not evidence from your own testing. None of it has been independently verified against your traffic, your content categories, or your failure tolerance.\n\n**Critical characteristics your use relies on** (for a moderation API, at minimum):\n- **Accuracy/recall on your actual content mix** \u2014 the vendor's \"99.9%\" is on their benchmark, not yours. Moderation false negatives (missed abuse/CSAM/harassment) are a materially different risk than false positives.\n- **SOC2 report itself, not the badge** \u2014 \"SOC2 compliant\" means nothing until you've read the actual report (Type I vs II, which trust criteria, any exceptions noted).\n- **Latency/availability under your load**\n- **API/response format stability** \u2014 will their categories and confidence scores map cleanly to your existing moderation logic?\n- **Data handling** \u2014 what happens to the content you send them (retention, training use, subprocessors)? This matters especially if you're sending user-generated content to a third party.\n\n**Gaps right now:** all of the above are unverified. Case studies are someone else's use case, not proof for yours. This blocks acceptance for production use \u2014 not because the vendor is necessarily bad, but because you have no repo-side evidence yet.\n\n**What would unblock it:**\n1. Request the actual SOC2 report (ask for Type II if you're handling sensitive/user data) and read it \u2014 don't accept the badge as proof.\n2. Run it in shadow mode against your production traffic for a period, comparing its decisions to your current pipeline, and eyeball the disagreements \u2014 especially false negatives on your most sensitive categories.\n3. Get contractual terms on data retention/use in writing.\n4. Confirm SLA/latency under realistic load.\n\n**Backup control if you're time-pressured on cost:** run it in parallel/shadow alongside your existing provider rather than cutting over, so you get pricing pressure relief data without swapping the safety-critical decision-maker blind.\n\n**Re-check trigger going forward:** any model/version update on their side, since a vendor swapping their underlying model resets whatever track record you build.\n\nThis is a security/safety-adjacent decision (content moderation failures have real user-harm and liability consequences), so if you do proceed, loop in whoever owns trust & safety or security review before go-live \u2014 this isn't a call to make on pricing alone.",
+  "ttft_ms": 6222,
+  "ttft_stream_ms": 2571,
+  "time_to_request_ms": 36,
+  "time_to_request_from_spawn_ms": 1143312,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789781842.177,
+  "type": "result",
+  "duration_ms": 20964,
+  "uuid": "058713cc-e2cc-421f-8923-9ea80c074707",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "09bebff115fd340254ced75f0db14a5449f851f0afc0e1b3462cc8e2577f5162"
+}

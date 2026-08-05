@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 22672,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.040303000000000005,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2086,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1680,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2086,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1680,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2086,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2086
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 617,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000697,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1680,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2086,
+      "webSearchRequests": 0,
+      "costUSD": 0.039606,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before drafting text, one flag: \"safe and fully backward compatible\" is a strong, absolute claim, and your evidence \u2014 a self-run test suite and a self-review \u2014 only partially supports it. Self-run tests can't rule out coverage gaps, and self-review is inherently blind to the author's own mistakes. If a reviewer takes the claim at face value and doesn't independently verify, that's a risk for both of you.\n\nHere's the claim-to-evidence trace:\n\n| Claim | Evidence you have | Status | Gap |\n|---|---|---|---|\n| Existing test suite passes | Ran full suite locally, all green | Supported | Was it run in CI too, or only locally? Local env can mask config/dependency drift. |\n| Diff is internally consistent / no obvious bugs | Self line-by-line review | Weak support | Self-review doesn't catch blind spots \u2014 the classic reason for requiring a second reviewer. |\n| No behavior change for existing callers (\"backward compatible\") | Not directly evidenced | **Not supported** | Passing tests only prove behavior matches for *cases the tests cover*. If the suite doesn't specifically assert on payment API contracts, edge cases, error codes, etc., compatibility isn't demonstrated. |\n| Safe to deploy (\"safe\") | Not evidenced | **Not supported** | No mention of staging/canary testing, rollback plan, or independent review. |\n\nSuggested evidence section \u2014 scoped to what you can actually back up:\n\n---\n**Testing & Review**\n- Ran the full existing test suite locally; all tests pass.\n- Reviewed the diff line-by-line before pushing.\n\n**Backward compatibility**\n- No changes to public API signatures, request/response schemas, or error codes were intended in this refactor. [Only include this line if actually true \u2014 worth double-checking against the diff.]\n- Not yet independently verified \u2014 requesting reviewer sign-off, and CI run, before merge.\n\n**Not yet covered**\n- No new tests were added to specifically exercise backward-compatibility of [list the areas the refactor touched \u2014 e.g. webhook payloads, retry logic, idempotency keys].\n---\n\nIf you want the \"fully backward compatible\" claim to hold up, the gap to close is independent verification \u2014 get CI green (not just local), and have at least one other reviewer check it, ideally against the specific compatibility surface (API contracts, data formats) rather than general code quality. Want me to help identify which parts of the diff are highest-risk for backward compatibility so you can call those out explicitly for reviewers?",
+  "ttft_ms": 11434,
+  "ttft_stream_ms": 1227,
+  "time_to_request_ms": 30,
+  "time_to_request_from_spawn_ms": 1070713,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789708919.7578,
+  "type": "result",
+  "duration_ms": 23256,
+  "uuid": "841dfbe2-d0b2-4f7d-b8e8-1504ed72ca1e",
+  "_skill": "proving-claims",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "a83bef5b5d66ef487c55ed91b0d6bc52cc72a4f902d2b2a9c1cf2f2bf967da32"
+}

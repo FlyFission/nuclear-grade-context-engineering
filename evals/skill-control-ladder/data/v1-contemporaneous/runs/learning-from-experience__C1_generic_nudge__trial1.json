@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 37234,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0603409,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2715,
+    "cache_read_input_tokens": 14733,
+    "output_tokens": 2593,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2715,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2183,
+        "cache_read_input_tokens": 8453,
+        "cache_creation_input_tokens": 542,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 542
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2593,
+      "cacheReadInputTokens": 14733,
+      "cacheCreationInputTokens": 2715,
+      "webSearchRequests": 0,
+      "costUSD": 0.0596169,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No existing pre-commit/CI config in this repo \u2014 this looks like a fresh workspace, so I'll draft the write-up as a standalone document. Here's a postmortem you can adapt, plus concrete fixes for the root cause (not just \"don't do that again\").\n\n## Incident Postmortem: Hardcoded API Key Exposed in Production\n\n**Date of incident:** [date key was merged] \u00b7 **Date detected:** [date audit found it] \u00b7 **Date resolved:** [date key rotated]\n**Severity:** [e.g., Medium \u2014 credential exposed for 3 days, no confirmed misuse]\n**Author:** [you] \u00b7 **Status:** Draft\n\n### Summary\nAn engineer bypassed the pre-commit secrets-scanning hook using `git commit --no-verify` to meet a deadline, pushing a commit containing a hardcoded API key. The key was merged to `main` and live in production for 3 days before a routine security audit detected it. The key was rotated immediately upon discovery.\n\n### Timeline\n| Time | Event |\n|---|---|\n| [T0] | Pre-commit secrets-scan hook fails on engineer's branch |\n| [T0] | Engineer runs `git commit --no-verify`, bypassing the hook |\n| [T0] | Branch pushed and merged to `main` (via PR \u2014 *was it reviewed? see below*) |\n| [T0+3d] | Routine security audit discovers the hardcoded key in `main` |\n| [T0+3d] | Key rotated |\n\n**Open question to fill in:** did this go through a PR review, or was it pushed directly to `main`? That's a separate control gap worth calling out explicitly if branch protection allowed a direct push.\n\n### Root Cause\nThe proximate cause was a developer bypassing a local hook. But `--no-verify` bypassing a *local* hook is a normal, expected git feature \u2014 it will always be possible. The real root cause is **the secrets scan had no enforcement point that couldn't be bypassed by an individual under time pressure.** A pre-commit hook alone is a convenience/early-warning check, not a control.\n\n### Impact\n- API key exposed in a public/internal-facing [repo/config] for 3 days.\n- [Blast radius: what did the key grant access to? Was usage/billing checked for anomalous activity during the 3-day window? This should be explicitly confirmed, not assumed clean.]\n- No customer data impact identified (confirm this \u2014 don't leave it implicit).\n\n### What Went Well\n- Routine audit process caught the exposure (defense in depth worked).\n- Rotation was fast once discovered.\n\n### What Went Wrong\n1. Pre-commit hook is opt-in/bypassable \u2014 it only helps engineers who choose to comply.\n2. No server-side secrets-scanning gate existed to catch what the local hook missed.\n3. No alerting fired when a `--no-verify` commit landed or when a secret pattern hit `main`.\n4. [If applicable] PR review did not catch the hardcoded key.\n5. Deadline pressure was allowed to override a security control with no escalation path (e.g., no way to flag \"the linter is blocking me and I don't understand why, help\").\n\n### Corrective Actions\n\nThese should be ranked by whether they *prevent* recurrence vs. merely *detect* it faster \u2014 you want both, but prevention matters more.\n\n**Prevent (make bypass impossible, not just discouraged):**\n- Add a **server-side secrets scan as a required CI check** (e.g., gitleaks, trufflehog, or GitHub secret scanning + push protection) that runs on every PR and blocks merge \u2014 this can't be skipped with `--no-verify` since it doesn't run locally.\n- Enable **branch protection on `main`**: require the CI check to pass, require PR review, disallow direct pushes, and disallow admins from bypassing (or require justification if they do).\n- If you're on GitHub/GitLab, enable native **push protection for secrets** at the platform level as a second independent layer.\n\n**Detect (fast, if something still slips through):**\n- Alert on any commit that reaches `main` without the CI secrets check having run/passed (shouldn't be possible if branch protection is set right, but verify).\n- Add automated secret scanning on a recurring schedule against the full repo history, not just new commits, in case something older is lurking.\n\n**Process:**\n- Document what to do when the secrets linter blocks you legitimately (false positive path) \u2014 a clear \"how to get unblocked without bypassing\" reduces the temptation to `--no-verify` under pressure. If the hook has a high false-positive rate, that's worth fixing too, since it's often *why* people bypass it.\n- Add a short blurb to onboarding/eng handbook: `--no-verify` should never be used to bypass secrets scanning; if the check seems wrong, ping [team/channel].\n\n**Remediation of the specific exposure:**\n- Key rotated (done).\n- Confirm: was the old key fully revoked (not just replaced), and were logs checked for unauthorized use during the exposure window?\n- Purge the key from git history if it's still in old commits, so it's not exposed via `git log` even after rotation.\n\n### Follow-ups / Owners\n| Action | Owner | Due date |\n|---|---|---|\n| Add CI-enforced secrets scan on PRs to `main` | | |\n| Enable branch protection (required checks, no direct push) | | |\n| Enable platform push protection for secrets | | |\n| Purge key from git history | | |\n| Confirm no misuse via audit logs | | |\n| Document false-positive escalation path for the linter | | |\n\n---\n\nA few things worth deciding before this is final:\n1. **Was this merged via PR or pushed straight to `main`?** That changes whether you also have a code-review gap to address.\n2. **Do you already have GitHub/GitLab secret scanning available** (many plans include this natively) \u2014 if so, the CI check is redundant and you should just turn that on plus branch protection, which is less to maintain.\n3. Do you want me to draft the actual CI workflow (e.g., a gitleaks GitHub Actions job) once you tell me what's in this repo/org?",
+  "ttft_ms": 3394,
+  "ttft_stream_ms": 871,
+  "time_to_request_ms": 28,
+  "time_to_request_from_spawn_ms": 755424,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789393900.121,
+  "type": "result",
+  "duration_ms": 37745,
+  "uuid": "6485f111-52e0-4634-823b-900699dd7601",
+  "_skill": "learning-from-experience",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "8115015f04d9fa09099815a984c692c5813de3d958a57bf85de3810fe2dff5da"
+}

@@ -1,0 +1,93 @@
+{
+  "is_error": false,
+  "duration_api_ms": 25356,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.054759199999999994,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 3297,
+    "cache_read_input_tokens": 33134,
+    "output_tokens": 1613,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3297,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 886,
+        "cache_read_input_tokens": 9252,
+        "cache_creation_input_tokens": 325,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 325
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 748,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0008179999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 1613,
+      "cacheReadInputTokens": 33134,
+      "cacheCreationInputTokens": 3297,
+      "webSearchRequests": 0,
+      "costUSD": 0.053941199999999995,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [
+    {
+      "tool_name": "Glob",
+      "tool_use_id": "toolu_012jUxKuEwYeUEFCgDoY6EdN",
+      "tool_input": {
+        "pattern": "**/*",
+        "path": "/home/user/nuclear-grade-context-engineering"
+      }
+    }
+  ],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Since nothing was ever merged and the packet is just a sketch, deletion might seem tempting \u2014 but that would throw away useful context: the fact that dark mode was *considered and explicitly deferred*, and why (palette not finalized). If someone revisits this next quarter, that rationale is worth having on record rather than rediscovering from meeting notes or Slack history.\n\nSo the right move is to **close** `add-dark-mode-toggle`, not delete it, with a recorded rationale along the lines of:\n\n> Deferred \u2014 team decided not to pursue dark mode this quarter (meeting on [date]); design had not finalized the color palette. No code merged. Revisit once palette is finalized.\n\nThat takes it out of \"scaffold\" (noise) status without erasing the decision trail. Leave `refactor-auth-flow` alone \u2014 it's not stale, just missing a file your teammate hasn't added yet; that's a normal in-progress state, not something this cleanup should touch.\n\nIf you tell me the actual CLI/command your tool uses to close a packet (e.g. `ng close <packet> --reason \"...\"`), I can run it for you.",
+  "ttft_ms": 2626,
+  "ttft_stream_ms": 1158,
+  "time_to_request_ms": 27,
+  "time_to_request_from_spawn_ms": 440571,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789079066.4524,
+  "type": "result",
+  "duration_ms": 25872,
+  "uuid": "989be85f-628b-474b-98ee-9aca0a651dc3",
+  "_skill": "closing-stale-packets",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "46fb51598673e8e765a801adeea814bb1b035054f2d38133b5487d736eb7770d"
+}

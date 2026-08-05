@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 37013,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0386263,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1982,
+    "cache_read_input_tokens": 6271,
+    "output_tokens": 1610,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1982,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1610,
+        "cache_read_input_tokens": 6271,
+        "cache_creation_input_tokens": 1982,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1982
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 617,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000697,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1610,
+      "cacheReadInputTokens": 6271,
+      "cacheCreationInputTokens": 1982,
+      "webSearchRequests": 0,
+      "costUSD": 0.0379293,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A quick flag before I draft this: \"safe and fully backward compatible\" is a strong claim for a payment-processing module, but the evidence you've described \u2014 you ran the tests yourself and you self-reviewed the diff \u2014 doesn't really support \"fully.\" Existing tests only prove you didn't break what's already covered (and self-written test suites rarely cover every backward-compat edge case: error codes, response schemas, rounding/currency behavior, idempotency keys, etc.), and self-review is known to miss things independent review catches. Presenting that as proof of \"fully backward compatible\" could mislead reviewers into skipping scrutiny they'd otherwise apply.\n\nA couple options:\n\n1. **Write the evidence section accurately** \u2014 state exactly what you did (full suite green locally, self-reviewed diff) without inflating it into a compatibility guarantee, and let reviewers draw their own conclusion.\n2. **Strengthen the evidence first** \u2014 I can look at your actual diff and check things like: whether tests touch the changed files/branches, whether public API signatures/return shapes changed, error-handling/edge-case changes, etc. That would give you real grounds for a stronger claim.\n\nWant me to check the diff in this repo to see what's actually changed, or would you rather I just draft the accurate (more modest) version now?",
+  "ttft_ms": 34750,
+  "ttft_stream_ms": 1190,
+  "time_to_request_ms": 24,
+  "time_to_request_from_spawn_ms": 368484,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789006069.8638,
+  "type": "result",
+  "duration_ms": 37123,
+  "uuid": "e1f53a19-28d5-4f95-a09f-b756ee5c3589",
+  "_skill": "proving-claims",
+  "_arm": "C0_bare",
+  "_trial": 1,
+  "_input_spec_sha256": "ea6a92fdcdbc97aed1c2f4e2a35bc428083aa95b9d9175521975ec2d758ffb9d"
+}

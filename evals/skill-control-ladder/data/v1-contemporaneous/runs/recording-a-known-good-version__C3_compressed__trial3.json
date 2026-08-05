@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 30171,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0660801,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 3885,
+    "cache_read_input_tokens": 32577,
+    "output_tokens": 2148,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3885,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 733,
+        "cache_read_input_tokens": 8917,
+        "cache_creation_input_tokens": 1248,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1248
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000753,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 2148,
+      "cacheReadInputTokens": 32577,
+      "cacheCreationInputTokens": 3885,
+      "webSearchRequests": 0,
+      "costUSD": 0.0653271,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory is empty \u2014 no repo files, no PR content, no eval results, no existing baseline docs I can pull from. Before I draft this, a few things worth flagging:\n\n**What I'd need to actually write this record:**\n- The PR #482 diff/commit SHA (to pin the exact identity of what's \"known-good\")\n- The eval suite results themselves (numbers, dataset, what \"improved\" means quantitatively)\n- What \"controlled items\" means for this service \u2014 e.g., is `embed-v2` itself pinned to a specific model version/checkpoint, or could it drift upstream? Config, feature flags, vector index/schema changes?\n- Whether embed-v2 required reindexing existing vectors, and if so, whether that's done everywhere or still in flight\n\n**Why I'm hesitant to just write it up now as \"accepted\":**\n- **One hour of production observation is thin evidence** for a baseline you'd trust as a rollback target, especially for an embedding swap \u2014 those often show issues in tail latency, memory, or downstream ranking quality that don't show up in the first hour (traffic patterns, cold caches, less common query types).\n- This touches customers directly (a live recommendation service), so per the escalation criteria this isn't a \"trivial, skip the record\" case \u2014 but it also isn't yet in a state where I'd want to formally certify it as known-good.\n- I don't want to write a document that reads as \"we verified this is exactly rebuildable and fully vetted\" when the actual evidence is \"QA ran an eval suite and it's been live an hour.\"\n\n**What I'd suggest instead:** I can draft this now as a record with the commit/PR identity, what QA verified, and explicit residual gaps (e.g., \"production soak time: 1hr \u2014 recommend 24-48hr before treating as stable rollback baseline,\" \"reindex status: unconfirmed,\" \"embed-v2 pin: unconfirmed\"), plus a trigger for when to promote it to fully accepted (e.g., after a defined soak window with no anomalies). That's honest about what's actually been verified versus what's pending.\n\nWant me to draft it that way \u2014 with the gaps and soak-window trigger called out explicitly \u2014 or would you rather wait a bit longer / gather the PR and eval details first so the record can be fully backed?",
+  "ttft_ms": 2021,
+  "ttft_stream_ms": 892,
+  "time_to_request_ms": 26,
+  "time_to_request_from_spawn_ms": 1192015,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789830123.8738,
+  "type": "result",
+  "duration_ms": 33474,
+  "uuid": "2039cccd-55cf-4372-90dd-b9737dc65f17",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "15a6ce4cf7708cdad5ccf21f02b242e4ec8887a93ead0c6966ee50af92dc3bd6"
+}

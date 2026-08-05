@@ -30,13 +30,14 @@ from ladder_common import (
     LADDER_DIR,
     MAX_WORKERS,
     POOL,
+    RUBRIC_POOL,
     TASKS,
     TRIALS,
     response_text,
     run_path,
 )
 
-RUBRICS_PATH = LADDER_DIR / "data" / f"rubrics-{POOL}.json"
+RUBRICS_PATH = LADDER_DIR / "data" / f"rubrics-{RUBRIC_POOL}.json"
 OUT_PATH = LADDER_DIR / "data" / f"rubric-graded-{POOL}.json"
 PROMPT_VERSION = "r1"
 

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 34920,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0537946,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2371,
+    "cache_read_input_tokens": 14752,
+    "output_tokens": 2293,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2371,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2164,
+        "cache_read_input_tokens": 8472,
+        "cache_creation_input_tokens": 179,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 179
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 656,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000736,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2293,
+      "cacheReadInputTokens": 14752,
+      "cacheCreationInputTokens": 2371,
+      "webSearchRequests": 0,
+      "costUSD": 0.0530586,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "For an agent that autonomously approves refunds, the diff size (one line) is a bad proxy for risk \u2014 the behavior surface being changed is \"what this system does with real money,\" not \"which string is in a config file.\" A one-sentence PR description gives a future reviewer nothing to audit. What you need is a short, structured **change record**, not necessarily long, but real \u2014 linked from the PR, not just typed into it.\n\n**What kind of record:** a lightweight decision/change record (think ADR-style) that lives somewhere durable and searchable (docs folder, wiki, whatever your team uses) \u2014 not buried in PR description text that git-blame archaeology has to reconstruct later.\n\n**What it needs to contain:**\n\n1. **Why, with numbers** \u2014 the actual cost review: $/request or $/month for each provider, and any latency difference. \"Cost review\" alone isn't evidence.\n\n2. **Pre-swap evaluation evidence** \u2014 this is the part that actually answers \"was it safe.\" Did you run Provider B against the same refund-approval task (ideally a fixed eval set of real/representative refund requests) and compare against Provider A on:\n   - approval/denial agreement rate between the two models\n   - false-approve rate (denied refunds it wrongly approves) and false-deny rate\n   - behavior on edge cases: high-dollar refunds, repeat requesters, policy-ambiguous cases, adversarial/prompt-injection attempts in customer messages\n   - refusal/escalation behavior \u2014 does it defer to a human at the same thresholds?\n   \n   If this evaluation wasn't done, that's the actual gap \u2014 the record should say so explicitly rather than implying it was validated.\n\n3. **Known behavioral differences** \u2014 anything discovered where Provider B reasons differently (more/less conservative, different handling of ambiguous policy language, different susceptibility to social-engineering-style refund requests).\n\n4. **Sign-off** \u2014 who approved this beyond the engineer making the config change. For a system with direct financial/fraud exposure, that's probably someone who owns fraud/chargeback risk or finance, not just eng.\n\n5. **Rollback plan** \u2014 how fast can you revert to Provider A, and what specific signal (error rate, approval-rate shift, dollar-volume anomaly, customer complaints) triggers that rollback.\n\n6. **Post-launch monitoring** \u2014 named metrics, named owner, and a time window (e.g., \"watch approval rate and $ approved/day vs. baseline for 2 weeks\"). Without this, \"safe\" is just an assumption that decays silently.\n\n7. **Any guardrails that changed alongside the model** \u2014 prompts, temperature, approval-dollar-thresholds, human-review triggers. Model swaps often quietly require re-tuning these, and if none changed, say that explicitly (so a reviewer knows it was considered, not missed).\n\nThe honest version of this record might take an hour to write, not days \u2014 but it should force you to actually answer \"did we test this against the real task\" before shipping, not just after something goes wrong. If the evaluation in #2 hasn't happened yet, that's worth raising with your manager directly: the risk isn't the code change, it's shipping an unevaluated model swap into a system that spends money autonomously.",
+  "ttft_ms": 3274,
+  "ttft_stream_ms": 813,
+  "time_to_request_ms": 35,
+  "time_to_request_from_spawn_ms": 1513646,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785790152245.2812,
+  "type": "result",
+  "duration_ms": 37446,
+  "uuid": "55211438-5512-4b1f-8d46-e315fc80ddd7",
+  "_skill": "creating-change-records",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "4546ee653a44bd61beba656a58752ac4f42e8dd9893c59e7ee4c436cd0c43067"
+}

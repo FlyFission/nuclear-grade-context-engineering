@@ -4,11 +4,11 @@
 
 ## Mode
 
-<!-- Quick / Standard / stronger. One line on why a lower mode is insufficient. -->
+<!-- Administrative floor / Quick / Standard / stronger. Name why this is the lightest honest mode. -->
 
 ## Change packet
 
-<!-- For non-trivial changes, link .nuclear/changes/<slug>/. For trivial docs-only changes, write N/A and explain why. -->
+<!-- Link .nuclear/changes/<slug>/, or write N/A when the administrative floor applies and explain why. -->
 
 ## Proof command + result
 

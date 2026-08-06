@@ -166,6 +166,10 @@ def _validate_semantics(
         in_promoted_tree = entry.path.startswith("skills/")
         if entry.status == "promoted" and not in_promoted_tree:
             errors.append(f"{entry.id}: promoted skill must live under skills/")
+        if entry.status == "beta" and not entry.path.startswith("skills-beta/"):
+            errors.append(f"{entry.id}: beta skill must live under skills-beta/")
+        if entry.status == "deprecated" and not entry.path.startswith("skills-deprecated/"):
+            errors.append(f"{entry.id}: deprecated skill must live under skills-deprecated/")
         if entry.status != "promoted" and in_promoted_tree:
             errors.append(
                 f"{entry.id}: {entry.status} skill must not live under plugin-discoverable skills/"
@@ -204,6 +208,8 @@ def _validate_semantics(
         errors.append(f"promoted catalog skill(s) missing from skills/: {', '.join(missing_from_tree)}")
 
     by_id = {entry.id: entry for entry in entries}
+    if "core" not in profiles:
+        errors.append("required profile 'core' is missing")
     for profile_name, profile_ids in profiles.items():
         if profile_name == "full":
             errors.append("profile name 'full' is reserved for all promoted skills")
@@ -223,6 +229,10 @@ def _validate_semantics(
             else:
                 profile_entries.append(entry)
         if profile_name == "core":
+            if profile_ids and profile_ids[0] != "using-nuclear-grade":
+                errors.append(
+                    "profile 'core' must begin with designated router 'using-nuclear-grade'"
+                )
             routers = [
                 entry
                 for entry in profile_entries

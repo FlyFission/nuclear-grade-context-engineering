@@ -35,6 +35,8 @@ def test_non_promoted_lifecycle_trees_are_bundled_for_wheel_validation():
 
     assert '"skills-beta" = "nuclear_grade/_bundled/skills-beta"' in pyproject
     assert '"skills-deprecated" = "nuclear_grade/_bundled/skills-deprecated"' in pyproject
+    assert '"/skills-beta"' in pyproject
+    assert '"/skills-deprecated"' in pyproject
     assert (ROOT / "skills-beta").is_dir()
     assert (ROOT / "skills-deprecated").is_dir()
 
@@ -146,12 +148,31 @@ def test_catalog_rejects_unknown_enum_and_missing_skill_path(tmp_path):
     assert "missing skill file" in message
 
 
-def test_core_profile_requires_router_and_non_empty_selection(tmp_path):
-    router_path = _write_skill(tmp_path, "router")
+def test_catalog_requires_status_specific_nonpromoted_roots(tmp_path):
+    beta = _write_skill(tmp_path, "candidate", "other-beta")
+    promoted = _write_skill(tmp_path, "replacement")
+    deprecated = _write_skill(tmp_path, "old", "other-deprecated")
+    entries = [
+        {"id": "candidate", "path": beta, "status": "beta", "invocation": "model", "role": "discipline", "command": None},
+        {"id": "replacement", "path": promoted, "status": "promoted", "invocation": "model", "role": "router", "command": None},
+        {"id": "old", "path": deprecated, "status": "deprecated", "invocation": "model", "role": "discipline", "command": None, "replacement": "replacement"},
+    ]
+    _write_catalog(tmp_path, entries, profiles={"core": ["replacement"]})
+
+    with pytest.raises(CatalogError) as exc:
+        load_catalog(tmp_path)
+
+    message = str(exc.value)
+    assert "beta skill must live under skills-beta/" in message
+    assert "deprecated skill must live under skills-deprecated/" in message
+
+
+def test_core_profile_requires_designated_router_and_non_empty_selection(tmp_path):
+    router_path = _write_skill(tmp_path, "using-nuclear-grade")
     helper_path = _write_skill(tmp_path, "helper")
     entries = [
         {
-            "id": "router",
+            "id": "using-nuclear-grade",
             "path": router_path,
             "status": "promoted",
             "invocation": "model",
@@ -168,12 +189,20 @@ def test_core_profile_requires_router_and_non_empty_selection(tmp_path):
         },
     ]
 
+    _write_catalog(tmp_path, entries, profiles={})
+    with pytest.raises(CatalogError, match="required profile 'core' is missing"):
+        load_catalog(tmp_path)
+
     _write_catalog(tmp_path, entries, profiles={"core": []})
     with pytest.raises(CatalogError, match="profile 'core' must not be empty"):
         load_catalog(tmp_path)
 
     _write_catalog(tmp_path, entries, profiles={"core": ["helper"]})
     with pytest.raises(CatalogError, match="profile 'core' must contain exactly one promoted model-routable router"):
+        load_catalog(tmp_path)
+
+    _write_catalog(tmp_path, entries, profiles={"core": ["helper", "using-nuclear-grade"]})
+    with pytest.raises(CatalogError, match="profile 'core' must begin with designated router 'using-nuclear-grade'"):
         load_catalog(tmp_path)
 
 

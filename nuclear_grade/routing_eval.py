@@ -178,6 +178,11 @@ def load_observed(
         if unknown:
             errors.append(f"{path}:{line_number}: unknown skill(s): {', '.join(unknown)}")
 
+    missing_ids = sorted(scenario_ids - set(observed))
+    if not observed:
+        errors.append(f"{path}: at least one observed route is required")
+    if missing_ids:
+        errors.append(f"{path}: missing observed route(s): {', '.join(missing_ids)}")
     if errors:
         raise RoutingEvalError("invalid observed routes:\n- " + "\n- ".join(errors))
     return observed

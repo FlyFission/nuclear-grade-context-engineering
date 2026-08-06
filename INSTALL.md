@@ -43,6 +43,9 @@ keep context lean, and re-running updates in place. Each destination receives an
 installer-owned `.nuclear-grade-install.json` manifest. If a later lifecycle or
 profile change leaves a previously installed skill stale, reinstall blocks and
 names the directory for human review instead of deleting host files automatically.
+On the first post-upgrade run, recognized Nuclear-grade skill directories outside
+the selected profile trigger the same block before the installer adopts the
+destination; unrelated co-located skills are not claimed.
 See
 [`INTEGRATIONS.md`](INTEGRATIONS.md) for per-tool paths, the `--scope`/`--dest`
 options, the opt-in MCP server (`nuclear-grade[mcp]`), and how skills compare to

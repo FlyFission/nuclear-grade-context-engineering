@@ -9,9 +9,9 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 | Claim ID | Support type | Verification type | Acceptance criteria | Result status | Evidence link | Gap / follow-up |
 |---|---|---|---|---|---|---|
 | REQ-001 | local proof | deterministic test + review | bounded read-only preflight allowed; mutation/side-effect gate remains mandatory | pass | E-001 | provider review pending |
-| REQ-002 | local proof | deterministic test | registry is complete, unique, typed, and path-valid | pass | E-002 | provider review pending |
-| REQ-003 | local proof | adversarial deterministic test | beta/deprecated leakage and bad replacements fail with diagnostics | pass | E-003 | wheel smoke passed |
-| REQ-004 | local proof | deterministic scorer | misses and extra skills lower metrics; configured thresholds govern scored-run exit status | pass | E-004 | live host routing remains deferred |
+| REQ-002 | local proof | deterministic test | registry is complete, unique, typed, path-valid, and has a designated Core router | pass | E-002 | provider closure review pending |
+| REQ-003 | local proof | adversarial deterministic test | beta/deprecated leakage, status-root drift, stale installs, bad replacements, and source-package loss fail with diagnostics | pass | E-003 | synthetic sdist-to-wheel smoke passed |
+| REQ-004 | local proof | deterministic scorer | empty/partial evidence fails before thresholds; complete runs score misses and extra skills against configured thresholds | pass | E-004 | live host routing remains deferred |
 | REQ-005 | local proof | deterministic budget mutation test | aggregate/profile overages fail | pass | E-005 | none |
 | REQ-006 | local proof | parity + token measurement | generated commands unchanged in meaning; decisions remain; selected load drops | pass | E-006 | selected skill-body catalog dropped 1,477 tokens (2.35%); behavior evidence remains bounded to fixtures/pilot |
 | REQ-007 | source claim + local proof | doc contract + review | on-ramps are conditional and do not add mandatory phases | pass | E-007 | provider review pending |
@@ -26,13 +26,13 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | E-001 | REQ-001 | yes | router contract test | implementing agent | pytest | implementing agent | not transformed | local test runner | git/PR packet | implementing agent | full suite and reviewers |
 | E-002 | REQ-002 | yes | lifecycle registry tests | implementing agent | pytest | implementing agent | not transformed | local test runner | git/PR packet | implementing agent | full suite and reviewers |
-| E-003 | REQ-003 | yes | lifecycle negative fixtures and wheel smoke | implementing agent | pytest/build tools | implementing agent | summarized in this record | local test runner | git/PR packet | implementing agent | full suite and reviewers |
+| E-003 | REQ-003 | yes | lifecycle negative fixtures, pre-manifest/post-manifest stale-install checks, and synthetic sdist-to-wheel smoke | implementing agent | pytest/build tools | implementing agent | summarized in this record | local test runner | git/PR packet | implementing agent | full suite, isolated package smoke, and reviewers |
 | E-004 | REQ-004 | no | catalog-routing scorer tests and 16-scenario manifest validation | implementing agent | pytest/scorer | implementing agent | summarized in this record | local test runner | git/PR packet | implementing agent | full suite; live routing deferred |
 | E-005 | REQ-005 | yes | aggregate-budget mutation test and token report | implementing agent | pytest/token tool | implementing agent | summarized in this record | local test runner | git/PR packet | implementing agent | full suite and reviewers |
 | E-006 | REQ-006 | yes | command golden parity and measured selected-body delta | implementing agent | pytest/token tool | implementing agent | summarized in this record | local test runner | git/PR packet | implementing agent | full suite and reviewers |
 | E-007 | REQ-007 | yes | public-doc contract and template diff | implementing agent | pytest/git | implementing agent | summarized in this record | local test runner | git/PR packet | implementing agent | full suite and reviewers |
 | E-008 | REQ-008 | yes | lifecycle crosswalk contract test | implementing agent | pytest | implementing agent | not transformed | local test runner | git/PR packet | implementing agent | full suite and reviewers |
-| E-009 | REQ-009 | yes | full suite, command parity, doctor, build, and wheel smoke | implementing agent | project tools | implementing agent | summarized in this record | local test runner | git/PR packet | implementing agent | provider review and GitHub CI pending |
+| E-009 | REQ-009 | yes | full suite, command parity, doctor, direct wheel smoke, and synthetic sdist-derived wheel smoke | implementing agent | project tools | implementing agent | summarized in this record | local test runner | git/PR packet | implementing agent | provider closure review and GitHub CI pending |
 
 ### Coupling profile
 
@@ -59,18 +59,20 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 |---|---|---|---|---|
 | baseline | full project checks on `origin/main` | clean worktree | pass | baseline record |
 | focused RED/GREEN tests | targeted pytest files | branch | pass | test history and committed tests |
-| full verification | commands in `plan.md` | branch | pass | 334 pytest tests, Ruff, doctor, tokens, eval, command/Codex parity, strict packet, and diff check |
-| package smoke | build wheel; install from isolated venv; full profile and prompt asset check | isolated `/tmp` environment | pass | E-003 and E-009 |
-| Spec review | requirement-to-diff review | frozen candidate | planned | red-team record |
+| full verification | commands in `plan.md` | branch | pass | 344 pytest tests, Ruff, doctor, tokens, eval, command/Codex parity, strict packet, and diff check |
+| package smoke | direct wheel plus synthetic `sdist -> unpack -> add beta/deprecated bodies -> wheel -> install`; full promoted profile and lifecycle-body checks | isolated `/tmp` environments | pass | E-003 and E-009 |
+| opening adversarial review | blind Codex and Grok review of prior heads | frozen review packets | revise; accepted findings converted to RED tests and fixes | E-002, E-003, E-004, E-009 |
+| Spec review | requirement-to-diff closure review | frozen final candidate | planned | red-team record |
 | Standards review | maintainability/security/portability review | frozen candidate | planned | red-team record |
 
 ## Negative / failure-mode checks
 
 | Failure mode | Check performed | Result | Evidence link |
 |---|---|---|---|
-| malformed/duplicate lifecycle entries | synthetic fixtures | pass | lifecycle tests |
-| beta/deprecated leakage | synthetic package/catalog fixture | pass | lifecycle tests |
-| unknown or extra routed skill | scorer mutation fixture | pass | routing tests |
+| malformed/duplicate lifecycle entries, missing Core, or wrong Core router | synthetic fixtures | pass | lifecycle tests |
+| beta/deprecated leakage or status-root drift | synthetic package/catalog fixtures | pass | lifecycle tests and sdist-derived wheel smoke |
+| pre-manifest or post-manifest profile shrink | installer transition fixtures | pass; block names stale recognized directories and does not auto-delete | CLI tests |
+| empty, partial, unknown, or extra routed evidence | scorer mutation fixtures | pass; incomplete evidence fails before thresholds | routing tests |
 | aggregate budget bypass | many individually valid files exceeding total | pass | token tests |
 | missing command asset/fallback drift | generator parity fixture | pass | command tests |
 | compact body loses receipt | contract and output cases | pass | skill tests |
@@ -78,9 +80,9 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 ## AI-assisted work checks
 
 - AI scope: design, implementation, tests, packet, and PR preparation in an isolated branch.
-- Model/tool used: an AI coding agent; provider-diverse reviews planned with Claude, Codex, Grok, and OpenCode/Kimi.
+- Model/tool used: an AI coding agent; blind Codex and Grok reviews produced actionable findings that were converted to failing tests and fixes. Claude/OpenCode attempts failed and are not counted.
 - Permissions/actions allowed: local files/tests, commit, push, and PR creation as explicitly authorized.
-- Independent checks: provider-diverse advisory review and GitHub CI; neither is described as independent human validation.
+- Independent checks: provider closure review and GitHub CI remain required for the final candidate; neither is described as independent human validation.
 - Human approval gate: merge and release remain held for maintainer review.
 
 ## Required links

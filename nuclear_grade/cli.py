@@ -651,6 +651,26 @@ def handle_install(args: argparse.Namespace) -> int:
                 file=sys.stderr,
             )
             return 2
+    elif dest.is_dir():
+        known_ids = {entry.id for entry in skill_catalog.entries}
+        existing_known = {
+            path.name
+            for path in dest.iterdir()
+            if path.is_dir() and path.name in known_ids and (path / "SKILL.md").is_file()
+        }
+        stale = sorted(existing_known - set(names))
+        if stale:
+            print(
+                "pre-manifest Nuclear-grade skill(s) are outside the selected profile: "
+                + ", ".join(stale),
+                file=sys.stderr,
+            )
+            print(
+                "review and remove the stale Nuclear-grade directories, then rerun install; "
+                "unrecognized co-located skill directories are not claimed or deleted",
+                file=sys.stderr,
+            )
+            return 2
 
     # Reuse apply_writes for dry-run, parent creation, and copy. An install is an
     # update, so overwrite refreshes existing skill files when re-run.

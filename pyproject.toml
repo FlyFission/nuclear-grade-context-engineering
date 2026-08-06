@@ -44,6 +44,8 @@ include = [
   "/nuclear_grade",
   "/templates",
   "/skills",
+  "/skills-beta",
+  "/skills-deprecated",
   "/commands",
   "/skill-catalog.json",
   "/tests",

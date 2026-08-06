@@ -611,6 +611,23 @@ def test_install_is_idempotent_update(tmp_path):
     assert len([path for path in dest.iterdir() if path.is_dir()]) == 8
 
 
+def test_install_blocks_premanifest_profile_shrink_with_known_skill_dirs(tmp_path):
+    dest = tmp_path / "skills"
+    core_ids = {entry.id for entry in load_catalog(ROOT).profile("core")}
+    extra = next(name for name in ALL_SKILLS if name not in core_ids)
+    (dest / "using-nuclear-grade").mkdir(parents=True)
+    (dest / "using-nuclear-grade" / "SKILL.md").write_text("legacy\n", encoding="utf-8")
+    (dest / extra).mkdir()
+    (dest / extra / "SKILL.md").write_text("legacy\n", encoding="utf-8")
+
+    result = run_ng("install", "codex", "--dest", str(dest))
+
+    assert result.returncode == 2
+    assert "pre-manifest Nuclear-grade skill(s) are outside the selected profile" in result.stderr
+    assert extra in result.stderr
+    assert not (dest / ".nuclear-grade-install.json").exists()
+
+
 def test_install_blocks_when_previously_owned_skill_becomes_stale(tmp_path):
     dest = tmp_path / "skills"
     assert run_ng("install", "codex", "--dest", str(dest)).returncode == 0

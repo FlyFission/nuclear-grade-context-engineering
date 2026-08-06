@@ -128,6 +128,32 @@ def test_observed_routes_fail_closed_on_unknown_missing_and_duplicate_rows(tmp_p
     assert "no matching scenario" in message
 
 
+def test_observed_routes_reject_empty_or_partial_runs(tmp_path):
+    catalog = load_catalog(ROOT)
+    cases_path = tmp_path / "cases.jsonl"
+    cases_path.write_text(
+        "\n".join(
+            [
+                json.dumps({"id": "a", "prompt": "a", "required_skills": ["rating-change-risk"]}),
+                json.dumps({"id": "b", "prompt": "b", "required_skills": ["briefing-an-agent"]}),
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    scenarios = load_scenarios(cases_path, catalog)
+
+    empty = tmp_path / "empty.jsonl"
+    empty.write_text("\n", encoding="utf-8")
+    with pytest.raises(RoutingEvalError, match="at least one observed route"):
+        load_observed(empty, scenarios, catalog)
+
+    partial = tmp_path / "partial.jsonl"
+    partial.write_text(json.dumps({"id": "a", "loaded_skills": ["rating-change-risk"]}) + "\n", encoding="utf-8")
+    with pytest.raises(RoutingEvalError, match="missing observed route.*b"):
+        load_observed(partial, scenarios, catalog)
+
+
 def test_cli_thresholds_can_intentionally_accept_nonperfect_observations(tmp_path, monkeypatch):
     cases = tmp_path / "cases.jsonl"
     observed = tmp_path / "observed.jsonl"

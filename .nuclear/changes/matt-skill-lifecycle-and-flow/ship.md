@@ -21,7 +21,8 @@
 |---|---|---|---|---|
 | Live host routing is not deterministic CI evidence | static/scored cases may not generalize | defer and label honestly | maintainer | promotion/cross-host claim |
 | Compact pilot evidence is scenario-specific | shorter bodies may miss uncommon branches | limit rollout to pilot | maintainer | broad compression proposal |
-| Lifecycle registry adds a compatibility projection | future drift is possible | machine-enforce exact parity | maintainer | catalog change |
+| Lifecycle registry adds a compatibility projection | future drift is possible | machine-enforce exact parity, designated Core router, and status-specific roots | maintainer | catalog change |
+| Installer profile shrink requires reviewed cleanup | stale recognized directories remain discoverable until the operator removes them | fail closed before adoption; never auto-delete co-located host files | operator/maintainer | first post-upgrade run or profile shrink |
 | PR review is not merge/release authorization | branch could be mistaken for accepted baseline | hold merge/release | maintainer | human review decision |
 
 ## Rollback / restore plan

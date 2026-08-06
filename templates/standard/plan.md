@@ -64,6 +64,24 @@ For any slice whose work is model-mediated, record its **determinism posture** (
 prompt reference, and which steps are replayable vs human judgment) — a disclosure of what can
 be reproduced, not a guarantee. See `docs/02-operating-system/agentic-workflow-architecture.md`.
 
+### Optional targeted improvement cycle
+
+Use only when the candidate has an artifact and a concrete bar that can be inspected repeatedly.
+This is an Execute/Verify technique, not another lifecycle or acceptance path.
+
+- **Task / intended outcome:**
+- **Build method and ownership:** independently judgeable slices may fan out under explicit contracts; coupled work keeps one sequential owner; name the integration owner.
+- **Frozen inspectable bar:** requirement IDs, reference/benchmark/test, candidate scope, and acceptance threshold:
+- **Bar custodian / change authority:** who may approve a variance; the builder cannot change the bar, critic scope, evidence retention, or stop rule:
+- **Evidence retention location / policy:** where raw critic findings, adverse results, and rejected findings are kept; builder cannot change this unilaterally:
+- **Critic inputs and artifact:** source requirements, candidate digest, raw results, and the fresh artifact to inspect:
+- **Coupling profile:** actor, context, mechanism, authority, and resource basis; fresh context alone is not independence:
+- **Iteration bound:** maximum rounds/time/tokens and the NOT VERIFIED / INCONCLUSIVE / BLOCKED terminal condition:
+- **Integration observation:** who regenerates and directly checks the assembled candidate after slice work:
+
+Record each round in the existing command/review evidence table and update the originating
+claim's `Gap / follow-up`; do not create a second acceptance ledger.
+
 ## Two-speed work plan
 
 Keep fast trial work apart from the slower gates where work is accepted.

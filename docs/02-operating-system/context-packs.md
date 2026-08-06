@@ -84,6 +84,18 @@ Do-not-touch targets: <files, commands, systems, claims>
 Incoming confirmation: <owner restates objective, authority, proof, and stop criteria>
 Open gaps: <what is unknown or blocked>
 Next action: <single next move>
+
+When a targeted improvement cycle is active, also include:
+Targeted improvement cycle active: yes
+Task / intended outcome: <what must improve>
+Build method and ownership: <independent slices, coupled sequential owner, integration owner>
+Frozen inspectable bar: <requirements/reference/benchmark/test and threshold>
+Bar custodian / change authority: <who may approve a variance>
+Evidence retention location / policy: <where raw/adverse/rejected findings are kept>
+Current largest consequential gap: <named gap this action closes>
+Fresh artifact: <candidate digest and artifact the critic must inspect>
+Critic coupling basis: <actor/context/mechanism/authority/resource>
+Iteration bound: <rounds/time/tokens and NOT VERIFIED / INCONCLUSIVE / BLOCKED terminal state>
 ```
 
 ---

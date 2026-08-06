@@ -169,6 +169,77 @@ def test_workflow_crosswalk_and_build_track_are_explicit():
     assert "reversible mechanical choices" in core.lower()
 
 
+def test_inspectable_builder_critic_cycle_stays_bounded_and_non_authoritative():
+    workflows = (ROOT / "WORKFLOWS.md").read_text(encoding="utf-8")
+    plan = (ROOT / "templates" / "standard" / "plan.md").read_text(encoding="utf-8")
+    verification = (ROOT / "templates" / "standard" / "verification.md").read_text(
+        encoding="utf-8"
+    )
+    briefing = (ROOT / "skills" / "briefing-an-agent" / "SKILL.md").read_text(
+        encoding="utf-8"
+    )
+    source_map = (
+        ROOT / "docs" / "00-standards-foundation" / "source-map.md"
+    ).read_text(encoding="utf-8")
+    docs_readme = (ROOT / "docs" / "README.md").read_text(encoding="utf-8")
+    pilot = (
+        ROOT / "docs" / "05-reference" / "inspectable-builder-critic-pilot.md"
+    ).read_text(encoding="utf-8")
+
+    for term in (
+        "targeted improvement cycle",
+        "inside Execute and Verify",
+        "not a new mode",
+        "largest consequential unresolved gap",
+        "fresh artifact",
+    ):
+        assert term in workflows
+
+    for term in (
+        "Task / intended outcome",
+        "Build method and ownership",
+        "Frozen inspectable bar",
+        "Bar custodian / change authority",
+        "Iteration bound",
+        "coupled work keeps one sequential owner",
+    ):
+        assert term in plan
+
+    for term in (
+        "## Targeted improvement rule",
+        "largest consequential unresolved gap",
+        "fresh artifact",
+        "INCONCLUSIVE",
+        "does not create independent verification",
+        "`ship.md`",
+    ):
+        assert term in verification
+
+    for term in (
+        "inspectable bar",
+        "current largest consequential gap",
+        "iteration bound",
+        "fresh artifact",
+    ):
+        assert term in briefing
+
+    for term in (
+        "paired baseline",
+        "visual artifact",
+        "deterministic code",
+        "source-backed technical document",
+        "critic scores are process telemetry, not outcome evidence",
+        "fresh hidden confirmation set",
+        "## promotion gate",
+        "## kill conditions",
+    ):
+        assert term in pilot.lower()
+
+    assert "05-reference/inspectable-builder-critic-pilot.md" in docs_readme
+    assert "https://somethingbig.ai/gauntlet-loop" in source_map
+    assert "does not establish efficacy, independence, or release authority" in source_map
+
+
 def test_hpi_overlay_is_public_operating_doc():
     text = (
         ROOT / "docs" / "02-operating-system" / "hpi-overlays.md"

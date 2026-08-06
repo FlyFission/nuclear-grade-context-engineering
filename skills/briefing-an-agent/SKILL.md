@@ -35,6 +35,7 @@ A good brief is how you supply competence and clarity so the agent can decide we
 
 - The path to the change record and the chosen mode.
 - The role: builder, reviewer, verifier, releaser, incident lead, or researcher.
+- The task / intended outcome, build method and ownership, frozen inspectable bar, current largest consequential gap, iteration bound, and fresh artifact to inspect when a targeted improvement cycle is activated.
 - The files affected, the allowed commands, the forbidden actions, the approval gates, and the evidence required.
 - `docs/02-operating-system/context-packs.md`.
 
@@ -42,7 +43,7 @@ A good brief is how you supply competence and clarity so the agent can decide we
 
 1. Name the role, the question to decide, and the goal. Carry the goal anchor (the goal, the signs of success, and the non-goals, meaning what is out of scope) so it survives a context reset. Name who is affected by the work and anyone who must be consulted, so the brief carries the stakes, not just the task. See `staying-on-mission`.
 2. Include only the record files, affected files, source rows, and evidence commands needed for the next decision.
-3. State the last action that finished, what conditions changed, the most important next action, the likely mistake, and how to guard against it.
+3. State the last action that finished, what conditions changed, the most important next action, the likely mistake, and how to guard against it. If a targeted improvement cycle is active, name the current largest consequential gap the action closes, the frozen inspectable bar and its custodian, the iteration bound, and the fresh artifact the critic must inspect. The builder may propose a variance but cannot silently change the bar, critic scope, evidence retention, or stop rule.
 4. State the current phase: explore, candidate, audit, or accept, and name the **archetype** the brief puts the agent in. A briefing verb chooses a posture whether or not you say so -- "clean this up" is Sweeper, whose characteristic drift is deletion without a baseline; "make it work" is Builder, whose drift is volume outrunning review. Naming it puts the drift on the record before the agent starts. See `docs/02-operating-system/archetype-lens.md`.
 5. State the agent's power over files, commands, the network, credentials, approvals, and the release.
 6. State the claims that are off limits, the targets not to touch, and when to stop.
@@ -53,7 +54,7 @@ A good brief is how you supply competence and clarity so the agent can decide we
 - A context-pack section or file.
 - Clear limits on the agent's power.
 - The archetype the brief places the agent in, and the drift that posture is prone to.
-- The next action and the evidence required.
+- The next action and the evidence required; when a targeted improvement cycle is active, the named gap it closes, frozen bar, fresh artifact, coupling basis, and iteration bound.
 - The last action that finished and the conditions that changed, when this brief follows earlier work in the same task.
 
 ## Verification

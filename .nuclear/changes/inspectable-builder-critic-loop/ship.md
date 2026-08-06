@@ -15,7 +15,7 @@
 | Focused RED/GREEN | pass | public and command parity behavior |
 | Full local gates | pass | 346 pytest tests, Ruff, doctor, token budget, eval, command/Codex parity, strict packet, routing scenarios, and diff check |
 | Independent final review | planned | exact diff, blockers resolved |
-| Remote CI | planned | exact pushed head |
+| Remote CI | pass | exact head `ced2e55517ac9d0a481adb4710d8bf9bfc60c714`; validate 3.11/3.12, wheel-smoke, mcp-smoke |
 | Human approval | planned | maintainer merge decision |
 
 ## Residual risks and gaps

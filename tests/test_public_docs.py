@@ -200,6 +200,7 @@ def test_inspectable_builder_critic_cycle_stays_bounded_and_non_authoritative():
         "Build method and ownership",
         "Frozen inspectable bar",
         "Bar custodian / change authority",
+        "Evidence retention location / policy",
         "Iteration bound",
         "coupled work keeps one sequential owner",
     ):
@@ -220,8 +221,21 @@ def test_inspectable_builder_critic_cycle_stays_bounded_and_non_authoritative():
         "current largest consequential gap",
         "iteration bound",
         "fresh artifact",
+        "evidence retention",
     ):
         assert term in briefing
+
+    context_packs = (
+        ROOT / "docs" / "02-operating-system" / "context-packs.md"
+    ).read_text(encoding="utf-8")
+    for term in (
+        "Targeted improvement cycle active",
+        "Frozen inspectable bar",
+        "Evidence retention location / policy",
+        "Iteration bound",
+        "Fresh artifact",
+    ):
+        assert term in context_packs
 
     for term in (
         "paired baseline",

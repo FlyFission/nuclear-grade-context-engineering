@@ -15,8 +15,8 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 | REQ-005 command propagation | byte parity/generator | asset, golden, and generated card agree | pass | command parity tests |
 | REQ-006 measured pilot boundary | public contract + source review | paired external outcomes; hidden confirmation; kill/promotion gates; no efficacy claim | pass | pilot contract/source map |
 | Full repository regression | pytest/Ruff/project tools | all checks green | pass | 346 pytest tests, Ruff, doctor, tokens, eval, command/Codex parity, strict packet, routing scenarios, and diff check |
-| Independent final diff review | fresh reviewer | no unresolved P0/P1 | planned | review artifact |
-| GitHub CI | protected remote check | exact head green | pass | PR #100 head `ced2e55517ac9d0a481adb4710d8bf9bfc60c714`; validate 3.11/3.12, wheel-smoke, mcp-smoke |
+| Independent final diff review | fresh reviewer | no unresolved P0/P1 | pass | pre-commit review found 3 P1s; retention freeze, context-pack schema, and ship wording fixed; no remaining P0/P1 |
+| GitHub CI | protected remote check | exact head green | planned | re-check after P1 fix push |
 
 ## Evidence custody and coupling
 

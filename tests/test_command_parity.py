@@ -80,6 +80,7 @@ def test_context_pack_prompt_carries_bounded_targeted_iteration_fields():
         "build method and ownership",
         "frozen inspectable bar",
         "bar custodian / change authority",
+        "evidence retention location / policy",
         "current largest consequential gap",
         "iteration bound",
         "fresh artifact",

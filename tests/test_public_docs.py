@@ -146,6 +146,29 @@ def test_baseline_is_late_lifecycle_state():
     assert "Decide -> Baseline -> Operate -> Learn" in text
 
 
+def test_workflow_crosswalk_and_build_track_are_explicit():
+    workflows = (ROOT / "WORKFLOWS.md").read_text(encoding="utf-8")
+    core = (ROOT / "CORE.md").read_text(encoding="utf-8")
+
+    for term in (
+        "## One lifecycle, several views",
+        "eight control points",
+        "eleven beats",
+        "PROVE",
+        "explore -> candidate -> audit -> accept",
+        "## Engineering build track",
+        "decision frontier",
+        "tracer bullet",
+        "public seam",
+        "Spec review",
+        "Standards review",
+        "phase-boundary context decision",
+    ):
+        assert term in workflows
+    assert "frontier review" in core
+    assert "reversible mechanical choices" in core.lower()
+
+
 def test_hpi_overlay_is_public_operating_doc():
     text = (
         ROOT / "docs" / "02-operating-system" / "hpi-overlays.md"

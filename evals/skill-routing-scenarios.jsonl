@@ -1,0 +1,16 @@
+{"id":"catalog-001","prompt":"Start a change that updates OAuth permissions. Inspect the repo enough to classify it, then choose the Nuclear-grade path.","required_skills":["using-nuclear-grade","rating-change-risk"]}
+{"id":"catalog-002","prompt":"The mode is already Standard. Create and fill the repository change record; do not re-run risk classification.","required_skills":["creating-change-records"]}
+{"id":"catalog-003","prompt":"Prepare a bounded task packet for a fresh implementation agent that has not started the work.","required_skills":["briefing-an-agent"]}
+{"id":"catalog-004","prompt":"Transfer unfinished implementation state, changed files, open gaps, and acceptance checks to the next agent.","required_skills":["handing-off-work"]}
+{"id":"catalog-005","prompt":"Map every release claim to reproducible evidence or a named gap. Do not make the release verdict.","required_skills":["proving-claims"]}
+{"id":"catalog-006","prompt":"Evidence collection is complete. Decide ship, block, defer, or ship with named residual risk.","required_skills":["checking-release-readiness"]}
+{"id":"catalog-007","prompt":"Review this Python diff for needless complexity, layering violations, duplication, and weak interfaces.","required_skills":["reviewing-code-quality"]}
+{"id":"catalog-008","prompt":"Regenerate and visually inspect the final PDF; correctness lives in the rendered artifact rather than the source.","required_skills":["verifying-final-artifacts"]}
+{"id":"catalog-009","prompt":"This known defect will outlive the current PR. Record an owner, age, disposition, and review trigger.","required_skills":["tracking-deficiencies"]}
+{"id":"catalog-010","prompt":"A defect is in a shared supplied library used by other teams. Notify affected consumers as well as fixing our copy.","required_skills":["reporting-shared-defects"]}
+{"id":"catalog-011","prompt":"Before an agent can perform an irreversible migration, place the decision right and escalation trigger.","required_skills":["deciding-who-decides"]}
+{"id":"catalog-012","prompt":"Authority is already assigned. State the intended migration, expected result, abort criteria, rollback, and review window.","required_skills":["declaring-intent"]}
+{"id":"catalog-013","prompt":"Break this epic into complete non-overlapping deliverables, dependencies, and a short dictionary. Folder placement comes later.","required_skills":["breaking-down-the-work"]}
+{"id":"catalog-014","prompt":"The work breakdown is approved. Design a shallow project folder map with names, ownership, and depth checks.","required_skills":["organizing-project-folders"]}
+{"id":"catalog-015","prompt":"Evaluate an outside model API's claims, permissions, data path, local evidence, and release impact.","required_skills":["vetting-outside-code-and-models"],"allowed_skills":["vetting-outside-code-and-models","checking-source-claims"]}
+{"id":"catalog-016","prompt":"A production agent deleted user data. Stabilize first, name one incident commander, separate facts from hypotheses, and own corrective actions.","required_skills":["responding-to-incidents"]}

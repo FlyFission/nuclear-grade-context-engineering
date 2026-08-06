@@ -71,6 +71,19 @@ Use `coupled`, `partially separated`, or `separated`, with a concrete basis. Do 
 |---|---|---|---|---|
 | Unit/integration/eval/review | | | | |
 
+## Two-axis review
+
+Keep the axes separate when consequence warrants it. Spec review asks whether the
+implementation satisfies the accepted requirements and claim-to-evidence contract.
+Standards review asks whether the implementation is maintainable, bounded, secure,
+and consistent with repository standards. Record separate findings and let
+`ship.md`, not either reviewer, own the release decision.
+
+| Axis | Reviewer / mechanism | Findings artifact | Status |
+|---|---|---|---|
+| Spec review | | | planned / pass / gap |
+| Standards review | | | planned / pass / gap |
+
 ## Negative / failure-mode checks
 
 What did you try to break?

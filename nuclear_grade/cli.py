@@ -7,6 +7,7 @@ engineering adequacy, safety, security, compliance, or verification and validati
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import re
 import shutil
@@ -27,6 +28,7 @@ from nuclear_grade.ng_validate import (
     has_closure_note,
     validate_packet,
 )
+from nuclear_grade.skill_catalog import CatalogError, load_catalog, load_yaml_projections
 from nuclear_grade.tokens import (
     build_report,
     check_budgets,
@@ -40,6 +42,13 @@ from nuclear_grade.tokens import (
 PACKAGE_DIR = Path(__file__).resolve().parent
 REPO_ROOT = PACKAGE_DIR.parent
 BUNDLED_ROOT = PACKAGE_DIR / "_bundled"
+CATALOG_ROOT = REPO_ROOT if (REPO_ROOT / "skill-catalog.json").is_file() else BUNDLED_ROOT
+
+
+def _load_distribution_catalog():
+    """Load catalog lazily so diagnostics and help survive a malformed catalog."""
+
+    return load_catalog(CATALOG_ROOT)
 
 
 def _resolve_resource_root(name: str) -> Path:
@@ -89,20 +98,11 @@ MODE_FILES = {
 
 # --- `ng install`: cross-tool skill distribution --------------------------------
 # Skills auto-surface in each tool by their frontmatter `description` (the model
-# picks them when a request matches); installing is just placing the same SKILL.md
-# files where the tool looks for them. The lean `--core` profile ships the
-# always-first router plus the Core 7 dispositions (see CORE.md); `--full` ships
-# every skill under skills/*/.
-CORE_SKILLS = (
-    "using-nuclear-grade",  # the always-first router
-    "questioning-attitude",
-    "rating-change-risk",
-    "proving-claims",
-    "double-checking-before-acting",
-    "staying-on-mission",
-    "checking-release-readiness",
-    "learning-from-experience",
-)
+# picks them when a request matches). The lean ``--core`` profile is declared in
+# skill-catalog.json and ships the always-first router plus the Core 7 dispositions;
+# ``--full`` ships every promoted skill. Lifecycle status, not folder enumeration,
+# controls both profiles. Catalog loading stays inside commands so malformed metadata
+# cannot block `--help` or `doctor` at module import time.
 
 INSTALL_TOOLS = ("codex", "claude", "cursor", "windsurf", "vscode")
 TOOL_LABELS = {
@@ -118,6 +118,7 @@ TOOL_LABELS = {
 # unverified tools print a "verify / override with --dest" note so a wrong default
 # is obvious and recoverable rather than silently writing to the wrong place.
 VERIFIED_TOOLS = frozenset({"codex", "claude", "cursor", "windsurf"})
+INSTALL_MANIFEST = ".nuclear-grade-install.json"
 
 REQUIRED_PUBLIC_FILES = (
     "README.md",
@@ -590,11 +591,17 @@ def install_dest(tool: str, scope: str, repo: Path) -> Path:
 
 
 def handle_install(args: argparse.Namespace) -> int:
+    try:
+        skill_catalog = _load_distribution_catalog()
+    except CatalogError as exc:
+        print(str(exc), file=sys.stderr)
+        return 2
+
     if args.full:
-        names = [path.parent.name for path in sorted(SKILLS.glob("*/SKILL.md"))]
+        names = [entry.id for entry in skill_catalog.promoted]
         profile = "full"
     else:
-        names = list(CORE_SKILLS)
+        names = [entry.id for entry in skill_catalog.profile("core")]
         profile = "core"
 
     missing = [name for name in names if not (SKILLS / name / "SKILL.md").is_file()]
@@ -605,6 +612,66 @@ def handle_install(args: argparse.Namespace) -> int:
     repo = args.repo.resolve()
     dest = Path(args.dest).expanduser().resolve() if args.dest is not None else install_dest(args.tool, args.scope, repo)
 
+    manifest_path = dest / INSTALL_MANIFEST
+    if manifest_path.is_file():
+        try:
+            installed_state = json.loads(manifest_path.read_text(encoding="utf-8"))
+            previous_names = installed_state["skills"]
+            if (
+                installed_state.get("schema_version") != 1
+                or not isinstance(previous_names, list)
+                or any(
+                    not isinstance(name, str)
+                    or not name
+                    or Path(name).name != name
+                    or name in {".", ".."}
+                    for name in previous_names
+                )
+            ):
+                raise ValueError("invalid install manifest shape")
+        except (OSError, json.JSONDecodeError, KeyError, TypeError, ValueError) as exc:
+            print(
+                f"cannot reconcile previous Nuclear-grade install at {dest}: {exc}; "
+                f"inspect or remove {manifest_path}",
+                file=sys.stderr,
+            )
+            return 2
+        stale = sorted(
+            name for name in set(previous_names) - set(names) if (dest / name).exists()
+        )
+        if stale:
+            print(
+                "previously installed skill(s) are no longer in the selected profile: "
+                + ", ".join(stale),
+                file=sys.stderr,
+            )
+            print(
+                "remove those installer-owned directories after review, then rerun install; "
+                "Nuclear-grade will not delete host files automatically",
+                file=sys.stderr,
+            )
+            return 2
+    elif dest.is_dir():
+        known_ids = {entry.id for entry in skill_catalog.entries}
+        existing_known = {
+            path.name
+            for path in dest.iterdir()
+            if path.is_dir() and path.name in known_ids and (path / "SKILL.md").is_file()
+        }
+        stale = sorted(existing_known - set(names))
+        if stale:
+            print(
+                "pre-manifest Nuclear-grade skill(s) are outside the selected profile: "
+                + ", ".join(stale),
+                file=sys.stderr,
+            )
+            print(
+                "review and remove the stale Nuclear-grade directories, then rerun install; "
+                "unrecognized co-located skill directories are not claimed or deleted",
+                file=sys.stderr,
+            )
+            return 2
+
     # Reuse apply_writes for dry-run, parent creation, and copy. An install is an
     # update, so overwrite refreshes existing skill files when re-run.
     writes: list[PlannedWrite] = [PlannedWrite(dest, is_dir=True)]
@@ -613,6 +680,17 @@ def handle_install(args: argparse.Namespace) -> int:
         writes.append(PlannedWrite(dest / name, is_dir=True))
         for src in sorted(path for path in skill_dir.rglob("*") if path.is_file()):
             writes.append(PlannedWrite(dest / name / src.relative_to(skill_dir), source=src))
+    writes.append(
+        PlannedWrite(
+            manifest_path,
+            content=json.dumps(
+                {"schema_version": 1, "profile": profile, "skills": names},
+                indent=2,
+                sort_keys=True,
+            )
+            + "\n",
+        )
+    )
 
     code = apply_writes(writes, dry_run=args.dry_run, overwrite=True)
     if code != 0:
@@ -913,8 +991,14 @@ def handle_tokens(args: argparse.Namespace) -> int:
     print(
         f"\nSkill totals: descriptions {report.skill_description_total} tokens "
         f"(host may shorten or omit), bodies {report.skill_body_total} tokens "
-        f"(loaded when selected)."
+        f"(loaded when selected), body p95 {report.skill_body_p95}."
     )
+    if (repo / "skill-catalog.json").is_file():
+        core_description, core_body = report.profile_totals("core")
+        print(
+            f"Core profile: descriptions {core_description} tokens, "
+            f"selected bodies {core_body} tokens."
+        )
 
     commands = report.of_kind("command")
     if commands:
@@ -1140,6 +1224,23 @@ def collect_doctor_failures(repo: Path) -> list[str]:
 
     if not catalog.exists():
         failures.append("missing nuclear-grade.yaml")
+
+    lifecycle_catalog = None
+    try:
+        lifecycle_catalog = load_catalog(repo)
+    except CatalogError as exc:
+        failures.extend(str(exc).splitlines())
+    if lifecycle_catalog is not None and catalog.exists():
+        projected_skills, projected_commands = load_yaml_projections(repo)
+        promoted_ids = [entry.id for entry in lifecycle_catalog.promoted]
+        if projected_skills != promoted_ids:
+            failures.append(
+                "nuclear-grade.yaml skills projection differs from promoted skill-catalog.json entries"
+            )
+        if projected_commands != lifecycle_catalog.command_map:
+            failures.append(
+                "nuclear-grade.yaml command_map projection differs from skill-catalog.json"
+            )
 
     if not skills_dir.exists():
         failures.append(f"missing skills directory: {skills_dir.name}")

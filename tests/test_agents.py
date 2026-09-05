@@ -53,6 +53,15 @@ def test_authority_split_is_encoded_in_tools():
     assert "Bash" not in tools["educator"], "educator must not run commands"
 
 
+def test_runner_requires_execution_authorization_beyond_plan_acceptance():
+    runner = (AGENTS / "runner.md").read_text(encoding="utf-8").lower()
+    planner = (AGENTS / "planner.md").read_text(encoding="utf-8").lower()
+    assert "explicitly authorizes execution" in runner
+    assert "acceptance of the plan's contents alone is not permission to act" in runner
+    assert "explicitly authorizes execution" in planner
+    assert "acceptance of the plan's contents alone is not permission to act" in planner
+
+
 def test_readme_carries_the_honesty_caveat():
     readme = (AGENTS / "README.md").read_text(encoding="utf-8")
     assert "permissionMode" in readme, "must document the plugin permissionMode limit (F6)"

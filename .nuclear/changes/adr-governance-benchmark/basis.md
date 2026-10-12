@@ -15,8 +15,8 @@ uber/ADR is **Agentic AI Detection and Response**, an agent-security system (end
 | Versioned, content-free health schema | `Sensor/README.md` `adr.sensor.health` | Adopted as `schema` and `schema_version` (REQ-002) |
 | Aggregate CI gate with `if: always()` | `.github/workflows/ci.yml` | Adopted (REQ-003) |
 | Dependabot with each freeze decision recorded inline | `.github/dependabot.yml` | Adopted (REQ-004) |
-| OIDC trusted publishing, tag equals version, never move a tag | `docs/RELEASING.md` | Follow-up F-02 (needs a release decision) |
-| Open-source release review: fixtures, accepted risks, attributions | `docs/OPEN_SOURCE_REVIEW.md`, `NOTICE.md` | Follow-up F-06 |
+| OIDC trusted publishing, tag equals version, never move a tag | `docs/RELEASING.md` | Partly adopted: identity check and `releasing.md`; the tag-triggered workflow is drafted, pending owner approval |
+| Open-source release review: fixtures, accepted risks, attributions | `docs/OPEN_SOURCE_REVIEW.md`, `NOTICE.md` | Docs half adopted: `docs/05-reference/release-review.md` |
 | PR template asks for worst-case risk | `.github/pull_request_template.md` | Already covered by "Residual risks or gaps" |
 
 ## Bottom-up findings
@@ -24,8 +24,8 @@ uber/ADR is **Agentic AI Detection and Response**, an agent-security system (end
 - **B-1 (fixed here):** `mcp` 2.x renamed `FastMCP` to `MCPServer`. The extra was pinned `<2`, so the server ran only on a superseded SDK.
 - **B-2 (fixed here):** the CI matrix had no aggregate gate, no concurrency control, and no Python 3.13 leg.
 - **B-3 (fixed here):** Actions are SHA-pinned but nothing updates the pins. `actions/checkout` is at v4.4.0.
-- **B-4 (open, owner decision):** version drift. `pyproject.toml`, both plugin manifests, and `CITATION.cff` say `0.6.0` (CITATION dated 2026-06-04), but `CHANGELOG.md` has no 0.6.0 section. About two months of work sits under `[Unreleased]`, and the repository has no git tags.
-- **B-5 (open):** `README.md` says 28 of 28 skills show a measured behavior change, but 29 skills ship. The CHANGELOG already names this gap.
+- **B-4 (addressed):** `CHANGELOG.md` now has `[0.6.0] - 2026-10-12`, `CITATION.cff` matches, and `python -m nuclear_grade.release` enforces agreement in CI. Tagging stays with the owner. Original finding: version drift. `pyproject.toml`, both plugin manifests, and `CITATION.cff` say `0.6.0` (CITATION dated 2026-06-04), but `CHANGELOG.md` has no 0.6.0 section. About two months of work sits under `[Unreleased]`, and the repository has no git tags.
+- **B-5 (withdrawn):** the README limits its benchmark claim to the 28 skills in the July 2026 pilot and calls it a historical snapshot. The claim is accurate as written.
 
 ## Landscape benchmark (top down)
 
@@ -37,15 +37,15 @@ The research was delegated and cites public pages. Star counts were not cross-ch
 
 | ID | Gap | Exemplar |
 |---|---|---|
-| F-01 | Blocking PreToolUse policy gate that fails closed (hooks are advisory today) | Claude Code / Codex hook policy kits |
+| F-01 | Blocking PreToolUse policy gate that fails closed (hooks are advisory today) **Done:** opt-in `hooks/pre_tool_use.py` (packet `blocking-pretooluse-gate`). | Claude Code / Codex hook policy kits |
 | F-02 | Release workflow: tag equals version, trusted publishing, signed attestation over the receipt digest | uber/ADR `RELEASING.md`, SLSA, in-toto/Sigstore |
 | F-03 | Import machine traces (OTel GenAI agent spans, Agent Trace, ADR Sensor schema) into `execution-trace.md` | uber/ADR Sensor, Agent Trace draft |
 | F-04 | Fold accepted claims into a living baseline when a packet closes | OpenSpec archive |
 | F-05 | Behavioral and pressure-scenario skill evals beyond routing cases | obra/superpowers evals, inspect_ai |
 | F-06 | Skill and MCP security scan in CI, plus a release-review/NOTICE page | Snyk Agent Scan, uber/ADR |
 | F-07 | Cross-tool distribution and directory listings (`npx skills`/skills.sh) | anthropics/skills, superpowers |
-| F-08 | MADR-compatible front matter (status, deciders, supersedes) on decision records | MADR 4 |
-| F-09 | Map the OWASP Top 10 for Agentic Applications (2026) in the threat model | OWASP GenAI project |
+| F-08 | MADR-compatible front matter (status, deciders, supersedes) on decision records **Done:** optional front matter in `risk.md` templates (packet `threat-map-and-decision-metadata`). | MADR 4 |
+| F-09 | Map the OWASP Top 10 for Agentic Applications (2026) in the threat model **Done:** `agent-threat-model.md`; source held at `public-url-needed`. | OWASP GenAI project |
 
 ## Requirements
 

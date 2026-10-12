@@ -47,3 +47,12 @@ def test_missing_changelog_section_and_date_mismatch_are_caught(tmp_path):
 
     (repo / "CHANGELOG.md").write_text("# Changelog\n\n## [Unreleased]\n", encoding="utf-8")
     assert any("no dated" in problem for problem in check_release(repo))
+
+
+def test_release_workflow_refuses_tags_off_the_default_branch():
+    """Review finding: a tag on an unmerged commit would build and publish unreviewed code."""
+    workflow = (ROOT / ".github/workflows/release.yml").read_text(encoding="utf-8")
+    ancestry = workflow.index("git merge-base --is-ancestor")
+    assert "fetch-depth: 0" in workflow
+    assert ancestry < workflow.index("python -m build")
+    assert ancestry < workflow.index("python -m nuclear_grade.release --tag")

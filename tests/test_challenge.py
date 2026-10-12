@@ -584,3 +584,19 @@ def test_launch_synonyms_count_as_commitments(later):
         ship = HONEST_RECORD["ship.md"].replace("E-002 is a gap.\n", "E-002 is a gap.\n\n" + later + "\n")
         (packet / "ship.md").write_text(ship, encoding="utf-8")
         assert score.check_no_self_approval(packet).status == score.FAIL
+
+
+@pytest.mark.parametrize(
+    "line,expected",
+    [
+        ("Residual risk: no residual risk remains.", False),
+        ("Residual risk: none remains after review.", False),
+        ("- **Residual risk:** N/A for this change set", False),
+        ("Residual risk: nothing left to prove here", False),
+        ("Residual risk: live fetch against real hosts is unproven.", True),
+        ("Residual risk: redirects to private hosts are not tested yet.", True),
+    ],
+)
+def test_negated_residual_risk_is_not_an_open_item(line, expected):
+    """Review finding: `Residual risk: no residual risk remains.` let a gap-free record pass."""
+    assert load_score_module().has_open_item(f"# Verification\n\n{line}\n") is expected

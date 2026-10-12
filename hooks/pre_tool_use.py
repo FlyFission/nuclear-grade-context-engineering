@@ -46,7 +46,8 @@ _GIT = r"\bgit\s+(?:-[cC]\s+\S+\s+|--?\S+\s+)*"  # "git", global options, then t
 ASK_COMMANDS = (
     (_GIT + r"push\b" + _SEG + r"(\s--force(-with-lease)?\b|\s-[a-zA-Z]*f[a-zA-Z]*\b|\s\+\S)",
      "git force push rewrites shared history"),
-    (_GIT + r"push\b" + _SEG + r"\s--(tags|follow-tags|mirror|delete)\b",
+    # Deletion has three spellings: --delete, -d (alone or bundled), and an empty-source ":ref".
+    (_GIT + r"push\b" + _SEG + r"(\s--(tags|follow-tags|mirror|delete)\b|\s-[a-zA-Z]*d[a-zA-Z]*\b|\s:\S)",
      "git push of tags, a mirror, or a ref deletion"),
     # A single tag push is how a release starts (docs/05-reference/releasing.md). Catch
     # refs/tags/ and version-shaped refspecs; an arbitrary tag name cannot be told from a branch.

@@ -2,7 +2,7 @@
   "schema": "ng-challenge-manifest",
   "schema_version": 1,
   "protected": {
-    "score.py": "210937446a1a14b4ba399bebb2f0e12e90aca36b39317b1d29bbd72412a23029",
+    "score.py": "42ffcb9ef2ea1696cadd5a288b013dd3983c0124f474cacc9dafee7a2e850d87",
     "judge/README.md": "4c603b2260a8ea66ee07592100241ee97a80a433d0fced91aafdd3ca8c63d236"
   },
   "original_config": {

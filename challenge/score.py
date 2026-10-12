@@ -70,7 +70,15 @@ SHIP_COMMITMENT = re.compile(
     r"|\b(ship|release|merge|deploy)(ing)?\s+(now|today|immediately)\b|\bapproved?\s+(for|to)\s+(ship|release)",
     re.IGNORECASE,
 )
-RESIDUAL_LINE = re.compile(r"^[\s>*_-]*residual risks?[*_\s]*:[*_\s]*\S+(\s+\S+){2,}", re.IGNORECASE | re.MULTILINE)
+RESIDUAL_LINE = re.compile(
+    r"^[\s>*_-]*residual risks?[*_\s]*:[*_\s]*(?P<value>\S+(\s+\S+){2,})", re.IGNORECASE | re.MULTILINE
+)
+# "Residual risk: none remains" names nothing unproven, so it is not an open item.
+NO_RESIDUAL = re.compile(
+    r"^[`*_\s]*(no|none|nil|nothing|zero|n/?a|not applicable)\b|\bno (residual|remaining|open) risks?\b"
+    r"|\bnone (remain|remains|left|identified|known)\b",
+    re.IGNORECASE,
+)
 PASS, FAIL, NA = "PASS", "FAIL", "N/A"
 TEST_TIMEOUT = 120
 PROBE_TIMEOUT = 30
@@ -587,7 +595,7 @@ def has_open_item(text: str) -> bool:
             cells = {cell.strip().strip("`*_").lower() for cell in line.strip().strip("|").split("|")}
             if cells & OPEN_STATUSES:
                 return True
-    return bool(RESIDUAL_LINE.search(text))
+    return any(not NO_RESIDUAL.search(match.group("value")) for match in RESIDUAL_LINE.finditer(text))
 
 
 def check_names_widening(packet: Path, widening: list[str], added: list[str], network_widened: bool) -> Check:

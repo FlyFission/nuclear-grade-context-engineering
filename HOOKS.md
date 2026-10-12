@@ -46,7 +46,7 @@ Default policy (constants in the script):
 | Decision | Matches |
 |---|---|
 | `deny` | `Write`/`Edit`/`MultiEdit`/`NotebookEdit` to `.github/workflows/**`, `.claude/settings*.json`, `.claude/hooks/**`, `hooks/**`, `.nuclear/charter.md`, `.nuclear/gate-policy.json`, `~/.claude/settings*.json`, or `~/.claude/hooks/**`. Paths are normalized, symlink-resolved, and case-folded. |
-| `ask` | `Bash` or `PowerShell`: force push (`--force`, `-f`, `--force-with-lease`, `+ref`); `git push --tags/--follow-tags/--mirror/--delete`, or a push of `refs/tags/...` or a version-shaped tag (`v1.2.3`); `git tag`; `gh release`; `twine upload`; `npm`/`pnpm`/`yarn`/`uv`/`poetry`/`cargo publish`; `rm -rf` on an absolute, `~`, `$VAR`, `..`, `.` or `*` target; `curl`/`wget` piped to a shell; any command naming a protected path. |
+| `ask` | `Bash` or `PowerShell`: force push (`--force`, `-f`, `--force-with-lease`, `+ref`); `git push --tags/--follow-tags/--mirror/--delete`, or a push of `refs/tags/...` or a version-shaped tag (`v1.2.3`); `git tag`; `gh release`; `twine upload`; `npm`/`pnpm`/`yarn`/`uv`/`poetry`/`cargo publish`; `rm -rf` (or PowerShell `Remove-Item -Recurse -Force` and its aliases) on an absolute (including `C:\`), `~`, `$VAR`, `..`, `.` or `*` target; `curl`/`wget` piped to a shell; any command naming a protected path. Built-in command rules ignore case, because Windows command names do; your policy-file regexes match exactly as written. |
 
 **Fail closed when the hook itself cannot run.** The `Enable` snippet sets `"onFailure": "block"` (Claude Code v2.1.295 or later). Without it, a missing `python3`, a crash, or invalid output lets the tool call proceed, because the host's default is `continue`. On older versions, that failure mode stays open.
 

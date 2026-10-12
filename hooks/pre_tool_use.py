@@ -61,6 +61,8 @@ ASK_COMMANDS = (
 )
 # A shell command that names a trust surface is a human gate too ("hooks/" is
 # left out: it is too common a directory name to match in free text).
+# rm and its PowerShell spellings (Remove-Item and aliases).
+RM_VERBS = ("rm", "remove-item", "ri", "del", "erase", "rd", "rmdir")
 SHELL_TRUST_TOKENS = (".github/workflows", ".claude/settings", ".claude/hooks", ".nuclear/charter.md",
                       ".nuclear/gate-policy.json")
 
@@ -146,20 +148,23 @@ def _rm_outside_cwd(command):
     """True when a recursive, forced rm targets something that is not a plain cwd-relative path."""
     for segment in re.split(r"[;&|\n]+", command):
         tokens = segment.split()
-        names = [t.rsplit("/", 1)[-1] for t in tokens]
-        if "rm" not in names:
+        names = [t.replace("\\", "/").rsplit("/", 1)[-1].lower() for t in tokens]
+        verb = next((n for n in names if n in RM_VERBS), None)
+        if verb is None:
             continue
-        args = tokens[names.index("rm") + 1:]
-        flags = "".join(a.lstrip("-") for a in args if a.startswith("-") and not a.startswith("--"))
-        long_flags = {a for a in args if a.startswith("--")}
-        recursive = "r" in flags or "R" in flags or "--recursive" in long_flags
+        args = tokens[names.index(verb) + 1:]
+        flags = "".join(a.lstrip("-") for a in args if a.startswith("-") and not a.startswith("--")).lower()
+        long_flags = {a.lower() for a in args if a.startswith("--")}
+        # Short flags (-rf) and PowerShell switches (-Recurse -Force) both land here.
+        recursive = "r" in flags or "--recursive" in long_flags
         forced = "f" in flags or "--force" in long_flags
         if not (recursive and forced):
             continue
         targets = [a for a in args if not a.startswith("-")]
         for target in targets or ["<none>"]:
-            stripped = target.strip("'\"")
-            if (stripped.startswith(("/", "~", "$", "`")) or ".." in stripped.split("/")
+            stripped = target.strip("'\"").replace("\\", "/")
+            if (stripped.startswith(("/", "~", "$", "`")) or re.match(r"[A-Za-z]:/", stripped)
+                    or ".." in stripped.split("/")
                     or stripped in (".", "./", "*", "./*", "<none>")):
                 return True
     return False
@@ -213,11 +218,12 @@ def _decide(raw, project_dir):
         for pattern in extra["deny_commands"]:
             if re.search(pattern, command):
                 return _decision("deny", "command matches a policy deny rule")
-        reasons = [why for pattern, why in ASK_COMMANDS if re.search(pattern, command)]
+        # Built-in rules ignore case: Windows command names are case-insensitive (`Git`, `GH`).
+        reasons = [why for pattern, why in ASK_COMMANDS if re.search(pattern, command, re.IGNORECASE)]
         reasons += ["command matches a policy ask rule" for p in extra["ask_commands"] if re.search(p, command)]
         if _rm_outside_cwd(command):
             reasons.append("recursive forced rm outside a plain cwd-relative path")
-        if any(token in command for token in SHELL_TRUST_TOKENS):
+        if any(token in command.lower() for token in SHELL_TRUST_TOKENS):
             reasons.append("shell command names a protected trust surface")
         if reasons:
             return _ask(reasons[0] + "; human gate required")

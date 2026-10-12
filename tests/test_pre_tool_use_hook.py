@@ -249,3 +249,22 @@ def test_enable_snippet_blocks_when_the_hook_fails():
     snippet = next(line for line in hooks_doc.splitlines() if "pre_tool_use.py" in line and '"matcher"' in line)
     assert '"onFailure": "block"' in snippet
     assert "PowerShell" in snippet
+
+
+@pytest.mark.parametrize(
+    "command",
+    [
+        "Git push --force origin main",
+        "GH release create v1",
+        "Twine Upload dist/*",
+        "Remove-Item -Recurse -Force C:\\Users\\me\\old",
+        "rm -r -fo ..\\outside",
+        "ri -Recurse -Force $env:USERPROFILE",
+    ],
+)
+def test_powershell_capitalization_and_spellings_cannot_bypass(tmp_path, command):
+    assert _kind(_decide(tmp_path, "PowerShell", {"command": command})) == "ask"
+
+
+def test_powershell_workspace_cleanup_is_not_gated(tmp_path):
+    assert _decide(tmp_path, "PowerShell", {"command": "Remove-Item -Recurse -Force build"}) is None

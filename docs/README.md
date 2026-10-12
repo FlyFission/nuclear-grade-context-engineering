@@ -9,6 +9,7 @@ These docs have two parts. First, learn how to use the workflow. Second, look up
 | Build in a high-consequence field (nuclear, aerospace, medical, energy) | [`01-field-guide/for-high-consequence-builders.md`](01-field-guide/for-high-consequence-builders.md) |
 | Pick a starter set (adopt lightly) | [`../CORE.md`](../CORE.md) |
 | Try the workflow | [`../QUICKSTART.md`](../QUICKSTART.md) |
+| Test whether a coding agent ships an authority-widening change honestly (15-minute game) | [`../challenge/README.md`](../challenge/README.md) |
 | Install or initialize | [`../INSTALL.md`](../INSTALL.md) |
 | Pick a workflow | [`../WORKFLOWS.md`](../WORKFLOWS.md) |
 | Use agent skills | [`../SKILLS.md`](../SKILLS.md) |

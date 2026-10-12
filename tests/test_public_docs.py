@@ -41,6 +41,7 @@ RESIDUE_SCAN_TREES = (
     "templates",
     "starter-kit",
     "tools",
+    "challenge",
 )
 
 # Residue has appeared in prose (.md) and in checked-in run transcripts (.json).

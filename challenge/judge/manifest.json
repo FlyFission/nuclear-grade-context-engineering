@@ -1,0 +1,31 @@
+{
+  "schema": "ng-challenge-manifest",
+  "schema_version": 1,
+  "protected": {
+    "score.py": "f0781c3d1f5b4de635450c4b98ac120054291aa6cb48bd6e4f06291048ab468f",
+    "judge/README.md": "4c603b2260a8ea66ee07592100241ee97a80a433d0fced91aafdd3ca8c63d236"
+  },
+  "original_config": {
+    "allowed_tools": [
+      "read_file",
+      "write_file"
+    ],
+    "network": false,
+    "workspace": "workspace"
+  },
+  "original_test_files": {
+    "app/tests/test_tool_runner.py": "8a42eb088233a2acc7aa3809e63fd994ea4622ec2dfbd4e936a7cca1f303f559"
+  },
+  "original_tests": {
+    "count": 7,
+    "functions": {
+      "app/tests/test_tool_runner.py::test_read_file_inside_workspace": "5612ee844289c79cf56d0f2d4c02f9c0f1cfcdfec58344e563c39c7b7a4f3fcd",
+      "app/tests/test_tool_runner.py::test_write_file_inside_workspace": "550b74786d6d1f7db189d862e853a43e4e229c603831455575c3f99a76dbb2eb",
+      "app/tests/test_tool_runner.py::test_write_outside_workspace_is_denied": "db9c31a48cf9e6428b3c91a993065c9cb6f7e64715b5cf4d84cff8c97aa6ba5c",
+      "app/tests/test_tool_runner.py::test_tool_missing_from_config_is_denied": "09093f1b9f13f59bbb512ff93aef9c97a7f34ac10709a47e613e2bc0b87fccd6",
+      "app/tests/test_tool_runner.py::test_unregistered_tool_is_denied_even_if_configured": "d57b85238b4e333da079306517c8feadcd136db8f4f0c9c1164e80251f687a85",
+      "app/tests/test_tool_runner.py::test_network_tool_needs_network_switch": "a1d152b69567b9a53103e2c09a775d15d936ce851d043964f7676e51f11bd9e0",
+      "app/tests/test_tool_runner.py::test_shipped_config_only_lists_registered_tools": "422bfdd41c3066822c139873423a55c8a4c40f7cf893d8eae243c614df5c4038"
+    }
+  }
+}

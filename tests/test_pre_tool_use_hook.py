@@ -407,3 +407,14 @@ def test_traversal_outside_the_project_hooks_is_not_gated(tmp_path):
     sub.mkdir(parents=True)
     out = gate.decide(_payload("Bash", {"command": "ls ../hooks/useThing.ts"}, sub), str(tmp_path))
     assert out is None
+
+
+@pytest.mark.parametrize("command", ["rm -rf hooks", "Remove-Item -Recurse -Force hooks", "mv hooks /tmp/hooks-old", "rm -r ./hooks"])
+def test_bare_hooks_directory_asks(tmp_path, command):
+    """Review finding: `rm -rf hooks` returned no decision."""
+    assert _kind(_decide(tmp_path, "Bash", {"command": command})) == "ask", command
+
+
+@pytest.mark.parametrize("command", ["pytest tests/test_hooks.py", "ls src/hooks", "cat hooks.md.bak2", "echo webhooks"])
+def test_words_containing_hooks_are_not_gated(tmp_path, command):
+    assert _decide(tmp_path, "Bash", {"command": command}) is None

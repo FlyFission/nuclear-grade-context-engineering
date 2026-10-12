@@ -45,7 +45,10 @@ BOUNDARY = (
     "evidence is adequate, independent, or true, and this receipt is not a signature."
 )
 _GIT_TIMEOUT_SECONDS = 5
-_STATUS_TOKEN = re.compile(r"(?<!\bno )\b(not applicable|pass|fail|gap|deferred|planned)\b", re.IGNORECASE)
+# A negated status ("no gap", "not planned") declares nothing.
+_STATUS_TOKEN = re.compile(
+    r"(?<!\bno )(?<!\bnot )\b(not applicable|pass|fail|gap|deferred|planned)\b", re.IGNORECASE
+)
 _STATUS_DECLARATION = re.compile(
     r"\bstatus\**[ \t]*:\**[ \t]*(?P<value>`?(not applicable|pass|fail|gap|deferred|planned)\b[^\n]*)",
     re.IGNORECASE,

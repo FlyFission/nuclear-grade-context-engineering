@@ -294,3 +294,15 @@ def test_explanation_after_a_dash_in_a_status_cell_is_not_counted(tmp_path):
     statuses = receipt_for(packet)["evidence_statuses"]
     assert statuses["pass"] == 2
     assert statuses["gap"] == 1
+
+
+def test_negated_status_in_a_composite_is_not_counted(tmp_path):
+    """Review finding: `pass; not planned` counted a planned item."""
+    packet = minimal_standard_packet(tmp_path)
+    verification = packet / "verification.md"
+    verification.write_text(
+        verification.read_text(encoding="utf-8").replace("| C-001 | pass | test |\n", "| C-001 | pass; not planned | test |\n"),
+        encoding="utf-8",
+    )
+    statuses = receipt_for(packet)["evidence_statuses"]
+    assert statuses["pass"] == 1 and statuses["planned"] == 0

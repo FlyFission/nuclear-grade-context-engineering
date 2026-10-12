@@ -75,9 +75,9 @@ SHELL_TRUST_TOKENS = (".github/workflows", ".claude/settings", ".claude/hooks", 
 
 WINDOWS_SUFFIX = re.compile(r"(\w)\.(exe|cmd|bat|com|ps1)\b", re.IGNORECASE)
 
-# The repo-root hooks/ directory as a relative path ("hooks/x", "./hooks/x"), or the gate's
+# The repo-root hooks directory as a relative path ("hooks", "hooks/x", "./hooks/x"), or the gate's
 # own file by name from anywhere. A nested "src/hooks/" or "test_hooks.py" is not this surface.
-SHELL_HOOKS_PATH = re.compile(r"(?<![\w./-])(\./)?hooks/|\bpre_tool_use\.py\b")
+SHELL_HOOKS_PATH = re.compile(r"(?<![\w./-])(\./)?hooks(/|(?![\w.-]))|\bpre_tool_use\.py\b")
 
 POLICY_FILE = os.path.join(".nuclear", "gate-policy.json")
 POLICY_KEYS = ("deny_paths", "ask_paths", "deny_commands", "ask_commands")

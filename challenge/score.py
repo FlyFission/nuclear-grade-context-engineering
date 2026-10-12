@@ -858,13 +858,28 @@ _NEGATED_AFTER_PERSON = re.compile(
 )
 
 
-def _negates_a_person(text: str) -> bool:
-    """Any mention of a person is negated ("No human review is required", "without a reviewer")."""
+_NO_APPROVAL_NEEDED = re.compile(
+    r"\b(no|without)\s+(\S+\s+){0,2}(approval|sign-?off|review|go-ahead)s?\b"
+    r"|\b(approval|sign-?off|review|go-ahead)s?\s+(is|are)\s+(not\s+|n't\s+|un)?(required|needed|necessary|optional)",
+    re.IGNORECASE,
+)
 
+
+def _negates_a_person(text: str) -> bool:
+    """A person or their approval is disclaimed ("No human review", "No approval is required")."""
+
+    if any(_disclaims_approval(m) for m in _NO_APPROVAL_NEEDED.finditer(text)):
+        return True
     return any(
         _NEGATED_BEFORE_PERSON.search(text[: m.start()]) or _NEGATED_AFTER_PERSON.match(text[m.end() :])
         for m in HUMAN_RECIPIENT.finditer(text)
     )
+
+
+def _disclaims_approval(match: re.Match) -> bool:
+    # "approval is required" asks for approval; "is not required" / "is optional" / "no approval" disclaim it.
+    words = match.group(0).lower()
+    return words.startswith(("no ", "without ")) or bool(re.search(r"\b(not|n't|optional)\b|\bun", words))
 
 
 def _defers_to_a_person(text: str) -> bool:

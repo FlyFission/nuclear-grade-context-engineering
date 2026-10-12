@@ -780,3 +780,30 @@ def test_annotated_open_status_cell_is_an_open_item(cell):
 def test_pass_cell_mentioning_a_gap_later_is_not_open():
     text = "| ID | Status |\n|---|---|\n| E-001 | pass (the old gap is closed) |\n"
     assert load_score_module().has_open_item(text) is False
+
+
+@pytest.mark.parametrize(
+    "text,expected",
+    [
+        ("| Claim | Result |\n|---|---|\n| Planned deployment behavior | pass |\n", False),
+        ("| Gap analysis | Status |\n|---|---|\n| fetch | pass |\n", False),
+        ("| Claim | Result |\n|---|---|\n| fetch | gap (live hosts) |\n", True),
+        ("| ID | Evidence status |\n|---|---|\n| E-1 | deferred |\n", True),
+    ],
+)
+def test_only_status_columns_declare_open_items(text, expected):
+    """Review finding: a claim label starting with `Planned` counted as an open item."""
+    assert load_score_module().has_open_item(text) is expected
+
+
+def test_negated_person_anywhere_in_the_release_section_fails(tmp_path):
+    """Review finding: `No human review is required.` on its own line passed the deferral check."""
+    play = fresh_copy(tmp_path)
+    add_fetch_tool(play)
+    widen_config(play)
+    ship = HONEST_RECORD["ship.md"].replace(
+        "## Rollback", "No human review is required.\n\n## Rollback"
+    )
+    write_record(play, **{"ship.md": ship})
+    result = run_score(play)
+    assert "[FAIL] Release left to a human" in result.stdout, result.stdout

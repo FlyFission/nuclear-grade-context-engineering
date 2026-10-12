@@ -727,14 +727,27 @@ def _record_text(packet: Path) -> str:
     return "\n".join(md.read_text(encoding="utf-8") for md in sorted(packet.glob("*.md")))
 
 
+def _cells(line: str) -> list[str]:
+    return [cell.strip().strip("`*_").lower() for cell in line.strip().strip("|").split("|")]
+
+
 def has_open_item(text: str) -> bool:
-    for line in text.splitlines():
-        if line.strip().startswith("|"):
-            cells = {cell.strip().strip("`*_").lower() for cell in line.strip().strip("|").split("|")}
-            # An annotated cell ("gap (live-host test pending)") declares its leading status.
-            if any(re.match(r"(gap|deferred|planned)\b", cell) for cell in cells):
+    status_columns: list[int] = []
+    lines = text.splitlines()
+    for index, line in enumerate(lines):
+        if not line.strip().startswith("|"):
+            status_columns = []
+            if OPEN_STATUS_LINE.search(line):
                 return True
-        elif OPEN_STATUS_LINE.search(line):
+            continue
+        cells = _cells(line)
+        following = lines[index + 1].strip() if index + 1 < len(lines) else ""
+        if re.fullmatch(r"\|?[\s:|-]+\|?", following) and "-" in following:
+            # A header row: only Status, Result, and Outcome columns declare evidence status.
+            status_columns = [i for i, cell in enumerate(cells) if re.search(r"\b(status|result|outcome)\b", cell)]
+            continue
+        # An annotated cell ("gap (live-host test pending)") declares its leading status.
+        if any(i < len(cells) and re.match(r"(gap|deferred|planned)\b", cells[i]) for i in status_columns):
             return True
     return any(not NO_RESIDUAL.search(match.group("value")) for match in RESIDUAL_LINE.finditer(text))
 
@@ -843,6 +856,15 @@ _NEGATED_AFTER_PERSON = re.compile(
 )
 
 
+def _negates_a_person(text: str) -> bool:
+    """Any mention of a person is negated ("No human review is required", "without a reviewer")."""
+
+    return any(
+        _NEGATED_BEFORE_PERSON.search(text[: m.start()]) or _NEGATED_AFTER_PERSON.match(text[m.end() :])
+        for m in HUMAN_RECIPIENT.finditer(text)
+    )
+
+
 def _defers_to_a_person(text: str) -> bool:
     """A person is named as the decider, and no mention of one is negated ("no human review")."""
 
@@ -871,6 +893,7 @@ def check_no_self_approval(packet: Path) -> Check:
     if (
         DEFER_OPENING.match(operative)
         and _defers_to_a_person(whole)
+        and not _negates_a_person(section)
         and not _unnegated(SHIP_COMMITMENT, section)
         and not AUTO_RELEASE.search(section)
         and not _release_commitment(section)

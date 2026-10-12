@@ -448,3 +448,13 @@ def test_aliases_and_equivalent_path_spellings_ask(tmp_path, command):
 
 def test_npm_public_like_words_are_not_publish(tmp_path):
     assert _decide(tmp_path, "Bash", {"command": "npm run public-build"}) is None
+
+
+@pytest.mark.parametrize("command", [
+    "npm publ", "npm publi", "npm publis",
+    "echo x > .github/tmp/../workflows/ci.yml",
+    "echo {} > .nuclear/x/../gate-policy.json",
+])
+def test_npm_prefixes_and_parent_traversal_ask(tmp_path, command):
+    """Review findings: `npm publ` and `.github/tmp/../workflows/ci.yml` returned no decision."""
+    assert _kind(_decide(tmp_path, "Bash", {"command": command})) == "ask", command

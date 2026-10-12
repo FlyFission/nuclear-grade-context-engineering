@@ -62,7 +62,8 @@ ASK_COMMANDS = (
     (r"\bgh\s+(?:--?\S+\s+(?:[^-\s]\S*\s+)?)*release\b", "gh release changes a published release"),
     # Global options (and cargo's `+toolchain`) may come before the subcommand.
     (r"\btwine\s+" + _OPTS + r"upload\b", "package publish is irreversible"),
-    (r"\b(npm|pnpm|yarn|uv|poetry|cargo)\s+" + _OPTS + r"(publish|pub)\b", "package publish is irreversible"),
+    # npm accepts any unambiguous prefix of "publish" down to its `pub` alias.
+    (r"\b(npm|pnpm|yarn|uv|poetry|cargo)\s+" + _OPTS + r"pub(?:l(?:i(?:s(?:h)?)?)?)?\b", "package publish is irreversible"),
     (r"\b(curl|wget)\b[^;&\n]*\|\s*(sudo\s+)?(ba|z|da|k)?sh\b", "piping a download into a shell runs unreviewed code"),
     (r"\b(ba|z)?sh\s+<\(\s*(curl|wget)\b", "running a downloaded script runs unreviewed code"),
 )
@@ -85,15 +86,18 @@ POLICY_KEYS = ("deny_paths", "ask_paths", "deny_commands", "ask_commands")
 
 
 def _names_project_hooks(normalized, roots, project_hooks):
-    """A path-shaped word that resolves into <root>/hooks/ (`../hooks/x`, `sub/../hooks/x`)."""
+    """A path-shaped word with ".." that resolves into a trust surface: <root>/hooks/ or any
+    SHELL_TRUST_TOKENS path (`../hooks/x`, `.github/tmp/../workflows/ci.yml`)."""
     for word in re.findall(r"[^\s;&|<>()]+", normalized):
-        if "hooks/" not in word or ".." not in word:
+        if ".." not in word:
             continue
         for root in roots:
             base = root.replace("\\", "/")
             joined = word if word.startswith("/") else os.path.join(base, word)
             resolved = os.path.normpath(joined).replace("\\", "/").lower()
             if any((resolved + "/").startswith(hooks) for hooks in project_hooks):
+                return True
+            if any(token in resolved for token in SHELL_TRUST_TOKENS):
                 return True
     return False
 

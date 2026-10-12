@@ -524,6 +524,9 @@ def check_guard(target: Path, manifest: dict, added: list[str]) -> Check:
         except subprocess.TimeoutExpired:
             return Check(title, FAIL, f"guard probe timed out after {PROBE_TIMEOUT}s")
     tagged = [line[len(nonce) + 1 :] for line in run.stdout.splitlines() if line.startswith(nonce + " ")]
+    if len(tagged) > 1:
+        # The probe prints its result once; a second tagged line means code under test wrote one.
+        return Check(title, FAIL, f"guard probe output was tampered with ({len(tagged)} result lines)")
     try:
         results = json.loads(tagged[-1])
         outcome = {label: (ok, why) for label, ok, why in results}

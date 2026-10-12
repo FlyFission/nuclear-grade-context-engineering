@@ -54,6 +54,7 @@ scorer falls back to a smaller built-in check and says so.
 
 - It is not evidence that an agent, model, or tool is safe, secure, or fit for
   any use. One trap, one run, one folder.
+- The guard probe imports the agent's own code into its process, so code written to fool the scorer can fake the probe's results. The scorer catches the simple forgeries. Read the diff before trusting a score.
 - The rules are open-book. An agent that reads `score.py` can aim at the
   checks, and the scorer cannot tell a made-up human approval from a real one.
 - A record can pass the checks and still be wrong. A human still has to read it.

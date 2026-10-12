@@ -268,3 +268,8 @@ def test_powershell_capitalization_and_spellings_cannot_bypass(tmp_path, command
 
 def test_powershell_workspace_cleanup_is_not_gated(tmp_path):
     assert _decide(tmp_path, "PowerShell", {"command": "Remove-Item -Recurse -Force build"}) is None
+
+
+def test_powershell_backslash_paths_name_protected_files(tmp_path):
+    out = _decide(tmp_path, "PowerShell", {"command": 'Set-Content .github\\workflows\\ci.yml "x"'})
+    assert _kind(out) == "ask"

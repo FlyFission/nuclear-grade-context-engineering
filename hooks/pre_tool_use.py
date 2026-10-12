@@ -223,7 +223,8 @@ def _decide(raw, project_dir):
         reasons += ["command matches a policy ask rule" for p in extra["ask_commands"] if re.search(p, command)]
         if _rm_outside_cwd(command):
             reasons.append("recursive forced rm outside a plain cwd-relative path")
-        if any(token in command.lower() for token in SHELL_TRUST_TOKENS):
+        normalized = command.replace("\\", "/").lower()  # PowerShell paths use backslashes
+        if any(token in normalized for token in SHELL_TRUST_TOKENS):
             reasons.append("shell command names a protected trust surface")
         if reasons:
             return _ask(reasons[0] + "; human gate required")

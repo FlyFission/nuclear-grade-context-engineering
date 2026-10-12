@@ -261,3 +261,20 @@ def test_result_column_statuses_are_counted(tmp_path):
     assert statuses["gap"] == 1
     assert statuses["planned"] == 1
     assert receipt_for(packet)["open_evidence_items"] == 2
+
+
+def test_status_words_inside_an_explanation_are_not_counted(tmp_path):
+    """Review finding: `not applicable (no release planned)` counted a planned item."""
+    packet = minimal_standard_packet(tmp_path)
+    verification = packet / "verification.md"
+    verification.write_text(
+        verification.read_text(encoding="utf-8").replace(
+            "| C-001 | pass | test |\n", "| C-001 | not applicable (no release planned) | test |\n"
+        )
+        + "\n- Status: pass (the gap from v1 is closed)\n",
+        encoding="utf-8",
+    )
+    statuses = receipt_for(packet)["evidence_statuses"]
+    assert statuses["not applicable"] == 1
+    assert statuses["planned"] == 0 and statuses["gap"] == 0
+    assert receipt_for(packet)["open_evidence_items"] == 0

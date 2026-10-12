@@ -50,6 +50,8 @@ _STATUS_DECLARATION = re.compile(
     r"\bstatus\**[ \t]*:\**[ \t]*(?P<value>`?(not applicable|pass|fail|gap|deferred|planned)\b[^\n]*)",
     re.IGNORECASE,
 )
+# Parenthetical notes explain a status ("not applicable (no release planned)"); they declare none.
+_PARENTHETICAL = re.compile(r"\([^()]*\)")
 # A declared value ends where its explanation starts: an em dash, " -- ", " - ", or a sentence stop.
 _DECLARATION_END = re.compile(r"\s+(—|--?)\s|—|\.(\s|$)")
 # An unfilled choice list is not a declaration: "pass / fail / gap" or "`pass`, `fail`, `gap`, ...".
@@ -132,7 +134,7 @@ def _status_counts(packet: Path, mode: str) -> dict[str, int]:
     prose = "\n".join(line for line in text.splitlines() if not line.lstrip().startswith("|"))
     for match in _STATUS_DECLARATION.finditer(prose):
         # "Status: pass (local); gap (review pending)" declares two statuses, like a table cell.
-        value = _DECLARATION_END.split(match.group("value"), maxsplit=1)[0]
+        value = _PARENTHETICAL.sub(" ", _DECLARATION_END.split(match.group("value"), maxsplit=1)[0])
         if _CHOICE_LIST.search(value):
             continue
         for token in _STATUS_TOKEN.finditer(value):
@@ -154,7 +156,7 @@ def _status_counts(packet: Path, mode: str) -> dict[str, int]:
                     raw = _DECLARATION_END.split(raw.strip(), maxsplit=1)[0]
                     if not _STATUS_TOKEN.match(_normalize_table_label(raw)):
                         continue
-                cell = _normalize_table_label(raw)
+                cell = _normalize_table_label(_PARENTHETICAL.sub(" ", raw))
                 for match in _STATUS_TOKEN.finditer(cell):
                     counts[match.group(1).lower()] += 1
     return counts

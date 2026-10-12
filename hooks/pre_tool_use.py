@@ -69,6 +69,10 @@ SHELL_TRUST_TOKENS = (".github/workflows", ".claude/settings", ".claude/hooks", 
 
 WINDOWS_SUFFIX = re.compile(r"(\w)\.(exe|cmd|bat|com|ps1)\b", re.IGNORECASE)
 
+# The repo-root hooks/ directory as a relative path ("hooks/x", "./hooks/x"), or the gate's
+# own file by name from anywhere. A nested "src/hooks/" or "test_hooks.py" is not this surface.
+SHELL_HOOKS_PATH = re.compile(r"(?<![\w./-])(\./)?hooks/|\bpre_tool_use\.py\b")
+
 POLICY_FILE = os.path.join(".nuclear", "gate-policy.json")
 POLICY_KEYS = ("deny_paths", "ask_paths", "deny_commands", "ask_commands")
 
@@ -229,7 +233,7 @@ def _decide(raw, project_dir):
         if _rm_outside_cwd(plain):
             reasons.append("recursive forced rm outside a plain cwd-relative path")
         normalized = command.replace("\\", "/").lower()  # PowerShell paths use backslashes
-        if any(token in normalized for token in SHELL_TRUST_TOKENS):
+        if any(token in normalized for token in SHELL_TRUST_TOKENS) or SHELL_HOOKS_PATH.search(normalized):
             reasons.append("shell command names a protected trust surface")
         if reasons:
             return _ask(reasons[0] + "; human gate required")

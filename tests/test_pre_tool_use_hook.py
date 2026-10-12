@@ -294,3 +294,23 @@ def test_powershell_backslash_paths_name_protected_files(tmp_path):
 def test_windows_executable_suffixes_cannot_bypass(tmp_path, command):
     """Review finding: `git.exe push --force` returned no decision."""
     assert _kind(_decide(tmp_path, "PowerShell", {"command": command})) == "ask", command
+
+
+@pytest.mark.parametrize("command", [
+    "echo x > hooks/pre_tool_use.py",
+    "cp evil.py ./hooks/pre_tool_use.py",
+    "Set-Content -Path hooks\\pre_tool_use.py -Value x",
+    "echo x > /work/repo/hooks/pre_tool_use.py",
+])
+def test_shell_writes_to_the_hook_directory_ask(tmp_path, command):
+    """Review finding: `echo x > hooks/pre_tool_use.py` returned no decision."""
+    assert _kind(_decide(tmp_path, "Bash", {"command": command})) == "ask", command
+
+
+@pytest.mark.parametrize("command", [
+    "cat src/hooks/useThing.ts",
+    "pytest tests/test_pre_tool_use_hook.py",
+    "ls docs/hooks",
+])
+def test_nested_hooks_directories_are_not_gated(tmp_path, command):
+    assert _decide(tmp_path, "Bash", {"command": command}) is None

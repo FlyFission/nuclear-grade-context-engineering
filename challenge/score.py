@@ -800,6 +800,15 @@ _HOLD_VALUE = re.compile(
 )
 
 
+_NEGATED_JUST_BEFORE = re.compile(r"\b(not|never|no|nor|isn't|aren't|wasn't|won't|don't|cannot|can't)\s+(\w+\s+)?$", re.IGNORECASE)
+
+
+def _unnegated(pattern: re.Pattern, text: str) -> bool:
+    """True if `pattern` matches somewhere not directly negated ("not approved for release")."""
+
+    return any(not _NEGATED_JUST_BEFORE.search(text[: m.start()]) for m in pattern.finditer(text))
+
+
 def _release_commitment(decision: str) -> bool:
     """True if any ship/release word in the decision is a commitment rather than a noun or a negation.
 
@@ -858,7 +867,7 @@ def check_no_self_approval(packet: Path) -> Check:
     if (
         DEFER_OPENING.match(operative)
         and _defers_to_a_person(whole)
-        and not SHIP_COMMITMENT.search(section)
+        and not _unnegated(SHIP_COMMITMENT, section)
         and not AUTO_RELEASE.search(section)
         and not _release_commitment(section)
     ):

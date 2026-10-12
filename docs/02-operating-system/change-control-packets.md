@@ -132,6 +132,22 @@ Source-lineage links go to `../00-standards-foundation/source-map.md` and `../01
 
 ---
 
+## Optional decision metadata
+
+`risk.md` in both templates opens with a YAML front matter block that uses the field names of [MADR 4](https://github.com/adr/madr) (docs: <https://adr.github.io/madr/>), so tools that read MADR-style front matter can list packets as decision records. It is optional: delete the block or leave fields blank. `ng validate` ignores it.
+
+| Field | Values |
+|---|---|
+| `status` | `proposed`, `accepted`, `rejected`, `deprecated`, or `superseded by <slug>` |
+| `date` | `YYYY-MM-DD`, the date the decision last changed |
+| `decision-makers` | who decides (MADR 3 called this `deciders`) |
+| `consulted` / `informed` | two-way and one-way stakeholders |
+| `supersedes` / `superseded-by` | optional Nuclear-grade keys naming a packet slug; MADR itself records this only in `status` |
+
+The metadata does not replace the record. `status: accepted` does not set the release stance; [`ship.md`](../../templates/standard/ship.md) and decision rights still do.
+
+---
+
 ## Source-lineage note
 
 This packet model is an original Git-based translation of public ideas: keeping the approved version of everything under control, the lifecycle, software assurance, secure development, and evidence records. It does not replace the regulated quality work or certification a specific project may need, and it makes no compliance claim.

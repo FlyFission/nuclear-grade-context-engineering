@@ -1,3 +1,14 @@
+---
+# Optional MADR 4 decision metadata for ADR indexers. Delete this block if unused.
+# status: proposed | accepted | rejected | deprecated | superseded by <slug>
+# See docs/02-operating-system/change-control-packets.md#optional-decision-metadata
+status: proposed
+date:
+decision-makers:
+consulted:
+informed:
+---
+
 # Standard Risk Template
 
 <!-- NUCLEAR-GRADE-PLACEHOLDER: replace every field below with real content, then delete this line so validation can pass. -->

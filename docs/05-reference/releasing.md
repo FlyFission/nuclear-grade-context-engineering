@@ -26,13 +26,18 @@ git tag -a vX.Y.Z -m "vX.Y.Z" <merge-commit>
 git push origin vX.Y.Z
 ```
 
-Attach the wheel, the sdist, and `ng validate --json` receipts for the shipped change records to the GitHub release, along with a `SHA256SUMS` file covering them.
+Pushing the tag runs `.github/workflows/release.yml`. It re-checks the release identity against the tag, runs the release gates, builds the wheel and sdist, writes `ng validate --json` receipts for every change record, and creates the GitHub release with the distributions, receipts, and a `SHA256SUMS` file.
 
 A pushed tag is never moved or reused. A correction ships as a new version.
 
-## Not yet automated
+## PyPI (off by default)
 
-A tag-triggered workflow (identity check, gates, build, receipts, GitHub release, and an opt-in PyPI Trusted Publishing job behind a protected environment) is drafted but not merged. It creates public release artifacts, so it needs the maintainer's explicit approval. The package is not on PyPI today.
+The `pypi` job runs only when the repository variable `PUBLISH_TO_PYPI` is `true`. Before turning it on:
+
+1. Create a `pypi` environment in the repository settings and add required reviewers.
+2. On PyPI, add a Trusted Publisher for this repository, workflow `release.yml`, and environment `pypi`.
+
+Publishing uses OIDC, so there is no long-lived token to leak. The package is not on PyPI today.
 
 ## Boundary note
 

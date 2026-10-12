@@ -42,7 +42,7 @@ No vendored code, and no third-party license or NOTICE file, is tracked.
 
 ## Accepted risks and open items
 
-- **Personal data in raw evidence (open; the owner decides).** Six pilot files under `evals/skill-benchmark-pilot/data/` contain a maintainer's personal email address, which the model copied from its session context. Before a release, the owner should either accept this or redact the files and record that the raw evidence changed.
+- **Personal data in raw evidence (redacted 2026-10-12).** Six pilot files under `evals/skill-benchmark-pilot/data/` contained a maintainer's personal email address, copied by the model from its session context. With the owner's approval, each occurrence was replaced with `[redacted-email]`. No other byte changed, and no stored hash pinned those files. Earlier git history still holds the original text. `tests/test_public_docs.py` now fails the build if a personal mailbox address reappears in a scanned tree.
 - **arXiv metadata license (accepted, unverified).** The abstracts are kept as research records, but their reuse terms were not checked in this review.
 - **Model output in the pilot data (accepted).** The raw responses are kept unedited as evidence, so they may contain wrong statements.
 

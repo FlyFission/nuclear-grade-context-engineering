@@ -15,7 +15,7 @@ uber/ADR is **Agentic AI Detection and Response**, an agent-security system (end
 | Versioned, content-free health schema | `Sensor/README.md` `adr.sensor.health` | Adopted as `schema` and `schema_version` (REQ-002) |
 | Aggregate CI gate with `if: always()` | `.github/workflows/ci.yml` | Adopted (REQ-003) |
 | Dependabot with each freeze decision recorded inline | `.github/dependabot.yml` | Adopted (REQ-004) |
-| OIDC trusted publishing, tag equals version, never move a tag | `docs/RELEASING.md` | Partly adopted: identity check and `releasing.md`; the tag-triggered workflow is drafted, pending owner approval |
+| OIDC trusted publishing, tag equals version, never move a tag | `docs/RELEASING.md` | Adopted with owner approval: identity check, `releasing.md`, and `release.yml` (PyPI job opt-in) |
 | Open-source release review: fixtures, accepted risks, attributions | `docs/OPEN_SOURCE_REVIEW.md`, `NOTICE.md` | Docs half adopted: `docs/05-reference/release-review.md` |
 | PR template asks for worst-case risk | `.github/pull_request_template.md` | Already covered by "Residual risks or gaps" |
 

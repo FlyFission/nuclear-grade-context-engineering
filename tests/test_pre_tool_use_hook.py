@@ -402,11 +402,21 @@ def test_traversal_paths_into_project_hooks_ask(tmp_path, command):
     assert _kind(out) == "ask", command
 
 
-def test_traversal_outside_the_project_hooks_is_not_gated(tmp_path):
+def test_any_parent_hooks_spelling_is_gated_conservatively(tmp_path):
+    """`../hooks` is gated even when it might name a sibling's hooks: an in-command `cd`
+    can make it the project's, and the hook cannot track the shell's cwd."""
     sub = tmp_path / "pkg" / "src"
     sub.mkdir(parents=True)
     out = gate.decide(_payload("Bash", {"command": "ls ../hooks/useThing.ts"}, sub), str(tmp_path))
-    assert out is None
+    assert _kind(out) == "ask"
+    nested = gate.decide(_payload("Bash", {"command": "ls src/hooks/useThing.ts"}, tmp_path), str(tmp_path))
+    assert nested is None
+
+
+@pytest.mark.parametrize("command", ["cd tests && echo x > ../hooks/helper.py", "pushd tests; cp x ../../hooks/y"])
+def test_cd_then_parent_hooks_asks(tmp_path, command):
+    """Review finding: `cd tests && echo x > ../hooks/helper.py` returned no decision."""
+    assert _kind(_decide(tmp_path, "Bash", {"command": command})) == "ask", command
 
 
 @pytest.mark.parametrize("command", ["rm -rf hooks", "Remove-Item -Recurse -Force hooks", "mv hooks /tmp/hooks-old", "rm -r ./hooks"])

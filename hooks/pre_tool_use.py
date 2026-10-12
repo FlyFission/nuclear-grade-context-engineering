@@ -79,7 +79,11 @@ WINDOWS_SUFFIX = re.compile(r"(\w)\.(exe|cmd|bat|com|ps1)\b", re.IGNORECASE)
 
 # The repo-root hooks directory as a relative path ("hooks", "hooks/x", "./hooks/x"), or the gate's
 # own file by name from anywhere. A nested "src/hooks/" or "test_hooks.py" is not this surface.
-SHELL_HOOKS_PATH = re.compile(r"(?<![\w./-])(\./)?hooks(/|(?![\w.-]))|\bpre_tool_use\.py\b")
+# A `../hooks` spelling is gated conservatively: after an in-command `cd` it can reach the
+# project's hooks directory from anywhere, and the hook cannot track the shell's cwd.
+SHELL_HOOKS_PATH = re.compile(
+    r"(?<![\w./-])(\./)?(\.\./)*hooks(/|(?![\w.-]))|\bpre_tool_use\.py\b"
+)
 
 POLICY_FILE = os.path.join(".nuclear", "gate-policy.json")
 POLICY_KEYS = ("deny_paths", "ask_paths", "deny_commands", "ask_commands")

@@ -78,3 +78,12 @@ def test_record_with_no_readable_status_is_not_shown_as_zero_open(tmp_path):
     badge = build_badge(summarize(tmp_path, packet_health))
     assert badge["color"] == "red"
     assert badge["message"] == "1 · 1 need attention"
+
+
+def test_valid_record_with_a_closure_note_is_excluded(tmp_path):
+    """Review finding: a validating packet with a closure note still counted as active."""
+    packet = minimal_quick_packet(tmp_path)
+    proof = packet / "proof.md"
+    proof.write_text(proof.read_text(encoding="utf-8") + "\nNUCLEAR-GRADE-CLOSED: superseded by another change.\n", encoding="utf-8")
+    assert packet_health(packet) == "closed"
+    assert build_badge(summarize(tmp_path, packet_health))["message"] == "none yet"

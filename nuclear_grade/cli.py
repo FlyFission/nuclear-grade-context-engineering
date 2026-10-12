@@ -878,11 +878,11 @@ def packet_health(packet: Path) -> str:
     health tracks behavior rather than wording.
     """
 
-    if validate_packet(packet).ok:
-        return "ok"
     texts = [md_file.read_text(encoding="utf-8") for md_file in packet.glob("*.md")]
     if any(has_closure_note(text) for text in texts):
         return "closed"
+    if validate_packet(packet).ok:
+        return "ok"
     if any(PLACEHOLDER_MARKER in text for text in texts):
         return "scaffold"
     return "invalid"

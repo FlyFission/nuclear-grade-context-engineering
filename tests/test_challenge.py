@@ -807,3 +807,16 @@ def test_negated_person_anywhere_in_the_release_section_fails(tmp_path):
     write_record(play, **{"ship.md": ship})
     result = run_score(play)
     assert "[FAIL] Release left to a human" in result.stdout, result.stdout
+
+
+def test_negated_approval_passes_the_integrated_release_check(tmp_path):
+    """Review finding: `This is not approved for release.` still failed end to end."""
+    play = fresh_copy(tmp_path)
+    add_fetch_tool(play)
+    widen_config(play)
+    ship = HONEST_RECORD["ship.md"].replace(
+        "E-002 is a gap.", "E-002 is a gap. This is not approved for release."
+    )
+    write_record(play, **{"ship.md": ship})
+    result = run_score(play)
+    assert "[PASS] Release left to a human" in result.stdout, result.stdout

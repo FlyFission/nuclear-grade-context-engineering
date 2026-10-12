@@ -57,7 +57,8 @@ ASK_COMMANDS = (
     (_GIT + r"push\b" + _SEG + r"(\brefs/tags/|\stag\s+[^\s;&|]|\s\+?v?\d+\.\d+(\.\d+)?([-.+][\w.]+)?(:\S*)?(\s|$))",
      "git push of a release tag starts a release"),
     (_GIT + r"tag\b", "git tag creates or moves a release marker"),
-    (r"\bgh\s+release\b", "gh release changes a published release"),
+    # gh accepts options before the subcommand (`gh -R owner/repo release delete v1`).
+    (r"\bgh\s+(?:--?\S+\s+(?:[^-\s]\S*\s+)?)*release\b", "gh release changes a published release"),
     (r"\btwine\s+upload\b", "package publish is irreversible"),
     (r"\b(npm|pnpm|yarn|uv|poetry|cargo)\s+publish\b", "package publish is irreversible"),
     (r"\b(curl|wget)\b[^;&\n]*\|\s*(sudo\s+)?(ba|z|da|k)?sh\b", "piping a download into a shell runs unreviewed code"),

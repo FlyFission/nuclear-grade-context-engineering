@@ -804,7 +804,7 @@ _RELEASE_WORD = re.compile(
     re.IGNORECASE,
 )
 _NEGATION_BEFORE = re.compile(
-    r"\b(not|no|never|don't|do not|won't|will not|without|whether|if)\s+(\w+\s+)?$", re.IGNORECASE
+    r"\b(not|no|never|don't|do not|won't|will not|without|whether|if)\s+(\w+\s+){0,2}$", re.IGNORECASE
 )
 _NOUN_AFTER = re.compile(r"^\s*(owner|decision|manager|call|notes?|gate|plan|review)\b", re.IGNORECASE)
 # "Release plan: <value>" is a field, and its value is read like a decision: anything but a

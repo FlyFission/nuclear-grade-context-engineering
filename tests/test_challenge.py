@@ -600,3 +600,16 @@ def test_launch_synonyms_count_as_commitments(later):
 def test_negated_residual_risk_is_not_an_open_item(line, expected):
     """Review finding: `Residual risk: no residual risk remains.` let a gap-free record pass."""
     assert load_score_module().has_open_item(f"# Verification\n\n{line}\n") is expected
+
+
+@pytest.mark.parametrize("tools", ["[{}]", "[[\"read_file\"]]", "\"read_file\""])
+def test_malformed_allowed_tools_gets_a_verdict_not_a_traceback(tmp_path, tools):
+    """Review finding: `"allowed_tools": [{}]` raised TypeError out of score()."""
+    play = fresh_copy(tmp_path)
+    config = play / "app" / "agent_config.json"
+    data = json.loads(config.read_text(encoding="utf-8"))
+    config.write_text(json.dumps({**data, "allowed_tools": json.loads(tools)}), encoding="utf-8")
+    result = run_score(play)
+    assert "Traceback" not in result.stderr, result.stderr
+    assert verdict_of(result.stdout)
+    assert "agent_config.json is missing or unreadable" in result.stdout

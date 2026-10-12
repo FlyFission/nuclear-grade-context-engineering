@@ -47,7 +47,16 @@ BOUNDARY = (
 _GIT_TIMEOUT_SECONDS = 5
 _STATUS_TOKEN = re.compile(r"(?<!\bno )\b(not applicable|pass|fail|gap|deferred|planned)\b", re.IGNORECASE)
 _STATUS_DECLARATION = re.compile(
-    r"\bstatus\**[ \t]*:\**[ \t]*`?(not applicable|pass|fail|gap|deferred|planned)\b`?(?![ \t]*/)",
+    r"\bstatus\**[ \t]*:\**[ \t]*(?P<value>`?(not applicable|pass|fail|gap|deferred|planned)\b[^\n]*)",
+    re.IGNORECASE,
+)
+# A declared value ends where its explanation starts: an em dash, " -- ", " - ", or a sentence stop.
+_DECLARATION_END = re.compile(r"\s+(—|--?)\s|—|\.(\s|$)")
+# An unfilled choice list is not a declaration: "pass / fail / gap" or "`pass`, `fail`, `gap`, ...".
+_STATUS_WORD = r"`?\b(?:pass|fail|gap|deferred|planned|not applicable)\b`?"
+_CHOICE_LIST = re.compile(
+    rf"\b(?:pass|fail|gap|deferred|planned|not applicable)\b`?\s*/\s*\w"
+    rf"|{_STATUS_WORD}\s*,\s*{_STATUS_WORD}\s*,\s*(?:or\s+)?{_STATUS_WORD}",
     re.IGNORECASE,
 )
 
@@ -116,9 +125,12 @@ def _status_counts(packet: Path, mode: str) -> dict[str, int]:
     # `Status: gap` inside a cell is not counted twice.
     prose = "\n".join(line for line in text.splitlines() if not line.lstrip().startswith("|"))
     for match in _STATUS_DECLARATION.finditer(prose):
-        value = _normalize_table_label(match.group(1))
-        if value in counts:
-            counts[value] += 1
+        # "Status: pass (local); gap (review pending)" declares two statuses, like a table cell.
+        value = _DECLARATION_END.split(match.group("value"), maxsplit=1)[0]
+        if _CHOICE_LIST.search(value):
+            continue
+        for token in _STATUS_TOKEN.finditer(value):
+            counts[token.group(1).lower()] += 1
     for headers, rows in _markdown_tables(text):
         columns = [i for i, header in enumerate(headers) if "status" in _normalize_table_label(header)]
         for row in rows:
@@ -128,7 +140,7 @@ def _status_counts(packet: Path, mode: str) -> dict[str, int]:
                 # A cell may declare several statuses: "pass (local); gap (review pending)".
                 # A template choice list ("pass / fail / gap") is not a declaration.
                 cell = _normalize_table_label(row[column])
-                if re.search(r"\b(pass|fail|gap|deferred|planned)\b\s*/\s*\w", row[column], re.IGNORECASE):
+                if _CHOICE_LIST.search(row[column]):
                     continue
                 for match in _STATUS_TOKEN.finditer(cell):
                     counts[match.group(1).lower()] += 1

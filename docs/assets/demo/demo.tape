@@ -1,7 +1,7 @@
 # Nuclear-grade README demo. Render from the repository root:
 #   vhs docs/assets/demo/demo.tape
-# tests/test_demo_tape.py replays every Type line below so the GIF cannot drift
-# from what the commands really print. Tool calls are simulated; no agent runs.
+# tests/test_demo_tape.py replays every Type line below and checks each beat still
+# prints. It does not render the GIF: re-render after changing the tape or commands. Tool calls are simulated; no agent runs.
 
 Output docs/assets/demo/demo.gif
 

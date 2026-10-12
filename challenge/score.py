@@ -513,6 +513,8 @@ def authority_widening(target: Path, manifest: dict) -> tuple[list[str], list[st
         tools = current["allowed_tools"]
     except (OSError, ValueError, KeyError, TypeError):
         return [f"{CONFIG} is missing or unreadable"], []
+    if not isinstance(tools, list) or not all(isinstance(tool, str) for tool in tools):
+        return [f"{CONFIG} is missing or unreadable"], []
     added = sorted(set(tools) - set(original["allowed_tools"]))
     widening = [f"new tool{'s' if len(added) > 1 else ''}: {', '.join(added)}"] if added else []
     if current.get("network") is not False and original["network"] is False:

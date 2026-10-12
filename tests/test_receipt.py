@@ -201,3 +201,46 @@ def test_status_declared_inside_a_table_cell_counts_once(tmp_path):
     receipt = receipt_for(packet)
     assert receipt["evidence_statuses"]["gap"] == 1
     assert receipt["open_evidence_items"] == 1
+
+
+def test_composite_prose_declaration_counts_every_status(tmp_path):
+    """Review finding: `- Status: pass (local); gap (review pending)` hid its gap from the badge."""
+    packet = minimal_quick_packet(tmp_path)
+    proof = packet / "proof.md"
+    proof.write_text(
+        proof.read_text(encoding="utf-8").replace(
+            "- Status: pass", "- Status: pass (local); gap (independent review pending)"
+        ),
+        encoding="utf-8",
+    )
+    receipt = receipt_for(packet)
+    assert receipt["evidence_statuses"]["pass"] == 1
+    assert receipt["evidence_statuses"]["gap"] == 1
+    assert receipt["open_evidence_items"] == 1
+
+
+def test_prose_explanation_after_a_declaration_is_not_counted(tmp_path):
+    packet = minimal_quick_packet(tmp_path)
+    proof = packet / "proof.md"
+    proof.write_text(
+        proof.read_text(encoding="utf-8")
+        + "\n- Retry path. Status: deferred — the gap closes once the fail-safe test can pass.\n",
+        encoding="utf-8",
+    )
+    statuses = receipt_for(packet)["evidence_statuses"]
+    assert statuses["deferred"] == 1
+    assert statuses["gap"] == 0 and statuses["fail"] == 0
+
+
+def test_comma_choice_list_in_prose_is_not_counted(tmp_path):
+    """The Standard template says: a status: `pass`, `fail`, `gap`, ... -- a list of choices, not a declaration."""
+    packet = minimal_quick_packet(tmp_path)
+    proof = packet / "proof.md"
+    proof.write_text(
+        proof.read_text(encoding="utf-8")
+        + "\n- Each important claim has a status: `pass`, `fail`, `gap`, `deferred`, `not applicable`, or `planned`.\n",
+        encoding="utf-8",
+    )
+    statuses = receipt_for(packet)["evidence_statuses"]
+    assert statuses["pass"] == 1
+    assert receipt_for(packet)["open_evidence_items"] == 0

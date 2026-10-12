@@ -36,7 +36,7 @@ Agents now edit files, change prompts, call tools, swap dependencies, write thei
 3. `ng validate <worked example> --json` reports `"ok": true` and `"open_evidence_items": 2`; `ng badge .` reports the repository's records and open items.
 4. `ng validate` on a freshly scaffolded, unfilled record prints `FAILED`.
 
-`sim` sends a simulated tool call through `hooks/pre_tool_use.py`; no agent runs. The recording is [`docs/assets/demo/demo.tape`](docs/assets/demo/demo.tape), and a test replays it so the GIF cannot drift from what the commands print.
+`sim` sends a simulated tool call through `hooks/pre_tool_use.py`; no agent runs. The recording is [`docs/assets/demo/demo.tape`](docs/assets/demo/demo.tape), and a test replays its commands so they still print what the recording shows. The test does not render the GIF; re-render it with `vhs docs/assets/demo/demo.tape` whenever the tape or those commands change.
 
 </details>
 

@@ -1,4 +1,4 @@
-"""Replay the README demo tape so the rendered GIF cannot drift from reality.
+"""Replay the README demo tape so its commands still print what the recording shows.
 
 Every `Type` line in docs/assets/demo/demo.tape runs, in order, in one bash
 session from the repository root; the output must still show each beat.

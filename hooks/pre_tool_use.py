@@ -42,6 +42,7 @@ ASK_PATHS = ()
 
 # Shell commands that are irreversible or release-shaped. Each is a human gate (ASK).
 _SEG = r"[^;&|\n]*"  # stay inside one simple command
+_OPTS = r"(?:[-+]\S*\s+(?:[^-+\s]\S*\s+)?)*"  # options before a subcommand, each with an optional value
 # "git", then global options (each may take a separate value: `-C dir`, `--exec-path /p`,
 # `--git-dir x`), then the subcommand. A value never starts with "-".
 _GIT = r"\bgit\s+(?:--?\S+\s+(?:[^-\s]\S*\s+)?)*"
@@ -59,8 +60,9 @@ ASK_COMMANDS = (
     (_GIT + r"tag\b", "git tag creates or moves a release marker"),
     # gh accepts options before the subcommand (`gh -R owner/repo release delete v1`).
     (r"\bgh\s+(?:--?\S+\s+(?:[^-\s]\S*\s+)?)*release\b", "gh release changes a published release"),
-    (r"\btwine\s+upload\b", "package publish is irreversible"),
-    (r"\b(npm|pnpm|yarn|uv|poetry|cargo)\s+publish\b", "package publish is irreversible"),
+    # Global options (and cargo's `+toolchain`) may come before the subcommand.
+    (r"\btwine\s+" + _OPTS + r"upload\b", "package publish is irreversible"),
+    (r"\b(npm|pnpm|yarn|uv|poetry|cargo)\s+" + _OPTS + r"publish\b", "package publish is irreversible"),
     (r"\b(curl|wget)\b[^;&\n]*\|\s*(sudo\s+)?(ba|z|da|k)?sh\b", "piping a download into a shell runs unreviewed code"),
     (r"\b(ba|z)?sh\s+<\(\s*(curl|wget)\b", "running a downloaded script runs unreviewed code"),
 )

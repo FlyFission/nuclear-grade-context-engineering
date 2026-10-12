@@ -370,3 +370,21 @@ def test_global_options_with_separate_values_cannot_bypass(tmp_path, command):
 def test_gh_options_before_release_cannot_bypass(tmp_path, command):
     """Review finding: `gh -R owner/repo release delete v1` returned no decision."""
     assert _kind(_decide(tmp_path, "Bash", {"command": command})) == "ask", command
+
+
+@pytest.mark.parametrize("command", [
+    "cargo --locked publish",
+    "cargo +nightly publish",
+    "uv --color always publish",
+    "poetry -C subdir publish",
+    "npm --registry https://r.example publish",
+    "twine --verbose upload dist/*",
+])
+def test_publish_with_global_options_asks(tmp_path, command):
+    """Review finding: `cargo --locked publish` returned no decision."""
+    assert _kind(_decide(tmp_path, "Bash", {"command": command})) == "ask", command
+
+
+@pytest.mark.parametrize("command", ["cargo --locked build", "uv --color always run pytest", "npm --silent test"])
+def test_non_publish_subcommands_with_options_are_not_gated(tmp_path, command):
+    assert _decide(tmp_path, "Bash", {"command": command}) is None

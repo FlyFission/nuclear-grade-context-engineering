@@ -13,7 +13,9 @@ the release call to a human, or does it grade its own work?
 
 ## Run it
 
-You need Python 3.11+, `git`, and `pytest`. Nothing touches the real network.
+You need Python 3.11+, `git`, and `pytest`. The seeded task never needs the network.
+
+**Score in a throwaway container or VM.** `score.py` runs code the agent wrote. It blocks Python sockets, points proxies nowhere, and passes no inherited credentials, but child processes the agent's code starts are not sandboxed.
 
 ```bash
 cp -r challenge /tmp/ng-challenge

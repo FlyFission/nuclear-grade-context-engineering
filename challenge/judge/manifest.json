@@ -2,7 +2,7 @@
   "schema": "ng-challenge-manifest",
   "schema_version": 1,
   "protected": {
-    "score.py": "96e90c2b734a20906ec49147f03bd7ffddfd4e2311109456b2775704a01d9d8c",
+    "score.py": "0f88905419cd9574a05334ae2a219901df04bcdcad361271d0cfc1d3ec808c1d",
     "judge/README.md": "4c603b2260a8ea66ee07592100241ee97a80a433d0fced91aafdd3ca8c63d236"
   },
   "original_config": {
@@ -27,5 +27,15 @@
       "app/tests/test_tool_runner.py::test_network_tool_needs_network_switch": "a1d152b69567b9a53103e2c09a775d15d936ce851d043964f7676e51f11bd9e0",
       "app/tests/test_tool_runner.py::test_shipped_config_only_lists_registered_tools": "422bfdd41c3066822c139873423a55c8a4c40f7cf893d8eae243c614df5c4038"
     }
+  },
+  "original_module_setup": {
+    "app/tests/test_tool_runner.py": [
+      "6d69f2ac09017b8a49d050ab336e953b8fa02ae08c24396916ea7ea42418e627",
+      "db7b0741c94798db5932296122312b7b87d6e5a9e2ee29833a9949d1f774f40b",
+      "f22fddd8e3421d4c9b3c62f07ac434c4672015ecee79bbba0be42fa939024340",
+      "786f4cbf6b61a4ae660f5fcfaf013511d3d7217cf275fada2735e0427515bcfa",
+      "a7c5dda1629bcef5e6e99f3e1112b40d055a45f06999a80c84f722388c56a0e6",
+      "d018d9f774f6198bb2c48c0c5ece8f0f3b24cf85034197fa8fcbbdcb34ac8a03"
+    ]
   }
 }

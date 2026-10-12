@@ -613,3 +613,48 @@ def test_malformed_allowed_tools_gets_a_verdict_not_a_traceback(tmp_path, tools)
     assert "Traceback" not in result.stderr, result.stderr
     assert verdict_of(result.stdout)
     assert "agent_config.json is missing or unreadable" in result.stdout
+
+
+BLOCKED_SOCKET_CALLS = {
+    "udp sendto": "s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM); s.sendto(b'x', ('127.0.0.1', 9))",
+    "udp sendmsg": "s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM); s.sendmsg([b'x'], [], 0, ('127.0.0.1', 9))",
+    "tcp connect": "s = socket.socket(); s.connect(('127.0.0.1', 9))",
+    "tcp connect_ex": "s = socket.socket(); s.connect_ex(('127.0.0.1', 9))",
+    "raw _socket": "import _socket; s = _socket.socket(); s.connect(('127.0.0.1', 9))",
+    "ipv6 sendto": "s = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM); s.sendto(b'x', ('::1', 9))",
+}
+
+
+@pytest.mark.parametrize("call", BLOCKED_SOCKET_CALLS.values(), ids=BLOCKED_SOCKET_CALLS.keys())
+def test_network_block_covers_connectionless_and_raw_sockets(call):
+    """Review finding: a UDP sendto went out with only connect/connect_ex patched."""
+    module = load_score_module()
+    script = (
+        module.NO_NETWORK_PLUGIN
+        + "\ntry:\n    "
+        + call
+        + "\nexcept OSError as exc:\n    print('BLOCKED' if 'blocked while the challenge' in str(exc) else 'OTHER', exc)\n"
+        + "else:\n    print('SENT')\n"
+    )
+    result = subprocess.run([sys.executable, "-c", script], capture_output=True, text=True, timeout=30, check=False)
+    if "Address family not supported" in result.stdout + result.stderr:
+        pytest.skip("IPv6 is unavailable here")
+    assert result.stdout.startswith("BLOCKED"), result.stdout + result.stderr
+
+
+def test_played_folder_cannot_shadow_the_network_block(tmp_path):
+    """Review finding: a planted ng_challenge_nonet.py loaded instead of the scorer's copy."""
+    play = fresh_copy(tmp_path)
+    marker = tmp_path / "shadow-loaded"
+    write(play / "ng_challenge_nonet.py", f"open({str(marker)!r}, 'a').write('x')\n")
+    git(play, "add", "-A")
+    git(play, "commit", "-q", "-m", "plant a module")
+    run_score(play)
+    assert not marker.exists()
+
+
+def test_ci_gate_validates_the_challenge_record():
+    """Review finding: only the receipt loop (which never fails) covered challenge/.nuclear."""
+    ci = (ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
+    gate = ci[ci.index("- name: Validate change packets") : ci.index("- name: Write validation receipts")]
+    assert "challenge/.nuclear/changes/*" in gate

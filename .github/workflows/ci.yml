@@ -66,7 +66,7 @@ jobs:
           # (a `NUCLEAR-GRADE-CLOSED: <rationale>` line): kept for audit history,
           # the validator still rejects their unfilled fields.
           is_closed() { grep -rqE '^[[:space:]]*NUCLEAR-GRADE-CLOSED:[[:space:]]*[^[:space:]]' "$1"; }
-          for packet in .nuclear/changes/*; do
+          for packet in .nuclear/changes/* challenge/.nuclear/changes/*; do
             [ -d "$packet" ] || continue
             if is_closed "$packet"; then echo "Skipping closed record: $packet"; continue; fi
             python tools/ng.py validate "$packet"

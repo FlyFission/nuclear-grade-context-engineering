@@ -418,3 +418,17 @@ def test_bare_hooks_directory_asks(tmp_path, command):
 @pytest.mark.parametrize("command", ["pytest tests/test_hooks.py", "ls src/hooks", "cat hooks.md.bak2", "echo webhooks"])
 def test_words_containing_hooks_are_not_gated(tmp_path, command):
     assert _decide(tmp_path, "Bash", {"command": command}) is None
+
+
+@pytest.mark.parametrize("command", [
+    "cmd /c rmdir /s /q C:\\Users\\me\\project",
+    "cmd /c rd /S /Q ..\\sibling",
+    "del /s /q C:\\work",
+])
+def test_cmd_slash_switch_deletes_ask(tmp_path, command):
+    """Review finding: `cmd /c rmdir /s /q C:\\Users\\me\\project` returned no decision."""
+    assert _kind(_decide(tmp_path, "PowerShell", {"command": command})) == "ask", command
+
+
+def test_cmd_delete_of_a_local_build_dir_is_not_gated(tmp_path):
+    assert _decide(tmp_path, "PowerShell", {"command": "cmd /c rmdir /s /q build"}) is None

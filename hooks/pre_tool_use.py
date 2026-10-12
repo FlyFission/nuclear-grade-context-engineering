@@ -70,6 +70,7 @@ ASK_COMMANDS = (
 # left out: it is too common a directory name to match in free text).
 # rm and its PowerShell spellings (Remove-Item and aliases).
 RM_VERBS = ("rm", "remove-item", "ri", "del", "erase", "rd", "rmdir")
+CMD_RM_VERBS = ("del", "erase", "rd", "rmdir")
 SHELL_TRUST_TOKENS = (".github/workflows", ".claude/settings", ".claude/hooks", ".nuclear/charter.md",
                       ".nuclear/gate-policy.json")
 
@@ -188,12 +189,14 @@ def _rm_outside_cwd(command):
         args = tokens[names.index(verb) + 1:]
         flags = "".join(a.lstrip("-") for a in args if a.startswith("-") and not a.startswith("--")).lower()
         long_flags = {a.lower() for a in args if a.startswith("--")}
+        # cmd.exe switches: `rd /s /q` and `del /s /q` delete a tree without confirmation.
+        slash = {a[1].lower() for a in args if re.fullmatch(r"/[A-Za-z]", a)} if verb in CMD_RM_VERBS else set()
         # Short flags (-rf) and PowerShell switches (-Recurse -Force) both land here.
-        recursive = "r" in flags or "--recursive" in long_flags
-        forced = "f" in flags or "--force" in long_flags
+        recursive = "r" in flags or "--recursive" in long_flags or "s" in slash
+        forced = "f" in flags or "--force" in long_flags or bool(slash & {"q", "f"})
         if not (recursive and forced):
             continue
-        targets = [a for a in args if not a.startswith("-")]
+        targets = [a for a in args if not a.startswith("-") and not (slash and re.fullmatch(r"/[A-Za-z]", a))]
         for target in targets or ["<none>"]:
             stripped = target.strip("'\"").replace("\\", "/")
             if (stripped.startswith(("/", "~", "$", "`")) or re.match(r"[A-Za-z]:/", stripped)

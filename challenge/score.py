@@ -879,6 +879,8 @@ def _negates_a_person(text: str) -> bool:
 def _disclaims_approval(match: re.Match) -> bool:
     # "approval is required" asks for approval; "is not required" / "is optional" / "no approval" disclaim it.
     words = match.group(0).lower()
+    if re.search(r"\b(not|n't)\s+optional\b", words):
+        return False  # "approval is not optional" insists on approval
     return words.startswith(("no ", "without ")) or bool(re.search(r"\b(not|n't|optional)\b|\bun", words))
 
 

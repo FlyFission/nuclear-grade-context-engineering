@@ -83,6 +83,20 @@ POLICY_FILE = os.path.join(".nuclear", "gate-policy.json")
 POLICY_KEYS = ("deny_paths", "ask_paths", "deny_commands", "ask_commands")
 
 
+def _names_project_hooks(normalized, roots, project_hooks):
+    """A path-shaped word that resolves into <root>/hooks/ (`../hooks/x`, `sub/../hooks/x`)."""
+    for word in re.findall(r"[^\s;&|<>()]+", normalized):
+        if "hooks/" not in word or ".." not in word:
+            continue
+        for root in roots:
+            base = root.replace("\\", "/")
+            joined = word if word.startswith("/") else os.path.join(base, word)
+            resolved = os.path.normpath(joined).replace("\\", "/").lower()
+            if any((resolved + "/").startswith(hooks) for hooks in project_hooks):
+                return True
+    return False
+
+
 def _join_quoted(command):
     """Replace each quoted string with its content as one word (inner spaces become "_")."""
     return re.sub(r'"([^"]*)"|\'([^\']*)\'',
@@ -249,7 +263,8 @@ def _decide(raw, project_dir):
         normalized = command.replace("\\", "/").lower()  # PowerShell paths use backslashes
         project_hooks = [r.replace("\\", "/").rstrip("/").lower() + "/hooks/" for r in roots]
         if (any(token in normalized for token in SHELL_TRUST_TOKENS) or SHELL_HOOKS_PATH.search(normalized)
-                or any(hooks in normalized for hooks in project_hooks)):
+                or any(hooks in normalized for hooks in project_hooks)
+                or _names_project_hooks(normalized, roots, project_hooks)):
             reasons.append("shell command names a protected trust surface")
         if reasons:
             return _ask(reasons[0] + "; human gate required")

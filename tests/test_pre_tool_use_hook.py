@@ -388,3 +388,22 @@ def test_publish_with_global_options_asks(tmp_path, command):
 @pytest.mark.parametrize("command", ["cargo --locked build", "uv --color always run pytest", "npm --silent test"])
 def test_non_publish_subcommands_with_options_are_not_gated(tmp_path, command):
     assert _decide(tmp_path, "Bash", {"command": command}) is None
+
+
+@pytest.mark.parametrize("command", [
+    "echo x > ../hooks/helper.py",
+    "cp evil.py ./sub/../../hooks/pre_commit.py",
+])
+def test_traversal_paths_into_project_hooks_ask(tmp_path, command):
+    """Review finding: `echo x > ../hooks/helper.py` from a subdirectory returned no decision."""
+    sub = tmp_path / "sub"
+    sub.mkdir()
+    out = gate.decide(_payload("Bash", {"command": command}, sub), str(tmp_path))
+    assert _kind(out) == "ask", command
+
+
+def test_traversal_outside_the_project_hooks_is_not_gated(tmp_path):
+    sub = tmp_path / "pkg" / "src"
+    sub.mkdir(parents=True)
+    out = gate.decide(_payload("Bash", {"command": "ls ../hooks/useThing.ts"}, sub), str(tmp_path))
+    assert out is None

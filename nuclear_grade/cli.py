@@ -7,6 +7,7 @@ engineering adequacy, safety, security, compliance, or verification and validati
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import re
 import shutil
@@ -27,6 +28,7 @@ from nuclear_grade.ng_validate import (
     has_closure_note,
     validate_packet,
 )
+from nuclear_grade.receipt import build_receipt
 from nuclear_grade.tokens import (
     build_report,
     check_budgets,
@@ -348,6 +350,12 @@ def build_parser() -> argparse.ArgumentParser:
 
     validate_parser = subcommands.add_parser("validate", help="Validate a change packet.")
     validate_parser.add_argument("packet", type=Path)
+    validate_parser.add_argument(
+        "--json",
+        action="store_true",
+        help="Print a versioned JSON receipt (file digests, git state, evidence-status counts) "
+        "instead of OK/FAILED lines. Exit codes are unchanged.",
+    )
     validate_parser.add_argument(
         "--strict-custody",
         action="store_true",
@@ -708,6 +716,16 @@ def handle_validate(args: argparse.Namespace) -> int:
         require_custody=args.strict_custody,
         require_authority=args.strict_authority,
     )
+    if args.json:
+        receipt = build_receipt(
+            args.packet,
+            result,
+            strict_custody=args.strict_custody,
+            strict_authority=args.strict_authority,
+            validator_version=_validator_version(),
+        )
+        print(json.dumps(receipt, indent=2, ensure_ascii=False))
+        return 0 if result.ok else 1
     if result.ok:
         print(f"OK: {args.packet}")
         return 0

@@ -45,7 +45,9 @@ The next work should deepen that seam rather than add another generic approval f
    migrate, then make the disclosure the default in the next breaking validator release.
 2. **Protect raw evidence.** Add adapters for out-of-band CI, attestations, immutable or append-only
    result retention, and independent rerun receipts. Preserve the boundary: integrity and
-   provenance do not prove adequacy or independence.
+   provenance do not prove adequacy or independence. First slice shipped: `ng validate --json`
+   emits a versioned receipt with packet file digests, packet-scoped git state, and open-evidence
+   counts. Next: a CI step that publishes the receipt as a build artifact, then signed attestations.
 3. **Add a derived acceptance graph.** Build an optional local index over existing packet records:
    candidate → claim → evidence → custody → verifier → verdict → clearance → baseline → revalidation
    trigger. Markdown and Git remain the source of truth; the graph is a query and policy surface,

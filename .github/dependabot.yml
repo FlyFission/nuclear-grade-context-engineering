@@ -1,0 +1,32 @@
+# Dependency update policy. Each entry records why it is shaped the way it is, so a
+# reviewer can challenge the decision rather than rediscover it.
+version: 2
+updates:
+  # CI actions are pinned to immutable commit SHAs (see ci.yml). Pins without an
+  # update channel quietly go stale; Dependabot rewrites the SHA and its version
+  # comment together, and every bump still has to pass the full CI gate.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "ci(deps)"
+
+  # Python: security-only. The shipped package has zero runtime dependencies; the
+  # optional `mcp` extra is range-bounded to the SDK majors CI tests (`<3`), so a
+  # routine bump would only move a bound that needs a tested port. A limit of 0
+  # turns off version-update PRs; known-CVE security updates are exempt and still open.
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 0
+    labels:
+      - "dependencies"
+      - "python"
+    commit-message:
+      prefix: "chore(deps)"

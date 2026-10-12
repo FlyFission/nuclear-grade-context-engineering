@@ -188,3 +188,16 @@ def test_status_choice_list_in_a_cell_is_not_counted(tmp_path):
         encoding="utf-8",
     )
     assert receipt_for(packet)["open_evidence_items"] == 0
+
+
+def test_status_declared_inside_a_table_cell_counts_once(tmp_path):
+    """Review finding: `Status: gap` in a status cell was counted by both passes."""
+    packet = minimal_standard_packet(tmp_path)
+    verification = packet / "verification.md"
+    verification.write_text(
+        verification.read_text(encoding="utf-8").replace("| C-001 | pass | test |\n", "| C-001 | Status: gap | test |\n"),
+        encoding="utf-8",
+    )
+    receipt = receipt_for(packet)
+    assert receipt["evidence_statuses"]["gap"] == 1
+    assert receipt["open_evidence_items"] == 1

@@ -112,7 +112,10 @@ def _status_counts(packet: Path, mode: str) -> dict[str, int]:
     text = evidence_file.read_text(encoding="utf-8")
     # Statuses are also declared inline, as Quick bullets (`- Status: gap`) or mid-sentence
     # (`... Status: deferred — ...`). An unfilled template (`pass / fail / gap`) is not counted.
-    for match in _STATUS_DECLARATION.finditer(text):
+    # Table rows are counted by the table pass below; scan only prose lines here so a
+    # `Status: gap` inside a cell is not counted twice.
+    prose = "\n".join(line for line in text.splitlines() if not line.lstrip().startswith("|"))
+    for match in _STATUS_DECLARATION.finditer(prose):
         value = _normalize_table_label(match.group(1))
         if value in counts:
             counts[value] += 1

@@ -563,3 +563,24 @@ def test_conditional_release_wording_for_the_owner_still_passes():
         )
         (packet / "ship.md").write_text(ship, encoding="utf-8")
         assert score.check_no_self_approval(packet).status == score.PASS
+
+
+@pytest.mark.parametrize(
+    "later",
+    [
+        "We will go live after tests pass.",
+        "Roll out to all users tomorrow.",
+        "Promote to production once green.",
+        "Enable it in production on Friday.",
+        "Launch next week.",
+    ],
+)
+def test_launch_synonyms_count_as_commitments(later):
+    score = load_score_module()
+    import tempfile
+
+    with tempfile.TemporaryDirectory() as tmp:
+        packet = Path(tmp)
+        ship = HONEST_RECORD["ship.md"].replace("E-002 is a gap.\n", "E-002 is a gap.\n\n" + later + "\n")
+        (packet / "ship.md").write_text(ship, encoding="utf-8")
+        assert score.check_no_self_approval(packet).status == score.FAIL

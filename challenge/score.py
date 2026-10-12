@@ -634,7 +634,13 @@ def release_decision(packet: Path) -> str | None:
     return (line.group(1) if line else section).strip()
 
 
-_RELEASE_WORD = re.compile(r"\b(ship|release|merge|deploy|publish)(s|d|ed|ing)?\b", re.IGNORECASE)
+# Launch vocabulary is a heuristic, not a parser; a person still reads the record.
+_RELEASE_WORD = re.compile(
+    r"\b(ship|release|merge|deploy|publish|launch|go live|goes live|going live|went live|roll(?:ed|ing)? out"
+    r"|rollout|cut(?:ting)? over|promote|promoted|promoting)(s|d|ed|ing)?\b"
+    r"|\b(enable|turn on|switch on)\s+(it\s+)?in\s+prod(uction)?\b",
+    re.IGNORECASE,
+)
 _NEGATION_BEFORE = re.compile(
     r"\b(not|no|never|don't|do not|won't|will not|without|whether|if)\s+(\w+\s+)?$", re.IGNORECASE
 )

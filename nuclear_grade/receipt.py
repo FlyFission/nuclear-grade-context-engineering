@@ -45,7 +45,10 @@ BOUNDARY = (
     "evidence is adequate, independent, or true, and this receipt is not a signature."
 )
 _GIT_TIMEOUT_SECONDS = 5
-_STATUS_BULLET = re.compile(r"^[ \t]*[-*+][ \t]+\**(?:result[ \t]+)?status\**[ \t]*:\**[ \t]*(.+?)[ \t]*$", re.IGNORECASE | re.MULTILINE)
+_STATUS_DECLARATION = re.compile(
+    r"\bstatus\**[ \t]*:\**[ \t]*`?(not applicable|pass|fail|gap|deferred|planned)\b`?(?![ \t]*/)",
+    re.IGNORECASE,
+)
 
 
 def _sha256_bytes(content: bytes) -> str:
@@ -106,9 +109,9 @@ def _status_counts(packet: Path, mode: str) -> dict[str, int]:
     if not evidence_file.is_file():
         return counts
     text = evidence_file.read_text(encoding="utf-8")
-    # Quick proof.md declares results as bullets: `- Status: gap`. An unfilled template
-    # line (`pass / fail / gap`) is not one status, so it is not counted.
-    for match in _STATUS_BULLET.finditer(text):
+    # Statuses are also declared inline, as Quick bullets (`- Status: gap`) or mid-sentence
+    # (`... Status: deferred — ...`). An unfilled template (`pass / fail / gap`) is not counted.
+    for match in _STATUS_DECLARATION.finditer(text):
         value = _normalize_table_label(match.group(1))
         if value in counts:
             counts[value] += 1

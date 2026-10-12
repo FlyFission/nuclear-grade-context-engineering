@@ -46,7 +46,9 @@ Default policy (constants in the script):
 | Decision | Matches |
 |---|---|
 | `deny` | `Write`/`Edit`/`MultiEdit`/`NotebookEdit` to `.github/workflows/**`, `.claude/settings*.json`, `.claude/hooks/**`, `hooks/**`, `.nuclear/charter.md`, `.nuclear/gate-policy.json`, `~/.claude/settings*.json`, or `~/.claude/hooks/**`. Paths are normalized, symlink-resolved, and case-folded. |
-| `ask` | `Bash`: force push (`--force`, `-f`, `--force-with-lease`, `+ref`); `git push --tags/--mirror/--delete`; `git tag`; `gh release`; `twine upload`; `npm`/`pnpm`/`yarn`/`uv`/`poetry`/`cargo publish`; `rm -rf` on an absolute, `~`, `$VAR`, `..`, `.` or `*` target; `curl`/`wget` piped to a shell; any command naming a protected path. |
+| `ask` | `Bash` or `PowerShell`: force push (`--force`, `-f`, `--force-with-lease`, `+ref`); `git push --tags/--follow-tags/--mirror/--delete`, or a push of `refs/tags/...` or a version-shaped tag (`v1.2.3`); `git tag`; `gh release`; `twine upload`; `npm`/`pnpm`/`yarn`/`uv`/`poetry`/`cargo publish`; `rm -rf` on an absolute, `~`, `$VAR`, `..`, `.` or `*` target; `curl`/`wget` piped to a shell; any command naming a protected path. |
+
+**Fail closed when the hook itself cannot run.** The `Enable` snippet sets `"onFailure": "block"` (Claude Code v2.1.295 or later). Without it, a missing `python3`, a crash, or invalid output lets the tool call proceed, because the host's default is `continue`. On older versions, that failure mode stays open.
 
 **Policy file.** `.nuclear/gate-policy.json` may add rules: `deny_paths` and `ask_paths` (globs),
 `deny_commands` and `ask_commands` (regexes). No key removes a default. The gate also denies agent
@@ -67,7 +69,7 @@ Copy the scripts you want into your repo (for example `.claude/hooks/`) and regi
       { "matcher": "*", "hooks": [ { "type": "command", "command": "python3", "args": ["${CLAUDE_PROJECT_DIR}/.claude/hooks/user_prompt_submit.py"] } ] }
     ],
     "PreToolUse": [
-      { "matcher": "Write|Edit|MultiEdit|NotebookEdit|Bash", "hooks": [ { "type": "command", "command": "python3", "args": ["${CLAUDE_PROJECT_DIR}/.claude/hooks/pre_tool_use.py"] } ] }
+      { "matcher": "Write|Edit|MultiEdit|NotebookEdit|Bash|PowerShell", "hooks": [ { "type": "command", "command": "python3", "args": ["${CLAUDE_PROJECT_DIR}/.claude/hooks/pre_tool_use.py"], "onFailure": "block" } ] }
     ]
   }
 }

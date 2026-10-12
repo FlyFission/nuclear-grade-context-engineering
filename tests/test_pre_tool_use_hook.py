@@ -217,3 +217,35 @@ def test_gate_is_stdlib_no_network_no_exec():
                 and isinstance(node.value.value, ast.Name) and node.value.value.id == "os"
                 and node.value.attr == "path"):
             assert node.attr in safe_os_path, f"os.path.{node.attr} is not allowed"
+
+
+# --- review regressions (PR #110) -----------------------------------------------
+
+
+@pytest.mark.parametrize(
+    "command",
+    [
+        "git push origin v0.6.0",
+        "git push origin refs/tags/v0.6.0",
+        "git push --follow-tags origin main",
+        "git push origin 1.2.3",
+    ],
+)
+def test_release_tag_pushes_ask(tmp_path, command):
+    assert _kind(_decide(tmp_path, "Bash", {"command": command})) == "ask"
+
+
+def test_ordinary_branch_push_is_not_gated(tmp_path):
+    assert _decide(tmp_path, "Bash", {"command": "git push origin feature-v2-docs"}) is None
+
+
+@pytest.mark.parametrize("command", ["git push --force origin main", "twine upload dist/*", "gh release create v1"])
+def test_powershell_tool_gets_the_same_gate(tmp_path, command):
+    assert _kind(_decide(tmp_path, "PowerShell", {"command": command})) == "ask"
+
+
+def test_enable_snippet_blocks_when_the_hook_fails():
+    hooks_doc = (ROOT / "HOOKS.md").read_text(encoding="utf-8")
+    snippet = next(line for line in hooks_doc.splitlines() if "pre_tool_use.py" in line and '"matcher"' in line)
+    assert '"onFailure": "block"' in snippet
+    assert "PowerShell" in snippet

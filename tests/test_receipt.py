@@ -145,3 +145,18 @@ def test_unfilled_status_template_line_is_not_counted(tmp_path):
     )
 
     assert receipt_for(packet)["open_evidence_items"] == 0
+
+
+def test_inline_status_declarations_are_counted(tmp_path):
+    """Review finding: `- No score yet. Status: deferred — ...` must count as an open item."""
+    packet = minimal_quick_packet(tmp_path)
+    proof = packet / "proof.md"
+    proof.write_text(
+        proof.read_text(encoding="utf-8") + "\n## Gaps\n\n- No automated score. Status: deferred — optional stretch.\n",
+        encoding="utf-8",
+    )
+
+    receipt = receipt_for(packet)
+
+    assert receipt["evidence_statuses"]["deferred"] == 1
+    assert receipt["open_evidence_items"] == 1

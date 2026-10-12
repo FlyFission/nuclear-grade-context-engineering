@@ -22,6 +22,8 @@ import os
 import re
 import sys
 
+# Claude Code's PowerShell tool (Windows) carries its command in the same field as Bash.
+SHELL_TOOLS = ("Bash", "PowerShell")
 WRITE_TOOLS = {"Write": "file_path", "Edit": "file_path", "MultiEdit": "file_path", "NotebookEdit": "notebook_path"}
 
 # The gate's own trust surfaces. Globs are project-root-relative; a leading "~/"
@@ -44,8 +46,12 @@ _GIT = r"\bgit\s+(?:-[cC]\s+\S+\s+|--?\S+\s+)*"  # "git", global options, then t
 ASK_COMMANDS = (
     (_GIT + r"push\b" + _SEG + r"(\s--force(-with-lease)?\b|\s-[a-zA-Z]*f[a-zA-Z]*\b|\s\+\S)",
      "git force push rewrites shared history"),
-    (_GIT + r"push\b" + _SEG + r"\s--(tags|mirror|delete)\b",
+    (_GIT + r"push\b" + _SEG + r"\s--(tags|follow-tags|mirror|delete)\b",
      "git push of tags, a mirror, or a ref deletion"),
+    # A single tag push is how a release starts (docs/05-reference/releasing.md). Catch
+    # refs/tags/ and version-shaped refspecs; an arbitrary tag name cannot be told from a branch.
+    (_GIT + r"push\b" + _SEG + r"(\brefs/tags/|\s\+?v?\d+\.\d+(\.\d+)?([-.+][\w.]+)?(:\S*)?(\s|$))",
+     "git push of a release tag starts a release"),
     (_GIT + r"tag\b", "git tag creates or moves a release marker"),
     (r"\bgh\s+release\b", "gh release changes a published release"),
     (r"\btwine\s+upload\b", "package publish is irreversible"),
@@ -184,7 +190,7 @@ def _decide(raw, project_dir):
         return _ask("no absolute project directory or cwd to resolve paths against; failing closed")
 
     extra, error = _load_policy(list(dict.fromkeys(roots)))
-    if error and (tool in WRITE_TOOLS or tool == "Bash"):
+    if error and (tool in WRITE_TOOLS or tool in SHELL_TOOLS):
         return _ask(error + "; failing closed")
 
     if tool in WRITE_TOOLS:
@@ -200,10 +206,10 @@ def _decide(raw, project_dir):
             return _ask(tool + " to a gated path (" + hits[0] + ") needs a human decision")
         return None
 
-    if tool == "Bash":
+    if tool in SHELL_TOOLS:
         command = tool_input.get("command")
         if not isinstance(command, str):
-            return _ask("Bash input lacks a command string; failing closed")
+            return _ask(tool + " input lacks a command string; failing closed")
         for pattern in extra["deny_commands"]:
             if re.search(pattern, command):
                 return _decision("deny", "command matches a policy deny rule")

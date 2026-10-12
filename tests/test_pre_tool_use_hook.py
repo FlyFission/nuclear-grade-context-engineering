@@ -281,3 +281,16 @@ def test_powershell_workspace_cleanup_is_not_gated(tmp_path):
 def test_powershell_backslash_paths_name_protected_files(tmp_path):
     out = _decide(tmp_path, "PowerShell", {"command": 'Set-Content .github\\workflows\\ci.yml "x"'})
     assert _kind(out) == "ask"
+
+
+@pytest.mark.parametrize("command", [
+    "git.exe push --force origin main",
+    "C:\\Program Files\\Git\\bin\\git.exe push -f origin main",
+    "gh.exe release create v1.0.0",
+    "twine.exe upload dist/*",
+    "npm.cmd publish",
+    "GIT.EXE tag v1.0.0",
+])
+def test_windows_executable_suffixes_cannot_bypass(tmp_path, command):
+    """Review finding: `git.exe push --force` returned no decision."""
+    assert _kind(_decide(tmp_path, "PowerShell", {"command": command})) == "ask", command

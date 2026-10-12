@@ -67,6 +67,8 @@ RM_VERBS = ("rm", "remove-item", "ri", "del", "erase", "rd", "rmdir")
 SHELL_TRUST_TOKENS = (".github/workflows", ".claude/settings", ".claude/hooks", ".nuclear/charter.md",
                       ".nuclear/gate-policy.json")
 
+WINDOWS_SUFFIX = re.compile(r"(\w)\.(exe|cmd|bat|com|ps1)\b", re.IGNORECASE)
+
 POLICY_FILE = os.path.join(".nuclear", "gate-policy.json")
 POLICY_KEYS = ("deny_paths", "ask_paths", "deny_commands", "ask_commands")
 
@@ -219,10 +221,12 @@ def _decide(raw, project_dir):
         for pattern in extra["deny_commands"]:
             if re.search(pattern, command):
                 return _decision("deny", "command matches a policy deny rule")
-        # Built-in rules ignore case: Windows command names are case-insensitive (`Git`, `GH`).
-        reasons = [why for pattern, why in ASK_COMMANDS if re.search(pattern, command, re.IGNORECASE)]
+        # Built-in rules ignore case: Windows command names are case-insensitive (`Git`, `GH`),
+        # and `git.exe` or an npm `.cmd` shim is the same command as `git` or `npm`.
+        plain = WINDOWS_SUFFIX.sub(r"\1", command)
+        reasons = [why for pattern, why in ASK_COMMANDS if re.search(pattern, plain, re.IGNORECASE)]
         reasons += ["command matches a policy ask rule" for p in extra["ask_commands"] if re.search(p, command)]
-        if _rm_outside_cwd(command):
+        if _rm_outside_cwd(plain):
             reasons.append("recursive forced rm outside a plain cwd-relative path")
         normalized = command.replace("\\", "/").lower()  # PowerShell paths use backslashes
         if any(token in normalized for token in SHELL_TRUST_TOKENS):

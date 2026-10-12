@@ -77,6 +77,12 @@ POLICY_FILE = os.path.join(".nuclear", "gate-policy.json")
 POLICY_KEYS = ("deny_paths", "ask_paths", "deny_commands", "ask_commands")
 
 
+def _join_quoted(command):
+    """Replace each quoted string with its content as one word (inner spaces become "_")."""
+    return re.sub(r'"([^"]*)"|\'([^\']*)\'',
+                  lambda m: re.sub(r"\s+", "_", m.group(1) if m.group(1) is not None else m.group(2)), command)
+
+
 def _ask(reason):
     return _decision("ask", reason)
 
@@ -227,14 +233,17 @@ def _decide(raw, project_dir):
                 return _decision("deny", "command matches a policy deny rule")
         # Built-in rules ignore case: Windows command names are case-insensitive (`Git`, `GH`),
         # and `git.exe` or an npm `.cmd` shim is the same command as `git` or `npm`.
-        # A quoted program path (`& "C:\\...\\git.exe" push`) is the same program unquoted.
-        plain = WINDOWS_SUFFIX.sub(r"\1", command).replace('"', " ").replace("'", " ")
+        # A quoted word stays one word (`git -C "repo with space" push`), and a quoted program
+        # path (`& "C:\\...\\git.exe" push`) is the same program unquoted.
+        plain = WINDOWS_SUFFIX.sub(r"\1", _join_quoted(command))
         reasons = [why for pattern, why in ASK_COMMANDS if re.search(pattern, plain, re.IGNORECASE)]
         reasons += ["command matches a policy ask rule" for p in extra["ask_commands"] if re.search(p, command)]
         if _rm_outside_cwd(plain):
             reasons.append("recursive forced rm outside a plain cwd-relative path")
         normalized = command.replace("\\", "/").lower()  # PowerShell paths use backslashes
-        if any(token in normalized for token in SHELL_TRUST_TOKENS) or SHELL_HOOKS_PATH.search(normalized):
+        project_hooks = [r.replace("\\", "/").rstrip("/").lower() + "/hooks/" for r in roots]
+        if (any(token in normalized for token in SHELL_TRUST_TOKENS) or SHELL_HOOKS_PATH.search(normalized)
+                or any(hooks in normalized for hooks in project_hooks)):
             reasons.append("shell command names a protected trust surface")
         if reasons:
             return _ask(reasons[0] + "; human gate required")

@@ -324,3 +324,23 @@ def test_nested_hooks_directories_are_not_gated(tmp_path, command):
 def test_quoted_program_paths_cannot_bypass(tmp_path, command):
     """Review finding: `& "C:\\...\\git.exe" push -f` left `git"` and returned no decision."""
     assert _kind(_decide(tmp_path, "PowerShell", {"command": command})) == "ask", command
+
+
+@pytest.mark.parametrize("command", [
+    'git -C "repo with space" push --force origin main',
+    "git -C 'my checkout' push -f origin main",
+    'git -c user.name="A B" push --force origin main',
+])
+def test_quoted_global_option_values_cannot_bypass(tmp_path, command):
+    """Review finding: unquoting split `-C "repo with space"` into words and hid the push."""
+    assert _kind(_decide(tmp_path, "Bash", {"command": command})) == "ask", command
+
+
+def test_absolute_path_into_project_hooks_asks(tmp_path):
+    """Review finding: `echo x > /abs/project/hooks/helper.py` returned no decision."""
+    command = f"echo x > {tmp_path}/hooks/helper.py"
+    assert _kind(_decide(tmp_path, "Bash", {"command": command})) == "ask"
+
+
+def test_quoted_commit_message_is_still_not_gated(tmp_path):
+    assert _decide(tmp_path, "Bash", {"command": "git commit -m 'fix tag parsing; push --force docs'"}) is None

@@ -67,3 +67,14 @@ def test_quick_record_with_a_gap_is_not_green(tmp_path):
     badge = build_badge(summarize(tmp_path, packet_health))
     assert badge["color"] == "yellow"
     assert badge["message"] == "1 · 1 open items"
+
+
+def test_record_with_no_readable_status_is_not_shown_as_zero_open(tmp_path):
+    """Review finding: `- The proof remains planned` validated, and the badge said 0 open items in green."""
+    packet = minimal_quick_packet(tmp_path)
+    proof = packet / "proof.md"
+    proof.write_text(proof.read_text(encoding="utf-8").replace("- Status: pass", "- The proof remains planned"), encoding="utf-8")
+    assert packet_health(packet) == "ok"
+    badge = build_badge(summarize(tmp_path, packet_health))
+    assert badge["color"] == "red"
+    assert badge["message"] == "1 · 1 need attention"

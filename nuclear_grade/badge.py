@@ -37,6 +37,11 @@ def summarize(repo: Path, health_of: Callable[[Path], str]) -> dict[str, int]:
             summary["attention"] += 1
             continue
         counts = _status_counts(packet, _effective_mode(packet))
+        if not any(counts.values()):
+            # The validator accepts any status word in prose ("remains planned"); a record with no
+            # declared status the count can read is unknown, not zero open items.
+            summary["attention"] += 1
+            continue
         summary["open_items"] += sum(counts[status] for status in OPEN_STATUSES)
     return summary
 

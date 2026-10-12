@@ -121,3 +121,27 @@ def test_cli_json_flag_keeps_exit_codes(tmp_path):
     failed = run_ng("validate", str(packet), "--json")
     assert failed.returncode == 1
     assert json.loads(failed.stdout)["ok"] is False
+
+
+def test_quick_bullet_statuses_are_counted(tmp_path):
+    """Review finding: Quick proof.md uses `- Status: gap`; a gap must not read as zero open items."""
+    packet = minimal_quick_packet(tmp_path)
+    proof = packet / "proof.md"
+    proof.write_text(proof.read_text(encoding="utf-8").replace("- Status: pass", "- Status: gap"), encoding="utf-8")
+
+    receipt = receipt_for(packet)
+
+    assert receipt["ok"] is True
+    assert receipt["evidence_statuses"]["gap"] == 1
+    assert receipt["open_evidence_items"] == 1
+
+
+def test_unfilled_status_template_line_is_not_counted(tmp_path):
+    packet = minimal_quick_packet(tmp_path)
+    proof = packet / "proof.md"
+    proof.write_text(
+        proof.read_text(encoding="utf-8").replace("- Status: pass", "- Status: pass / fail / gap / not applicable"),
+        encoding="utf-8",
+    )
+
+    assert receipt_for(packet)["open_evidence_items"] == 0

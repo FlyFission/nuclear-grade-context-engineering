@@ -19,6 +19,7 @@ from __future__ import annotations
 import hashlib
 import json
 import platform
+import re
 import subprocess
 from datetime import UTC, datetime
 from pathlib import Path
@@ -44,6 +45,7 @@ BOUNDARY = (
     "evidence is adequate, independent, or true, and this receipt is not a signature."
 )
 _GIT_TIMEOUT_SECONDS = 5
+_STATUS_BULLET = re.compile(r"^[ \t]*[-*+][ \t]+\**(?:result[ \t]+)?status\**[ \t]*:\**[ \t]*(.+?)[ \t]*$", re.IGNORECASE | re.MULTILINE)
 
 
 def _sha256_bytes(content: bytes) -> str:
@@ -103,7 +105,14 @@ def _status_counts(packet: Path, mode: str) -> dict[str, int]:
     evidence_file = packet / ("proof.md" if mode == QUICK_MODE else "verification.md")
     if not evidence_file.is_file():
         return counts
-    for headers, rows in _markdown_tables(evidence_file.read_text(encoding="utf-8")):
+    text = evidence_file.read_text(encoding="utf-8")
+    # Quick proof.md declares results as bullets: `- Status: gap`. An unfilled template
+    # line (`pass / fail / gap`) is not one status, so it is not counted.
+    for match in _STATUS_BULLET.finditer(text):
+        value = _normalize_table_label(match.group(1))
+        if value in counts:
+            counts[value] += 1
+    for headers, rows in _markdown_tables(text):
         columns = [i for i, header in enumerate(headers) if "status" in _normalize_table_label(header)]
         for row in rows:
             for column in columns:

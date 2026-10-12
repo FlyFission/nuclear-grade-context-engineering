@@ -58,3 +58,12 @@ def test_cli_writes_badge_file(tmp_path):
     result = run_ng("badge", str(tmp_path), "--out", str(out))
     assert result.returncode == 0, result.stderr
     assert json.loads(Path(out).read_text(encoding="utf-8"))["schemaVersion"] == 1
+
+
+def test_quick_record_with_a_gap_is_not_green(tmp_path):
+    packet = minimal_quick_packet(tmp_path)
+    proof = packet / "proof.md"
+    proof.write_text(proof.read_text(encoding="utf-8").replace("- Status: pass", "- Status: gap"), encoding="utf-8")
+    badge = build_badge(summarize(tmp_path, packet_health))
+    assert badge["color"] == "yellow"
+    assert badge["message"] == "1 · 1 open items"

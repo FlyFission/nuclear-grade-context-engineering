@@ -227,7 +227,8 @@ def _decide(raw, project_dir):
                 return _decision("deny", "command matches a policy deny rule")
         # Built-in rules ignore case: Windows command names are case-insensitive (`Git`, `GH`),
         # and `git.exe` or an npm `.cmd` shim is the same command as `git` or `npm`.
-        plain = WINDOWS_SUFFIX.sub(r"\1", command)
+        # A quoted program path (`& "C:\\...\\git.exe" push`) is the same program unquoted.
+        plain = WINDOWS_SUFFIX.sub(r"\1", command).replace('"', " ").replace("'", " ")
         reasons = [why for pattern, why in ASK_COMMANDS if re.search(pattern, plain, re.IGNORECASE)]
         reasons += ["command matches a policy ask rule" for p in extra["ask_commands"] if re.search(p, command)]
         if _rm_outside_cwd(plain):

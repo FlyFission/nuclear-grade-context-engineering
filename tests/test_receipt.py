@@ -278,3 +278,19 @@ def test_status_words_inside_an_explanation_are_not_counted(tmp_path):
     assert statuses["not applicable"] == 1
     assert statuses["planned"] == 0 and statuses["gap"] == 0
     assert receipt_for(packet)["open_evidence_items"] == 0
+
+
+def test_explanation_after_a_dash_in_a_status_cell_is_not_counted(tmp_path):
+    """Review finding: `pass — prior gap is closed` counted a gap."""
+    packet = minimal_standard_packet(tmp_path)
+    verification = packet / "verification.md"
+    verification.write_text(
+        verification.read_text(encoding="utf-8").replace(
+            "| C-001 | pass | test |\n",
+            "| C-001 | pass — prior gap is closed | test |\n| C-002 | pass (local); gap (review pending) | t |\n",
+        ),
+        encoding="utf-8",
+    )
+    statuses = receipt_for(packet)["evidence_statuses"]
+    assert statuses["pass"] == 2
+    assert statuses["gap"] == 1

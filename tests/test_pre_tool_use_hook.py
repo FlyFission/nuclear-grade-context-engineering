@@ -314,3 +314,13 @@ def test_shell_writes_to_the_hook_directory_ask(tmp_path, command):
 ])
 def test_nested_hooks_directories_are_not_gated(tmp_path, command):
     assert _decide(tmp_path, "Bash", {"command": command}) is None
+
+
+@pytest.mark.parametrize("command", [
+    '& "C:\\\\Program Files\\\\Git\\\\bin\\\\git.exe" push -f origin main',
+    "& 'C:/Program Files/Git/bin/git.exe' push --force origin main",
+    '"gh.exe" release create v1.0.0',
+])
+def test_quoted_program_paths_cannot_bypass(tmp_path, command):
+    """Review finding: `& "C:\\...\\git.exe" push -f` left `git"` and returned no decision."""
+    assert _kind(_decide(tmp_path, "PowerShell", {"command": command})) == "ask", command

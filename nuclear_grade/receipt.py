@@ -151,11 +151,11 @@ def _status_counts(packet: Path, mode: str) -> dict[str, int]:
                 # A template choice list ("pass / fail / gap") is not a declaration.
                 if _CHOICE_LIST.search(row[column]):
                     continue
-                raw = row[column]
-                if column in result_columns:
-                    raw = _DECLARATION_END.split(raw.strip(), maxsplit=1)[0]
-                    if not _STATUS_TOKEN.match(_normalize_table_label(raw)):
-                        continue
+                # The explanation after a dash or sentence stop declares nothing ("pass — prior gap
+                # is closed"); a composite joined by ";" stays whole.
+                raw = _DECLARATION_END.split(row[column].strip(), maxsplit=1)[0]
+                if column in result_columns and not _STATUS_TOKEN.match(_normalize_table_label(raw)):
+                    continue
                 cell = _normalize_table_label(_PARENTHETICAL.sub(" ", raw))
                 for match in _STATUS_TOKEN.finditer(cell):
                     counts[match.group(1).lower()] += 1

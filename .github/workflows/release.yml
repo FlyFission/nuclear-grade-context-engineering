@@ -92,7 +92,8 @@ jobs:
     # Opt-in: repo variable PUBLISH_TO_PYPI=true, a PyPI Trusted Publisher, and
     # required reviewers on the `pypi` environment.
     if: vars.PUBLISH_TO_PYPI == 'true'
-    needs: build
+    # After the GitHub release exists: a failed release must not leave a PyPI-only version.
+    needs: [build, github-release]
     runs-on: ubuntu-latest
     environment: pypi
     permissions:

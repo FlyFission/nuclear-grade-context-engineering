@@ -56,3 +56,11 @@ def test_release_workflow_refuses_tags_off_the_default_branch():
     assert "fetch-depth: 0" in workflow
     assert ancestry < workflow.index("python -m build")
     assert ancestry < workflow.index("python -m nuclear_grade.release --tag")
+
+
+def test_pypi_publishes_only_after_the_github_release():
+    """Review finding: pypi and github-release both needed only build, so they ran in parallel."""
+    import yaml
+
+    jobs = yaml.safe_load((ROOT / ".github/workflows/release.yml").read_text(encoding="utf-8"))["jobs"]
+    assert "github-release" in jobs["pypi"]["needs"]

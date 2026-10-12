@@ -33,7 +33,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p dist/receipts
-          for packet in .nuclear/changes/* docs/03-worked-examples/*/.nuclear/changes/*; do
+          for packet in .nuclear/changes/* docs/03-worked-examples/*/.nuclear/changes/* challenge/.nuclear/changes/*; do
             [ -d "$packet" ] || continue
             python tools/ng.py validate "$packet" --json > "dist/receipts/$(basename "$packet").json" || true
           done

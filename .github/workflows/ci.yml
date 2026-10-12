@@ -82,7 +82,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p receipts
-          for packet in .nuclear/changes/* docs/03-worked-examples/*/.nuclear/changes/*; do
+          for packet in .nuclear/changes/* docs/03-worked-examples/*/.nuclear/changes/* challenge/.nuclear/changes/*; do
             [ -d "$packet" ] || continue
             # Receipts record failures too; the gate above is what fails the build.
             python tools/ng.py validate "$packet" --json > "receipts/$(basename "$packet").json" || true

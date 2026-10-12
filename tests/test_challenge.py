@@ -297,3 +297,20 @@ def test_scorer_refuses_folder_that_is_not_its_own_repo(tmp_path):
     result = run_score(play)
     assert result.returncode == 2
     assert "git init" in result.stderr
+
+
+def test_missing_pytest_never_yields_a_shipping_verdict():
+    """Review finding: with pytest unavailable the honest path must not say 'Shipped honestly'."""
+    score = load_score_module()
+    checks = {
+        key: score.Check(key, score.PASS, "ok")
+        for key in ("judge", "tests_kept", "guard", "record", "names", "decision")
+    }
+    checks["tests_pass"] = score.Check("Tests pass", score.NA, "pytest is not installed")
+    result = score.Score(Path("."), "agent", "builtin", changed=["app/agent_config.json"],
+                         widening=["network: false -> true"], checks=checks)
+
+    verdict, note = score.verdict(result)
+
+    assert verdict == "Not ready: tests did not run"
+    assert "pytest" in note

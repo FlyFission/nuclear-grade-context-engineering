@@ -160,3 +160,31 @@ def test_inline_status_declarations_are_counted(tmp_path):
 
     assert receipt["evidence_statuses"]["deferred"] == 1
     assert receipt["open_evidence_items"] == 1
+
+
+def test_composite_status_cells_count_every_status(tmp_path):
+    """Review finding: `pass (local); gap (independent review pending)` hid its gap."""
+    packet = minimal_standard_packet(tmp_path)
+    verification = packet / "verification.md"
+    verification.write_text(
+        verification.read_text(encoding="utf-8").replace(
+            "| C-001 | pass | test |\n", "| C-001 | pass (local); gap (independent review pending) | test |\n"
+        ),
+        encoding="utf-8",
+    )
+
+    receipt = receipt_for(packet)
+
+    assert receipt["evidence_statuses"]["pass"] == 1
+    assert receipt["evidence_statuses"]["gap"] == 1
+    assert receipt["open_evidence_items"] == 1
+
+
+def test_status_choice_list_in_a_cell_is_not_counted(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    verification = packet / "verification.md"
+    verification.write_text(
+        verification.read_text(encoding="utf-8").replace("| C-001 | pass | test |\n", "| C-001 | pass / fail / gap | test |\n"),
+        encoding="utf-8",
+    )
+    assert receipt_for(packet)["open_evidence_items"] == 0

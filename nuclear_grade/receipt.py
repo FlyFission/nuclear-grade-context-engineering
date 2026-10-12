@@ -45,6 +45,7 @@ BOUNDARY = (
     "evidence is adequate, independent, or true, and this receipt is not a signature."
 )
 _GIT_TIMEOUT_SECONDS = 5
+_STATUS_TOKEN = re.compile(r"(?<!\bno )\b(not applicable|pass|fail|gap|deferred|planned)\b", re.IGNORECASE)
 _STATUS_DECLARATION = re.compile(
     r"\bstatus\**[ \t]*:\**[ \t]*`?(not applicable|pass|fail|gap|deferred|planned)\b`?(?![ \t]*/)",
     re.IGNORECASE,
@@ -121,9 +122,13 @@ def _status_counts(packet: Path, mode: str) -> dict[str, int]:
             for column in columns:
                 if column >= len(row):
                     continue
-                value = _normalize_table_label(row[column])
-                if value in counts:
-                    counts[value] += 1
+                # A cell may declare several statuses: "pass (local); gap (review pending)".
+                # A template choice list ("pass / fail / gap") is not a declaration.
+                cell = _normalize_table_label(row[column])
+                if re.search(r"\b(pass|fail|gap|deferred|planned)\b\s*/\s*\w", row[column], re.IGNORECASE):
+                    continue
+                for match in _STATUS_TOKEN.finditer(cell):
+                    counts[match.group(1).lower()] += 1
     return counts
 
 

@@ -26,7 +26,7 @@ git tag -a vX.Y.Z -m "vX.Y.Z" <merge-commit>
 git push origin vX.Y.Z
 ```
 
-Pushing the tag runs `.github/workflows/release.yml`. It first refuses a tag whose commit is not already on the default branch, so a mistagged topic commit never builds. It then re-checks the release identity against the tag, runs the release gates and the MCP server tests against both supported SDK majors, builds the wheel and sdist, writes `ng validate --json` receipts for every change record, and creates the GitHub release with the distributions, receipts, and a `SHA256SUMS` file.
+Pushing the tag runs `.github/workflows/release.yml`. It first refuses a tag whose commit is not already on the default branch, so a mistagged topic commit never builds. It then re-checks the release identity against the tag, runs the release gates, the MCP server tests against both supported SDK majors, and a CLI smoke test of the built wheel installed in a clean environment, builds the wheel and sdist, writes `ng validate --json` receipts for every change record, and creates the GitHub release with the distributions, receipts, and a `SHA256SUMS` file.
 
 A pushed tag is never moved or reused. A correction ships as a new version.
 

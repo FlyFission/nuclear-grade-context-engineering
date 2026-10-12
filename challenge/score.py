@@ -75,7 +75,7 @@ RESIDUAL_LINE = re.compile(
 )
 # `- Status: gap` (the Quick and prose form of an evidence status), not a `gap / pass` choice list.
 OPEN_STATUS_LINE = re.compile(
-    r"\bstatus[*_\s]*:[*_`\s]*(gap|deferred|planned)\b(?![`*_\s]*/)", re.IGNORECASE
+    r"\bstatus[*_\s]*:[*_`\s]*(fail|gap|deferred|planned)\b(?![`*_\s]*/)", re.IGNORECASE
 )
 # "Residual risk: none remains" names nothing unproven, so it is not an open item.
 NO_RESIDUAL = re.compile(
@@ -753,7 +753,7 @@ def has_open_item(text: str) -> bool:
             status_columns = [i for i, cell in enumerate(cells) if re.search(r"\b(status|result|outcome)\b", cell)]
             continue
         # An annotated cell ("gap (live-host test pending)") declares its leading status.
-        if any(i < len(cells) and re.match(r"(gap|deferred|planned)\b", cells[i]) for i in status_columns):
+        if any(i < len(cells) and re.match(r"(fail|gap|deferred|planned)\b", cells[i]) for i in status_columns):
             return True
     return any(not NO_RESIDUAL.search(match.group("value")) for match in RESIDUAL_LINE.finditer(text))
 

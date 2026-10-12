@@ -889,3 +889,12 @@ def test_amended_root_commit_still_gets_a_real_verdict(tmp_path):
     git(play, "commit", "-q", "--amend", "--no-edit")
     result = run_score(play)
     assert verdict_of(result.stdout) != "No change shipped", result.stdout
+
+
+@pytest.mark.parametrize(
+    "text",
+    ["- Status: fail -- live fetch against a real host failed", "| ID | Status |\n|---|---|\n| E-1 | fail (timeout) |\n"],
+)
+def test_failed_evidence_is_an_open_item(text):
+    """Review finding: a record whose only disclosure was `Status: fail` was not counted as open."""
+    assert load_score_module().has_open_item(text) is True

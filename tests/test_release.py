@@ -72,3 +72,12 @@ def test_release_exercises_both_mcp_majors_before_publishing():
     assert '"mcp>=1.0,<2", "mcp>=2,<3"' in workflow
     release_job = workflow[workflow.index("\n  github-release:"):workflow.index("\n  pypi:")]
     assert "mcp-smoke" in next(line for line in release_job.splitlines() if line.strip().startswith("needs:"))
+
+
+def test_release_smoke_tests_the_built_wheel_before_publishing():
+    """Review finding: the release could publish a wheel CI's wheel-smoke would reject."""
+    workflow = (ROOT / ".github/workflows/release.yml").read_text(encoding="utf-8")
+    smoke = workflow[workflow.index("\n  wheel-smoke:"):workflow.index("\n  github-release:")]
+    assert "name: release-dist" in smoke and "pip install dist/*.whl" in smoke
+    release_job = workflow[workflow.index("\n  github-release:"):workflow.index("\n  pypi:")]
+    assert "wheel-smoke" in next(line for line in release_job.splitlines() if line.strip().startswith("needs:"))

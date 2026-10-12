@@ -89,8 +89,44 @@ jobs:
       - name: Run MCP server tests with the extra present
         run: python -m pytest tests/test_mcp_server.py -q
 
+  wheel-smoke:
+    # Install the exact wheel this release will publish into a clean venv and run the
+    # same CLI smoke as CI, so a packaging omission cannot ship.
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: "3.12"
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: release-dist
+          path: dist
+      - name: Smoke-test the released wheel outside a source tree
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m venv /tmp/wheel-smoke-venv
+          /tmp/wheel-smoke-venv/bin/pip install --upgrade pip
+          /tmp/wheel-smoke-venv/bin/pip install dist/*.whl
+          NG=/tmp/wheel-smoke-venv/bin/nuclear-grade
+          WORK=$(mktemp -d)
+          cd "$WORK"
+          "$NG" init .
+          "$NG" new my-quick --mode quick
+          "$NG" new my-std --mode standard
+          LIST_OUTPUT=$("$NG" list)
+          echo "$LIST_OUTPUT" | grep -q "Skills:"
+          echo "$LIST_OUTPUT" | grep -q "questioning-attitude"
+          set +e
+          "$NG" validate .nuclear/changes/my-quick
+          rc=$?
+          set -e
+          [ "$rc" -eq 1 ]
+          echo "release wheel-smoke OK"
+
   github-release:
-    needs: [build, mcp-smoke]
+    needs: [build, mcp-smoke, wheel-smoke]
     runs-on: ubuntu-latest
     permissions:
       contents: write

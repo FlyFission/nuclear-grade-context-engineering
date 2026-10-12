@@ -277,6 +277,59 @@ def module_setup(root: Path) -> dict[str, list[str]]:
     return found
 
 
+def _test_rebindings(tree: ast.Module) -> list[str]:
+    """Names a test file binds more than once, or rebinds outside a def, at module or class level.
+
+    `test_read_file = lambda: None` after the original def would leave the protected source
+    untouched while pytest runs the replacement. Function bodies are not scanned: a local
+    variable cannot replace a collected test.
+    """
+
+    found: list[str] = []
+
+    def scan(nodes: list[ast.stmt]) -> None:
+        defined: set[str] = set()
+        for node in nodes:
+            if isinstance(node, ast.ClassDef):
+                scan(node.body)
+            if isinstance(node, ast.FunctionDef | ast.AsyncFunctionDef | ast.ClassDef):
+                if node.name.startswith(("test", "Test")):
+                    if node.name in defined:
+                        found.append(f"{node.name} is defined twice")
+                    defined.add(node.name)
+                continue
+            for sub in _walk_outside_functions(node):
+                name = None
+                if isinstance(sub, ast.Name) and isinstance(sub.ctx, ast.Store | ast.Del):
+                    name = sub.id
+                elif isinstance(sub, ast.Attribute) and isinstance(sub.ctx, ast.Store | ast.Del):
+                    name = sub.attr
+                elif isinstance(sub, ast.alias):
+                    name = sub.asname or sub.name.split(".")[0]
+                elif isinstance(sub, ast.FunctionDef | ast.AsyncFunctionDef | ast.ClassDef):
+                    name = sub.name  # a def nested in `if`/`try` at module level rebinds too
+                elif isinstance(sub, ast.Call) and isinstance(sub.func, ast.Name) and sub.func.id in (
+                    "setattr", "delattr", "globals", "vars", "exec", "eval",
+                ):
+                    found.append(f"calls {sub.func.id}() outside a test")
+                if name and name.startswith(("test", "Test")):
+                    found.append(f"rebinds {name}")
+
+    scan(tree.body)
+    return found
+
+
+def _walk_outside_functions(node: ast.AST):
+    """Walk a statement without entering function, lambda, or class bodies (their nodes are yielded)."""
+
+    yield node
+    for child in ast.iter_child_nodes(node):
+        if isinstance(child, ast.FunctionDef | ast.AsyncFunctionDef | ast.Lambda | ast.ClassDef):
+            yield child
+        else:
+            yield from _walk_outside_functions(child)
+
+
 def rigging(root: Path) -> list[str]:
     """Test-wide switches an agent could add to skip or rig the original tests."""
 
@@ -289,6 +342,7 @@ def rigging(root: Path) -> list[str]:
         if ignored(rel):
             continue
         tree = ast.parse(path.read_text(encoding="utf-8"), filename=rel)
+        problems.extend(f"{rel} {problem}" for problem in _test_rebindings(tree))
         for node in ast.walk(tree):  # anywhere, so `if True: pytestmark = ...` is caught too
             targets = node.targets if isinstance(node, ast.Assign) else [getattr(node, "target", None)]
             if isinstance(node, ast.Assign | ast.AnnAssign | ast.AugAssign) and any(
@@ -655,7 +709,7 @@ def release_decision(packet: Path) -> str | None:
 # Launch vocabulary is a heuristic, not a parser; a person still reads the record.
 _RELEASE_WORD = re.compile(
     r"\b(ship|release|merge|deploy|publish|launch|go live|goes live|going live|went live|roll(?:ed|ing)? out"
-    r"|rollout|cut(?:ting)? over|promote|promoted|promoting)(s|d|ed|ing)?\b"
+    r"|rollout|cut(?:ting)? over|promote|promoted|promoting|proceed|go ahead|goes ahead|going ahead)(s|d|ed|ing)?\b"
     r"|\b(enable|turn on|switch on)\s+(it\s+)?in\s+prod(uction)?\b",
     re.IGNORECASE,
 )
@@ -663,6 +717,14 @@ _NEGATION_BEFORE = re.compile(
     r"\b(not|no|never|don't|do not|won't|will not|without|whether|if)\s+(\w+\s+)?$", re.IGNORECASE
 )
 _NOUN_AFTER = re.compile(r"^\s*(owner|decision|manager|call|notes?|gate|plan|review)\b", re.IGNORECASE)
+# "Release plan: <value>" is a field, and its value is read like a decision: anything but a
+# hold or an empty placeholder schedules the release.
+_LABEL_VALUE = re.compile(r"^[*_`\s]*:[*_`\s]*([^.;\n]*)")
+_HOLD_VALUE = re.compile(
+    r"^(tbd|none|n/?a|not yet|pending|to be decided|undecided|unscheduled|the release owner|release owner"
+    r"|a human|human|owner|maintainer)\b",
+    re.IGNORECASE,
+)
 
 
 def _release_commitment(decision: str) -> bool:
@@ -673,7 +735,16 @@ def _release_commitment(decision: str) -> bool:
     """
 
     for match in _RELEASE_WORD.finditer(decision):
-        if _NOUN_AFTER.match(decision[match.end() :]) or _NEGATION_BEFORE.search(decision[: match.start()]):
+        if _NEGATION_BEFORE.search(decision[: match.start()]):
+            continue
+        noun = _NOUN_AFTER.match(decision[match.end() :])
+        if noun:
+            # Only fields whose value is itself a decision; "Release owner: <name>" is not one.
+            is_decision_field = noun.group(1).lower() in ("plan", "decision", "call")
+            label = _LABEL_VALUE.match(decision[match.end() + noun.end() :]) if is_decision_field else None
+            value = label.group(1).strip() if label else ""
+            if value and not (DEFER_OPENING.match(value) or _HOLD_VALUE.match(value)):
+                return True
             continue
         return True
     return False

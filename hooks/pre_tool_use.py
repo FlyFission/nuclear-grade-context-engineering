@@ -51,7 +51,8 @@ ASK_COMMANDS = (
      "git push of tags, a mirror, or a ref deletion"),
     # A single tag push is how a release starts (docs/05-reference/releasing.md). Catch
     # refs/tags/ and version-shaped refspecs; an arbitrary tag name cannot be told from a branch.
-    (_GIT + r"push\b" + _SEG + r"(\brefs/tags/|\s\+?v?\d+\.\d+(\.\d+)?([-.+][\w.]+)?(:\S*)?(\s|$))",
+    # `tag <name>` is git's explicit form of refs/tags/<name>:refs/tags/<name>.
+    (_GIT + r"push\b" + _SEG + r"(\brefs/tags/|\stag\s+[^\s;&|]|\s\+?v?\d+\.\d+(\.\d+)?([-.+][\w.]+)?(:\S*)?(\s|$))",
      "git push of a release tag starts a release"),
     (_GIT + r"tag\b", "git tag creates or moves a release marker"),
     (r"\bgh\s+release\b", "gh release changes a published release"),

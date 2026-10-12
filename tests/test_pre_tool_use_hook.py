@@ -344,3 +344,13 @@ def test_absolute_path_into_project_hooks_asks(tmp_path):
 
 def test_quoted_commit_message_is_still_not_gated(tmp_path):
     assert _decide(tmp_path, "Bash", {"command": "git commit -m 'fix tag parsing; push --force docs'"}) is None
+
+
+@pytest.mark.parametrize("command", ["git push origin tag release-candidate", "git push --atomic origin main tag rc"])
+def test_explicit_tag_refspec_push_asks(tmp_path, command):
+    """Review finding: `git push origin tag release-candidate` returned no decision."""
+    assert _kind(_decide(tmp_path, "Bash", {"command": command})) == "ask", command
+
+
+def test_branch_named_like_tag_word_is_not_gated(tmp_path):
+    assert _decide(tmp_path, "Bash", {"command": "git push origin tagging-docs"}) is None

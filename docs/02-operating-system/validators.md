@@ -86,6 +86,17 @@ independent signal that carries a trust-bearing gate still comes from protected 
 reproduction or diverse verification, and a reviewer with real authority — not from a line the
 actor wrote and linted.
 
+**Built output: validation receipt.** `ng validate <packet> --json` prints a versioned
+`nuclear-grade.validation-receipt` (schema version 1) instead of the OK/FAILED lines, with the same
+exit code. It records the structural result and messages, the strict flags, a SHA-256 for every file in
+the packet plus one digest over the set, the repository commit, whether the packet itself has
+uncommitted changes, the validator and Python versions, and counts of each evidence status declared in
+status columns of `proof.md` or `verification.md`. `open_evidence_items` (fail + gap + deferred +
+planned) keeps a structurally passing packet that still carries open gaps from reading as gap-free, the
+same reason uber/ADR reports partial coverage as its own state. The digests let an out-of-band rerun
+show it checked the same bytes. The receipt is not a signature — anyone who can edit the packet can
+regenerate it — and it proves nothing about whether the evidence is adequate, independent, or true.
+
 **Built opt-in check: evidence-conditioned decision authority.** For a Standard packet,
 `ng validate <packet> --strict-authority` requires `decision-authority.md` and checks that prepare,
 recommend, verify, validate, verdict, accept, apply, reopen, and close each appear exactly once; each

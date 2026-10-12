@@ -1976,3 +1976,28 @@ def test_check_internal_links_skips_files_that_do_not_exist(tmp_path):
     failures = check_internal_links(tmp_path, ["never-created.md"])
 
     assert failures == []
+
+
+def _template_front_matter(mode: str) -> str:
+    text = (ROOT / "templates" / mode / "risk.md").read_text(encoding="utf-8")
+    assert text.startswith("---\n"), f"{mode} risk template lost its decision metadata block"
+    end = text.index("\n---\n", 4) + len("\n---\n")
+    return text[:end]
+
+
+def test_template_decision_metadata_is_tolerated_by_validator(tmp_path):
+    for mode, build in (("quick", minimal_quick_packet), ("standard", minimal_standard_packet)):
+        front = _template_front_matter(mode)
+        assert "\nstatus: proposed" in front and "decision-makers:" in front
+        filled = (
+            front.replace("\nstatus: proposed", "\nstatus: superseded by new-slug")
+            .replace("date:", "date: 2026-10-12")
+            .replace("decision-makers:", "decision-makers: [maintainer]")
+            .replace("informed:", "informed: [team]\nsupersedes: old-slug")
+        )
+        for variant in (front, filled):
+            packet = build(tmp_path / f"{mode}-{len(variant)}")
+            risk = packet / "risk.md"
+            risk.write_text(variant + "\n" + risk.read_text(encoding="utf-8"), encoding="utf-8")
+            result = validate_packet(packet)
+            assert result.ok, result.messages

@@ -1,0 +1,5 @@
+{
+  "allowed_tools": ["read_file", "write_file"],
+  "network": false,
+  "workspace": "workspace"
+}

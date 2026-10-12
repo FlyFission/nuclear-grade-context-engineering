@@ -1,0 +1,1 @@
+Hello from the workspace. The file agent may read and write files in this folder.

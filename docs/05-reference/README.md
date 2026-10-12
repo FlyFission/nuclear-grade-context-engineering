@@ -6,6 +6,7 @@ Use these files when you extend the product surface.
 - `skill-evaluation.md`
 - `command-authoring-contract.md`
 - `cli-reference.md`
+- `release-review.md` (release contents, data, third-party material, accepted risks)
 
 ## Source-lineage note
 

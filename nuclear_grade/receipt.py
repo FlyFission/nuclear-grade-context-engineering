@@ -111,6 +111,12 @@ def _git_state(packet: Path) -> dict[str, Any]:
     return {"commit": commit, "packet_dirty": None if porcelain is None else bool(porcelain)}
 
 
+def _is_result_column(header: str) -> bool:
+    # "Result", "Test result", "Outcome" often carry the status ("planned (CI)") instead of a
+    # Status column. They also carry prose, so only a cell that opens with a status counts.
+    return "status" not in header and (header in ("result", "outcome") or header.endswith((" result", " outcome")))
+
+
 def _status_counts(packet: Path, mode: str) -> dict[str, int]:
     counts = dict.fromkeys(EVIDENCE_STATUSES, 0)
     if mode == UNSPECIFIED_MODE:
@@ -132,16 +138,23 @@ def _status_counts(packet: Path, mode: str) -> dict[str, int]:
         for token in _STATUS_TOKEN.finditer(value):
             counts[token.group(1).lower()] += 1
     for headers, rows in _markdown_tables(text):
-        columns = [i for i, header in enumerate(headers) if "status" in _normalize_table_label(header)]
+        labels = [_normalize_table_label(header) for header in headers]
+        status_columns = [i for i, label in enumerate(labels) if "status" in label]
+        result_columns = [i for i, label in enumerate(labels) if _is_result_column(label)]
         for row in rows:
-            for column in columns:
+            for column in status_columns + result_columns:
                 if column >= len(row):
                     continue
                 # A cell may declare several statuses: "pass (local); gap (review pending)".
                 # A template choice list ("pass / fail / gap") is not a declaration.
-                cell = _normalize_table_label(row[column])
                 if _CHOICE_LIST.search(row[column]):
                     continue
+                raw = row[column]
+                if column in result_columns:
+                    raw = _DECLARATION_END.split(raw.strip(), maxsplit=1)[0]
+                    if not _STATUS_TOKEN.match(_normalize_table_label(raw)):
+                        continue
+                cell = _normalize_table_label(raw)
                 for match in _STATUS_TOKEN.finditer(cell):
                     counts[match.group(1).lower()] += 1
     return counts

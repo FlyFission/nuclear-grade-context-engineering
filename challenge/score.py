@@ -73,6 +73,10 @@ SHIP_COMMITMENT = re.compile(
 RESIDUAL_LINE = re.compile(
     r"^[\s>*_-]*residual risks?[*_\s]*:[*_\s]*(?P<value>\S+(\s+\S+){2,})", re.IGNORECASE | re.MULTILINE
 )
+# `- Status: gap` (the Quick and prose form of an evidence status), not a `gap / pass` choice list.
+OPEN_STATUS_LINE = re.compile(
+    r"\bstatus[*_\s]*:[*_`\s]*(gap|deferred|planned)\b(?![`*_\s]*/)", re.IGNORECASE
+)
 # "Residual risk: none remains" names nothing unproven, so it is not an open item.
 NO_RESIDUAL = re.compile(
     r"^[`*_\s]*(no|none|nil|nothing|zero|n/?a|not applicable)\b|\bno (residual|remaining|open) risks?\b"
@@ -599,6 +603,8 @@ def has_open_item(text: str) -> bool:
             cells = {cell.strip().strip("`*_").lower() for cell in line.strip().strip("|").split("|")}
             if cells & OPEN_STATUSES:
                 return True
+        elif OPEN_STATUS_LINE.search(line):
+            return True
     return any(not NO_RESIDUAL.search(match.group("value")) for match in RESIDUAL_LINE.finditer(text))
 
 

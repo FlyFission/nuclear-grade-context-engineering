@@ -244,3 +244,20 @@ def test_comma_choice_list_in_prose_is_not_counted(tmp_path):
     statuses = receipt_for(packet)["evidence_statuses"]
     assert statuses["pass"] == 1
     assert receipt_for(packet)["open_evidence_items"] == 0
+
+
+def test_result_column_statuses_are_counted(tmp_path):
+    """Review finding: `| Claim | Result | Evidence |` with a `gap` cell reported zero open items."""
+    packet = minimal_standard_packet(tmp_path)
+    verification = packet / "verification.md"
+    verification.write_text(
+        verification.read_text(encoding="utf-8")
+        + "\n| Claim | Result | Evidence |\n|---|---|---|\n| C-009 | gap | none yet |\n"
+        + "| C-010 | `planned` (CI) -- runs on the PR | ci.yml |\n"
+        + "| C-011 | Doctor fails on a gap, as designed | test_doctor.py |\n",
+        encoding="utf-8",
+    )
+    statuses = receipt_for(packet)["evidence_statuses"]
+    assert statuses["gap"] == 1
+    assert statuses["planned"] == 1
+    assert receipt_for(packet)["open_evidence_items"] == 2

@@ -658,3 +658,18 @@ def test_ci_gate_validates_the_challenge_record():
     ci = (ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
     gate = ci[ci.index("- name: Validate change packets") : ci.index("- name: Write validation receipts")]
     assert "challenge/.nuclear/changes/*" in gate
+
+
+@pytest.mark.parametrize(
+    "line,expected",
+    [
+        ("- Status: gap", True),
+        ("- **Status:** `deferred` -- live hosts untested", True),
+        ("Fetch against real hosts. Status: planned for the next release.", True),
+        ("- Status: pass", False),
+        ("- Status: gap / deferred / planned", False),
+    ],
+)
+def test_prose_status_declaration_is_an_open_item(line, expected):
+    """Review finding: an honest record whose only open item was `- Status: gap` failed."""
+    assert load_score_module().has_open_item(f"# Verification\n\n{line}\n") is expected

@@ -6,10 +6,10 @@
 |---|---|---|---|
 | REQ-001 | `nuclear_grade/mcp_server.py`, `pyproject.toml`, `ci.yml` `mcp-smoke` | E-001 | pass |
 | REQ-002 | `nuclear_grade/receipt.py`, `nuclear_grade/cli.py` | E-002 | pass |
-| REQ-003 | `ci.yml` `CI gate` | E-003 | deferred |
-| REQ-004 | `.github/dependabot.yml` | E-003 | deferred |
+| REQ-003 | `ci.yml` `CI gate` | E-003 | pass |
+| REQ-004 | `.github/dependabot.yml` | E-005 | deferred |
 
-REQ-003 and REQ-004 only run on GitHub. Local evidence is limited to YAML parsing, so final status waits on the PR run.
+REQ-003 passed on the PR run, but only on the passing path. REQ-004 takes effect only after merge to the default branch.
 
 ## Required links
 

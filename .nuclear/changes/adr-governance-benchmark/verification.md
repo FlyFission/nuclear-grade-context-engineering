@@ -6,7 +6,8 @@
 |---|---|---|---|
 | E-001 | REQ-001 | `tests/test_mcp_server.py` on mcp 2.2.0 (system) and mcp 1.30.0 (clean venv): 13 passed each | pass |
 | E-002 | REQ-002 | `tests/test_receipt.py` (7 tests): digest stability and change, packet-scoped git dirty state, gap counting, exit codes. Worked example via `--json` reports 5 pass and 2 deferred, matching its claim table | pass |
-| E-003 | REQ-003, REQ-004 | Both YAML files parse locally; gate and matrix behavior need the GitHub run | deferred |
+| E-003 | REQ-003 | PR #110 run 38241356437 on `5e7d4bb`: all 7 checks succeeded, including `validate` on 3.11/3.12/3.13, both `mcp-smoke` legs, and `CI gate`. Only the passing path was exercised; the gate's failure path was not | pass |
+| E-005 | REQ-004 | `dependabot.yml` parses locally; GitHub only acts on it after merge to the default branch | deferred |
 | E-004 | No regressions | `pytest` 328 passed; Ruff, doctor, token budget, `py_compile`, and `git diff --check` OK | pass |
 
 ## Evidence custody and coupling
@@ -21,7 +22,7 @@
 |---|---|---|---|---|---|---|---|
 | E-001 | coupled; same actor wrote port and tests | coupled; same session | partially separated; CI reruns on a clean runner | partially separated; reviewer controls merge | coupled; local runner | self-check | admitted for PR review; CI rerun carried to [`ship.md`](ship.md) |
 | E-002 | coupled; same actor wrote receipt and tests | coupled; same session | coupled; local repository checks | partially separated; reviewer controls merge | coupled; local runner | self-check | admitted for PR review; residual coupling carried to [`ship.md`](ship.md) |
-| E-003 | coupled; same actor wrote the workflow | coupled; same session | separated; GitHub executes it | partially separated; reviewer controls merge | separated; GitHub-hosted runner | self-check | pending the PR run; see [`ship.md`](ship.md) |
+| E-003 | coupled; same actor wrote the workflow | coupled; same session | separated; GitHub executes it | partially separated; reviewer controls merge | separated; GitHub-hosted runner | self-check | admitted for the passing path; failure path unexercised, see [`ship.md`](ship.md) |
 
 ## Required links
 
@@ -31,7 +32,7 @@
 
 ## Exit criteria
 
-Record actual outcomes, disclose the coupled self-check, and leave E-003 deferred until CI runs.
+Record actual outcomes, disclose the coupled self-check, and leave E-005 deferred until Dependabot runs on the default branch.
 
 ## Source-lineage note
 

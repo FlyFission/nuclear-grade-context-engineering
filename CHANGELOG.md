@@ -6,7 +6,15 @@ These entries record public-facing changes. They do not claim the project is a m
 
 ## [Unreleased]
 
+_Nothing yet._
+
+## [0.6.0] - 2026-10-12
+
 ### Added
+
+- `ng badge [repo] [--out .nuclear/badge.json]`: a shields.io endpoint badge counting active change records and their open evidence items. It shows gaps rather than hiding them and never says certified, compliant, or passing. This repo dogfoods it: `.nuclear/badge.json` is committed, the README shows it, and CI fails if it is stale, so the badge is CI-checked rather than self-reported.
+- Release identity check `python -m nuclear_grade.release [--tag vX.Y.Z]`: the versions in `pyproject.toml`, both plugin manifests, and `CITATION.cff`, plus a dated `CHANGELOG.md` section and the citation date, must agree (and the tag, when given). Runs on every PR. The procedure is in `docs/05-reference/releasing.md` (after uber/ADR: the tag matches the version, a published tag never moves). A tag-triggered release workflow is drafted but not merged, pending maintainer approval.
+- CI uploads `ng validate --json` receipts for every change record as a 90-day `validation-receipts` artifact.
 
 - `ng validate <packet> --json`: a versioned `nuclear-grade.validation-receipt` that binds the structural result to SHA-256 digests of every packet file (plus one set digest), the git commit and packet-scoped dirty state, the validator and Python versions, and the counts of declared evidence statuses. `open_evidence_items` keeps a passing packet with open gaps from reading as gap-free. Exit codes are unchanged. First slice of roadmap item 2 (protect raw evidence / rerun receipts); it is integrity metadata, not a signature or an adequacy claim. Pattern lineage: uber/ADR's run manifests and partial-coverage status (`source-map.md` Tier 6).
 - `.github/dependabot.yml`: monthly updates for the SHA-pinned GitHub Actions (pins without an update channel go stale) and security-only Python updates, each with its rationale inline.

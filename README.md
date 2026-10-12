@@ -11,6 +11,7 @@
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3A5BA8.svg)](pyproject.toml)
 [![No build step](https://img.shields.io/badge/setup-no%20build%20step-5B49A6.svg)](#quick-start)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-B07400.svg)](CONTRIBUTING.md)
+[![Evidence records](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FFlyFission%2Fnuclear-grade-context-engineering%2Fmain%2F.nuclear%2Fbadge.json)](.nuclear/changes/)
 
 </div>
 
@@ -342,6 +343,16 @@ That exposes the skills and command prompts as a plugin. No hooks are configured
 3. **Make your first record.** Run `python tools/ng.py new <slug> --mode quick`, fill in the two files, then prove it with `python tools/ng.py validate .nuclear/changes/<slug>`.
 
 If your shell only has `python3`, use `python3`. The full guided tour is in [`QUICKSTART.md`](QUICKSTART.md). **Using an AI agent? Point it at [`AGENTS.md`](AGENTS.md)**: it is the shared brief agents read first.
+
+### Show your evidence
+
+`python tools/ng.py badge . --out .nuclear/badge.json` writes a [shields.io endpoint](https://shields.io/badges/endpoint-badge) badge that counts your change records and their open evidence items. Commit the file, add a CI step that reruns the command and fails on `git diff --exit-code`, and point the badge at it:
+
+```markdown
+[![Evidence records](https://img.shields.io/endpoint?url=<raw URL of .nuclear/badge.json>)](https://github.com/FlyFission/nuclear-grade-context-engineering)
+```
+
+The badge shows open gaps instead of hiding them. It is never a "certified" or "passing" mark: it reports what your records disclose, not whether the work is adequate.
 
 ## Works across your tools
 

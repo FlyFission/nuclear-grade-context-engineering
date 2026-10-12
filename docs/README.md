@@ -38,6 +38,7 @@ These docs have two parts. First, learn how to use the workflow. Second, look up
 | Run an incident, track deficiencies | [`02-operating-system/incident-response.md`](02-operating-system/incident-response.md), [`02-operating-system/deficiency-register.md`](02-operating-system/deficiency-register.md) |
 | Periodically self-assess the method | [`02-operating-system/program-self-assessment.md`](02-operating-system/program-self-assessment.md) |
 | Understand CLI behavior | [`05-reference/cli-reference.md`](05-reference/cli-reference.md) |
+| Cut a release (versions, tag, receipts) | [`05-reference/releasing.md`](05-reference/releasing.md) |
 | See the workflow as diagrams | [`diagrams.md`](diagrams.md) |
 | Pick a prompting / reasoning technique (CoT, ReAct, PAL) and place it in PROVE | [`05-reference/reasoning-techniques.md`](05-reference/reasoning-techniques.md) |
 | See where this sits in the wider context-engineering field | [`01-field-guide/context-engineering-landscape.md`](01-field-guide/context-engineering-landscape.md) |

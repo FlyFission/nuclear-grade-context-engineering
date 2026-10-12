@@ -47,6 +47,14 @@ jobs:
       - name: Run repo doctor
         run: python tools/ng.py doctor .
 
+      - name: Check release identity (versions, citation, changelog agree)
+        run: python -m nuclear_grade.release
+
+      - name: Evidence badge must match the records
+        run: |
+          python tools/ng.py badge . --out .nuclear/badge.json
+          git diff --exit-code -- .nuclear/badge.json || { echo "Run: python tools/ng.py badge . --out .nuclear/badge.json"; exit 1; }
+
       - name: Enforce token budget
         run: python tools/ng.py tokens .
 
@@ -67,6 +75,26 @@ jobs:
             if is_closed "$packet"; then echo "Skipping closed record: $packet"; continue; fi
             python tools/ng.py validate "$packet"
           done < <(find docs/03-worked-examples -path '*/.nuclear/changes/*' -type d -prune -print)
+
+      - name: Write validation receipts
+        if: matrix.python-version == '3.12'
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts
+          for packet in .nuclear/changes/* docs/03-worked-examples/*/.nuclear/changes/*; do
+            [ -d "$packet" ] || continue
+            # Receipts record failures too; the gate above is what fails the build.
+            python tools/ng.py validate "$packet" --json > "receipts/$(basename "$packet").json" || true
+          done
+
+      - name: Keep receipts with the run
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: validation-receipts
+          path: receipts/
+          retention-days: 90
 
   wheel-smoke:
     runs-on: ubuntu-latest

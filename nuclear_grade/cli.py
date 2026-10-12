@@ -19,6 +19,7 @@ if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from nuclear_grade import gen_commands
+from nuclear_grade.badge import build_badge, summarize
 from nuclear_grade.efficacy import run_all as run_efficacy
 from nuclear_grade.metrics import build_inventory
 from nuclear_grade.ng_validate import (
@@ -483,6 +484,16 @@ def build_parser() -> argparse.ArgumentParser:
     )
     decisions_parser.set_defaults(handler=handle_decisions)
 
+    badge_parser = subcommands.add_parser(
+        "badge",
+        help="Write a shields.io endpoint badge summarizing change records and open evidence items.",
+    )
+    badge_parser.add_argument("repo", nargs="?", default=".", type=Path)
+    badge_parser.add_argument(
+        "--out", type=Path, default=None, help="Write the JSON here (e.g. .nuclear/badge.json) instead of stdout."
+    )
+    badge_parser.set_defaults(handler=handle_badge)
+
     return parser
 
 
@@ -875,6 +886,18 @@ def packet_health(packet: Path) -> str:
     if any(PLACEHOLDER_MARKER in text for text in texts):
         return "scaffold"
     return "invalid"
+
+
+def handle_badge(args: argparse.Namespace) -> int:
+    badge = build_badge(summarize(args.repo.resolve(), packet_health))
+    text = json.dumps(badge, ensure_ascii=False) + "\n"
+    if args.out is None:
+        print(text, end="")
+    else:
+        args.out.parent.mkdir(parents=True, exist_ok=True)
+        args.out.write_text(text, encoding="utf-8")
+        print(f"wrote {args.out}: {badge['label']} | {badge['message']}")
+    return 0
 
 
 def handle_eval(args: argparse.Namespace) -> int:

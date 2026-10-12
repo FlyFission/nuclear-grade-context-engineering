@@ -27,6 +27,19 @@ Agents now edit files, change prompts, call tools, swap dependencies, write thei
 
 [See it work](#see-it-work-then-make-it-yours) in about a minute, or jump to [Quick start](#quick-start). It borrows high-consequence engineering discipline, not its regulations: see [What this is NOT](#what-this-is-not).
 
+<p align="center"><img src="docs/assets/demo/demo.gif" width="900" alt="Terminal demo, about 30 seconds. A simulated agent write to .github/workflows/ci.yml is denied by the PreToolUse gate; a simulated force-push to main is routed to a human; a passing change record's JSON receipt still reports two open evidence items and the badge counts open items; an unfilled change record fails validation."></p>
+
+<details><summary>Text transcript of the demo</summary>
+
+1. `sim Write .github/workflows/ci.yml` prints `DENY`: writes to a protected trust surface go through human review, not the agent.
+2. `sim Bash "git push --force origin main"` prints `ASK`: a force push needs a human.
+3. `ng validate <worked example> --json` reports `"ok": true` and `"open_evidence_items": 2`; `ng badge .` reports the repository's records and open items.
+4. `ng validate` on a freshly scaffolded, unfilled record prints `FAILED`.
+
+`sim` sends a simulated tool call through `hooks/pre_tool_use.py`; no agent runs. The recording is [`docs/assets/demo/demo.tape`](docs/assets/demo/demo.tape), and a test replays it so the GIF cannot drift from what the commands print.
+
+</details>
+
 ## Contents
 
 - [See it work, then make it yours](#see-it-work-then-make-it-yours)

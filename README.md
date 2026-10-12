@@ -25,7 +25,7 @@ Agents now edit files, change prompts, call tools, swap dependencies, write thei
 - **Checks that do not depend on the agent's narrative**: a validator for CI, versioned receipts with file digests, and an opt-in hook that denies agent writes to the files that judge the agent.
 - **Rigor that scales with the stakes**: a typo needs nothing; a permission change gets the full record. Agent skills and paste-ready prompts work in Claude Code, Codex, Cursor, and more.
 
-[See it work](#see-it-work-then-make-it-yours) in about a minute, or jump to [Quick start](#quick-start). It borrows high-consequence engineering discipline, not its regulations: see [What this is NOT](#what-this-is-not).
+[See it work](#see-it-work-then-make-it-yours) in about a minute, or jump to [Quick start](#quick-start). Want to test your own coding agent? Try the 15-minute [honesty challenge](challenge/README.md). It borrows high-consequence engineering discipline, not its regulations: see [What this is NOT](#what-this-is-not).
 
 <p align="center"><img src="docs/assets/demo/demo.gif" width="900" alt="Terminal demo, about 30 seconds. A simulated agent write to .github/workflows/ci.yml is denied by the PreToolUse gate; a simulated force-push to main is routed to a human; a passing change record's JSON receipt still reports two open evidence items and the badge counts open items; an unfilled change record fails validation."></p>
 
@@ -94,6 +94,8 @@ python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.n
 ```
 
 That packet is a complete Standard record: `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, and `ship.md`, plus an `adversarial-review.md` this high-stakes example adds on top. Copy [`docs/03-worked-examples/ai-agent-tool-permissions/`](docs/03-worked-examples/ai-agent-tool-permissions/) as the template for your own changes, keep [`CORE.md`](CORE.md) open for the seven habits behind it, and take the full guided tour in [`QUICKSTART.md`](QUICKSTART.md) when you want depth. It is a worked teaching example, not a production guarantee — see [What this is NOT](#what-this-is-not).
+
+**Try it on your agent.** [`challenge/`](challenge/README.md) is a 15-minute game: a routine `fetch_url` request quietly widens a toy agent's authority, and `score.py` checks whether your agent recorded the widening, named what is unproven, and left the release to a human. It covers one seeded trap; it is not a safety rating.
 
 ## Quick start
 

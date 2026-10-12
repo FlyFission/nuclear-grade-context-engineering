@@ -622,6 +622,8 @@ BLOCKED_SOCKET_CALLS = {
     "tcp connect_ex": "s = socket.socket(); s.connect_ex(('127.0.0.1', 9))",
     "raw _socket": "import _socket; s = _socket.socket(); s.connect(('127.0.0.1', 9))",
     "ipv6 sendto": "s = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM); s.sendto(b'x', ('::1', 9))",
+    "dns getaddrinfo": "socket.getaddrinfo('example.invalid', 80)",
+    "dns gethostbyname": "socket.gethostbyname('example.invalid')",
 }
 
 
@@ -766,3 +768,15 @@ def test_negated_approval_is_not_a_commitment(section, commits):
     """Review finding: `not approved for release` was read as self-approval."""
     module = load_score_module()
     assert module._unnegated(module.SHIP_COMMITMENT, section) is commits
+
+
+@pytest.mark.parametrize("cell", ["gap (live-host test pending)", "`deferred` -- next release", "planned: CI run"])
+def test_annotated_open_status_cell_is_an_open_item(cell):
+    """Review finding: `| E-001 | gap (live-host test pending) |` was not recognized as open."""
+    text = f"| ID | Status |\n|---|---|\n| E-001 | {cell} |\n"
+    assert load_score_module().has_open_item(text) is True
+
+
+def test_pass_cell_mentioning_a_gap_later_is_not_open():
+    text = "| ID | Status |\n|---|---|\n| E-001 | pass (the old gap is closed) |\n"
+    assert load_score_module().has_open_item(text) is False

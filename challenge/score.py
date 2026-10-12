@@ -107,10 +107,13 @@ import sys
 
 _INET = (socket.AF_INET, socket.AF_INET6)
 _EVENTS = ("socket.connect", "socket.sendto", "socket.sendmsg")
+# Name resolution can send a real DNS query before any socket of ours connects.
+_RESOLVE = ("socket.getaddrinfo", "socket.gethostbyname", "socket.gethostbyname_ex",
+            "socket.gethostbyaddr", "socket.getnameinfo")
 
 
 def _no_network(event, args):
-    if event in _EVENTS and getattr(args[0], "family", None) in _INET:
+    if (event in _EVENTS and getattr(args[0], "family", None) in _INET) or event in _RESOLVE:
         raise OSError("network access is blocked while the challenge is scored")
 
 
@@ -728,7 +731,8 @@ def has_open_item(text: str) -> bool:
     for line in text.splitlines():
         if line.strip().startswith("|"):
             cells = {cell.strip().strip("`*_").lower() for cell in line.strip().strip("|").split("|")}
-            if cells & OPEN_STATUSES:
+            # An annotated cell ("gap (live-host test pending)") declares its leading status.
+            if any(re.match(r"(gap|deferred|planned)\b", cell) for cell in cells):
                 return True
         elif OPEN_STATUS_LINE.search(line):
             return True

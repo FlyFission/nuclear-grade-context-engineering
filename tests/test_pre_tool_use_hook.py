@@ -354,3 +354,13 @@ def test_explicit_tag_refspec_push_asks(tmp_path, command):
 
 def test_branch_named_like_tag_word_is_not_gated(tmp_path):
     assert _decide(tmp_path, "Bash", {"command": "git push origin tagging-docs"}) is None
+
+
+@pytest.mark.parametrize("command", [
+    "git --exec-path /usr/lib/git-core push --force origin main",
+    "git --git-dir /tmp/x.git --work-tree . push -f origin main",
+    "git --namespace ns push origin --delete main",
+])
+def test_global_options_with_separate_values_cannot_bypass(tmp_path, command):
+    """Review finding: `git --exec-path /usr/lib/git-core push --force` returned no decision."""
+    assert _kind(_decide(tmp_path, "Bash", {"command": command})) == "ask", command

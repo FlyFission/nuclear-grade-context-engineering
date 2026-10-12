@@ -42,7 +42,9 @@ ASK_PATHS = ()
 
 # Shell commands that are irreversible or release-shaped. Each is a human gate (ASK).
 _SEG = r"[^;&|\n]*"  # stay inside one simple command
-_GIT = r"\bgit\s+(?:-[cC]\s+\S+\s+|--?\S+\s+)*"  # "git", global options, then the subcommand
+# "git", then global options (each may take a separate value: `-C dir`, `--exec-path /p`,
+# `--git-dir x`), then the subcommand. A value never starts with "-".
+_GIT = r"\bgit\s+(?:--?\S+\s+(?:[^-\s]\S*\s+)?)*"
 ASK_COMMANDS = (
     (_GIT + r"push\b" + _SEG + r"(\s--force(-with-lease)?\b|\s-[a-zA-Z]*f[a-zA-Z]*\b|\s\+\S)",
      "git force push rewrites shared history"),

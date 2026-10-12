@@ -64,3 +64,11 @@ def test_pypi_publishes_only_after_the_github_release():
     pypi_job = workflow[workflow.index("\n  pypi:"):]
     needs = next(line for line in pypi_job.splitlines() if line.strip().startswith("needs:"))
     assert "github-release" in needs
+
+
+def test_release_exercises_both_mcp_majors_before_publishing():
+    """Review finding: the release installed no `mcp` extra, so the MCP compatibility test skipped."""
+    workflow = (ROOT / ".github/workflows/release.yml").read_text(encoding="utf-8")
+    assert '"mcp>=1.0,<2", "mcp>=2,<3"' in workflow
+    release_job = workflow[workflow.index("\n  github-release:"):workflow.index("\n  pypi:")]
+    assert "mcp-smoke" in next(line for line in release_job.splitlines() if line.strip().startswith("needs:"))

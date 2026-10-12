@@ -432,3 +432,19 @@ def test_cmd_slash_switch_deletes_ask(tmp_path, command):
 
 def test_cmd_delete_of_a_local_build_dir_is_not_gated(tmp_path):
     assert _decide(tmp_path, "PowerShell", {"command": "cmd /c rmdir /s /q build"}) is None
+
+
+@pytest.mark.parametrize("command", [
+    "npm pub",
+    "npm --registry https://registry.example pub",
+    "echo x > .github//workflows/ci.yml",
+    "echo x > .github/./workflows/ci.yml",
+    "echo {} > .nuclear//gate-policy.json",
+])
+def test_aliases_and_equivalent_path_spellings_ask(tmp_path, command):
+    """Review findings: `npm pub` and `.github//workflows/ci.yml` returned no decision."""
+    assert _kind(_decide(tmp_path, "Bash", {"command": command})) == "ask", command
+
+
+def test_npm_public_like_words_are_not_publish(tmp_path):
+    assert _decide(tmp_path, "Bash", {"command": "npm run public-build"}) is None

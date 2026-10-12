@@ -62,7 +62,7 @@ ASK_COMMANDS = (
     (r"\bgh\s+(?:--?\S+\s+(?:[^-\s]\S*\s+)?)*release\b", "gh release changes a published release"),
     # Global options (and cargo's `+toolchain`) may come before the subcommand.
     (r"\btwine\s+" + _OPTS + r"upload\b", "package publish is irreversible"),
-    (r"\b(npm|pnpm|yarn|uv|poetry|cargo)\s+" + _OPTS + r"publish\b", "package publish is irreversible"),
+    (r"\b(npm|pnpm|yarn|uv|poetry|cargo)\s+" + _OPTS + r"(publish|pub)\b", "package publish is irreversible"),
     (r"\b(curl|wget)\b[^;&\n]*\|\s*(sudo\s+)?(ba|z|da|k)?sh\b", "piping a download into a shell runs unreviewed code"),
     (r"\b(ba|z)?sh\s+<\(\s*(curl|wget)\b", "running a downloaded script runs unreviewed code"),
 )
@@ -264,6 +264,12 @@ def _decide(raw, project_dir):
         if _rm_outside_cwd(plain):
             reasons.append("recursive forced rm outside a plain cwd-relative path")
         normalized = command.replace("\\", "/").lower()  # PowerShell paths use backslashes
+        # `.github//workflows` and `.github/./workflows` name the same directory.
+        while True:
+            collapsed = re.sub(r"/\./", "/", re.sub(r"/{2,}", "/", normalized))
+            if collapsed == normalized:
+                break
+            normalized = collapsed
         project_hooks = [r.replace("\\", "/").rstrip("/").lower() + "/hooks/" for r in roots]
         if (any(token in normalized for token in SHELL_TRUST_TOKENS) or SHELL_HOOKS_PATH.search(normalized)
                 or any(hooks in normalized for hooks in project_hooks)

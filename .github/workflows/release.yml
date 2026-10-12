@@ -33,10 +33,20 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p dist/receipts
+          # Same rule as CI: open packets must validate; closed ones (a NUCLEAR-GRADE-CLOSED:
+          # rationale) are kept for audit and still get a receipt. Any failure stops the release.
+          is_closed() { grep -rqE '^[[:space:]]*NUCLEAR-GRADE-CLOSED:[[:space:]]*[^[:space:]]' "$1"; }
+          failed=0
           for packet in .nuclear/changes/* docs/03-worked-examples/*/.nuclear/changes/* challenge/.nuclear/changes/*; do
             [ -d "$packet" ] || continue
-            python tools/ng.py validate "$packet" --json > "dist/receipts/$(basename "$packet").json" || true
+            if python tools/ng.py validate "$packet" --json > "dist/receipts/$(basename "$packet").json"; then
+              continue
+            fi
+            if is_closed "$packet"; then echo "Closed record kept for audit: $packet"; continue; fi
+            echo "::error::change record failed validation: $packet"
+            failed=1
           done
+          [ "$failed" -eq 0 ]
           (cd dist && sha256sum *.whl *.tar.gz receipts/*.json > SHA256SUMS)
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:

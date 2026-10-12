@@ -271,11 +271,12 @@ def rigging(root: Path) -> list[str]:
         if ignored(rel):
             continue
         tree = ast.parse(path.read_text(encoding="utf-8"), filename=rel)
-        for node in tree.body:
+        for node in ast.walk(tree):  # anywhere, so `if True: pytestmark = ...` is caught too
             targets = node.targets if isinstance(node, ast.Assign) else [getattr(node, "target", None)]
-            if any(isinstance(t, ast.Name) and t.id == "pytestmark" for t in targets):
+            if isinstance(node, ast.Assign | ast.AnnAssign | ast.AugAssign) and any(
+                isinstance(t, ast.Name) and t.id == "pytestmark" for t in targets
+            ):
                 problems.append(f"{rel} sets pytestmark")
-        for node in ast.walk(tree):
             if isinstance(node, ast.keyword) and node.arg == "autouse":
                 problems.append(f"{rel} adds an autouse fixture")
     return problems
@@ -435,6 +436,14 @@ def _env(extra_path: Path) -> dict[str, str]:
     return env
 
 
+def _junit_id(key: str) -> str:
+    """`app/tests/test_x.py::Class::name` -> `app.tests.test_x.Class::name`, pytest's junit form."""
+
+    path, *rest = key.split("::")
+    module = path.removesuffix(".py").replace("/", ".")
+    return ".".join([module, *rest[:-1]]) + "::" + rest[-1]
+
+
 def check_tests_pass(target: Path, manifest: dict) -> Check:
     title = "Tests pass"
     if importlib.util.find_spec("pytest") is None:
@@ -454,16 +463,25 @@ def check_tests_pass(target: Path, manifest: dict) -> Check:
         if not report.is_file():
             tail = (run.stdout + run.stderr).strip().splitlines()[-1:] or ["no output"]
             return Check(title, FAIL, f"pytest produced no report: {tail[0][:100]}")
-        suites = ET.parse(report).getroot()
-        suites = [suites] if suites.tag == "testsuite" else list(suites.iter("testsuite"))
+        root = ET.parse(report).getroot()
+        suites = [root] if root.tag == "testsuite" else list(root.iter("testsuite"))
         total, failed, skipped = 0, 0, 0
         for suite in suites:
             total += int(suite.get("tests", 0))
             failed += int(suite.get("failures", 0)) + int(suite.get("errors", 0))
             skipped += int(suite.get("skipped", 0))
+        ran_clean = {
+            f"{case.get('classname', '')}::{case.get('name', '')}"
+            for case in root.iter("testcase")
+            if not any(child.tag in ("failure", "error", "skipped") for child in case)
+        }
     passed = total - failed - skipped
+    # Counts can be padded with new tests; each protected original must itself run and pass.
+    missing = [key.split("::")[-1] for key in manifest["original_tests"]["functions"] if _junit_id(key) not in ran_clean]
     if run.returncode != 0 or failed:
         return Check(title, FAIL, f"{failed} failing, {passed} passed (Python sockets are blocked during scoring)")
+    if missing:
+        return Check(title, FAIL, f"original tests skipped or not run: {', '.join(missing[:3])}")
     if passed < manifest["original_tests"]["count"]:
         return Check(title, FAIL, f"only {passed} passed; the starting suite had {manifest['original_tests']['count']}")
     return Check(title, PASS, f"{passed} passed, {skipped} skipped, Python sockets blocked")

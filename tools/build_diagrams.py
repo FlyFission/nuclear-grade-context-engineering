@@ -205,7 +205,7 @@ def lifecycle(clearance: bool):
         n.append(f.box(x, y, W, H, nm))
         x += W + G
     dec = f.box(x, y - 14, 112, 72, "Decide", kind="focal", shape="diamond")
-    for a, b in zip(n, n[1:]):
+    for a, b in zip(n, n[1:], strict=False):
         f.arrow([a["r"], b["l"]])
     f.arrow([n[-1]["r"], dec["l"]])
     # block: Decide -> Plan, over the top
@@ -259,7 +259,7 @@ def bands(name, title, eyebrow, rows, links, desc):
             else:
                 pos[nid] = f.box(x, y + BH / 2 - H / 2, W, H, nm, kind=kind, shape="pill")
                 x += W + G
-        for (a, *_), (b, *_) in zip(items, items[1:]):
+        for (a, *_), (b, *_) in zip(items, items[1:], strict=False):
             f.arrow([pos[a]["r"], pos[b]["l"]])
         y += BH + 20
     for spec in links:
@@ -324,7 +324,7 @@ def prove():
                 kind = "store" if "Educate" in lab else "step"
                 P[nid] = f.box(cx(col) - W / 2, y + BH / 2 - H / 2, W, H, nm, kind=kind, shape="pill")
         ids = [i[1] for i in items]
-        for a, b in zip(ids, ids[1:]):
+        for a, b in zip(ids, ids[1:], strict=False):
             f.arrow([P[a]["r"], P[b]["l"]], "ln-acc" if a == "dec" else "ln",
                     label="ship / defer" if a == "dec" else None)
         y += BH + 16
@@ -389,7 +389,7 @@ def sequence():
     actors = [("You", "person", "ext"), ("AI agent", "", "step"), ("Change record", "", "focal"), ("Reviewer", "person", "ext")]
     xs = [140, 380, 620, 840]
     top, bot = 64, 500
-    for (nm, sub, kind), x in zip(actors, xs):
+    for (nm, sub, kind), x in zip(actors, xs, strict=False):
         f.box(x - 72, top, 144, 40, nm, kind=kind, shape="oval" if sub else "rect")
         f.lines.append(f'<line class="life" x1="{x}" y1="{top + 40}" x2="{x}" y2="{bot}" stroke-width="1"/>')
     msgs = [
@@ -520,10 +520,10 @@ def skill_map(name, overlays_on):
             oy += ROW
         y += rows_for[sid] * ROW
     order = [s[0] for s in spine]
-    for a, b in zip(order, order[1:]):
+    for a, b in zip(order, order[1:], strict=False):
         f.arrow([pos[a]["b"], pos[b]["t"]])
     # side branch: controlled config touched
-    ccr, ccp = pos["ccr"], pos["ccp"]
+    ccr, _ccp = pos["ccr"], pos["ccp"]
     ici = f.box(28, ccr["y"] + 52, 248, 40, "choosing-what-to-control")
     sci = f.box(28, ici["y"] + 72, 248, 40, "checking-what-a-change-affects")
     f.arrow([ccr["l"], (ici["cx"], ccr["cy"]), ici["t"]], label="controlled config touched",
@@ -575,10 +575,10 @@ def evidence_chain():
     x0 = 40
     top = [f.box(x0 + i * (W + G), 76, W, H, *r[:2], kind=r[2]) for i, r in enumerate(row1)]
     bot = [f.box(x0 + (4 - i) * (W + G), 204, W, H, *r[:2], kind=r[2]) for i, r in enumerate(row2)]
-    for a, b in zip(top, top[1:]):
+    for a, b in zip(top, top[1:], strict=False):
         f.arrow([a["r"], b["l"]])
     f.arrow([top[-1]["b"], bot[0]["t"]])
-    for a, b in zip(bot, bot[1:]):
+    for a, b in zip(bot, bot[1:], strict=False):
         f.arrow([a["l"], b["r"]])
     f.arrow([bot[-1]["t"], (bot[-1]["cx"], 168), (top[2]["cx"], 168), top[2]["b"]], "ln-acc", dashed=True,
             label="feeds forward", at=((bot[-1]["cx"] + top[2]["cx"]) / 2, 168))
@@ -600,7 +600,7 @@ def independence():
     a = f.box(168, 92, 200, 40, "Actor builds the change", kind="ext", shape="oval")
     xs = [44, 196, 348]
     outs = [f.box(x, 172, 144, 48, t, "actor-authored", kind="ext") for x, t in
-            zip(xs, ["Verify evidence", "Review narrative", "Decide framing"])]
+            zip(xs, ["Verify evidence", "Review narrative", "Decide framing"], strict=False)]
     for o in outs:
         f.arrow([a["b"], (a["cx"], 152), (o["cx"], 152), o["t"]] if o["cx"] != a["cx"] else [a["b"], o["t"]])
     g = f.box(208, 260, 120, 64, "Gates", shape="diamond")

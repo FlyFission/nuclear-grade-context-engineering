@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 500" width="1040" height="500" role="img" aria-labelledby="t d">
+<title id="t">The independence seam</title>
+<desc id="d">Left, coupled: the actor builds the change and also authors the verify evidence, the review narrative and the decide framing, so every gate input is actor-authored and a confident error ships wrapped in its own proof. Right, with the seam: an independent verifier or reproducible evidence and a decider independent of the actor, so a confident error is visible at the gate.</desc>
+<style>
+.bg{fill:#F7F6F2} .ink{fill:#0E1A30} .muted{fill:#46536B} .soft{fill:#5A6680}
+.acc{fill:#8A5A00} .lnk{fill:#2F4F94}
+.n-step{fill:#FFFFFF;stroke:#0E1A30} .n-store{fill:rgba(14,26,48,0.05);stroke:#46536B}
+.n-focal{fill:rgba(255,210,77,0.22);stroke:#8A5A00} .n-ext{fill:rgba(14,26,48,0.03);stroke:rgba(14,26,48,0.32)}
+.n-opt{fill:rgba(14,26,48,0.02);stroke:rgba(14,26,48,0.36);stroke-dasharray:4 3}
+.n-indep{fill:rgba(47,79,148,0.07);stroke:#2F4F94}
+.grp{fill:none;stroke:rgba(14,26,48,0.22);stroke-dasharray:4 4}
+.band{fill:rgba(14,26,48,0.035);stroke:rgba(14,26,48,0.10)}
+.ln{fill:none;stroke:#46536B} .ln-acc{fill:none;stroke:#8A5A00} .ln-lnk{fill:none;stroke:#2F4F94}
+.life{stroke:rgba(14,26,48,0.25);stroke-dasharray:3 4}
+.mask{fill:#F7F6F2} .rule{stroke:rgba(14,26,48,0.14)}
+.name{font-family:system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;font-size:13px;font-weight:600}
+.sub{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:10px}
+.eye{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:9.5px;font-weight:600;letter-spacing:0.16em}
+.lbl{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:9.5px;letter-spacing:0.04em}
+.ttl{font-family:'Iowan Old Style', Georgia, 'Times New Roman', serif;font-size:22px}
+.call{font-family:'Iowan Old Style', Georgia, 'Times New Roman', serif;font-style:italic;font-size:14px}
+@media (prefers-color-scheme: dark){
+.bg{fill:#0E1A30} .ink{fill:#F4F7FC} .muted{fill:#B3C2DA} .soft{fill:#9DB0CE}
+.acc{fill:#FFD24D} .lnk{fill:#8FB0E6}
+.n-step{fill:#16263F;stroke:#D7E0EE} .n-store{fill:rgba(244,247,252,0.05);stroke:#9DB0CE}
+.n-focal{fill:rgba(255,210,77,0.14);stroke:#FFD24D} .n-ext{fill:rgba(244,247,252,0.03);stroke:rgba(244,247,252,0.34)}
+.n-opt{fill:rgba(244,247,252,0.02);stroke:rgba(244,247,252,0.40)}
+.n-indep{fill:rgba(143,176,230,0.10);stroke:#8FB0E6}
+.grp{stroke:rgba(244,247,252,0.26)} .band{fill:rgba(244,247,252,0.035);stroke:rgba(244,247,252,0.10)}
+.ln{stroke:#9DB0CE} .ln-acc{stroke:#FFD24D} .ln-lnk{stroke:#8FB0E6}
+.life{stroke:rgba(244,247,252,0.28)} .mask{fill:#0E1A30} .rule{stroke:rgba(244,247,252,0.16)}
+}
+</style>
+<defs>
+<marker id="m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="muted" points="0 0, 8 3, 0 6"/></marker>
+<marker id="m-acc" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="acc" points="0 0, 8 3, 0 6"/></marker>
+<marker id="m-lnk" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="lnk" points="0 0, 8 3, 0 6"/></marker>
+</defs>
+<rect class="bg" width="1040" height="500" rx="10"/>
+<text x="28" y="34" class="eye soft">INDEPENDENCE · WHERE A CONFIDENT ERROR IS CAUGHT</text>
+<line class="rule" x1="28" y1="44" x2="1012" y2="44"/>
+<rect class="grp" x="28" y="60" width="480" height="420" rx="8"/>
+<text x="42" y="78" class="eye soft" text-anchor="start">COUPLED — THE HOLE</text>
+<rect class="grp" x="532" y="60" width="480" height="420" rx="8"/>
+<text x="546" y="78" class="eye soft" text-anchor="start">WITH THE INDEPENDENCE SEAM</text>
+<path class="ln" stroke-width="1.2" d="M268.0,132 L268.0,144 Q268.0,152 260.0,152 L124.0,152 Q116.0,152 116.0,160 L116.0,172" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M268.0,132 L268.0,172" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M268.0,132 L268.0,144 Q268.0,152 276.0,152 L412.0,152 Q420.0,152 420.0,160 L420.0,172" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M116.0,220 L116.0,232 Q116.0,240 124.0,240 L260.0,240 Q268.0,240 268.0,248 L268.0,260" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M268.0,220 L268.0,260" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M420.0,220 L420.0,232 Q420.0,240 412.0,240 L276.0,240 Q268.0,240 268.0,248 L268.0,260" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M268.0,324 L268.0,372" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M772.0,132 L772.0,164" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M772.0,216 L772.0,236" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M772.0,292 L772.0,308" marker-end="url(#m-muted)"/>
+<path class="ln-acc" stroke-width="1.2" d="M772.0,348 L772.0,404" marker-end="url(#m-acc)"/>
+<rect class="n-ext" stroke-width="1" x="168" y="92" width="200" height="40" rx="20"/>
+<text x="268.0" y="116.0" class="name ink" text-anchor="middle">Actor builds the change</text>
+<rect class="n-ext" stroke-width="1" x="44" y="172" width="144" height="48" rx="6"/>
+<text x="116.0" y="193.5" class="name ink" text-anchor="middle">Verify evidence</text>
+<text x="116.0" y="208.5" class="sub soft" text-anchor="middle">actor-authored</text>
+<rect class="n-ext" stroke-width="1" x="196" y="172" width="144" height="48" rx="6"/>
+<text x="268.0" y="193.5" class="name ink" text-anchor="middle">Review narrative</text>
+<text x="268.0" y="208.5" class="sub soft" text-anchor="middle">actor-authored</text>
+<rect class="n-ext" stroke-width="1" x="348" y="172" width="144" height="48" rx="6"/>
+<text x="420.0" y="193.5" class="name ink" text-anchor="middle">Decide framing</text>
+<text x="420.0" y="208.5" class="sub soft" text-anchor="middle">actor-authored</text>
+<polygon class="n-step" stroke-width="1" points="268.0,260 328,292.0 268.0,324 208,292.0"/>
+<text x="268.0" y="296.0" class="name ink" text-anchor="middle">Gates</text>
+<rect class="n-opt" stroke-width="1" x="128" y="372" width="280" height="56" rx="6"/>
+<text x="268.0" y="397.5" class="name ink" text-anchor="middle">A confident error ships,</text>
+<text x="268.0" y="412.5" class="sub soft" text-anchor="middle">wrapped in its own proof</text>
+<rect class="n-ext" stroke-width="1" x="672" y="92" width="200" height="40" rx="20"/>
+<text x="772.0" y="116.0" class="name ink" text-anchor="middle">Actor builds the change</text>
+<rect class="n-indep" stroke-width="1.4" x="632" y="164" width="280" height="52" rx="6"/>
+<text x="772.0" y="187.5" class="name ink" text-anchor="middle">Independent verifier</text>
+<text x="772.0" y="202.5" class="sub soft" text-anchor="middle">or evidence the reviewer reproduces</text>
+<polygon class="n-step" stroke-width="1" points="772.0,236 832,264.0 772.0,292 712,264.0"/>
+<text x="772.0" y="268.0" class="name ink" text-anchor="middle">Gates</text>
+<rect class="n-indep" stroke-width="1.4" x="652" y="308" width="240" height="40" rx="6"/>
+<text x="772.0" y="332.0" class="name ink" text-anchor="middle">Decider independent of the actor</text>
+<rect class="n-focal" stroke-width="1.4" x="632" y="404" width="280" height="56" rx="6"/>
+<text x="772.0" y="429.5" class="name ink" text-anchor="middle">A confident error is</text>
+<text x="772.0" y="444.5" class="sub soft" text-anchor="middle">visible at the gate</text>
+<rect class="mask" x="185.0" y="342" width="166.0" height="15" rx="2"/>
+<text x="268.0" y="353.5" class="lbl muted" text-anchor="middle">every input actor-authored</text>
+<rect class="mask" x="674.0" y="368" width="196.0" height="15" rx="2"/>
+<text x="772" y="379.5" class="lbl acc" text-anchor="middle">input not solely actor-authored</text>
+</svg>

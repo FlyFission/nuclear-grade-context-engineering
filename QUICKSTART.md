@@ -83,6 +83,11 @@ Trust check: What dependency, model, API, SaaS, or vendor claim affects the deci
 | Mostly an architecture or research decision | Research Board pattern |
 | A release-readiness decision | Release pattern |
 
+<p align="center"><img src="docs/assets/diagrams/mode-selection.svg" alt="Choosing a rigor mode" width="100%"></p>
+
+<details>
+<summary>Mermaid source (text version)</summary>
+
 ```mermaid
 flowchart TD
     Start([Change request]) --> Q0{Purely administrative,<br/>instantly reversible,<br/>no new trust boundary?}
@@ -94,6 +99,8 @@ flowchart TD
     Q2 -->|severe, silent,<br/>irreversible, external trust| Strong[Human-reviewed<br/>stronger mode]
     Q2 -->|already went wrong| Incident[Incident pattern]
 ```
+
+</details>
 
 If the mode is genuinely unclear after checking consequence, reversibility, and
 unknowns, use Standard until the uncertainty is resolved. Do not raise the mode

@@ -206,6 +206,11 @@ Every change walks the same path: the headline above, shown in full. Each step i
 Question -> Discover -> Specify -> Plan -> Execute -> Verify -> Review -> Decide -> Baseline -> Operate -> Learn
 ```
 
+<p align="center"><img src="docs/assets/diagrams/lifecycle.svg" alt="Nuclear-grade lifecycle" width="100%"></p>
+
+<details>
+<summary>Mermaid source (text version)</summary>
+
 ```mermaid
 flowchart LR
     Q[Question] --> D[Discover] --> S[Specify] --> P[Plan]
@@ -216,7 +221,14 @@ flowchart LR
     L -.feeds future basis.-> Q
 ```
 
+</details>
+
 Those eleven beats are the same path zoomed in. Zoomed out, they're three moves (**PRO**: Plan · Run · Operate) or five with the gate named (**PROVE**: Plan · Run · Observe · Verdict · Educate) — one path, three levels of detail:
+
+<p align="center"><img src="docs/assets/diagrams/pro.svg" alt="PRO: Plan · Run · Operate" width="100%"></p>
+
+<details>
+<summary>Mermaid source (text version)</summary>
 
 ```mermaid
 flowchart TB
@@ -246,6 +258,8 @@ flowchart TB
   class C1,C2,C3 emb
 ```
 
+</details>
+
 *If the diagrams above do not render (for example on PyPI), the eleven-beat line just above is the same path in text.* The control-point detail (what each step stops and produces) is in [`WORKFLOWS.md`](WORKFLOWS.md), and every diagram here is canonical in [`docs/diagrams.md`](docs/diagrams.md).
 
 Underneath the path sit a few **optional** habits borrowed from high-reliability work — **HPI for AI agents** (Human Performance Improvement). Reach for them only when they change the outcome: brief the work before a risky step, double-check critical actions, hand off cleanly, get a second set of eyes when trust is on the line, and capture the lesson after a near miss. [`WORKFLOWS.md`](WORKFLOWS.md) covers them.
@@ -262,6 +276,11 @@ Ready-made bundles live in [`starter-kit/`](starter-kit/), and [`CORE.md`](CORE.
 
 **Which change record do you need?** This release checks two kinds, both kept under `.nuclear/changes/<name>/`:
 
+<p align="center"><img src="docs/assets/diagrams/mode-selection.svg" alt="Choosing a rigor mode" width="100%"></p>
+
+<details>
+<summary>Mermaid source (text version)</summary>
+
 ```mermaid
 flowchart TD
     Start([Change request]) --> Q0{Purely administrative,<br/>instantly reversible,<br/>no new trust boundary?}
@@ -273,6 +292,8 @@ flowchart TD
     Q2 -->|severe, silent,<br/>irreversible, external trust| Strong[Human-reviewed<br/>stronger mode]
     Q2 -->|already went wrong| Incident[Incident pattern]
 ```
+
+</details>
 
 **In words / which files:**
 
@@ -304,6 +325,11 @@ Two tools also have native plugin packages: **Claude Code** (the repo is its own
 
 Four roles share the work: **you**, the **AI agent**, the **change record**, and the **reviewer**. The agent moves fast, but only inside limits you approve first. The record carries each claim and its evidence. The reviewer decides on the evidence, not the pitch.
 
+<p align="center"><img src="docs/assets/diagrams/one-change-sequence.svg" alt="One change, end to end" width="100%"></p>
+
+<details>
+<summary>Mermaid source (text version)</summary>
+
 ```mermaid
 sequenceDiagram
     actor You
@@ -322,6 +348,8 @@ sequenceDiagram
     Note over You,Reviewer: Lessons from real use feed the next change
 ```
 
+</details>
+
 **In words:** you ask and set the goal → the agent drafts the risk and what "good" means → you approve the limits → the agent builds only inside them → the agent writes each claim with its evidence → the reviewer checks the evidence and decides (ship / defer / block) → the approved version is saved as the baseline → lessons from real use feed the next change. Canonical copy in [`docs/diagrams.md`](docs/diagrams.md).
 
 One caution this loop has to defend against on purpose: the agent that builds the change also drafts much of its evidence, writes the narrative the reviewer reads, and frames the decision. A confident mistake can therefore arrive wrapped in convincing proof that it is correct — persuasive documentation the loop manufactured, because the actor and the evidence-author are the same. The defense is **independence**, scaled to the stakes: the load-bearing claim's evidence is reproducible by the reviewer or authored by an independent checker, and on trust-bearing work the decider is not the actor. See [`docs/02-operating-system/actor-evidence-independence.md`](docs/02-operating-system/actor-evidence-independence.md).
@@ -331,6 +359,11 @@ One caution this loop has to defend against on purpose: the agent that builds th
 You already have git, CI, and branch protection. Keep them; this rides on top, it does not replace them. What they do not give you is the *decision*: a green pipeline says the suite passed on some commit, not that a human weighed the leftover risk and chose to ship, and not what would force a re-check. And they were never aimed at the things that now drive an AI system's behavior: the prompts, the model IDs, the eval sets, the agent's own permissions. Agent context files such as `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, Copilot instructions, skills, and prompt templates are part of the operating envelope; changing them is not documentation-only when it changes how an agent may act. Git versions your code; none of it records *why this is the version you trust*.
 
 A **baseline** closes that gap. It is the version everyone agreed is correct, plus the evidence behind the agreement. Changes never edit the baseline directly; they go through evidence and a decision first, and only an accepted change becomes the new baseline. That is configuration management, in one loop:
+
+<p align="center"><img src="docs/assets/diagrams/control-loop.svg" alt="Configuration control loop" width="100%"></p>
+
+<details>
+<summary>Mermaid source (text version)</summary>
 
 ```mermaid
 flowchart LR
@@ -346,6 +379,8 @@ flowchart LR
     OP --> LE["Lessons learned"]
     LE -.->|"feed the next change"| CI
 ```
+
+</details>
 
 **In words:** controlled items (code, prompts, models, dependencies, docs, releases) → a change → named evidence (pass or gap) → a deliberate decision → if ship or defer, save the new baseline; if block, back to the change → operate the baseline → lessons feed the next change. You only add the heavier records (what is under control, ripple effects, the saved baseline, drift, and operating lessons) when the stakes are high enough to earn them. Canonical copy in [`docs/diagrams.md`](docs/diagrams.md).
 

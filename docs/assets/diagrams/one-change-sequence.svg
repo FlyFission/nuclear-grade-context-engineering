@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" width="960" height="560" role="img" aria-labelledby="t d">
+<title id="t">One change, end to end</title>
+<desc id="d">Sequence between You, the AI agent, the change record and a reviewer: you set the goal, the agent drafts risk and acceptance, you approve limits, the agent builds inside them and writes claims with evidence, the reviewer decides on purpose, and the approved version is saved as the baseline.</desc>
+<style>
+.bg{fill:#F7F6F2} .ink{fill:#0E1A30} .muted{fill:#46536B} .soft{fill:#5A6680}
+.acc{fill:#8A5A00} .lnk{fill:#2F4F94}
+.n-step{fill:#FFFFFF;stroke:#0E1A30} .n-store{fill:rgba(14,26,48,0.05);stroke:#46536B}
+.n-focal{fill:rgba(255,210,77,0.22);stroke:#8A5A00} .n-ext{fill:rgba(14,26,48,0.03);stroke:rgba(14,26,48,0.32)}
+.n-opt{fill:rgba(14,26,48,0.02);stroke:rgba(14,26,48,0.36);stroke-dasharray:4 3}
+.n-indep{fill:rgba(47,79,148,0.07);stroke:#2F4F94}
+.grp{fill:none;stroke:rgba(14,26,48,0.22);stroke-dasharray:4 4}
+.band{fill:rgba(14,26,48,0.035);stroke:rgba(14,26,48,0.10)}
+.ln{fill:none;stroke:#46536B} .ln-acc{fill:none;stroke:#8A5A00} .ln-lnk{fill:none;stroke:#2F4F94}
+.life{stroke:rgba(14,26,48,0.25);stroke-dasharray:3 4}
+.mask{fill:#F7F6F2} .rule{stroke:rgba(14,26,48,0.14)}
+.name{font-family:system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;font-size:13px;font-weight:600}
+.sub{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:10px}
+.eye{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:9.5px;font-weight:600;letter-spacing:0.16em}
+.lbl{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:9.5px;letter-spacing:0.04em}
+.ttl{font-family:'Iowan Old Style', Georgia, 'Times New Roman', serif;font-size:22px}
+.call{font-family:'Iowan Old Style', Georgia, 'Times New Roman', serif;font-style:italic;font-size:14px}
+@media (prefers-color-scheme: dark){
+.bg{fill:#0E1A30} .ink{fill:#F4F7FC} .muted{fill:#B3C2DA} .soft{fill:#9DB0CE}
+.acc{fill:#FFD24D} .lnk{fill:#8FB0E6}
+.n-step{fill:#16263F;stroke:#D7E0EE} .n-store{fill:rgba(244,247,252,0.05);stroke:#9DB0CE}
+.n-focal{fill:rgba(255,210,77,0.14);stroke:#FFD24D} .n-ext{fill:rgba(244,247,252,0.03);stroke:rgba(244,247,252,0.34)}
+.n-opt{fill:rgba(244,247,252,0.02);stroke:rgba(244,247,252,0.40)}
+.n-indep{fill:rgba(143,176,230,0.10);stroke:#8FB0E6}
+.grp{stroke:rgba(244,247,252,0.26)} .band{fill:rgba(244,247,252,0.035);stroke:rgba(244,247,252,0.10)}
+.ln{stroke:#9DB0CE} .ln-acc{stroke:#FFD24D} .ln-lnk{stroke:#8FB0E6}
+.life{stroke:rgba(244,247,252,0.28)} .mask{fill:#0E1A30} .rule{stroke:rgba(244,247,252,0.16)}
+}
+</style>
+<defs>
+<marker id="m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="muted" points="0 0, 8 3, 0 6"/></marker>
+<marker id="m-acc" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="acc" points="0 0, 8 3, 0 6"/></marker>
+<marker id="m-lnk" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="lnk" points="0 0, 8 3, 0 6"/></marker>
+</defs>
+<rect class="bg" width="960" height="560" rx="10"/>
+<text x="28" y="34" class="eye soft">ONE CHANGE · WHO DOES WHAT, IN ORDER</text>
+<line class="rule" x1="28" y1="44" x2="932" y2="44"/>
+<rect class="band" x="68" y="488" width="844" height="32" rx="6"/>
+<text x="490.0" y="509" class="call muted" text-anchor="middle">Lessons from real use feed the next change</text>
+<line class="life" x1="140" y1="104" x2="140" y2="500" stroke-width="1"/>
+<line class="life" x1="380" y1="104" x2="380" y2="500" stroke-width="1"/>
+<line class="life" x1="620" y1="104" x2="620" y2="500" stroke-width="1"/>
+<line class="life" x1="840" y1="104" x2="840" y2="500" stroke-width="1"/>
+<path class="ln" stroke-width="1.2" d="M143,136 L376,136" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M383,176 L616,176" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M617,216 L144,216" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M143,256 L376,256" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M380,290 L410,290 Q416,290 416,296 L416,300 Q416,306 410,306 L384,306" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M383,336 L616,336" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M623,376 L836,376" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
+<path class="ln-acc" stroke-width="1.2" d="M837,416 L624,416" marker-end="url(#m-acc)"/>
+<path class="ln" stroke-width="1.2" d="M620,450 L650,450 Q656,450 656,456 L656,460 Q656,466 650,466 L624,466" marker-end="url(#m-muted)"/>
+<rect class="n-ext" stroke-width="1" x="68" y="64" width="144" height="40" rx="20"/>
+<text x="140.0" y="88.0" class="name ink" text-anchor="middle">You</text>
+<rect class="n-step" stroke-width="1" x="308" y="64" width="144" height="40" rx="6"/>
+<text x="380.0" y="88.0" class="name ink" text-anchor="middle">AI agent</text>
+<rect class="n-focal" stroke-width="1.4" x="548" y="64" width="144" height="40" rx="6"/>
+<text x="620.0" y="88.0" class="name ink" text-anchor="middle">Change record</text>
+<rect class="n-ext" stroke-width="1" x="768" y="64" width="144" height="40" rx="20"/>
+<text x="840.0" y="88.0" class="name ink" text-anchor="middle">Reviewer</text>
+<rect class="mask" x="150.0" y="116" width="220.0" height="15" rx="2"/>
+<text x="260.0" y="127.5" class="lbl muted" text-anchor="middle">Ask the hard question, set the goal</text>
+<rect class="mask" x="387.0" y="156" width="226.0" height="15" rx="2"/>
+<text x="500.0" y="167.5" class="lbl muted" text-anchor="middle">Draft the risk and what “good” means</text>
+<rect class="mask" x="321.0" y="196" width="118.0" height="15" rx="2"/>
+<text x="380.0" y="207.5" class="lbl muted" text-anchor="middle">You read the draft</text>
+<rect class="mask" x="144.0" y="236" width="232.0" height="15" rx="2"/>
+<text x="260.0" y="247.5" class="lbl muted" text-anchor="middle">Approve the limits (may / may not do)</text>
+<text x="426" y="302" class="lbl muted" text-anchor="start">Build only inside the limits</text>
+<rect class="mask" x="393.0" y="316" width="214.0" height="15" rx="2"/>
+<text x="500.0" y="327.5" class="lbl muted" text-anchor="middle">Write each claim with its evidence</text>
+<rect class="mask" x="638.0" y="356" width="184.0" height="15" rx="2"/>
+<text x="730.0" y="367.5" class="lbl muted" text-anchor="middle">Show evidence, gaps, decision</text>
+<rect class="mask" x="605.0" y="396" width="250.0" height="15" rx="2"/>
+<text x="730.0" y="407.5" class="lbl acc" text-anchor="middle">Decide on purpose — ship / defer / block</text>
+<text x="666" y="462" class="lbl muted" text-anchor="start">Save the approved version (baseline)</text>
+</svg>

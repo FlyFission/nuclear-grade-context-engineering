@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 300" width="1040" height="300" role="img" aria-labelledby="t d">
+<title id="t">Evidence chain</title>
+<desc id="d">Change intent, consequence classification, design basis, controlled items, implementation plan, traceability, verification, baseline record, release readiness, operating signals; OPEX feeds forward into the design basis.</desc>
+<style>
+.bg{fill:#F7F6F2} .ink{fill:#0E1A30} .muted{fill:#46536B} .soft{fill:#5A6680}
+.acc{fill:#8A5A00} .lnk{fill:#2F4F94}
+.n-step{fill:#FFFFFF;stroke:#0E1A30} .n-store{fill:rgba(14,26,48,0.05);stroke:#46536B}
+.n-focal{fill:rgba(255,210,77,0.22);stroke:#8A5A00} .n-ext{fill:rgba(14,26,48,0.03);stroke:rgba(14,26,48,0.32)}
+.n-opt{fill:rgba(14,26,48,0.02);stroke:rgba(14,26,48,0.36);stroke-dasharray:4 3}
+.n-indep{fill:rgba(47,79,148,0.07);stroke:#2F4F94}
+.grp{fill:none;stroke:rgba(14,26,48,0.22);stroke-dasharray:4 4}
+.band{fill:rgba(14,26,48,0.035);stroke:rgba(14,26,48,0.10)}
+.ln{fill:none;stroke:#46536B} .ln-acc{fill:none;stroke:#8A5A00} .ln-lnk{fill:none;stroke:#2F4F94}
+.life{stroke:rgba(14,26,48,0.25);stroke-dasharray:3 4}
+.mask{fill:#F7F6F2} .rule{stroke:rgba(14,26,48,0.14)}
+.name{font-family:system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;font-size:13px;font-weight:600}
+.sub{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:10px}
+.eye{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:9.5px;font-weight:600;letter-spacing:0.16em}
+.lbl{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:9.5px;letter-spacing:0.04em}
+.ttl{font-family:'Iowan Old Style', Georgia, 'Times New Roman', serif;font-size:22px}
+.call{font-family:'Iowan Old Style', Georgia, 'Times New Roman', serif;font-style:italic;font-size:14px}
+@media (prefers-color-scheme: dark){
+.bg{fill:#0E1A30} .ink{fill:#F4F7FC} .muted{fill:#B3C2DA} .soft{fill:#9DB0CE}
+.acc{fill:#FFD24D} .lnk{fill:#8FB0E6}
+.n-step{fill:#16263F;stroke:#D7E0EE} .n-store{fill:rgba(244,247,252,0.05);stroke:#9DB0CE}
+.n-focal{fill:rgba(255,210,77,0.14);stroke:#FFD24D} .n-ext{fill:rgba(244,247,252,0.03);stroke:rgba(244,247,252,0.34)}
+.n-opt{fill:rgba(244,247,252,0.02);stroke:rgba(244,247,252,0.40)}
+.n-indep{fill:rgba(143,176,230,0.10);stroke:#8FB0E6}
+.grp{stroke:rgba(244,247,252,0.26)} .band{fill:rgba(244,247,252,0.035);stroke:rgba(244,247,252,0.10)}
+.ln{stroke:#9DB0CE} .ln-acc{stroke:#FFD24D} .ln-lnk{stroke:#8FB0E6}
+.life{stroke:rgba(244,247,252,0.28)} .mask{fill:#0E1A30} .rule{stroke:rgba(244,247,252,0.16)}
+}
+</style>
+<defs>
+<marker id="m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="muted" points="0 0, 8 3, 0 6"/></marker>
+<marker id="m-acc" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="acc" points="0 0, 8 3, 0 6"/></marker>
+<marker id="m-lnk" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="lnk" points="0 0, 8 3, 0 6"/></marker>
+</defs>
+<rect class="bg" width="1040" height="300" rx="10"/>
+<text x="28" y="34" class="eye soft">EVIDENCE CHAIN · INTENT TO OPERATING SIGNAL</text>
+<line class="rule" x1="28" y1="44" x2="1012" y2="44"/>
+<path class="ln" stroke-width="1.2" d="M208,102.0 L238,102.0" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M406,102.0 L436,102.0" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M604,102.0 L634,102.0" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M802,102.0 L832,102.0" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M916.0,128 L916.0,204" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M832,230.0 L802,230.0" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M634,230.0 L604,230.0" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M436,230.0 L406,230.0" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M238,230.0 L208,230.0" marker-end="url(#m-muted)"/>
+<path class="ln-acc" stroke-width="1.2" d="M124.0,204 L124.0,176 Q124.0,168 132.0,168 L512.0,168 Q520.0,168 520.0,160 L520.0,128" stroke-dasharray="5 4" marker-end="url(#m-acc)"/>
+<rect class="n-ext" stroke-width="1" x="40" y="76" width="168" height="52" rx="6"/>
+<text x="124.0" y="106.0" class="name ink" text-anchor="middle">Change intent</text>
+<rect class="n-step" stroke-width="1" x="238" y="76" width="168" height="52" rx="6"/>
+<text x="322.0" y="99.5" class="name ink" text-anchor="middle">Consequence</text>
+<text x="322.0" y="114.5" class="sub soft" text-anchor="middle">classification</text>
+<rect class="n-focal" stroke-width="1.4" x="436" y="76" width="168" height="52" rx="6"/>
+<text x="520.0" y="99.5" class="name ink" text-anchor="middle">Design basis</text>
+<text x="520.0" y="114.5" class="sub soft" text-anchor="middle">basis.md</text>
+<rect class="n-store" stroke-width="1" x="634" y="76" width="168" height="52" rx="6"/>
+<text x="718.0" y="106.0" class="name ink" text-anchor="middle">Controlled items</text>
+<rect class="n-step" stroke-width="1" x="832" y="76" width="168" height="52" rx="6"/>
+<text x="916.0" y="99.5" class="name ink" text-anchor="middle">Implementation plan</text>
+<text x="916.0" y="114.5" class="sub soft" text-anchor="middle">plan.md</text>
+<rect class="n-step" stroke-width="1" x="832" y="204" width="168" height="52" rx="6"/>
+<text x="916.0" y="227.5" class="name ink" text-anchor="middle">Traceability</text>
+<text x="916.0" y="242.5" class="sub soft" text-anchor="middle">trace.md</text>
+<rect class="n-step" stroke-width="1" x="634" y="204" width="168" height="52" rx="6"/>
+<text x="718.0" y="227.5" class="name ink" text-anchor="middle">Verification</text>
+<text x="718.0" y="242.5" class="sub soft" text-anchor="middle">verification.md</text>
+<rect class="n-store" stroke-width="1" x="436" y="204" width="168" height="52" rx="6"/>
+<text x="520.0" y="234.0" class="name ink" text-anchor="middle">Baseline record</text>
+<rect class="n-step" stroke-width="1" x="238" y="204" width="168" height="52" rx="6"/>
+<text x="322.0" y="227.5" class="name ink" text-anchor="middle">Release readiness</text>
+<text x="322.0" y="242.5" class="sub soft" text-anchor="middle">ship.md</text>
+<rect class="n-step" stroke-width="1" x="40" y="204" width="168" height="52" rx="6"/>
+<text x="124.0" y="227.5" class="name ink" text-anchor="middle">Operating signals</text>
+<text x="124.0" y="242.5" class="sub soft" text-anchor="middle">opex.md</text>
+<rect class="mask" x="278.0" y="160" width="88.0" height="15" rx="2"/>
+<text x="322.0" y="171.5" class="lbl acc" text-anchor="middle">feeds forward</text>
+</svg>

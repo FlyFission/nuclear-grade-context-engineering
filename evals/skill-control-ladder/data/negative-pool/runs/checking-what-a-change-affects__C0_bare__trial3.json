@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 13801,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0302172,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2486,
+    "cache_read_input_tokens": 31624,
+    "output_tokens": 342,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2486,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 59,
+        "cache_read_input_tokens": 8624,
+        "cache_creation_input_tokens": 133,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 133
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 585,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00066,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 342,
+      "cacheReadInputTokens": 31624,
+      "cacheCreationInputTokens": 2486,
+      "webSearchRequests": 0,
+      "costUSD": 0.0295572,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "There's no `scripts/backup.sh` in this repo, and no \"Succesfully\" typo anywhere in the codebase. Could you double-check the file path or which repo you meant?",
+  "ttft_ms": 1268,
+  "ttft_stream_ms": 863,
+  "time_to_request_ms": 28,
+  "time_to_request_from_spawn_ms": 1366725,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594360758.3616,
+  "type": "result",
+  "duration_ms": 9969,
+  "uuid": "45aa2719-c981-495c-afa8-000935d6386d",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C0_bare",
+  "_trial": 3,
+  "_input_spec_sha256": "55e8610723bda98e1638d38faa6dbed6bdb07be45f9196a4081baa4e9060514e"
+}

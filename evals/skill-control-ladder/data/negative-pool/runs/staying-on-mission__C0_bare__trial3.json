@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 10967,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0320434,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2498,
+    "cache_read_input_tokens": 31448,
+    "output_tokens": 463,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2498,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 102,
+        "cache_read_input_tokens": 8638,
+        "cache_creation_input_tokens": 131,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 131
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 577,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000652,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 463,
+      "cacheReadInputTokens": 31448,
+      "cacheCreationInputTokens": 2498,
+      "webSearchRequests": 0,
+      "costUSD": 0.0313914,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This working directory appears to be empty \u2014 there's no `cli.py` or any files in it at all, so I can't find the typo you're describing.\n\nCould you double check the directory/repo you meant to point me at? It's possible you're referencing a different project than what's currently checked out here.",
+  "ttft_ms": 2287,
+  "ttft_stream_ms": 1086,
+  "time_to_request_ms": 50,
+  "time_to_request_from_spawn_ms": 1711647,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594705690.8848,
+  "type": "result",
+  "duration_ms": 12044,
+  "uuid": "0f0c8fa6-5695-41ea-86ad-0f7c2af8e65c",
+  "_skill": "staying-on-mission",
+  "_arm": "C0_bare",
+  "_trial": 3,
+  "_input_spec_sha256": "cf7a61efe10107a8560bb9db1c9ebf0d5ef37ca1ed0fafa5f296de9be2af9a39"
+}

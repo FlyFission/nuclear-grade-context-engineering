@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 13778,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0382075,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 3039,
+    "cache_read_input_tokens": 24045,
+    "output_tokens": 804,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3039,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 235,
+        "cache_read_input_tokens": 9179,
+        "cache_creation_input_tokens": 140,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 140
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 607,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000682,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 804,
+      "cacheReadInputTokens": 24045,
+      "cacheCreationInputTokens": 3039,
+      "webSearchRequests": 0,
+      "costUSD": 0.037525499999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This working directory is completely empty \u2014 there's no `package.json` and no system prompt template file anywhere in this repo. I can't find the files you're referring to.\n\nCould you confirm:\n1. Is this the right directory/repo for this change?\n2. If the files live elsewhere, what's the path?\n\nAlso, heads-up on process even once I find the files: since this touches a dependency version and the model's system prompt, both edits need to go through the **Standard-plus** path (a minimal change packet + validation) rather than a quick drive-by edit \u2014 even though the diff is small, dependency bumps and prompt changes are flagged as always requiring that review, per the working agreements here. Happy to move fast on it, just wanted to flag that before we start rather than after.",
+  "ttft_ms": 4031,
+  "ttft_stream_ms": 1040,
+  "time_to_request_ms": 28,
+  "time_to_request_from_spawn_ms": 832045,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789470491.6553,
+  "type": "result",
+  "duration_ms": 14219,
+  "uuid": "d712381a-2eac-4034-88d6-17722b563eae",
+  "_skill": "using-nuclear-grade",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "315a75bab79c59ab48d8f68dbecde3491af5b46e8e1622b0eb9726a9a4689fa5"
+}

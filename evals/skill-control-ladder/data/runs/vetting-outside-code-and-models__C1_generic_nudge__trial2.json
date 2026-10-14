@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 13769,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.028838000000000003,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2154,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 887,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2154,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 887,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2154,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2154
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000719,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 887,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2154,
+      "webSearchRequests": 0,
+      "costUSD": 0.028119,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 don't cut production over this week based on marketing claims alone. Here's why, and what actually needs to happen first.\n\n**What's missing/unverified:**\n- \"99.9% accuracy\" is meaningless without knowing: accuracy on what dataset, what harm categories, what's the false negative rate specifically (that's the number that matters for moderation \u2014 false positives annoy users, false negatives let harmful content through). Vendors cherry-pick benchmarks.\n- \"SOC2 compliant\" \u2014 ask for the actual report (Type II, not Type I), check the audit period and any exceptions noted. A claim on a website isn't evidence.\n- Customer case studies on a vendor's own site are marketing, not independent validation. Ask for reference customers you can actually talk to, ideally in your industry/scale.\n- No visibility into their model's behavior on adversarial inputs, non-English content, edge cases specific to your platform, or how they handle drift/updates to their model over time.\n\n**Concrete risks if you skip evaluation:**\n- False negatives in content moderation mean CSAM, harassment, violent content, or illegal material reaching users \u2014 this is a legal/regulatory/trust liability, not just a quality issue.\n- False positives at scale can silently break legitimate user content/accounts.\n- If the vendor has an outage or degrades quietly, you have no baseline to detect it since you never measured their performance yourselves.\n- A cheap pricing tier from a startup is also a signal to check their financial stability/longevity \u2014 losing your moderation vendor suddenly is a real operational risk.\n\n**Who should be involved:** whoever owns trust & safety / legal risk at your company should sign off before this goes to production, not just engineering picking a cheaper API.\n\n**What I'd actually recommend before any production cutover:**\n1. Run the new API in shadow mode (or on a held-out labeled dataset) against your own historical moderation decisions for at least a couple weeks, comparing precision/recall by category against your current provider.\n2. Request and review the actual SOC2 Type II report and DPA/security documentation.\n3. Talk to 2-3 reference customers, ideally ones at similar scale/content type.\n4. Check contract terms: SLAs, liability for moderation failures, data handling/retention, and exit terms if you need to switch back quickly.\n5. If results look good, do a gradual rollout (small % of traffic) with monitoring/alerting before full cutover, not a full swap in one week.\n\nThis is a case where the cost of moving fast and being wrong (a moderation failure hitting users or triggering legal exposure) is much higher than the cost of a few weeks of proper evaluation. Want help designing the shadow-mode evaluation or a comparison test harness?",
+  "ttft_ms": 12754,
+  "ttft_stream_ms": 953,
+  "time_to_request_ms": 81,
+  "time_to_request_from_spawn_ms": 1219316,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785026098163.7341,
+  "type": "result",
+  "duration_ms": 12858,
+  "uuid": "e5817a96-b718-41ad-9b89-6395e94ecb85",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C1_generic_nudge",
+  "_trial": 2,
+  "_input_spec_sha256": "18d2ee05b64b0e7761a276b206d50734d1bba70b467234fb7cb019d0e50fc967"
+}

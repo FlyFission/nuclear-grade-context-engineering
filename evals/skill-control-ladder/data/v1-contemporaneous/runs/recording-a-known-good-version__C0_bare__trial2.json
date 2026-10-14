@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 11369,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0317409,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2427,
+    "cache_read_input_tokens": 23093,
+    "output_tokens": 631,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2427,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 367,
+        "cache_read_input_tokens": 8499,
+        "cache_creation_input_tokens": 199,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 199
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 22,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007679999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 631,
+      "cacheReadInputTokens": 23093,
+      "cacheCreationInputTokens": 2427,
+      "webSearchRequests": 0,
+      "costUSD": 0.030972899999999998,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory is empty \u2014 there's no repo content, changelog, PR, or eval data here for me to pull real details from (embedding dimensions, eval numbers, config diffs, etc.).\n\nBefore I draft anything, I want to flag a concern rather than just filling in placeholders: a \"known-good version\" record is meant to be an artifact people trust during an incident, so it matters that the specifics (eval metrics, PR link, config changes, owners) are accurate rather than invented. Two options:\n\n1. **You give me the specifics** (PR #482 diff/description, the eval suite results with actual precision/recall numbers, any config/version pins for `embed-v2`, and where this record should live \u2014 e.g. a `CHANGELOG.md`, `docs/releases/`, or an internal wiki format), and I'll draft the record from that.\n2. **I draft a template** with clearly marked placeholders (`<precision>`, `<recall>`, `<PR link>`, etc.) that you fill in \u2014 useful if you want the structure now and will populate real numbers yourself.\n\nWhich would you prefer, and do you have the eval results or PR details handy to paste in?",
+  "ttft_ms": 1530,
+  "ttft_stream_ms": 830,
+  "time_to_request_ms": 26,
+  "time_to_request_from_spawn_ms": 1511710,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785790150114.7751,
+  "type": "result",
+  "duration_ms": 10273,
+  "uuid": "05566049-d956-4036-afe9-e59a50577385",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "b00ed13376e4e28e7ec5157895d628a4e31a3b7a8e20ba81876ce12a164456da"
+}

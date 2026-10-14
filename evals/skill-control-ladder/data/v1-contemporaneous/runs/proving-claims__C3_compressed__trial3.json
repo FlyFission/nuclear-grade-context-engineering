@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 20593,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.039532000000000005,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2345,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1525,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2345,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1525,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2345,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2345
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 617,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000697,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1525,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2345,
+      "webSearchRequests": 0,
+      "costUSD": 0.038835,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A quick flag before I draft this: \"safe and fully backward compatible\" is a strong, unscoped claim for a payment-processing module, and the evidence you have \u2014 tests you ran yourself, and a diff you reviewed yourself \u2014 is all self-authored/self-executed. That's useful signal, but it's not independent verification, and self-checks shouldn't be presented as proof of a strong safety claim to reviewers who are relying on the PR description to decide how much scrutiny to apply.\n\nTwo specific gaps worth naming:\n\n1. **Self vs. independent evidence** \u2014 you generated, executed, and reviewed all of this yourself. Reviewers can't tell from \"I ran the tests and they passed\" whether that's true independent confirmation or just restating your own work. If CI ran the suite too, that's a different (and stronger) claim than \"I ran it locally.\"\n2. **Test coverage vs. the claim** \u2014 passing the *existing* suite tells you the refactor didn't break what's already tested. It says nothing about backward compatibility for behaviors/edge cases the existing suite doesn't cover (this is exactly the gap a refactor can hide). \"Fully backward compatible\" implies more certainty than \"existing tests still pass.\"\n\nSuggested evidence section, scoped to what you actually know:\n\n```markdown\n## Evidence\n\n- **Test suite**: Full existing test suite passes locally (run by me, not yet re-verified in CI).\n- **Self-review**: I reviewed the full diff line-by-line for unintended behavior changes.\n- **Not yet done**: No independent code review; no explicit backward-compatibility test cases beyond existing coverage.\n\n**Compatibility claim**: Based on the above, I believe this refactor preserves existing behavior, but this hasn't been independently verified yet. Reviewers, please treat this as a normal review, not a rubber stamp \u2014 particularly around [call out any areas you changed that touch external callers, serialization formats, or public interfaces].\n```\n\nIf you want to actually support \"safe and fully backward compatible\" rather than \"I believe it is,\" I'd recommend before merge:\n- Let CI run the suite independently (don't just cite your local run).\n- Get at least one reviewer to look at the diff \u2014 that's the independent check self-review can't substitute for.\n- If there are behaviors not covered by existing tests (e.g., edge cases in the old vs. new code paths), add tests for those specifically, since that's the actual risk in a refactor.\n\nWant me to look at the diff with you to spot backward-compat risks the existing suite might not cover?",
+  "ttft_ms": 9788,
+  "ttft_stream_ms": 1316,
+  "time_to_request_ms": 64,
+  "time_to_request_from_spawn_ms": 783609,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789421912.4177,
+  "type": "result",
+  "duration_ms": 20912,
+  "uuid": "e25df497-4a77-4c46-b936-c7a8ef5ef794",
+  "_skill": "proving-claims",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "4f271896c4f65ed9da0834e13073c621f6aa4d17ac993ae9b3aec20f086c6211"
+}

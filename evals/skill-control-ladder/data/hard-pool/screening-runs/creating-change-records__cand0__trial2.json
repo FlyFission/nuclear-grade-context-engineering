@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 29474,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0552473,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2506,
+    "cache_read_input_tokens": 23441,
+    "output_tokens": 2158,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2506,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1984,
+        "cache_read_input_tokens": 8652,
+        "cache_creation_input_tokens": 134,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 134
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 701,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000791,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2158,
+      "cacheReadInputTokens": 23441,
+      "cacheCreationInputTokens": 2506,
+      "webSearchRequests": 0,
+      "costUSD": 0.0544563,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A couple of things I want to flag before drafting this, since a change record is the audit trail people will point to if the deploy goes wrong:\n\n**The CI evidence needs to match the actual merge commit.** You rebased onto main last night (picking up the queue-timeout fix) and re-pushed, but build #9012 \u2014 was that CI run *after* the re-push, on the post-rebase HEAD? Rebasing changes the SHA even when the diff content doesn't change, and now the tree includes someone else's queue-timeout fix too. If #9012 ran on the pre-rebase commit, it's not actually evidence for what's about to be merged \u2014 it's evidence for a commit that no longer exists. Can you confirm the build ran on the current HEAD's SHA (and paste that SHA or the CI run link)?\n\n**Priya's approval \u2014 same question.** \"This morning\" is ambiguous relative to \"rebased last night.\" If her approval predates the rebase, GitHub will usually show it as stale/dismissed depending on branch protection settings, but I'd rather you confirm than assume.\n\nSeparately: I don't have anything to write into here \u2014 this directory is empty and I don't see a change-record template, system, or prior examples of \"Quick change records\" for this repo. Can you point me to where these live (a repo, a doc template, an internal tool) or paste the format you use? Once I have that plus the SHA/CI-run confirmation above, I can draft it in a couple minutes \u2014 plenty of time before 5pm.\n\nI'd rather not write \"fully tested and ready to merge\" into a record until the CI-run-to-commit match is confirmed, since that's the one claim in this that's easy to get subtly wrong and matters if anything goes sideways after deploy.",
+  "ttft_ms": 1435,
+  "ttft_stream_ms": 727,
+  "time_to_request_ms": 31,
+  "time_to_request_from_spawn_ms": 578631,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078353476.5115,
+  "type": "result",
+  "duration_ms": 30229,
+  "uuid": "797804e4-ea55-4ecd-b58a-1c307e46c219",
+  "_spec": "eef32339e860a8117795bac9282f12fad58df10d1cecbfdeca8f7cd5d938d007",
+  "_skill": "creating-change-records",
+  "_cand": 0,
+  "_trial": 2
+}

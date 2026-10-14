@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 9891,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0530272,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 5511,
+    "cache_read_input_tokens": 40534,
+    "output_tokens": 475,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 5511,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 89,
+        "cache_read_input_tokens": 11571,
+        "cache_creation_input_tokens": 220,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 220
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 577,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000652,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 475,
+      "cacheReadInputTokens": 40534,
+      "cacheCreationInputTokens": 5511,
+      "webSearchRequests": 0,
+      "costUSD": 0.0523752,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I searched this repo but couldn't find a `cli.py` file or the string \"Specifiy\" (or \"output directory\") anywhere in it. It looks like this repo may not contain the CLI code you're thinking of \u2014 could you confirm the file path or which repo/directory this should be in?",
+  "ttft_ms": 2109,
+  "ttft_stream_ms": 941,
+  "time_to_request_ms": 45,
+  "time_to_request_from_spawn_ms": 1726039,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594720362.142,
+  "type": "result",
+  "duration_ms": 9020,
+  "uuid": "6ee1fe09-bc5e-48a5-bcd6-deda2657c926",
+  "_skill": "staying-on-mission",
+  "_arm": "C4_full_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "2d95b1c891247e785409476ef2fb798da5b9c06e1437f3dddb327501ec9985e7"
+}

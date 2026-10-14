@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 35194,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.08529629999999999,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 4722,
+    "cache_read_input_tokens": 33331,
+    "output_tokens": 3079,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4722,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 938,
+        "cache_read_input_tokens": 9523,
+        "cache_creation_input_tokens": 1479,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1479
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 676,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007559999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 3079,
+      "cacheReadInputTokens": 33331,
+      "cacheCreationInputTokens": 4722,
+      "webSearchRequests": 0,
+      "costUSD": 0.08454029999999998,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't have write access in this session, so here's the handoff note as text \u2014 feel free to save it wherever your team keeps these (e.g. a `HANDOFF.md` on the branch, or your team wiki).\n\n---\n\n# Handoff: OAuth2 Migration for Billing Service\n\n**From:** Ben (benjaminhuffer1@gmail.com)\n**Date:** 2026-07-26\n**Back:** ~2026-08-02 (one week vacation, starting tomorrow morning)\n**Branch:** `oauth-migration`\n\n## Last completed action\n\nAuth middleware and token-refresh logic have been rewritten for OAuth2 and merged into `oauth-migration`. Unit tests for both pass. This is as far as the migration has gotten \u2014 nothing beyond this has been started.\n\n## Changed conditions\n\n- The billing service itself now supports OAuth2 auth via the merged changes above.\n- **Old API-key auth is still live and must stay that way.** It has not been touched, and the keys have not been rotated. Do not rotate or revoke them yet \u2014 see Stop Conditions below.\n- Production config has not been touched at all. Nothing has been deployed from this branch.\n\n## Remaining scope\n\n1. Migrate the **three downstream services** that still call the old API-key auth endpoints over to OAuth2. (Not started \u2014 no written list yet of the exact call sites in each service, so budget time to find them first.)\n2. Once all three downstream services are confirmed working against OAuth2, update production config for the billing service.\n3. Only after that: rotate/retire the old API keys.\n\n## Authority limits\n\n- Do not rotate or deactivate the old API keys until all three downstream services are verified as migrated and working. Doing so early will break those services with 401s.\n- Do not push changes to production config until the downstream migration is verified complete.\n- No deployment or key-rotation decision has been approved yet \u2014 that should wait for me, or get explicit sign-off from whoever owns this service if it becomes urgent.\n\n## Open evidence / unknowns\n\n- Exact list of downstream call sites using the old endpoints hasn't been documented \u2014 needs to be found via search across those three services' codebases.\n- No integration testing has been done yet between the new OAuth2 middleware and any downstream service.\n\n## Stop conditions\n\nStop and escalate (don't just proceed) if:\n- Any of the three downstream services can't be migrated cleanly (blocked dependency, unclear ownership, etc.)\n- There's pressure to rotate the old API keys before all downstream migrations are verified.\n- Anything requires touching production config in a way that could affect live billing traffic.\n\nUrgent issues: benjaminhuffer1@gmail.com.\n\n---\n\nLet me know if you'd like this trimmed down, expanded with more technical detail, or adjusted in tone.",
+  "ttft_ms": 2916,
+  "ttft_stream_ms": 730,
+  "time_to_request_ms": 42,
+  "time_to_request_from_spawn_ms": 797993,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025676816.6702,
+  "type": "result",
+  "duration_ms": 35360,
+  "uuid": "bf8c9700-4617-434b-9ba7-9ab8cad93cde",
+  "_skill": "handing-off-work",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "8947c73732a3df9076794b1651b97531ce37ae07f029b1a9db1944aafad6774f"
+}

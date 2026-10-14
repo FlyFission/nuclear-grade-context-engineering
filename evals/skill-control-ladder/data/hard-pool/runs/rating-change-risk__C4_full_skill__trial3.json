@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 25675,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.061191999999999996,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 4738,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2007,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4738,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2007,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 4738,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4738
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 679,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000769,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2007,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 4738,
+      "webSearchRequests": 0,
+      "costUSD": 0.060423,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't have git/merge tooling available in this session, but more importantly \u2014 I'd flag this for a second look before it ships, even though it reads as a trivial diff.\n\n**Why this isn't administrative-floor, \"just merge it\" work:** the diff is three lines of JSX, but the *content* is a public compliance/security claim, and you're making it more prominent specifically because a competitor got publicly dinged for not having one. That combination \u2014 claim-bearing public wording + timing that invites scrutiny + pressure to ship before a sales call \u2014 is exactly the pattern that should bump this out of \"routine copy tweak\" territory, regardless of diff size or Dana's prior sign-off.\n\n**Two things worth checking before this goes live:**\n\n1. **Wording accuracy.** SOC 2 (Type I or II) is an *attestation report* under AICPA SSAE 18, not a \"certification\" \u2014 there's no certifying body and no expiration/pass-fail cert to hold. \"SOC 2 Type II certified\" is common marketing shorthand, but it's technically imprecise, and if you're about to draw more eyes to this line (partly *because* a competitor is under scrutiny for their own security claims), that's the moment sloppy wording gets noticed and picked apart \u2014 by the prospect's security team, a competitor, or a journalist.\n2. **Currency and scope.** SOC 2 Type II reports cover a specific period and specific trust service criteria (security, availability, confidentiality, etc.) and go stale. \"We have a report\" isn't the same as \"the report is current and covers what the new prominent copy implies.\" Worth a quick confirm with whoever owns the actual audit artifact \u2014 not just Dana, who owns the copy, not the compliance fact.\n\n**Mode:** I'd call this Standard, not Quick \u2014 it's a lasting, user-visible claim about security posture, touching a compliance trust boundary, made more visible at a moment competitors and prospects are likely to scrutinize it. Quick would be fine for wording-only changes with zero compliance content; this isn't that.\n\n**Least proof needed, and it's fast:** a one-line confirmation from whoever holds the SOC 2 report (compliance/security lead) that it's current, and a decision on \"certified\" vs. \"attested\"/\"audited\" wording. That's a Slack message, not a review cycle \u2014 doable before tomorrow's call without blowing the deadline.\n\nWant me to draft the corrected copy (e.g., \"SOC 2 Type II audited\" or similar) so you have it ready once someone confirms the report status?",
+  "ttft_ms": 15099,
+  "ttft_stream_ms": 810,
+  "time_to_request_ms": 33,
+  "time_to_request_from_spawn_ms": 1908434,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079683211.4622,
+  "type": "result",
+  "duration_ms": 26229,
+  "uuid": "3a7bfb03-ca74-454f-9622-1ad0eaf69102",
+  "_skill": "rating-change-risk",
+  "_arm": "C4_full_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "54edfa36de1336ceff2b66e647cab1040a697ad90db32f54d42a08dcd1535af8"
+}

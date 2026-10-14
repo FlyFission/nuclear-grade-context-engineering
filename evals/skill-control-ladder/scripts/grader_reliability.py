@@ -1,0 +1,189 @@
+#!/usr/bin/env python3
+"""Measure whether the grader is consistent enough for its verdicts to mean anything.
+
+Every number this project has published rests on an LLM grader, and until now
+nothing established that the grader agrees with itself, let alone with a
+different model. A grader that flips verdicts on identical input puts a noise
+floor under every reported effect: if it disagrees with itself on 20% of cells,
+an effect smaller than that is unmeasurable no matter how many trials are run.
+
+Two measurements, both on the binary rubric (which is what makes them clean --
+`YES/PARTIAL/NO` agreement is ambiguous to score, a yes/no check is not):
+
+1. **Test-retest.** Re-grade the same transcripts with the same model. Any
+   disagreement is pure sampling noise in the grader, since the input is
+   byte-identical.
+2. **Cross-model.** Grade with a stronger model. Disagreement here mixes noise
+   with genuine difficulty, and tells you whether the cheap grader is
+   systematically easier or harder than the expensive one.
+
+Reported as raw agreement plus Cohen's kappa. Kappa matters because raw
+agreement flatters a lopsided rubric: if 90% of checks are false, a grader that
+answers "false" every time scores 90% agreement while carrying no information.
+Kappa corrects for exactly that.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+from ladder_common import GRADER_MODEL, LADDER_DIR, POOL
+
+STRONG_MODEL = "claude-sonnet-5"
+
+
+def load(path: Path) -> dict[tuple[str, str, int], dict[str, bool]]:
+    return {
+        (r["skill"], r["arm"], r["trial"]): r["per_check"]
+        for r in json.loads(path.read_text())
+    }
+
+
+def cohens_kappa(a: list[bool], b: list[bool]) -> float:
+    """Chance-corrected agreement for two binary raters over the same items."""
+    n = len(a)
+    if n == 0:
+        return float("nan")
+    observed = sum(1 for x, y in zip(a, b, strict=True) if x == y) / n
+    pa, pb = sum(a) / n, sum(b) / n
+    expected = pa * pb + (1 - pa) * (1 - pb)
+    if expected >= 1.0:
+        return float("nan")  # both raters constant: kappa undefined, not 1.0
+    return (observed - expected) / (1 - expected)
+
+
+def compare(base: dict, other: dict, label: str) -> dict:
+    shared = sorted(set(base) & set(other))
+    a, b = [], []
+    for key in shared:
+        for check_id in sorted(set(base[key]) & set(other[key])):
+            a.append(base[key][check_id])
+            b.append(other[key][check_id])
+    agree = sum(1 for x, y in zip(a, b, strict=True) if x == y)
+    # Directional disagreement: does `other` say true where `base` says false?
+    other_stricter = sum(1 for x, y in zip(a, b, strict=True) if x and not y)
+    other_looser = sum(1 for x, y in zip(a, b, strict=True) if y and not x)
+    return {
+        "label": label,
+        "cells": len(shared),
+        "checks": len(a),
+        "agreement": agree / max(1, len(a)),
+        "kappa": cohens_kappa(a, b),
+        "base_true_rate": sum(a) / max(1, len(a)),
+        "other_true_rate": sum(b) / max(1, len(b)),
+        "other_stricter": other_stricter,
+        "other_looser": other_looser,
+    }
+
+
+MAX_GRADER_ATTEMPTS = 5
+
+
+def run_grader(model: str, out_name: str) -> Path:
+    """Delegate to grade_rubric.py so reliability is measured on the EXACT
+    grading path used to produce results, not a reimplementation of it.
+
+    Retried because grade_rubric.py exits non-zero whenever ANY call in the
+    batch fails transiently, and on a 100+ cell batch that is close to routine.
+    Each retry is cheap and strictly monotonic: successful rows persist to the
+    sidecar, so an attempt only re-grades the cells still missing. Without this
+    the whole reliability measurement aborts on a single timeout.
+    """
+    path = LADDER_DIR / "data" / out_name
+    for attempt in range(1, MAX_GRADER_ATTEMPTS + 1):
+        proc = subprocess.run(
+            [sys.executable, "grade_rubric.py", "--model", model, "--out", out_name],
+            cwd=str(Path(__file__).resolve().parent),
+        )
+        if proc.returncode == 0:
+            return path
+        print(f"  grading attempt {attempt}/{MAX_GRADER_ATTEMPTS} for {model} "
+              f"incomplete; retrying the missing cells", file=sys.stderr)
+    raise SystemExit(
+        f"{out_name}: still incomplete after {MAX_GRADER_ATTEMPTS} attempts. "
+        f"Partial rows are preserved in {path.with_suffix('.partial.json').name}; "
+        f"re-run to continue rather than starting over."
+    )
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--skip-runs", action="store_true",
+                    help="analyze existing replicate files without re-grading")
+    args = ap.parse_args()
+
+    base_path = LADDER_DIR / "data" / f"rubric-graded-{POOL}.json"
+    if not base_path.exists():
+        print(f"No baseline rubric grades for pool {POOL!r}.", file=sys.stderr)
+        return 2
+
+    retest_name = f"rubric-graded-{POOL}-retest.json"
+    cross_name = f"rubric-graded-{POOL}-{STRONG_MODEL}.json"
+    if not args.skip_runs:
+        run_grader(GRADER_MODEL, retest_name)
+        run_grader(STRONG_MODEL, cross_name)
+
+    base = load(base_path)
+    results = []
+    for name, label in ((retest_name, f"test-retest ({GRADER_MODEL})"),
+                        (cross_name, f"cross-model ({STRONG_MODEL})")):
+        p = LADDER_DIR / "data" / name
+        if p.exists():
+            results.append(compare(base, load(p), label))
+        else:
+            print(f"missing {p}", file=sys.stderr)
+
+    L = [f"# Grader reliability — pool `{POOL}`\n",
+         "Generated by `scripts/grader_reliability.py`. Do not hand-edit.\n",
+         "Measured on the binary rubric, per individual check.\n",
+         "**How to read the disagreement rate.** It bounds how precisely a SINGLE cell\n"
+         "is measured — it does not set a floor under the pooled effect size. Grader\n"
+         "noise is roughly independent across cells, so averaging over trials, checks,\n"
+         "and skills shrinks its contribution to the pooled mean well below the\n"
+         "per-check rate; what it inflates is variance, which the paired permutation\n"
+         "test already reflects. An earlier draft of this file claimed any effect\n"
+         "smaller than the disagreement rate was unmeasurable. That was wrong, and\n"
+         "wrong in the direction of understating the results, so it is corrected here\n"
+         "rather than quietly dropped. The correct use of these numbers is as a check\n"
+         "that the grader is a stable instrument at all, and as a caution against\n"
+         "reading any individual cell as precise.\n",
+         "| Comparison | Cells | Checks | Raw agreement | Cohen's κ | "
+         "base true-rate | other true-rate |",
+         "|---|---|---|---|---|---|---|"]
+    for r in results:
+        L.append(f"| {r['label']} | {r['cells']} | {r['checks']} | "
+                 f"{r['agreement']:.1%} | {r['kappa']:.3f} | "
+                 f"{r['base_true_rate']:.1%} | {r['other_true_rate']:.1%} |")
+    L.append("")
+    for r in results:
+        L.append(f"- **{r['label']}**: disagreed on {r['checks'] - round(r['agreement'] * r['checks'])}"
+                 f" of {r['checks']} checks — "
+                 f"{r['other_looser']} where the comparison grader said met and the "
+                 f"baseline did not, {r['other_stricter']} the other way.")
+    L.append("")
+    L.append("κ interpretation (Landis & Koch): <0.40 poor, 0.40–0.60 moderate,\n"
+             "0.60–0.80 substantial, >0.80 almost perfect.\n")
+    L.append(
+        "A symmetric test-retest disagreement (roughly equal counts in both\n"
+        "directions) means grader noise adds variance without pushing scores\n"
+        "systematically up or down, so it does not bias any arm relative to another —\n"
+        "all arms are graded by the same instrument. A lopsided cross-model\n"
+        "disagreement means the two models differ in strictness; that shifts absolute\n"
+        "scores but, again, applies equally across arms, so between-arm differences\n"
+        "survive it better than absolute levels do.\n"
+    )
+
+    out = LADDER_DIR / f"GRADER-RELIABILITY-{POOL}.md"
+    out.write_text("\n".join(L) + "\n")
+    print(f"Wrote {out}")
+    for r in results:
+        print(f"{r['label']}: agreement={r['agreement']:.1%} kappa={r['kappa']:.3f}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

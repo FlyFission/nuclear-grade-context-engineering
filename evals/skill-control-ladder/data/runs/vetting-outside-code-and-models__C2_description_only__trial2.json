@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 14516,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.030507999999999997,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2124,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1010,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2124,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1010,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2124,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2124
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1010,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2124,
+      "webSearchRequests": 0,
+      "costUSD": 0.029783999999999998,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 don't cut this over yet. Marketing claims like \"99.9% accuracy\" and \"SOC2 compliant\" aren't evidence for *your* use case, and you have zero independent proof right now. A few reasons this is riskier than it looks:\n\n**\"99.9% accuracy\" is close to meaningless without context**\n- Accuracy on what dataset? Their benchmark almost certainly isn't your content distribution (your platform's spam patterns, languages, edge cases, adversarial users).\n- 99.9% could still mean thousands of misses at your volume, and moderation errors are asymmetric \u2014 a missed violation (CSAM, harassment, doxxing) is far more costly than a false positive.\n- Case studies are curated success stories, not audited performance data.\n\n**\"SOC2 compliant\" needs verification, not just a badge**\n- SOC2 Type I vs Type II matters a lot (point-in-time vs. sustained-over-time controls).\n- Ask for the actual report (under NDA is normal) \u2014 check scope (does it cover the moderation service specifically, or just their corporate IT?) and any noted exceptions.\n- A badge on a website with no report to back it up is a red flag for a startup handling potentially sensitive user content.\n\n**Gaps you currently have**\n- No test of accuracy/recall on your own labeled data (even a few hundred examples across your worst-case categories would tell you a lot).\n- No latency/uptime SLA validation under your production load.\n- No incident history \u2014 what happens when their model is wrong, and what's the appeal/override path?\n- No understanding of data handling \u2014 is user content logged, used for their model training, retained, shared with subprocessors?\n- No fallback plan if their API degrades or goes down.\n\n**Release impact**\nContent moderation is a trust-and-safety-critical path. If it fails silently, you could expose users to harmful content or wrongly moderate legitimate content, both of which are hard to walk back and carry legal/reputational risk. This isn't the kind of dependency to swap on price alone under time pressure.\n\n**What I'd do instead**\n1. Shadow-test it: run the new API in parallel with your current pipeline on live/recent traffic for 1\u20132 weeks, log disagreements, and manually review a sample.\n2. Build a small labeled eval set from your actual worst-case content and measure precision/recall directly \u2014 don't trust their number.\n3. Request the SOC2 report and read the scope/exceptions yourself.\n4. Ask about data retention/training use in writing, ideally in the DPA.\n5. Confirm a rollback path before any production cutover.\n\nIf you want, I can help draft the shadow-testing harness or an eval script comparing the two APIs' outputs on a sample dataset.",
+  "ttft_ms": 2282,
+  "ttft_stream_ms": 817,
+  "time_to_request_ms": 107,
+  "time_to_request_from_spawn_ms": 1225313,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785026103631.9033,
+  "type": "result",
+  "duration_ms": 15261,
+  "uuid": "21b2eeb1-51cd-4c44-834f-a6b387fef0c3",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C2_description_only",
+  "_trial": 2,
+  "_input_spec_sha256": "0980d4b71b4f129757bf2710680f0332a851e731cd0194b13b08f6f02d9eaa4e"
+}

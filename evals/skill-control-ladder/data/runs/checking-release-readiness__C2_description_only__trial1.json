@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 26379,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.050926900000000004,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2691,
+    "cache_read_input_tokens": 14643,
+    "output_tokens": 1977,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2691,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1473,
+        "cache_read_input_tokens": 8363,
+        "cache_creation_input_tokens": 608,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 608
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000721,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1977,
+      "cacheReadInputTokens": 14643,
+      "cacheCreationInputTokens": 2691,
+      "webSearchRequests": 0,
+      "costUSD": 0.050205900000000005,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 this isn't ready to ship this afternoon. CI passing and the author's confidence are necessary but not sufficient for a change with this blast radius (primary user DB, major version jump, index changes). Two hard blockers stand out:\n\n- **No rollback plan.** A Postgres 12\u219215 migration with index changes is not trivially reversible \u2014 if query plans regress or the migration partially fails mid-production, \"just revert the PR\" won't undo schema/index state or a version downgrade. You need a tested rollback path (e.g., replica/snapshot to fail back to, or a documented downgrade procedure) *before* deploying, not improvised after an incident starts.\n- **No monitoring for this specific change.** CI validates logic in a test environment; it says nothing about production query latency, lock contention during index builds, connection pool behavior on PG15, or replication lag. Without alerts tied to this migration, you're relying on someone noticing problems manually.\n\nOther gaps worth checking before you call this \"ship\":\n- Has the migration been tested against a production-sized dataset/copy? Index rebuild time and locking behavior differ a lot at scale vs. CI fixtures.\n- Is there a maintenance window / off-peak deploy plan, and who's on call and actively watching during and after the deploy?\n- \"Ready to go\" from the author is a self-assessment, not independent verification \u2014 has anyone else reviewed the actual migration script and index changes, not just the PR diff?\n\n**Recommendation: defer the production deploy** (merging to `main` is lower-risk and fine if deploy is decoupled from merge). Before shipping to prod:\n1. Write and test a rollback script/procedure.\n2. Add monitoring/alerts for query latency, error rates, and lock waits scoped to this migration.\n3. Confirm it's been run against realistic data volume.\n4. Deploy in a low-traffic window with an owner actively watching, not \"this afternoon\" as a default.\n\nIf there's time pressure and stakeholders still want to ship today with these gaps, that's a \"ship-with-risk\" call that should be made explicitly by whoever owns the DB/on-call \u2014 not by default.",
+  "ttft_ms": 6300,
+  "ttft_stream_ms": 1615,
+  "time_to_request_ms": 35,
+  "time_to_request_from_spawn_ms": 455597,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025334569.0823,
+  "type": "result",
+  "duration_ms": 28131,
+  "uuid": "04e9bab0-6c4c-4bda-99b9-c24f14ddef17",
+  "_skill": "checking-release-readiness",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "4c5434dd7600e98e140efbad25bbb80d0fd4a2ac2b3a91a3dac8f02f2ed1b3cb"
+}

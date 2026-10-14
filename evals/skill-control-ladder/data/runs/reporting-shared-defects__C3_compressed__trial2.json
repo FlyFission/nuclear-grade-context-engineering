@@ -1,0 +1,93 @@
+{
+  "is_error": false,
+  "duration_api_ms": 18362,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0419023,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2850,
+    "cache_read_input_tokens": 23791,
+    "output_tokens": 1124,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2850,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 782,
+        "cache_read_input_tokens": 8885,
+        "cache_creation_input_tokens": 245,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 245
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 702,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000787,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1124,
+      "cacheReadInputTokens": 23791,
+      "cacheCreationInputTokens": 2850,
+      "webSearchRequests": 0,
+      "costUSD": 0.0411153,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [
+    {
+      "tool_name": "Glob",
+      "tool_use_id": "toolu_018Sp2Wruae8ZtSJJTZUASY7",
+      "tool_input": {
+        "pattern": "*",
+        "path": "./evals/skill-control-ladder/data/work"
+      }
+    }
+  ],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No, patching your own bot isn't enough \u2014 the other three teams are still shipping the vulnerable template without knowing it. A few things to do:\n\n1. **Notify the other three teams now.** Send onboarding, sales, and internal-tools owners a shared-defect notice covering: what the bug is (formatting bug in the truncation path), when it triggers (long conversations hitting the truncation edge case), impact (leaks internal DB tool identifiers into customer-facing output), severity, and your fix/workaround (point them to your patched template or the diff). Tie it to a tracking link (ticket/PR) so it's actionable, not just an FYI.\n\n2. **Fix `prompt-common` itself, not just your local override.** A local override in the support bot means every other consumer \u2014 and any future consumer \u2014 inherits the bug by default. Land the fix upstream in the shared package (or at least open a PR/issue against it) so the correct behavior becomes the default rather than something only you know about.\n\n3. **File it as a shared-defect / security issue, not just a code comment.** A comment in your repo explaining why you overrode the template is invisible to the other teams and to whoever tracks security issues. This qualifies for escalation: it's leaking internal identifiers (DB tool names) to customers, which is a data-exposure/security concern, not just a cosmetic bug. Log it in your deficiency register / security tracker with severity, affected teams, and status, and loop in whoever owns incident/security triage if you have that process.\n\n4. **Consider whether any leaked identifiers need follow-up.** If the bug has already been live for a while, check whether any of the four bots' logs show it actually firing in production \u2014 that determines if this is \"bug found and contained\" or \"bug found and already caused exposure,\" which changes urgency and who needs to be looped in (e.g., security/privacy team).\n\nSo: not done yet. The local patch handles your bot; the shared defect in `prompt-common` and the three unaware teams are still open until you notify them and fix upstream.",
+  "ttft_ms": 2745,
+  "ttft_stream_ms": 583,
+  "time_to_request_ms": 38,
+  "time_to_request_from_spawn_ms": 1077923,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025956719.076,
+  "type": "result",
+  "duration_ms": 17946,
+  "uuid": "ba82d6bf-b44d-4d6d-b75f-296dd3bcb157",
+  "_skill": "reporting-shared-defects",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "41b168ac7a01b0726b5ab40da47d1fee99d3879be53c9e916b56f862c83f6eb1"
+}

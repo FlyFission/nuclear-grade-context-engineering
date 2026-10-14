@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 30469,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0594405,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 3066,
+    "cache_read_input_tokens": 23805,
+    "output_tokens": 2208,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3066,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1521,
+        "cache_read_input_tokens": 9022,
+        "cache_creation_input_tokens": 324,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 324
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 680,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007650000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2208,
+      "cacheReadInputTokens": 23805,
+      "cacheCreationInputTokens": 3066,
+      "webSearchRequests": 0,
+      "costUSD": 0.058675500000000005,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I couldn't find any files in this repo to inspect directly (the working directory appears empty), so I can't verify the actual blast radius myself \u2014 but based on your description, here's what I'd want nailed down before merging a config *schema* field rename, not just a code rename:\n\n**The core risk:** unlike `apikey` \u2192 `api_key`, if `graceperiod_days` is a key that gets parsed out of **customer-supplied** config files (not just internal code/variables), this is a breaking API change, not a cosmetic one. Any existing customer whose live config still has `graceperiod_days` will either:\n- fail validation outright (if the schema is strict/`additionalProperties: false`), or\n- silently pass validation with the grace period defaulting to unset/0 (if the validator just ignores unknown keys) \u2014 which is worse, since it fails silently.\n\nQuestions worth answering before merge:\n1. **Is this field only in your own repo's sample configs, or do live customer configs already use it?** If any customer has this field set today, a straight rename breaks them the moment this ships.\n2. **Was `apikey`\u2192`api_key` actually the same kind of change**, or was that an internal code/env-var rename with no customer-facing config impact? If it never touched externally-parsed input, it's not a great precedent for this one.\n3. **Does \"full test suite green\" include a test with the *old* field name** to confirm what actually happens (reject vs. silently drop)? If all your fixtures were already updated to the new name, the suite wouldn't catch this.\n4. If external customers could be affected, consider **accepting both keys for a deprecation window** (validator maps `graceperiod_days` \u2192 `grace_period_days` with a warning) rather than a hard cutover, especially given you have a customer onboarding call tomorrow using this exact template \u2014 shipping a hard break right before that call is the failure mode to avoid, not just a \"nice to have.\"\n5. Any **persisted/serialized data** (DB columns, stored JSON blobs, API responses/webhooks) using the old key name that also need migration, not just the schema/validator/docs.\n\nIf this field has never shipped to a real customer yet (e.g. new/unreleased feature), then it's genuinely low-risk and your plan is fine. Can you confirm whether any live customer configs use `graceperiod_days` today?",
+  "ttft_ms": 5006,
+  "ttft_stream_ms": 1042,
+  "time_to_request_ms": 68,
+  "time_to_request_from_spawn_ms": 1735771,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079510490.296,
+  "type": "result",
+  "duration_ms": 28597,
+  "uuid": "8bef6572-0891-4286-b585-99ab17d87948",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C1_generic_nudge",
+  "_trial": 2,
+  "_input_spec_sha256": "4ee1a6ff8c86a5b43c9e32348128441c4590ac175d07d24171b4f0a2384023cf"
+}

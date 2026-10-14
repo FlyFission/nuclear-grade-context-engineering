@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 21673,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0561223,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 4788,
+    "cache_read_input_tokens": 17071,
+    "output_tokens": 1436,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4788,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1264,
+        "cache_read_input_tokens": 10791,
+        "cache_creation_input_tokens": 277,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 277
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000721,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1436,
+      "cacheReadInputTokens": 17071,
+      "cacheCreationInputTokens": 4788,
+      "webSearchRequests": 0,
+      "costUSD": 0.0554013,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No `.nuclear/changes/` packet or `ship.md` exists for this yet \u2014 that's the first gap. Here's the readiness review based on what you've described.\n\n## Release decision: **BLOCK**\n\nGreen CI plus the author's own \"ready to go\" note is not release evidence for a change of this class (production database engine upgrade + index changes on the primary user database). Two required elements are missing outright:\n\n## Why this blocks\n\n**1. Rollback/restore path \u2014 missing.**\nThis is the hardest blocker. A Postgres 12\u219215 major version migration is not trivially reversible (binary formats, catalog changes, extension compatibility, `pg_upgrade` link-mode considerations). \"We haven't prepared rollback scripts yet\" means if something breaks in production this afternoon, you have no defined path back. For a primary user database, that's not a leftover risk you can accept and ship anyway \u2014 it's a hard stop until at minimum one of these exists:\n- A tested restore-from-backup procedure with a known RPO/RTO, or\n- A documented downgrade/rollback path, or\n- A blue-green / dual-write cutover strategy that lets you flip back to the PG12 instance\n\n**2. Monitoring \u2014 missing.**\nNo new alerts means you won't know promptly if the migration degrades things \u2014 query latency regressions from the index changes, replication lag, connection pool errors from the version bump, lock contention during/after migration. At minimum you need alerting on: post-cutover error rate, query latency (especially for queries touching the changed indexes), replication/connection health, and disk/WAL if `pg_upgrade` is involved.\n\n## On the evidence itself\n\n- **\"CI is green\"** confirms tests pass in CI's environment \u2014 it does not verify behavior against a realistic PG15 dataset/load, index performance under production-shaped queries, or that the cutover procedure itself works.\n- **\"The engineer says it's ready\"** is the actor's own narrative about their own work \u2014 that's not independent evidence. Who verified the migration against a staging replica of production data? Who reviewed the index changes for correctness (not just \"it compiles/runs\")? That should be a second, independent reviewer distinct from the author, not just CI passing.\n\n## Defeater hunt \u2014 what would have to be true for \"ship\" to be wrong here\n\n- Migration fails partway through on production-scale data \u2192 you're now in a broken state with no rollback. (Currently unruled-out \u2014 this is the live risk.)\n- New index behavior causes query plan regressions under real traffic \u2192 nothing alerts you, users just experience slowness. (Currently unruled-out.)\n- PG15 deprecates/changes behavior your app depends on (implicit casts, extension versions, auth methods) \u2192 surfaces post-deploy. (Unknown if checked against staging.)\n\n## What's needed before this ships\n\n1. **Rollback/restore plan**, tested, with an owner and an RTO estimate.\n2. **Monitoring**: at least error-rate, latency, and DB health alerts scoped to this change, live before cutover.\n3. **Independent verification** beyond CI: has anyone run this against a production-shaped staging copy? Who reviewed the index changes specifically?\n4. A named **verdict owner** who accepts the residual risk if you choose \"ship with named leftover risk\" instead of full block, and an **abort trigger** (e.g., \"error rate > X% or latency > Yms in first 30 min post-deploy \u2192 automatic rollback\").\n\nIf you want, I can help draft the `ship.md` / packet once you have the rollback and monitoring pieces in hand \u2014 or help you scope what the rollback plan should look like given your setup (self-managed Postgres vs. RDS/Cloud SQL affects the options significantly).",
+  "ttft_ms": 1616,
+  "ttft_stream_ms": 829,
+  "time_to_request_ms": 50,
+  "time_to_request_from_spawn_ms": 1055075,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789692680.7644,
+  "type": "result",
+  "duration_ms": 22860,
+  "uuid": "4a30c7eb-41f4-4690-8a24-569ee4311cda",
+  "_skill": "checking-release-readiness",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "bae7b4b4280755dae9e6fb19a3751e253b9934cbcebc15f91e20e63979e651e4"
+}

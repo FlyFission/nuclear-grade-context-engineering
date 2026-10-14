@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 16521,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0370342,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2523,
+    "cache_read_input_tokens": 14894,
+    "output_tokens": 1110,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2523,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 972,
+        "cache_read_input_tokens": 8614,
+        "cache_creation_input_tokens": 189,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 189
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 676,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000766,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1110,
+      "cacheReadInputTokens": 14894,
+      "cacheCreationInputTokens": 2523,
+      "webSearchRequests": 0,
+      "costUSD": 0.0362682,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The repo here is empty, so I don't have code to inspect \u2014 I'll base the note on what you've told me. Before I draft it, a few gaps I want to fill in rather than guess:\n\n1. **Names of the three downstream services** still on old auth \u2014 the teammate will need these to know what to migrate.\n2. **Emergency contact/escalation path** while you're out \u2014 should they page you, or is there someone else (tech lead, on-call) to reach if something breaks?\n3. **PR/branch reference** \u2014 just `oauth-migration`, or is there a specific PR link/ticket they should reference?\n4. **Any known blockers or gotchas** on the downstream migrations you've already scoped out (e.g., one of them has a weird retry mechanism, or a service owned by another team)?\n\nIf you don't have time to dig these up, I can draft the note with placeholders marked clearly (e.g., `[SERVICE NAMES TBD]`) so it's obvious what needs filling in before you send it \u2014 just let me know which way you'd like to go.",
+  "ttft_ms": 2428,
+  "ttft_stream_ms": 1468,
+  "time_to_request_ms": 30,
+  "time_to_request_from_spawn_ms": 432366,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789070927.0098,
+  "type": "result",
+  "duration_ms": 15582,
+  "uuid": "00484e7e-4926-457d-b763-5b65a3a05da9",
+  "_skill": "handing-off-work",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "8947c73732a3df9076794b1651b97531ce37ae07f029b1a9db1944aafad6774f"
+}

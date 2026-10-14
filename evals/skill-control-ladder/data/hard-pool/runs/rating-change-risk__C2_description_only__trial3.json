@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 36156,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0658399,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3524,
+    "cache_read_input_tokens": 14783,
+    "output_tokens": 2632,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3524,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1381,
+        "cache_read_input_tokens": 8503,
+        "cache_creation_input_tokens": 1301,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1301
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 679,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000769,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2632,
+      "cacheReadInputTokens": 14783,
+      "cacheCreationInputTokens": 3524,
+      "webSearchRequests": 0,
+      "costUSD": 0.0650709,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I'd flag this as needing a quick compliance sign-off before merging, not because the diff is big, but because of what kind of claim it is.\n\n**Why this isn't just a copy tweak:**\n- The existing \"SOC 2 Type II certified\" line already carries legal/marketing risk that's been implicitly accepted at its current visibility. Making it *more prominent* changes the risk profile even if the words are similar \u2014 you're increasing reliance on it, explicitly for a sales call where a prospect is going to weigh a purchasing decision on it.\n- \"I checked and we have a report\" isn't the same as verifying the specific claim: is the report current (not expired)? Is \"certified\" the right term (SOC 2 is technically an attestation, not a certification \u2014 some auditors/legal teams are picky about this exact wording)? Does the new prominent line stay within the scope the auditor actually covers?\n- Dana approved the *original* copy, not this new line \u2014 and it's unclear if she's the right approver for compliance-claim wording versus general marketing copy.\n- Reversibility is asymmetric: reverting the commit is trivial, but if a prospect relies on the amplified claim tomorrow and it turns out imprecise, the revert doesn't undo that reliance.\n\nNone of this means it's wrong \u2014 it probably just needs a 5-minute check with whoever owns your SOC 2 attestation (security/compliance/legal) confirming the exact new wording is accurate and current, then it's fine to merge fast given the timeline.\n\nI also don't have merge access or the actual PR/diff in front of me in this session \u2014 you'll need to merge it yourself once you've got that sign-off. Want me to draft a quick Slack message to compliance/legal asking for a fast confirm on the wording?",
+  "ttft_ms": 16198,
+  "ttft_stream_ms": 1402,
+  "time_to_request_ms": 28,
+  "time_to_request_from_spawn_ms": 1881327,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079656090.0024,
+  "type": "result",
+  "duration_ms": 36327,
+  "uuid": "bc2e8014-2e92-43a0-8950-0237b1800949",
+  "_skill": "rating-change-risk",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "30bd81198c87a6bd36c35a0b8e6aefda72fce54140496ee1f972aabe4c999e4a"
+}

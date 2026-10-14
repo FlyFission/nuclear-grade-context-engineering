@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 16778,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.038342799999999996,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2541,
+    "cache_read_input_tokens": 14776,
+    "output_tokens": 1191,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2541,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 920,
+        "cache_read_input_tokens": 8496,
+        "cache_creation_input_tokens": 325,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 325
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 702,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000787,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1191,
+      "cacheReadInputTokens": 14776,
+      "cacheCreationInputTokens": 2541,
+      "webSearchRequests": 0,
+      "costUSD": 0.0375558,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No, you're not done \u2014 a local override only fixes your bot's symptom, not the shared defect. Sales, onboarding, and internal-tools are still running vulnerable code and don't know it. A code comment in your repo won't reach them since they don't read your codebase.\n\nWhat I'd do next:\n\n1. **Report the defect against `prompt-common` itself** \u2014 file an issue/ticket on the shared package describing the truncation edge case and the tool-name leak, not just a note in your fork.\n2. **Notify the other three teams directly** (Slack/email/whatever your org uses for cross-team defect alerts) \u2014 this is information disclosure of internal tooling to customers, so it's worth flagging as higher-urgency than a typical bug, and it's worth asking if it's already been observed in their prod logs/transcripts.\n3. **Upstream your fix as a PR** to `prompt-common` instead of leaving it as a permanent local fork. Since you already have a working fixed version, that's the fastest path to closing the gap for everyone, and it avoids your support bot silently drifting from the shared template over time.\n4. **Loop in security/appsec** if your org has that function \u2014 leaking internal DB query tool identifiers to customers could matter beyond just this bug (e.g., worth checking if those identifiers reveal anything exploitable).\n\nOnce the fix lands upstream, you can drop your local override and go back to consuming `prompt-common` directly, so you don't end up maintaining a permanent fork.",
+  "ttft_ms": 3982,
+  "ttft_stream_ms": 1031,
+  "time_to_request_ms": 80,
+  "time_to_request_from_spawn_ms": 1065098,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025943963.536,
+  "type": "result",
+  "duration_ms": 17668,
+  "uuid": "101aad6b-f6f1-4e40-aa72-feef48ded085",
+  "_skill": "reporting-shared-defects",
+  "_arm": "C2_description_only",
+  "_trial": 2,
+  "_input_spec_sha256": "31499170666ed5715e065795f4fb06bdfe3f4b79c2c199215d21e1bda620c6c9"
+}

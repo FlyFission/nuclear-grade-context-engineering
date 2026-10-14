@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 9465,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.027627600000000002,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2566,
+    "cache_read_input_tokens": 23442,
+    "output_tokens": 301,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2566,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 63,
+        "cache_read_input_tokens": 8656,
+        "cache_creation_input_tokens": 190,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 190
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 596,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006659999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 301,
+      "cacheReadInputTokens": 23442,
+      "cacheCreationInputTokens": 2566,
+      "webSearchRequests": 0,
+      "costUSD": 0.026961600000000002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "It looks like the working directory is empty \u2014 no files were found at all (not even a match search returns anything). Could you tell me the path or name of the script you renamed the variable in? That'll let me search it directly.",
+  "ttft_ms": 1786,
+  "ttft_stream_ms": 1407,
+  "time_to_request_ms": 71,
+  "time_to_request_from_spawn_ms": 1629101,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594623036.1123,
+  "type": "result",
+  "duration_ms": 10129,
+  "uuid": "6687f19d-2ea9-4755-aeef-413eb2dba56d",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "ea100b02591594f0597ab2e141ae15f59239b9bdc61dd2e99cfe54e2094d414a"
+}

@@ -1,0 +1,102 @@
+{
+  "is_error": false,
+  "duration_api_ms": 17053,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0413412,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2798,
+    "cache_read_input_tokens": 23364,
+    "output_tokens": 1122,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2798,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 744,
+        "cache_read_input_tokens": 8617,
+        "cache_creation_input_tokens": 461,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 461
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 626,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000696,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1122,
+      "cacheReadInputTokens": 23364,
+      "cacheCreationInputTokens": 2798,
+      "webSearchRequests": 0,
+      "costUSD": 0.0406452,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [
+    {
+      "tool_name": "Grep",
+      "tool_use_id": "toolu_01Y43xANG9MYn6AqLJgu1dbg",
+      "tool_input": {
+        "pattern": "NIST SP 800-61",
+        "path": ".",
+        "output_mode": "files_with_matches"
+      }
+    },
+    {
+      "tool_name": "Glob",
+      "tool_use_id": "toolu_01KENKcWddYYHg632qHCempK",
+      "tool_input": {
+        "pattern": "**/source-map.md",
+        "path": "."
+      }
+    }
+  ],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 this needs changes before publishing. Two problems:\n\n**1. \"Fully compliant with the framework\"**\nNIST SP 800-61 is a guidance document, not a certification standard \u2014 there's no formal body that attests \"compliance\" with it, so this claim reads as a formal assurance you likely can't back up. Reword it as influence/inspiration instead, e.g.: *\"Our workflow follows the incident-response lifecycle described in NIST SP 800-61.\"* Drop \"fully compliant\" (and any similar words like \"certified,\" \"approved,\" \"formal\") unless you have an actual audit or attestation behind it.\n\n**2. The uncited conference talk**\n\"A great talk we saw at a conference... we don't have a link or citation for it handy\" is a non-verifiable, non-public source with no name, speaker, or link. In public docs this should either be:\n- Removed entirely, or\n- Generalized as unattributed inspiration without implying it's a citable source, e.g.: *\"We also drew on general SRE incident-response practices commonly discussed in the industry.\"*\n\nDon't reference it as if it's a real citation \u2014 readers can't verify it, and it could look like a fabricated or misremembered source.\n\n**Suggested rewrite:**\n> \"Our workflow follows the incident-response lifecycle described in NIST SP 800-61, and was also informed by general SRE incident-response practices.\"\n\nWant me to fold this into a full Methodology section, or is this sentence-level fix enough?",
+  "ttft_ms": 1692,
+  "ttft_stream_ms": 973,
+  "time_to_request_ms": 116,
+  "time_to_request_from_spawn_ms": 502799,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025380494.929,
+  "type": "result",
+  "duration_ms": 17472,
+  "uuid": "0cd134c3-1da0-44b5-8156-3233ced75a4f",
+  "_skill": "checking-source-claims",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "816d8328c3274e31acdf44845fd8edbea3111d76b8c8281ab0f5c639fa38bbd7"
+}

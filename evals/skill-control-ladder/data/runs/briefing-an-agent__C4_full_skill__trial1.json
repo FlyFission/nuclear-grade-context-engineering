@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 58007,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.10780039999999999,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 5980,
+    "cache_read_input_tokens": 28678,
+    "output_tokens": 4173,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 5980,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2448,
+        "cache_read_input_tokens": 12020,
+        "cache_creation_input_tokens": 240,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 240
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 624,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000704,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 4173,
+      "cacheReadInputTokens": 28678,
+      "cacheCreationInputTokens": 5980,
+      "webSearchRequests": 0,
+      "costUSD": 0.10709640000000001,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "One thing to flag before the brief itself: an agent making schema changes and backfilling production data **with nobody watching overnight** is the highest-risk pattern this skill calls out \u2014 production data + release power + no approval loop. A brief can bound the agent's authority, but it can't substitute for a human checking results. So I've written the brief to keep the agent's overnight authority narrow: prepare, migrate additively, backfill in a reversible way, verify \u2014 but **stop short of anything a human hasn't seen**, unless you tell me you want it to go further (e.g., you're comfortable with additive-only prod changes running unattended because they're low-risk to revert).\n\nHere's the context pack:\n\n---\n\n## Context Pack \u2014 `email_verified` column + backfill + signup endpoint update\n\n**Mode:** Standard (production schema + data change, unattended execution)\n**Role:** builder\n**Phase:** candidate (agent may build, migrate on a copy, and prepare evidence; it may **not** unilaterally reach `accept` on production without the stop conditions below being satisfied)\n\n**Decision question:** Can `email_verified` be added to `users`, backfilled correctly for existing rows, and set correctly on new signups \u2014 without an outage, data loss, or an unreviewable guess baked into production data?\n\n**Goal anchor**\n- **Goal:** `users.email_verified` exists, is populated correctly for all existing rows per the agreed heuristic, and the signup endpoint sets it correctly going forward.\n- **Signs of success:** migration applies without locking `users` for a user-visible duration; backfill row counts match expected totals per signup source; spot-check sample rows manually reasoned about; signup endpoint tests (existing + new) pass; no rows left `NULL` unexpectedly (or `NULL` is the intended value for \"unknown\" sources \u2014 decide and record which).\n- **Non-goals:** no retroactive email re-verification sends, no changes to auth/session logic, no changes to other columns or tables, no renaming/dropping of anything, no changes to how `email_verified` is currently *read* elsewhere in the codebase beyond what's needed for the signup endpoint (grep for existing usages first \u2014 this column may already be referenced as a computed value somewhere).\n- **Affected/consulted:** anyone relying on `users` schema stability (any consumer service, analytics/ETL reading this table, other endpoints computing \"verified\" today) \u2014 check for existing logic before assuming this is new.\n\n**Files/scope**\n- `migrations/` (new migration file only)\n- signup endpoint route/controller/service file(s) \u2014 name them explicitly once located\n- backfill script (should be its own file, not run ad hoc in a shell)\n- test files covering signup and the new column\n\n**Heuristic \u2014 must be stated explicitly, not inferred**\nBefore backfilling, the agent must write down the exact source\u2192value mapping it intends to use (e.g., \"OAuth/Google signups \u2192 true, email/password signups \u2192 false, source X \u2192 unknown/NULL\") and treat any source it can't classify confidently as **NULL**, not a guess. If more than one heuristic is plausible for a source, that's a stop condition, not a judgment call.\n\n**Allowed commands/tools**\n- Read/grep/glob across the repo\n- Run migrations against a local/staging database or a disposable copy of production data (never against prod directly without the checkpoint below)\n- Run the test suite\n- Write/edit files listed above\n- `git` add/commit on a feature branch (no push, no merge)\n\n**Forbidden actions**\n- Applying the migration or running the backfill against the production database directly\n- Dropping, renaming, or altering any other column/table\n- Deleting or overwriting existing `users` data\n- Deploying/merging to a branch that auto-deploys\n- Sending any user-facing email, verification, or notification as a side effect\n- Guessing a heuristic value for a source it isn't confident about \u2014 must write NULL/unknown and flag it instead\n- Running unbounded `UPDATE users SET ...` without a `WHERE` batching strategy (avoid full-table locks)\n\n**Do-not-touch:** any table other than `users`; any credentials/secrets files; CI/CD config; production environment variables.\n\n**Approval gates**\n1. Migration + backfill script + tests reviewed by a human (you) before either runs against production.\n2. A backup/snapshot of `users` is confirmed to exist and be restorable *before* the backfill runs against production.\n3. Production execution itself requires your explicit go-ahead \u2014 this should not happen while you're asleep. Recommend the agent stop at \"ready to ship\" (migration written, tested against staging/copy, backfill script written and dry-run counts reported) and leave the actual production apply for you in the morning.\n\n**Required evidence**\n- Migration file diff\n- Dry-run backfill report: row counts per signup source, count set to `true`/`false`/`NULL`, and a sample of 5\u201310 affected rows with their source and resulting value\n- Test suite output (signup endpoint tests passing, including a new test for `email_verified` on signup)\n- Confirmation of backup/snapshot existing before any prod-adjacent step\n- If it did stop short of production, a clear note of exactly what remains for you to run and in what order\n\n**Loaded instruction files in force:** none known in this workspace \u2014 confirm with the agent whether your actual backend repo has an `AGENTS.md`/`CLAUDE.md`; if so, that file's conventions (migration tooling, coding style, test commands) win over anything generic in this brief.\n\n**Last action completed:** none \u2014 this is the start of task.\n**Changed conditions:** n/a (fresh start).\n**Critical next action:** locate the migration tooling already used in the repo (e.g., Knex/Sequelize/Prisma/raw SQL) and follow its existing pattern rather than introducing a new one. **Likely error:** inventing a new migration mechanism or running raw SQL by hand instead of using the project's existing migration system \u2014 guard against this by checking `package.json`/existing `migrations/` folder structure first.\n\n**Stop conditions (escalate to you, don't proceed):**\n- Any source category where the heuristic is ambiguous\n- The `users` table already has significant row count where an unbatched `UPDATE` would lock it for more than a couple seconds\n- Any existing code already computes \"verified\" some other way (naming collision or conflicting logic)\n- Anything requiring credentials, direct prod DB access, or a deploy\n- Test failures it can't resolve without changing unrelated code\n\n---\n\n**My recommendation:** have the agent run through migration + backfill script + tests + dry-run evidence overnight, but leave the actual production apply as a ~5-minute task for you to run yourself in the morning with the evidence in front of you. That gets you the unattended leverage without the highest-risk step happening while no one's watching. Want me to adjust the brief to allow full unattended production execution instead (e.g., if the change is genuinely low-stakes and easily reversible), or keep it as a stop-before-prod handoff?",
+  "ttft_ms": 20928,
+  "ttft_stream_ms": 1727,
+  "time_to_request_ms": 42,
+  "time_to_request_from_spawn_ms": 402174,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025280814.2349,
+  "type": "result",
+  "duration_ms": 58268,
+  "uuid": "9d5f6c79-7157-40d6-b648-ff74c6be4325",
+  "_skill": "briefing-an-agent",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "3fc86ebe5a57be47f431ab871aa81234615e9dedb8b2f23b6d66afe7b8db8548"
+}

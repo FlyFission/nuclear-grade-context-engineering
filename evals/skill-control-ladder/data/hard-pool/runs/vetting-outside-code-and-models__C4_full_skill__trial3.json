@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 23219,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.05430300000000001,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 4242,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1744,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4242,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1744,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 4242,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4242
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 691,
+      "outputTokens": 22,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000801,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1744,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 4242,
+      "webSearchRequests": 0,
+      "costUSD": 0.05350200000000001,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A few things worth flagging before Friday \u2014 the core issue is that most of what's backing this decision so far is vendor claims and a sales demo, not verified evidence for the specific things you're relying on.\n\n**\"Legally binding\" is a vendor claim, not proof.** Their site saying so isn't evidence \u2014 ESIGN/UETA compliance, and whether their audit trail would actually hold up in a dispute, is a legal question. Since the whole point of storing the certificate is to win a dispute, this is the one gap that should go to actual legal review before cutover, not get waved through on marketing copy.\n\n**The completion certificate \u2014 check what's actually in it.** Is it cryptographically tied to the signed PDF (hash/signature chain) so you can prove it wasn't altered after the fact, or is it just another PDF SignFast generates that you're trusting on faith? If it's the latter, your \"pull up the certificate\" dispute-resolution plan is weaker than it sounds.\n\n**Sales running the demo twice isn't an acceptance test.** That verifies the happy path. Before shipping, someone from your side should test: declined signatures, expired signing links, partial multi-signer completion, and webhook retry/idempotency behavior when pulling completed docs via the REST API. Those are the cases that actually bite you in production.\n\n**99.98% uptime is probably the marketing site's stat, not the signing API's.** Worth confirming it's scoped to the actual endpoints you depend on, and checking their status page history for the document/API subsystem specifically, not just overall.\n\n**Data handling:** customer PII and signed contracts flowing through a third party \u2014 do you have a DPA, SOC2/ISO report, and clarity on data residency and what happens to documents if you cancel the contract?\n\nNone of this necessarily blocks Friday for a pilot/soft-launch, but I'd treat \"system of record for legally disputed contracts\" as a separate bar that needs the legal + certificate-verification pieces closed before you fully cut over from the manual process. Want me to help draft what to ask SignFast's team for on the certificate/audit-trail question, or sketch the edge-case test list?",
+  "ttft_ms": 14293,
+  "ttft_stream_ms": 751,
+  "time_to_request_ms": 28,
+  "time_to_request_from_spawn_ms": 2002784,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079777465.7214,
+  "type": "result",
+  "duration_ms": 24111,
+  "uuid": "5a6398d7-d24d-49a9-a0ca-15cae63c7a6a",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C4_full_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "4e2a349dfe751bd5409c41cabb272530d8da73040217a1865631cf5245591c01"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 21010,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0488059,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3113,
+    "cache_read_input_tokens": 14793,
+    "output_tokens": 1660,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3113,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 889,
+        "cache_read_input_tokens": 8513,
+        "cache_creation_input_tokens": 880,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 880
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 688,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000778,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1660,
+      "cacheReadInputTokens": 14793,
+      "cacheCreationInputTokens": 3113,
+      "webSearchRequests": 0,
+      "costUSD": 0.0480279,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I checked this repo and there's no checkout service, payment retry logic, or `retry-lib`/`retrypro` reference anywhere in it \u2014 so there's nothing here for me to swap. Before we even get to that, though, I'd hold off on this change as described, for reasons independent of which repo it lives in:\n\n**The plan skips root-causing the actual problem.** Nobody has reproduced the timeout under a controlled test. A retry-library swap can only fix this if the timeouts are actually caused by the retry logic itself (e.g., bad backoff/jitter, no circuit breaker, blocking behavior). If the real cause is a slow downstream payment gateway, exhausted connection pool, DNS resolution, or thread starvation, swapping retry libraries will do nothing \u2014 or will paper over the symptom while the underlying issue keeps degrading.\n\n**\"Drop-in replacement, exact same behavior\" is an unverified memory, not a fact.** It's from a different codebase, at a different job, recalled under time pressure. Nobody on the team has read `retrypro`'s source or docs yet. For payment retry logic specifically, small differences matter a lot: retry-on-conditions (does it retry on timeout vs. only on 5xx?), idempotency-key handling, max attempts, backoff/jitter curve, and whether it retries non-idempotent operations at all. Get any of those wrong and instead of fixing abandoned carts you risk **double-charging customers** \u2014 a materially worse outcome than the current timeouts.\n\n**The one fact that would change this decision:** whether the timeouts have been traced to the retry logic itself (vs. a downstream dependency) \u2014 plus a side-by-side read of `retrypro`'s retry/idempotency semantics against your current library's. If both check out, the swap is low-risk. If either doesn't, swapping is a coin flip that could make things worse on the payment path, under deadline pressure, without a rollback plan validated.\n\nIf you want, I can help you:\n1. Find the actual checkout/retry-lib repo and pull logs/traces to isolate where the timeout is occurring (retry logic vs. downstream call).\n2. Do a quick diff of `retrypro` vs. your current library's retry/idempotency behavior once I can see both.\n\nWant me to start with #1 \u2014 do you have the right repo path, or is this service elsewhere?",
+  "ttft_ms": 7545,
+  "ttft_stream_ms": 943,
+  "time_to_request_ms": 67,
+  "time_to_request_from_spawn_ms": 1053638,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789691462.9858,
+  "type": "result",
+  "duration_ms": 21216,
+  "uuid": "92f9255a-837f-4566-9adf-ea7f2569991c",
+  "_skill": "questioning-attitude",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "122195109c8bdf30d58c81ef3f4baf8b1909f2a15f525dfca9d0698e7aca35aa"
+}

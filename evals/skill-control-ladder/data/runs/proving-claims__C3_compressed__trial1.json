@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 21362,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0467095,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2850,
+    "cache_read_input_tokens": 14885,
+    "output_tokens": 1629,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2850,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1154,
+        "cache_read_input_tokens": 8605,
+        "cache_creation_input_tokens": 525,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 525
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 617,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000697,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1629,
+      "cacheReadInputTokens": 14885,
+      "cacheCreationInputTokens": 2850,
+      "webSearchRequests": 0,
+      "costUSD": 0.0460125,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A quick flag before I draft this: \"safe and fully backward compatible\" is a strong, absolute claim, but the evidence you have \u2014 tests you ran yourself and a self-review of your own diff \u2014 is entirely self-authored. No independent party has reproduced the test run or reviewed the change. Self-checks catch real issues, but they don't support \"fully\" anything, especially for a payment-processing module where the blast radius of being wrong is high. I'd suggest scoping the claim to what the evidence actually shows, and being explicit about what hasn't been verified yet.\n\nHere's a version that does that:\n\n```markdown\n## Evidence\n\n**Scope of testing:** The existing test suite passes against this diff (self-run, not yet run in CI or by a reviewer).\n- Command: `<fill in>`\n- Result: `<pass count>` passing, `<N>` skipped/pending \u2014 link to local run output if possible\n\n**Review status:** I've done a line-by-line self-review of the diff, but no one else has reviewed it yet.\n\n**Known coverage gaps** (please weigh in if you know of others):\n- [ ] Does the existing suite cover the specific code paths touched by this refactor, or just adjacent ones?\n- [ ] Edge cases: partial failures, retries, idempotency, currency/rounding edge cases\n- [ ] Behavior with external payment providers / sandbox vs. self-authored mocks\n- [ ] Concurrency and error-handling paths\n- [ ] Any schema, API, or webhook contract changes downstream consumers depend on\n\n**Ask:** Given this touches payment processing, I'd like at least one reviewer to independently run the suite and check the diff before we call this backward-compatible, rather than relying on my self-report. Flagging this explicitly so we don't rubber-stamp on my word alone.\n```\n\nThis is more useful to reviewers than a bare assertion \u2014 it shows them exactly what your two checks do and don't establish, and asks for the independent verification a claim this consequential actually needs. Want me to fill in the specifics once you tell me what your test suite covers, or would you rather keep the stronger claim and just add caveats?",
+  "ttft_ms": 5993,
+  "ttft_stream_ms": 936,
+  "time_to_request_ms": 36,
+  "time_to_request_from_spawn_ms": 898819,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025777656.566,
+  "type": "result",
+  "duration_ms": 22035,
+  "uuid": "8434c00c-3d73-42c6-b736-1973632cf3b5",
+  "_skill": "proving-claims",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "4f271896c4f65ed9da0834e13073c621f6aa4d17ac993ae9b3aec20f086c6211"
+}

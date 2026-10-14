@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 8376,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.037499899999999996,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 4076,
+    "cache_read_input_tokens": 26353,
+    "output_tokens": 297,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4076,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 52,
+        "cache_read_input_tokens": 10242,
+        "cache_creation_input_tokens": 114,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 114
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 585,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000665,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 297,
+      "cacheReadInputTokens": 26353,
+      "cacheCreationInputTokens": 4076,
+      "webSearchRequests": 0,
+      "costUSD": 0.0368349,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "There's no `scripts/backup.sh` (or any `backup.sh`) in this repo. Could you double check the path, or point me to the right repo/directory?",
+  "ttft_ms": 2438,
+  "ttft_stream_ms": 1893,
+  "time_to_request_ms": 49,
+  "time_to_request_from_spawn_ms": 1384726,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594379118.8254,
+  "type": "result",
+  "duration_ms": 7555,
+  "uuid": "8159caf4-80ff-4fd1-ac27-cbba85604f02",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C4_full_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "77ce60815e1181c7dff7c5d26288fdb4424f642c1cf1f93292cea1ed794cb007"
+}

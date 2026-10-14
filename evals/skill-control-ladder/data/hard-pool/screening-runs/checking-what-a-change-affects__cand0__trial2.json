@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 14563,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0416234,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2870,
+    "cache_read_input_tokens": 32558,
+    "output_tokens": 923,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2870,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 479,
+        "cache_read_input_tokens": 9021,
+        "cache_creation_input_tokens": 129,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 129
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 672,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000767,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 923,
+      "cacheReadInputTokens": 32558,
+      "cacheCreationInputTokens": 2870,
+      "webSearchRequests": 0,
+      "costUSD": 0.040856399999999994,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This working directory is actually empty \u2014 there's no repo content here for me to inspect (no `deploy-checklist` file, no README, nothing at all). So I can't verify anything about this rename from what's on disk right now.\n\nA few things worth flagging regardless of that:\n\n1. **This directory has no files in it.** If your actual project lives elsewhere, I'm not looking at it \u2014 point me to the right path and I can actually check the diff.\n2. **Search scope for references**: don't rely on the README alone. Grep the whole repo (not just docs) for `deploy-checklist` and `deploy_checklist` \u2014 CI workflows, other slash-command files that might chain-invoke it, onboarding docs, Slack/wiki links pasted into code comments, and any changelog or \"how to release\" doc outside the one being rewritten tomorrow could all reference the old name.\n3. **File renames and command registries**: if commands are registered anywhere by filename (e.g., a manifest, index, or lookup table) rather than being auto-discovered by directory scan, the rename needs to update that registry too, or the command silently disappears.\n4. **Redirect/back-compat**: if anyone has `/deploy-checklist` muscle-memory or it's linked from external docs (runbooks, Notion, etc. outside this repo), consider whether the old name should keep working as an alias for a transition period \u2014 that's a product decision, not just a rename detail.\n\nPoint me at the actual repo/path and I'll do the real grep before you merge.",
+  "ttft_ms": 2202,
+  "ttft_stream_ms": 1133,
+  "time_to_request_ms": 44,
+  "time_to_request_from_spawn_ms": 548833,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078323545.5862,
+  "type": "result",
+  "duration_ms": 14985,
+  "uuid": "1dbb2506-21b1-4b32-b48b-44a6ad3d522b",
+  "_spec": "7abe69dc998df92685d2f78a65d5dee0a9d50e21e600d81846032220e6527fbe",
+  "_skill": "checking-what-a-change-affects",
+  "_cand": 0,
+  "_trial": 2
+}

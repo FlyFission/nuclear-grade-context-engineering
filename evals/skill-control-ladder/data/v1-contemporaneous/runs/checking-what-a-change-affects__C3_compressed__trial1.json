@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 17663,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.039227200000000004,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2749,
+    "cache_read_input_tokens": 23684,
+    "output_tokens": 995,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2749,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 594,
+        "cache_read_input_tokens": 8885,
+        "cache_creation_input_tokens": 144,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 144
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006850000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 995,
+      "cacheReadInputTokens": 23684,
+      "cacheCreationInputTokens": 2749,
+      "webSearchRequests": 0,
+      "costUSD": 0.0385422,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory is empty \u2014 there's no actual codebase here for me to inspect (no serializer, no tests, no docs). So I can't verify the real blast radius, which itself is a reason not to wave this through as \"just merge it.\"\n\nEven setting that aside, here's why this isn't a quick/trivial change even though the diff is one line:\n\n**This is a public API contract change, not an internal rename.** The line-count of a diff doesn't correlate with its blast radius. Renaming `total` \u2192 `order_total` in a public response will silently break:\n- Any external client/integration parsing the JSON by field name\n- API docs / OpenAPI-Swagger specs that reference `total`\n- SDKs or client libraries you publish that expose `.total`\n- Contract tests or schema validators pinned to the old field name\n- Changelogs/release notes for the public API\n\n**What I'd actually want before merging:**\n1. Confirm whether this endpoint is versioned. If so, this belongs in a new version, not a mutation of the existing one.\n2. If unversioned, either add `order_total` alongside `total` (deprecate old field with a sunset date) rather than a hard rename, or treat this as a breaking change requiring a major version bump / customer notice.\n3. Update API docs and any published schema/SDKs.\n4. Check for internal consumers too (dashboards, other services) even though it's the \"public\" field.\n\nSince I can't see the actual code/docs in this environment, I can't tell you definitively what's affected \u2014 but I'd stop and ask: **is `total` truly public and already relied upon by external clients?** If yes, this needs a deprecation path, not a same-line swap. If it's pre-launch or has zero external consumers, then a straight rename is fine to merge quickly.\n\nWant me to point you toward how to check for existing consumers/docs referencing this field in your actual repo?",
+  "ttft_ms": 5478,
+  "ttft_stream_ms": 3624,
+  "time_to_request_ms": 48,
+  "time_to_request_from_spawn_ms": 957413,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789595885.1472,
+  "type": "result",
+  "duration_ms": 18996,
+  "uuid": "cecda1d2-b1e6-4f10-9a4d-8dd5e8bbf165",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "ad442de17887c6883c7f7bf079b4e00edb13c3d2c7a0774a07a88dac6a6afd3d"
+}

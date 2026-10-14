@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 27294,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.05474369999999999,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2557,
+    "cache_read_input_tokens": 23419,
+    "output_tokens": 2107,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2557,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1857,
+        "cache_read_input_tokens": 8710,
+        "cache_creation_input_tokens": 127,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 127
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000753,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2107,
+      "cacheReadInputTokens": 23419,
+      "cacheCreationInputTokens": 2557,
+      "webSearchRequests": 0,
+      "costUSD": 0.053990699999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The repo here is empty, so I can't pull PR #482, eval numbers, or the prior baseline directly \u2014 I'll draft based on what you've told me, but flag the gaps that would make this record actually useful for a future rollback decision.\n\nA few things worth nailing down before calling this final:\n\n1. **Actual eval numbers** \u2014 \"precision and recall both improved\" is directional; the record should have the specific figures (embed-v1 baseline vs embed-v2) and the eval suite name/version, since that's the evidence a future reader will lean on.\n2. **What version we'd roll back to** \u2014 presumably the last v2.2.x release. Which exact version/commit was running before this deploy?\n3. **QA sign-off** \u2014 who signed off, and is there a PR comment, ticket, or doc link to point to?\n4. **Known caveats** \u2014 anything the eval suite doesn't cover well (e.g., cold-start behavior, specific content categories, latency/cost of embed-v2) that would be useful to flag as \"this record is only as good as X.\"\n\nHere's a draft \u2014 fill in the bracketed parts and I'll finalize:\n\n---\n\n## Known-Good Version Record: v2.3.0\n\n**Recorded:** 2026-07-26\n**Recorded by:** benjaminhuffer1@gmail.com\n**Status:** Accepted \u2014 production, stable ~1 hour post-deploy\n\n### What's in this version\n- Recommendation service v2.3.0\n- Embedding model dependency upgraded: `embed-v1` \u2192 `embed-v2`\n- Shipped via PR #482 (`[link]`)\n- Rollback target (prior known-good): `[v2.2.x \u2014 exact version/commit?]`\n\n### Why accepted\n- New eval suite (`[suite name/version]`) run against `embed-v2`:\n  - Precision: `[baseline] \u2192 [new]`\n  - Recall: `[baseline] \u2192 [new]`\n- QA sign-off: `[name/team]`, `[link to approval \u2014 PR review, ticket, etc.]`\n- Post-deploy: stable in production for ~1 hour, no incidents reported\n\n### What would make this record stale / trigger re-recording\n- Eval suite is later found to miss a case that matters in production (e.g., `[known gaps, if any]`)\n- Production metrics (precision/recall/latency/cost proxies) diverge meaningfully from eval predictions once real traffic volume accumulates\n- `embed-v2` receives a patch/version bump that isn't covered by this eval run\n- Any incident traced back to the embedding change\n\n---\n\nSend me the bracketed info (or tell me to leave placeholders) and where you'd like this saved \u2014 is there a docs/changelog location in this repo I should be writing to, or elsewhere?",
+  "ttft_ms": 1591,
+  "ttft_stream_ms": 891,
+  "time_to_request_ms": 233,
+  "time_to_request_from_spawn_ms": 1006418,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025883694.6426,
+  "type": "result",
+  "duration_ms": 26391,
+  "uuid": "0e64fe11-a087-424f-a054-4a86755663e5",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "e4b397fecb333c773679ae125a0df3e537437af52fae1a737ef0b4cd0d8c29c8"
+}

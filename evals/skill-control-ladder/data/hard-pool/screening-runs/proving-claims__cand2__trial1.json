@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 31475,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.053898999999999996,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2209,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2534,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2209,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2534,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2209,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2209
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 675,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000745,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2534,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2209,
+      "webSearchRequests": 0,
+      "costUSD": 0.05315399999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Looking at this evidence against the specific claim (\"accessible to screen reader users\"), there's a real gap: nothing here actually tests with a screen reader. Here's the row.\n\n| Field | Content |\n|---|---|\n| **Claim** | New checkout flow is accessible to screen reader users. |\n| **Status** | Not substantiated as stated \u2014 evidence supports a narrower claim than the one written. |\n| **Evidence** | (1) axe-core CI scan, 0 violations. (2) Designer (Dana) sighted walkthrough, confirms visual/structural match to existing accessible component library. (3) Same component set shipped on account settings page last month, no reported issues. (4) Change scope: swap-in of existing components, no new custom UI. |\n| **Gap** | No one has actually driven the checkout flow with a screen reader (NVDA/JAWS/VoiceOver). axe-core is a static/DOM linter \u2014 it catches missing labels, contrast, ARIA misuse, etc., but not focus management between steps, live-region announcements for validation/loading/error states, reading order vs. visual order, or behavior inside any payment iframe. Dana's review was visual (\"looks right\"), which doesn't test the non-visual experience the claim is actually about. \"No complaints\" on account settings is absence of evidence, not evidence \u2014 most users don't file accessibility bugs, they just bounce \u2014 and that page has a simpler interaction pattern (no multi-step flow, no async payment/error states) than checkout. Component-level accessibility also doesn't guarantee flow-level accessibility; composition bugs are exactly what evade both axe-core and visual QA. |\n| **Tests run** | Automated: axe-core, CI-gated, 0 violations. Manual: sighted design review against component library. |\n| **Tests not run** | Manual screen reader pass on the critical path (add to cart \u2192 checkout \u2192 validation errors \u2192 payment step \u2192 confirmation), across at least one of NVDA/VoiceOver. Keyboard-only navigation test. Live-region/announcement check for async states (loading, error, success). |\n| **Non-claims** | This evidence does **not** establish: WCAG 2.1 AA conformance for the flow; usability for actual screen reader users; correct behavior of dynamic/async states (errors, loading, payment processing) under assistive tech; accessibility of any third-party payment iframe if one is embedded. |\n\n**Recommendation:** either (a) run a 30\u201360 min manual screen reader smoke test on the checkout path before Friday \u2014 even just one pass catches most flow-level issues axe-core misses \u2014 or (b) if that's not feasible in time, reword the claim to match the evidence you actually have (e.g., \"New checkout flow passes automated accessibility scanning and matches our accessible component library; manual screen reader testing pending\") and file a follow-up ticket. Shipping the claim as currently worded without a manual pass is the part I'd push back on.",
+  "ttft_ms": 19642,
+  "ttft_stream_ms": 2514,
+  "time_to_request_ms": 26,
+  "time_to_request_from_spawn_ms": 681694,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078456571.6208,
+  "type": "result",
+  "duration_ms": 32662,
+  "uuid": "f4f1355c-af7f-4f4a-90c3-db2ee6d2a48e",
+  "_spec": "2dd20e1a1df2574786ec8a2114ce82b00fd841e01acb77b0cc792a69fcf2d2ee",
+  "_skill": "proving-claims",
+  "_cand": 2,
+  "_trial": 1
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 19104,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.044910000000000005,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3043,
+    "cache_read_input_tokens": 14780,
+    "output_tokens": 1430,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3043,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 661,
+        "cache_read_input_tokens": 8500,
+        "cache_creation_input_tokens": 823,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 823
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 686,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007559999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1430,
+      "cacheReadInputTokens": 14780,
+      "cacheCreationInputTokens": 3043,
+      "webSearchRequests": 0,
+      "costUSD": 0.044154000000000006,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The repo here is empty, so there's nothing local for me to cross-check either \u2014 I can't verify the dashboard state directly.\n\nBut regardless of what I could check, here's the issue worth pausing on: you mentioned EU checkout traffic moved to the new routing cluster after last month's migration. If the Checkout Errors dashboard's query/data source was scoped to the old infrastructure and never updated to include the new cluster, \"flat at zero for 25 minutes\" doesn't tell you checkout is healthy \u2014 it tells you the dashboard isn't seeing EU traffic at all. That's a classic false-negative trap: the revert could be working, or EU could be silently erroring and simply invisible to the panel you're staring at.\n\nBefore you post the all-clear, I'd confirm one concrete thing: does the Checkout Errors dashboard's data source include the new EU routing cluster, or does it need a separate panel/filter for it? Quickest ways to check:\n- Look at the dashboard's query definition (service/cluster tags it filters on) \u2014 does it list the new cluster or only the pre-migration one?\n- Pull up any EU-specific checkout metric (even raw request/error counts from the new cluster) for the last 30-60 min, independent of this dashboard.\n- Ask whoever owns the routing migration whether dashboards were updated to include the new cluster \u2014 this is the kind of thing that's easy to miss in a migration.\n\nGiven the 20-minute clock, I'd rather you post something calibrated than a flat all-clear that turns out to be wrong: e.g. \"Error rate flat at zero post-revert; confirming dashboard coverage includes new EU routing cluster before fully closing.\" That keeps the incident channel honest and gives you room to amend without walking back a false all-clear in front of the whole eng org. If you can get someone to confirm the EU cluster is in scope in the next few minutes, great \u2014 then close it outright.",
+  "ttft_ms": 7905,
+  "ttft_stream_ms": 924,
+  "time_to_request_ms": 25,
+  "time_to_request_from_spawn_ms": 826865,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078601724.7595,
+  "type": "result",
+  "duration_ms": 20375,
+  "uuid": "f302541d-2cb9-4196-80c0-7bba454359d5",
+  "_spec": "e6f9461f1dd569b4044101f5ed48715e20ca101c410e76d6b87f142c58defd7f",
+  "_skill": "responding-to-incidents",
+  "_cand": 1,
+  "_trial": 2
+}

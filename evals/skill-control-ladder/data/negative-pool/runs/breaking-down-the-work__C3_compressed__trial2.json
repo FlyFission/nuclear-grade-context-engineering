@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 6419,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0244456,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2400,
+    "cache_read_input_tokens": 14822,
+    "output_tokens": 328,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2400,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 241,
+        "cache_read_input_tokens": 8542,
+        "cache_creation_input_tokens": 138,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 138
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 592,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000667,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 328,
+      "cacheReadInputTokens": 14822,
+      "cacheCreationInputTokens": 2400,
+      "webSearchRequests": 0,
+      "costUSD": 0.0237786,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I couldn't find a `LoginForm.jsx` in this project, so here's a generic snippet you can drop in \u2014 adjust names to match your existing state/handlers.\n\n```jsx\nconst [rememberMe, setRememberMe] = useState(false);\n\n// ...inside the form, near the password field:\n<label>\n  <input\n    type=\"checkbox\"\n    checked={rememberMe}\n    onChange={(e) => setRememberMe(e.target.checked)}\n  />\n  Remember me\n</label>\n\n// ...in your submit handler:\nawait login({ email, password, rememberMe });\n```\n\nIf your `login()` call takes positional args instead of an object, just add `rememberMe` as the next argument. Want me to look at the actual file if it's at a different path?",
+  "ttft_ms": 1307,
+  "ttft_stream_ms": 975,
+  "time_to_request_ms": 139,
+  "time_to_request_from_spawn_ms": 1840007,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594833804.8354,
+  "type": "result",
+  "duration_ms": 7047,
+  "uuid": "44b3ae3b-3362-4c9a-802e-eaf0c792e145",
+  "_skill": "breaking-down-the-work",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "0bde5c1e488623637efdbd2557cfa8eefdffc32f89dbf4a09282142a05dab11e"
+}

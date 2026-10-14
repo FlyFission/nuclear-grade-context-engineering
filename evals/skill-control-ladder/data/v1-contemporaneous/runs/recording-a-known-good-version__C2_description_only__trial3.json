@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 25810,
+  "num_turns": 6,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.051449299999999996,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2831,
+    "cache_read_input_tokens": 23691,
+    "output_tokens": 1772,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2831,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1317,
+        "cache_read_input_tokens": 8962,
+        "cache_creation_input_tokens": 149,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 149
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000758,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1772,
+      "cacheReadInputTokens": 23691,
+      "cacheCreationInputTokens": 2831,
+      "webSearchRequests": 0,
+      "costUSD": 0.050691299999999995,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory is completely empty \u2014 no files, no git history I can inspect via Glob/Grep, nothing for PR #482, the eval suite results, the changelog, or the dependency bump itself. I can't verify any of the specifics you mentioned (embed-v1 \u2192 embed-v2, the precision/recall numbers, QA sign-off) against actual repo artifacts.\n\nBefore I draft a known-good-version record, I want to flag why that matters: this skill's whole purpose is to capture the *evidence* behind \"we trust this version,\" not just restate what someone said in chat. If I write up precision/recall figures or a PR link based only on your description, it'll look like a verified record but actually just be your claims reformatted \u2014 which defeats the point if you ever need to lean on this record during an incident.\n\nCould you point me to the actual artifacts? Specifically:\n- The PR #482 diff or a link/description of what changed (files, dependency version pins)\n- The eval suite output (numbers, or a report file/URL)\n- Where QA sign-off was recorded (ticket, Slack thread, approval on the PR)\n- Current deployed version identifier (git tag/commit SHA, package version)\n\nIf those live outside this directory (e.g., another repo, GitHub, a dashboard), tell me where and I'll pull them in. If they're not written down anywhere retrievable, I can still draft the record, but I'll clearly mark the evidence fields as \"reported by [you], not independently verified\" rather than presenting them as confirmed \u2014 so the record stays honest about what it actually rests on.",
+  "ttft_ms": 1898,
+  "ttft_stream_ms": 1186,
+  "time_to_request_ms": 66,
+  "time_to_request_from_spawn_ms": 484346,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789122269.7178,
+  "type": "result",
+  "duration_ms": 25759,
+  "uuid": "2fe69c22-709e-429c-b072-db6f1c879144",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "e4b397fecb333c773679ae125a0df3e537437af52fae1a737ef0b4cd0d8c29c8"
+}

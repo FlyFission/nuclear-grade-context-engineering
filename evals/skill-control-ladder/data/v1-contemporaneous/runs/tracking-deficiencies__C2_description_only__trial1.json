@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 19309,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.034003,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2139,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1238,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2139,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1238,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2139,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2139
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000709,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1238,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2139,
+      "webSearchRequests": 0,
+      "costUSD": 0.033294,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Ship today, but don't let this stay an informal \"everyone kind of knows\" bug \u2014 that's exactly how deficiencies rot for 8 months. Concretely:\n\n1. **Register it formally, today.** Open a tracked deficiency/risk item (not just a ticket) with: discovery date, description, rate (1:5000), root cause (retry doesn't handle mid-retry partition idempotently), and business impact (money moving incorrectly, customer trust, chargeback/dispute exposure).\n2. **Get explicit risk acceptance from someone who owns the money, not just the code.** A payments double-charge bug isn't a pure eng call \u2014 get sign-off from whoever owns finance/payments risk (eng lead + a payments/finance stakeholder), not just tribal team knowledge. That's the difference between \"accepted risk\" and \"quietly normalized.\"\n3. **Add a detection/mitigation stopgap for the interim**, since you're not fixing root cause today:\n   - Alert/monitor on duplicate charges (e.g., same customer+amount+idempotency key window) so occurrences surface immediately instead of via customer complaints.\n   - Make sure there's an existing fast-path to auto-refund/reverse duplicates when detected.\n4. **Set a real fix-by date or review cadence**, not \"someday.\" 8 months of \"low priority\" with no re-review is the failure mode \u2014 give it an owner and a date to revisit, especially since financial-harm bugs deserve tighter aging than typical low-priority debt.\n\nWant me to help draft the deficiency entry (owner, severity, fix-by date, detection plan) so it's ready to log before the release goes out?",
+  "ttft_ms": 10821,
+  "ttft_stream_ms": 1188,
+  "time_to_request_ms": 149,
+  "time_to_request_from_spawn_ms": 344140,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788980734.6687,
+  "type": "result",
+  "duration_ms": 19586,
+  "uuid": "5d8e8f5e-e8fa-40dd-96a1-f09b8153600c",
+  "_skill": "tracking-deficiencies",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "789dbc282deb1b8b44b333c8646964b4d916c4d17d9ec0bf2caa6a98a9fa7fc0"
+}

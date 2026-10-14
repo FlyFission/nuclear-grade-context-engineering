@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 25882,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.04435800000000001,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2233,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1886,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2233,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1886,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2233,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2233
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 695,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00078,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1886,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2233,
+      "webSearchRequests": 0,
+      "costUSD": 0.043578000000000006,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Not quite yet \u2014 a few gaps worth closing first:\n\n1. **Shadow mode tested the decision, not the mechanism.** Matching a human's \"would merge\" call 40+ times validates your criteria logic, but you haven't yet exercised the actual merge path (auto-merge permissions, CI triggering on merge, conflict handling). That's a different failure mode than \"picked the wrong PR.\"\n2. **Weekend + offsite is the wrong first run.** If the bot's first real merges coincide with the team being unreachable, you lose the fast-response window that would normally catch an early hiccup. Alerts in Slack only help if someone's watching Slack.\n3. **\"Dev dependency\" isn't automatically low-risk in a payments repo** \u2014 build tooling (bundlers, transpilers, linters-that-run-in-CI) is exactly the class of package that's been used in real supply-chain compromises, even though it's \"dev-only.\" Worth confirming your dev-dep definition excludes anything that touches the build/release pipeline, or that you have a lockfile/checksum gate on top of semver matching.\n\nI'd flip it on during a normal week when people are around to watch the first handful of real merges, then let it run unattended once you've seen it actually merge cleanly a few times \u2014 not just recommend correctly.",
+  "ttft_ms": 19508,
+  "ttft_stream_ms": 901,
+  "time_to_request_ms": 29,
+  "time_to_request_from_spawn_ms": 546736,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078321557.548,
+  "type": "result",
+  "duration_ms": 27250,
+  "uuid": "13af31ac-48c9-443a-a192-c3a78346d729",
+  "_spec": "305019d71060b6d9bc7c72af4d6895ff579028c1a1dde8dcf5f91ce3a5b13f78",
+  "_skill": "checking-release-readiness",
+  "_cand": 2,
+  "_trial": 3
+}

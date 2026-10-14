@@ -1,0 +1,81 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 8489,
+  "duration_api_ms": 10531,
+  "ttft_ms": 8397,
+  "ttft_stream_ms": 1512,
+  "time_to_request_ms": 48,
+  "time_to_request_from_spawn_ms": 892678,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121455454.8494,
+  "num_turns": 1,
+  "result": "No \u2014 don't cut production over this week based on vendor marketing claims alone.\n\nA few reasons for caution specific to content moderation:\n\n- \"99.9% accuracy\" is a meaningless number without knowing the base rate, what counts as an error, and on what dataset it was measured \u2014 moderation classes are usually heavily imbalanced, so a naive \"always allow\" classifier could hit 99.9% too.\n- SOC2 attests to security/process controls, not moderation quality \u2014 it says nothing about false-negative rates on harmful content or false-positive rates on legitimate content.\n- Case studies are marketing artifacts, selected by the vendor to look good; they're not a substitute for testing against your own traffic distribution (your content, your languages, your edge cases, your adversarial users).\n\nWhat I'd recommend instead:\n1. Request the vendor's actual eval methodology/benchmark (dataset, metrics, confusion matrix) and their SOC2 report (Type II, not just Type I).\n2. Run their API against a held-out sample of your own historical moderation queue (including known hard cases and past incidents) and compare precision/recall against your current provider.\n3. Shadow-test in production \u2014 send live traffic to both providers, log both decisions, don't act on the new one \u2014 for at least a couple weeks to see real-world divergence before switching anything user-facing.\n4. Only after that, consider a gradual rollout (small % of traffic) with monitoring and an easy rollback path, rather than a full cutover.\n\nGiven the stakes (harmful content slipping through, or legitimate content wrongly blocked), the cost savings aren't worth the risk of switching untested this week. Want help building a quick eval harness to compare the two providers on a sample of your data?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.021206700000000002,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 1851,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 555,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1851,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 555,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1851,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1851
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000714,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 555,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1851,
+      "webSearchRequests": 0,
+      "costUSD": 0.020492700000000003,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "cd071336-7c56-4900-ba5c-a11e0d824d99",
+  "_skill": "vetting-outside-code-and-models",
+  "_condition": "without_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "f4a6c2be0ac2917f10e71d220585fc6c0c0f67f6182aa46cab8c5fa7fbe4c3ee",
+  "_arm": "C0_bare",
+  "_reused_from": "evals/skill-benchmark-pilot/data/all-skills-pilot/runs/vetting-outside-code-and-models__without_skill__trial2.json"
+}

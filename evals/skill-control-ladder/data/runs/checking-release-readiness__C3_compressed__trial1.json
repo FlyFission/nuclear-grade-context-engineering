@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 14091,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0329032,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2494,
+    "cache_read_input_tokens": 14904,
+    "output_tokens": 851,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2494,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 752,
+        "cache_read_input_tokens": 8624,
+        "cache_creation_input_tokens": 150,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 150
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000691,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 851,
+      "cacheReadInputTokens": 14904,
+      "cacheCreationInputTokens": 2494,
+      "webSearchRequests": 0,
+      "costUSD": 0.032212199999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 this isn't ready to ship this afternoon. Verdict: **block**.\n\n**Why:**\n- Green CI + \"the engineer says it's ready\" is not evidence of production readiness for a database migration with index changes. CI tests don't exercise production data volume, replication lag, lock contention on `ALTER INDEX`/`REINDEX`, or version-specific planner behavior differences between PG12 and PG15.\n- No rollback plan exists. A DB major-version + index migration is close to irreversible once data is written under the new engine/index set \u2014 if something goes wrong post-deploy (bad query plans, index bloat, replication break), you need a tested path back, not one improvised during an incident.\n- No monitoring/alerts specific to this change means a regression (slow queries, lock waits, index-not-used, disk/connection pressure from PG15 defaults) could go undetected until users notice.\n\n**Before this ships, I'd want to see:**\n1. A rollback script/procedure (schema down-migration and a data restore/point-in-time-recovery plan), tested at least once in staging.\n2. Monitoring: alerts on query latency, error rate, replication lag, and index usage stats for at least the tables/indexes touched \u2014 active *before* deploy, not after.\n3. Confirmation this ran against a production-like dataset (size, indexes, query patterns), not just CI's synthetic fixtures.\n4. Explicit named owner accepting the risk if you deploy without the above (trust-bearing infra change \u2014 the risk owner shouldn't just be \"the engineer who wrote it\").\n\n**Recommendation:** defer the production deploy until rollback + monitoring are in place \u2014 that's typically a half-day of work, not a blocker to merging into `main` if you want to keep iterating, but it is a blocker to deploying today. If there's a hard deadline forcing today's deploy, at minimum get an explicit sign-off from whoever owns on-call/incident response, naming them as accepting the rollback/monitoring gap.\n\nWant me to draft the rollback checklist or the ship.md capturing this as a \"defer\" decision?",
+  "ttft_ms": 2114,
+  "ttft_stream_ms": 1125,
+  "time_to_request_ms": 41,
+  "time_to_request_from_spawn_ms": 462628,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025341391.1274,
+  "type": "result",
+  "duration_ms": 15087,
+  "uuid": "0f829c25-5b61-4851-b55c-119cf846f0e0",
+  "_skill": "checking-release-readiness",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "ce61a7db835d338265dde44d389788f65737eaf670032e880cd4ac5a11c3f07d"
+}

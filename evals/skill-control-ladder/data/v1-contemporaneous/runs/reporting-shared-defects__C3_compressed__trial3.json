@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 18983,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0427916,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2945,
+    "cache_read_input_tokens": 23822,
+    "output_tokens": 1145,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2945,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 726,
+        "cache_read_input_tokens": 8896,
+        "cache_creation_input_tokens": 329,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 329
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 702,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000782,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1145,
+      "cacheReadInputTokens": 23822,
+      "cacheCreationInputTokens": 2945,
+      "webSearchRequests": 0,
+      "costUSD": 0.04200960000000001,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No, you're not fully covered \u2014 this is a shared defect and a local fix alone leaves the other three teams exposed and unaware. Here's what's still missing:\n\n**Why it's not done:**\n- Sales, onboarding, and internal-tools bots still ship the vulnerable template and will leak internal DB tool identifiers to customers under the same truncation condition.\n- A code comment in your repo is invisible to those teams \u2014 it doesn't reach anyone who doesn't read your bot's source.\n- This is also a security-relevant issue (internal system/tool identifiers leaking to end users is an information-disclosure bug, potentially useful recon for an attacker), so it warrants escalation, not just a quiet fix.\n\n**What to do:**\n1. **Notify the other three teams' owners directly** \u2014 not just \"FYI in Slack,\" but a written report each owner can act on and track, containing:\n   - Description: `prompt-common`'s system-prompt template has a truncation edge case that can leak internal tool/query identifiers into customer-facing output on long conversations.\n   - Severity: security/info-disclosure \u2014 flag it as high given customer-facing exposure of internal implementation details.\n   - Fix/workaround: point them to your patched template (or better, propose the real fix landing in `prompt-common` itself so no one has to override).\n   - Owner + tracking link for each team.\n2. **Fix it upstream in `prompt-common`**, not just locally. Your override is a workaround; the shared package still has the bug for anyone else who imports it (including future teams). Submit the fix (or a PR) to whoever owns that package.\n3. **File a shared-defect report** linked to your OPEX record and the deficiency register, referencing all four consuming teams \u2014 this is what makes the issue trackable and prevents it from silently recurring if `prompt-common` gets updated and your override drifts out of sync.\n4. **Escalate** given the security angle (credential/internal-system leakage) \u2014 this likely warrants informing whoever owns security review, not just peer teams.\n\nSince I don't have access to your actual issue tracker, `prompt-common` repo, or team contacts in this environment, I can't file these for you \u2014 but I can help draft the shared-defect report and the notification message if you want a starting point.",
+  "ttft_ms": 3043,
+  "ttft_stream_ms": 1157,
+  "time_to_request_ms": 25,
+  "time_to_request_from_spawn_ms": 123627,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788761911.1465,
+  "type": "result",
+  "duration_ms": 19189,
+  "uuid": "1507e016-a592-4b2a-b5ef-59ad68af7820",
+  "_skill": "reporting-shared-defects",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "41b168ac7a01b0726b5ab40da47d1fee99d3879be53c9e916b56f862c83f6eb1"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 37521,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0732762,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 4134,
+    "cache_read_input_tokens": 24874,
+    "output_tokens": 2679,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4134,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 911,
+        "cache_read_input_tokens": 10050,
+        "cache_creation_input_tokens": 364,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 364
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 717,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000807,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2679,
+      "cacheReadInputTokens": 24874,
+      "cacheCreationInputTokens": 4134,
+      "webSearchRequests": 0,
+      "costUSD": 0.0724692,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No trace-logger code in this repo, so I'll go on what you've described.\n\nThe dedup logic has a real gap for your stated use case: it keeps only the **first entry's response**, but for a flaky API being retried 40-50 times, the responses are almost certainly *not* identical across calls \u2014 that's usually why the caller is retrying (errors, timeouts, partial results, rate-limit responses, etc.). By collapsing on request-args equality alone, you're storing \"called N times\" but silently discarding what actually happened on calls 2 through N \u2014 which is precisely the signal you'd need to explain why a run cost more or produced a different outcome.\n\nConcretely:\n- If call #14 returned a 500 and #15 returned valid data (and the agent used that data), your trace now just shows \"called 40x, see first response\" \u2014 no way to tell which call succeeded, how many failed, or what the failures looked like.\n- Per-call latency/timestamps are also collapsed into one, so you lose the ability to see if the run was slow because of retry backoff.\n- \"Ran it against last week's incident traces and the counts line up\" only validates that you preserved *count*, not that you preserved the *content* needed for incident analysis \u2014 it's not actually testing the thing you rely on traces for.\n- This week's traces are already in the new format, so for any collapsed run, the discarded per-call responses aren't recoverable unless you have raw logs elsewhere.\n\nI'd suggest tightening the dedup condition (or the retained data) before this becomes the only record you have of a real incident:\n- Only collapse when the **response** also matches the first call, not just the request args \u2014 genuinely-identical repeated calls (e.g., redundant reads) are safe to fold, but retries-after-failure are not.\n- If you still want to collapse retries for size, keep a lightweight per-occurrence record (status/error code, latency, response hash or size) instead of dropping them entirely \u2014 that's a small fraction of the payload size but preserves the diagnostic signal.\n- Worth checking whether the original per-call raw traces are archived anywhere (even short-retention) so this week's incident data isn't permanently reduced to counts.\n\nI'd flag this to your teammate/reviewer before it becomes the default for future weeks, since as-is it looks like it optimizes away exactly the data you said you rely on it for.",
+  "ttft_ms": 18741,
+  "ttft_stream_ms": 1224,
+  "time_to_request_ms": 25,
+  "time_to_request_from_spawn_ms": 796896,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078571776.7822,
+  "type": "result",
+  "duration_ms": 39536,
+  "uuid": "0c5d5ab6-f68e-471a-ae05-3300a6ce680e",
+  "_spec": "75b674341ca9b81db1127f542bbb96ed7fc342bded7038ee3101a5f4d4e7ead3",
+  "_skill": "recording-what-an-agent-did",
+  "_cand": 2,
+  "_trial": 1
+}

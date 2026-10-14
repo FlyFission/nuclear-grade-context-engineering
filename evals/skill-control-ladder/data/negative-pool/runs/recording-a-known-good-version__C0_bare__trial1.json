@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 9646,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0275223,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2344,
+    "cache_read_input_tokens": 22881,
+    "output_tokens": 394,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2344,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 111,
+        "cache_read_input_tokens": 8382,
+        "cache_creation_input_tokens": 233,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 233
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 596,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006659999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 394,
+      "cacheReadInputTokens": 22881,
+      "cacheCreationInputTokens": 2344,
+      "webSearchRequests": 0,
+      "costUSD": 0.0268563,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "It looks like the working directory here is empty \u2014 I don't see any files in this repo (no matches for `tmp` anywhere, and a glob for all files returns nothing).\n\nCould you confirm the file path or paste the script's contents? I don't have shell access in this environment beyond file search tools, so I need the actual file to check for lingering `tmp` references.",
+  "ttft_ms": 1647,
+  "ttft_stream_ms": 1261,
+  "time_to_request_ms": 32,
+  "time_to_request_from_spawn_ms": 1615701,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594610191.719,
+  "type": "result",
+  "duration_ms": 9950,
+  "uuid": "d578a3ec-02fa-41e4-8714-94e800a893b2",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C0_bare",
+  "_trial": 1,
+  "_input_spec_sha256": "f19fbfa19dd9d8d790749a633bcaf7cce95921e728a75ed240d827a08021baf7"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 34466,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0662368,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2739,
+    "cache_read_input_tokens": 23696,
+    "output_tokens": 2794,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2739,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2471,
+        "cache_read_input_tokens": 8822,
+        "cache_creation_input_tokens": 197,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 197
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 676,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000766,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2794,
+      "cacheReadInputTokens": 23696,
+      "cacheCreationInputTokens": 2739,
+      "webSearchRequests": 0,
+      "costUSD": 0.0654708,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Here's a handoff note structured so your teammate can't accidentally start acting on partial context. I left placeholders (`[ ]`) for details only you know \u2014 fill those in before you go.\n\n---\n\n# Handoff: Billing Service OAuth2 Migration\n\n**Outgoing owner:** benjaminhuffer1@gmail.com \u2014 out starting 2026-07-27, back [fill in return date]\n**Branch:** `oauth-migration`\n**Handoff date:** 2026-07-26\n\n## What's done\n- Auth middleware rewritten for OAuth2 \u2014 merged to `oauth-migration`, unit tests passing.\n- Token-refresh logic rewritten \u2014 merged to `oauth-migration`, unit tests passing.\n- Nothing else has been touched. No production config changes, no key rotation.\n\n## What's NOT done (remaining scope)\n1. **Three downstream services** still call the old API-key auth endpoints and have not been migrated to OAuth2. [List the service names/repos here \u2014 the incoming owner has no context on this project and won't know which services these are.]\n2. **Production config** has not been updated for the new auth flow.\n3. **Old API keys have not been rotated.**\n\n## Hard constraint \u2014 do not cross without confirming first\n**The old API keys must stay active until all three downstream services are migrated.** Rotating or deactivating them early will break those services with 401s in production. Do not rotate keys, and do not touch prod config, until the downstream migration is confirmed complete and verified working.\n\n## Open questions the incoming owner needs answered before touching anything\n- Which three services, specifically, and who owns each one?\n- Is there a test/staging environment to validate each downstream migration before it touches prod?\n- Who has authority to deploy prod config changes and rotate the keys \u2014 is that the incoming owner, or does it need sign-off from you or someone else?\n- What's the rollback plan if a downstream service migration fails partway?\n\n## Stop conditions \u2014 escalate, don't guess\n- Don't rotate or deactivate any API key until all three downstream services are verified migrated and working.\n- Don't deploy production config changes until the downstream services are ready to use OAuth2.\n- Don't merge `oauth-migration` past the downstream-service work without your (or another lead's) sign-off.\n- If it's unclear whether a given service has fully cut over, treat it as not migrated and wait.\n\n## Before picking this up\nAsk the incoming owner to restate back (in the ticket/PR, not just verbally): which services they're migrating, what they're authorized to deploy/rotate, and what they're still waiting on confirmation for. That way nothing gets assumed from this note alone.\n\n---\n\nWant me to save this as a file in the repo (e.g. `TURNOVER.md` or in your ticketing system format), or is this good to paste directly into wherever you're handing it off?",
+  "ttft_ms": 1958,
+  "ttft_stream_ms": 879,
+  "time_to_request_ms": 33,
+  "time_to_request_from_spawn_ms": 792037,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025671037.758,
+  "type": "result",
+  "duration_ms": 33730,
+  "uuid": "232030ba-3829-459c-b770-c16acf78c710",
+  "_skill": "handing-off-work",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "8947c73732a3df9076794b1651b97531ce37ae07f029b1a9db1944aafad6774f"
+}

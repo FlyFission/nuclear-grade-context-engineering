@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 13662,
+  "num_turns": 6,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0399283,
+  "usage": {
+    "input_tokens": 10,
+    "cache_creation_input_tokens": 2773,
+    "cache_read_input_tokens": 40381,
+    "output_tokens": 698,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2773,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 123,
+        "cache_read_input_tokens": 8920,
+        "cache_creation_input_tokens": 124,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 124
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 581,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006760000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 10,
+      "outputTokens": 698,
+      "cacheReadInputTokens": 40381,
+      "cacheCreationInputTokens": 2773,
+      "webSearchRequests": 0,
+      "costUSD": 0.0392523,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The repository appears to be empty \u2014 I can't find any files at all, let alone anything related to a login rate limiter or `retryCount`. There's no diff or working tree content here for me to edit.\n\nCan you confirm this is the right directory/branch? It's possible your in-progress changes are elsewhere (uncommitted in a different worktree, a different repo path, or not yet saved to disk).",
+  "ttft_ms": 1403,
+  "ttft_stream_ms": 977,
+  "time_to_request_ms": 63,
+  "time_to_request_from_spawn_ms": 1401991,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594396434.4944,
+  "type": "result",
+  "duration_ms": 14813,
+  "uuid": "055324ed-80d8-4eb1-869c-d2ce586f67e0",
+  "_skill": "closing-stale-packets",
+  "_arm": "C0_bare",
+  "_trial": 3,
+  "_input_spec_sha256": "d1076e8f4ef5697c1310b6840c74ef35450e50a34383149e9619db97034d08fe"
+}

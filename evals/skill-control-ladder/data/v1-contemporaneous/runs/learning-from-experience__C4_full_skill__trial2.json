@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 29923,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.061708,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 4309,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2216,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4309,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2216,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 4309,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4309
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2216,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 4309,
+      "webSearchRequests": 0,
+      "costUSD": 0.060984,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "# OPEX Record \u2014 Hardcoded API Key Merged to Production via `--no-verify` Bypass\n\n## 1. What happened (actual vs. standard)\n\n**Standard:** All commits are required to pass the secrets-scanning pre-commit hook before merging to `main`.\n\n**Actual:** An engineer's branch failed the secrets-scanning hook. Rather than resolving the finding, they ran `git commit --no-verify`, bypassing the check, and pushed under deadline pressure. The commit \u2014 containing a hardcoded API key \u2014 was merged to `main` and ran live in production for **3 days** until a routine security audit caught it.\n\n**Important distinction:** This was not a simple honest mistake in the same category as \"the check flagged a false positive and I didn't notice.\" The engineer *saw the check fail and deliberately routed around it* using `--no-verify`. Per our no-blame policy, no-blame protects honest error and at-risk behavior under normal pressure \u2014 it does not extend to knowingly bypassing a required gate. That distinction matters for how we respond: the person isn't being blamed or punished, but the bypass itself needs to be named as a finding, not softened into \"just a mistake,\" because normalizing it would teach the team that `--no-verify` is an acceptable escape valve under deadline pressure.\n\n## 2. Impact\n\n- Hardcoded API key live in production source for 3 days.\n- Key exposure window: unknown blast radius (repo may have been readable by more people than the key was scoped for) until rotation.\n- Detected only via **periodic** audit, not by any automated control \u2014 meaning any similar bypass could sit undetected for weeks depending on audit cadence.\n\n## 3. Immediate correction (already done)\n\n- Key rotated as soon as discovered. \u2705\n\nGiven this is a credential exposure, a few things are worth confirming as part of closing this out (not just for the writeup):\n- Was the old key's usage logs checked for unauthorized calls during the 3-day window?\n- Was the exposed key scoped to anything sensitive (billing, PII access, admin actions) that would warrant broader notification?\n\n## 4. Root cause and weak/missing controls\n\nThe bug fix (rotating the key) treats a symptom. The actual gaps:\n\n| Weak control | Why it failed |\n|---|---|\n| **Pre-commit hook is locally bypassable** | `--no-verify` is a client-side flag with no server-side enforcement. Any local check that isn't re-enforced server-side is optional in practice, especially under deadline pressure. |\n| **No CI-level secrets scan** | The only gate was local pre-commit. Nothing re-checked the diff at the PR/CI stage before merge to `main`. |\n| **No branch protection tied to the check** | `main` didn't require the secrets-scan status check to pass before merge. |\n| **No detection of `--no-verify` usage** | No one flagged that the commit skipped hooks; it was invisible until an unrelated audit found it. |\n| **Detection cadence too slow** | Reliance on \"routine audit\" as the backstop means the mean-time-to-detect for this class of leak is measured in the audit interval, not minutes. |\n\nRoot cause: **a required control existed only as a locally-bypassable client-side hook, with no server-side or CI-side enforcement backing it up**, and no fast-path detection for when it was skipped.\n\n## 5. Durable fixes (control changes, not just this-time fixes)\n\n1. **Add secrets scanning as a required CI check on PRs into `main`.** (e.g., gitleaks/truffleHog in the pipeline, not just pre-commit.) This can't be bypassed with a local flag.\n2. **Enable branch protection on `main`** requiring that CI check to pass before merge \u2014 no admin override without explicit justification logged.\n3. **Add a lightweight secret-scanning webhook/scan on push** (e.g. GitHub secret scanning / push protection) as a second, independent layer, so detection happens at push time, not at the next audit.\n4. **Reduce audit-based detection reliance:** audits remain useful as a periodic *verification* that controls are working, not as the primary detection mechanism for leaked secrets.\n5. **Norm-setting, not punitive:** clarify in team docs/runbook that `--no-verify` is for legitimate cases (e.g., hook itself is broken) and requires flagging it (Slack message, PR note) \u2014 silently bypassing a failing security check and shipping is treated as a reportable event, independent of whether anything bad results.\n\n## 6. Owner and verification\n\n| Item | Owner | Due / Trigger |\n|---|---|---|\n| Add CI secrets-scan required check + branch protection on `main` | (assign: eng lead / platform owner) | Before next deploy cycle; verify by attempting a test PR with a fake secret and confirming it's blocked |\n| Enable push-protection / secret scanning at push time | (assign) | Same sprint |\n| Confirm exposed key's usage logs for the 3-day window | (assign: security) | This week |\n| Update engineering runbook on `--no-verify` usage norms | (assign: eng lead) | Next team doc review |\n| Re-check after 30 days: has the CI gate blocked anything, and has `--no-verify` usage without flagging recurred? | (assign) | 30-day follow-up |\n\n## 7. Escalation note\n\nSince this touched a live credential in production, this record should be shared beyond the immediate team \u2014 anyone else relying on the same pre-commit-only secrets-scanning setup (other repos/services with the same hook config but no CI backstop) should get the same fix, not just this repo.\n\n---\n\nWant me to turn the \"durable fixes\" section into an actual implementation plan (e.g., draft the CI config/branch protection settings), or is this writeup itself what you needed for the incident report?",
+  "ttft_ms": 4847,
+  "ttft_stream_ms": 1191,
+  "time_to_request_ms": 34,
+  "time_to_request_from_spawn_ms": 919537,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789558088.4097,
+  "type": "result",
+  "duration_ms": 31116,
+  "uuid": "55d0df4d-5be2-490a-8cb3-69321449a38a",
+  "_skill": "learning-from-experience",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "cfa4f74e9bb2cb7d8f393262df0498ea8e7f19457f4949e786b26109f3bd0c3c"
+}

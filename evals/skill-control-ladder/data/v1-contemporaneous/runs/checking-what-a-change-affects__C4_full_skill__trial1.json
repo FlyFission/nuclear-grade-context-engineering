@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 54695,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.054143300000000005,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 4054,
+    "cache_read_input_tokens": 26321,
+    "output_tokens": 1415,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4054,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1011,
+        "cache_read_input_tokens": 10211,
+        "cache_creation_input_tokens": 123,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 123
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00068,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1415,
+      "cacheReadInputTokens": 26321,
+      "cacheCreationInputTokens": 4054,
+      "webSearchRequests": 0,
+      "costUSD": 0.053463300000000005,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The repo here is empty, so I can't point to your actual serializer/docs/tests \u2014 but the answer doesn't depend on that. **No, don't just merge it.** A one-line diff renaming a public API field is exactly the case this framework flags: small diff size says nothing about blast radius, because `total` is a public contract, not internal code.\n\nHere's the ripple check:\n\n**Runtime blast radius (the real risk):**\n- **API consumers** \u2014 anyone parsing `total` from your JSON response breaks silently (no error, just a missing/undefined field) the moment this ships. This is the blocker unless you know for certain there are zero external/internal consumers depending on this exact response shape.\n- **Backward compatibility** \u2014 a rename isn't additive. You need either: (a) emit both `total` and `order_total` for a deprecation window, (b) version the endpoint, or (c) confirm and document that breaking changes are acceptable for this API (e.g., pre-GA, no external SLA).\n- **Schema/state migration** \u2014 likely not applicable if `total` isn't a stored field name, but check if any persisted payloads, webhooks, or event logs replay this response shape.\n\n**Repo artifacts to update in the same change, not later:**\n- API docs / OpenAPI spec referencing `total`\n- Client SDKs or internal services that consume this endpoint\n- Tests asserting on the `total` key (contract/integration tests, not just unit tests of the serializer)\n- Changelog / release notes \u2014 this needs to be called out explicitly as a breaking change, not buried as a refactor\n- Any example payloads in READMEs or public docs\n\n**Questions that determine whether this is \"block\" or \"update-and-ship\":**\n1. Is this endpoint public/external, or internal-only?\n2. Do you have any versioning or deprecation mechanism for this API?\n3. Do you know who/what currently consumes `total`?\n\nIf you can point me at the actual serializer, API docs, and any client code in your project, I'll do the concrete impact scan and draft `change-impact.md` with per-item actions. Otherwise, my default recommendation: don't merge as a silent rename \u2014 either dual-emit both fields for a deprecation period, or treat it as a versioned breaking change with consumers notified.",
+  "ttft_ms": 6315,
+  "ttft_stream_ms": 3137,
+  "time_to_request_ms": 56,
+  "time_to_request_from_spawn_ms": 458154,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789096620.7546,
+  "type": "result",
+  "duration_ms": 50736,
+  "uuid": "5258328c-2c93-4905-98e2-c388ee42bd15",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "cb9792f55f02ab213ee934b4629f747698e3120ae737e7fbba43976a6222637a"
+}

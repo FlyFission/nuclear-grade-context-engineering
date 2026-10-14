@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 18027,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0400635,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2360,
+    "cache_read_input_tokens": 14635,
+    "output_tokens": 1387,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2360,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1206,
+        "cache_read_input_tokens": 8355,
+        "cache_creation_input_tokens": 285,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 285
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 626,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000696,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1387,
+      "cacheReadInputTokens": 14635,
+      "cacheCreationInputTokens": 2360,
+      "webSearchRequests": 0,
+      "costUSD": 0.0393675,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "It needs changes before publishing \u2014 two issues:\n\n1. **\"Fully compliant with the framework\"** is a strong, verifiable-sounding claim about NIST SP 800-61, but that document is a guideline, not a certifiable standard \u2014 there's no compliance scheme to be \"fully compliant\" against. Unless you've done a formal gap analysis mapping your workflow to every recommendation in the document, this overstates your relationship to it. Better: \"Our workflow is informed by / aligned with NIST SP 800-61\" or name the specific phases/practices you actually follow.\n\n2. **The uncited conference talk** shouldn't go in public docs as-is. A vague reference to \"a great talk... we don't have a link or citation for\" gives readers nothing to verify and mixes an unaccountable anecdote into the same sentence as a formal standards claim. Either track down the actual talk/speaker and cite it properly, or drop the specific reference and just say the design was informed by general SRE practices (without implying a specific traceable source).\n\nSuggested rewrite: \"Our workflow is informed by NIST SP 800-61 and general SRE incident-response practices.\" \u2014 accurate and doesn't overclaim compliance or cite something you can't back up.",
+  "ttft_ms": 1898,
+  "ttft_stream_ms": 786,
+  "time_to_request_ms": 80,
+  "time_to_request_from_spawn_ms": 499493,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025378270.913,
+  "type": "result",
+  "duration_ms": 19743,
+  "uuid": "583dbb62-6a2e-4b92-a7ff-f107038cefbb",
+  "_skill": "checking-source-claims",
+  "_arm": "C2_description_only",
+  "_trial": 2,
+  "_input_spec_sha256": "dc224e83e17a7a412635dbf5ade817c9ff63ce0f3e168e22e3ec24c6f14d3c78"
+}

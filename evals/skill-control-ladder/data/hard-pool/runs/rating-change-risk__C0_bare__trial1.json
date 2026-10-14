@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 16717,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.032736299999999996,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2060,
+    "cache_read_input_tokens": 6271,
+    "output_tokens": 1181,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2060,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1181,
+        "cache_read_input_tokens": 6271,
+        "cache_creation_input_tokens": 2060,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2060
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 679,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007740000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1181,
+      "cacheReadInputTokens": 6271,
+      "cacheCreationInputTokens": 2060,
+      "webSearchRequests": 0,
+      "costUSD": 0.0319623,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't actually have write/push/merge tools available in this session (only file-reading tools), so I can't merge this myself \u2014 you'll need to do that through GitHub/your normal flow. A couple of things worth flagging before it goes out, though:\n\n1. **\"SOC 2 Type II certified\" is technically inaccurate wording**, and making it *more prominent* is exactly the wrong moment to leave that as-is. SOC 2 isn't a certification (like ISO 27001 is) \u2014 it's an auditor's attestation report. Precise language is usually \"SOC 2 Type II compliant,\" \"SOC 2 Type II audited,\" or \"we maintain a SOC 2 Type II report.\" Given the whole reason for this change is a competitor getting called out for overstating their security posture, shipping imprecise terminology in bigger, bolder text is the kind of thing that invites the same scrutiny onto you. Worth a 30-second check with whoever manages your compliance/audit relationship (or legal) on the exact wording before it's more visible.\n\n2. Separate from wording \u2014 I'd still want to actually see the diff and the file it's in before treating this as a rubber-stamp merge. Even a 3-line JSX change can have a typo, a broken link to the report/trust page, or an accessibility issue (e.g., missing alt text if a badge/icon is involved).\n\nCan you paste the diff or the file path? I can review it and point out anything worth fixing, then you (or whoever has merge rights) can ship it in time for tomorrow.",
+  "ttft_ms": 9423,
+  "ttft_stream_ms": 957,
+  "time_to_request_ms": 26,
+  "time_to_request_from_spawn_ms": 1846559,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079621362.6445,
+  "type": "result",
+  "duration_ms": 17129,
+  "uuid": "62068882-0564-4012-8f55-909443dd1820",
+  "_skill": "rating-change-risk",
+  "_arm": "C0_bare",
+  "_trial": 1,
+  "_input_spec_sha256": "40fd4c7106447e067c1f8baa74e39b19b2402aa6e67462b622061d1638333640"
+}

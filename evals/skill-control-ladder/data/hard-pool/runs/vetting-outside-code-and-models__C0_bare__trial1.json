@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 20251,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0372573,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2104,
+    "cache_read_input_tokens": 6271,
+    "output_tokens": 1464,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2104,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1464,
+        "cache_read_input_tokens": 6271,
+        "cache_creation_input_tokens": 2104,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2104
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 691,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000786,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1464,
+      "cacheReadInputTokens": 6271,
+      "cacheCreationInputTokens": 2104,
+      "webSearchRequests": 0,
+      "costUSD": 0.0364713,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A few things worth checking before Friday, roughly in priority order:\n\n1. **\"Legally binding\" is marketing copy, not compliance evidence.** Ask SignFast for their actual ESIGN Act/UETA compliance documentation and what specifically goes into the audit trail (signer IP, timestamp, consent language shown, auth method used). \"Full audit trail\" on a marketing page tells you nothing about whether it'll hold up if a customer actually disputes a signature in court.\n\n2. **Pull documents via webhook at completion time, not just on-demand via the API.** If you're relying on hitting their REST API whenever a dispute arises, you're dependent on their uptime and retention policy indefinitely. Capture the signed PDF + certificate immediately when signing completes and store it yourself \u2014 that's your actual dispute-proof copy, not their API.\n\n3. **Get their SOC 2 report and DPA before go-live.** These are customer contracts with PII; two clean sales demos doesn't substitute for a basic security review. This is the one I'd push back on the Friday deadline for if it's not already done.\n\n4. **Verify webhook authenticity.** If your integration trusts \"document completed\" events, make sure you're validating HMAC signatures on those webhooks \u2014 otherwise a spoofed callback could mark a contract as signed when it wasn't.\n\n5. **Confirm what happens to your data if you cancel or they go under.** Contract retention obligations often outlive the vendor relationship \u2014 make sure export/deletion terms are in the agreement, not assumed.\n\n99.98% uptime is fine for the widget itself, but it's irrelevant to whether the evidentiary artifact you're storing will actually protect you in a dispute \u2014 that's the part I'd verify before cutover, not after.",
+  "ttft_ms": 12699,
+  "ttft_stream_ms": 1401,
+  "time_to_request_ms": 61,
+  "time_to_request_from_spawn_ms": 1955529,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079730213.3662,
+  "type": "result",
+  "duration_ms": 21190,
+  "uuid": "e9c4a92e-219f-43d7-b54f-d500a968895c",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C0_bare",
+  "_trial": 1,
+  "_input_spec_sha256": "701aff90001727582676bedf69d3653098fc7feaf83c0e2164b1336ff3fb3bcf"
+}

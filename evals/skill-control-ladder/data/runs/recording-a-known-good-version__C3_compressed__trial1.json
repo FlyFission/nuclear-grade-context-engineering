@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 31456,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.060406499999999995,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2613,
+    "cache_read_input_tokens": 23625,
+    "output_tokens": 2458,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2613,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2244,
+        "cache_read_input_tokens": 8769,
+        "cache_creation_input_tokens": 124,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 124
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000753,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2458,
+      "cacheReadInputTokens": 23625,
+      "cacheCreationInputTokens": 2613,
+      "webSearchRequests": 0,
+      "costUSD": 0.0596535,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Since this repo is empty, there's no existing `controlled-items.md`/`change-impact.md`/etc. to link to \u2014 I'll draft a standalone `known-good-version.md` for v2.3.0, but a few things need to be nailed down before I can call this record actually verified rather than just asserted:\n\n**The biggest gap:** you said QA used a *new* eval suite and it \"came back clean... improved over the prior baseline.\" If that new suite was only run against embed-v2, the \"improvement\" isn't a real comparison \u2014 you'd need the same new suite run against embed-v1 too, otherwise you can't tell if precision/recall actually improved or if the new suite is just measuring something different. Was the new suite run on both models, or only on embed-v2?\n\nOther things I need before I can mark this as a trustworthy rollback target rather than just a description:\n\n1. **Exact identity** \u2014 what's the commit SHA merged for PR #482 (or tag/release)? \"An hour ago\" + \"looks stable\" isn't a pinned identifier yet.\n2. **Model pin** \u2014 is `embed-v2` pinned to a specific version/checksum/artifact ID, or could \"embed-v2\" silently drift under you later?\n3. **Scope of PR #482** \u2014 did it *only* change the embedding model, or are other changes (config, feature flags, data migrations) bundled in? Rollback only works cleanly if you know exactly what's riding along.\n4. **Rollback tested?** \u2014 has anyone actually verified that reverting to v2.2.x/embed-v1 works (e.g., in staging), or is that untested on paper only?\n5. Do `controlled-items.md` / `change-impact.md` / `verification.md` / `ship.md` exist somewhere else (different repo/wiki) that this record should link to, or should I create stubs here?\n\nGiven this is a customer-facing recommendation service, I'd rather flag these gaps now than write a document that implies more assurance than actually exists. Can you answer 1\u20134 (or point me to where PR #482's diff/eval results live so I can check directly)?",
+  "ttft_ms": 2191,
+  "ttft_stream_ms": 1110,
+  "time_to_request_ms": 66,
+  "time_to_request_from_spawn_ms": 1010254,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025887445.7651,
+  "type": "result",
+  "duration_ms": 30420,
+  "uuid": "f2fa4b5f-fc27-47a3-84fc-44fec8557da3",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "15a6ce4cf7708cdad5ccf21f02b242e4ec8887a93ead0c6966ee50af92dc3bd6"
+}

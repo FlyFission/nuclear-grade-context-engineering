@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 15029,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0379284,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2710,
+    "cache_read_input_tokens": 23358,
+    "output_tokens": 926,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2710,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 529,
+        "cache_read_input_tokens": 8649,
+        "cache_creation_input_tokens": 341,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 341
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000753,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 926,
+      "cacheReadInputTokens": 23358,
+      "cacheCreationInputTokens": 2710,
+      "webSearchRequests": 0,
+      "costUSD": 0.0371754,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory is empty\u2014there's no repo content, PR data, or eval results here for me to pull from. Before I draft this, I want to flag a concern rather than just write it up as stated.\n\n**The core issue: \"everything looks stable so far\" after one hour isn't sufficient evidence to call this version known-good.** A recording-a-known-good-version record is meant to be something you can trust blindly during an incident \u2014 but an hour of observation won't surface issues like:\n- Gradual drift in recommendation quality (embedding changes often show effects over days, not hours)\n- Rare-path failures (cold-start users, edge-case queries) that need real traffic volume\n- Downstream effects on dependent services that consume recommendation output\n\nSo I'd suggest one of two paths:\n\n1. **Wait and record later** \u2014 let it soak for the period your team normally uses to trust a release (e.g., 24\u201348h or a full traffic cycle), then record it with real production evidence (error rates, latency, business metrics) alongside the QA eval results.\n2. **Record now as \"provisional\"** \u2014 I can draft the record today, but explicitly mark it as pending final sign-off, with a clear note on what \"stable\" means so far (1 hour of prod traffic, no alarms) versus what's still outstanding, and a trigger for when to convert it to fully accepted.\n\nAlso, since I don't have access to the actual PR #482 diff or the eval suite's numeric results in this workspace, I'd need you to paste those in (or point me to files) so the record cites real evidence rather than paraphrased claims.\n\nWhich approach do you want \u2014 wait, or provisional record \u2014 and can you share the eval results/PR details?",
+  "ttft_ms": 2207,
+  "ttft_stream_ms": 1500,
+  "time_to_request_ms": 93,
+  "time_to_request_from_spawn_ms": 1005291,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025883064.2092,
+  "type": "result",
+  "duration_ms": 14277,
+  "uuid": "ba785726-6846-4952-b3a7-7d1b8f841801",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "e4b397fecb333c773679ae125a0df3e537437af52fae1a737ef0b4cd0d8c29c8"
+}

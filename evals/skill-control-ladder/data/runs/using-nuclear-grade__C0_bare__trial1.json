@@ -1,0 +1,81 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 6021,
+  "duration_api_ms": 5694,
+  "ttft_ms": 1456,
+  "ttft_stream_ms": 1076,
+  "time_to_request_ms": 42,
+  "time_to_request_from_spawn_ms": 1752214,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783122315511.3433,
+  "num_turns": 3,
+  "result": "I don't see a project in this working directory \u2014 no `package.json` or system prompt file exists here yet. Could you point me to the correct path/repo, or let me know if it needs to be created?\n\nAlso, what's the new instruction you want added to the system prompt? I'll need the exact wording to make the edit.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0222114,
+  "usage": {
+    "input_tokens": 56,
+    "cache_creation_input_tokens": 2142,
+    "cache_read_input_tokens": 14398,
+    "output_tokens": 279,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2142,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 31,
+        "output_tokens": 94,
+        "cache_read_input_tokens": 8135,
+        "cache_creation_input_tokens": 270,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 270
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 607,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000687,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 56,
+      "outputTokens": 279,
+      "cacheReadInputTokens": 14398,
+      "cacheCreationInputTokens": 2142,
+      "webSearchRequests": 0,
+      "costUSD": 0.0215244,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "989bc194-d4e1-4907-864c-b95c78f2f013",
+  "_skill": "using-nuclear-grade",
+  "_condition": "without_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "a56d99f578deb15dd62e240941e3ff5875360d21f6a8fb432cfb7879e1ace337",
+  "_arm": "C0_bare",
+  "_reused_from": "evals/skill-benchmark-pilot/data/all-skills-pilot/runs/using-nuclear-grade__without_skill__trial1.json"
+}

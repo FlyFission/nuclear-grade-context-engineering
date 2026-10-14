@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 18333,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.04145700000000001,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2446,
+    "cache_read_input_tokens": 23100,
+    "output_tokens": 1272,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2446,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 980,
+        "cache_read_input_tokens": 8515,
+        "cache_creation_input_tokens": 202,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 202
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000753,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1272,
+      "cacheReadInputTokens": 23100,
+      "cacheCreationInputTokens": 2446,
+      "webSearchRequests": 0,
+      "costUSD": 0.040704000000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The repo is empty \u2014 no existing changelog, eval report, or record format to work from. Since this record is meant to be trusted for future rollback decisions, I want to base it on verifiable specifics rather than paraphrase, so a few things before I draft:\n\n1. **Eval numbers** \u2014 what were the actual precision/recall figures (new vs. baseline), and where do they live (a report/dashboard link, or should I inline the numbers you have)?\n2. **PR #482** \u2014 can you share the link, or the commit SHA / tag that was deployed, so the record points to something concrete?\n3. **Deployment details** \u2014 timestamp (or approximate), and what environment/how it was verified stable (e.g., dashboards, alerts monitored)?\n4. **QA sign-off** \u2014 who signed off, and was it against a formal threshold (e.g., \"must not regress below baseline by X%\") or a judgment call?\n5. **File location/format** \u2014 do you want this as a markdown file in the repo (e.g., `docs/known-good-versions/v2.3.0.md` or a `CHANGELOG`/`ADR`-style doc), or somewhere else?\n\nOnce I have those, I'll draft the record with the actual data rather than placeholders.",
+  "ttft_ms": 1714,
+  "ttft_stream_ms": 1010,
+  "time_to_request_ms": 139,
+  "time_to_request_from_spawn_ms": 1188376,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789825375.0508,
+  "type": "result",
+  "duration_ms": 19480,
+  "uuid": "527c654b-cd0f-4b58-856a-8d29dcb33cc1",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C0_bare",
+  "_trial": 1,
+  "_input_spec_sha256": "b00ed13376e4e28e7ec5157895d628a4e31a3b7a8e20ba81876ce12a164456da"
+}

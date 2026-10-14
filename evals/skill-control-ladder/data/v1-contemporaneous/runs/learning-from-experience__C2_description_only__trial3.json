@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 41120,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0697275,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2977,
+    "cache_read_input_tokens": 23745,
+    "output_tokens": 2932,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2977,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2257,
+        "cache_read_input_tokens": 9065,
+        "cache_creation_input_tokens": 192,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 192
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000744,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2932,
+      "cacheReadInputTokens": 23745,
+      "cacheCreationInputTokens": 2977,
+      "webSearchRequests": 0,
+      "costUSD": 0.0689835,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Here's a blameless writeup and a set of fixes focused on the actual gap: the only defense was a client-side hook that anyone can bypass with a documented git flag.\n\n## Incident Report: Hardcoded API Key Merged to Main\n\n**Date of incident:** ~3 days before detection (week of 2026-07-27, adjust to actuals)\n**Detected:** Routine security audit\n**Severity:** High (live credential in production for 3 days)\n**Status:** Resolved \u2014 key rotated\n\n### Summary\nAn engineer's local pre-commit secrets-scanning hook failed on a branch containing a hardcoded API key. Under time pressure, they bypassed the hook with `git commit --no-verify` and pushed. The change was reviewed, merged to `main`, and deployed. The exposed key was live in production for 3 days until a routine security audit flagged it. The key was rotated immediately upon discovery.\n\n### Timeline\n| Time | Event |\n|---|---|\n| Day 0 | Pre-commit secrets hook fails on engineer's branch |\n| Day 0 | Engineer runs `git commit --no-verify`, pushes, PR opened |\n| Day 0 | PR reviewed and merged to `main` (secret not caught in review) |\n| Day 0 | Deployed to production |\n| Day 3 | Security audit discovers the hardcoded key |\n| Day 3 | Key rotated |\n\n### Root Cause\nThe **secrets scan existed only as a local, client-side pre-commit hook**. That control is opt-in by construction \u2014 `--no-verify` is a standard, documented git flag, not a bug or misuse. So the real failure isn't \"an engineer bypassed a check,\" it's that **nothing enforced the check server-side**. A local hook is a convenience for catching mistakes early, not a security boundary.\n\n### Contributing Factors\n1. **No CI-enforced secrets scan** \u2014 the same linter (or equivalent) didn't re-run as a required status check on the PR/CI pipeline.\n2. **No branch protection rule** requiring that check to pass before merge to `main`.\n3. **Code review didn't catch it** \u2014 reviewers aren't a reliable secrets backstop; that's exactly what automated scanning is for.\n4. **Detection lag** \u2014 the only detection mechanism was a periodic manual audit, not continuous scanning, so exposure time was driven by audit cadence rather than minutes.\n5. **Unknown**: why was the hook failing in the first place? Worth confirming whether it was a true positive (engineer knew there was a real secret and shipped anyway) or a false positive/flaky check that trained people to bypass it. This matters a lot for the fix \u2014 I'd get an answer from the engineer as part of the blameless follow-up, not as blame, but as data.\n6. **Deadline pressure was the proximate trigger**, but pressure is a constant \u2014 the safeguard needs to hold up under it, not assume calm conditions.\n\n### Corrective Actions\n\n**Must do (closes the actual gap):**\n1. **Add the same secrets scan as a required CI check** on every PR (e.g., gitleaks/trufflehog/your existing linter run in CI, not just pre-commit).\n2. **Enable branch protection on `main`** requiring that check (and review) to pass \u2014 this makes the check un-bypassable at the PR/merge level regardless of local git flags.\n3. **Enable push protection at the platform level if available** (e.g., GitHub secret scanning push protection blocks the push itself when it detects a known credential pattern) \u2014 stops it before it ever reaches a PR.\n\n**Should do (reduces exposure time and recurrence):**\n4. Turn on **continuous secret scanning of the repo/history** (not just diffs) with alerting to security, so detection isn't dependent on the next scheduled audit.\n5. **Investigate the original hook failure** \u2014 if it was a false positive, fix the linter's signal-to-noise so people trust it instead of routing around it. If it was a true positive, that's a separate conversation with the engineer about what made shipping-anyway feel like the right call under deadline pressure.\n6. **Document an escape hatch that isn't silent bypass** \u2014 e.g., a fast path to ping security/on-call when a check is blocking and the deadline is real, so people have a legitimate option other than `--no-verify`.\n\n**Nice to have:**\n7. Add a step to secret rotation runbooks to also check if secret managers/vaults should be used instead of any hardcoded config for this class of key going forward.\n\n### Key takeaway for the writeup\nLead with: *the control was advisory, not enforced* \u2014 that's the one-sentence root cause. The fix is moving the same check server-side as a required, non-bypassable gate, not a policy reminder about not using `--no-verify`.\n\n---\n\nWant me to save this as a markdown file in the repo (e.g., `docs/incidents/2026-07-hardcoded-api-key.md`), or is this going into an external incident tracker? I can also draft the actual CI config for the secrets scan + branch protection settings if you tell me what CI/hosting platform you're on (GitHub Actions, GitLab CI, etc.) and what linter you're currently using locally.",
+  "ttft_ms": 5336,
+  "ttft_stream_ms": 1058,
+  "time_to_request_ms": 30,
+  "time_to_request_from_spawn_ms": 529532,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789168108.7014,
+  "type": "result",
+  "duration_ms": 41864,
+  "uuid": "37401621-8a73-4025-8379-ef9c7ff6ad95",
+  "_skill": "learning-from-experience",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "4dbea7cefe1c8425ec97d7d54173d4fc3fc08bc958b4043160ef0219e4a03c7a"
+}

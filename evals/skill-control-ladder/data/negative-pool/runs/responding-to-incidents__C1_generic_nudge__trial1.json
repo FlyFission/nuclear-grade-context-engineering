@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 10646,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0316425,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2656,
+    "cache_read_input_tokens": 23255,
+    "output_tokens": 536,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2656,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 150,
+        "cache_read_input_tokens": 8587,
+        "cache_creation_input_tokens": 349,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 349
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 597,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000672,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 536,
+      "cacheReadInputTokens": 23255,
+      "cacheCreationInputTokens": 2656,
+      "webSearchRequests": 0,
+      "costUSD": 0.030970499999999998,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't see an `.env.dev` file or any reference to `apiTimeout`/`api_timeout` in this repo \u2014 this working directory doesn't seem to be the project you're describing.\n\nCould you confirm the correct project path, or point me to the file that reads `.env.dev` (e.g. via `os.environ`, `process.env`, or a config loader)? Once I can see the startup script that references `apiTimeout`, I can update it to `api_timeout` for you.",
+  "ttft_ms": 2723,
+  "ttft_stream_ms": 2253,
+  "time_to_request_ms": 27,
+  "time_to_request_from_spawn_ms": 1678867,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594673343.7004,
+  "type": "result",
+  "duration_ms": 11383,
+  "uuid": "2ef9f09f-8ccd-476e-bb0a-446a68d2adc4",
+  "_skill": "responding-to-incidents",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "40deb23691bbf1f31719af738d457711ee34770abef4b6dd1cf770a2a823d379"
+}

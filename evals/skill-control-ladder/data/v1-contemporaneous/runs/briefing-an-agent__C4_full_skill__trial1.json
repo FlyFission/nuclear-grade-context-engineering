@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 56090,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.094552,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 5613,
+    "cache_read_input_tokens": 16860,
+    "output_tokens": 3672,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 5613,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2409,
+        "cache_read_input_tokens": 10580,
+        "cache_creation_input_tokens": 1313,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1313
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 624,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 3672,
+      "cacheReadInputTokens": 16860,
+      "cacheCreationInputTokens": 5613,
+      "webSearchRequests": 0,
+      "costUSD": 0.093828,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before the brief itself: the risky part of this plan isn't the code, it's the \"unattended + production\" combination. I'd bound the agent so it prepares and validates everything overnight, but does **not** apply anything to production without you reviewing it in the morning. That's the one change I'd push back on if you want it fully autonomous \u2014 happy to discuss if you have a reason it needs to actually land in prod overnight.\n\nHere's the context pack:\n\n```markdown\n# Context Pack \u2014 email_verified column + backfill + signup endpoint\n\n## Mode / Record\n- Standard change (schema change + data backfill + endpoint logic change touching production data)\n- Record: .nuclear/changes/add-email-verified-column/ (create if it doesn't exist)\n\n## Role\nBuilder \u2014 unattended, overnight\n\n## Decision question\nCan `email_verified` be added to `users`, correctly backfilled by signup-source heuristic,\nand set correctly on new signups \u2014 with evidence a human can approve in the morning\nwithout re-deriving the work?\n\n## Goal anchor\n- **Goal:** users.email_verified exists, is backfilled per the agreed heuristic, and the\n  signup endpoint sets it correctly for all new signups.\n- **Success looks like:** migration applies cleanly and is reversible; backfill logic is\n  documented and its row-count effects are known before it touches real data; signup\n  endpoint change has tests; nothing in production has actually been altered without\n  human sign-off.\n- **Non-goals:** no other columns, tables, or endpoints touched. No cleanup/refactor of\n  unrelated code. No changes to auth/session logic beyond setting this one field.\n\n## Work phase\n**Candidate** \u2014 build and validate the change. This is explicitly NOT \"accept\" \u2014 do not\napply migration or backfill to production. Phase ends at \"ready for human approval,\"\nnot at \"done.\"\n\n## Archetype\n**Builder.** Characteristic drift: volume outrunning review \u2014 writing the migration,\nthe backfill script, AND the endpoint change AND running them all in one pass with no\ncheckpoint. Guard against it by treating the migration, the backfill, and the endpoint\nchange as three separate deliverables, each with its own evidence, and stopping between\nthem.\n\n## Scope \u2014 files/areas affected\n- New migration file (e.g. `migrations/xxxx_add_email_verified_to_users.*`)\n- Backfill script (new file, e.g. `scripts/backfill_email_verified.*`) \u2014 must be\n  idempotent and support dry-run mode\n- Signup endpoint handler (state the actual path here, e.g. `src/routes/signup.js` or\n  equivalent) and its tests\n- Nothing else. Do not touch other tables, other endpoints, or unrelated migrations.\n\n## Heuristic for backfill (state explicitly \u2014 don't let the agent invent it)\n[Fill in: e.g. \"signup_source = 'google_oauth' or 'github_oauth' \u2192 email_verified = true;\nsignup_source = 'password' \u2192 email_verified = false; anything else \u2192 false, flagged for\nmanual review.\"]\nIf this isn't nailed down precisely before the agent starts, that's the highest-risk gap \u2014\nan ambiguous heuristic run against real user records is exactly the kind of thing that's\nhard to notice and hard to undo.\n\n## Allowed commands / tools\n- Read/write within the files listed above\n- Run migrations against a local or staging database only\n- Run the backfill script in `--dry-run` mode against staging/local, and print a summary\n  (row counts by branch of the heuristic, before/after)\n- Run the existing test suite and linter\n- Read production schema (SELECT/DESCRIBE only) if needed to confirm column doesn't\n  already exist \u2014 no writes\n\n## Forbidden actions\n- Applying the migration to the production database\n- Running the backfill (dry-run or real) against the production database\n- Any `DROP`, `TRUNCATE`, or destructive statement anywhere\n- Modifying production data directly (no ad hoc UPDATE statements outside the reviewed\n  script)\n- Committing/using production credentials if the agent has access to them \u2014 if prod\n  creds are reachable from this environment, stop and flag it, don't use them\n- Force-pushing, rewriting migration history, or editing already-applied migrations\n- Silently changing the heuristic if the data looks messier than expected \u2014 surface it,\n  don't decide it\n\n## Do-not-touch\n- Any table other than `users`\n- Any existing column on `users`\n- Production database, in any mode (write or destructive read)\n- CI/CD pipeline configuration\n- Auth/session code beyond the one field being set\n\n## Approval gates\n1. Migration SQL/schema-change file \u2014 human review required before production apply.\n2. Backfill script + its dry-run output (row counts per heuristic branch) \u2014 human review\n   required before production apply. If dry-run shows an unexpected proportion of users\n   falling into \"unclear\" cases, stop and ask rather than guessing.\n3. Signup endpoint diff + passing tests \u2014 human review before merge.\n4. **No step touching production runs without explicit human go-ahead the next morning.**\n\n## Required evidence (leave this for the morning review)\n- Migration file, and confirmation it applies + rolls back cleanly on staging/local\n- Backfill script with dry-run output: total users, count per heuristic branch, count\n  of ambiguous/unmatched signup sources\n- Diff of the signup endpoint change + test results\n- A short written note of any signup_source values encountered that weren't anticipated\n  in the heuristic\n- Explicit statement: \"production has not been modified\"\n\n## Instruction files in force\n[Fill in: AGENTS.md / CLAUDE.md / any repo-specific rules, and which one wins on\nconflict. If none exist, say \"none known\" rather than leaving it blank.]\n\n## Stop conditions\n- Any point where the next action would touch production\n- Signup-source values in the data that don't map cleanly to the heuristic\n- Any need for production credentials the agent doesn't already have scoped, read-only\n- Migration or backfill script fails on staging/local\n- Uncertainty about what \"email_verified\" should mean for a given signup source \u2014\n  don't guess, log it and stop\n\n## Last action completed / changed conditions\nNone \u2014 this is the start of the task.\n\n## Critical next action\nWrite and validate the migration against staging/local first, in isolation, before\ntouching the backfill script or the endpoint. Likely error: writing the backfill logic\nbefore confirming the migration is reversible and confirming the actual set of distinct\nsignup_source values in the data \u2014 the heuristic is only as good as the agent's\nunderstanding of source data.\n```\n\nFill in the bracketed pieces (heuristic detail, file paths, instruction files) before handing it off \u2014 those are the parts that turn \"the agent worked something out\" into \"the agent did the thing you meant.\" Want me to also draft the migration/backfill script skeleton, or a `.nuclear/changes/...` record file to go with this?",
+  "ttft_ms": 18060,
+  "ttft_stream_ms": 963,
+  "time_to_request_ms": 37,
+  "time_to_request_from_spawn_ms": 642003,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789280518.6433,
+  "type": "result",
+  "duration_ms": 57113,
+  "uuid": "8967f643-23ea-40fe-81e6-0fb8c2a286b6",
+  "_skill": "briefing-an-agent",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "2907054b0851a5825ce117f49ed17cf04ced8330b3d420f200d17db85fba2a3e"
+}

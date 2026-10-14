@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 25095,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.048614199999999996,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2485,
+    "cache_read_input_tokens": 14904,
+    "output_tokens": 1900,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2485,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1810,
+        "cache_read_input_tokens": 8624,
+        "cache_creation_input_tokens": 141,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 141
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000721,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1900,
+      "cacheReadInputTokens": 14904,
+      "cacheCreationInputTokens": 2485,
+      "webSearchRequests": 0,
+      "costUSD": 0.0478932,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "**Verdict: Block.** Don't merge/deploy this afternoon as-is.\n\n**Why green CI + author confidence isn't enough:** CI passing confirms the migration runs without erroring in a test environment \u2014 it doesn't validate production-scale behavior, PG12\u219215 query planner/index differences, or recoverability. The engineer's own \"it's ready\" note in the PR is a self-report, not independent evidence; for a primary user database migration, that's exactly the kind of claim that needs to be checked, not trusted at face value.\n\n**Why this specific gap is disqualifying:**\n- **No rollback plan** \u2014 schema/index migrations on a primary DB are hard to reverse once live traffic writes under the new schema/indexes. If something breaks post-deploy (bad query plan, lock contention, index bloat, data corruption), you need a defined path back. \"We'll figure it out\" is not a rollback plan for a production database.\n- **No migration-specific monitoring** \u2014 without new alerts (query latency, error rate, lock waits, index scan stats, replication/connection health), you won't know something's wrong until users report it. Green CI tells you nothing about production behavior once deployed.\n\nBoth are named block triggers here \u2014 irreversible-leaning action, no rollback readiness, no detection mechanism.\n\n**Before this ships, you need:**\n1. A concrete rollback strategy \u2014 e.g., a tested downgrade path, a pre-migration snapshot/backup with a verified restore procedure, or a documented \"keep PG12 warm and cut back\" plan with an actual owner.\n2. Monitoring/alerts scoped to this change, live before deploy \u2014 not added reactively after an incident.\n3. Confirmation the migration was exercised against production-scale/production-like data (not just CI fixtures), given index behavior differences between PG12 and 15.\n4. An explicit abort trigger (e.g., error rate or latency threshold within N minutes post-deploy \u2192 rollback) and a named on-call owner for the deploy window.\n\nOnce those exist, this becomes a **ship-with-named-risk** at best (residual risk: PG15 planner behavior differences under real load) \u2014 but someone with authority needs to explicitly accept that risk, not just note it in a PR description. Happy to help draft the rollback plan or alert list if that's useful.",
+  "ttft_ms": 1531,
+  "ttft_stream_ms": 768,
+  "time_to_request_ms": 65,
+  "time_to_request_from_spawn_ms": 471786,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025350609.959,
+  "type": "result",
+  "duration_ms": 25800,
+  "uuid": "28d926b5-b025-413f-863c-4dbfafd1bc37",
+  "_skill": "checking-release-readiness",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "ce61a7db835d338265dde44d389788f65737eaf670032e880cd4ac5a11c3f07d"
+}

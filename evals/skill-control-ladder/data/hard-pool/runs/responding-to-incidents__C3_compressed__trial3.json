@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 23422,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.05385079999999999,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3548,
+    "cache_read_input_tokens": 14866,
+    "output_tokens": 1822,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3548,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 638,
+        "cache_read_input_tokens": 8586,
+        "cache_creation_input_tokens": 1242,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1242
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 686,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000761,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1822,
+      "cacheReadInputTokens": 14866,
+      "cacheCreationInputTokens": 3548,
+      "webSearchRequests": 0,
+      "costUSD": 0.05308979999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Hold off on the all-clear \u2014 the EU migration detail is the thing to chase down first, not a formality.\n\nHere's the gap: your Checkout Errors dashboard has been the right tool for every incident *this year*, but if EU checkout traffic moved to a new routing cluster last month, there's a real chance that cluster's errors aren't flowing into the same metric pipeline this dashboard reads from. \"Flat at zero for 25 minutes\" could mean the incident is resolved, or it could mean the dashboard is now blind to a chunk of traffic. Those look identical from where you're sitting, and you can't tell them apart without checking.\n\nWhat I'd do in the next 20 minutes:\n1. **Confirm dashboard coverage** \u2014 ask whoever owns the routing migration (or check the dashboard's data source/query) whether it includes the new EU cluster, or if EU checkout now needs its own panel/metric.\n2. **Pull a quick independent EU check** \u2014 even a raw error count or log query scoped to the EU cluster for the last 30 min, just to sanity-check the \"zero\" reading.\n3. **Separately**: the pricing-service revert is still a hypothesis, not a confirmed root cause \u2014 the timing correlates, but you haven't verified the mechanism. Fine to note as \"likely cause, unconfirmed\" in the summary; don't state it as fact.\n\nIf you can't get the EU coverage question answered before the all-hands, I'd post a status update in the channel instead of an all-clear \u2014 something like \"error rate at zero for 25+ min post-revert, confirming dashboard coverage for EU cluster before declaring resolved\" \u2014 and close it out right after the meeting once you've checked. Given it's a customer-facing checkout flow, a 30-minute delay on the formal close is cheap insurance against reopening this later with EU customers still affected.",
+  "ttft_ms": 13623,
+  "ttft_stream_ms": 860,
+  "time_to_request_ms": 30,
+  "time_to_request_from_spawn_ms": 1939781,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079714693.1997,
+  "type": "result",
+  "duration_ms": 24097,
+  "uuid": "7155fa93-0fe4-467f-a5dc-26b3b38e650b",
+  "_skill": "responding-to-incidents",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "fa13eec42847bf39076bbe2d377b1996214fdd400faa1f19e3466286a7476e62"
+}

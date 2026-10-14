@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 33887,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0745275,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 4920,
+    "cache_read_input_tokens": 26595,
+    "output_tokens": 2417,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4920,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1387,
+        "cache_read_input_tokens": 10331,
+        "cache_creation_input_tokens": 869,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 869
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 676,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007559999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2417,
+      "cacheReadInputTokens": 26595,
+      "cacheCreationInputTokens": 4920,
+      "webSearchRequests": 0,
+      "costUSD": 0.07377149999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The workspace is empty, so I'll write this from what you've told me, with a few bracketed placeholders for details only you know (teammate's name, exact service names, links). Fill those in before you go.\n\nHere's the handoff note:\n\n---\n\n```markdown\n# TURNOVER \u2014 Billing Service OAuth2 Migration\n\n**Date:** 2026-08-03\n**Outgoing owner:** [Your name] (benjaminhuffer1@gmail.com) \u2014 out on vacation starting 2026-08-04, back [return date]\n**Incoming owner:** [Teammate's name] \u2014 new to this project\n**Branch:** `oauth-migration`\n**Contact if blocked:** [Your name] is unreachable during vacation \u2014 escalate to [backup contact / team lead] instead.\n\n## 1. Resume point \u2014 what's done\n\n- Auth middleware rewritten for OAuth2 \u2014 merged to `oauth-migration`, unit tests passing.\n- Token-refresh logic rewritten for OAuth2 \u2014 merged to `oauth-migration`, unit tests passing.\n- Old API-key auth path is still fully active in production. No production config changes have been made. No old API keys have been rotated or revoked.\n\n## 2. What changed / what's still true\n\n- The billing service itself supports both old API-key auth and new OAuth2 auth right now (dual-mode).\n- Three downstream services still call the old auth endpoints and have **not** been migrated:\n  1. [Service A]\n  2. [Service B]\n  3. [Service C]\n- **Hard constraint: old API keys must stay active until all three downstream services are migrated.** Rotating or revoking them early will cause 401s across those services.\n\n## 3. Remaining work\n\n- Migrate each of the three downstream services to call the new OAuth2 endpoints (in whatever order makes sense \u2014 check for dependencies between them first).\n- Verify each downstream service's auth calls against `oauth-migration` in a non-prod environment before touching anything in prod.\n- Only after **all three** are confirmed migrated and working: update production config, then rotate/revoke the old API keys.\n\n## 4. Authority limits\n\n**Allowed:**\n- Continue migration work on the three downstream services.\n- Merge to `oauth-migration` branch.\n- Run tests, deploy to staging/non-prod.\n\n**Forbidden / hold until confirmed:**\n- Do **not** touch production config.\n- Do **not** rotate or revoke any old API keys \u2014 this is the most likely way to cause an outage if done early.\n- Do **not** deploy `oauth-migration` to production until all three downstream services are verified against it.\n\n## 5. Next decision gate\n\nBefore rotating API keys or touching prod config, confirm all three downstream services are:\n1. Migrated to OAuth2 calls, and\n2. Verified working end-to-end (not just unit-tested).\n\nIf unsure whether a downstream service is fully migrated, **do not rotate keys** \u2014 hold and ask.\n\n## 6. Likely error to guard against\n\nRotating/revoking an old API key before all three downstream services are migrated \u2014 this will cause immediate 401s in production for whichever service(s) still depend on it.\n\n## 7. Proof still needed\n\n- Passing tests (unit + integration) for each downstream service against the new OAuth2 endpoints.\n- Confirmation from each downstream service's logs/monitoring that it's successfully authenticating via OAuth2 before its old-auth path is considered retired.\n\n---\n\n**Incoming owner: before starting, please confirm in reply/comment that you understand \u2014**\n1. You may work on the three downstream service migrations and merge to `oauth-migration`.\n2. You must **not** touch production config or rotate/revoke old API keys until all three downstream services are confirmed migrated and verified.\n3. If blocked or unsure, escalate to [backup contact] rather than waiting for [outgoing owner] to return.\n```\n\n---\n\nFill in the bracketed placeholders (teammate name, return date, backup contact, and the three downstream service names) before sending. Want me to save this to a file in your project, or is this good to paste directly into a wiki/PR/ticket?",
+  "ttft_ms": 4671,
+  "ttft_stream_ms": 2225,
+  "time_to_request_ms": 70,
+  "time_to_request_from_spawn_ms": 570524,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789208831.104,
+  "type": "result",
+  "duration_ms": 34504,
+  "uuid": "9535e595-3b50-4a86-ae50-1c57844d2d3c",
+  "_skill": "handing-off-work",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "41c0bd5846e714cdc33d9298a4f08037d1e9efa6040d894007a9242d29060feb"
+}

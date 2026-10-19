@@ -37,7 +37,7 @@ reported over informative skills only.
 - Informative: **24/27**
 - Ceiling (all arms >= 0.95): **3**
 - Floor (all arms <= 0.05): **0**
-- Rubric checks met: **1844/2280** (81%) across 405 gradings
+- Rubric checks met: **1845/2280** (81%) across 405 gradings
 
 Ceiling skills, excluded from the primary test: `creating-change-records`, `recording-what-an-agent-did`, `staying-on-mission`
 
@@ -47,13 +47,13 @@ Pre-registered hypothesis: across the 27-skill pool, the full
 skill (C4) outscores the generic prompting control (C1) on paired per-skill
 scores. Tested once.
 
-- Mean paired difference: **+0.100** (score scale 0–1; YES=1, PARTIAL=0.5, NO=0)
+- Mean paired difference: **+0.102** (score scale 0–1; YES=1, PARTIAL=0.5, NO=0)
 - Skills where C4 > C1: **19** · C4 < C1: **1** · tied: **7**
 - Two-sided exact sign test: **p = 0.0000**
 - Two-sided paired permutation test (100,000 resamples, seed 20260726): **p = 0.0000**
 
 Restricted to the 24 informative skills (ceilings and floors
-removed): mean **+0.112**, 19 better / 1 worse / 4 tied, sign p = 0.0000, permutation p = 0.0000.
+removed): mean **+0.115**, 19 better / 1 worse / 4 tied, sign p = 0.0000, permutation p = 0.0000.
 
 
 C4 scores **lower** than C1 on 1 of the 27 skills, and ties on 7:
@@ -70,10 +70,10 @@ C4 scores **lower** than C1 on 1 of the 27 skills, and ties on 7:
 
 | Comparison | Mean diff | Higher | Lower | Tied | Sign p | Perm p |
 |---|---|---|---|---|---|---|
-| C4_full_skill vs C0_bare | +0.130 | 20 | 2 | 5 | 0.0001 | 0.0001 |
+| C4_full_skill vs C0_bare | +0.133 | 20 | 2 | 5 | 0.0001 | 0.0001 |
 | C1_generic_nudge vs C0_bare | +0.030 | 13 | 4 | 10 | 0.0490 | 0.1816 |
-| C4_full_skill vs C3_compressed | -0.000 | 8 | 7 | 12 | 1.0000 | 1.0000 |
-| C4_full_skill vs C2_description_only | +0.040 | 12 | 4 | 11 | 0.0768 | 0.0898 |
+| C4_full_skill vs C3_compressed | +0.002 | 8 | 7 | 12 | 1.0000 | 0.9704 |
+| C4_full_skill vs C2_description_only | +0.042 | 12 | 4 | 11 | 0.0768 | 0.0849 |
 
 `C4 vs C0` is the comparison the original pilot ran. `C1 vs C0` is how much of
 that gap one reusable generic paragraph buys on its own. `C4 vs C3` is the
@@ -88,7 +88,7 @@ carrying token cost without a measured behavioral effect.
 | `C1_generic_nudge` | 78 | $0.0456 | 1,688 | 0.766 (95% CI 0.58–0.89) |
 | `C2_description_only` | 61 | $0.0478 | 1,848 | 0.826 (95% CI 0.65–0.93) |
 | `C3_compressed` | 126 | $0.0510 | 1,881 | 0.867 (95% CI 0.69–0.95) |
-| `C4_full_skill` | 1,100 | $0.0674 | 2,175 | 0.866 (95% CI 0.69–0.95) |
+| `C4_full_skill` | 1,100 | $0.0674 | 2,175 | 0.868 (95% CI 0.69–0.95) |
 
 ## Per-skill scores
 
@@ -125,7 +125,7 @@ their own permutation p-values.
 | `deciding-who-decides` | 0.83 | 0.83 | 0.83 | 0.94 | 0.78 | -0.06 [-0.33, +0.17] · spans 0 |
 | `declaring-intent` | 0.78 | 0.83 | 0.89 | 0.89 | 0.94 | +0.11 [-0.06, +0.28] · spans 0 |
 | `double-checking-before-acting` | 0.53 | 0.80 | 0.87 | 0.93 | 0.87 | +0.07 [+0.00, +0.20] · spans 0 |
-| `handing-off-work` | 0.22 | 0.33 | 0.33 | 0.39 | 0.56 | +0.22 [+0.17, +0.33] |
+| `handing-off-work` | 0.22 | 0.33 | 0.33 | 0.39 | 0.61 | +0.28 [+0.17, +0.33] |
 | `learning-from-experience` | 0.80 | 0.80 | 0.80 | 1.00 | 0.93 | +0.13 [+0.00, +0.20] · spans 0 |
 | `organizing-project-folders` | 0.56 | 0.56 | 0.56 | 0.89 | 0.94 | +0.39 [-0.06, +0.94] · spans 0 |
 | `proving-claims` | 0.72 | 0.89 | 0.89 | 1.00 | 1.00 | +0.11 [+0.00, +0.17] · spans 0 |

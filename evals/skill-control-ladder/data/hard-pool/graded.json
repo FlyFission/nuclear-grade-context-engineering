@@ -121,12 +121,12 @@
     "arm": "C3_compressed",
     "trial": 1,
     "verdict": "NO",
-    "quote": "The response requires \"checkout-service test suite run is green\" as a gate for auto-merge, but never explicitly notes that flags/production.yaml is a shared config consumed by services beyond checkout-service, nor does it acknowledge that checkout-service's green tests alone do not constitute evidence of safety for those other consumers.",
+    "quote": "The response provides a more restrictive auto-merge gate and adds approval verification, but does not explicitly note that flags/production.yaml is shared by services other than checkout-service or that checkout-service test success does not constitute evidence of safety for those other consumers.",
     "cost_usd": 0.07294110000000001,
     "output_tokens": 2923,
     "input_tokens": 4,
     "duration_api_ms": 41611,
-    "_source_sha256": "f7c869dd1362599ccb7fd1e7dbe675f548c813c448f0fb3420f0bf88661534ef",
+    "_source_sha256": "dcdeca93ccb25d0fdca18e22513d844012f506ed382f446b3ee66e167c419311",
     "_criteria_sha256": "47d7324e149de89b7f104b0f656ad4ebda4a708486c429619092baf6030bfefb"
   },
   {
@@ -602,12 +602,12 @@
     "arm": "C0_bare",
     "trial": 2,
     "verdict": "PARTIAL",
-    "quote": "If #9012 ran on the pre-rebase commit, it never actually tested the code as it now sits on top of the queue-timeout fix \u2014 that combination (your backoff change + the newly-pulled-in timeout change) hasn't technically been exercised by that CI run",
+    "quote": "If #9012 ran on the pre-rebase commit, it never actually tested the code as it now sits on top of the queue-timeout fix \u2014 that combination (your backoff change + the newly-pulled-in timeout change) hasn't technically been exercised by that CI run... I need the commit SHA that #9012 ran against, plus the current branch HEAD SHA, so they can be checked against each other (or you confirm CI re-ran after the re-push).",
     "cost_usd": 0.0957719,
     "output_tokens": 4633,
     "input_tokens": 8,
     "duration_api_ms": 63916,
-    "_source_sha256": "c5f5080323342774c6291becfc0d5475afc97daa384c399ee9df918c70a95f31",
+    "_source_sha256": "7221cd58b4c5a256a9666d41f4119286da7b716c5280f8012bc8815acc43b262",
     "_criteria_sha256": "8e9621516d477d7c65ada2a79b68d9be4e547fc8aff0aee228b293c28fe56def"
   },
   {

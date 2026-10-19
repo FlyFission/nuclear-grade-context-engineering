@@ -2619,7 +2619,7 @@
     },
     "cost_usd": 0.047000299999999995,
     "output_tokens": 1444,
-    "_source_sha256": "62f7298807c408e1c038af6cd5215b8e24e769c7656bbcdc21bca371929e1a6b",
+    "_source_sha256": "e404f12249ee7e11fae3b65ba09d6a4f502c6a4d0ce0444dd9b816bc3cf48725",
     "_rubric_sha256": "e28d2aec95580973d0c80fe75dfc699cbe9d1aae9afde35a844a3bd6369461a9"
   },
   {
@@ -2711,7 +2711,7 @@
     },
     "cost_usd": 0.0386674,
     "output_tokens": 446,
-    "_source_sha256": "ef22f09c369ba1bda2f1f1ee5467d81173b0d43f68898a5f4ac02919eedac2f9",
+    "_source_sha256": "bceabaaa5a8b55363ad95b43297b9068cd11a6afaa7f5a6114d83082760b9c1b",
     "_rubric_sha256": "e28d2aec95580973d0c80fe75dfc699cbe9d1aae9afde35a844a3bd6369461a9"
   },
   {
@@ -4010,7 +4010,7 @@
     },
     "cost_usd": 0.046640999999999995,
     "output_tokens": 2007,
-    "_source_sha256": "0d40a471cd73eeeb08f063ff5b1ad8140d0e174e8cf5477d478d2e59cdabac15",
+    "_source_sha256": "2223200154138e7a3660df4799ffbda04a5d732eeb03982f47dc11a243a97909",
     "_rubric_sha256": "1ff7b4f0a70c05cec2ef1c68b2770103a9daf7c509c6721298f1cea57c6bc23f"
   },
   {
@@ -4099,7 +4099,7 @@
     },
     "cost_usd": 0.034151799999999996,
     "output_tokens": 1054,
-    "_source_sha256": "9790839d6388d68975c6f63cde25719e041faa73d98ce0de57141d3c919e8aa9",
+    "_source_sha256": "e12c78247195652c35f9255c7c0df1c7bc72ed4b5de93f0e431e327da03473ec",
     "_rubric_sha256": "b02287ecfb45c1f7948503ba88c75eb19f0693a271a64b78e4bee8ad740d507f"
   },
   {
@@ -4214,7 +4214,7 @@
     },
     "cost_usd": 0.054379399999999994,
     "output_tokens": 2065,
-    "_source_sha256": "b6a0c1bde899761184aefea12d749c951ea5a763b285b24b24596ff819ecd38c",
+    "_source_sha256": "22398aad7f58e950681ab4f56a583f28d732053ff6cf1785d1c9edd687190bda",
     "_rubric_sha256": "b02287ecfb45c1f7948503ba88c75eb19f0693a271a64b78e4bee8ad740d507f"
   },
   {
@@ -4267,9 +4267,9 @@
     "skill": "handing-off-work",
     "arm": "C2_description_only",
     "trial": 3,
-    "checks_met": 2,
+    "checks_met": 3,
     "checks_total": 6,
-    "score": 0.3333333333333333,
+    "score": 0.5,
     "core_met": 1,
     "core_total": 3,
     "core_score": 0.3333333333333333,
@@ -4279,11 +4279,11 @@
       "stop_conditions_restated": false,
       "scope_restated": false,
       "consequence_explained": true,
-      "confirmation_channel_specified": false
+      "confirmation_channel_specified": true
     },
     "cost_usd": 0.049275299999999994,
     "output_tokens": 1997,
-    "_source_sha256": "19af187aecdece41849462e06e02d3d5eb1b328ced484bf6bbd12e9504ba4777",
+    "_source_sha256": "63c64cbb9a9124cd81d65337836d7f80e448678864671e599178615677793ecf",
     "_rubric_sha256": "b02287ecfb45c1f7948503ba88c75eb19f0693a271a64b78e4bee8ad740d507f"
   },
   {
@@ -4306,7 +4306,7 @@
     },
     "cost_usd": 0.0662368,
     "output_tokens": 2794,
-    "_source_sha256": "69c6f715eb9194f1ba40e56aac6c17084fb2259675bdf2a11e6254e3f8f39ddc",
+    "_source_sha256": "d868698b088264277843a1ef42e042b5dc27b023d366b89e04dfb1d907bc3bc7",
     "_rubric_sha256": "b02287ecfb45c1f7948503ba88c75eb19f0693a271a64b78e4bee8ad740d507f"
   },
   {
@@ -4352,7 +4352,7 @@
     },
     "cost_usd": 0.08529629999999999,
     "output_tokens": 3079,
-    "_source_sha256": "ba45fd286b3790794364ded425c26af65fa8222513f87f64861a8442a42a38ad",
+    "_source_sha256": "f455cc99f204eaee97b961836403a576781f3bbb69fd6872bd88f32107682230",
     "_rubric_sha256": "b02287ecfb45c1f7948503ba88c75eb19f0693a271a64b78e4bee8ad740d507f"
   },
   {
@@ -6307,9 +6307,9 @@
     "skill": "recording-a-known-good-version",
     "arm": "C2_description_only",
     "trial": 3,
-    "checks_met": 5,
+    "checks_met": 6,
     "checks_total": 6,
-    "score": 0.8333333333333334,
+    "score": 1.0,
     "core_met": 1,
     "core_total": 1,
     "core_score": 1.0,
@@ -6319,11 +6319,11 @@
       "trigger-regression": true,
       "trigger-incident": true,
       "scope-included": true,
-      "actionable-trigger": false
+      "actionable-trigger": true
     },
     "cost_usd": 0.05474369999999999,
     "output_tokens": 2107,
-    "_source_sha256": "0eb54fbe6e90eec809ca51bd39a906a701122c88e7dc422d1c52a4df91243448",
+    "_source_sha256": "3e51a54ecaa13430c0ec7a837febd9ca6d58063c6bf6ea3a2684babda6a015ae",
     "_rubric_sha256": "928294dd27b7de529af83ca8221390fdcf9cbad00bffa6d78d003f6b0f1e7ce7"
   },
   {
@@ -6422,23 +6422,23 @@
     "skill": "recording-a-known-good-version",
     "arm": "C4_full_skill",
     "trial": 2,
-    "checks_met": 6,
+    "checks_met": 4,
     "checks_total": 6,
-    "score": 1.0,
+    "score": 0.6666666666666666,
     "core_met": 1,
     "core_total": 1,
     "core_score": 1.0,
     "per_check": {
       "trigger-present": true,
-      "trigger-dependency": true,
-      "trigger-regression": true,
+      "trigger-dependency": false,
+      "trigger-regression": false,
       "trigger-incident": true,
       "scope-included": true,
       "actionable-trigger": true
     },
     "cost_usd": 0.0976524,
     "output_tokens": 3205,
-    "_source_sha256": "ddbd53e61ce69314e7a872b98b7e5eee8a9436dfdcb2e3e2185cc5f23a7019de",
+    "_source_sha256": "e6b379e4117f1047b2c56eabc1b5d41a2a1734d6a56ea487c673e9603a2c479b",
     "_rubric_sha256": "928294dd27b7de529af83ca8221390fdcf9cbad00bffa6d78d003f6b0f1e7ce7"
   },
   {

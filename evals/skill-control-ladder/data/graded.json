@@ -1499,12 +1499,12 @@
     "arm": "C3_compressed",
     "trial": 2,
     "verdict": "PARTIAL",
-    "quote": "One thing I can't fill in for you: who should be recorded as the decider \u2014 you, or whoever ran that meeting? Use whichever name/role makes the decision traceable.",
+    "quote": "NUCLEAR-GRADE-CLOSED: Deferred \u2014 team decided not to pursue dark mode this quarter (design hadn't finalized color palette). No code merged. Revisit once palette is finalized. Decided in team meeting [date]; closed by [redacted-email].",
     "cost_usd": 0.047000299999999995,
     "output_tokens": 1444,
     "input_tokens": 6,
     "duration_api_ms": 18775,
-    "_source_sha256": "62f7298807c408e1c038af6cd5215b8e24e769c7656bbcdc21bca371929e1a6b",
+    "_source_sha256": "e404f12249ee7e11fae3b65ba09d6a4f502c6a4d0ce0444dd9b816bc3cf48725",
     "_criteria_sha256": "002d6b4cf7c6a7d2df820c2c857c531982e5885a008cb712945e77195e390364"
   },
   {
@@ -1551,12 +1551,12 @@
     "arm": "C4_full_skill",
     "trial": 3,
     "verdict": "YES",
-    "quote": "Concretely, in the `add-dark-mode-toggle` packet directory, edit the file(s) that carry the placeholder text and add a line like: NUCLEAR-GRADE-CLOSED: Dropped for this quarter \u2014 team decision (2026-06 meeting) to defer dark mode until design finalizes the color palette. No code merged. Decided by: team, recorded by benjaminhuffer1@gmail.com.",
+    "quote": "Since the dark-mode change was deliberately abandoned (explicit team decision, nothing merged) and there's a real rationale worth preserving, close it rather than delete it \u2014 that keeps the record of *why* it was dropped instead of erasing it.\n\nConcretely, in the `add-dark-mode-toggle` packet directory, edit the file(s) that carry the placeholder text and add a line like:\n\n```\nNUCLEAR-GRADE-CLOSED: Dropped for this quarter \u2014 team decision (2026-06 meeting) to defer dark mode until design finalizes the color palette. No code merged. Decided by: team, recorded by [redacted-email].\n```",
     "cost_usd": 0.0386674,
     "output_tokens": 446,
     "input_tokens": 25,
     "duration_api_ms": 7622,
-    "_source_sha256": "ef22f09c369ba1bda2f1f1ee5467d81173b0d43f68898a5f4ac02919eedac2f9",
+    "_source_sha256": "bceabaaa5a8b55363ad95b43297b9068cd11a6afaa7f5a6114d83082760b9c1b",
     "_criteria_sha256": "002d6b4cf7c6a7d2df820c2c857c531982e5885a008cb712945e77195e390364"
   },
   {
@@ -2292,12 +2292,12 @@
     "arm": "C3_compressed",
     "trial": 3,
     "verdict": "YES",
-    "quote": "**Second pair of eyes.** Given this is irreversible, production, and time-pressured, get someone else to glance at the exact query and expected row count before you run it \u2014 not after.",
+    "quote": "Second pair of eyes. Given this is irreversible, production, and time-pressured, get someone else to glance at the exact query and expected row count before you run it \u2014 not after. That's the difference between catching a mistake and explaining one.",
     "cost_usd": 0.046640999999999995,
     "output_tokens": 2007,
     "input_tokens": 2,
     "duration_api_ms": 24680,
-    "_source_sha256": "0d40a471cd73eeeb08f063ff5b1ad8140d0e174e8cf5477d478d2e59cdabac15",
+    "_source_sha256": "2223200154138e7a3660df4799ffbda04a5d732eeb03982f47dc11a243a97909",
     "_criteria_sha256": "d7791b01eb4a744f59df183b4ae92224daec5ae56fd74211e27ee972515a3ee2"
   },
   {
@@ -2344,12 +2344,12 @@
     "arm": "C0_bare",
     "trial": 1,
     "verdict": "NO",
-    "quote": "The response must include an explicit instruction that the incoming teammate is required to restate back the remaining scope, what they are and are not allowed to do (specifically: not rotating or disabling the old API keys until the three downstream services are migrated), and the stop conditions, before they begin any work \u2014 not merely a passive status summary for them to read on their own.",
+    "quote": "The response does not include an explicit instruction requiring the incoming teammate to restate back their understanding. Instead, it provides a passive handoff document with information about scope, constraints, and next steps. The critical constraint about not rotating old API keys is clearly stated, but there is no directive like \"Before you begin work, please restate back...\" or any requirement for the teammate to confirm understanding by repeating back the scope, permissions, and stop conditions. The response ends by asking if adjustments are desired, rather than establishing a mandatory confirmation step as a precondition to work.",
     "cost_usd": 0.034151799999999996,
     "output_tokens": 1054,
     "input_tokens": 56,
     "duration_api_ms": 19656,
-    "_source_sha256": "9790839d6388d68975c6f63cde25719e041faa73d98ce0de57141d3c919e8aa9",
+    "_source_sha256": "e12c78247195652c35f9255c7c0df1c7bc72ed4b5de93f0e431e327da03473ec",
     "_criteria_sha256": "40be4acf729720e311b337c1af3d337d41fe0ce5ed64a31ad5f3ef2708e7a515"
   },
   {
@@ -2409,12 +2409,12 @@
     "arm": "C1_generic_nudge",
     "trial": 3,
     "verdict": "NO",
-    "quote": "The response is framed as a \"Handoff Note\" that describes the situation and suggests next steps, but contains no explicit instruction requiring the teammate to restate back the scope, boundaries, and stop conditions before beginning work. It is a passive informational summary, not an active instruction.",
+    "quote": "The response provides a comprehensive handoff note with scope and constraints clearly documented (including \"Do not rotate, revoke, or disable the old API keys until the downstream services are confirmed migrated\"), but it does not include an explicit instruction requiring the incoming teammate to restate back their understanding before beginning work. The document is informational\u2014a passive status summary for them to read\u2014rather than containing an explicit directive such as \"Before you start, please confirm your understanding by restating...\" or \"Walk me through what you understand about what you can and cannot do before you begin.\"",
     "cost_usd": 0.054379399999999994,
     "output_tokens": 2065,
     "input_tokens": 6,
     "duration_api_ms": 28383,
-    "_source_sha256": "b6a0c1bde899761184aefea12d749c951ea5a763b285b24b24596ff819ecd38c",
+    "_source_sha256": "22398aad7f58e950681ab4f56a583f28d732053ff6cf1785d1c9edd687190bda",
     "_criteria_sha256": "40be4acf729720e311b337c1af3d337d41fe0ce5ed64a31ad5f3ef2708e7a515"
   },
   {
@@ -2448,12 +2448,12 @@
     "arm": "C2_description_only",
     "trial": 3,
     "verdict": "PARTIAL",
-    "quote": "Given you're new to this project, please **hold off and check with me (or [backup contact/on-call/lead]) before**: Touching production config for auth. Rotating or disabling any old API keys. Merging anything into `main`/deploying... You're free to continue migrating the downstream services and iterating on the branch without checking in \u2014 that's the expected next step.",
+    "quote": "please **hold off and check with me** before [certain actions] / You're free to continue migrating the downstream services and iterating on the branch without checking in",
     "cost_usd": 0.049275299999999994,
     "output_tokens": 1997,
     "input_tokens": 4,
     "duration_api_ms": 26158,
-    "_source_sha256": "19af187aecdece41849462e06e02d3d5eb1b328ced484bf6bbd12e9504ba4777",
+    "_source_sha256": "63c64cbb9a9124cd81d65337836d7f80e448678864671e599178615677793ecf",
     "_criteria_sha256": "40be4acf729720e311b337c1af3d337d41fe0ce5ed64a31ad5f3ef2708e7a515"
   },
   {
@@ -2466,7 +2466,7 @@
     "output_tokens": 2794,
     "input_tokens": 6,
     "duration_api_ms": 34466,
-    "_source_sha256": "69c6f715eb9194f1ba40e56aac6c17084fb2259675bdf2a11e6254e3f8f39ddc",
+    "_source_sha256": "d868698b088264277843a1ef42e042b5dc27b023d366b89e04dfb1d907bc3bc7",
     "_criteria_sha256": "40be4acf729720e311b337c1af3d337d41fe0ce5ed64a31ad5f3ef2708e7a515"
   },
   {
@@ -2487,12 +2487,12 @@
     "arm": "C3_compressed",
     "trial": 3,
     "verdict": "NO",
-    "quote": "The response is structured as a passive handoff document for reading, not as an explicit requirement with active confirmation. There is no instruction stating the incoming teammate must restate back the scope, constraints, or stop conditions before beginning work.",
+    "quote": "I don't have write access in this session, so here's the handoff note as text \u2014 feel free to save it wherever your team keeps these (e.g. a `HANDOFF.md` on the branch, or your team wiki). [Document with sections for scope, limits, and stop conditions] Let me know if you'd like this trimmed down, expanded with more technical detail, or adjusted in tone.",
     "cost_usd": 0.08529629999999999,
     "output_tokens": 3079,
     "input_tokens": 8,
     "duration_api_ms": 35194,
-    "_source_sha256": "ba45fd286b3790794364ded425c26af65fa8222513f87f64861a8442a42a38ad",
+    "_source_sha256": "f455cc99f204eaee97b961836403a576781f3bbb69fd6872bd88f32107682230",
     "_criteria_sha256": "40be4acf729720e311b337c1af3d337d41fe0ce5ed64a31ad5f3ef2708e7a515"
   },
   {
@@ -3623,7 +3623,7 @@
     "output_tokens": 2107,
     "input_tokens": 6,
     "duration_api_ms": 27294,
-    "_source_sha256": "0eb54fbe6e90eec809ca51bd39a906a701122c88e7dc422d1c52a4df91243448",
+    "_source_sha256": "3e51a54ecaa13430c0ec7a837febd9ca6d58063c6bf6ea3a2684babda6a015ae",
     "_criteria_sha256": "8676060f1cd7eb2c021db55bf342c6be4e6e73af17fd639a1b8a9649c3d24e24"
   },
   {
@@ -3688,7 +3688,7 @@
     "output_tokens": 3205,
     "input_tokens": 149,
     "duration_api_ms": 45625,
-    "_source_sha256": "ddbd53e61ce69314e7a872b98b7e5eee8a9436dfdcb2e3e2185cc5f23a7019de",
+    "_source_sha256": "e6b379e4117f1047b2c56eabc1b5d41a2a1734d6a56ea487c673e9603a2c479b",
     "_criteria_sha256": "8676060f1cd7eb2c021db55bf342c6be4e6e73af17fd639a1b8a9649c3d24e24"
   },
   {

@@ -37,7 +37,7 @@ reported over informative skills only.
 - Informative: **7/7**
 - Ceiling (all arms >= 0.95): **0**
 - Floor (all arms <= 0.05): **0**
-- Rubric checks met: **334/600** (56%) across 105 gradings
+- Rubric checks met: **336/600** (56%) across 105 gradings
 
 ## Primary result
 
@@ -64,9 +64,9 @@ C4 scores **lower** than C1 on 4 of the 7 skills, and ties on 0:
 
 | Comparison | Mean diff | Higher | Lower | Tied | Sign p | Perm p |
 |---|---|---|---|---|---|---|
-| C4_full_skill vs C0_bare | -0.033 | 2 | 4 | 1 | 0.6875 | 0.4398 |
-| C1_generic_nudge vs C0_bare | +0.032 | 4 | 2 | 1 | 0.6875 | 0.7199 |
-| C4_full_skill vs C3_compressed | -0.092 | 2 | 4 | 1 | 0.6875 | 0.1574 |
+| C4_full_skill vs C0_bare | -0.057 | 2 | 4 | 1 | 0.6875 | 0.3456 |
+| C1_generic_nudge vs C0_bare | +0.008 | 4 | 3 | 0 | 1.0000 | 0.9689 |
+| C4_full_skill vs C3_compressed | -0.084 | 2 | 4 | 1 | 0.6875 | 0.1574 |
 | C4_full_skill vs C2_description_only | -0.054 | 3 | 2 | 2 | 1.0000 | 0.5641 |
 
 `C4 vs C0` is the comparison the original pilot ran. `C1 vs C0` is how much of
@@ -78,10 +78,10 @@ carrying token cost without a measured behavioral effect.
 
 | Arm | Mean appended words | Mean $/call | Mean output tokens | Pool score |
 |---|---|---|---|---|
-| `C0_bare` | 0 | $0.0545 | 2,111 | 0.540 (95% CI 0.23–0.82) |
+| `C0_bare` | 0 | $0.0545 | 2,111 | 0.563 (95% CI 0.24–0.84) |
 | `C1_generic_nudge` | 78 | $0.0572 | 2,201 | 0.571 (95% CI 0.25–0.84) |
 | `C2_description_only` | 60 | $0.0565 | 2,192 | 0.560 (95% CI 0.24–0.84) |
-| `C3_compressed` | 129 | $0.0589 | 2,158 | 0.598 (95% CI 0.27–0.86) |
+| `C3_compressed` | 129 | $0.0589 | 2,158 | 0.590 (95% CI 0.26–0.85) |
 | `C4_full_skill` | 1,039 | $0.0792 | 2,723 | 0.506 (95% CI 0.21–0.80) |
 
 ## Per-skill scores
@@ -107,10 +107,10 @@ their own permutation p-values.
 
 | Skill | `C0` | `C1` | `C2` | `C3` | `C4` | C4−C1 [95% CI] |
 |---|---|---|---|---|---|---|
-| `briefing-an-agent` | 0.33 | 0.56 | 0.11 | 0.50 | 0.28 | -0.28 [-0.44, -0.06] |
+| `briefing-an-agent` | 0.33 | 0.56 | 0.11 | 0.44 | 0.28 | -0.28 [-0.44, -0.06] |
 | `checking-release-readiness` | 0.94 | 0.72 | 0.72 | 0.89 | 0.78 | +0.06 [-0.06, +0.17] · spans 0 |
 | `checking-what-a-change-affects` | 0.17 | 0.28 | 0.22 | 0.22 | 0.22 | -0.06 [-0.17, +0.06] · spans 0 |
-| `creating-change-records` | 0.67 | 0.67 | 0.94 | 0.72 | 0.56 | -0.11 [-0.28, +0.06] · spans 0 |
+| `creating-change-records` | 0.83 | 0.67 | 0.94 | 0.72 | 0.56 | -0.11 [-0.28, +0.06] · spans 0 |
 | `rating-change-risk` | 0.67 | 0.78 | 0.72 | 0.72 | 0.78 | +0.00 [-0.22, +0.17] · spans 0 |
 | `responding-to-incidents` | 0.93 | 0.80 | 0.93 | 0.87 | 0.93 | +0.13 [+0.00, +0.20] · spans 0 |
 | `vetting-outside-code-and-models` | 0.07 | 0.20 | 0.27 | 0.27 | 0.00 | -0.20 [-0.40, +0.00] · spans 0 |

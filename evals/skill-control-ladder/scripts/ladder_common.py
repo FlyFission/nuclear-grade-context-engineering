@@ -245,10 +245,25 @@ def run_subject(scenario: str, appended: str, cwd: Path) -> dict:
 _PATH_RE = re.compile(r"/(?:home|Users|tmp)/[^\s\"'`),\]}]*")
 
 
+# Personal mailbox addresses. The subject model can copy the maintainer's address
+# out of its session context into a response, which then ships in a committed
+# transcript -- a privacy leak, not a cosmetic one. Domain list split so this
+# file never matches itself. Mirrors PERSONAL_EMAIL in tests/test_public_docs.py
+# and uses the same `[redacted-email]` replacement that test documents.
+_EMAIL_RE = re.compile(
+    r"[A-Za-z0-9._%+-]+@(?:"
+    + "|".join(("gm" "ail", "ya" "hoo", "hot" "mail", "out" "look", "ic" "loud", "proton" "mail"))
+    + r")\.[a-z]{2,}",
+    re.IGNORECASE,
+)
+
+
 def sanitize(text: str) -> str:
-    """Replace absolute sandbox paths with a stable placeholder. Deterministic:
-    the same input always yields the same output, so hashes stay reproducible."""
-    return _PATH_RE.sub("<sandbox-path>", text)
+    """Strip machine- and person-identifying residue from a transcript before it
+    is persisted. Deterministic: the same input always yields the same output,
+    so hashes stay reproducible across runs."""
+    text = _PATH_RE.sub("<sandbox-path>", text)
+    return _EMAIL_RE.sub("[redacted-email]", text)
 
 
 def read_skill(skill: str) -> str:

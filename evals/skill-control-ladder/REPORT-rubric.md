@@ -47,13 +47,13 @@ Pre-registered hypothesis: across the 27-skill pool, the full
 skill (C4) outscores the generic prompting control (C1) on paired per-skill
 scores. Tested once.
 
-- Mean paired difference: **+0.136** (score scale 0–1; YES=1, PARTIAL=0.5, NO=0)
+- Mean paired difference: **+0.132** (score scale 0–1; YES=1, PARTIAL=0.5, NO=0)
 - Skills where C4 > C1: **16** · C4 < C1: **4** · tied: **7**
 - Two-sided exact sign test: **p = 0.0118**
 - Two-sided paired permutation test (100,000 resamples, seed 20260726): **p = 0.0008**
 
 Restricted to the 24 informative skills (ceilings and floors
-removed): mean **+0.153**, 16 better / 4 worse / 4 tied, sign p = 0.0118, permutation p = 0.0007.
+removed): mean **+0.148**, 16 better / 4 worse / 4 tied, sign p = 0.0118, permutation p = 0.0007.
 
 
 C4 scores **lower** than C1 on 4 of the 27 skills, and ties on 7:
@@ -77,10 +77,10 @@ C4 scores **lower** than C1 on 4 of the 27 skills, and ties on 7:
 
 | Comparison | Mean diff | Higher | Lower | Tied | Sign p | Perm p |
 |---|---|---|---|---|---|---|
-| C4_full_skill vs C0_bare | +0.141 | 18 | 3 | 6 | 0.0015 | 0.0001 |
+| C4_full_skill vs C0_bare | +0.137 | 18 | 3 | 6 | 0.0015 | 0.0001 |
 | C1_generic_nudge vs C0_bare | +0.005 | 7 | 11 | 9 | 0.4807 | 0.8818 |
-| C4_full_skill vs C3_compressed | +0.048 | 12 | 4 | 11 | 0.0768 | 0.0552 |
-| C4_full_skill vs C2_description_only | +0.065 | 15 | 4 | 8 | 0.0192 | 0.0195 |
+| C4_full_skill vs C3_compressed | +0.044 | 12 | 4 | 11 | 0.0768 | 0.0552 |
+| C4_full_skill vs C2_description_only | +0.057 | 15 | 4 | 8 | 0.0192 | 0.0222 |
 
 `C4 vs C0` is the comparison the original pilot ran. `C1 vs C0` is how much of
 that gap one reusable generic paragraph buys on its own. `C4 vs C3` is the
@@ -93,9 +93,9 @@ carrying token cost without a measured behavioral effect.
 |---|---|---|---|---|
 | `C0_bare` | 0 | $0.0322 | 1,179 | 0.764 (95% CI 0.58–0.88) |
 | `C1_generic_nudge` | 78 | $0.0471 | 1,774 | 0.770 (95% CI 0.58–0.89) |
-| `C2_description_only` | 61 | $0.0472 | 1,818 | 0.840 (95% CI 0.66–0.93) |
+| `C2_description_only` | 61 | $0.0472 | 1,818 | 0.844 (95% CI 0.67–0.94) |
 | `C3_compressed` | 126 | $0.0524 | 1,953 | 0.858 (95% CI 0.68–0.94) |
-| `C4_full_skill` | 1,100 | $0.0574 | 1,888 | 0.905 (95% CI 0.74–0.97) |
+| `C4_full_skill` | 1,100 | $0.0574 | 1,888 | 0.901 (95% CI 0.73–0.97) |
 
 ## Per-skill scores
 
@@ -132,13 +132,13 @@ their own permutation p-values.
 | `deciding-who-decides` | 0.83 | 0.78 | 1.00 | 0.83 | 0.72 | -0.06 [-0.28, +0.11] · spans 0 |
 | `declaring-intent` | 0.67 | 0.67 | 0.94 | 0.83 | 0.94 | +0.28 [+0.11, +0.44] |
 | `double-checking-before-acting` | 0.80 | 0.80 | 0.73 | 0.87 | 0.93 | +0.13 [-0.07, +0.33] · spans 0 |
-| `handing-off-work` | 0.33 | 0.33 | 0.33 | 0.44 | 0.50 | +0.17 [+0.17, +0.17] |
+| `handing-off-work` | 0.33 | 0.33 | 0.39 | 0.44 | 0.50 | +0.17 [+0.17, +0.17] |
 | `learning-from-experience` | 0.80 | 0.73 | 0.73 | 1.00 | 0.87 | +0.13 [+0.00, +0.27] · spans 0 |
 | `organizing-project-folders` | 0.67 | 0.67 | 0.72 | 0.78 | 0.89 | +0.22 [+0.17, +0.33] |
 | `proving-claims` | 0.83 | 0.83 | 0.94 | 1.00 | 1.00 | +0.17 [+0.00, +0.33] · spans 0 |
 | `questioning-attitude` | 0.73 | 1.00 | 1.00 | 1.00 | 0.93 | -0.07 [-0.20, +0.00] · spans 0 |
 | `rating-change-risk` | 0.94 | 1.00 | 1.00 | 0.94 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |
-| `recording-a-known-good-version` | 0.56 | 0.06 | 0.44 | 0.28 | 0.94 | +0.89 [+0.78, +1.00] |
+| `recording-a-known-good-version` | 0.56 | 0.06 | 0.50 | 0.28 | 0.83 | +0.78 [+0.61, +0.94] |
 | `recording-what-an-agent-did` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |
 | `reporting-shared-defects` | 0.83 | 0.78 | 0.83 | 0.83 | 1.00 | +0.22 [+0.17, +0.33] |
 | `responding-to-incidents` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |

@@ -210,9 +210,9 @@
     "skill": "briefing-an-agent",
     "arm": "C3_compressed",
     "trial": 1,
-    "checks_met": 2,
+    "checks_met": 3,
     "checks_total": 6,
-    "score": 0.3333333333333333,
+    "score": 0.5,
     "core_met": 1,
     "core_total": 3,
     "core_score": 0.3333333333333333,
@@ -220,13 +220,13 @@
       "shared_file_identified": false,
       "insufficient_evidence": false,
       "recommends_change_to_criteria": true,
-      "path_restriction_insufficient": false,
+      "path_restriction_insufficient": true,
       "track_record_challenged": true,
       "identifies_other_consumers": false
     },
     "cost_usd": 0.07294110000000001,
     "output_tokens": 2923,
-    "_source_sha256": "f7c869dd1362599ccb7fd1e7dbe675f548c813c448f0fb3420f0bf88661534ef",
+    "_source_sha256": "dcdeca93ccb25d0fdca18e22513d844012f506ed382f446b3ee66e167c419311",
     "_rubric_sha256": "d610faf47e73c9415be4ccc595bc6a7cea4a21b5be8fe3136bc360a3360269ae"
   },
   {
@@ -1061,23 +1061,23 @@
     "skill": "creating-change-records",
     "arm": "C0_bare",
     "trial": 2,
-    "checks_met": 2,
+    "checks_met": 4,
     "checks_total": 6,
-    "score": 0.3333333333333333,
-    "core_met": 0,
+    "score": 0.6666666666666666,
+    "core_met": 1,
     "core_total": 3,
-    "core_score": 0.0,
+    "core_score": 0.3333333333333333,
     "per_check": {
       "identifies_stale_ci": false,
-      "flags_fully_tested_claim": false,
+      "flags_fully_tested_claim": true,
       "recommends_rerun": false,
       "does_not_just_defer_to_diff": true,
       "does_not_fabricate_record": true,
-      "acknowledges_deadline_tension": false
+      "acknowledges_deadline_tension": true
     },
     "cost_usd": 0.0957719,
     "output_tokens": 4633,
-    "_source_sha256": "c5f5080323342774c6291becfc0d5475afc97daa384c399ee9df918c70a95f31",
+    "_source_sha256": "7221cd58b4c5a256a9666d41f4119286da7b716c5280f8012bc8815acc43b262",
     "_rubric_sha256": "da00d51408c44f9a42b96c3605ccd86125a00184534009c25fe96651eb93ad68"
   },
   {

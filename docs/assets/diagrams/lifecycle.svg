@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" width="1000" height="300" role="img" aria-labelledby="t d">
+<title id="t">Nuclear-grade lifecycle</title>
+<desc id="d">Question, Discover, Specify, Plan, Execute, Verify, Review, then the Decide gate. Ship or defer leads to Baseline, Operate, Learn; block returns to Plan; Learn feeds the next Question.</desc>
+<style>
+.bg{fill:#F7F6F2} .ink{fill:#0E1A30} .muted{fill:#46536B} .soft{fill:#5A6680}
+.acc{fill:#8A5A00} .lnk{fill:#2F4F94}
+.n-step{fill:#FFFFFF;stroke:#0E1A30} .n-store{fill:rgba(14,26,48,0.05);stroke:#46536B}
+.n-focal{fill:rgba(255,210,77,0.22);stroke:#8A5A00} .n-ext{fill:rgba(14,26,48,0.03);stroke:rgba(14,26,48,0.32)}
+.n-opt{fill:rgba(14,26,48,0.02);stroke:rgba(14,26,48,0.36);stroke-dasharray:4 3}
+.n-indep{fill:rgba(47,79,148,0.07);stroke:#2F4F94}
+.grp{fill:none;stroke:rgba(14,26,48,0.22);stroke-dasharray:4 4}
+.band{fill:rgba(14,26,48,0.035);stroke:rgba(14,26,48,0.10)}
+.ln{fill:none;stroke:#46536B} .ln-acc{fill:none;stroke:#8A5A00} .ln-lnk{fill:none;stroke:#2F4F94}
+.life{stroke:rgba(14,26,48,0.25);stroke-dasharray:3 4}
+.mask{fill:#F7F6F2} .rule{stroke:rgba(14,26,48,0.14)}
+.name{font-family:system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;font-size:13px;font-weight:600}
+.sub{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:10px}
+.eye{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:9.5px;font-weight:600;letter-spacing:0.16em}
+.lbl{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:9.5px;letter-spacing:0.04em}
+.ttl{font-family:'Iowan Old Style', Georgia, 'Times New Roman', serif;font-size:22px}
+.call{font-family:'Iowan Old Style', Georgia, 'Times New Roman', serif;font-style:italic;font-size:14px}
+@media (prefers-color-scheme: dark){
+.bg{fill:#0E1A30} .ink{fill:#F4F7FC} .muted{fill:#B3C2DA} .soft{fill:#9DB0CE}
+.acc{fill:#FFD24D} .lnk{fill:#8FB0E6}
+.n-step{fill:#16263F;stroke:#D7E0EE} .n-store{fill:rgba(244,247,252,0.05);stroke:#9DB0CE}
+.n-focal{fill:rgba(255,210,77,0.14);stroke:#FFD24D} .n-ext{fill:rgba(244,247,252,0.03);stroke:rgba(244,247,252,0.34)}
+.n-opt{fill:rgba(244,247,252,0.02);stroke:rgba(244,247,252,0.40)}
+.n-indep{fill:rgba(143,176,230,0.10);stroke:#8FB0E6}
+.grp{stroke:rgba(244,247,252,0.26)} .band{fill:rgba(244,247,252,0.035);stroke:rgba(244,247,252,0.10)}
+.ln{stroke:#9DB0CE} .ln-acc{stroke:#FFD24D} .ln-lnk{stroke:#8FB0E6}
+.life{stroke:rgba(244,247,252,0.28)} .mask{fill:#0E1A30} .rule{stroke:rgba(244,247,252,0.16)}
+}
+</style>
+<defs>
+<marker id="m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="muted" points="0 0, 8 3, 0 6"/></marker>
+<marker id="m-acc" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="acc" points="0 0, 8 3, 0 6"/></marker>
+<marker id="m-lnk" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="lnk" points="0 0, 8 3, 0 6"/></marker>
+</defs>
+<rect class="bg" width="1000" height="300" rx="10"/>
+<text x="28" y="34" class="eye soft">THE CHANGE LIFECYCLE · ELEVEN BEATS</text>
+<line class="rule" x1="28" y1="44" x2="972" y2="44"/>
+<path class="ln" stroke-width="1.2" d="M128,126.0 L148,126.0" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M240,126.0 L260,126.0" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M352,126.0 L372,126.0" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M464,126.0 L484,126.0" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M576,126.0 L596,126.0" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M688,126.0 L708,126.0" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M800,126.0 L820,126.0" marker-end="url(#m-muted)"/>
+<path class="ln-acc" stroke-width="1.2" d="M876.0,90 L876.0,76 Q876.0,68 868.0,68 L426.0,68 Q418.0,68 418.0,76 L418.0,104" stroke-dasharray="5 4" marker-end="url(#m-acc)"/>
+<path class="ln-acc" stroke-width="1.2" d="M876.0,162 L876.0,198.0" marker-end="url(#m-acc)"/>
+<path class="ln" stroke-width="1.2" d="M830.0,220.0 L782.0,220.0" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M690.0,220.0 L642.0,220.0" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M550.0,220.0 L90.0,220.0 Q82.0,220.0 82.0,212.0 L82.0,148" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
+<rect class="n-step" stroke-width="1" x="36" y="104" width="92" height="44" rx="6"/>
+<text x="82.0" y="130.0" class="name ink" text-anchor="middle">Question</text>
+<rect class="n-step" stroke-width="1" x="148" y="104" width="92" height="44" rx="6"/>
+<text x="194.0" y="130.0" class="name ink" text-anchor="middle">Discover</text>
+<rect class="n-step" stroke-width="1" x="260" y="104" width="92" height="44" rx="6"/>
+<text x="306.0" y="130.0" class="name ink" text-anchor="middle">Specify</text>
+<rect class="n-step" stroke-width="1" x="372" y="104" width="92" height="44" rx="6"/>
+<text x="418.0" y="130.0" class="name ink" text-anchor="middle">Plan</text>
+<rect class="n-step" stroke-width="1" x="484" y="104" width="92" height="44" rx="6"/>
+<text x="530.0" y="130.0" class="name ink" text-anchor="middle">Execute</text>
+<rect class="n-step" stroke-width="1" x="596" y="104" width="92" height="44" rx="6"/>
+<text x="642.0" y="130.0" class="name ink" text-anchor="middle">Verify</text>
+<rect class="n-step" stroke-width="1" x="708" y="104" width="92" height="44" rx="6"/>
+<text x="754.0" y="130.0" class="name ink" text-anchor="middle">Review</text>
+<polygon class="n-focal" stroke-width="1.4" points="876.0,90 932,126.0 876.0,162 820,126.0"/>
+<text x="876.0" y="130.0" class="name ink" text-anchor="middle">Decide</text>
+<rect class="n-store" stroke-width="1" x="830.0" y="198.0" width="92" height="44" rx="6"/>
+<text x="876.0" y="224.0" class="name ink" text-anchor="middle">Baseline</text>
+<rect class="n-store" stroke-width="1" x="690.0" y="198.0" width="92" height="44" rx="6"/>
+<text x="736.0" y="224.0" class="name ink" text-anchor="middle">Operate</text>
+<rect class="n-store" stroke-width="1" x="550.0" y="198.0" width="92" height="44" rx="6"/>
+<text x="596.0" y="224.0" class="name ink" text-anchor="middle">Learn</text>
+<rect class="mask" x="627.0" y="60" width="40.0" height="15" rx="2"/>
+<text x="647.0" y="71.5" class="lbl acc" text-anchor="middle">block</text>
+<rect class="mask" x="835.0" y="172.0" width="82.0" height="15" rx="2"/>
+<text x="876.0" y="183.5" class="lbl acc" text-anchor="middle">ship / defer</text>
+<rect class="mask" x="257.0" y="212.0" width="118.0" height="15" rx="2"/>
+<text x="316.0" y="223.5" class="lbl muted" text-anchor="middle">feeds future basis</text>
+</svg>

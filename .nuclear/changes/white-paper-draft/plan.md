@@ -43,7 +43,7 @@ No non-goal or charter boundary is authorized to be crossed.
 | 10 | Productize research through repository surfaces | REQ-003, REQ-009 | steps 2, 7–9 | exhaustive review, current doctrine, templates, validator, skills, example | custody/coupling doctrine; Standard/Quick records; validator/CLI/MCP/tests; starter kits; external-enforcement roadmap; derived-graph design | adversarial tests, full suite, Ruff, doctor, token/eval checks, strict validation | Current surfaces match the bounded contribution without overstating PR-controlled enforcement or platform scope |
 | 11 | Review, commit, push, and open PR | REQ-001–REQ-009 | steps 1–10 | staged tree, independent reviews, user authorization | verified branch and GitHub PR | independent blocker review, credential scan, strict packet validation, CI | PR opened; merge, release, DOI, and venue submission remain held |
 
-Model-mediated work uses the current Hermes drafting session. The manuscript and tool outputs are reproducible only to the extent represented by committed source files and deterministic checks; prose judgment remains human-reviewed.
+Model-mediated work uses the current drafting session. The manuscript and tool outputs are reproducible only to the extent represented by committed source files and deterministic checks; prose judgment remains human-reviewed.
 
 ## Two-speed work plan
 

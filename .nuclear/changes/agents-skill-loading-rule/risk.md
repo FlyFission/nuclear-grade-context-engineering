@@ -8,7 +8,7 @@
 ## Change
 
 - Slug: `agents-skill-loading-rule`
-- Owner: Hermes Agent
+- Owner: change actor
 - Date: 2026-07-01
 - Summary: Add a short rule telling agents to load skills by trigger, not by inventory, and to minimize only after screening for risk/evidence/escalation triggers.
 

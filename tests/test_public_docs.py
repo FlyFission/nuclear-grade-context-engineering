@@ -27,6 +27,55 @@ UNSAFE_RESIDUE = (
     "local" " uncommitted",
 )
 
+# Trees that ship to readers or are read by agents but are NOT covered by the
+# top-level PUBLIC_DOCS scan above. Internal codenames and machine-specific
+# absolute paths kept leaking through here -- change packets under `.nuclear/`,
+# worked-example transcripts under `evals/`, publication drafts under `docs/` --
+# because CI only ever checked the ~13 files above.
+RESIDUE_SCAN_TREES = (
+    ".nuclear",
+    "docs",
+    "evals",
+    "skills",
+    "commands",
+    "templates",
+    "starter-kit",
+    "tools",
+    "challenge",
+)
+
+# Residue has appeared in prose (.md) and in checked-in run transcripts (.json).
+RESIDUE_SCAN_SUFFIXES = (".md", ".json", ".jsonl", ".txt", ".py", ".tex", ".csv")
+
+# Internal codenames and machine-specific absolute paths that must not ship in
+# any repository tree. Split so this test file never matches itself. `/home/`
+# and `/Users/` are generic on purpose: a sandbox path like `/home/user/...` is
+# residue even though it names no person.
+TREE_RESIDUE = (
+    "Her" "mes",
+    "/" "mnt/",
+    "/" "home/",
+    "/" "Users/",
+)
+
+
+def _iter_residue_scan_files():
+    for tree in RESIDUE_SCAN_TREES:
+        base = ROOT / tree
+        if not base.exists():
+            continue
+        for path in base.rglob("*"):
+            if path.is_file() and path.suffix in RESIDUE_SCAN_SUFFIXES:
+                yield path
+
+# Personal mailbox addresses (a model can copy one from session context into a
+# checked-in transcript). Domain list split so this file never matches itself.
+PERSONAL_EMAIL = re.compile(
+    r"[A-Za-z0-9._%+-]+@(?:" + "|".join(("gm" "ail", "ya" "hoo", "hot" "mail", "out" "look", "ic" "loud", "proton" "mail"))
+    + r")\.[a-z]{2,}",
+    re.IGNORECASE,
+)
+
 BOUNDARY_PHRASES = (
     "NQA-1 evidence",
     "NQA-1 record",
@@ -57,6 +106,22 @@ def test_public_docs_contain_no_internal_residue():
         text = (ROOT / public_doc).read_text(encoding="utf-8")
         for unsafe in UNSAFE_RESIDUE:
             assert unsafe not in text, f"{public_doc} contains {unsafe}"
+
+
+def test_repo_trees_contain_no_internal_residue():
+    """Internal codenames and machine-specific absolute paths must not ship in any
+    tree readers or agents consume -- not only the top-level PUBLIC_DOCS. This is
+    the guard the residue used to slip past: change packets under `.nuclear/`,
+    worked-example transcripts under `evals/`, and publication drafts under
+    `docs/` were never scanned, so an internal codename or a `/home/...` sandbox
+    path could ship undetected. See `.nuclear/changes/harden-residue-scan/`."""
+    offenders = []
+    for path in _iter_residue_scan_files():
+        text = path.read_text(encoding="utf-8", errors="ignore")
+        for token in TREE_RESIDUE:
+            if token in text:
+                offenders.append(f"{path.relative_to(ROOT)}: contains {token!r}")
+    assert not offenders, "internal residue found in repo trees:\n" + "\n".join(sorted(offenders))
 
 
 def test_boundary_phrases_are_only_used_in_negative_context():
@@ -280,3 +345,14 @@ def test_starter_kit_copy_commands_reference_existing_assets():
             assert (ROOT / doc).exists(), (
                 f"{readme.relative_to(ROOT)} references missing doc {doc}"
             )
+
+
+def test_repo_trees_contain_no_personal_email_addresses():
+    """Raw eval transcripts once carried the maintainer's personal address, copied
+    by the model from session context. Redacted values read `[redacted-email]`."""
+    offenders = []
+    for path in _iter_residue_scan_files():
+        text = path.read_text(encoding="utf-8", errors="ignore")
+        if PERSONAL_EMAIL.search(text):
+            offenders.append(str(path.relative_to(ROOT)))
+    assert not offenders, "personal email address found in:\n" + "\n".join(sorted(offenders))

@@ -9,13 +9,18 @@ on:
 permissions:
   contents: read
 
+# Supersede stale PR runs; never cancel a main-branch run mid-flight.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   validate:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.11", "3.12"]
+        python-version: ["3.11", "3.12", "3.13"]
     steps:
       - name: Check out repository
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
@@ -42,6 +47,14 @@ jobs:
       - name: Run repo doctor
         run: python tools/ng.py doctor .
 
+      - name: Check release identity (versions, citation, changelog agree)
+        run: python -m nuclear_grade.release
+
+      - name: Evidence badge must match the records
+        run: |
+          python tools/ng.py badge . --out .nuclear/badge.json
+          git diff --exit-code -- .nuclear/badge.json || { echo "Run: python tools/ng.py badge . --out .nuclear/badge.json"; exit 1; }
+
       - name: Enforce token budget
         run: python tools/ng.py tokens .
 
@@ -53,7 +66,7 @@ jobs:
           # (a `NUCLEAR-GRADE-CLOSED: <rationale>` line): kept for audit history,
           # the validator still rejects their unfilled fields.
           is_closed() { grep -rqE '^[[:space:]]*NUCLEAR-GRADE-CLOSED:[[:space:]]*[^[:space:]]' "$1"; }
-          for packet in .nuclear/changes/*; do
+          for packet in .nuclear/changes/* challenge/.nuclear/changes/*; do
             [ -d "$packet" ] || continue
             if is_closed "$packet"; then echo "Skipping closed record: $packet"; continue; fi
             python tools/ng.py validate "$packet"
@@ -62,6 +75,26 @@ jobs:
             if is_closed "$packet"; then echo "Skipping closed record: $packet"; continue; fi
             python tools/ng.py validate "$packet"
           done < <(find docs/03-worked-examples -path '*/.nuclear/changes/*' -type d -prune -print)
+
+      - name: Write validation receipts
+        if: matrix.python-version == '3.12'
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts
+          for packet in .nuclear/changes/* docs/03-worked-examples/*/.nuclear/changes/* challenge/.nuclear/changes/*; do
+            [ -d "$packet" ] || continue
+            # Receipts record failures too; the gate above is what fails the build.
+            python tools/ng.py validate "$packet" --json > "receipts/$(printf %s "$packet" | tr / _).json" || true
+          done
+
+      - name: Keep receipts with the run
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: validation-receipts
+          path: receipts/
+          retention-days: 90
 
   wheel-smoke:
     runs-on: ubuntu-latest
@@ -117,9 +150,14 @@ jobs:
     # The MCP server ships behind the optional `mcp` extra, so the main `validate`
     # job stays zero-dependency and its test is importorskip-skipped there. This
     # job installs the extra so build_server() and list_tools() actually run --
-    # otherwise the server could break and CI would stay green.
+    # otherwise the server could break and CI would stay green. Both supported SDK
+    # majors run, because the extra's range (`mcp>=1.0,<3`) admits both.
     runs-on: ubuntu-latest
     needs: validate
+    strategy:
+      fail-fast: false
+      matrix:
+        mcp-spec: ["mcp>=1.0,<2", "mcp>=2,<3"]
     steps:
       - name: Check out repository
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
@@ -132,7 +170,22 @@ jobs:
       - name: Install with the optional MCP extra
         run: |
           python -m pip install --upgrade pip pytest
-          python -m pip install -e ".[mcp]"
+          python -m pip install -e ".[mcp]" "${{ matrix.mcp-spec }}"
 
       - name: Run MCP server tests with the extra present
         run: python -m pytest tests/test_mcp_server.py -q
+
+  ci-gate:
+    # One stable required check for branch protection. `if: always()` matters: without
+    # it a failed upstream job leaves this job skipped, and a skipped job satisfies a
+    # required check -- a red build would read as green. (Pattern from uber/ADR's CI.)
+    name: CI gate
+    runs-on: ubuntu-latest
+    needs: [validate, wheel-smoke, mcp-smoke]
+    if: always()
+    steps:
+      - name: Every upstream job must succeed
+        run: |
+          test "${{ needs.validate.result }}" = "success"
+          test "${{ needs.wheel-smoke.result }}" = "success"
+          test "${{ needs.mcp-smoke.result }}" = "success"

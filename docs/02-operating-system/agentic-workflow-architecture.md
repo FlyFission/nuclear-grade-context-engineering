@@ -40,6 +40,11 @@ plane — and it should not be sold as one. When a workflow needs persistence ac
 distributed retries, multi-user queues, or high-volume runs, the durable runtime belongs in the
 execution plane; the folder system stays the human-readable control surface on top.
 
+<p align="center"><img src="../assets/diagrams/control-execution-planes.svg" alt="Control plane and execution plane" width="100%"></p>
+
+<details>
+<summary>Mermaid source (text version)</summary>
+
 ```mermaid
 flowchart LR
     subgraph CP["Control plane (interpretable)"]
@@ -54,6 +59,8 @@ flowchart LR
     GATE -->|"accept"| NEXT["Next stage"]
     GATE -.->|"reject"| SC
 ```
+
+</details>
 
 ### How this maps onto PROVE
 

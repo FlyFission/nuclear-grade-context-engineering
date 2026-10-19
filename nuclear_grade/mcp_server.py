@@ -110,21 +110,25 @@ def new_change_record(slug: str, mode: str = "quick", repo_path: str = ".") -> s
 
 
 def build_server():
-    """Construct the FastMCP server with the Nuclear-grade tools registered.
+    """Construct the MCP server (mcp 1.x FastMCP or 2.x MCPServer) with the Nuclear-grade tools registered.
 
     Imports `mcp` lazily so the module stays importable (and testable) without the
     optional dependency.
     """
 
     try:
-        from mcp.server.fastmcp import FastMCP
-    except ImportError as exc:  # pragma: no cover - only hit without the extra
-        raise SystemExit(
-            'The MCP server needs the optional "mcp" dependency. '
-            'Install it with:  pip install "nuclear-grade[mcp]"'
-        ) from exc
+        # mcp 2.x renamed FastMCP to MCPServer; registration and run() are unchanged.
+        from mcp.server.mcpserver import MCPServer as ServerClass
+    except ImportError:
+        try:
+            from mcp.server.fastmcp import FastMCP as ServerClass
+        except ImportError as exc:  # pragma: no cover - only hit without the extra
+            raise SystemExit(
+                'The MCP server needs the optional "mcp" dependency. '
+                'Install it with:  pip install "nuclear-grade[mcp]"'
+            ) from exc
 
-    server = FastMCP("nuclear-grade")
+    server = ServerClass("nuclear-grade")
     for tool in (validate_change_record, doctor, status, new_change_record):
         server.tool()(tool)
     return server

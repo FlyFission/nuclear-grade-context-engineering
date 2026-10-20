@@ -31,6 +31,7 @@ Record the sequence the change actually followed, including the steps taken out 
 | 15 | Act on two upheld review findings: gate the panel's matrix row on its trigger, and reword the gate exclusion so the panel feeds a required human gate rather than being suppressed by one | `CORE.md`, `SKILL.md`, regenerated `commands/ng-panel.md` | done |
 | 16 | Act on the second review round: give the panel a matrix route keyed to its own verdict trigger rather than nesting it under agent authority, and hold Nuclear / Tier 0 to the independence floor the doctrine already states | `CORE.md`, `SKILL.md`, regenerated `commands/ng-panel.md` | done |
 | 17 | Act on the third review round: carry the Tier 0 independence floor into the `## Prompt` block an agent may receive alone, and widen the matrix route to the correlated-reviewer case the routing eval already treats as a trigger | `SKILL.md`, `CORE.md`, regenerated `commands/ng-panel.md`, `tests/fixtures/command_prompts.json` | done |
+| 18 | Verify the fourth review round, draft the fix, measure that it does not fit, and hold it for the owner rather than deleting substance or raising a controlled limit | `ship.md`, `verification.md` V-22 | held — open for the owner |
 
 ## Out-of-order steps, and what that costs
 

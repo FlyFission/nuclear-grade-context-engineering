@@ -25,7 +25,8 @@ Record what was checked, how, and what the check did and did not establish.
 | V-15 | The axis declaration is enforced rather than requested | Read Process step 3 and `## Verification` | Enforced by instruction only; nothing mechanical prevents a seat from naming an axis it does not vary | gap |
 | V-16 | `reviewing-code-quality` is unchanged | `git diff 3ade94e e1a61d6 -- skills/reviewing-code-quality/` | empty diff | pass |
 | V-17 | This packet satisfies Standard mode | `python tools/ng.py validate .nuclear/changes/running-a-review-panel` | `OK` | pass |
-| V-18 | GitHub CI passes on the merge commit | Cannot run from here; requires the push | Owed on the push; the local gate stands in at V-1 to V-5 | planned |
+| V-18 | GitHub CI passes on the tree being accepted | Pushed; hosted run `39445687566` on head `572a3e5` | 7 of 7 jobs green: validate 3.11 / 3.12 / 3.13, wheel-smoke, both mcp-smoke matrix legs, CI gate | pass |
+| V-18a | The first hosted run after the merge | Run `39444990072` on head `53911e3` | **Failed all three validate jobs** on the evidence-badge staleness check — see the note below | superseded |
 
 ## Notes on the gaps
 
@@ -35,7 +36,13 @@ Record what was checked, how, and what the check did and did not establish.
 
 **V-15 names a limit of the design, not a defect in the diff.** A seat can satisfy the declaration by asserting an axis. The skill's answer is the fold-down rule — a seat that cannot state what it varies is folded into the seat it duplicates before counting — but that rule is executed by whoever runs the panel, who may be the same agent that composed the seats. This is the self-authorship problem the repo names in `actor-evidence-independence.md`, reappearing one level up inside the remedy. Recorded rather than papered over.
 
-**V-18 is deliberately `planned`, not `pass`.** The four green checks visible on the PR completed on 2026-08-05 against base `3ade94e`. `main` has since taken #110 and #114. Reporting those checks as current evidence would be the exact substitution this repo warns about: a green badge from a run that did not test the tree being accepted. The local gate was re-run on the merge result instead, and the hosted run is owed before merge.
+**V-18a: the local gate was not the hosted gate, and the first push proved it.** The four commands this packet had been treating as "the gate" (pytest, ruff, `doctor`, `tokens`) are the gate as it stood in August. The 0.6.0 release added steps this branch had never seen: a release-identity check, a committed evidence badge that CI regenerates and fails if stale, and a 3.13 matrix leg. The new change record moved the badge (54 to 55 records, 24 to 28 open items), so all three validate jobs failed on a file this packet's own addition had invalidated.
+
+Fixed by regenerating `.nuclear/badge.json` and committing it, then re-running every step the hosted job runs rather than the four that were familiar. The lesson is small and exactly on this repo's theme: a gate inherited from a stale base is not the gate, and "my checks pass" measured a set of checks that no longer existed. It is recorded here rather than silently amended because V-18 was held at `planned` on the argument that stale green checks must not be reported as current — and then the first honest run went red, which is the argument working.
+
+**A side finding from the same fix.** While regenerating the badge, the open-item count read 29 where this ledger has 28. The counter reads statuses from both prose and table cells, and the word "Deferred" in V-18's result cell was counted alongside that row's `planned` status, double-counting one item. The cell was reworded. The badge is a public evidence surface, so a number inflated by a stray word is a misstatement even when it errs toward looking worse.
+
+**Why V-18 was held at `planned` until it could be `pass`.** The four green checks visible on the PR completed on 2026-08-05 against base `3ade94e`. `main` has since taken #110 and #114. Reporting those checks as current evidence would be the exact substitution this repo warns about: a green badge from a run that did not test the tree being accepted. The local gate was re-run on the merge result instead, and the hosted run is owed before merge.
 
 ## What this verification does not establish
 
@@ -74,7 +81,7 @@ Every row classifies as **self-check**. The deterministic rows feel independent 
 - **Verdict owner:** human reviewer via PR.
 - **Apply-clearance owner:** human reviewer via PR; the authoring agent holds neither.
 - **Minimum profile required by the consequence:** an additive public catalog surface with an independence claim — deterministic checks reproducible, the admissibility argument independently re-derivable, and the efficacy gap disclosed at every surface that could be read as measured. Met for E-001 to E-003 and E-005; E-004 is reader-dependent by nature.
-- **Any unmet separation carried into `ship.md`:** yes — no efficacy measurement, no end-to-end execution, an unenforced axis declaration, and a hosted CI run still owed.
+- **Any unmet separation carried into `ship.md`:** yes — no efficacy measurement, no end-to-end execution, and an unenforced axis declaration. The hosted CI run is no longer owed (V-18), but it was owed when this row was first written, and it went red.
 
 ## Commands, evals, and reviews
 

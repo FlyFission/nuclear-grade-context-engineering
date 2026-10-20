@@ -109,13 +109,13 @@ Inputs:
 Do this:
 - State the verdict and boundary; stop if the mode does not earn the seats.
 - Freeze one packet; redact it, record its digest, partition rather than truncate.
-- Per seat, name the axis it varies; count distinct axes and model families separately from seat count.
+- Per seat, name the axis it varies; count distinct axes and model families separately from seat count; Nuclear / Tier 0 also names the three independence axes plus rung-4 CI and human backstops.
 - Run the first pass independently, withholding the actor's own conclusion; where stakes call for it, add an anonymized challenge round attacking the strongest claims.
-- Record every dropped, timed-out, truncated, or invalid seat as panel health beside the result.
+- Record every dropped, timed-out, truncated, or invalid seat as panel health.
 - Synthesize by evidence, not by vote; keep the strongest opposing case; give each material finding a falsification test.
 - Verify every actionable finding against live source or tests in this session; mark each verified, rejected, or unresolved.
 
-Return the disposition first, then verified blockers, non-blockers, dissent, panel health, and next checks; distinct-axis and distinct-family counts stated separately from seat count; and any escalation trigger that fired.
+Return the disposition first, then verified blockers, non-blockers, dissent, panel health, and next checks, plus any escalation trigger that fired.
 
 Do not resolve a split high-consequence panel by majority, report unverified findings as recommendations, or edit reviewed code merely because the panel recommended it. Do not imply formal assurance, compliance, certification, safety, security, or regulatory adequacy.
 ```

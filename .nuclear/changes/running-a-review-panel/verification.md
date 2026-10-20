@@ -25,7 +25,7 @@ Record what was checked, how, and what the check did and did not establish.
 | V-15 | The axis declaration is enforced rather than requested | Read Process step 3 and `## Verification` | Enforced by instruction only; nothing mechanical prevents a seat from naming an axis it does not vary | gap |
 | V-16 | `reviewing-code-quality` is unchanged | `git diff 3ade94e e1a61d6 -- skills/reviewing-code-quality/` | empty diff | pass |
 | V-17 | This packet satisfies Standard mode | `python tools/ng.py validate .nuclear/changes/running-a-review-panel` | `OK` | pass |
-| V-18 | GitHub CI passes on the merge commit | Cannot run from here; requires the push | Deferred to the push; the local gate is V-1 to V-5 | planned |
+| V-18 | GitHub CI passes on the merge commit | Cannot run from here; requires the push | Owed on the push; the local gate stands in at V-1 to V-5 | planned |
 
 ## Notes on the gaps
 

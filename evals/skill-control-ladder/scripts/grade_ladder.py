@@ -54,7 +54,13 @@ def load_cache() -> dict:
     from the rows that already succeeded instead of re-spending the whole batch.
     """
     out: dict[tuple[str, str, int], dict] = {}
-    for src in (GRADED_PATH.with_suffix(".partial.json"), GRADED_PATH):
+# Authoritative file FIRST, sidecar SECOND: dict.update() lets the
+    # later source win, and the sidecar holds the fresher rows from a
+    # partly-failed attempt. Reading it first let a stale authoritative
+    # row overwrite a fresh retry row under the same key, so the hash
+    # check rescheduled an already-successful cell and a retry could
+    # re-spend the batch instead of converging.
+    for src in (GRADED_PATH, GRADED_PATH.with_suffix(".partial.json")):
         if not src.exists():
             continue
         try:

@@ -133,8 +133,14 @@ def source_hash(skill: str) -> str:
     scenario or criterion regenerates its rubric instead of silently keeping a
     rubric that no longer matches what is being graded."""
     t = TASKS[skill]
+    # Includes the planted defect: author() puts it in the rubric-authoring
+    # prompt, so correcting a defect without touching the scenario or criterion
+    # would otherwise leave the rubric looking current while its checks still
+    # encode the old ground truth -- and every later grade for that scenario
+    # would be measured against it.
     return hashlib.sha256(
-        f"{t['scenario_prompt']}::{t['pass_criteria']}".encode()
+        f"{t['scenario_prompt']}::{t['pass_criteria']}::"
+        f"{t.get('_planted_defect', '')}".encode()
     ).hexdigest()
 
 

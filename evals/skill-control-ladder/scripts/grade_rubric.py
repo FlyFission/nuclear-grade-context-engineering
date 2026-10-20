@@ -132,7 +132,13 @@ def main() -> int:
     # the retry loop nearly impossible to converge.
     partial_path = out_path.with_suffix(".partial.json")
     prior: dict[tuple[str, str, int], dict] = {}
-    for src in (partial_path, out_path):
+# Authoritative file FIRST, sidecar SECOND: dict.update() lets the
+    # later source win, and the sidecar holds the fresher rows from a
+    # partly-failed attempt. Reading it first let a stale authoritative
+    # row overwrite a fresh retry row under the same key, so the hash
+    # check rescheduled an already-successful cell and a retry could
+    # re-spend the batch instead of converging.
+    for src in (out_path, partial_path):
         if not src.exists():
             continue
         try:

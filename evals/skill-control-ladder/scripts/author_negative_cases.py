@@ -154,8 +154,38 @@ def main() -> int:
     tasks = json.loads(TASKS_PATH.read_text()) if TASKS_PATH.exists() else {}
     rubrics = json.loads(RUBRICS_PATH.read_text()) if RUBRICS_PATH.exists() else {}
 
-    todo = [s for s in skills if s not in tasks and exclusion_of(
-        skill_frontmatter(s).get("description", ""))]
+    # Regenerate when the skill's declared exclusion CHANGES, not only when the
+    # entry is missing. The stored `_exclusion` was recorded but never compared,
+    # so editing or removing a "Do not use" clause left the old scenario and
+    # rubric active while the generated report still asserted the scenario sits
+    # inside the skill's own current exclusion -- the claim that makes this pool
+    # a fair test at all.
+    todo = []
+    stale = []
+    for s in skills:
+        current = exclusion_of(skill_frontmatter(s).get("description", ""))
+        if not current:
+            continue
+        if s not in tasks:
+            todo.append(s)
+        elif tasks[s].get("_exclusion") != current:
+            todo.append(s)
+            stale.append(s)
+    if stale:
+        print(f"Exclusion clause changed, regenerating: {', '.join(sorted(stale))}",
+              file=sys.stderr)
+
+    # A skill that no longer declares an exclusion cannot have a negative case:
+    # drop any stored entry rather than keep scoring against a clause that is
+    # gone from the frontmatter.
+    orphaned = [s for s in list(tasks)
+                if not exclusion_of(skill_frontmatter(s).get("description", ""))]
+    for s in orphaned:
+        tasks.pop(s, None)
+        rubrics.pop(s, None)
+    if orphaned:
+        print(f"Exclusion clause removed, dropped: {', '.join(sorted(orphaned))}",
+              file=sys.stderr)
     skipped = [s for s in skills
                if not exclusion_of(skill_frontmatter(s).get("description", ""))]
     if skipped:

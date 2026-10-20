@@ -24,9 +24,31 @@ import hashlib
 import importlib
 import json
 import os
+import sys
 from pathlib import Path
 
 LADDER_DIR = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from grade_rubric import rubric_hash  # noqa: E402
+
+_RUBRIC_CACHE: dict[str, dict] = {}
+
+
+def _rubrics_for(pool: str) -> dict:
+    """The rubric file a pool is graded with. v1c shares v1's by design."""
+    key = {"v1c": "v1"}.get(pool, pool)
+    if key not in _RUBRIC_CACHE:
+        path = LADDER_DIR / "data" / f"rubrics-{key}.json"
+        _RUBRIC_CACHE[key] = json.loads(path.read_text()) if path.exists() else {}
+    return _RUBRIC_CACHE[key]
+
+
+def _grader_of(row: dict, rel: str) -> str:
+    """The grader model a row was scored by. The replicate files encode it in
+    their filename; everything else used the default."""
+    if "claude-sonnet-5" in rel:
+        return "claude-sonnet-5"
+    return "claude-haiku-4-5-20251001"
 
 # (graded artifact, pool it belongs to). Every file that carries `_source_sha256`
 # rows must be listed; an unlisted artifact is an unverified artifact.
@@ -75,6 +97,30 @@ def check(rel: str, pool: str) -> tuple[int, int, list[str]]:
                 f"{rel}: {r['skill']}/{r['arm']}/t{r['trial']} HASH MISMATCH "
                 f"(recorded {recorded[:12]}, transcript now {actual[:12]})"
             )
+
+        # Rubric lineage, not just transcript lineage.
+        #
+        # A rubric-graded row records `_rubric_sha256`, the fingerprint of the
+        # checks it was scored against. Checking only the transcript hash left a
+        # whole class of drift invisible: regenerating a rubric changes the
+        # checks without touching any transcript, so the grades would silently
+        # describe a rubric no longer in the repository and this validator would
+        # still report everything clean. That happened once, from an accidental
+        # re-run, and was caught by inspecting a diff rather than by this check.
+        rec_rubric = r.get("_rubric_sha256")
+        if rec_rubric is not None:
+            rubrics = _rubrics_for(pool)
+            entry = rubrics.get(r["skill"])
+            if entry is None:
+                broken.append(f"{rel}: {r['skill']} graded against a rubric that no "
+                              f"longer exists")
+            else:
+                live = rubric_hash(entry["checks"], _grader_of(r, rel))
+                if live != rec_rubric:
+                    broken.append(
+                        f"{rel}: {r['skill']}/{r['arm']}/t{r['trial']} RUBRIC MISMATCH "
+                        f"(recorded {rec_rubric[:12]}, rubric now {live[:12]})"
+                    )
     return len(rows), len(broken), broken
 
 

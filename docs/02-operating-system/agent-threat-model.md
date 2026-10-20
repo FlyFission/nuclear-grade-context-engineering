@@ -42,6 +42,25 @@ starve or race a gated action), and *communication* (untrusted input is quaranti
 arguments a privileged action reads). A throwaway component must not be able to clobber a gated
 one just by sharing a workspace.
 
+## OWASP Top 10 for Agentic Applications (2026) map
+
+The OWASP GenAI Security Project published this list in December 2025. Risk names below come from secondary write-ups; the official page could not be fetched from this environment, so the row in [`source-map.md`](../00-standards-foundation/source-map.md) is held at `public-url-needed`. Check names against the official text before citing them.
+
+This is a reading aid, not a coverage claim. Most rows are **process** controls: they help a person or agent notice and record the risk. None is a runtime defense. **Gap** means the repo has no control for the core risk.
+
+| ID | Risk | Nuclear-grade control | Does NOT cover |
+|---|---|---|---|
+| ASI01 | Agent goal hijack | [`staying-on-mission`](../../skills/staying-on-mission/SKILL.md); untrusted-input rule above; [`context-window-discipline.md`](context-window-discipline.md) | Detecting or blocking injected instructions |
+| ASI02 | Tool misuse and exploitation | [`double-checking-before-acting`](../../skills/double-checking-before-acting/SKILL.md), [`declaring-intent`](../../skills/declaring-intent/SKILL.md), [`stress-testing-agent-changes`](../../skills/stress-testing-agent-changes/SKILL.md) | Enforcing tool limits beyond the opt-in [`HOOKS.md`](../../HOOKS.md) PreToolUse gate, which pattern-matches and can be bypassed |
+| ASI03 | Identity and privilege abuse | [`deciding-who-decides`](../../skills/deciding-who-decides/SKILL.md), [`agent-authority-model.md`](../04-adoption/agent-authority-model.md) | **Gap** for credentials, tokens, and agent identity; authority is recorded, not enforced |
+| ASI04 | Agentic supply chain | [`vetting-outside-code-and-models`](../../skills/vetting-outside-code-and-models/SKILL.md), [`supplier-trust.md`](../../templates/standard/supplier-trust.md), [`reporting-shared-defects`](../../skills/reporting-shared-defects/SKILL.md) | Signature checks or scans of skills, plugins, and MCP servers |
+| ASI05 | Unexpected code execution | [`double-checking-before-acting`](../../skills/double-checking-before-acting/SKILL.md) for risky commands only | **Gap**: no sandbox and no execution policy |
+| ASI06 | Memory and context poisoning | [`durable-memory.md`](durable-memory.md), [`context-window-discipline.md`](context-window-discipline.md), mixed-criticality section above | Integrity checks on memory stores or retrieved content |
+| ASI07 | Insecure inter-agent communication | [`briefing-an-agent`](../../skills/briefing-an-agent/SKILL.md), [`handing-off-work`](../../skills/handing-off-work/SKILL.md), [`context-packs.md`](context-packs.md) | **Gap** for transport: no message authentication or integrity |
+| ASI08 | Cascading failures | [`checking-what-a-change-affects`](../../skills/checking-what-a-change-affects/SKILL.md), [`independence-architecture.md`](independence-architecture.md), [`responding-to-incidents`](../../skills/responding-to-incidents/SKILL.md) | Runtime circuit breakers or blast-radius limits |
+| ASI09 | Human-agent trust exploitation | [`actor-evidence-independence.md`](actor-evidence-independence.md), [`proving-claims`](../../skills/proving-claims/SKILL.md), [`quality-verdict-accountability.md`](quality-verdict-accountability.md) | Stopping a reviewer from rubber-stamping |
+| ASI10 | Rogue agents | [`recording-what-an-agent-did`](../../skills/recording-what-an-agent-did/SKILL.md), [`agent-trace-evidence.md`](agent-trace-evidence.md) | **Gap**: no behavior monitoring or kill switch |
+
 ## Relationship to SECURITY.md
 
 `SECURITY.md` scopes the *worked example's* security boundaries. This page scopes the *agent operating the workflow*. Neither makes the repo a production security control.

@@ -45,6 +45,11 @@ For directional pilot evidence on the 28 skills included in the July 2026 run â€
 
 The diagram below is the full-system view. For cherry-pick adoption see [`CORE.md`](CORE.md): seven core habits (`questioning-attitude`, `rating-change-risk`, `proving-claims`, `double-checking-before-acting`, `staying-on-mission`, `checking-release-readiness`, `learning-from-experience`) plus the decision matrix that invokes the ancillary clusters by trigger.
 
+<p align="center"><img src="docs/assets/diagrams/skill-map.svg" alt="Skill map" width="100%"></p>
+
+<details>
+<summary>Mermaid source (text version)</summary>
+
 ```mermaid
 flowchart TD
     UNG([using-nuclear-grade<br/>router / entry point])
@@ -89,6 +94,8 @@ flowchart TD
     CCR -.outside dependency / model.-> VOC
     RSR -.trust-bearing verdict on one reviewer.-> RRP
 ```
+
+</details>
 
 **Consequence note.** If your agent has write, run, network, or approval authority over its own working set, treat `deciding-who-decides`, `declaring-intent`, `stress-testing-agent-changes`, `vetting-outside-code-and-models`, `recording-what-an-agent-did`, `briefing-an-agent`, and `handing-off-work` as **main-path, not overlay** â€” the trigger is always on for you. The agent-tool-permissions worked example is your template. See the Agent-authority row in [`CORE.md`](CORE.md)'s decision matrix.
 

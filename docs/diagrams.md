@@ -2,13 +2,18 @@
 
 Visual maps of the workflow. These are the canonical source for the diagrams embedded across the public docs; update them here and mirror changes where they are referenced.
 
-Diagrams are Mermaid so they render natively on GitHub, stay diffable in version control, and need no build step. Treat each diagram as a controlled item: when the lifecycle, modes, or skill set change, update the matching diagram in the same change.
+Each diagram ships twice: an editorial SVG in [`assets/diagrams/`](assets/diagrams/) (drawn with the [diagram-design](https://github.com/cathrynlavery/diagram-design) conventions, light and dark aware) and the Mermaid block beneath it, which stays the diffable text source. After editing a diagram, regenerate the SVGs with `python tools/build_diagrams.py` and update the matching Mermaid block in the same change. Treat each diagram as a controlled item: when the lifecycle, modes, or skill set change, update the matching diagram in the same change.
 
 ---
 
 ## 1. Core lifecycle
 
 The full lifecycle. The short, at-a-glance version is `question -> specify -> execute -> verify -> decide -> baseline -> operate -> learn` (the eight everyday control points); the full path below splits three of them to reach the eleven beats.
+
+<p align="center"><img src="assets/diagrams/lifecycle-cleared.svg" alt="Nuclear-grade lifecycle" width="100%"></p>
+
+<details>
+<summary>Mermaid source (text version)</summary>
 
 ```mermaid
 flowchart LR
@@ -22,6 +27,8 @@ flowchart LR
     L -.feeds future basis.-> Q
 ```
 
+</details>
+
 The **Decide** gate is the *verdict* — is the change correct and worth releasing? **Cleared to apply now?** is a separate, operator-owned gate: even a `ship` verdict waits if a freeze window is closed, an approval lapsed, external state drifted, or policy changed. It is re-checked at apply-time, so a stale "go" cannot ship a correct change into the wrong moment. See [`02-operating-system/lifecycle.md`](02-operating-system/lifecycle.md).
 
 ---
@@ -31,6 +38,11 @@ The **Decide** gate is the *verdict* — is the change correct and worth releasi
 The same eleven beats, grouped into a handle you can remember. Zoom out to **PRO** — three moves. Zoom in to **PROVE** — five, with the acceptance gate named on its own. The beats, their order, and the control points are unchanged; this is a label, not a new workflow.
 
 **PRO — the billboard (3):**
+
+<p align="center"><img src="assets/diagrams/pro.svg" alt="PRO: Plan · Run · Operate" width="100%"></p>
+
+<details>
+<summary>Mermaid source (text version)</summary>
 
 ```mermaid
 flowchart TB
@@ -61,7 +73,14 @@ flowchart TB
   class C1,C2,C3 emb
 ```
 
+</details>
+
 **PROVE — the working map (5):**
+
+<p align="center"><img src="assets/diagrams/prove.svg" alt="PROVE: Plan · Run · Observe · Verdict · Educate" width="100%"></p>
+
+<details>
+<summary>Mermaid source (text version)</summary>
 
 ```mermaid
 flowchart TB
@@ -103,6 +122,8 @@ flowchart TB
   class B,OP,L emb
 ```
 
+</details>
+
 **Crosswalk — how the zoom levels line up:**
 
 | Full path (11 beats) | PROVE — working map (5) | PRO — billboard (3) |
@@ -121,6 +142,11 @@ PROVE and PRO are memory handles for the same eleven-beat path; the [eight contr
 
 Which packet mode a change earns. Rigor scales with consequence, not effort tolerance.
 
+<p align="center"><img src="assets/diagrams/mode-selection.svg" alt="Choosing a rigor mode" width="100%"></p>
+
+<details>
+<summary>Mermaid source (text version)</summary>
+
 ```mermaid
 flowchart TD
     Start([Change request]) --> Q0{Purely administrative,<br/>instantly reversible,<br/>no new trust boundary?}
@@ -133,11 +159,18 @@ flowchart TD
     Q2 -->|already went wrong| Incident[Incident pattern]
 ```
 
+</details>
+
 ---
 
 ## 4. Skill-relationship graph
 
 How the skills compose. `using-nuclear-grade` is the single way in and the router; the main path is the per-change pipeline; the heavier overlays switch on only when the stakes call for them.
+
+<p align="center"><img src="assets/diagrams/skill-map-core.svg" alt="Skill map" width="100%"></p>
+
+<details>
+<summary>Mermaid source (text version)</summary>
 
 ```mermaid
 flowchart TD
@@ -174,11 +207,18 @@ flowchart TD
     LFO -.stale packet sweep.-> CSP
 ```
 
+</details>
+
 ---
 
 ## 5. Packet artifact-dependency graph
 
 How a Standard packet's records depend on each other. Later records point back to the basis they depend on; operating lessons feed forward into the next change. The text form lives in [`00-standards-foundation/artifact-dependency-graph.md`](00-standards-foundation/artifact-dependency-graph.md).
+
+<p align="center"><img src="assets/diagrams/evidence-chain.svg" alt="Evidence chain" width="100%"></p>
+
+<details>
+<summary>Mermaid source (text version)</summary>
 
 ```mermaid
 flowchart TD
@@ -194,11 +234,18 @@ flowchart TD
     opex -.feeds forward.-> basis
 ```
 
+</details>
+
 ---
 
 ## 6. Who does what in one change
 
 How four roles hand off authority over a single change: **you**, the **AI agent**, the **change record**, and the **reviewer**. The agent moves fast inside limits you approved first; the record carries the claims and their evidence; the reviewer decides on the evidence, not the pitch. Read top to bottom.
+
+<p align="center"><img src="assets/diagrams/one-change-sequence.svg" alt="One change, end to end" width="100%"></p>
+
+<details>
+<summary>Mermaid source (text version)</summary>
 
 ```mermaid
 sequenceDiagram
@@ -218,6 +265,8 @@ sequenceDiagram
     Note over You,Reviewer: Lessons from real use feed the next change
 ```
 
+</details>
+
 **In words (text fallback):** you ask + set the goal → agent drafts the risk and the definition of "good" → you approve the limits → agent builds only inside them → agent writes each claim with its evidence → reviewer checks the evidence and decides (ship / defer / block) → the approved version is saved as the baseline → lessons from real use feed the next change.
 
 ---
@@ -225,6 +274,11 @@ sequenceDiagram
 ## 7. Keeping the approved version under control
 
 The configuration-management loop in one picture. A **baseline** is the version everyone agreed is correct and wants to protect. Changes do not edit the baseline directly — they go through evidence and a decision first, and only an accepted change becomes the new baseline.
+
+<p align="center"><img src="assets/diagrams/control-loop-cleared.svg" alt="Configuration control loop" width="100%"></p>
+
+<details>
+<summary>Mermaid source (text version)</summary>
 
 ```mermaid
 flowchart LR
@@ -243,6 +297,8 @@ flowchart LR
     LE -.->|"feed the next change"| CI
 ```
 
+</details>
+
 **In words (text fallback):** controlled items (code, prompts, models, dependencies, docs, releases) → a change → named evidence (pass or gap) → a deliberate decision (the *verdict*: correct and worth releasing?) → if ship/defer, a separate apply-clearance gate (may it be applied *now* — approvals, window, external state, policy?), re-checked at apply-time; if cleared, save the new baseline; if block, back to the change → operate the baseline → lessons learned feed the next change to the controlled items.
 
 ---
@@ -250,6 +306,11 @@ flowchart LR
 ## 8. Actor-evidence independence
 
 The loop's gates after Execute — Verify, Review, Decide — assume the evidence they read is independent of the actor. In the default single-agent path it is not: the same agent authors the change *and* every input the gates read, so a confident error ships wrapped in its own proof. The seam breaks that coupling in proportion to the stakes. See [`02-operating-system/actor-evidence-independence.md`](02-operating-system/actor-evidence-independence.md).
+
+<p align="center"><img src="assets/diagrams/independence-seam.svg" alt="The independence seam" width="100%"></p>
+
+<details>
+<summary>Mermaid source (text version)</summary>
 
 ```mermaid
 flowchart TB
@@ -281,6 +342,8 @@ flowchart TB
       ID -->|input not solely actor-authored| OUT2[A confident error is<br/>visible at the gate]:::good
     end
 ```
+
+</details>
 
 **In words (text fallback):** in the coupled default, the actor builds the change and also authors the Verify evidence, the Review narrative, and the Decide framing, so the gates only ever see what the actor wrote and a confident hallucination clears them. With the seam, the load-bearing claim's evidence is authored by an independent verifier (or reproduced by the reviewer) and the decider is independent of the actor, so the same error is visible at the gate instead of laundered through it.
 

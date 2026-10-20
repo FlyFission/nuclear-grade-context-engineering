@@ -41,6 +41,7 @@ RESIDUE_SCAN_TREES = (
     "templates",
     "starter-kit",
     "tools",
+    "challenge",
 )
 
 # Residue has appeared in prose (.md) and in checked-in run transcripts (.json).
@@ -66,6 +67,14 @@ def _iter_residue_scan_files():
         for path in base.rglob("*"):
             if path.is_file() and path.suffix in RESIDUE_SCAN_SUFFIXES:
                 yield path
+
+# Personal mailbox addresses (a model can copy one from session context into a
+# checked-in transcript). Domain list split so this file never matches itself.
+PERSONAL_EMAIL = re.compile(
+    r"[A-Za-z0-9._%+-]+@(?:" + "|".join(("gm" "ail", "ya" "hoo", "hot" "mail", "out" "look", "ic" "loud", "proton" "mail"))
+    + r")\.[a-z]{2,}",
+    re.IGNORECASE,
+)
 
 BOUNDARY_PHRASES = (
     "NQA-1 evidence",
@@ -336,3 +345,14 @@ def test_starter_kit_copy_commands_reference_existing_assets():
             assert (ROOT / doc).exists(), (
                 f"{readme.relative_to(ROOT)} references missing doc {doc}"
             )
+
+
+def test_repo_trees_contain_no_personal_email_addresses():
+    """Raw eval transcripts once carried the maintainer's personal address, copied
+    by the model from session context. Redacted values read `[redacted-email]`."""
+    offenders = []
+    for path in _iter_residue_scan_files():
+        text = path.read_text(encoding="utf-8", errors="ignore")
+        if PERSONAL_EMAIL.search(text):
+            offenders.append(str(path.relative_to(ROOT)))
+    assert not offenders, "personal email address found in:\n" + "\n".join(sorted(offenders))

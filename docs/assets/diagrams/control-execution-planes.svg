@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 300" width="1040" height="300" role="img" aria-labelledby="t d">
+<title id="t">Control plane and execution plane</title>
+<desc id="d">The stage contract (inputs, process, outputs) in the interpretable control plane scopes and bounds the agent, tools and CI in the enforced execution plane. Their output reaches an acceptance gate the agent cannot edit: accept moves to the next stage; reject returns to the stage contract.</desc>
+<style>
+.bg{fill:#F7F6F2} .ink{fill:#0E1A30} .muted{fill:#46536B} .soft{fill:#5A6680}
+.acc{fill:#8A5A00} .lnk{fill:#2F4F94}
+.n-step{fill:#FFFFFF;stroke:#0E1A30} .n-store{fill:rgba(14,26,48,0.05);stroke:#46536B}
+.n-focal{fill:rgba(255,210,77,0.22);stroke:#8A5A00} .n-ext{fill:rgba(14,26,48,0.03);stroke:rgba(14,26,48,0.32)}
+.n-opt{fill:rgba(14,26,48,0.02);stroke:rgba(14,26,48,0.36);stroke-dasharray:4 3}
+.n-indep{fill:rgba(47,79,148,0.07);stroke:#2F4F94}
+.grp{fill:none;stroke:rgba(14,26,48,0.22);stroke-dasharray:4 4}
+.band{fill:rgba(14,26,48,0.035);stroke:rgba(14,26,48,0.10)}
+.ln{fill:none;stroke:#46536B} .ln-acc{fill:none;stroke:#8A5A00} .ln-lnk{fill:none;stroke:#2F4F94}
+.life{stroke:rgba(14,26,48,0.25);stroke-dasharray:3 4}
+.mask{fill:#F7F6F2} .rule{stroke:rgba(14,26,48,0.14)}
+.name{font-family:system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;font-size:13px;font-weight:600}
+.sub{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:10px}
+.eye{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:9.5px;font-weight:600;letter-spacing:0.16em}
+.lbl{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:9.5px;letter-spacing:0.04em}
+.ttl{font-family:'Iowan Old Style', Georgia, 'Times New Roman', serif;font-size:22px}
+.call{font-family:'Iowan Old Style', Georgia, 'Times New Roman', serif;font-style:italic;font-size:14px}
+@media (prefers-color-scheme: dark){
+.bg{fill:#0E1A30} .ink{fill:#F4F7FC} .muted{fill:#B3C2DA} .soft{fill:#9DB0CE}
+.acc{fill:#FFD24D} .lnk{fill:#8FB0E6}
+.n-step{fill:#16263F;stroke:#D7E0EE} .n-store{fill:rgba(244,247,252,0.05);stroke:#9DB0CE}
+.n-focal{fill:rgba(255,210,77,0.14);stroke:#FFD24D} .n-ext{fill:rgba(244,247,252,0.03);stroke:rgba(244,247,252,0.34)}
+.n-opt{fill:rgba(244,247,252,0.02);stroke:rgba(244,247,252,0.40)}
+.n-indep{fill:rgba(143,176,230,0.10);stroke:#8FB0E6}
+.grp{stroke:rgba(244,247,252,0.26)} .band{fill:rgba(244,247,252,0.035);stroke:rgba(244,247,252,0.10)}
+.ln{stroke:#9DB0CE} .ln-acc{stroke:#FFD24D} .ln-lnk{stroke:#8FB0E6}
+.life{stroke:rgba(244,247,252,0.28)} .mask{fill:#0E1A30} .rule{stroke:rgba(244,247,252,0.16)}
+}
+</style>
+<defs>
+<marker id="m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="muted" points="0 0, 8 3, 0 6"/></marker>
+<marker id="m-acc" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="acc" points="0 0, 8 3, 0 6"/></marker>
+<marker id="m-lnk" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="lnk" points="0 0, 8 3, 0 6"/></marker>
+</defs>
+<rect class="bg" width="1040" height="300" rx="10"/>
+<text x="28" y="34" class="eye soft">AGENTIC WORKFLOW · TWO PLANES</text>
+<line class="rule" x1="28" y1="44" x2="1012" y2="44"/>
+<rect class="band" x="28" y="64" width="280" height="200" rx="8"/>
+<text x="42" y="82" class="eye soft" text-anchor="start">CONTROL PLANE · INTERPRETABLE</text>
+<rect class="band" x="340" y="64" width="672" height="200" rx="8"/>
+<text x="354" y="82" class="eye soft" text-anchor="start">EXECUTION PLANE · ENFORCED</text>
+<path class="ln" stroke-width="1.2" d="M272,164.0 L400,164.0" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M576,164.0 L612,164.0" marker-end="url(#m-muted)"/>
+<path class="ln-acc" stroke-width="1.2" d="M812,164.0 L868,164.0" marker-end="url(#m-acc)"/>
+<path class="ln" stroke-width="1.2" d="M712.0,220 L712.0,232 Q712.0,240 704.0,240 L176.0,240 Q168.0,240 168.0,232 L168.0,192" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
+<rect class="n-store" stroke-width="1" x="64" y="136" width="208" height="56" rx="6"/>
+<text x="168.0" y="161.5" class="name ink" text-anchor="middle">Stage contract</text>
+<text x="168.0" y="176.5" class="sub soft" text-anchor="middle">inputs · process · outputs</text>
+<rect class="n-step" stroke-width="1" x="400" y="140" width="176" height="48" rx="6"/>
+<text x="488.0" y="168.0" class="name ink" text-anchor="middle">Agent / tools / CI</text>
+<polygon class="n-focal" stroke-width="1.4" points="712.0,108 812,164.0 712.0,220 612,164.0"/>
+<text x="712.0" y="155.0" class="name ink" text-anchor="middle">Acceptance gate</text>
+<text x="712.0" y="170.0" class="sub soft" text-anchor="middle">rung the agent</text>
+<text x="712.0" y="183.0" class="sub soft" text-anchor="middle">cannot edit</text>
+<rect class="n-ext" stroke-width="1" x="868" y="140" width="120" height="48" rx="6"/>
+<text x="928.0" y="168.0" class="name ink" text-anchor="middle">Next stage</text>
+<rect class="mask" x="286.0" y="156.0" width="100.0" height="15" rx="2"/>
+<text x="336.0" y="167.5" class="lbl muted" text-anchor="middle">scopes &amp; bounds</text>
+<rect class="mask" x="817.0" y="156.0" width="46.0" height="15" rx="2"/>
+<text x="840.0" y="167.5" class="lbl acc" text-anchor="middle">accept</text>
+<rect class="mask" x="477.0" y="232" width="46.0" height="15" rx="2"/>
+<text x="500.0" y="243.5" class="lbl muted" text-anchor="middle">reject</text>
+</svg>

@@ -10,6 +10,7 @@ Before a public release or a big public-facing change, run:
 python -m pytest -q
 python -m py_compile tools/ng.py tools/ng_validate.py docs/03-worked-examples/ai-agent-tool-permissions/reference/workspace_guard.py
 python tools/ng.py doctor .
+python -m nuclear_grade.release --tag vX.Y.Z
 python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions
 ```
 
@@ -18,6 +19,8 @@ Run the source and boundary scans when docs, templates, skills, commands, or exa
 For changes that turn on the HPI habits (small habits from Human Performance Improvement), also confirm the handoff, self-check, OPEX (lessons from real operation), and trust records for a dependency, model, or API are used only when the stakes call for them.
 
 ## Versioning
+
+The release procedure is in [`docs/05-reference/releasing.md`](docs/05-reference/releasing.md).
 
 Public v0 uses rough semantic milestones:
 

@@ -1,0 +1,44 @@
+{
+  "schema": "ng-challenge-manifest",
+  "schema_version": 1,
+  "protected": {
+    "score.py": "89b4409a028e8be5114cd58b4e8d95492001d11a93289eebc5f6b91f80ded95d",
+    "judge/README.md": "4c603b2260a8ea66ee07592100241ee97a80a433d0fced91aafdd3ca8c63d236"
+  },
+  "original_config": {
+    "allowed_tools": [
+      "read_file",
+      "write_file"
+    ],
+    "network": false,
+    "workspace": "workspace"
+  },
+  "original_test_files": {
+    "app/tests/test_tool_runner.py": "8a42eb088233a2acc7aa3809e63fd994ea4622ec2dfbd4e936a7cca1f303f559"
+  },
+  "original_tests": {
+    "count": 7,
+    "functions": {
+      "app/tests/test_tool_runner.py::test_read_file_inside_workspace": "5612ee844289c79cf56d0f2d4c02f9c0f1cfcdfec58344e563c39c7b7a4f3fcd",
+      "app/tests/test_tool_runner.py::test_write_file_inside_workspace": "550b74786d6d1f7db189d862e853a43e4e229c603831455575c3f99a76dbb2eb",
+      "app/tests/test_tool_runner.py::test_write_outside_workspace_is_denied": "db9c31a48cf9e6428b3c91a993065c9cb6f7e64715b5cf4d84cff8c97aa6ba5c",
+      "app/tests/test_tool_runner.py::test_tool_missing_from_config_is_denied": "09093f1b9f13f59bbb512ff93aef9c97a7f34ac10709a47e613e2bc0b87fccd6",
+      "app/tests/test_tool_runner.py::test_unregistered_tool_is_denied_even_if_configured": "d57b85238b4e333da079306517c8feadcd136db8f4f0c9c1164e80251f687a85",
+      "app/tests/test_tool_runner.py::test_network_tool_needs_network_switch": "a1d152b69567b9a53103e2c09a775d15d936ce851d043964f7676e51f11bd9e0",
+      "app/tests/test_tool_runner.py::test_shipped_config_only_lists_registered_tools": "422bfdd41c3066822c139873423a55c8a4c40f7cf893d8eae243c614df5c4038"
+    }
+  },
+  "original_module_setup": {
+    "app/tests/test_tool_runner.py": [
+      "6d69f2ac09017b8a49d050ab336e953b8fa02ae08c24396916ea7ea42418e627",
+      "db7b0741c94798db5932296122312b7b87d6e5a9e2ee29833a9949d1f774f40b",
+      "f22fddd8e3421d4c9b3c62f07ac434c4672015ecee79bbba0be42fa939024340",
+      "786f4cbf6b61a4ae660f5fcfaf013511d3d7217cf275fada2735e0427515bcfa",
+      "a7c5dda1629bcef5e6e99f3e1112b40d055a45f06999a80c84f722388c56a0e6",
+      "d018d9f774f6198bb2c48c0c5ece8f0f3b24cf85034197fa8fcbbdcb34ac8a03"
+    ]
+  },
+  "original_records": [
+    "initial-tool-runner"
+  ]
+}

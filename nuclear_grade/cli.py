@@ -7,6 +7,7 @@ engineering adequacy, safety, security, compliance, or verification and validati
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import re
 import shutil
@@ -18,6 +19,7 @@ if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from nuclear_grade import gen_commands
+from nuclear_grade.badge import build_badge, summarize
 from nuclear_grade.efficacy import run_all as run_efficacy
 from nuclear_grade.metrics import build_inventory
 from nuclear_grade.ng_validate import (
@@ -27,6 +29,7 @@ from nuclear_grade.ng_validate import (
     has_closure_note,
     validate_packet,
 )
+from nuclear_grade.receipt import build_receipt
 from nuclear_grade.tokens import (
     build_report,
     check_budgets,
@@ -349,6 +352,12 @@ def build_parser() -> argparse.ArgumentParser:
     validate_parser = subcommands.add_parser("validate", help="Validate a change packet.")
     validate_parser.add_argument("packet", type=Path)
     validate_parser.add_argument(
+        "--json",
+        action="store_true",
+        help="Print a versioned JSON receipt (file digests, git state, evidence-status counts) "
+        "instead of OK/FAILED lines. Exit codes are unchanged.",
+    )
+    validate_parser.add_argument(
         "--strict-custody",
         action="store_true",
         help="Require evidence-custody and five-axis coupling disclosure for Standard packets.",
@@ -474,6 +483,16 @@ def build_parser() -> argparse.ArgumentParser:
         help="Also list observe-class skills held in telemetry, not just the promoted receipt.",
     )
     decisions_parser.set_defaults(handler=handle_decisions)
+
+    badge_parser = subcommands.add_parser(
+        "badge",
+        help="Write a shields.io endpoint badge summarizing change records and open evidence items.",
+    )
+    badge_parser.add_argument("repo", nargs="?", default=".", type=Path)
+    badge_parser.add_argument(
+        "--out", type=Path, default=None, help="Write the JSON here (e.g. .nuclear/badge.json) instead of stdout."
+    )
+    badge_parser.set_defaults(handler=handle_badge)
 
     return parser
 
@@ -708,6 +727,16 @@ def handle_validate(args: argparse.Namespace) -> int:
         require_custody=args.strict_custody,
         require_authority=args.strict_authority,
     )
+    if args.json:
+        receipt = build_receipt(
+            args.packet,
+            result,
+            strict_custody=args.strict_custody,
+            strict_authority=args.strict_authority,
+            validator_version=_validator_version(),
+        )
+        print(json.dumps(receipt, indent=2, ensure_ascii=False))
+        return 0 if result.ok else 1
     if result.ok:
         print(f"OK: {args.packet}")
         return 0
@@ -849,14 +878,26 @@ def packet_health(packet: Path) -> str:
     health tracks behavior rather than wording.
     """
 
-    if validate_packet(packet).ok:
-        return "ok"
     texts = [md_file.read_text(encoding="utf-8") for md_file in packet.glob("*.md")]
     if any(has_closure_note(text) for text in texts):
         return "closed"
+    if validate_packet(packet).ok:
+        return "ok"
     if any(PLACEHOLDER_MARKER in text for text in texts):
         return "scaffold"
     return "invalid"
+
+
+def handle_badge(args: argparse.Namespace) -> int:
+    badge = build_badge(summarize(args.repo.resolve(), packet_health))
+    text = json.dumps(badge, ensure_ascii=False) + "\n"
+    if args.out is None:
+        print(text, end="")
+    else:
+        args.out.parent.mkdir(parents=True, exist_ok=True)
+        args.out.write_text(text, encoding="utf-8")
+        print(f"wrote {args.out}: {badge['label']} | {badge['message']}")
+    return 0
 
 
 def handle_eval(args: argparse.Namespace) -> int:

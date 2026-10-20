@@ -753,7 +753,7 @@
     "trial": 3,
     "error": false,
     "meets_criteria": "YES",
-    "grader_quote": "close it rather than delete it \u2014 that keeps the record of *why* it was dropped instead of erasing it. [...] NUCLEAR-GRADE-CLOSED: Dropped for this quarter \u2014 team decision (2026-06 meeting) to defer dark mode until design finalizes the color palette. No code merged. Decided by: team, recorded by benjaminhuffer1@gmail.com.",
+    "grader_quote": "close it rather than delete it \u2014 that keeps the record of *why* it was dropped instead of erasing it. [...] NUCLEAR-GRADE-CLOSED: Dropped for this quarter \u2014 team decision (2026-06 meeting) to defer dark mode until design finalizes the color palette. No code merged. Decided by: team, recorded by [redacted-email].",
     "cost_usd": 0.0386674,
     "input_tokens": 25,
     "output_tokens": 446,

@@ -26,7 +26,7 @@ Portable command prompt generated from `skills/running-a-review-panel/SKILL.md`.
 
 - The verdict at stake, its consequence, whether it is reversible, and the mode or risk tier justifying the cost.
 - The candidate at a pinned revision, the evidence to freeze -- diff, plan, source paths, prior verification records -- and the exclusions.
-- The available seats and what each varies: model family, mechanism (test, type check, static analysis, direct observation), brief, or human judgment.
+- The available seats and what each varies: model family, mechanism, brief, or human judgment.
 - Redaction rules for proprietary or secret material.
 - The verification budget, and confirmation the work under review does not control it.
 
@@ -60,8 +60,8 @@ Do not resolve a split high-consequence panel by majority, report unverified fin
 
 - Every seat names the axis it varies; a seat that cannot is folded into the seat it duplicates before counting.
 - The record states distinct axes and model families separately from seat count, and every actionable finding has a host-session verification behind it.
-- Dissent, dropped seats, timeouts, and invalid responses all appear; none was dropped for tidiness.
-- A degraded panel is labeled degraded, and a split high-consequence panel escalated rather than resolved by majority.
+- Dissent, dropped seats, timeouts, and invalid responses all appear; a degraded panel is labeled degraded, and a split high-consequence panel escalated rather than resolved by majority.
+- Nuclear / Tier 0 also clears the independence floor in `independence-architecture.md`.
 - Passing proves the panel was built and reported honestly. It does not prove the findings correct, does not establish independence beyond the axes actually varied, and creates no assurance, safety, security, certification, or regulatory adequacy.
 
 ## Full skill

@@ -29,6 +29,7 @@ Record the sequence the change actually followed, including the steps taken out 
 | 13 | Merge `main` after discovering the branch was two commits behind a release and its green CI was stale | `CHANGELOG.md` conflict resolved; commit `a33f858` | done |
 | 14 | Write this packet, out of order, and record the deviation | `.nuclear/changes/running-a-review-panel/` | done |
 | 15 | Act on two upheld review findings: gate the panel's matrix row on its trigger, and reword the gate exclusion so the panel feeds a required human gate rather than being suppressed by one | `CORE.md`, `SKILL.md`, regenerated `commands/ng-panel.md` | done |
+| 16 | Act on the second review round: give the panel a matrix route keyed to its own verdict trigger rather than nesting it under agent authority, and hold Nuclear / Tier 0 to the independence floor the doctrine already states | `CORE.md`, `SKILL.md`, regenerated `commands/ng-panel.md` | done |
 
 ## Out-of-order steps, and what that costs
 

@@ -58,6 +58,7 @@ Scan the triggers. For every "yes," invoke that cluster. Default is Core only.
 | The change makes public claims about safety, security, compliance, licensing, or provenance | **Claims discipline** | [`checking-legal-and-safety-wording`](skills/checking-legal-and-safety-wording/SKILL.md), [`checking-source-claims`](skills/checking-source-claims/SKILL.md) |
 | Production failure, data loss, or agent-caused harm | **Incident & deficiency** | [`responding-to-incidents`](skills/responding-to-incidents/SKILL.md), [`tracking-deficiencies`](skills/tracking-deficiencies/SKILL.md), [`reporting-shared-defects`](skills/reporting-shared-defects/SKILL.md) |
 | Repo layout / structure decision, visible code-quality drift in a diff, or a deliverable that is a produced artifact whose correctness lives in the rendered output (figure, PDF, SVG, screenshot, build, deployed response) | **Hygiene** | [`organizing-project-folders`](skills/organizing-project-folders/SKILL.md), [`reviewing-code-quality`](skills/reviewing-code-quality/SKILL.md), [`verifying-final-artifacts`](skills/verifying-final-artifacts/SKILL.md) |
+| A trust-bearing or irreversible verdict — ship, block, apply-clearance, a security or authorization call — rests on a single reviewer, whoever or whatever produced it | **Review panel** — an overlay on the verdict-bearing step, not a cluster | [`running-a-review-panel`](skills/running-a-review-panel/SKILL.md) |
 | Planning a multi-stage AI / agentic workflow (workspace, orchestration, repo convention) | **Workflow architecture** — a composing path, not a new cluster (see [`docs/02-operating-system/agentic-workflow-architecture.md`](docs/02-operating-system/agentic-workflow-architecture.md)) | [`organizing-project-folders`](skills/organizing-project-folders/SKILL.md), [`breaking-down-the-work`](skills/breaking-down-the-work/SKILL.md), [`briefing-an-agent`](skills/briefing-an-agent/SKILL.md), [`recording-what-an-agent-did`](skills/recording-what-an-agent-did/SKILL.md) |
 
 **Two front-door lenses run before the matrix, not as clusters.** Ask what *kind* of change this
@@ -72,7 +73,10 @@ skills; they shape the questions and the mode, then hand off to the matrix below
 All 30 skills are accounted for: 7 Core + 22 ancillary across 5 clusters + 1 router
 ([`using-nuclear-grade`](skills/using-nuclear-grade/SKILL.md)). The workflow-architecture
 trigger above composes existing skills rather than adding a sixth cluster or a new skill — its
-home is the doctrine page, not a new `SKILL.md`.
+home is the doctrine page, not a new `SKILL.md`. The review-panel row is an overlay for the same
+reason: the skill is counted once, inside Agent authority, and the row exists because its own
+trigger can fire where that cluster's does not — a human-led release or security review holds no
+agent authority and still comes down to one reviewer.
 
 ### What each ancillary trigger feels like in practice
 

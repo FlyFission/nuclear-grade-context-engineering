@@ -31,7 +31,13 @@ import subprocess
 import sys
 from pathlib import Path
 
-from ladder_common import GRADER_MODEL, LADDER_DIR, POOL
+from ladder_common import ARMS, GRADER_MODEL, LADDER_DIR, POOL
+
+# Pools need not run every arm: the negative pool deliberately has no C2
+# transcripts. Delegating to grade_rubric.py with its default five arms made it
+# report 87 missing C2 cells and exit 2 on every retry, so negative-pool
+# reliability could not be produced at all except from prebuilt files.
+POOL_ARMS = [a for a in ARMS if not (POOL == "negative" and a == "C2_description_only")]
 
 STRONG_MODEL = "claude-sonnet-5"
 
@@ -96,7 +102,8 @@ def run_grader(model: str, out_name: str) -> Path:
     path = LADDER_DIR / "data" / out_name
     for attempt in range(1, MAX_GRADER_ATTEMPTS + 1):
         proc = subprocess.run(
-            [sys.executable, "grade_rubric.py", "--model", model, "--out", out_name],
+            [sys.executable, "grade_rubric.py", "--model", model, "--out", out_name,
+             "--arms", *POOL_ARMS],
             cwd=str(Path(__file__).resolve().parent),
         )
         if proc.returncode == 0:

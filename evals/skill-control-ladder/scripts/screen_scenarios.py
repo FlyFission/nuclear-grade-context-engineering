@@ -35,8 +35,12 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from ladder_common import (
     GENERIC_NUDGE,
+    HARNESS_FLAGS,
     LADDER_DIR,
+    MAX_BUDGET_USD,
     MAX_WORKERS,
+    MODEL,
+    TOOLS,
     TRIALS,
     blind_grade,
     response_text,
@@ -57,7 +61,16 @@ ELIGIBILITY_MAX_C1 = 0.5
 
 def screen_one(skill: str, idx: int, cand: dict, trial: int) -> dict:
     scenario = cand["scenario_prompt"]
-    spec = hashlib.sha256(f"{scenario}::{GENERIC_NUDGE}".encode()).hexdigest()
+    # Include the harness configuration, not just the scenario and nudge. Without
+    # it, changing the subject model, tool allowlist, budget or isolation flags
+    # leaves existing screening files matching, so difficulty would be calibrated
+    # against responses from the OLD harness while run_ladder.py evaluates the
+    # selected scenarios under the NEW one -- silently invalidating the live-C1
+    # calibration this screening exists to provide. Mirrors ladder_spec_hash.
+    spec = hashlib.sha256(
+        f"{scenario}::{GENERIC_NUDGE}::{MODEL}::{TOOLS}::{MAX_BUDGET_USD}::"
+        f"{'::'.join(HARNESS_FLAGS)}".encode()
+    ).hexdigest()
     out_path = SCREEN_RUNS / f"{skill}__cand{idx}__trial{trial}.json"
 
     if out_path.exists():

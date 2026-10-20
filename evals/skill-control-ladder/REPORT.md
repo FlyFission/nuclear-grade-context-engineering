@@ -31,21 +31,23 @@ from any of them:
 A scenario where every arm scores 1.00 (ceiling) or every arm scores 0.00
 (floor) cannot express a difference between arms. Equality there is a
 property of the scenario, not a finding about the skills. Every skill is
-classified before any pooled statistic is computed, and the primary test is
-reported over informative skills only.
+classified before any pooled statistic is computed, and the classification is
+published so a reader can see which cells carry information. They are NOT
+dropped from the primary test -- see Primary result for why keeping them is
+the conservative choice.
 
 - Informative: **17/27**
 - Ceiling (all arms >= 0.95): **10**
 - Floor (all arms <= 0.05): **0**
 - PARTIAL verdict rate: **21%** of 405 gradings
 
-Ceiling skills, excluded from the primary test: `checking-legal-and-safety-wording`, `checking-release-readiness`, `checking-what-a-change-affects`, `creating-change-records`, `deciding-who-decides`, `rating-change-risk`, `recording-what-an-agent-did`, `responding-to-incidents`, `stress-testing-agent-changes`, `vetting-outside-code-and-models`
+Ceiling skills — these cells cannot express a difference, so they carry no information about the skill either way. They are still INCLUDED in the primary test (see below for why that is the conservative choice): `checking-legal-and-safety-wording`, `checking-release-readiness`, `checking-what-a-change-affects`, `creating-change-records`, `deciding-who-decides`, `rating-change-risk`, `recording-what-an-agent-did`, `responding-to-incidents`, `stress-testing-agent-changes`, `vetting-outside-code-and-models`
 
 ## Primary result
 
-Pre-registered hypothesis: across the 27-skill pool, the full
-skill (C4) outscores the generic prompting control (C1) on paired per-skill
-scores. Tested once.
+Pre-specified hypothesis: across the 27-skill pool, the full skill (C4) outscores the generic prompting control (C1) on paired per-skill scores. Tested once.
+
+This figure spans **all** skills in the pool, ceilings and floors included. They are not dropped: a cell that cannot express a difference contributes a zero and pulls the mean toward zero, so including it is the conservative choice. Filtering on the validity gate would raise the effect and would be a post-hoc selection that depends on observing the treatment arm.
 
 - Mean paired difference: **+0.222** (score scale 0–1; YES=1, PARTIAL=0.5, NO=0)
 - Skills where C4 > C1: **12** · C4 < C1: **0** · tied: **15**

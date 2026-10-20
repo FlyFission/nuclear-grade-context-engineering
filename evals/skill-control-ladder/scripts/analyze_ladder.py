@@ -67,6 +67,22 @@ SEED = 20260726  # fixed so the reported p-value is reproducible, not resampled
 BOOTSTRAP_RESAMPLES = 10_000
 BOOTSTRAP_SEED = 20260803
 
+# The negative pool inverts the meaning of a score: its checks reward staying
+# PROPORTIONATE on a scenario the skill's own frontmatter excludes, so C4 scoring
+# BELOW C1 is the finding of interest. Emitting the trigger-pool template for it
+# produced a report that stated the opposite hypothesis and carried limitations
+# ("trigger cases only") that are false for that pool.
+POOL_KIND = "negative" if POOL == "negative" else "trigger"
+
+HYPOTHESIS_DIRECTION = {
+    "trigger": ("the full skill (C4) outscores the generic prompting control (C1) "
+                "on paired per-skill scores"),
+    "negative": ("the full skill (C4) does NOT score below the generic prompting "
+                 "control (C1) on paired per-skill proportionality scores -- these "
+                 "scenarios sit inside each skill's own declared exclusion, so a "
+                 "LOWER C4 is the cost finding and a null is the good outcome"),
+}
+
 
 def bootstrap_delta_ci(hi_trials: list[float], lo_trials: list[float],
                        rng: random.Random) -> tuple[float, float]:
@@ -250,8 +266,10 @@ def main() -> int:
         "A scenario where every arm scores 1.00 (ceiling) or every arm scores 0.00\n"
         "(floor) cannot express a difference between arms. Equality there is a\n"
         "property of the scenario, not a finding about the skills. Every skill is\n"
-        "classified before any pooled statistic is computed, and the primary test is\n"
-        "reported over informative skills only.\n"
+        "classified before any pooled statistic is computed, and the classification is\n"
+        "published so a reader can see which cells carry information. They are NOT\n"
+        "dropped from the primary test -- see Primary result for why keeping them is\n"
+        "the conservative choice.\n"
     )
     counts = {k: sum(1 for v in validity.values() if v == k)
               for k in ("informative", "ceiling", "floor")}
@@ -269,7 +287,10 @@ def main() -> int:
     for kind in ("ceiling", "floor"):
         named = [s for s in skills if validity[s] == kind]
         if named:
-            L.append(f"{kind.title()} skills, excluded from the primary test: "
+            L.append(f"{kind.title()} skills — these cells cannot express a "
+                     f"difference, so they carry no information about the skill "
+                     f"either way. They are still INCLUDED in the primary test "
+                     f"(see below for why that is the conservative choice): "
                      + ", ".join(f"`{s}`" for s in named) + "\n")
     if partial_rate > 0.5:
         L.append(
@@ -284,9 +305,29 @@ def main() -> int:
     L.append("## Primary result\n")
     if primary:
         L.append(
-            f"Pre-registered hypothesis: across the {primary['n']}-skill pool, the full\n"
-            f"skill (C4) outscores the generic prompting control (C1) on paired per-skill\n"
-            f"scores. Tested once.\n"
+            f"Pre-specified hypothesis: across the {primary['n']}-skill pool, "
+            f"{HYPOTHESIS_DIRECTION[POOL_KIND]}. Tested once.\n"
+        )
+        # The primary number spans EVERY skill, including ceilings and floors.
+        #
+        # The validity gate's purpose is to tell a reader which cells could not
+        # express a difference -- not to drop them from the headline. Filtering
+        # them out would raise the reported effect, and the filter depends on
+        # observing the treatment arm, so it is a post-hoc selection that favours
+        # the hypothesis. Keeping them in is conservative: a ceiling or floor
+        # contributes a zero difference and pulls the mean toward zero.
+        #
+        # An earlier version of this report claimed those cells were "excluded
+        # from the primary test" while the primary test still included them --
+        # the text and the number disagreed. The informative-only figure is now
+        # reported below as a labelled sensitivity check instead.
+        L.append(
+            "This figure spans **all** skills in the pool, ceilings and floors "
+            "included. They are not dropped: a cell that cannot express a "
+            "difference contributes a zero and pulls the mean toward zero, so "
+            "including it is the conservative choice. Filtering on the validity "
+            "gate would raise the effect and would be a post-hoc selection that "
+            "depends on observing the treatment arm.\n"
         )
         L.append(f"- Mean paired difference: **{primary['mean_diff']:+.3f}** "
                  f"(score scale 0–1; YES=1, PARTIAL=0.5, NO=0)")
@@ -446,11 +487,22 @@ def main() -> int:
         "  skills. C1 partly defuses this — a generic paragraph that satisfies the\n"
         "  criterion shows the criterion was measuring compliance rather than knowledge —\n"
         "  but it does not remove it.\n"
-        "- **Trigger cases only.** Every scenario is one where the skill firing is the\n"
-        "  right behavior. Nothing here measures the cost of a skill firing when it should\n"
-        "  not, and nothing measures whether the right skill is selected out of the full\n"
-        "  library. Both remain open.\n"
-        f"- **{len(TASKS)} of the 29 skills on disk have a scenario.** "
+        + ("- **Forced-load proportionality, not over-firing.** Every scenario sits "
+           "inside\n  the territory the skill's own frontmatter excludes, and the skill is "
+           "then\n  injected anyway. That measures whether its body still permits a "
+           "proportionate\n  answer -- NOT whether the library would have selected it. Real "
+           "over-firing\n  needs whole-catalog routing, which is unmeasured.\n"
+           "- **Known confound.** Some scenarios ask the model to edit project files while\n"
+           "  the isolated work directory is empty and tools are read-only, so the response\n"
+           "  asks clarifying questions and the rubric partly scores a missing fixture as\n"
+           "  disproportionate. Treat a null here as UNSUPPORTED, not as evidence of no "
+           "cost.\n"
+           if POOL_KIND == "negative" else
+           "- **Trigger cases only.** Every scenario is one where the skill firing is the\n"
+           "  right behavior. Nothing here measures the cost of a skill firing when it "
+           "should\n  not, and nothing measures whether the right skill is selected out of "
+           "the full\n  library. Both remain open.\n")
+        + f"- **{len(TASKS)} of the 29 skills on disk have a scenario.** "
         "`verifying-final-artifacts`\n  has no eval coverage at all; `reviewing-code-quality` is covered by the separate\n"
         "  3-task pilot rather than this pool.\n"
         "- **The C1 text is one specific paragraph.** A different generic control would\n"

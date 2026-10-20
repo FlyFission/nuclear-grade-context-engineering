@@ -30,21 +30,23 @@ from any of them:
 A scenario where every arm scores 1.00 (ceiling) or every arm scores 0.00
 (floor) cannot express a difference between arms. Equality there is a
 property of the scenario, not a finding about the skills. Every skill is
-classified before any pooled statistic is computed, and the primary test is
-reported over informative skills only.
+classified before any pooled statistic is computed, and the classification is
+published so a reader can see which cells carry information. They are NOT
+dropped from the primary test -- see Primary result for why keeping them is
+the conservative choice.
 
 - Informative: **26/29**
 - Ceiling (all arms >= 0.95): **3**
 - Floor (all arms <= 0.05): **0**
 - Rubric checks met: **1371/1740** (79%) across 348 gradings
 
-Ceiling skills, excluded from the primary test: `breaking-down-the-work`, `checking-release-readiness`, `creating-change-records`
+Ceiling skills — these cells cannot express a difference, so they carry no information about the skill either way. They are still INCLUDED in the primary test (see below for why that is the conservative choice): `breaking-down-the-work`, `checking-release-readiness`, `creating-change-records`
 
 ## Primary result
 
-Pre-registered hypothesis: across the 29-skill pool, the full
-skill (C4) outscores the generic prompting control (C1) on paired per-skill
-scores. Tested once.
+Pre-specified hypothesis: across the 29-skill pool, the full skill (C4) does NOT score below the generic prompting control (C1) on paired per-skill proportionality scores -- these scenarios sit inside each skill's own declared exclusion, so a LOWER C4 is the cost finding and a null is the good outcome. Tested once.
+
+This figure spans **all** skills in the pool, ceilings and floors included. They are not dropped: a cell that cannot express a difference contributes a zero and pulls the mean toward zero, so including it is the conservative choice. Filtering on the validity gate would raise the effect and would be a post-hoc selection that depends on observing the treatment arm.
 
 - Mean paired difference: **+0.030** (score scale 0–1; YES=1, PARTIAL=0.5, NO=0)
 - Skills where C4 > C1: **9** · C4 < C1: **6** · tied: **14**
@@ -167,10 +169,15 @@ their own permutation p-values.
   skills. C1 partly defuses this — a generic paragraph that satisfies the
   criterion shows the criterion was measuring compliance rather than knowledge —
   but it does not remove it.
-- **Trigger cases only.** Every scenario is one where the skill firing is the
-  right behavior. Nothing here measures the cost of a skill firing when it should
-  not, and nothing measures whether the right skill is selected out of the full
-  library. Both remain open.
+- **Forced-load proportionality, not over-firing.** Every scenario sits inside
+  the territory the skill's own frontmatter excludes, and the skill is then
+  injected anyway. That measures whether its body still permits a proportionate
+  answer -- NOT whether the library would have selected it. Real over-firing
+  needs whole-catalog routing, which is unmeasured.
+- **Known confound.** Some scenarios ask the model to edit project files while
+  the isolated work directory is empty and tools are read-only, so the response
+  asks clarifying questions and the rubric partly scores a missing fixture as
+  disproportionate. Treat a null here as UNSUPPORTED, not as evidence of no cost.
 - **29 of the 29 skills on disk have a scenario.** `verifying-final-artifacts`
   has no eval coverage at all; `reviewing-code-quality` is covered by the separate
   3-task pilot rather than this pool.

@@ -31,7 +31,7 @@ The repo already says high-consequence verdicts should use a panel, and that "a 
 - The change is reversible and low-consequence. A panel on a Quick change is ceremony.
 - You cannot name a second axis to vary. Two seats on one model, brief, and context are one seat; run the single review honestly.
 - A deterministic check settles it. A type checker, a test, or reading the source beats four opinions for less.
-- A required human approval already exists. This never talks past a gate.
+- A required human gate already settles it. Panels feed gates, never replace them.
 - An incident is live and stabilization comes first (use `responding-to-incidents`).
 - You want to overturn direct contradictory evidence. A majority is not a rebuttal.
 

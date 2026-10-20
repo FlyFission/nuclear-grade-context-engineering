@@ -28,6 +28,7 @@ Record the sequence the change actually followed, including the steps taken out 
 | 12 | Write the CHANGELOG entry naming the efficacy gap as a risk | `CHANGELOG.md` | done |
 | 13 | Merge `main` after discovering the branch was two commits behind a release and its green CI was stale | `CHANGELOG.md` conflict resolved; commit `a33f858` | done |
 | 14 | Write this packet, out of order, and record the deviation | `.nuclear/changes/running-a-review-panel/` | done |
+| 15 | Act on two upheld review findings: gate the panel's matrix row on its trigger, and reword the gate exclusion so the panel feeds a required human gate rather than being suppressed by one | `CORE.md`, `SKILL.md`, regenerated `commands/ng-panel.md` | done |
 
 ## Out-of-order steps, and what that costs
 

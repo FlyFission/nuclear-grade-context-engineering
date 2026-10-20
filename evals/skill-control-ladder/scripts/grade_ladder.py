@@ -49,18 +49,25 @@ def load_cache() -> dict:
     A row is reused only when BOTH the transcript's content hash and the grading
     inputs' hash still match, so neither a re-run transcript nor an edited
     criterion can silently keep an old verdict.
+
+    Reads the sidecar first so a retry after transient grader failures resumes
+    from the rows that already succeeded instead of re-spending the whole batch.
     """
-    if not GRADED_PATH.exists():
-        return {}
-    try:
-        rows = json.loads(GRADED_PATH.read_text())
-    except (json.JSONDecodeError, OSError):
-        return {}
-    return {
-        (r["skill"], r["arm"], r["trial"]): r
-        for r in rows
-        if r.get("verdict") != "ERROR" and r.get("_source_sha256") and r.get("_criteria_sha256")
-    }
+    out: dict[tuple[str, str, int], dict] = {}
+    for src in (GRADED_PATH.with_suffix(".partial.json"), GRADED_PATH):
+        if not src.exists():
+            continue
+        try:
+            rows = json.loads(src.read_text())
+        except (json.JSONDecodeError, OSError):
+            continue
+        out.update({
+            (r["skill"], r["arm"], r["trial"]): r
+            for r in rows
+            if r.get("verdict") != "ERROR" and r.get("_source_sha256")
+            and r.get("_criteria_sha256")
+        })
+    return out
 
 
 def main() -> int:
@@ -132,11 +139,29 @@ def main() -> int:
 
     errors = [r for r in rows if r["verdict"] == "ERROR"]
     rows.sort(key=lambda r: (r["skill"], r["arm"], r["trial"]))
-    GRADED_PATH.write_text(json.dumps(rows, indent=2) + "\n")
-    print(f"Wrote {len(rows)} rows to {GRADED_PATH}", file=sys.stderr)
+
+    # An ERROR verdict must never reach the authoritative file. analyze_ladder
+    # maps an unrecognized verdict through SCORE.get(..., 0.0), so a timed-out
+    # grading call would be scored as a silent NO and could move the reported
+    # effect -- the file would look complete while containing failures.
+    #
+    # Successful rows still persist, to a sidecar the next run reads as cache, so
+    # a handful of transient failures does not discard an otherwise complete
+    # batch. This is the same guarantee grade_rubric.py already had; it was not
+    # ported here when that fix was made.
+    partial_path = GRADED_PATH.with_suffix(".partial.json")
     if errors:
-        print(f"{len(errors)} grading error(s) recorded", file=sys.stderr)
+        partial_path.write_text(
+            json.dumps([r for r in rows if r["verdict"] != "ERROR"], indent=2) + "\n")
+        print(f"{len(errors)} grading error(s); kept "
+              f"{len(rows) - len(errors)} good row(s) in {partial_path.name} and did "
+              f"NOT write {GRADED_PATH.name}. Re-run to grade only the failures.",
+              file=sys.stderr)
         return 1
+
+    GRADED_PATH.write_text(json.dumps(rows, indent=2) + "\n")
+    partial_path.unlink(missing_ok=True)
+    print(f"Wrote {len(rows)} rows to {GRADED_PATH}", file=sys.stderr)
     return 0
 
 

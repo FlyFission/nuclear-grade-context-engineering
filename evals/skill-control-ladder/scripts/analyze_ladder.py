@@ -74,6 +74,35 @@ BOOTSTRAP_SEED = 20260803
 # ("trigger cases only") that are false for that pool.
 POOL_KIND = "negative" if POOL == "negative" else "trigger"
 
+# Criteria provenance differs by pool and the limitation text must say which.
+# v1/v1c reuse the pilot's criteria, authored by the same effort that wrote the
+# skills. The hard and negative pools instead have per-scenario criteria written
+# by an author shown only the skill's NAME and DESCRIPTION, never the SKILL.md
+# body -- less contaminated, but not independent. Emitting the v1 paragraph for
+# every pool misstated the provenance, and therefore the circularity, of the
+# hard-pool evidence.
+_REUSED_CRITERIA = (
+    "- **Criteria are not independent of the skills.** The pass criteria are reused\n"
+    "  unchanged from the pilot, and were authored by the same effort that wrote the\n"
+    "  skills. C1 partly defuses this — a generic paragraph that satisfies the\n"
+    "  criterion shows the criterion was measuring compliance rather than knowledge —\n"
+    "  but it does not remove it.\n"
+)
+_AUTHORED_CRITERIA = (
+    "- **Criteria are less contaminated here, but not independent.** This pool's\n"
+    "  scenarios and criteria were generated per scenario by an author shown only the\n"
+    "  skill's name and frontmatter description — never the SKILL.md body — so they\n"
+    "  cannot simply restate the skill's checklist the way the reused pilot criteria\n"
+    "  can. They are still not external: one model wrote both the scenario and its\n"
+    "  criterion, and the description still describes the skill.\n"
+)
+CRITERIA_PROVENANCE = {
+    "v1": _REUSED_CRITERIA,
+    "v1c": _REUSED_CRITERIA,
+    "hard": _AUTHORED_CRITERIA,
+    "negative": _AUTHORED_CRITERIA,
+}
+
 HYPOTHESIS_DIRECTION = {
     "trigger": ("the full skill (C4) outscores the generic prompting control (C1) "
                 "on paired per-skill scores"),
@@ -482,11 +511,7 @@ def main() -> int:
     L.append(
         "- **One subject model** (`claude-sonnet-5`), one scenario per skill, 3 trials per\n"
         "  cell. Everything here is Sonnet-specific until replicated.\n"
-        "- **Criteria are not independent of the skills.** The pass criteria are reused\n"
-        "  unchanged from the pilot, and were authored by the same effort that wrote the\n"
-        "  skills. C1 partly defuses this — a generic paragraph that satisfies the\n"
-        "  criterion shows the criterion was measuring compliance rather than knowledge —\n"
-        "  but it does not remove it.\n"
+        + CRITERIA_PROVENANCE[POOL]
         + ("- **Forced-load proportionality, not over-firing.** Every scenario sits "
            "inside\n  the territory the skill's own frontmatter excludes, and the skill is "
            "then\n  injected anyway. That measures whether its body still permits a "

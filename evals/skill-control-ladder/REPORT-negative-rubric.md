@@ -164,11 +164,12 @@ their own permutation p-values.
 
 - **One subject model** (`claude-sonnet-5`), one scenario per skill, 3 trials per
   cell. Everything here is Sonnet-specific until replicated.
-- **Criteria are not independent of the skills.** The pass criteria are reused
-  unchanged from the pilot, and were authored by the same effort that wrote the
-  skills. C1 partly defuses this — a generic paragraph that satisfies the
-  criterion shows the criterion was measuring compliance rather than knowledge —
-  but it does not remove it.
+- **Criteria are less contaminated here, but not independent.** This pool's
+  scenarios and criteria were generated per scenario by an author shown only the
+  skill's name and frontmatter description — never the SKILL.md body — so they
+  cannot simply restate the skill's checklist the way the reused pilot criteria
+  can. They are still not external: one model wrote both the scenario and its
+  criterion, and the description still describes the skill.
 - **Forced-load proportionality, not over-firing.** Every scenario sits inside
   the territory the skill's own frontmatter excludes, and the skill is then
   injected anyway. That measures whether its body still permits a proportionate

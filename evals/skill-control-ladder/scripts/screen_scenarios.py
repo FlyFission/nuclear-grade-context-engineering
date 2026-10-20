@@ -35,11 +35,13 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from ladder_common import (
     GENERIC_NUDGE,
+    GRADER_MODEL,
     HARNESS_FLAGS,
     LADDER_DIR,
     MAX_BUDGET_USD,
     MAX_WORKERS,
     MODEL,
+    PROMPT_VERSION,
     TOOLS,
     TRIALS,
     blind_grade,
@@ -134,7 +136,14 @@ def main() -> int:
             cache = {}
 
     def cache_key(criteria: str, text: str) -> str:
-        return hashlib.sha256(f"{criteria}::{text}".encode()).hexdigest()
+        # Include the grading instrument, not just the criterion and response.
+        # Otherwise changing GRADER_MODEL, PROMPT_VERSION or the shared prompt in
+        # ladder_common leaves every cached screening verdict matching, so hard
+        # candidates stay selected under the OLD grader while final grading uses
+        # the new one -- invalidating the live-C1 calibration screening provides.
+        return hashlib.sha256(
+            f"{criteria}::{text}::{GRADER_MODEL}::{PROMPT_VERSION}".encode()
+        ).hexdigest()
 
     verdicts: dict[tuple[str, int, int], str] = {}
     grade_jobs = []

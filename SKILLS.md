@@ -37,7 +37,7 @@ For directional pilot evidence on the 28 skills included in the July 2026 run â€
 | [`tracking-deficiencies`](skills/tracking-deficiencies/SKILL.md) | A known problem will outlive a single change and must be owned, not normalized | A deficiency register entry that is aged, owned, and fixed or formally risk-accepted |
 | [`reporting-shared-defects`](skills/reporting-shared-defects/SKILL.md) | A defect you found lives in a shared or supplied artifact others depend on, not just your copy | An outward notice to the affected consumers, plus the local fix |
 | [`verifying-final-artifacts`](skills/verifying-final-artifacts/SKILL.md) | The deliverable is a produced artifact (figure, PDF, SVG, screenshot, build, deployed response) and correctness lives in the rendered output, not the source | The freshly regenerated artifact, ranked findings tied to the observed output, and one verdict |
-| [`running-a-review-panel`](skills/running-a-review-panel/SKILL.md) | A trust-bearing or irreversible verdict rests on one reviewer and you need checks that can fail differently | A panel record with each seat's diversity axis, preserved dissent, panel health, and host-verified findings |
+| [`running-a-review-panel`](skills/running-a-review-panel/SKILL.md) | A trust-bearing or irreversible verdict rests on one reviewer, or on several that share a model and brief, and you need checks that can fail differently | A panel record with each seat's diversity axis, preserved dissent, panel health, and host-verified findings |
 
 ## How the skills compose
 

@@ -141,9 +141,17 @@ token_budgets:
   # measured skill-body max to 3239 (organizing-project-folders); skill_body_max is
   # reseeded above that. The generated cards stay the leaner surface (max 1515).
   # Earlier basis, pre-single-sourcing: desc 138, skill body 2489, command 1295.
+  #
+  # Reseeded for `running-a-review-panel`, which is now the measured max on both
+  # gated surfaces (body 3678, card 1632). The old ceilings were calibrated when the
+  # largest card was 1515; that skill consumed the whole margin, and a review found a
+  # correctness fix the gate would not admit -- a ceiling that blocks a fix has stopped
+  # being a regression guard. Both new ceilings still reject the first draft of that
+  # skill (body 4176, card 1724), which `plan.md` refused to raise a limit for, so the
+  # precedent holds: the gate admits the accepted corpus plus edit room, not bloat.
   description_max: 200
-  skill_body_max: 3600
-  command_max: 1600
+  skill_body_max: 3900
+  command_max: 1700
   repeated_block_max_files: 8
 boundaries:
   license: MIT

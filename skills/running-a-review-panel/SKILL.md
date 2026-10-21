@@ -1,6 +1,6 @@
 ---
 name: running-a-review-panel
-description: Convenes several reviewers on one frozen evidence packet, names the diversity axis each seat actually varies, preserves dissent, and verifies every finding against live source before it counts as actionable. Use when a trust-bearing or irreversible verdict currently rests on a single reviewer. Do not use for reversible low-stakes work where a second opinion is ceremony, and do not use it to overrule direct contradictory evidence by majority.
+description: Convenes several reviewers on one frozen evidence packet, names the diversity axis each seat actually varies, preserves dissent, and verifies every finding against live source before it counts as actionable. Use when a trust-bearing or irreversible verdict currently rests on a single reviewer, or on several that cannot fail differently. Do not use for reversible low-stakes work where a second opinion is ceremony, and do not use it to overrule direct contradictory evidence by majority.
 ---
 
 # Running a Review Panel
@@ -47,7 +47,7 @@ The repo already says high-consequence verdicts should use a panel, and that "a 
 
 1. State the verdict at stake, the boundary, and the mode that earns the cost. Quick gets a self-check; Standard gets one independent method; a panel is for Nuclear / Tier 0 and trust-bearing calls. If you cannot name the consequence that earns the seats, stop. Do not let an audit widen silently.
 2. Freeze the packet at a pinned revision. Redact it, record its contents and digest, give every first-pass seat exactly that. If it exceeds its bound, partition and say so -- never truncate load-bearing code silently.
-3. Compose the seats. For each, write the axis it varies and the blind spot it covers. Count distinct axes and model families separately from seat count. Two seats on one family are one family with two voices. Nuclear / Tier 0 raises the floor: name all three independence axes -- technical, managerial, financial -- plus the rung-4 CI and human backstops (`independence-architecture.md`).
+3. Compose the seats. For each, write the axis it varies and the blind spot it covers. Count distinct axes and model families separately from seat count. Two seats on one family are one family with two voices. For a trust-bearing verdict, state the minimum acceptable coupling profile before the first pass, not after. Nuclear / Tier 0 raises the floor: name all three independence axes -- technical, managerial, financial -- plus the rung-4 CI and human backstops (`independence-architecture.md`).
 4. Run the first pass independently. No seat sees another's conclusion. Withhold the actor's own conclusion where feasible -- a stated preferred answer is the sycophancy path in `evaluation-integrity.md` §2.
 5. Run a challenge round when the stakes call for it. Anonymize the submissions; require each seat to attack the strongest claims rather than restate its own, and to name where its reasoning may be correlated with another's.
 6. Record panel health beside the result: every seat dropped, timed out, invalid, or given a truncated packet. A panel that planned five axes and delivered two is a **degraded panel** and is reported as one. Health is a condition on the verdict, not a footnote.
@@ -61,14 +61,14 @@ The repo already says high-consequence verdicts should use a panel, and that "a 
 - A finding list, each with supporting axes, severity, falsification test, and a state of `verified`, `rejected`, or `unresolved`.
 - Preserved dissent and the strongest opposing case, attributed and unaveraged.
 - The degradation record: dropped, timed-out, truncated, and invalid seats.
-- One disposition and any escalation trigger that fired, linked from `verification.md` as an Evidence ID.
+- One disposition and any escalation trigger that fired, linked from `verification.md` as an Evidence ID carrying the custody roles and five-axis coupling profile (`actor-evidence-independence.md`).
 
 ## Verification
 
 - Every seat names the axis it varies; a seat that cannot is folded into the seat it duplicates before counting.
 - The record states distinct axes and model families separately from seat count, and every actionable finding has a host-session verification behind it.
 - Dissent, dropped seats, timeouts, and invalid responses all appear; a degraded panel is labeled degraded, and a split high-consequence panel escalated rather than resolved by majority.
-- Nuclear / Tier 0 also clears the independence floor in `independence-architecture.md`.
+- The record carries custody roles and the five-axis coupling profile, and Nuclear / Tier 0 also clears the independence floor in `independence-architecture.md`.
 - Passing proves the panel was built and reported honestly. It does not prove the findings correct, does not establish independence beyond the axes actually varied, and creates no assurance, safety, security, certification, or regulatory adequacy.
 
 ## Escalation

@@ -18,6 +18,7 @@ Link each claim the change makes to its basis, its implementation, and its evide
 | REQ-008 | `nuclear-grade.yaml`, `SKILLS.md`, `CORE.md`, `COMMANDS.md`, `INSTALL.md`, `cli-reference.md`, `skill-authoring-contract.md`, `commands/ng-panel.md`, `tests/fixtures/command_prompts.json`, three test files | `verification.md` V-1, V-7, V-9, V-10 |
 | REQ-009 | No `pyproject.toml` change, no new directory, no `source-map.md` change | `verification.md` V-11 |
 | REQ-010 | `## Verification` boundary paragraph; `## Source-lineage note` in the skill | `verification.md` E-004 |
+| Controlled-item change (no REQ; arose in review) | `nuclear-grade.yaml` `token_budgets` — `skill_body_max` 3600 to 3900, `command_max` 1600 to 1700, with the basis recorded beside the values. A checker configuration under the Code/tests and Agent-context rows of [`controlled-items.md`](../../../docs/02-operating-system/controlled-items.md), changed on the owner's decision, not by the authoring agent | `verification.md` V-22, V-23; `ship.md` named risks |
 
 ## Claim-to-source trace
 

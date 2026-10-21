@@ -99,7 +99,7 @@ close neighbor, the `## When Not to Use` entry names the sibling to use instead.
 - Only add the pointer where a real near-miss exists (e.g. `briefing-an-agent` ↔ `handing-off-work`;
   `creating-change-records` ↔ `rating-change-risk`). Do not manufacture cross-links for distant skills.
 - This turns the skill set into a navigable graph: each near-miss edge routes to the more specific
-  skill, which is what keeps 29 skills from collapsing into "read them all and decide."
+  skill, which is what keeps 30 skills from collapsing into "read them all and decide."
 
 Source: the explicit activation-boundary pattern in Agent-Skills-for-Context-Engineering
 (source-map Tier 11), adapted to this repo's existing `## When Not to Use` section.

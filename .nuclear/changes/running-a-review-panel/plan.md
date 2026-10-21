@@ -34,6 +34,7 @@ Record the sequence the change actually followed, including the steps taken out 
 | 18 | Verify the fourth review round, draft the fix, measure that it does not fit, and hold it for the owner rather than deleting substance or raising a controlled limit | `ship.md`, `verification.md` V-22 | done |
 | 19 | Owner chose to reseed the ceilings: raise `skill_body_max` to 3900 and `command_max` to 1700 with the basis recorded beside the values, then apply the held fix and widen the catalog rows | `nuclear-grade.yaml`, `SKILL.md`, `SKILLS.md`, `COMMANDS.md`, regenerated `commands/ng-panel.md` | done |
 | 20 | Act on the sixth review round: carry the custody, coupling, and pre-execution-minimum requirements into the `## Prompt` block, which the previous task had left behind | `SKILL.md`, regenerated `commands/ng-panel.md`, `tests/fixtures/command_prompts.json` | done |
+| 21 | Owner instructed the merge; record the clearance and flip the verdict from `defer` to `ship-with-named-risk` before the release action, not after | `ship.md` | done |
 
 ## Out-of-order steps, and what that costs
 

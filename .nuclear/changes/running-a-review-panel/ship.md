@@ -6,16 +6,18 @@ State the release decision, what backs it, and what stays open.
 
 ## Verdict
 
-**defer — to a human, on two questions the authoring agent should not answer for itself.**
+**ship-with-named-risk — the owner answered the two deferred questions by authorizing the merge.**
+
+This packet held `defer` until 2026-10-21, when the repository owner instructed the merge directly. That instruction is the human gate the deferral was waiting on, not a bypass of it: the questions below were reserved for a person precisely so a person could answer them, and the record keeps both the deferral and its resolution rather than rewriting the verdict as though it had always been `ship`.
 
 The evidentiary record is complete and the deterministic surface is clean. On the post-merge tree: 657 passed and 2 skipped, ruff clean, `doctor` OK, token budget OK, `git diff --check` clean, 30 skill folders matching all six stated counts, eval ratchet met, no dependency or runtime surface added, and this packet validating at Standard. The branch is no longer behind `main`.
 
-It is not `ship` and not `ship-with-named-risk`, because two of the open items are not risks to accept — they are decisions:
+**The two questions, and how they were resolved.** Neither was a risk the authoring agent could accept; both were decisions, and both are now answered by the owner's merge instruction rather than by argument in this record:
 
-1. **Should the repo add a 30th skill with no efficacy evidence?** An earlier packet in this repo answered no, and its decisive objection was the gap between the benchmarked and shipped catalogs. That objection was about a README claim that #86 has since scoped (`verification.md` V-12), which is why the question is live again rather than settled against. But the evidence did not improve — the gap went from one skill to two — and whether disclosure is sufficient where the earlier decision demanded measurement is a maintainer's call about the repo's own standard. An agent that wants the skill merged is the wrong party to decide it.
-2. **Is a procedure different enough from a concept to earn a skill rather than a doctrine page?** The repo's precedent is explicit and runs the other way twice: `CORE.md` refused a skill for workflow architecture, "its home is the doctrine page, not a new `SKILL.md`," and the quality/verdict/accountability change landed as doctrine for the same reason. `basis.md` argues a procedure differs because an adopter executes it. That argument is in the record to be rejected, not asserted as settled.
+1. **Should the repo add a 30th skill with no efficacy evidence?** An earlier packet in this repo answered no, and its decisive objection was the gap between the benchmarked and shipped catalogs. That objection was about a README claim that #86 has since scoped (`verification.md` V-12), which is why the question is live again rather than settled against. But the evidence did not improve — the gap went from one skill to two — and whether disclosure is sufficient where the earlier decision demanded measurement is a maintainer's call about the repo's own standard. An agent that wants the skill merged is the wrong party to decide it. **Resolved by the owner in favor of adding it.** The gap itself is unchanged and stays open as named risk 1 — the decision was that disclosure suffices, not that the evidence improved.
+2. **Is a procedure different enough from a concept to earn a skill rather than a doctrine page?** The repo's precedent is explicit and runs the other way twice: `CORE.md` refused a skill for workflow architecture, "its home is the doctrine page, not a new `SKILL.md`," and the quality/verdict/accountability change landed as doctrine for the same reason. `basis.md` argues a procedure differs because an adopter executes it. That argument is in the record to be rejected, not asserted as settled. **Resolved by the owner in favor of the skill.** The precedent is not overturned in general; one change was judged to fall on the other side of it.
 
-Everything else below is a named risk in the ordinary sense, carried rather than hidden.
+It is `ship-with-named-risk` rather than plain `ship` because the risks below are real and unclosed — above all that this skill carries no efficacy evidence and has never been executed end to end. They are carried, not hidden.
 
 ## Named risks
 
@@ -32,7 +34,9 @@ Everything else below is a named risk in the ordinary sense, carried rather than
 
 ## Apply-clearance
 
-This verdict is evidentiary acceptance only, and it is deliberately short of clearance. Merge authority stays with a human reviewer via PR; the PR remains a draft. The authoring agent wrote the skill, the doctrine cross-links, the eval cases, this packet, and ran every check cited in it — a single coupled reviewer, which is the precise condition the skill being added exists to refuse. Treating its own self-check as clearance would be the failure the change is about.
+**Cleared by the owner on 2026-10-21, not by the authoring agent.** The distinction still matters and is why this section exists: the agent wrote the skill, the doctrine cross-links, the eval cases, this packet, and ran every check cited in it — a single coupled reviewer, the precise condition the skill being added exists to refuse. Its own self-check was never clearance and was not treated as such. Clearance came from the human who holds merge authority.
+
+Between the deferral and the clearance, six independent review rounds on a different model family raised ten findings against the shipped text; all were verified against their cited sources, all were upheld, and all were fixed (`verification.md` V-19 through V-24). That is not the panel procedure being executed — V-14 still stands — but it is the only part of this change that was read by something other than its author before merge, and it is recorded as such rather than counted as independent verification of the skill's claims.
 
 ## Release decision
 

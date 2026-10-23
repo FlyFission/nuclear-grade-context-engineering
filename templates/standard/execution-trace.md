@@ -6,6 +6,8 @@
 
 **Minimum useful version:** the steps that matter, each with its action, inputs, outputs, and evidence status; the decision-point records; and the stance summary.
 
+**Secret boundary:** Never copy secret or credential values into this record. Keep the field name and review result, replace the value with `[REDACTED]`, and link to a protected source if authorized inspection of the original is required.
+
 ---
 
 ## Execution context

@@ -12,7 +12,7 @@ For each step in the agent's run that has real consequence:
 
 | Evidence type | What to record |
 |---|---|
-| Tool call | Action name, tool, inputs (abbreviated), output, result |
+| Tool call | Action name, tool, inputs (abbreviated; secret and credential values redacted), output, result |
 | Decision point | Choice made, constraint applied, authority boundary check |
 | Approval gate | Reviewer, date, decision (approved / blocked / deferred) |
 | Token use | Prompt and completion token counts per step (where cost or efficiency is a criterion) |
@@ -62,6 +62,8 @@ Use `templates/standard/execution-trace.md` when trace volume warrants a separat
 ## Boundaries
 
 A run trace is a focused engineering record, not a formal audit trail. It proves what was captured. It does not prove what was not captured. Actions that were never logged are not evidenced.
+
+Do not copy secret or credential values into the trace or a durable packet. Preserve the field name and the result needed for review, replace the value with `[REDACTED]`, and link to a protected source when a qualified reviewer must inspect the original.
 
 ## Source-lineage note
 

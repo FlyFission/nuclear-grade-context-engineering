@@ -42,6 +42,7 @@ For each consequential step (tool call, file edit, command run, API call,
 approval gate):
 - Name the action and the tool.
 - Record the inputs (shortened) and the output or result.
+- Redact secret and credential values; keep only the field name and result needed for review.
 - Set an evidence status: pass, gap, fail, or not applicable.
 - At decision points: record the choice made, the limit applied, and the authority check.
 - For approval gates: the reviewer, the date, and the decision.

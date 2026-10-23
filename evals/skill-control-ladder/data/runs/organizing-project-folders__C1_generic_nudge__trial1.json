@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 15800,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0377676,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2573,
+    "cache_read_input_tokens": 23442,
+    "output_tokens": 971,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2573,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 720,
+        "cache_read_input_tokens": 8725,
+        "cache_creation_input_tokens": 128,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 128
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 634,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000714,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 971,
+      "cacheReadInputTokens": 23442,
+      "cacheCreationInputTokens": 2573,
+      "webSearchRequests": 0,
+      "costUSD": 0.0370536,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This working directory is actually empty \u2014 there's no `misc` or `utils` folder here, so I can't inspect your real files to tailor the proposal precisely. A couple of things worth flagging before I sketch a structure anyway:\n\n1. **The \"shared helper functions used by two different services\" is the trickiest part.** Moving those wrong (e.g., duplicating them into each service, or burying them somewhere non-obvious) is the kind of change that's easy to make but annoying to reverse once other code has updated its imports. I'd want to identify those files specifically and decide deliberately where they live \u2014 probably a `packages/shared/` or `libs/` folder if your build tooling supports cross-package imports, not just \"wherever seems logical.\"\n\n2. **Archived compliance reports and old meeting notes probably shouldn't live in the code repo at all** \u2014 or if they must, they belong in a clearly labeled `archive/` or `docs/` path with no code depending on them, so nothing breaks if you later move them to a wiki/drive.\n\nGiven that, here's a general proposal you can adapt once I can see the real filenames \u2014 treat this as a starting point, not final:\n\n```\ndocs/\n  compliance/           # archived compliance reports\n  meeting-notes/        # old meeting notes (or move out of repo entirely)\n\nscripts/\n  migrations/           # one-off migration scripts\n\nconfig/\n  templates/            # config templates\n\npackages/shared/  (or libs/)\n  <specific-module>/    # the helper functions used by 2 services \u2014 split by responsibility, not dumped together\n\n<service-a>/, <service-b>/\n  # each service's own helpers move into that service's own utils, not a shared dumping ground\n```\n\nFor `utils` (30 files): the fix isn't a new top-level folder, it's usually **deleting the concept of a generic \"utils\" folder** and instead grouping by what the code actually does (e.g., `date/`, `string/`, `http/`, `validation/`) or, better, colocating helpers next to the single feature/service that uses them if they're not truly shared.\n\nIf you can point me at the actual repo path (or run this from within it), I can list the real files, categorize them, and give you a specific migration plan with exact file moves and updated import paths rather than a generic template.",
+  "ttft_ms": 2497,
+  "ttft_stream_ms": 2044,
+  "time_to_request_ms": 44,
+  "time_to_request_from_spawn_ms": 838116,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025716752.3542,
+  "type": "result",
+  "duration_ms": 16472,
+  "uuid": "23b165df-4f9a-4885-98c5-4246a882d25c",
+  "_skill": "organizing-project-folders",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "3c0342844fd85d63a677995ba34ac215eb41302896467edfe33343249a2ab95d"
+}

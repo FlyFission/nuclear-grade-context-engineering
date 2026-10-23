@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 21510,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.04230199999999999,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2241,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1746,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2241,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1746,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2241,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2241
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 706,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000776,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1746,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2241,
+      "webSearchRequests": 0,
+      "costUSD": 0.041525999999999993,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before drafting this, one thing jumps out: the evidence you have doesn't actually support the claim as worded, and locking it as-is creates risk at the review.\n\n**The core problem:** \"All customer PII is encrypted at rest\" is a statement about the *current state of data in production*. Your evidence \u2014 unit tests on the write path, a code review sign-off, and a prior rollout on a different service \u2014 only supports \"new/updated writes get encrypted.\" The lazy re-encryption design (re-encrypt on next update) means rows that aren't touched stay in plaintext indefinitely. Some rows \u2014 dormant accounts, closed records, rarely-updated fields \u2014 may never get re-encrypted at all. That's not a minor caveat; it directly contradicts the word \"All.\"\n\nIf this goes into an evidence packet as \"Met\" and someone later pulls a random sample of prod rows, or an auditor asks \"what % is actually encrypted right now,\" the claim fails and it looks like the trace was rubber-stamped.\n\nHere's the trace row I'd actually defend on Thursday:\n\n| Field | Content |\n|---|---|\n| **Claim** | All customer PII is encrypted at rest |\n| **Status** | \u26a0\ufe0f Partial \u2014 not met as literally stated |\n| **Evidence** | AES-256 write-path unit tests (green in CI); Priya's sign-off on crypto module PR (code review, not prod verification) |\n| **Gap** | (1) Migration is lazy \u2014 existing rows are only encrypted on next update, so an unknown subset of prod PII remains plaintext at rest with no forced remediation date. (2) No query/report evidence showing current % of rows actually encrypted. (3) No decryption/read-path test evidence, only write path. (4) No evidence covering PII outside the primary table \u2014 backups, replicas, logs, caches, analytics exports. (5) Billing service precedent is anecdotal, not verification for this system. |\n| **Non-claims** | This does NOT claim: 100% of existing PII is currently encrypted; a completion deadline/backfill exists for dormant rows; read/decrypt paths are covered by tests; PII in backups/logs/downstream systems is encrypted |\n\n**Recommendation:** either (a) reword the claim to \"All customer PII writes/updates are encrypted at rest going forward; legacy rows migrate opportunistically on update\" and get that scoped version approved, or (b) if \"All\" must hold, get a prod query showing current encrypted-row percentage and a stated plan/deadline for the remaining rows before you can call it Met.\n\nWant me to draft the reworded claim language too, or do you want to take the gap list to Priya/team first?",
+  "ttft_ms": 10848,
+  "ttft_stream_ms": 1427,
+  "time_to_request_ms": 35,
+  "time_to_request_from_spawn_ms": 659704,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078434551.553,
+  "type": "result",
+  "duration_ms": 23269,
+  "uuid": "5c49916c-f0c8-46f6-939e-8cbfa03769e4",
+  "_spec": "4639696e9af9dfdf5d678b63f2c3672e7ec8b932aea95133c0fcd5cce21bb6fe",
+  "_skill": "proving-claims",
+  "_cand": 0,
+  "_trial": 1
+}

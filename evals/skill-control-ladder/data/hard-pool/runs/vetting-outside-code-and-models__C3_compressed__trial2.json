@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 23925,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.04443300000000001,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2407,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1820,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2407,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1820,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2407,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2407
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 691,
+      "outputTokens": 22,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000801,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1820,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2407,
+      "webSearchRequests": 0,
+      "costUSD": 0.043632000000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A few things worth checking before Friday, since a demo running smoothly twice doesn't cover the parts that matter in a dispute:\n\n**Audit trail / legal admissibility** \u2014 \"legally binding with a full audit trail\" is a marketing claim, not a spec. Get the actual documentation of what the certificate contains (signer IP, timestamp, consent language, and critically, a hash tying the certificate to the exact signed PDF bytes). Have legal confirm it satisfies ESIGN/UETA requirements for your jurisdiction \u2014 this shouldn't be an engineering judgment call, and it's the whole point of storing the certificate.\n\n**Certificate-to-document integrity** \u2014 if a customer disputes a contract, you need cryptographic proof the PDF you're storing is exactly what they signed, not just \"we have a certificate that says someone signed something.\" Confirm the certificate includes a hash/checksum of the document you can verify against your stored copy.\n\n**Capture path, not just pull path** \u2014 \"REST API for pulling completed documents\" implies polling or on-demand fetch. You want an event-driven webhook that archives the signed doc + certificate immediately on completion, with retry/idempotency handling. If you rely on pulling later and miss a doc, you have no record for the one contract that actually gets disputed.\n\n**99.98% uptime** is a vendor-reported aggregate \u2014 check the incident history behind it (degraded webhook delivery, API error rates), not just the topline number.\n\n**Signer authentication** \u2014 how does SignFast verify the actual signer (email link only vs. KBA/2FA)? Weak signer auth is often where \"legally binding\" claims fall apart in practice.\n\n**Security posture** \u2014 for a system handling customer PII/contracts, ask for their SOC 2 report rather than relying on the marketing site.\n\nMain tradeoff: the widget integration itself is genuinely a small lift, but the legal-admissibility and data-integrity verification isn't something Friday's timeline should compress \u2014 I'd decouple \"widget ships Friday\" from \"legal has signed off on audit trail sufficiency,\" and treat the latter as a blocking item that can land slightly after if needed.",
+  "ttft_ms": 14782,
+  "ttft_stream_ms": 855,
+  "time_to_request_ms": 28,
+  "time_to_request_from_spawn_ms": 1986499,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079761351.4377,
+  "type": "result",
+  "duration_ms": 24444,
+  "uuid": "7ee3ae32-ef37-4b6c-8ef9-3d32582278b8",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "018284c7113663fa6b7e31fe240e5cc7f7bc238b43ce608a79a88dbb916fd6df"
+}

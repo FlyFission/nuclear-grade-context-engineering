@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 10761,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0501341,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 5312,
+    "cache_read_input_tokens": 28287,
+    "output_tokens": 606,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 5312,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 94,
+        "cache_read_input_tokens": 11355,
+        "cache_creation_input_tokens": 237,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 237
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 588,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000668,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 606,
+      "cacheReadInputTokens": 28287,
+      "cacheCreationInputTokens": 5312,
+      "webSearchRequests": 0,
+      "costUSD": 0.0494661,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This repo is empty \u2014 there's no `src/config/dashboard.ts` or any files at all in this working directory. Are you sure this is the right repo/path? Point me to the correct location (or confirm you want me to create it fresh) and I'll make the change and check for other usages of the constant before editing.",
+  "ttft_ms": 1580,
+  "ttft_stream_ms": 800,
+  "time_to_request_ms": 27,
+  "time_to_request_from_spawn_ms": 1594891,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594589316.7202,
+  "type": "result",
+  "duration_ms": 11056,
+  "uuid": "523d8c40-6f60-4db1-a7f5-ce838ef2a5bf",
+  "_skill": "questioning-attitude",
+  "_arm": "C4_full_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "2a057b5af9afd3f94306af65775a742f9e89488aebdf5147ba400f84d383fec3"
+}

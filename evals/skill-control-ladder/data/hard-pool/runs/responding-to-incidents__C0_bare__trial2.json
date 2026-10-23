@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 25615,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0549045,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 3093,
+    "cache_read_input_tokens": 23825,
+    "output_tokens": 1895,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3093,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1040,
+        "cache_read_input_tokens": 9206,
+        "cache_creation_input_tokens": 158,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 158
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 686,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007559999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1895,
+      "cacheReadInputTokens": 23825,
+      "cacheCreationInputTokens": 3093,
+      "webSearchRequests": 0,
+      "costUSD": 0.0541485,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This repo is empty \u2014 no dashboard, monitoring, or infra config in it \u2014 so I can't independently verify the dashboard for you. I don't have access to your observability stack (Datadog/Grafana/etc.) from here.\n\nBut there's a real gap worth flagging before you post the all-clear: you said EU checkout traffic moved to the new routing cluster last month, and this is the *same* dashboard you've used all year. If that dashboard's queries/data source weren't updated to include the new cluster, \"flat at zero for 25 minutes\" could mean \"no data coming in from EU\" rather than \"no errors\" \u2014 a silent blind spot, not a resolved incident.\n\nBefore closing, I'd check one thing specifically: confirm the dashboard shows non-zero *request volume* from the EU/new-cluster traffic during this window, not just zero errors. If volume is also zero or suspiciously low, the dashboard likely isn't capturing that cluster at all, and you'd want a quick spot-check of EU checkout error rates directly on the new cluster before calling it resolved.\n\nThat's a 2-minute check that could save you from reopening this after the all-hands \u2014 want me to help draft the all-clear message with a caveat noting that EU-cluster verification is pending, so you're not blocked either way?",
+  "ttft_ms": 7528,
+  "ttft_stream_ms": 1556,
+  "time_to_request_ms": 94,
+  "time_to_request_from_spawn_ms": 1913576,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079688367.8755,
+  "type": "result",
+  "duration_ms": 26761,
+  "uuid": "63b88772-866f-41a8-87d3-b8ef574774aa",
+  "_skill": "responding-to-incidents",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "d645d044885af9789439b8b87c212db8c012b173ef2f8687cf14720b021211fd"
+}

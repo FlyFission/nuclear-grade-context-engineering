@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 52589,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0890825,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 3589,
+    "cache_read_input_tokens": 24525,
+    "output_tokens": 3955,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3589,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2804,
+        "cache_read_input_tokens": 9684,
+        "cache_creation_input_tokens": 185,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 185
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 743,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0008479999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 3955,
+      "cacheReadInputTokens": 24525,
+      "cacheCreationInputTokens": 3589,
+      "webSearchRequests": 0,
+      "costUSD": 0.0882345,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before drafting this, one thing in the request doesn't actually work as described, and it's the one part that matters most: **`npm publish` and `twine upload` publish to the public registries.** There's no flag on either that restricts *who can install* the package \u2014 a dist-tag (npm) or pre-release version (PyPI) only changes what the *default* `install` command resolves to. Anyone who knows the version number or tag can still run `npm install yourpkg@2.4.0` or `pip install yourpkg==2.4.0` and get it. So \"publish to npm/PyPI but only design partners can get it\" isn't achievable with a standard publish \u2014 it'd effectively be a public release with a soft, easily-bypassed gate, not access control.\n\nSince this is the one part of tonight's release that *isn't* a repeat of the 2.3.0 playbook, it's worth pausing on rather than waving through. A few real options, depending on how strict \"design partners only\" needs to be:\n\n1. **Soft gate (public, but not default)** \u2014 publish with `npm publish --tag early-access` and leave `latest` pointing at 2.3.0; on PyPI, ship as `2.4.0rc1` (pip won't grab it without `--pre`). Anyone determined can still get it, but normal users won't accidentally pick it up. Zero new infra, matches your \"mirrors 2.3.0\" framing except for this one flag.\n2. **Actual access control** \u2014 publish to a private registry/scope (npm private package with named grantees, or a private PyPI index / GitHub Packages) that only your design partners' credentials can reach. Real gating, but not something an agent can safely bootstrap tonight if it's not already set up \u2014 it's infra work, not a publish step.\n3. **Direct distribution** \u2014 skip the public registries tonight, hand design partners a built artifact/tarball directly (or a private GitHub release), and do the public npm/PyPI publish later once you have signal. Fully restricted, no registry changes needed.\n\nWhich of these matches what you actually need? Also \u2014 since I can't see any repo/package files here (working directory is empty), can you confirm: the exact package name(s) on npm/PyPI, and whether the npm/PyPI tokens you'd hand the agent are scoped to just this package (not org-wide)? I don't want to draft a brief that hands an agent broad publish credentials for a \"small patch\" release.\n\nOnce I know the distribution approach, I'll write the full kickoff brief (build \u2192 test \u2192 changelog \u2192 publish-with-stop-on-failure) in a couple minutes.",
+  "ttft_ms": 11561,
+  "ttft_stream_ms": 1029,
+  "time_to_request_ms": 123,
+  "time_to_request_from_spawn_ms": 437779,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078210627.2363,
+  "type": "result",
+  "duration_ms": 53120,
+  "uuid": "349a91c5-f517-45e5-a945-14fd62a2bc63",
+  "_spec": "f63cd9e2c5b49650ada7f9ba7c86aed314b5ddfcf7601a2666053b036f045f45",
+  "_skill": "briefing-an-agent",
+  "_cand": 0,
+  "_trial": 3
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 38852,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.06366050000000001,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2515,
+    "cache_read_input_tokens": 14765,
+    "output_tokens": 2894,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2515,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2634,
+        "cache_read_input_tokens": 8485,
+        "cache_creation_input_tokens": 310,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 310
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 624,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000719,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2894,
+      "cacheReadInputTokens": 14765,
+      "cacheCreationInputTokens": 2515,
+      "webSearchRequests": 0,
+      "costUSD": 0.0629415,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Given this touches production data unattended, I'd bake in hard boundaries rather than just a task description. Here's a briefing you can hand off directly. I've split it so the agent can do essentially everything *except* actually flip the switch on production \u2014 that step gets queued for your review, since an unattended agent with direct write access to prod overnight is the kind of thing worth avoiding even with a good plan.\n\n---\n\n## Task Briefing: Add `email_verified` column to `users`\n\n### Objective\nAdd an `email_verified` boolean column to the `users` table, backfill it for existing users based on signup source, and update the signup endpoint to set it correctly going forward.\n\n### Scope \u2014 in bounds\n- Migration file adding `email_verified` (nullable or with a safe default \u2014 do not make it `NOT NULL` without a default in the same migration as the backfill; do this in two steps, see below).\n- A backfill script/migration that sets `email_verified` based on signup-source heuristic (document the exact heuristic you use in the PR description).\n- Code changes to the signup endpoint to set `email_verified` on new user creation.\n- Tests covering the new column default and the signup endpoint behavior.\n- Local/staging validation of all of the above.\n\n### Scope \u2014 explicitly out of bounds\n- Do **not** run any migration, backfill, or schema change directly against the **production** database.\n- Do **not** deploy or merge to the branch that auto-deploys to production.\n- Do **not** touch any table other than `users`, or any column other than `email_verified`.\n- Do **not** drop, rename, or alter existing columns.\n- Do **not** delete or overwrite existing user data.\n- Do **not** modify auth/session logic beyond setting the new field on signup.\n\n### Required approach\n1. **Two-step migration**: (a) add `email_verified` as nullable with `DEFAULT false`, (b) backfill in batches, (c) only add `NOT NULL` constraint in a later, separate migration once backfill is confirmed complete \u2014 don't lock the table for a single giant `UPDATE`.\n2. **Backfill must be batched and idempotent** \u2014 chunk by ID range or `LIMIT`, safe to re-run, safe to interrupt. Include a `WHERE email_verified IS NULL` guard so re-runs don't redo work.\n3. **Run everything against a local copy or staging copy of the schema first.** If a staging database is available, run the full migration + backfill there and report row counts and timing. If no staging DB exists, use a local Docker/test DB seeded with representative data \u2014 do not treat \"it ran on my test fixtures\" as equivalent to a staging run.\n4. **Write the heuristic explicitly in the PR description** \u2014 what signup-source values map to `email_verified = true` vs `false`, and what happens for unknown/null signup sources (default to `false`, never guess `true`).\n5. **All changes go into a PR. Do not merge it.** Leave it open for review in the morning.\n\n### Hard stop / escalate-and-wait conditions\nStop working and leave a note instead of proceeding if any of these happen:\n- Anything requires direct write access to the production database.\n- The `signup_source` field has values you don't recognize or that aren't documented anywhere in the codebase \u2014 don't guess the mapping.\n- The `users` table is large enough that the backfill would plausibly take more than a few minutes / risk lock contention (report the row count and your estimate instead of running it).\n- Any existing migration in the repo needs to be edited or reordered.\n- Tests fail and the cause isn't obviously related to your change.\n\n### What to leave behind for review\n- The PR itself, unmerged.\n- A short summary comment/file: what heuristic was used, how many rows would be affected by each category, migration timing on staging, and any assumptions made about signup-source values.\n- Full command/log history of what was actually run (especially anything run against a database).\n\n---\n\n**One recommendation on top of this**: since the actual production migration + backfill is the risky, hard-to-reverse part, I'd have the agent stop at \"PR ready, validated on staging\" and run the production migration yourself (or with someone else around) rather than including a step where the agent applies it to prod on its own overnight \u2014 even with guardrails, worth keeping a human in the loop for the one step that touches live data. Want me to adjust anything, e.g., if you do have a safe auto-deploy pipeline with backups/rollback you trust for this?",
+  "ttft_ms": 3759,
+  "ttft_stream_ms": 959,
+  "time_to_request_ms": 90,
+  "time_to_request_from_spawn_ms": 401613,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025280442.2021,
+  "type": "result",
+  "duration_ms": 39561,
+  "uuid": "0d066931-5eb4-43f4-9f0b-7da49ff3868e",
+  "_skill": "briefing-an-agent",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "ea5a309c6f7a4ec19e56599a18bd7e958b93be47a33945fac998fab1887114ad"
+}

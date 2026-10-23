@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 14832,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.032014,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2124,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1113,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2124,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1113,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2124,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2124
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 615,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000685,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1113,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2124,
+      "webSearchRequests": 0,
+      "costUSD": 0.031329,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 this wording has three real legal/compliance problems, not just style nits:\n\n1. **\"open and safe... for production payment systems\"** \u2014 MIT licensing has nothing to do with safety or fitness for use. In fact, the MIT license explicitly disclaims all warranties (\"provided 'as is', without warranty of any kind\"). Saying the license makes it \"safe\" directly contradicts the license text itself.\n\n2. **\"has passed all our internal tests\"** \u2014 Unverifiable by a reader and easy to read as an assurance of correctness/security. If this claim isn't backed by something you'd be comfortable showing (test reports, coverage numbers), it's an overstatement.\n\n3. **\"fully compliant with PCI security standards\"** \u2014 This is the biggest issue. PCI DSS compliance is a formal, audited status (typically via a QSA assessment) that applies to a *system as deployed and operated*, not to a library in isolation. A library can help with compliance, but it can't be \"PCI compliant\" on its own, and claiming full compliance without an actual audit/attestation is a false certification claim \u2014 the kind of thing that creates real liability if a downstream user relies on it and gets breached or fails an audit.\n\nSuggested rewrite that stays inside what you can actually back up:\n\n> \"PayCheck is released under the MIT license. It is provided as-is, with no warranty of any kind (see LICENSE). PayCheck implements validation logic aligned with common PCI DSS requirements, but using this library does not by itself make your system PCI compliant \u2014 compliance depends on your full implementation, infrastructure, and a qualified assessment. We run [X] automated tests as part of CI; see [link] for current results.\"\n\nAdjust the bracketed parts to match what you can actually point to (test suite link, any specific PCI DSS requirements the code addresses, etc.). I'd send this back to marketing/legal with the PCI line flagged as the one that needs to change before publishing \u2014 that's the one with real legal exposure. Worth a final sign-off from actual legal counsel, not just this check.",
+  "ttft_ms": 6619,
+  "ttft_stream_ms": 1115,
+  "time_to_request_ms": 42,
+  "time_to_request_from_spawn_ms": 1466720,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785790104848.728,
+  "type": "result",
+  "duration_ms": 15490,
+  "uuid": "31fcd82a-0369-4a72-9771-b7d6c3925eb6",
+  "_skill": "checking-legal-and-safety-wording",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "d4071e64a8bd1cbcbe3a7e13679c0d60537e54c0d20951703d0ecbdcd84d5505"
+}

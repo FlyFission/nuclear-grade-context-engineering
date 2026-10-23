@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 37944,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0727815,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2930,
+    "cache_read_input_tokens": 32385,
+    "output_tokens": 2985,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2930,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2330,
+        "cache_read_input_tokens": 8975,
+        "cache_creation_input_tokens": 235,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 235
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 607,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000687,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 2985,
+      "cacheReadInputTokens": 32385,
+      "cacheCreationInputTokens": 2930,
+      "webSearchRequests": 0,
+      "costUSD": 0.0720945,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Mode: **Standard-plus** for the prompt-template edit (bundled with a Quick-mode dependency bump). The fact that sets it: you're changing the system prompt sent to a live model, not just a dependency version \u2014 that's a behavior change to a running AI system, and it shouldn't ride along in the same low-scrutiny commit as a patch bump.\n\nTwo issues before I touch anything:\n\n1. **This working directory is empty** \u2014 no `package.json`, no prompt template file exists here. I can't find the files you're describing. Can you point me to the correct paths (or confirm this is the right repo/branch)?\n\n2. **I'd split these into two changes even once we find the files:**\n   - *Quick*: `openai` 4.2.0 \u2192 4.3.1 is a patch bump, low risk \u2014 fine to do fast, though worth a 30-second skim of the changelog between those versions for breaking changes before merging.\n   - *Standard-plus*: the system-prompt instruction change needs its own record \u2014 what the new instruction says, why, and how you'll verify it doesn't regress existing behavior (e.g., run it against your existing eval/test prompts, not just \"looks fine locally\"). Prompt changes are easy to write and easy to get subtly wrong, and mixing it into a dependency-bump PR makes it harder to revert independently if it causes a behavior regression.\n\nOnce you give me the file paths, I can make the dependency edit immediately. For the prompt line, tell me the exact instruction you want added and I'll make the edit, but I'd suggest keeping it as a separate commit/PR even if merged the same day.",
+  "ttft_ms": 3452,
+  "ttft_stream_ms": 888,
+  "time_to_request_ms": 73,
+  "time_to_request_from_spawn_ms": 1198135,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785026074618.7903,
+  "type": "result",
+  "duration_ms": 38151,
+  "uuid": "476ba083-3803-4f0e-8fca-d23af3541469",
+  "_skill": "using-nuclear-grade",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "49a01bec4e54568d7af751729e41660ee715fb9b2e49d07086725e909769f6bb"
+}

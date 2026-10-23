@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 41047,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0687363,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2744,
+    "cache_read_input_tokens": 32381,
+    "output_tokens": 2784,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2744,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2438,
+        "cache_read_input_tokens": 8881,
+        "cache_creation_input_tokens": 143,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 143
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 689,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007740000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 2784,
+      "cacheReadInputTokens": 32381,
+      "cacheCreationInputTokens": 2744,
+      "webSearchRequests": 0,
+      "costUSD": 0.0679623,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't have this repo's actual source checked out here (no `package.json` or lockfile found in this working directory), so I can't verify any of the claims directly \u2014 treat the below as what I'd want confirmed before merging, not a code review I've done.\n\nA few things worth flagging:\n\n**\"Patch-ish\" is misleading.** 3.2.1 \u2192 3.3.0 is a semver *minor* bump, and the changelog itself says it changed international character handling \u2014 that's a deliberate behavior change to the validation logic, not a bugfix. \"Same regex, same length limits, as far as I can tell\" is an assumption, not something a two-line `package.json` diff can confirm. Worth actually diffing the library's source (or at least its own test/changelog details) for what specifically changed in character acceptance/normalization.\n\n**The real risk isn't the DB, it's identity collision/spoofing.** You're right that parameterized queries make injection moot. The risk with loosened Unicode acceptance on *usernames* is homoglyph/confusable characters (e.g., Cyrillic \"\u0430\" vs Latin \"a\") and normalization form changes (NFC/NFKC) \u2014 these can let someone register a username that's visually identical to an existing one, or silently change what \"unique\" means if normalization behavior shifted between versions. Your uniqueness tests passing only proves the *old* fixture set still passes; it says nothing about new Unicode inputs that weren't in that suite before.\n\n**Also worth 5 minutes:** confirm the lockfile diff matches expectations (not just `package.json` \u2014 check no unexpected transitive deps came along), and glance at the package's npm/GitHub advisory history for 3.3.0 given it's a version bump on a validation-critical path.\n\nI wouldn't block Monday's release over this, but before merging I'd want: (1) a quick look at what the Unicode change actually does (normalization + confusables, not just \"accepts more characters\"), and (2) one or two new test cases with mixed-script/lookalike usernames to confirm uniqueness still behaves as expected. That's a much smaller ask than reverting, and it directly covers the failure mode a green test suite wouldn't catch.",
+  "ttft_ms": 1728,
+  "ttft_stream_ms": 974,
+  "time_to_request_ms": 24,
+  "time_to_request_from_spawn_ms": 891585,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078666429.3828,
+  "type": "result",
+  "duration_ms": 43066,
+  "uuid": "4131b707-e761-4173-ae60-1b5bfbd1c7ce",
+  "_spec": "2c1e22f080fc04f125bcc15f2b0eb15412c5f2e089df1bc12541efdf6b0ae992",
+  "_skill": "vetting-outside-code-and-models",
+  "_cand": 1,
+  "_trial": 1
+}

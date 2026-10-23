@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 13423,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.042418199999999996,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 3827,
+    "cache_read_input_tokens": 25874,
+    "output_tokens": 734,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3827,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 437,
+        "cache_read_input_tokens": 9890,
+        "cache_creation_input_tokens": 217,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 217
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 596,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006659999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 734,
+      "cacheReadInputTokens": 25874,
+      "cacheCreationInputTokens": 3827,
+      "webSearchRequests": 0,
+      "costUSD": 0.041752199999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory appears to be empty \u2014 I don't see any files at all in this repo. Could you tell me the path to the script you edited? I'll grep it for leftover `tmp` references directly (this is just a quick cleanup check, not something that needs a formal baseline record).",
+  "ttft_ms": 1702,
+  "ttft_stream_ms": 911,
+  "time_to_request_ms": 29,
+  "time_to_request_from_spawn_ms": 1636979,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594631466.0056,
+  "type": "result",
+  "duration_ms": 12187,
+  "uuid": "b4eda120-98fe-4145-bd15-b1e0ed674d67",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "9de9d0c7d4ee69055c529c2ea6656e39dba2561066434768c35b1bfc6f2a3bda"
+}

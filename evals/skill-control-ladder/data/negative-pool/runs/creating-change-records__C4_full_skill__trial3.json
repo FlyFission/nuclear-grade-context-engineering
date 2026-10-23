@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 6709,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0353843,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 4186,
+    "cache_read_input_tokens": 16461,
+    "output_tokens": 308,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4186,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 176,
+        "cache_read_input_tokens": 10181,
+        "cache_creation_input_tokens": 285,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 285
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 613,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000698,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 308,
+      "cacheReadInputTokens": 16461,
+      "cacheCreationInputTokens": 4186,
+      "webSearchRequests": 0,
+      "costUSD": 0.034686299999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No need to touch the project or make a change record for this \u2014 it's a throwaway local script. Here it is:\n\n```python\nimport os\nfrom pathlib import Path\n\ndownloads = Path.home() / \"Downloads\"\n\nfor f in downloads.glob(\"tmp_*\"):\n    new_name = f.with_name(f.name[len(\"tmp_\"):])\n    f.rename(new_name)\n    print(f\"{f.name} -> {new_name.name}\")\n```\n\nAdjust `downloads` if your folder is elsewhere, then just run it once with `python rename.py`.",
+  "ttft_ms": 2024,
+  "ttft_stream_ms": 929,
+  "time_to_request_ms": 77,
+  "time_to_request_from_spawn_ms": 1437998,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594432060.5237,
+  "type": "result",
+  "duration_ms": 7195,
+  "uuid": "fde8c4ec-dc90-4cd8-8f08-d80cf4a2102c",
+  "_skill": "creating-change-records",
+  "_arm": "C4_full_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "1b3c707912dbc952b4959982593e47567c0121e752999d8bf0a07eb12e4b99f7"
+}

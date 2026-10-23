@@ -1,0 +1,92 @@
+{
+  "is_error": false,
+  "duration_api_ms": 18975,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.038718899999999994,
+  "usage": {
+    "input_tokens": 10,
+    "cache_creation_input_tokens": 2720,
+    "cache_read_input_tokens": 40193,
+    "output_tokens": 643,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2720,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 135,
+        "cache_read_input_tokens": 8722,
+        "cache_creation_input_tokens": 269,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 269
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 596,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006659999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 10,
+      "outputTokens": 643,
+      "cacheReadInputTokens": 40193,
+      "cacheCreationInputTokens": 2720,
+      "webSearchRequests": 0,
+      "costUSD": 0.038052899999999994,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [
+    {
+      "tool_name": "Read",
+      "tool_use_id": "toolu_01RZBQzZXFuc8vMs4wdNke3A",
+      "tool_input": {
+        "file_path": "/dev/null"
+      }
+    }
+  ],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This working directory appears to be empty \u2014 no files found at all, so there's no script here for me to check against `tmp`/`rowCount`.\n\nCould you point me to the file (or repo) with the renamed variable? Also worth noting: I don't have a Bash/shell tool available in this session, so I can't run `git diff`/`git log` directly \u2014 I'll need to use Read/Glob/Grep on the actual file path once you share it.",
+  "ttft_ms": 2456,
+  "ttft_stream_ms": 1170,
+  "time_to_request_ms": 46,
+  "time_to_request_from_spawn_ms": 1621343,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594615750.6719,
+  "type": "result",
+  "duration_ms": 19499,
+  "uuid": "11ea966e-5b8e-45ac-8da0-3afb6ded19ee",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C0_bare",
+  "_trial": 3,
+  "_input_spec_sha256": "f19fbfa19dd9d8d790749a633bcaf7cce95921e728a75ed240d827a08021baf7"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 12506,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0311667,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2475,
+    "cache_read_input_tokens": 22889,
+    "output_tokens": 584,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2475,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 219,
+        "cache_read_input_tokens": 8398,
+        "cache_creation_input_tokens": 348,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 348
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 597,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000672,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 584,
+      "cacheReadInputTokens": 22889,
+      "cacheCreationInputTokens": 2475,
+      "webSearchRequests": 0,
+      "costUSD": 0.0304947,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I searched this working directory (`responding-to-incidents_C0_bare_1`) but found no `.env.dev` file and no reference to `apiTimeout` anywhere in the codebase \u2014 this repo doesn't seem to contain your dev server project.\n\nCould you point me to the correct project directory (or the path to the startup script), and I'll update the reference there?",
+  "ttft_ms": 1469,
+  "ttft_stream_ms": 1081,
+  "time_to_request_ms": 115,
+  "time_to_request_from_spawn_ms": 1671050,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594664460.5024,
+  "type": "result",
+  "duration_ms": 10668,
+  "uuid": "86712fb3-17e3-445e-9310-b3f66f0174bb",
+  "_skill": "responding-to-incidents",
+  "_arm": "C0_bare",
+  "_trial": 1,
+  "_input_spec_sha256": "63e468e68dfa69b13e152f461da3b08888e64049558fcde9a33fd55ac9a708df"
+}

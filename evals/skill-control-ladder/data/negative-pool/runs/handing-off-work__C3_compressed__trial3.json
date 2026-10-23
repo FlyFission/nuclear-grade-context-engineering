@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 21567,
+  "num_turns": 6,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0521601,
+  "usage": {
+    "input_tokens": 12,
+    "cache_creation_input_tokens": 3416,
+    "cache_read_input_tokens": 50857,
+    "output_tokens": 1046,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3416,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 160,
+        "cache_read_input_tokens": 9359,
+        "cache_creation_input_tokens": 337,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 337
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 581,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006810000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 12,
+      "outputTokens": 1046,
+      "cacheReadInputTokens": 50857,
+      "cacheCreationInputTokens": 3416,
+      "webSearchRequests": 0,
+      "costUSD": 0.0514791,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "There's nothing here \u2014 the working directory is entirely empty, not even a `.git` folder, so there's no `feature/search-filters` branch or any files with `tempFlag` to rename.\n\nThis doesn't match a repo I can inspect or verify \u2014 I can't confirm a \"search filter PR from this morning,\" an existing `feature/search-filters` branch, or the three files you mean, since nothing exists in this location. Can you point me to the correct repo/directory, or if you're working elsewhere, share that path?",
+  "ttft_ms": 2151,
+  "ttft_stream_ms": 1035,
+  "time_to_request_ms": 53,
+  "time_to_request_from_spawn_ms": 1499511,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594494002.8647,
+  "type": "result",
+  "duration_ms": 20790,
+  "uuid": "5b431e78-1577-4521-ac3b-3c18c6770b04",
+  "_skill": "handing-off-work",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "19b1b0e3807574426b55b14f3f50bd8bde01283226eec446149e8d0fcdd2a6e3"
+}

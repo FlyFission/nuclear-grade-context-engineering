@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 38114,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.08388960000000001,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 6016,
+    "cache_read_input_tokens": 16802,
+    "output_tokens": 2796,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 6016,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1130,
+        "cache_read_input_tokens": 10522,
+        "cache_creation_input_tokens": 1774,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1774
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 691,
+      "outputTokens": 22,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000801,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2796,
+      "cacheReadInputTokens": 16802,
+      "cacheCreationInputTokens": 6016,
+      "webSearchRequests": 0,
+      "costUSD": 0.0830886,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No existing supplier-trust docs in this repo, so here's the assessment directly. A few things here are worth separating from what's actually been verified.\n\n**What you've actually verified vs. what's a vendor claim:**\n- \"Legally binding with full audit trail\" \u2014 that's SignFast's marketing copy. Nobody on your side has checked *how* the audit trail satisfies ESIGN Act / UETA (consent capture, intent-to-sign, identity binding, tamper-evidence). This is the characteristic your whole \"pull up the certificate if disputed\" plan depends on, and it's currently unverified.\n- 99.98% uptime \u2014 that's status-page uptime for their platform being reachable. It says nothing about whether completed-document webhooks fire reliably or whether a doc can complete on their end but never sync to you. Different failure mode, same \"reliability\" label.\n- Two happy-path demo runs by Sales \u2014 real, but it only proves the golden path works. It doesn't cover expired sign links, declined signatures, multi-signer ordering, partial completion, or webhook retry/idempotency, which are exactly the cases that matter for a contract flow.\n\n**Critical characteristics I'd name for this use, and what's still open:**\n\n| Characteristic | Status |\n|---|---|\n| Legal validity / audit trail meets ESIGN/UETA | Vendor claim only \u2014 unverified |\n| Completion certificate is independently checkable (cryptographic hash/signature, not just a PDF that says \"trust us\") | Unverified \u2014 pull an actual sample cert and inspect it |\n| Identity verification method for signers (email link only vs. OTP/KBA) | Unknown \u2014 affects how strong your evidence is in a dispute |\n| Webhook/document-delivery reliability (distinct from platform uptime) | Unverified |\n| Failure/edge-case behavior (expired, declined, multi-party) | Untested |\n| PII handling \u2014 DPA, SOC 2, data residency for contract data | Not mentioned |\n\n**Where this blocks vs. where it doesn't:**\n\nThe legal-bindingness and audit-trail-integrity items are the ones I wouldn't let engineering self-certify. That's the specific case the skill flags for escalation \u2014 you're leaning on a vendor's \"legally binding\" claim as evidence for handling real contract disputes, and that needs a qualified (legal/compliance) review of an actual sample completion certificate, not just the sales page. Given the Friday date, I'd decouple: ship the technical integration on schedule if you want, but treat \"this certificate is sufficient in a dispute\" as a separate gate that legal signs off on, with a note that until then you're shipping with that risk open.\n\nEverything else (webhook reliability, edge cases, cert format) is verifiable by your team in a day \u2014 pull a real certificate from a completed test doc and inspect it, and test the non-happy paths yourselves rather than trusting Sales' two runs.\n\n**Re-check trigger:** since this is a hosted API/widget you don't pin a version of, any SignFast change to their audit-trail/cert format or signing flow should re-trigger this check \u2014 track record only holds for the version you actually looked at.\n\nWant me to turn this into a `supplier-trust.md` for the repo, or help write the specific test cases for the edge-case verification?",
+  "ttft_ms": 21001,
+  "ttft_stream_ms": 1277,
+  "time_to_request_ms": 35,
+  "time_to_request_from_spawn_ms": 1997990,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079772643.3572,
+  "type": "result",
+  "duration_ms": 37936,
+  "uuid": "d7243774-99d2-4d96-88e9-902c470d87a4",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "4e2a349dfe751bd5409c41cabb272530d8da73040217a1865631cf5245591c01"
+}

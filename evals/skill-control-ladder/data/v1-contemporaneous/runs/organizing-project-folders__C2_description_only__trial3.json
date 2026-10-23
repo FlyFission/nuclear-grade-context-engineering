@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 35477,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0636244,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2592,
+    "cache_read_input_tokens": 23468,
+    "output_tokens": 2687,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2592,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2416,
+        "cache_read_input_tokens": 8745,
+        "cache_creation_input_tokens": 127,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 127
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 634,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000709,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2687,
+      "cacheReadInputTokens": 23468,
+      "cacheCreationInputTokens": 2592,
+      "webSearchRequests": 0,
+      "costUSD": 0.0629154,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This repo is empty here, so I can't inspect the actual `misc`/`utils` files \u2014 I'll propose a target structure based on your description, plus the sorting logic you'd apply to place each of the ~77 files.\n\n**Core problem with `misc` and `utils`:** they're grouped by \"we didn't know where else to put it,\" not by what actually changes together or what happens to the file over its lifetime. Splitting by *lifecycle* fixes that:\n\n```\n/config\n  /templates/          # config templates, versioned with the services that consume them\n                        # edited occasionally when config schema changes\n\n/scripts\n  /migrations/          # one-off, already-run migration scripts \u2014 historical record, not live code\n                        # name with date prefix: 2024-03-14-backfill-user-emails.sql\n                        # never edited after merge, only added to\n\n/shared\n  /<domain-name>/       # e.g. shared/auth/, shared/http/, shared/formatting/\n                        # only code genuinely used by 2+ services lives here\n                        # one folder per capability, not one big bucket\n\n/docs\n  /compliance-archive/  # archived compliance reports \u2014 read-only reference, sort by year\n                        # docs/compliance-archive/2024/, docs/compliance-archive/2025/\n  /meeting-notes/       # old meeting notes \u2014 consider moving to a wiki/Drive instead of the repo;\n                        # if kept, date-prefixed files: 2025-01-10-standup.md\n```\n\n**Sorting rules for the migration:**\n\n1. **Shared helper functions (used by 2+ services)** \u2192 `shared/<domain>/`, one subfolder per what-it-does (e.g. `shared/validation`, `shared/dates`), not a flat dump. This replaces both parts of `misc` and `utils` that are genuinely shared.\n2. **The ~30 `utils` files nobody can navigate** \u2192 audit each one:\n   - Used by only *one* service? Move it into that service's own folder \u2014 it's not shared, it shouldn't live in a shared space.\n   - Used by 2+ services? Goes into `shared/<domain>` as above, grouped by function (string/formatting, http, dates, testing, etc.), not left flat.\n3. **Config templates** \u2192 `config/templates/`, named for what they configure (`config/templates/service-x.env.template`).\n4. **One-off migration scripts** \u2192 `scripts/migrations/`, date-prefixed, treated as append-only history \u2014 never reorganized once merged.\n5. **Archived compliance reports** \u2192 `docs/compliance-archive/<year>/`, read-only, sorted by year since that's how they'll be looked up (audit purposes).\n6. **Old meeting notes** \u2192 lowest priority to keep in-repo at all; if you keep them, `docs/meeting-notes/`, date-prefixed for sortability.\n\n**Naming convention across all of this:** lowercase-kebab-case, date-prefixed (`YYYY-MM-DD-`) for anything historical/append-only, and a one-line `README.md` per folder stating what belongs there and what doesn't \u2014 that's what prevents the next `misc` from forming.\n\nWant me to point this at your actual repo (or paste a file listing) so I can sort the real 77 files into these buckets rather than working from the description alone?",
+  "ttft_ms": 1600,
+  "ttft_stream_ms": 888,
+  "time_to_request_ms": 27,
+  "time_to_request_from_spawn_ms": 1307698,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789946058.4285,
+  "type": "result",
+  "duration_ms": 36337,
+  "uuid": "f881026a-ea5d-415c-b996-2affd1b3cbc8",
+  "_skill": "organizing-project-folders",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "211db5615828214564220e6f8ce44b5397bbe645e0066b145fbe80cd1cc22859"
+}

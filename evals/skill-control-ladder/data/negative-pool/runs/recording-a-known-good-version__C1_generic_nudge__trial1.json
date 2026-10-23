@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 13191,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0284751,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2478,
+    "cache_read_input_tokens": 23227,
+    "output_tokens": 397,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2478,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 141,
+        "cache_read_input_tokens": 8551,
+        "cache_creation_input_tokens": 207,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 207
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 596,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006659999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 397,
+      "cacheReadInputTokens": 23227,
+      "cacheCreationInputTokens": 2478,
+      "webSearchRequests": 0,
+      "costUSD": 0.0278091,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "It looks like the working directory here is empty \u2014 no files were found at all, not just no matches for `tmp`. I don't have access to a shell tool in this session to run `git status`/`git diff`, so I can't inspect your actual repo contents from here.\n\nCould you either:\n- Paste the diff or the relevant file path/contents, or\n- Confirm the working directory \u2014 this session's project folder appears empty, so I may not be pointed at the right checkout.",
+  "ttft_ms": 1290,
+  "ttft_stream_ms": 884,
+  "time_to_request_ms": 40,
+  "time_to_request_from_spawn_ms": 1621998,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594616232.6306,
+  "type": "result",
+  "duration_ms": 13092,
+  "uuid": "ff677e08-35eb-4942-8692-7de5fc19531d",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "ea91e78369b524cc518d634ccc5ae440586ae9da99a4a52d63925ca0bde18bbd"
+}

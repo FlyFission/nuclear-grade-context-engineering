@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 7918,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0271592,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2498,
+    "cache_read_input_tokens": 23304,
+    "output_tokens": 301,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2498,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 46,
+        "cache_read_input_tokens": 8658,
+        "cache_creation_input_tokens": 120,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 120
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 577,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000647,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 301,
+      "cacheReadInputTokens": 23304,
+      "cacheCreationInputTokens": 2498,
+      "webSearchRequests": 0,
+      "costUSD": 0.026512200000000003,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory appears to be empty \u2014 I can't find the script you mentioned. Could you paste the script content or share its file path so I can help format the output?",
+  "ttft_ms": 1235,
+  "ttft_stream_ms": 846,
+  "time_to_request_ms": 31,
+  "time_to_request_from_spawn_ms": 1644519,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594638264.472,
+  "type": "result",
+  "duration_ms": 7077,
+  "uuid": "d60a28e8-c73b-41fc-b079-f9514f7b2d2d",
+  "_skill": "recording-what-an-agent-did",
+  "_arm": "C1_generic_nudge",
+  "_trial": 2,
+  "_input_spec_sha256": "f90810e7aced963eb8995a66878c99b9533d6e29bc2ad4ca8f621cf9fb10ec05"
+}

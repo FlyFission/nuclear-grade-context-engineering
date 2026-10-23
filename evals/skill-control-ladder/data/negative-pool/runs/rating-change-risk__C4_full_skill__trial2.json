@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 9539,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.049689500000000004,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 5347,
+    "cache_read_input_tokens": 28595,
+    "output_tokens": 554,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 5347,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 81,
+        "cache_read_input_tokens": 11374,
+        "cache_creation_input_tokens": 253,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 253
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000701,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 554,
+      "cacheReadInputTokens": 28595,
+      "cacheCreationInputTokens": 5347,
+      "webSearchRequests": 0,
+      "costUSD": 0.048988500000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I couldn't find a README or CONTRIBUTING.md anywhere in this repo \u2014 this working directory only contains the skill-control-ladder eval data, not an actual project checkout. Can you confirm the repo/path you meant, or point me to it?",
+  "ttft_ms": 2737,
+  "ttft_stream_ms": 836,
+  "time_to_request_ms": 26,
+  "time_to_request_from_spawn_ms": 1611096,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594605360.295,
+  "type": "result",
+  "duration_ms": 8593,
+  "uuid": "a1fbc50b-2421-4fab-8167-6750bf3f3ba8",
+  "_skill": "rating-change-risk",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "54a2b2ee16dd0d35090ca5219db1a94eb442e97b31d6bd3a4c25210862dc0dbd"
+}

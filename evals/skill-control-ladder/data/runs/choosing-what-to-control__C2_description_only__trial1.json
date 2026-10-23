@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 36252,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.055770999999999994,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2166,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2674,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2166,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2674,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2166,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2166
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 700,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000775,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2674,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2166,
+      "webSearchRequests": 0,
+      "costUSD": 0.054995999999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This PR bundles three changes with very different risk profiles and different owners, which is itself worth flagging \u2014 squashing them together makes it easy for the riskiest one to get rubber-stamped under cover of \"it's a tiny diff.\" Here's what to separate out and track:\n\n**1. The `issue_refund` tool \u2014 highest risk, needs the most scrutiny**\nThis is new autonomous authority to move money with no human in the loop. Track as its own controlled unit, independent of \"lines changed\":\n- The $50 cap as an *approved parameter* \u2014 if someone later bumps it to $500 in a routine-looking PR, that should trigger the same review this one gets, not slip through as a config tweak.\n- Authorization/ownership checks: does it verify `order_id` belongs to the requesting customer? Is it idempotent (can't be called twice for the same order)? Is there a per-customer/per-day ceiling, or could 100 calls at $50 each drain far more than intended?\n- Adversarial testing: can a customer prompt-inject their way into refunds they shouldn't get, or manipulate the agent into calling this repeatedly?\n- Audit logging and alerting on every call, live from day one \u2014 you need to *see* drift (unusual volume, repeated calls, near-cap amounts) not discover it in a monthly report.\n- Who actually approved \"no human sign-off up to $50\"? That's a finance/support-ops policy decision, not an engineering one \u2014 it should have a record of sign-off separate from \"LGTM\" on a code review.\n\n**2. The system prompt wording (\"more proactive\")**\nOn its own this looks cosmetic, but paired with #1 it changes the agent's threshold for *using* its new refund power. Track:\n- The specific wording change, not just \"prompt updated\" \u2014 vague adjectives like \"proactive\" are exactly what let scope creep in silently later.\n- A note that future prompt edits touching tone/autonomy near this tool need re-review, even if they look like small copy tweaks. This is the \"drift\" most likely to sneak past reviewers, since prompt diffs get treated as content, not behavior.\n\n**3. Deleting the help-center sentence about human review**\nThis is a public claim, and it's now *false* the moment #1 ships \u2014 worse, deleting it quietly removes the one external signal customers had that a human is checking refunds. Track this as a claims-control item:\n- It should require the same sign-off as the code change, since it's a customer-facing commitment being withdrawn, not a docs cleanup.\n- Going forward, keep an explicit link between \"what the docs promise\" and \"what the code enforces\" \u2014 right now nothing forces those to move together, which is exactly how you get silent drift in either direction (code changes without docs update, or vice versa).\n\n**Before merging**, I'd push back on \"quick smoke test\": a smoke test verifies the happy path works, not that the refund tool can't be abused and can't exceed its cap under adversarial input. At minimum I'd want to see the eval/test coverage for #1 and an explicit named approver for the policy change in #3 before this goes in as one commit.",
+  "ttft_ms": 22991,
+  "ttft_stream_ms": 1052,
+  "time_to_request_ms": 93,
+  "time_to_request_from_spawn_ms": 536734,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025415505.069,
+  "type": "result",
+  "duration_ms": 38968,
+  "uuid": "e6af4fc0-ce44-473f-a65c-de25b1d04a2b",
+  "_skill": "choosing-what-to-control",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "9d23836dc38aee412ba4b94aeb50fbcac54b1182e832a2e8e8ef833c367bbcac"
+}

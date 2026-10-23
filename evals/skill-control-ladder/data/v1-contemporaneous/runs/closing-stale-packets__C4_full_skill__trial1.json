@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 18259,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0530739,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 5541,
+    "cache_read_input_tokens": 17743,
+    "output_tokens": 911,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 5541,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 657,
+        "cache_read_input_tokens": 11463,
+        "cache_creation_input_tokens": 358,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 358
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 748,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000828,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 911,
+      "cacheReadInputTokens": 17743,
+      "cacheCreationInputTokens": 5541,
+      "webSearchRequests": 0,
+      "costUSD": 0.0522459,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "For `add-dark-mode-toggle`: **close it, don't delete it.**\n\nIt has a real rationale worth preserving \u2014 the team explicitly decided not to pursue dark mode this quarter pending design's color palette, and nothing merged. Deleting the packet would erase that decision, so the next person who has the same idea won't know it was already considered and deferred.\n\nAdd a line to one of the packet's files (e.g. the top of its main prompt/summary file) like:\n\n```\nNUCLEAR-GRADE-CLOSED: Dropped for Q3 \u2014 design had not finalized the color palette (decided in team meeting 2026-07-xx). No code merged. Decision owner: <your name>. Revisit once palette is finalized.\n```\n\nThat marker line is what the status tool recognizes to report the packet as `closed` instead of `scaffold`, so it stops showing as noise while the record stays intact.\n\nOne note on `refactor-auth-flow`: since a teammate is actively working on it, it's not actually stale \u2014 leave it alone. It shouldn't be closed or deleted; it just needs the missing required file added, which is on them to finish, not something to \"clean up\" via this process.",
+  "ttft_ms": 3547,
+  "ttft_stream_ms": 1659,
+  "time_to_request_ms": 92,
+  "time_to_request_from_spawn_ms": 720281,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789358869.2532,
+  "type": "result",
+  "duration_ms": 16216,
+  "uuid": "4975f23c-d4dc-45e8-a5b0-0c3499192015",
+  "_skill": "closing-stale-packets",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "c2cd22468881c671e541874f3a6bbbd3d2c5c128d41d2ffda8e0148098db9682"
+}

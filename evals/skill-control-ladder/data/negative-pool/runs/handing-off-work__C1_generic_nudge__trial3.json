@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 15062,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0357831,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2689,
+    "cache_read_input_tokens": 31847,
+    "output_tokens": 626,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2689,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 177,
+        "cache_read_input_tokens": 8692,
+        "cache_creation_input_tokens": 277,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 277
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 581,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006810000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 626,
+      "cacheReadInputTokens": 31847,
+      "cacheCreationInputTokens": 2689,
+      "webSearchRequests": 0,
+      "costUSD": 0.0351021,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This working directory appears to be completely empty \u2014 no files at all, so there's no `feature/search-filters` branch or any code here to search.\n\nI can't find any trace of a `tempFlag` variable, the three files you mentioned, or even a git history in this directory. Before I do anything, a couple of things need to be sorted out:\n\n- Is this the right directory/repo? It looks like nothing has been checked out here.\n- Was there a different working directory this morning where the branch actually lives?\n\nCan you confirm the correct path (or repo) so I can pick up where you left off?",
+  "ttft_ms": 1323,
+  "ttft_stream_ms": 871,
+  "time_to_request_ms": 34,
+  "time_to_request_from_spawn_ms": 1491510,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594485715.9163,
+  "type": "result",
+  "duration_ms": 13748,
+  "uuid": "2dabd178-21ac-451d-a7c5-684805cc1f91",
+  "_skill": "handing-off-work",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "44cb986330b6e5631a5b1c36de69039fee7e479e19fb0eac64dfee8e00591037"
+}

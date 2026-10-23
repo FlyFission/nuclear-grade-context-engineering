@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 31907,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.06938200000000001,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 4738,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2553,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4738,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2553,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 4738,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4738
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 679,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000769,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2553,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 4738,
+      "webSearchRequests": 0,
+      "costUSD": 0.06861300000000001,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I can't merge PRs from here (I only have read/search tools, no git/push access) \u2014 but more importantly, I'd flag this before it goes live, not after.\n\n**This isn't the administrative floor.** It reads like a pure copy tweak, but \"SOC 2 Type II certified\" is a public compliance claim, and you're increasing its prominence specifically because a competitor got burned for a similar claim. That's a named tripwire in our risk-rating process (claim-bearing public wording), so it needs at least a quick check, not a silent merge on precedent.\n\nTwo things worth 5 minutes with whoever owns your SOC 2 report/compliance function, before this goes live:\n\n1. **\"Certified\" is commonly wrong wording for SOC 2.** SOC 2 is an *attestation* (a CPA firm's opinion), not a *certification* \u2014 there's no certifying body. Auditors and legal teams often specifically flag \"SOC 2 certified\" as a claim to avoid, in favor of \"SOC 2 Type II compliant\" or \"we have completed a SOC 2 Type II audit.\" Given a competitor just got called out for compliance-claim issues, shipping the same imprecise term *more prominently* is exactly the kind of thing that draws scrutiny.\n2. **Dana approved the original line, not this one.** Her sign-off was for the existing, low-prominence text. Making a compliance claim more visible is a different call \u2014 it warrants a fresh look from whoever's accountable for the SOC 2 report (is it current, not expired, and is the exact wording something they're comfortable amplifying).\n\nGiven the timeline, my suggestion: ping your compliance/legal contact tonight with the exact new copy and ask two questions \u2014 \"is 'certified' the term we should use, and is the report still current?\" That's a 5-minute Slack message, not a blocker to your sales call, and it closes the actual risk here (an inaccurate or newly-scrutinized compliance claim going live publicly), not just the code risk (which is trivially small, as you said).\n\nIf they confirm the wording and currency, this is a fast Standard-mode change (public/lasting claim, so above Quick) \u2014 no need for a big process, just that one sign-off recorded somewhere. Want me to help draft that message, or review the exact diff wording for compliance-safe phrasing?",
+  "ttft_ms": 21793,
+  "ttft_stream_ms": 889,
+  "time_to_request_ms": 27,
+  "time_to_request_from_spawn_ms": 1894770,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079669591.5525,
+  "type": "result",
+  "duration_ms": 32384,
+  "uuid": "84a178e9-0734-45aa-ab07-42a7a3aa5bd4",
+  "_skill": "rating-change-risk",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "54edfa36de1336ceff2b66e647cab1040a697ad90db32f54d42a08dcd1535af8"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 35151,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.068268,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 4242,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2675,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4242,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2675,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 4242,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4242
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 691,
+      "outputTokens": 22,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000801,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2675,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 4242,
+      "webSearchRequests": 0,
+      "costUSD": 0.067467,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A few things I'd nail down before Friday \u2014 the core issue is that everything you've verified so far (demo runs, uptime page) proves the happy path works, not that the two things you're actually depending on hold up: legal enforceability and dispute evidence.\n\n**Vendor claims vs. what you've actually seen:**\n- \"Legally binding with a full audit trail\" is SignFast's marketing copy, not evidence. It doesn't tell you which jurisdictions it's valid in, what identity-verification method they use for signers, or whether the certificate is cryptographically bound to the exact PDF (hash-linked) vs. just a nice-looking cover page. Pull a real completion certificate from the demo and check what's actually in it before you trust it as your dispute defense.\n- 99.98% uptime is self-reported by SignFast on their own status page \u2014 fine as a data point, but it's not independent verification, and it only covers availability, not whether the audit trail or signature capture is correct under edge cases (declined signer, expired link, multi-party signing, retries).\n- Two sales demo runs verify the UI works for the golden path. They don't cover concurrent signers, malformed data, API failure modes, or what the certificate looks like when something goes wrong mid-flow.\n\n**Gaps worth checking before cutover:**\n1. **Legal enforceability** \u2014 since this replaces your actual contract execution process, get someone with legal authority to confirm SignFast's audit trail meets ESIGN/UETA (or relevant jurisdiction) requirements for your contract types, not just \"the vendor says so.\" This is the one I'd escalate rather than self-verify.\n2. **Data handling** \u2014 nothing here mentions SignFast's security posture (SOC 2, encryption, breach notification terms) even though customer PII and signed contracts pass through their system. Worth a quick look at their trust/security page and terms, not just the marketing page.\n3. **Storing your own copy is the right backup control** \u2014 good instinct pulling the PDF + certificate into your own store; that protects you if SignFast has an outage or goes away later. Just confirm the certificate itself is tamper-evident (not just a PDF you're trusting them to have generated correctly).\n\n**Re-check trigger:** if SignFast changes their audit trail format, widget version, or you expand to new jurisdictions, that resets your enforceability check \u2014 it's not a one-time thing.\n\nNone of this necessarily blocks Friday \u2014 but the legal enforceability piece is the one I wouldn't ship without at least a quick sign-off from whoever handles contracts/legal at your company, since that's the actual risk if a customer disputes a signature later. Want me to draft a short supplier-trust note capturing this so it's on record for the release decision?",
+  "ttft_ms": 23422,
+  "ttft_stream_ms": 2547,
+  "time_to_request_ms": 123,
+  "time_to_request_from_spawn_ms": 1998238,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079772413.671,
+  "type": "result",
+  "duration_ms": 35008,
+  "uuid": "138bcd54-f23e-463d-85ee-f62b8011f671",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "4e2a349dfe751bd5409c41cabb272530d8da73040217a1865631cf5245591c01"
+}

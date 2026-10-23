@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 22068,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.042328,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2133,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1797,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2133,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1797,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2133,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2133
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 615,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000685,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1797,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2133,
+      "webSearchRequests": 0,
+      "costUSD": 0.041643,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No, this wording shouldn't go out as-is \u2014 there are three separate problems, and the PCI claim in particular could create real legal exposure.\n\n**1. \"MIT license... so it's open and safe for anyone to use in production\"** \u2014 this is a logical error, not just a stylistic one. The MIT license's actual text explicitly disclaims warranties and liability (\"THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND... IN NO EVENT SHALL THE AUTHORS... BE LIABLE\"). A permissive license means you're free to use/modify/distribute the code \u2014 it says nothing about safety or fitness for a purpose. Claiming the license makes it \"safe for production\" contradicts the license itself.\n\n**2. \"Has passed all our internal tests\"** \u2014 this is a factual assertion with no evidence behind it in the text you've shared. Before publishing, confirm: is there an actual test suite/report backing this, and is \"all\" literally true? An unqualified claim like this in a public README is the kind of thing that gets pointed to later if something breaks.\n\n**3. \"Fully compliant with PCI security standards\"** \u2014 this is the one I'd stop and flag hardest. A few issues:\n- PCI DSS compliance is an audited certification (via QSA assessment or a formal SAQ) that applies to an *organization's environment* handling cardholder data \u2014 not something a standalone open-source library can unilaterally claim on its own behalf. A library is a component, not a certifiable scope.\n- If this claim isn't backed by an actual attestation of compliance (AOC) or QSA report, it's a false compliance claim on a payment-related product \u2014 that's a materially different risk category than normal marketing puffery (potential false advertising exposure, and if a downstream user relies on it and has a breach, it's the kind of statement that ends up in a complaint).\n- Even if some component has been assessed, \"fully compliant with PCI security standards\" as a blanket statement is almost certainly overbroad \u2014 compliance is scoped to a specific implementation/environment, not \"the library, full stop.\"\n\n**What I'd tell legal/marketing:** don't publish the PCI and safety-for-production claims until someone can point to the actual evidence (test reports, any formal PCI assessment/AOC) behind them. If no such evidence exists \u2014 which is my guess given the phrasing \u2014 the fix isn't wordsmithing, it's removing the claims and replacing with accurate, narrower language, e.g.:\n\n> \"PayCheck is released under the MIT license (see LICENSE for full terms, including the standard 'as is' disclaimer of warranty). It is covered by our internal test suite [link to results/CI badge]. PayCheck does not itself provide PCI DSS compliance \u2014 integrators are responsible for ensuring their overall payment environment meets PCI DSS requirements.\"\n\nI'd send this back to marketing/legal rather than lightly editing it myself, since the PCI line specifically needs someone with actual knowledge of whether any compliance assessment was ever done.",
+  "ttft_ms": 10221,
+  "ttft_stream_ms": 1153,
+  "time_to_request_ms": 67,
+  "time_to_request_from_spawn_ms": 408288,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025286665.4202,
+  "type": "result",
+  "duration_ms": 22336,
+  "uuid": "b91ff5eb-b38e-42ef-8de1-2de2d16b2ebe",
+  "_skill": "checking-legal-and-safety-wording",
+  "_arm": "C1_generic_nudge",
+  "_trial": 2,
+  "_input_spec_sha256": "68e89d7f045be6efc794a67d6bc85deeaae922e3af683bca3bdb5713b34b28a3"
+}

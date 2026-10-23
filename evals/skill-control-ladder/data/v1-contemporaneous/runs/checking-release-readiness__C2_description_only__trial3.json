@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 18818,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.035419,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2103,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1346,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2103,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1346,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2103,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2103
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000721,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1346,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2103,
+      "webSearchRequests": 0,
+      "costUSD": 0.034698,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 this shouldn't ship yet. A Postgres major-version migration on your primary user database is high blast-radius and hard to reverse once in production, and \"CI is green\" doesn't cover the risks that actually matter here: query planner behavior changes between PG12\u219215, index rebuild/lock time on real data volumes, extension/config compatibility, and whether CI even ran against a PG15 instance with production-scale data.\n\nThe two concrete gaps you flagged are blockers, not nice-to-haves:\n\n- **No rollback plan** \u2014 if something breaks post-deploy (bad query plan, lock contention, replication issue), you need a tested way back (e.g., keep the PG12 replica warm, documented downgrade/restore steps, or a feature-flag/dual-write path). \"We'll figure it out live\" isn't a plan for a primary DB.\n- **No migration-specific monitoring** \u2014 you need alerts on query latency/error rate, lock waits, replication lag, and index bloat *before* cutover, not added reactively after users notice something's wrong.\n\nI'd defer today's merge and get these three things first: a written rollback procedure (tested, not just documented), monitoring/alerts scoped to this migration, and confirmation the index changes were validated against production-like data/query patterns (not just that CI passed). \"Engineer says it's ready\" is a claim, not evidence \u2014 worth asking them specifically what testing covered the PG15 query planner and lock behavior during the index rebuilds.",
+  "ttft_ms": 11765,
+  "ttft_stream_ms": 1173,
+  "time_to_request_ms": 29,
+  "time_to_request_from_spawn_ms": 1210613,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789849040.7437,
+  "type": "result",
+  "duration_ms": 19326,
+  "uuid": "f9f2427f-f063-455a-8061-884eccd6aaee",
+  "_skill": "checking-release-readiness",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "4c5434dd7600e98e140efbad25bbb80d0fd4a2ac2b3a91a3dac8f02f2ed1b3cb"
+}

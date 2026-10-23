@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 24449,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.042429,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2233,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1756,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2233,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1756,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2233,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2233
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 691,
+      "outputTokens": 22,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000801,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1756,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2233,
+      "webSearchRequests": 0,
+      "costUSD": 0.041628,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A few things worth checking before Friday, since a contract dispute is exactly the scenario where you'll wish you'd verified this upfront:\n\n**\"Legally binding\" is a marketing claim, not proof.** Their site saying it doesn't make it true for your jurisdiction/use case. Have someone (legal, or at least you) actually read what the audit trail captures \u2014 IP address, timestamp, consent language shown, identity verification method \u2014 and confirm it meets ESIGN Act/UETA requirements for what you're signing. Don't take the tagline at face value for something you're relying on to win a dispute.\n\n**The completion certificate's evidentiary value depends on more than \"we have a copy of it.\"** If a customer disputes a contract, can SignFast's records independently corroborate the certificate (e.g., testify to its authenticity, or provide raw audit logs on request), or is the PDF certificate the only artifact? A self-contained PDF is easier to make claims about than to actually defend if challenged \u2014 check whether it's cryptographically signed/verifiable or just a generated document that trusts SignFast's word.\n\n**Sales running the demo twice isn't the same as testing the integration.** That validates the happy path in a controlled demo, not your actual REST API calls for pulling completed documents, webhook delivery, retry behavior on failures, or edge cases (expired signing link, declined signature, multi-signer flows, partial completion). Before cutover, someone on your side should hit the actual API with real error conditions \u2014 especially since your plan depends on reliably pulling every completed doc into your store.\n\n**99.98% uptime from their status page is self-reported, not contractual.** Check whether there's an actual SLA in your agreement with remedies, versus just a public dashboard. Status pages tend to undercount partial degradations.\n\n**Data handling gap.** What PII flows through the widget, is there a DPA, where's it hosted, do they have SOC 2 or equivalent? For something touching customer contracts this usually needs sign-off beyond \"the widget is easy to embed.\"\n\n**Exit/export**: confirm you can bulk-export all historical signed docs + certificates if you ever leave, not just pull them one at a time via API going forward.\n\nGiven the legal-evidence angle, I'd push back on the Friday date if legal hasn't reviewed the ToS and audit trail format yet \u2014 that's the one item that's expensive to fix retroactively if you find out post-launch it doesn't hold up.",
+  "ttft_ms": 12853,
+  "ttft_stream_ms": 790,
+  "time_to_request_ms": 28,
+  "time_to_request_from_spawn_ms": 1978323,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079753104.0293,
+  "type": "result",
+  "duration_ms": 25112,
+  "uuid": "2370f603-23d3-4098-b1a3-65a9d852c568",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "0c10a8d236d75edd045ad19567782e25bb400e6c520f5dc8a0d2842a55e93504"
+}

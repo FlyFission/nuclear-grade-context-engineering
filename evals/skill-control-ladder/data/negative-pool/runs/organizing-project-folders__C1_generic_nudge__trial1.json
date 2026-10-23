@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 9362,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.025154199999999998,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2323,
+    "cache_read_input_tokens": 14654,
+    "output_tokens": 409,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2323,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 285,
+        "cache_read_input_tokens": 8374,
+        "cache_creation_input_tokens": 229,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 229
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 588,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000673,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 409,
+      "cacheReadInputTokens": 14654,
+      "cacheCreationInputTokens": 2323,
+      "webSearchRequests": 0,
+      "costUSD": 0.024481199999999998,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Yes, move it \u2014 mirrors your existing convention and there's no reason for it to be the lone exception. Two things worth a 10-second check before you do:\n\n1. **Grep for references to it** (imports, shell scripts, CI/cron jobs, README instructions) so you update any hardcoded paths.\n2. If it's meant to be run as a top-level entry point (e.g., `python parse_csv.py` from the project root is part of a documented workflow), some people keep a thin wrapper or symlink at root \u2014 but if `scripts/` already holds similarly-invoked files, just move it and update the call sites.\n\nWant me to grep the repo for references to `parse_csv.py` and move it for you?",
+  "ttft_ms": 1244,
+  "ttft_stream_ms": 844,
+  "time_to_request_ms": 28,
+  "time_to_request_from_spawn_ms": 1542498,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594536333.9177,
+  "type": "result",
+  "duration_ms": 10070,
+  "uuid": "aba2517a-301d-453e-b8df-037cf07c2396",
+  "_skill": "organizing-project-folders",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "5b74a4a6c2a8aac3df63662be5ff648e6a2b6830b7f1bd0c8c717c9ee2d14b48"
+}

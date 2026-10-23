@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 16012,
+  "num_turns": 6,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.042380400000000006,
+  "usage": {
+    "input_tokens": 12,
+    "cache_creation_input_tokens": 2992,
+    "cache_read_input_tokens": 50428,
+    "output_tokens": 571,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2992,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 73,
+        "cache_read_input_tokens": 9140,
+        "cache_creation_input_tokens": 132,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 132
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 599,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006990000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 12,
+      "outputTokens": 571,
+      "cacheReadInputTokens": 50428,
+      "cacheCreationInputTokens": 2992,
+      "webSearchRequests": 0,
+      "costUSD": 0.0416814,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This working directory appears to be completely empty (no files at all, not just no Python files). Could you double check that we're in the right repo/branch, or point me to the actual path/branch where your `utils.py` and `format_date` PR live?",
+  "ttft_ms": 1869,
+  "ttft_stream_ms": 1243,
+  "time_to_request_ms": 32,
+  "time_to_request_from_spawn_ms": 1666967,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594661391.4434,
+  "type": "result",
+  "duration_ms": 15322,
+  "uuid": "84c80a93-95eb-46db-bae9-f45175919fb2",
+  "_skill": "reporting-shared-defects",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "8272d6b7264b63f6995f35329cf89549c877c67d937cdba8bc59766820ff47f2"
+}

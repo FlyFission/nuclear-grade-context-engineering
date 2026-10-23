@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 20146,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0422393,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2425,
+    "cache_read_input_tokens": 14721,
+    "output_tokens": 1501,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2425,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1288,
+        "cache_read_input_tokens": 8441,
+        "cache_creation_input_tokens": 264,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 264
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 676,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007459999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1501,
+      "cacheReadInputTokens": 14721,
+      "cacheCreationInputTokens": 2425,
+      "webSearchRequests": 0,
+      "costUSD": 0.0414933,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Here's a handoff note ready to paste into Slack/Confluence/wherever your teammate will see it first.\n\n---\n\n## Handoff: OAuth2 Migration for Billing Service\n\n**From:** Benjamin Huffer\n**Date:** 2026-07-26\n**Owner while I'm out:** [teammate name] \u2014 back 2026-08-02\n**Branch:** `oauth-migration`\n\n### Current state\n- Auth middleware rewritten for OAuth2 \u2014 merged to `oauth-migration`, unit tests passing.\n- Token-refresh logic rewritten for OAuth2 \u2014 merged to `oauth-migration`, unit tests passing.\n- No integration/end-to-end testing has been done yet against the downstream services.\n\n### Not done \u2014 do not assume these are handled\n- **Three downstream services still call the old API-key auth endpoints and have not been migrated.** (List them here if useful: Service A, B, C.)\n- Production config has **not** been touched \u2014 still pointed at the old auth system.\n- Old API keys have **not** been rotated.\n\n### Critical constraint \u2014 read before touching anything\n**The old API keys must stay active until all three downstream services are migrated to OAuth2.** If they're rotated or disabled early, those services will start failing with 401s in production. Do not rotate or revoke any API keys until the downstream migration is confirmed complete.\n\n### Do not do while I'm away\n- Don't deploy `oauth-migration` to production.\n- Don't rotate or disable the old API keys.\n- Don't change production auth config.\nAnything beyond continuing the downstream migration should wait for me or get a second sign-off \u2014 ping [manager/lead name] if something urgent comes up that needs a decision.\n\n### Remaining scope\n1. Migrate the three downstream services from old API-key calls to OAuth2, one at a time.\n2. After each service is migrated, verify it's working against OAuth2 in staging before moving to the next.\n3. Once all three are confirmed migrated and stable, update production config to point to the new auth system.\n4. Only after that \u2014 rotate/retire the old API keys.\n\n### Verification / evidence\n- Unit tests for middleware + token-refresh: passing on `oauth-migration` (see CI on that branch for latest run).\n- No integration tests exist yet for the downstream services \u2014 these should be written or extended as each service is migrated.\n\n### Contact\nI'll be back 2026-08-02. Reachable for true emergencies at [preferred emergency contact method] \u2014 otherwise this can wait.\n\n---\n\nWant me to save this to a file in the repo (e.g. `HANDOFF.md`) instead of just leaving it as text, or fill in the actual service names/branch links if you give them to me?",
+  "ttft_ms": 2674,
+  "ttft_stream_ms": 893,
+  "time_to_request_ms": 43,
+  "time_to_request_from_spawn_ms": 782910,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025661716.1052,
+  "type": "result",
+  "duration_ms": 17954,
+  "uuid": "4e4d0002-cf0d-4003-9e8b-5eb27905ed4e",
+  "_skill": "handing-off-work",
+  "_arm": "C2_description_only",
+  "_trial": 2,
+  "_input_spec_sha256": "069a3cad5969cd02cf089969cc5ecebaf6f957303631046dcbc3d623eb2430cc"
+}

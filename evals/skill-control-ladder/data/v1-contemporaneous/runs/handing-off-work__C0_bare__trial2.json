@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 18100,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0405725,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2486,
+    "cache_read_input_tokens": 23125,
+    "output_tokens": 1196,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2486,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 878,
+        "cache_read_input_tokens": 8517,
+        "cache_creation_input_tokens": 240,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 240
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 676,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000761,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1196,
+      "cacheReadInputTokens": 23125,
+      "cacheCreationInputTokens": 2486,
+      "webSearchRequests": 0,
+      "costUSD": 0.0398115,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory appears empty, so I'll write the handoff note based on what you've told me rather than referencing specific code.\n\nHere's a handoff note \u2014 drop it in the repo (e.g., `HANDOFF.md`) or paste into Slack/email, whichever your team uses:\n\n---\n\n## OAuth2 Migration Handoff \u2014 Billing Service\n\n**From:** Benjamin Huffer\n**Date:** 2026-08-03\n**Branch:** `oauth-migration`\n**Status:** In progress \u2014 do not deploy to production yet\n\n### What's done\n- Auth middleware updated to support OAuth2, merged to `oauth-migration`, unit tests passing.\n- Token-refresh logic updated for OAuth2, merged to `oauth-migration`, unit tests passing.\n\n### What's NOT done\n- **3 downstream services** still call the old API-key auth endpoints and have not been migrated to OAuth2. *(List them here by name so the next person doesn't have to hunt \u2014 I didn't have the service names handy when writing this note.)*\n- **Production config** has not been touched \u2014 still points at the old auth flow.\n- **Old API keys have not been rotated.**\n\n### \u26a0\ufe0f Critical constraint \u2014 read before touching anything\n**Do not rotate or revoke the old API keys until all three downstream services are migrated.** They still depend on the old auth endpoints. Rotating keys early will break those services with 401s in production.\n\n### Suggested order of operations\n1. Identify and migrate the three downstream services to use OAuth2 against the new middleware/token-refresh logic already merged.\n2. Verify each service authenticates successfully end-to-end (not just unit tests \u2014 hit staging/prod-like endpoints).\n3. Only once all three are confirmed migrated and working, update production config to fully cut over.\n4. Only after production cutover is confirmed stable, rotate/revoke the old API keys.\n\n### Contact\nI'm out on vacation starting tomorrow morning for one week. [Add your preferred backup contact / on-call info / whether you're reachable for emergencies here.]\n\n---\n\nTwo things worth filling in before you send this: the names of the three downstream services, and whether/how you want to be reachable in a true emergency. Want me to adjust anything else?",
+  "ttft_ms": 1999,
+  "ttft_stream_ms": 1293,
+  "time_to_request_ms": 26,
+  "time_to_request_from_spawn_ms": 231140,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788869333.9985,
+  "type": "result",
+  "duration_ms": 18807,
+  "uuid": "e8373fda-f898-48d4-8f96-1c76b2b934b7",
+  "_skill": "handing-off-work",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "403eaa2624b613f7e9316e5bcb769debf5a1e9999f840140516ce2ee50e84a57"
+}

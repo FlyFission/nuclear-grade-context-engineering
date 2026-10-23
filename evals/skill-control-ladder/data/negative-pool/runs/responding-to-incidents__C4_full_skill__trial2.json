@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 10605,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.044385999999999995,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 4453,
+    "cache_read_input_tokens": 26760,
+    "output_tokens": 596,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4453,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 139,
+        "cache_read_input_tokens": 10365,
+        "cache_creation_input_tokens": 368,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 368
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 597,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000682,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 596,
+      "cacheReadInputTokens": 26760,
+      "cacheCreationInputTokens": 4453,
+      "webSearchRequests": 0,
+      "costUSD": 0.043704,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I can't find any reference to `apiTimeout`/`api_timeout` or a `.env.dev` file in this working directory \u2014 this repo folder is just the incident-response skill definition, not your actual project.\n\nCould you point me to the right project directory (or paste the relevant snippet of the startup script)? Once I can see where `apiTimeout` is referenced, I'll update it to `api_timeout` to match your `.env.dev` change.",
+  "ttft_ms": 1945,
+  "ttft_stream_ms": 832,
+  "time_to_request_ms": 29,
+  "time_to_request_from_spawn_ms": 1689320,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594683732.7776,
+  "type": "result",
+  "duration_ms": 13149,
+  "uuid": "b5f32f2a-fda8-4f48-9e60-4f1a6a5d6294",
+  "_skill": "responding-to-incidents",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "6c3a30c41bd9a21143865455645ec89e1798e59655a22adfb58c605592acf96f"
+}

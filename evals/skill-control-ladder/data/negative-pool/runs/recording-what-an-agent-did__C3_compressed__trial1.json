@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 9194,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0283995,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2659,
+    "cache_read_input_tokens": 23435,
+    "output_tokens": 317,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2659,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 46,
+        "cache_read_input_tokens": 8650,
+        "cache_creation_input_tokens": 289,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 289
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 577,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000642,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 317,
+      "cacheReadInputTokens": 23435,
+      "cacheCreationInputTokens": 2659,
+      "webSearchRequests": 0,
+      "costUSD": 0.027757500000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't see the script anywhere in this working directory \u2014 it looks empty. Could you point me to the file path, or paste the relevant print statements here?",
+  "ttft_ms": 3374,
+  "ttft_stream_ms": 2995,
+  "time_to_request_ms": 67,
+  "time_to_request_from_spawn_ms": 1647624,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594642049.608,
+  "type": "result",
+  "duration_ms": 8204,
+  "uuid": "f0d3c759-a980-495e-a6be-01d9f152c036",
+  "_skill": "recording-what-an-agent-did",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "3b3733524f4a616fe335cdca657fa0e330ffb7ae343a9af25629a17e8c65933b"
+}

@@ -1,0 +1,81 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 34804,
+  "duration_api_ms": 33904,
+  "ttft_ms": 7886,
+  "ttft_stream_ms": 1689,
+  "time_to_request_ms": 37,
+  "time_to_request_from_spawn_ms": 519244,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121082387.8547,
+  "num_turns": 1,
+  "result": "I'll draft this as a standalone briefing document you can hand to the agent. Given this touches production data unattended, I'm going to bake in hard safety constraints (backups, staged rollout, no destructive ops, explicit stop conditions) rather than just describing the feature work.\n\n## Pre-flight (you do this before kicking off the agent)\n\n1. **Take a verified backup/snapshot of the production database** immediately before the run, and confirm you can restore from it. Don't let the agent be the one taking the \"backup\" it later relies on for safety \u2014 do this yourself.\n2. **Point the agent at a staging/replica environment first**, or make sure it's required to validate everything there before touching prod (see below).\n3. Make sure there's a way for the run to **stop itself and page/notify you** on failure (e.g., exit code + log file you'll check in the morning, or a Slack/email webhook if you have one wired up).\n\n## Briefing to hand the agent\n\n```\nTASK: Add `email_verified` column to `users` table, backfill existing rows\nvia a heuristic based on signup source, and update the signup endpoint to\nset it for new users.\n\nYou are running UNATTENDED overnight against PRODUCTION data. No human\nwill review your actions in real time. Because of this, safety and\nreversibility take priority over speed. Follow these rules exactly.\n\n=== HARD STOP CONDITIONS (do not proceed, log the issue, and exit) ===\n- If you cannot verify a recent backup/snapshot exists before making any\n  schema or data change.\n- If the migration cannot run inside a transaction, or if the migration\n  framework doesn't support a tested rollback/down migration.\n- If the \"signup source\" field is missing, ambiguous, or inconsistently\n  populated in a way that the heuristic can't handle for >X% of rows\n  (define your own threshold, e.g. 2%) \u2014 stop and report rather than\n  guessing.\n- If any command would run against a database connection string other\n  than the one explicitly designated for staging/prod in this task\n  (double-check env vars before every DB-touching command).\n- If at any point you'd need to use --force, disable a safety check, skip\n  a validation, or bypass a confirmation prompt to proceed.\n- If disk usage, replication lag, or query timeouts during the backfill\n  exceed normal thresholds \u2014 pause rather than retry aggressively.\n\n=== REQUIRED SEQUENCE ===\n1. Write the migration to ADD the column as nullable with no default\n   (or a safe default like NULL/false), reversible via a down-migration.\n   Never do a blocking ALTER TABLE that locks the table for the full\n   backfill \u2014 add the column first, backfill in a separate step.\n2. Run and fully validate the migration + backfill logic against\n   staging/a replica/a local copy of representative prod data first.\n3. Write the backfill as an idempotent, batched, resumable script:\n   - Process in small batches (e.g. 500-1000 rows) with a short sleep\n     between batches to avoid load spikes.\n   - Use a WHERE clause that only touches rows where email_verified IS\n     NULL, so re-running after an interruption is safe and doesn't\n     redo work.\n   - Log progress (rows processed, batch number) to a file so I can see\n     exactly how far it got and audit what it did.\n   - Never use raw string-interpolated SQL \u2014 use parameterized\n     queries/ORM methods only.\n4. Document the exact heuristic you use per signup source (e.g. \"OAuth\n   signups \u2192 verified=true, email/password signups \u2192 verified=false\n   unless a verification record exists\") in a comment in the backfill\n   script and in your final report. Do not silently invent a heuristic\n   not implied by the existing signup-source values \u2014 if a source is\n   unrecognized, leave it NULL and flag it in your report rather than\n   guessing true/false.\n5. Only after staging validation passes, run the migration against\n   production, then run the backfill against production in batches as\n   described above.\n6. Update the signup endpoint to set email_verified explicitly for new\n   users (per the same heuristic/logic), with a test covering each\n   signup source path.\n7. Run the full existing test suite before and after your changes.\n   Do not weaken, skip, or delete any existing tests to make them pass.\n\n=== WHAT NOT TO DO ===\n- Do not drop, rename, or alter any other existing column.\n- Do not run any destructive statement (DROP, TRUNCATE, DELETE without\n  a narrow WHERE) at any point.\n- Do not modify production data outside the `users.email_verified`\n  column.\n- Do not commit or push directly \u2014 leave changes as a branch/PR (or\n  local commits) for me to review in the morning. Do not merge to\n  main or deploy automatically.\n- Do not change database credentials, permissions, or infra config.\n- Do not install new dependencies without noting why in your report.\n\n=== WHEN YOU FINISH (or get stuck) ===\nWrite a report to `MORNING_REPORT.md` including:\n- What you did, in order, with commands run and their output/exit codes.\n- The exact heuristic mapping (signup source \u2192 email_verified value)\n  and counts of how many rows fell into each bucket, including any\n  left NULL/unhandled.\n- Migration file(s) and confirmation the down-migration was tested.\n- Test results before/after.\n- Anything that hit a stop condition above, with full context, so I\n  can resolve it and re-run.\n- Any anomalies you noticed even if they didn't block you (e.g. a\n  signup source value you'd never seen before).\n\nIf you are ever unsure whether an action is reversible or safe, treat\nit as unsafe: stop, log the uncertainty, and move to the next\nnon-blocking task instead.\n```\n\nA few things worth deciding before you send it off:\n- **Does the agent actually have prod DB credentials at all overnight?** If possible, I'd scope it to staging only tonight, and have it prepare the prod migration/backfill as a reviewed, ready-to-run script that *you* trigger manually in the morning \u2014 that removes \"unattended prod write\" as a risk entirely.\n- Fill in your actual signup-source values and desired heuristic mapping \u2014 I left that generic since I don't know your schema.\n\nWant me to also draft the actual migration/backfill script now so the agent has less room to improvise, or do you want it designing that from scratch?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0506987,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 1818,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 2535,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1818,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 2535,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1818,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1818
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 624,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000704,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 2535,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1818,
+      "webSearchRequests": 0,
+      "costUSD": 0.049994699999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "cbcaeaa8-f90e-40ef-b92c-d0f806bc582e",
+  "_skill": "briefing-an-agent",
+  "_condition": "without_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "b02bda04281bd15438d18e8634924a0871200eb60a75a14c5ef425ab9360b774",
+  "_arm": "C0_bare",
+  "_reused_from": "evals/skill-benchmark-pilot/data/all-skills-pilot/runs/briefing-an-agent__without_skill__trial2.json"
+}

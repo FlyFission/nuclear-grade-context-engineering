@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 36097,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.06154870000000001,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2671,
+    "cache_read_input_tokens": 14919,
+    "output_tokens": 2684,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2671,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2426,
+        "cache_read_input_tokens": 8639,
+        "cache_creation_input_tokens": 312,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 312
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 700,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000775,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2684,
+      "cacheReadInputTokens": 14919,
+      "cacheCreationInputTokens": 2671,
+      "webSearchRequests": 0,
+      "costUSD": 0.06077370000000001,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Merging this as \"a tiny diff\" is the risky move \u2014 the diff size has nothing to do with the blast radius. You're bundling an **agent capability increase** (can move money autonomously), a **behavioral nudge** (prompt wording), and a **public trust claim** (help-center copy) into one review pass. Each of these can drift independently and silently after merge. Here's what to actually track:\n\n## Controlled items\n\n**1. `issue_refund(amount, order_id)` tool \u2014 new agent capability**\n- Owner: whoever owns the support-bot's tool registry (name them explicitly, not \"the team\")\n- Current state: agent can autonomously approve refunds \u2264$50, no human sign-off\n- Evidence needed: authorization logic (is $50 a hard cap enforced server-side, or just a suggestion in the prompt?), rate limiting per customer/session, audit log of every call (who/what triggered it, order_id, amount, timestamp)\n- Re-check trigger: any change to the $50 cap, any new tool with money/state-changing side effects, first incident of refund abuse or anomalous volume\n- **This is the real risk.** A prompt-injectable, customer-facing agent with a money-moving tool is a classic target \u2014 a crafted customer message could talk it into calling `issue_refund` inappropriately. Verify this isn't just \"the agent asks for order_id and amount\" with no ownership/eligibility check tying the refund to the actual customer's own order.\n\n**2. System prompt wording (\"more proactive\")**\n- Owner: prompt/persona owner\n- Current state: vaguer, encourages more autonomous action\n- Evidence needed: does the smoke test include adversarial cases \u2014 a customer asking for a refund on someone else's order, or trying to get >$50 refunded via multiple calls?\n- Re-check trigger: any future prompt edit; combine review with #1 since \"more proactive\" + \"can autonomously refund money\" compound each other. Reviewing them separately is how this drifts.\n\n**3. Help-center article edit (deleted \"a human always reviews refunds\")**\n- Owner: whoever owns public support docs (likely different person than the eng owner above)\n- Current state: doc now silent on review \u2014 is that because it's *accurate* (no review happens) or just because it was awkward to keep the sentence?\n- Evidence needed: confirm the doc change is a *consequence* of #1 being true, not a cover for it. If a customer disputes a refund decision, this doc is what they'll be held to.\n- Re-check trigger: any future change to the refund cap or review process must sync back to this doc \u2014 right now nothing enforces that link.\n\n**4. Test coverage claim**\n- Owner: PR author/reviewer\n- Current state: \"quick smoke test\" \u2014 almost certainly doesn't cover authorization boundaries, injection attempts, or the $50 cap edge cases\n- Evidence needed: explicit test for \"agent cannot refund >$50,\" \"agent cannot refund another customer's order,\" \"agent behavior under adversarial prompting\"\n- Re-check trigger: before merge, not after \u2014 this is the gap most likely to bite you\n\n## Red flags\n- **No owner is distinguishable** for the tool's ongoing authorization logic vs. the public doc vs. the prompt \u2014 three different failure surfaces, currently reviewed as one diff.\n- **Agent-power change (money-moving tool) is being merged on smoke-test-only evidence.** That's the item most likely to cause real damage if wrong, and it has the least verification.\n- **No re-check trigger tying the doc claim to the actual code behavior** \u2014 if someone later adds a human-review step back for compliance reasons, nothing forces the help-center article to be checked.\n\nMy recommendation: split review effort \u2014 treat the `issue_refund` tool as its own security-sensitive change requiring adversarial testing and an explicit owner for monitoring, separately from the wording/doc tweaks which are lower-risk but should still have their own named owner. Want me to draft this as a `controlled-items.md` you can attach to the PR?",
+  "ttft_ms": 4305,
+  "ttft_stream_ms": 1716,
+  "time_to_request_ms": 36,
+  "time_to_request_from_spawn_ms": 573987,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025452874.049,
+  "type": "result",
+  "duration_ms": 37168,
+  "uuid": "88ae03e2-a01e-48be-ab0e-90d752032c24",
+  "_skill": "choosing-what-to-control",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "16e259e61a9eae86cad0d81b949de6b57648450bba2b720162f649a77de49b71"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 36549,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.07534740000000001,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 3953,
+    "cache_read_input_tokens": 33088,
+    "output_tokens": 2727,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3953,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1217,
+        "cache_read_input_tokens": 9268,
+        "cache_creation_input_tokens": 965,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 965
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 679,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007740000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 2727,
+      "cacheReadInputTokens": 33088,
+      "cacheCreationInputTokens": 3953,
+      "webSearchRequests": 0,
+      "costUSD": 0.07457340000000001,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't see an actual diff attached \u2014 nothing came through in your message \u2014 so there's nothing for me to review or merge yet. But even setting that aside, I'd flag this one before pushing it live tonight.\n\nThe diff size (3 lines of JSX) isn't really what determines the risk here \u2014 it's *what the words say*. A few things push this out of \"routine copy tweak, ship it\" territory:\n\n- **It's a public compliance claim, not just marketing copy.** SOC 2 wording is legally sensitive \u2014 \"certified\" is actually a common misstatement (SOC 2 is an *attestation/report*, not a certification), and the FTC has gone after companies for imprecise or overstated security claims. Making the claim more prominent, specifically in reaction to a competitor getting called out, is exactly the scenario where wording precision matters most.\n- **Dana's approval covers the original copy, not this one.** She signed off as the person who wrote the prior text \u2014 that's not the same as compliance/legal sign-off on a new, amplified claim, even if the underlying fact (you have a report) hasn't changed.\n- **I can't verify the substance myself.** I have no way to confirm the SOC 2 report is current, what scope/trust criteria it covers, or whether \"more prominent\" changes the framing in a way that overstates what the report actually says.\n- **The timing pressure (sales call tomorrow, prospect asked about it) is a reason to get this right, not a reason to skip the check** \u2014 a prospect scrutinizing this exact claim is the worst-case audience for a wording slip.\n\nI'd suggest a quick async ping to whoever owns compliance/legal claims (or your CISO/compliance lead) to eyeball the exact new wording against the actual report scope \u2014 that can realistically happen tonight and still make tomorrow's call. Once you've got that, or the actual diff, send it over and I'm glad to help get it merged.",
+  "ttft_ms": 5800,
+  "ttft_stream_ms": 716,
+  "time_to_request_ms": 30,
+  "time_to_request_from_spawn_ms": 1875707,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079650278.8564,
+  "type": "result",
+  "duration_ms": 36710,
+  "uuid": "1cced5aa-d294-4184-969e-044f48082051",
+  "_skill": "rating-change-risk",
+  "_arm": "C2_description_only",
+  "_trial": 2,
+  "_input_spec_sha256": "30bd81198c87a6bd36c35a0b8e6aefda72fce54140496ee1f972aabe4c999e4a"
+}

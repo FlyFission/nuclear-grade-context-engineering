@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 16232,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.039254899999999995,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2717,
+    "cache_read_input_tokens": 32103,
+    "output_tokens": 832,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2717,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 453,
+        "cache_read_input_tokens": 8763,
+        "cache_creation_input_tokens": 225,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 225
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 748,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0008179999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 832,
+      "cacheReadInputTokens": 32103,
+      "cacheCreationInputTokens": 2717,
+      "webSearchRequests": 0,
+      "costUSD": 0.038436899999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The repo appears empty here (no packet files found), so I can't inspect the actual tool or packet structure directly \u2014 I'll answer based on what you've described.\n\nGiven the context, `add-dark-mode-toggle` is a dead packet: no work was merged, and the team made an explicit decision to shelve it (blocked on an unresolved design dependency, not just \"stale\"). The right move is to **delete the packet folder**, not just leave it or mark it somehow \u2014 since none of its content was merged, there's nothing to preserve in the repo itself.\n\nBefore deleting, two things worth doing:\n\n1. **Capture the decision somewhere durable** \u2014 a line in a team doc, issue tracker, or meeting notes saying \"dark mode deferred until design finalizes palette\" \u2014 so the context doesn't disappear when the packet does. If that already lives in meeting notes, you're covered.\n2. **If you want to resume this later**, consider filing a lightweight tracking issue (e.g., \"Revisit dark-mode toggle once color palette is finalized\") instead of keeping a stale scaffold packet around as a placeholder.\n\nThis is different from `refactor-auth-flow`, which is actively being worked on \u2014 that one just needs the missing required file added by your teammate, not removal.\n\nOnce you point me to the actual packets directory (the glob/grep here came back empty), I can delete the `add-dark-mode-toggle` folder for you directly.",
+  "ttft_ms": 2632,
+  "ttft_stream_ms": 1079,
+  "time_to_request_ms": 34,
+  "time_to_request_from_spawn_ms": 1033866,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789671525.2808,
+  "type": "result",
+  "duration_ms": 16360,
+  "uuid": "953ca387-b0f6-45e5-b3dc-b6d2b82ad727",
+  "_skill": "closing-stale-packets",
+  "_arm": "C0_bare",
+  "_trial": 1,
+  "_input_spec_sha256": "c7b969208c21fce55b015164e122a7b731e61587a6cee605024ad3dfbc60dc72"
+}

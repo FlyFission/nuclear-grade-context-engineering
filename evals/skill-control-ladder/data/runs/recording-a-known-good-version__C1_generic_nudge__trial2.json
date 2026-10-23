@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 52284,
+  "num_turns": 7,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0961262,
+  "usage": {
+    "input_tokens": 10,
+    "cache_creation_input_tokens": 4525,
+    "cache_read_input_tokens": 41994,
+    "output_tokens": 3706,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4525,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1685,
+        "cache_read_input_tokens": 9525,
+        "cache_creation_input_tokens": 1280,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1280
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000758,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 10,
+      "outputTokens": 3706,
+      "cacheReadInputTokens": 41994,
+      "cacheCreationInputTokens": 4525,
+      "webSearchRequests": 0,
+      "costUSD": 0.0953682,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Two issues before I draft this:\n\n**I have no way to verify any of it here.** This working directory is completely empty (no repo files, no PR #482, no eval suite output, no CHANGELOG) \u2014 and in this session I only have read/search tools, not write or shell access. So I can't pull the actual eval numbers, the PR diff, the QA signoff, or the exact commit SHA that got deployed. Everything below is based purely on what you told me, not on anything I checked.\n\nThat matters because the whole point of a \"known-good\" record is that someone *trusts* it later \u2014 possibly under pressure, during an incident, to decide what to roll back to. A record that just restates a verbal summary (\"QA said it looked fine\") isn't actually trustworthy evidence; it needs to point to artifacts.\n\nHere's a draft. Treat the bracketed items as **required before this is final** \u2014 I've flagged which ones I couldn't verify:\n\n---\n\n## Known-Good Version Record: v2.3.0 \u2014 Recommendation Service\n\n**Status:** \u26a0\ufe0f Draft \u2014 pending evidence links (see below)\n**Recorded:** 2026-07-26\n**Recorded by:** [your name/handle]\n\n### Summary\n- **Change:** Upgraded embedding model dependency from `embed-v1` \u2192 `embed-v2`\n- **PR:** #482 [link needed]\n- **Deployed commit SHA:** [needed \u2014 \"the PR\" isn't enough; rollback needs an exact SHA/tag]\n- **Deploy time:** ~1 hour before 2026-07-26 (approx. [exact timestamp needed])\n- **Deploy mechanism:** [how \u2014 CI/CD pipeline name, manual, etc.]\n\n### Why this version is accepted\n- New eval suite reported improved precision and recall vs. prior baseline.\n  - **Baseline numbers:** [unverified \u2014 need actual prior values]\n  - **New numbers:** [unverified \u2014 need actual values]\n  - **Eval suite run/artifact link:** [needed \u2014 CI run ID or report]\n- QA signed off.\n  - **Signoff record:** [needed \u2014 ticket, Slack thread, or approval in PR, with who signed off and when]\n- One hour of production stability post-deploy, no incidents reported so far.\n  - **Monitoring evidence:** [needed \u2014 dashboard link or specific metrics checked]\n\n### What \"rollback to this version\" means concretely\n- Revert to commit `[SHA]` / tag `[tag]`\n- Dependency pin: `embed-v2` at version `[exact version]`\n- [Any config/data migration that would need to be reversed alongside code]\n\n### Known risks / things not yet proven\n- Only ~1 hour of production observation \u2014 this is *early* signal, not a track record. Consider re-confirming stability at 24h/7d before fully trusting this as a long-term rollback target.\n- [Any other caveats \u2014 e.g., was the eval suite run on production traffic or a held-out set? Any behavior differences between embed-v1 and embed-v2 that QA specifically checked, e.g. latency, embedding dimension compatibility with downstream stores?]\n\n---\n\nTwo things I'd suggest before you file this as official:\n\n1. **Fill in the bracketed items with actual links/SHAs**, not summaries \u2014 that's what makes it useful during an incident.\n2. Since I can't write files in this session, I can't commit this to your repo (e.g. `docs/known-good-versions.md`) for you. Want me to just hand you this text to paste in, or do you want to grant file-write access so I can create/commit it directly once you've filled in the real evidence?",
+  "ttft_ms": 4880,
+  "ttft_stream_ms": 3808,
+  "time_to_request_ms": 42,
+  "time_to_request_from_spawn_ms": 988224,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025867091.5793,
+  "type": "result",
+  "duration_ms": 53166,
+  "uuid": "2a3dfc30-f357-46f4-8ffc-549bde93250e",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C1_generic_nudge",
+  "_trial": 2,
+  "_input_spec_sha256": "13f564a9c4bcdabb0a423cb502716f2481aaa6be65ac7018f17eaaceb72bba36"
+}

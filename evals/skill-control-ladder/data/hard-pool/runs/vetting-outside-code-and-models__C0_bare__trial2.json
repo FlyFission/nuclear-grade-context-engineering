@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 21435,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0385173,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2104,
+    "cache_read_input_tokens": 6271,
+    "output_tokens": 1547,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2104,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1547,
+        "cache_read_input_tokens": 6271,
+        "cache_creation_input_tokens": 2104,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2104
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 691,
+      "outputTokens": 22,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000801,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1547,
+      "cacheReadInputTokens": 6271,
+      "cacheCreationInputTokens": 2104,
+      "webSearchRequests": 0,
+      "costUSD": 0.037716299999999994,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A few things worth checking before Friday, roughly in priority order:\n\n**Audit trail / legal defensibility** \u2014 \"legally binding\" on their marketing page isn't the same as your legal/compliance team confirming what's actually in the certificate. For a dispute to hold up, you need to know it captures signer identity verification method, IP/timestamp, consent-to-sign language, and ideally a hash that lets you prove the PDF wasn't altered *independent of SignFast* (i.e., if they go under or you're mid-litigation and can't reach them, can you still verify it yourself?). Worth a 15-minute call with legal, not just sales.\n\n**Demo \u2260 production edge cases** \u2014 two clean demo runs don't exercise: partial/abandoned signing sessions, signer declines, expired links, malformed webhook payloads, or duplicate webhook deliveries. If your completed-document pull relies on webhooks, make sure you have idempotency and a reconciliation job (poll their API periodically to catch anything a missed webhook would've dropped), not just fire-and-forget.\n\n**Uptime stat is the wrong metric** \u2014 99.98% is their status-page uptime, not a guarantee your onboarding webhook fires reliably or that mid-signature-flow failures are rare. Ask what happens to a customer who's mid-signature when SignFast has an incident \u2014 does the session recover, or does the customer have to restart?\n\n**Data handling** \u2014 confirm there's a signed DPA, and check what customer PII (SSNs, etc., if any) flows through their widget vs. stays client-side.\n\n**Rollback path** \u2014 given the Friday timeline, I'd run old and new processes in parallel for the first batch of real customers rather than a hard cutover, so a bad edge case doesn't block onboarding entirely.\n\nNone of this should blow up the Friday date if the integration itself is solid \u2014 it's mostly a half-day of verification (docs + one legal conversation) rather than rework. Happy to look at the actual webhook/API integration code if you want a second set of eyes there.",
+  "ttft_ms": 12410,
+  "ttft_stream_ms": 1155,
+  "time_to_request_ms": 26,
+  "time_to_request_from_spawn_ms": 1956442,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079730920.9983,
+  "type": "result",
+  "duration_ms": 22323,
+  "uuid": "f10a71c1-913c-494d-b296-3954c198ee2a",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "701aff90001727582676bedf69d3653098fc7feaf83c0e2164b1336ff3fb3bcf"
+}

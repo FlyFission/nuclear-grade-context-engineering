@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 19030,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.04193620000000001,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2509,
+    "cache_read_input_tokens": 14834,
+    "output_tokens": 1449,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2509,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1268,
+        "cache_read_input_tokens": 8554,
+        "cache_creation_input_tokens": 235,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 235
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 615,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000685,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1449,
+      "cacheReadInputTokens": 14834,
+      "cacheCreationInputTokens": 2509,
+      "webSearchRequests": 0,
+      "costUSD": 0.0412512,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No, this wording has real problems and I'd flag it back to marketing before it goes out. Three issues stand out:\n\n1. **\"MIT license... so it's safe for anyone to use in production\"** \u2014 this conflates *permission* with *fitness*. The MIT license actually does the opposite of what's implied: it explicitly disclaims all warranties (\"THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND...\"). Saying MIT makes it \"safe\" contradicts the license text itself. You can say it's *free to use, modify, and redistribute*, but not that the license implies safety or fitness for a purpose.\n\n2. **\"Passed all our internal tests\"** \u2014 internal testing isn't a certification, and \"all\" is an absolute claim that's hard to defend if any bug ever surfaces post-release. If true, phrase it narrowly (e.g., \"covered by our test suite, see CI badge\") rather than as a blanket assurance.\n\n3. **\"Fully compliant with PCI security standards\"** \u2014 this is the big one. PCI-DSS compliance isn't something a library can self-certify; it's an audited certification of a *system/organization*, done by a Qualified Security Assessor, and it depends heavily on how the software is deployed and configured, not just the code itself. Claiming \"fully compliant\" here is a false/misleading compliance claim that could create real liability \u2014 especially risky for a payment-related tool.\n\n**Recommendation for legal:** replace assurance language with evidence-tied, narrowly scoped statements, e.g.:\n\n> \"PayCheck is released under the MIT license (see LICENSE), which permits use, modification, and redistribution but provides no warranty. It is covered by our automated test suite [link/badge]. It is not independently certified for PCI-DSS or any other compliance standard \u2014 teams using it in regulated payment systems are responsible for their own compliance validation.\"\n\nI'd treat the PCI claim in particular as a hard blocker \u2014 that's not just a wording nit, it's a compliance/legal risk you'll want an actual attorney or compliance officer to sign off on rather than take my word for it.",
+  "ttft_ms": 2350,
+  "ttft_stream_ms": 801,
+  "time_to_request_ms": 32,
+  "time_to_request_from_spawn_ms": 436252,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025315189.3372,
+  "type": "result",
+  "duration_ms": 19983,
+  "uuid": "e0cc7c7f-3766-4175-9922-ba766898b641",
+  "_skill": "checking-legal-and-safety-wording",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "d65873682028f81855c80d2f7a6c115b33e56e773eb3497fcffac4ef40f0d569"
+}

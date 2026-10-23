@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 20785,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.051220100000000005,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 4049,
+    "cache_read_input_tokens": 26277,
+    "output_tokens": 1223,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4049,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 824,
+        "cache_read_input_tokens": 10167,
+        "cache_creation_input_tokens": 162,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 162
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00068,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1223,
+      "cacheReadInputTokens": 26277,
+      "cacheCreationInputTokens": 4049,
+      "webSearchRequests": 0,
+      "costUSD": 0.050540100000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory is empty, so this is a conceptual question rather than one tied to code I can inspect \u2014 I'll answer directly.\n\n**No, don't merge on \"it's a tiny diff\" alone.** The line count is small, but `total` is a public, external-facing contract. Renaming it is a breaking change for every consumer parsing that JSON key, regardless of how trivial the code change looks. Here's the ripple screen:\n\n**Runtime blast radius (the part that actually matters here):**\n- **API consumers** \u2014 any external client, internal service, mobile app, or third-party integration reading `response.total` breaks the moment this ships, silently (missing field, not an error) unless they're doing strict schema validation.\n- **Backward compatibility** \u2014 you need a decision: dual-emit both `total` and `order_total` for a deprecation window, version the endpoint, or do a hard cutover with advance notice. A hard cutover on a public API without notice is a blocker, not a \"quick merge.\"\n- **Schema/state migration** \u2014 likely N/A unless `total` is also a stored/serialized field name elsewhere (DB column, cached payloads, event schemas). Worth a quick grep for that before assuming it's response-only.\n\n**Repo artifacts:**\n- **API docs / OpenAPI spec** \u2014 stale the second the serializer changes; update in the same PR.\n- **Public changelog / release notes** \u2014 a field rename on a public API is exactly what belongs in a changelog with a deprecation note.\n- **Tests** \u2014 any test asserting on `total` in the response body needs updating; if none exist, that's itself a gap.\n- **SDKs/client libraries** you maintain \u2014 need corresponding updates and a version bump.\n- **Downstream teams** \u2014 if you know of internal consumers, they need a heads-up before the field disappears, not after.\n\n**Recommendation:** treat this as a deprecation, not a rename \u2014 emit both `total` and `order_total` for a window, announce it, then remove `total` in a later release. If you're confident there are zero external consumers (fully internal API), the bar is lower, but confirm that rather than assuming it from the diff size.\n\nWant me to draft the actual `change-impact.md` for this once I can see the real repo (serializer, docs, tests, changelog)?",
+  "ttft_ms": 2666,
+  "ttft_stream_ms": 835,
+  "time_to_request_ms": 42,
+  "time_to_request_from_spawn_ms": 672321,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789310770.583,
+  "type": "result",
+  "duration_ms": 21742,
+  "uuid": "043a1455-7a33-40f5-9d20-a58dae38777a",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "cb9792f55f02ab213ee934b4629f747698e3120ae737e7fbba43976a6222637a"
+}

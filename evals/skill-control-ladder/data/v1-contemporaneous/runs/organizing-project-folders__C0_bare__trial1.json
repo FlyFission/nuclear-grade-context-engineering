@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 13686,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0341062,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2419,
+    "cache_read_input_tokens": 23134,
+    "output_tokens": 795,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2419,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 552,
+        "cache_read_input_tokens": 8574,
+        "cache_creation_input_tokens": 116,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 116
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 634,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000709,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 795,
+      "cacheReadInputTokens": 23134,
+      "cacheCreationInputTokens": 2419,
+      "webSearchRequests": 0,
+      "costUSD": 0.0333972,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This working directory is empty \u2014 there's no actual `misc` or `utils` folder here for me to inspect, so I can't base a proposal on your real file list.\n\nThat said, here's a structure that fits the pattern you described (config templates, migration scripts, archived compliance reports, cross-service shared helpers, meeting notes, and a grab-bag of utils):\n\n```\nscripts/\n  migrations/        # one-off migration scripts\nconfig/\n  templates/         # config templates\nshared/\n  <helper-name>/      # shared helper functions used by 2+ services, one folder per concern\n                       # (e.g. shared/auth, shared/http, shared/validation)\ndocs/\n  compliance/\n    archive/         # archived compliance reports\n  meeting-notes/\n    archive/         # old meeting notes, probably fine to just archive/prune\n```\n\nThe `utils` grab-bag is the harder one since \"helper\" is a non-category \u2014 the real fix is sorting each file by *what it does*, not renaming the bucket. A few ways that usually shakes out:\n- **By consuming domain**: if a helper is only used by one service, it should live in that service's own `lib/` or `internal/` folder, not centrally.\n- **By technical concern**: things like `date/`, `string/`, `http/`, `validation/` if the helpers are truly generic and used everywhere.\n- Anything used by exactly one caller should just move next to that caller \u2014 that alone often shrinks a 30-file dumping ground by half.\n\nSince I can't see the actual files, I'd suggest: point me at the real `misc`/`utils` directories (or paste a file listing), and I'll categorize each file concretely rather than propose folder names in the abstract. Want to do that?",
+  "ttft_ms": 1389,
+  "ttft_stream_ms": 690,
+  "time_to_request_ms": 38,
+  "time_to_request_from_spawn_ms": 627381,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789265962.141,
+  "type": "result",
+  "duration_ms": 12818,
+  "uuid": "2c78ff24-69de-4541-bc1d-335bcd5a4d93",
+  "_skill": "organizing-project-folders",
+  "_arm": "C0_bare",
+  "_trial": 1,
+  "_input_spec_sha256": "cc70d2737f6ff8d9c37d7d8e35aa83552184da66b4b3e55a88fbf05dc2274310"
+}

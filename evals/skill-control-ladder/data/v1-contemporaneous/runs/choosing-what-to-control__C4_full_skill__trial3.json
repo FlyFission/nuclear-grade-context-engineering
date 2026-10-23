@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 27151,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.056794,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 3614,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2163,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3614,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2163,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 3614,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3614
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 700,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000775,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2163,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 3614,
+      "webSearchRequests": 0,
+      "costUSD": 0.056019,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Small diff, but it bundles three different kinds of controlled items \u2014 a behavior change, an agent-power grant, and a public trust claim. \"Tiny diff\" and \"low risk\" aren't the same thing here, especially since item 2 and item 3 are coupled (the doc is only accurate because of what the tool now does).\n\n| Item | Type | Current state | Intended state | Why controlled | Evidence / gap | Owner | Re-check trigger |\n|---|---|---|---|---|---|---|---|\n| System prompt wording (\"more proactive\") | Prompt | Prior wording | New \"proactive\" phrasing | Wording changes how assertively the bot acts toward customers, including around refunds \u2014 affects trust and behavior | PR diff (link it) | Bot prompt owner | Any further prompt edit; observed cases of bot being overly aggressive/pushy |\n| `issue_refund(amount, order_id)` tool, $50 autonomous cap | Agent power / tool | No autonomous refund capability existed | Agent can approve refunds up to $50 with zero human sign-off | This is a new financial authority granted to an agent \u2014 direct security/trust/money impact | **Gap** \u2014 no sign-off from finance or support leadership referenced in the PR | Eng lead + finance/support ops (needs explicit owner, not just the PR author) | Any change to the $50 cap, refund logic, or eligibility rules; any incident/abuse report |\n| Help-center article: refund review claim | Public doc / claim | States \"A human always reviews refunds before they are issued\" | Sentence deleted | Public-facing claim about how the system works; customers and possibly legal/compliance rely on it being accurate | **Gap** \u2014 no legal/support leadership approval cited for removing a customer-facing guarantee | Support/legal/comms | Any further change to refund threshold or review process; any customer complaint referencing the old guarantee |\n\nThe real risk isn't that any one of these drifts individually \u2014 it's that they're only consistent *together*. If someone later bumps the $50 cap in code without revisiting the doc (or vice versa), the public article goes silently wrong. That's the specific drift to name and watch, not \"the PR in general.\"\n\nGiven items 2 and 3 involve real money and a removed customer-facing safety claim with no cited approval, I'd treat this as an escalation, not a smoke-test-and-merge: get explicit sign-off from whoever owns refund policy (finance/support ops) and whoever owns the public docs (support/legal) before merging \u2014 not after. A quick functional smoke test doesn't tell you whether $50 autonomous refunds were actually approved as a policy.",
+  "ttft_ms": 17182,
+  "ttft_stream_ms": 790,
+  "time_to_request_ms": 24,
+  "time_to_request_from_spawn_ms": 1270033,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789908479.3086,
+  "type": "result",
+  "duration_ms": 28968,
+  "uuid": "4cb95bd8-1661-470a-87a6-c11d51ba2219",
+  "_skill": "choosing-what-to-control",
+  "_arm": "C4_full_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "9e3d906a4466c368b6c060ab46756868587d281dbc46bfe0497613c248ded3fb"
+}

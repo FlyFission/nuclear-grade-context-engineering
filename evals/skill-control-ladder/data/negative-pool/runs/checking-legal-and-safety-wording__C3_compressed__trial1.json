@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 14304,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0323204,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2631,
+    "cache_read_input_tokens": 23558,
+    "output_tokens": 584,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2631,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 337,
+        "cache_read_input_tokens": 8724,
+        "cache_creation_input_tokens": 187,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 187
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 604,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000689,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 584,
+      "cacheReadInputTokens": 23558,
+      "cacheCreationInputTokens": 2631,
+      "webSearchRequests": 0,
+      "costUSD": 0.0316314,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I couldn't find that comment in this repo \u2014 can you point me to the file, or paste the function/comment here? In the meantime, here's a suggested rewording pattern you can drop in:\n\n```\n// Retries on transient errors; not safe for concurrent use across threads.\n```\n\nor, more generic:\n\n```\n// Best-effort operation; may raise on unrecoverable errors. Caller must\n// synchronize access \u2014 this function is not internally thread-safe.\n```\n\nA couple of quick notes, even for internal-only code:\n- Swap absolute claims (\"guaranteed,\" \"100%,\" \"never,\" \"all cases\") for what's actually true \u2014 what it retries, what it doesn't handle, and any concurrency assumptions.\n- \"Internal and not published\" doesn't really change the risk calculus \u2014 comments like this get copy-pasted into other code, cited in incident postmortems, or surface later if the code path is exposed externally. Cheap to fix now, so worth doing regardless of audience.\n\nSend me the actual file/snippet and I'll tailor the wording to what the function really does.",
+  "ttft_ms": 1564,
+  "ttft_stream_ms": 859,
+  "time_to_request_ms": 78,
+  "time_to_request_from_spawn_ms": 1864584,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594857717.5544,
+  "type": "result",
+  "duration_ms": 14917,
+  "uuid": "3e6fa5b0-84fa-40d9-bd62-c355291c4eca",
+  "_skill": "checking-legal-and-safety-wording",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "89dcea13660d7be0d001ea5d574c19256d2f339f1d3880d86ec1feae7a8f3209"
+}

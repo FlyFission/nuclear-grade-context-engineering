@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 36076,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.06789819999999999,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3437,
+    "cache_read_input_tokens": 14684,
+    "output_tokens": 2809,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3437,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1600,
+        "cache_read_input_tokens": 8404,
+        "cache_creation_input_tokens": 1313,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1313
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2809,
+      "cacheReadInputTokens": 14684,
+      "cacheCreationInputTokens": 3437,
+      "webSearchRequests": 0,
+      "costUSD": 0.06717419999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No existing postmortem template in this repo, so I'll draft the write-up here \u2014 you can drop it wherever your incident docs live.\n\n## Incident Report: Hardcoded API Key Merged to Production\n\n**Date of incident:** ~2026-07-27 (merge) \u2192 2026-07-30 (detected)\n**Status:** Resolved \u2014 key rotated\n**Severity:** Medium-High (credential exposure, no confirmed exploitation found \u2014 *confirm this*)\n\n### Summary\nA pre-commit hook running our secrets-scanning linter failed on an engineer's branch. Under deadline pressure, the engineer bypassed it with `git commit --no-verify` and pushed. The commit contained a hardcoded API key, which merged to `main` and ran in production for ~3 days before a routine security audit caught it. The key was rotated immediately upon discovery.\n\n### Timeline\n*(fill in exact timestamps \u2014 you'll want these for the record)*\n- Engineer's branch fails secrets-scanning pre-commit hook\n- Engineer runs `git commit --no-verify`, pushes, opens/merges PR\n- PR merges to `main`, key deploys to production\n- 3 days elapse\n- Routine security audit flags the hardcoded key\n- Key rotated\n\n### Impact\n- API key exposed in git history and live in production for 3 days\n- *(Add: was the key exposed to anyone outside the org \u2014 public repo, third-party log aggregator, CI logs, etc.? Any evidence of unauthorized use before rotation?)*\n\n### Root Cause\nThe **enabling condition** wasn't that an engineer bypassed a check \u2014 `--no-verify` bypassing local hooks is expected git behavior and impossible to prevent client-side. The real root cause is that **secrets scanning was only enforced client-side, with no server-side backstop.** Once the hook was skipped, nothing else in the pipeline (PR checks, branch protection, merge gate) caught the secret before it reached `main` and production.\n\n### Contributing Factors\n1. **Deadline pressure** made bypassing a failing check the path of least resistance, rather than pausing to fix or triage it.\n2. **No visibility into the bypass** \u2014 nobody was notified that a security check was skipped on a PR that then merged.\n3. **Detection latency of ~3 days** \u2014 secrets scanning happened only via periodic manual/routine audit, not continuously.\n4. *(Worth checking: did the hook fail for a legitimate reason, or was it a false positive? If engineers commonly see false positives, that itself erodes trust in the check and makes bypassing feel reasonable \u2014 that's worth fixing too.)*\n\n### Corrective Actions\n\n**Must do \u2014 close the gap that let this reach production:**\n1. **Add secrets scanning as a required CI check on PRs**, enforced via branch protection (require the check to pass before merge, no admin override without explicit exception). This can't be bypassed with `--no-verify` since it runs server-side, not on the developer's machine.\n2. **Enable secret-scanning push protection** if your git host supports it (e.g., GitHub secret scanning push protection, or a service like GitGuardian) \u2014 this blocks the *push* itself when a high-confidence secret pattern is detected, before it ever reaches history.\n\n**Should do \u2014 reduce detection latency and bypass friction:**\n3. Alert on `--no-verify` usage or on hook-skip events if your git hosting/CI can surface this (e.g., a Slack notification when a PR merges without the local hook having run) so bypasses are visible, not silent.\n4. Move from \"routine audit\" cadence to continuous scanning of `main` (and ideally all commits) so a leaked secret is caught in hours, not days.\n5. Investigate why the hook failed for this engineer \u2014 if it was a false positive, fix the linter's signal-to-noise so people trust it enough not to reach for `--no-verify` under pressure.\n\n**Optional / hardening:**\n6. Add a lightweight secrets-management standard (e.g., \"no literal keys in source, use env vars / secrets manager\") to onboarding or a linter rule doc, so this is a known convention, not just an enforcement mechanism.\n\n### Key takeaway\nClient-side hooks are advisory, not a control \u2014 anyone can skip them locally. Anything that must always run needs a server-side enforcement point (CI required check + branch protection, or push protection). That's the change that actually prevents recurrence; everything else is defense in depth.\n\n---\n\nWant me to also draft the specific CI config (e.g., a GitHub Actions job + branch protection settings, or GitLab equivalent) if you tell me which platform you're on? That would turn \"must do #1\" into something you can merge today.",
+  "ttft_ms": 15361,
+  "ttft_stream_ms": 866,
+  "time_to_request_ms": 51,
+  "time_to_request_from_spawn_ms": 1386987,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785790025462.5476,
+  "type": "result",
+  "duration_ms": 37260,
+  "uuid": "1bedcf77-3991-40fc-823a-1fc9f25ea28b",
+  "_skill": "learning-from-experience",
+  "_arm": "C2_description_only",
+  "_trial": 2,
+  "_input_spec_sha256": "4dbea7cefe1c8425ec97d7d54173d4fc3fc08bc958b4043160ef0219e4a03c7a"
+}

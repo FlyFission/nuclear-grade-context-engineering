@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 5900,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.035757000000000004,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 4553,
+    "cache_read_input_tokens": 16920,
+    "output_tokens": 179,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4553,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 42,
+        "cache_read_input_tokens": 10640,
+        "cache_creation_input_tokens": 193,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 193
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 586,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000666,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 179,
+      "cacheReadInputTokens": 16920,
+      "cacheCreationInputTokens": 4553,
+      "webSearchRequests": 0,
+      "costUSD": 0.035091000000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No other references to `calcTax` anywhere in the repo \u2014 the rename to `calculateTax` is clean, safe to commit.",
+  "ttft_ms": 1642,
+  "ttft_stream_ms": 732,
+  "time_to_request_ms": 73,
+  "time_to_request_from_spawn_ms": 1705322,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594698998.9468,
+  "type": "result",
+  "duration_ms": 5500,
+  "uuid": "7de3a66b-51e4-46b7-96b8-d76f9a66679b",
+  "_skill": "reviewing-code-quality",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "01780d901313469c5d5a92ce6772e7897202a476ed01e1c3518d8bb92cf8c2dc"
+}

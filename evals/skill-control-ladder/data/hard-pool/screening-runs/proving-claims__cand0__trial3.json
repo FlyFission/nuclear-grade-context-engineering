@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 31739,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.057392,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2241,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2752,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2241,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2752,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2241,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2241
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 706,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000776,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2752,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2241,
+      "webSearchRequests": 0,
+      "costUSD": 0.056616,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before drafting, one thing stands out that changes the shape of this row: the lazy re-encryption approach means the claim as worded \u2014 **\"All customer PII is encrypted at rest\"** \u2014 isn't actually true today. Existing rows stay plaintext until they're next updated, so there's likely an unknown (possibly large, possibly indefinite for dormant records) population of unencrypted PII in prod right now. That's a material gap for a claim going into a release-review evidence packet, so I've written the row to surface it rather than paper over it \u2014 you'll want to decide with the team whether to reword the claim or flag it as a known open gap before 3pm.\n\n---\n\n**Claim:** All customer PII is encrypted at rest.\n\n**Status:** Partially Met \u2014 do not mark \"Verified\"/\"Complete\" as worded.\n\n**Gap:**\n1. **Claim/implementation mismatch:** Encryption is applied only on write going forward (lazy re-encryption on next update). Rows untouched since rollout remain plaintext. No backfill exists, so there is no bound on how long \u2014 or whether \u2014 some rows ever get re-encrypted (e.g., inactive/dormant customer records may never be updated).\n2. **No production verification:** Evidence provided (unit tests, PR sign-off) confirms the *code path* works, not the *actual state of data* in prod. Nothing here shows what fraction of PII rows are currently encrypted vs. plaintext.\n3. **Backups/replicas unaddressed:** No evidence covers whether pre-migration backups, snapshots, or read replicas still hold plaintext copies of PII that was later re-encrypted in the primary.\n4. **Precedent isn't evidence:** Billing service rollout is a useful process reference but isn't evidence for this table/dataset \u2014 different data, different access patterns, no indication the same lazy-migration gap was measured or resolved there either.\n\n**Tests:**\n- \u2705 AES-256 write-path unit tests, green in CI (covers new/updated writes only)\n- \u2705 Priya's PR sign-off (code review, not production validation)\n- \u274c Missing: query/audit against prod confirming current % of PII rows encrypted vs. plaintext\n- \u274c Missing: read-path test confirming correct handling of mixed encrypted/legacy-plaintext rows\n- \u274c Missing: backup/replica scan for residual plaintext\n\n**Non-claims (explicitly out of scope of this evidence):**\n- Does not claim all *existing* PII is encrypted \u2014 only that new/updated rows are.\n- Does not claim a completion date or SLA for full coverage.\n- Does not claim backups/replicas are covered.\n- Does not claim production-verified encryption state \u2014 evidence is code-level only.\n\n---\n\nMy recommendation: either (a) reword the claim to something defensible today, e.g. \"New and updated customer PII is encrypted at rest; historical rows are migrated opportunistically on next write, no backfill scheduled,\" or (b) keep the original claim but log this as an open gap with an owner and remediation plan (e.g., scheduled backfill or a metric/dashboard tracking coverage %). Submitting the current wording as fully met without one of those would misrepresent the actual state to whoever reads the packet. Want me to draft the reworded claim, or flag this to the team for a decision first?",
+  "ttft_ms": 19525,
+  "ttft_stream_ms": 910,
+  "time_to_request_ms": 28,
+  "time_to_request_from_spawn_ms": 668393,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078443248.2236,
+  "type": "result",
+  "duration_ms": 33032,
+  "uuid": "791192f5-62b1-4b77-a263-6b523dc8e501",
+  "_spec": "4639696e9af9dfdf5d678b63f2c3672e7ec8b932aea95133c0fcd5cce21bb6fe",
+  "_skill": "proving-claims",
+  "_cand": 0,
+  "_trial": 3
+}

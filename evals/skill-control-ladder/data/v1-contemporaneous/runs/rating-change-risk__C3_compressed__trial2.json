@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 19583,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.034648,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2504,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1131,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2504,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1131,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2504,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2504
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 684,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000769,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1131,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2504,
+      "webSearchRequests": 0,
+      "costUSD": 0.033879,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Don't do this the way it's proposed. A few concerns:\n\n- **Blast radius mismatch**: flipping `ENFORCE_MFA_FOR_ADMINS` globally removes MFA for *every* admin across *all* backend services, not just the one locked-out account. If the goal is unblocking one person, that's a much bigger exposure than the problem requires.\n- **This is an auth trust-boundary change**, not a \"minor flag tweak\" \u2014 it should get review regardless of diff size. Self-approval on a security control is exactly the kind of thing a second reviewer exists to catch (e.g., \"wait, this affects prod for all services\" or \"there's already an MFA-reset path for this\").\n- **\"Flip it back in an hour\" is a manual, unenforced promise.** Revert-by-memory on a live security control is how these windows become permanent \u2014 incidents happen, someone gets pulled away, on-call handoff drops it.\n\n**Better path**: use (or build, if missing) a per-user MFA bypass/reset \u2014 reissue backup codes, have an admin manually clear/reset that one user's MFA enrollment, or grant a scoped temporary exception \u2014 rather than disabling enforcement system-wide. That's normal identity-ops recovery, not a config flag flip.\n\nIf a global flag change is genuinely the only lever available: get at least one other reviewer's eyes on it even if expedited, have someone other than the person who flips it off be responsible for flipping it back, and set a hard alert/reminder tied to that revert. Skipping review and self-approving on main isn't worth saving for something touching admin auth enforcement.",
+  "ttft_ms": 10667,
+  "ttft_stream_ms": 1906,
+  "time_to_request_ms": 60,
+  "time_to_request_from_spawn_ms": 1302661,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789940004.486,
+  "type": "result",
+  "duration_ms": 18973,
+  "uuid": "badeca05-0db5-45f3-9c97-ff0100549675",
+  "_skill": "rating-change-risk",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "b6d7bf31322e2acefce2022def1bc4771e0b6845264c23aa983ea9e253a2369a"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 27794,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0493396,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2432,
+    "cache_read_input_tokens": 14732,
+    "output_tokens": 1972,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2432,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1762,
+        "cache_read_input_tokens": 8452,
+        "cache_creation_input_tokens": 260,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 260
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 656,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000736,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1972,
+      "cacheReadInputTokens": 14732,
+      "cacheCreationInputTokens": 2432,
+      "webSearchRequests": 0,
+      "costUSD": 0.0486036,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "\"Swapped model per cost review\" tells a future reviewer *why* someone might have wanted to change it, but nothing about whether it was *safe* to change \u2014 for a system that autonomously moves customer money, that's the part that matters. A one-line diff in code doesn't mean one line of risk.\n\nWhat you actually need is a short **decision/change record** (ADR-style), linked from the PR, not just prose in the PR body \u2014 PR descriptions get lost when branches are deleted or squash-merged; a durable record survives that.\n\n**It should contain:**\n\n1. **What changed, precisely** \u2014 old model ID/version \u2192 new model ID/version, and whether the new one is pinned or will silently drift on provider updates.\n2. **Why** \u2014 the actual cost numbers/review, not just \"cost review\" as a label.\n3. **Risk classification** \u2014 explicitly note this touches financial approvals autonomously; that should trigger a higher bar than a typical config change.\n4. **Pre-swap validation evidence** \u2014 results from running both models against a representative eval set of past refund decisions, specifically:\n   - false-approve rate (the costly failure mode \u2014 approving refunds that shouldn't be approved)\n   - false-deny rate (customer-harm side)\n   - behavior on edge cases: fraud-pattern requests, ambiguous policy cases, adversarial/prompt-injection attempts against the approval logic\n   - instruction-following/tool-calling reliability differences between providers (models differ here even at similar benchmark scores)\n5. **Who signed off** \u2014 for a money-moving autonomous agent, that arguably shouldn't be engineering alone; whoever owns fraud/finance risk should have visibility.\n6. **Rollout plan** \u2014 shadow mode or canary percentage before full cutover, not a flip.\n7. **Post-swap monitoring** \u2014 what metrics get watched (approval rate, dollar volume approved, deviation from historical baseline, sampled human review) and for how long.\n8. **Rollback trigger and procedure** \u2014 what threshold reverts the swap, and confirmation the old model ID still works as a fallback.\n\nIf none of the validation in (4) actually happened before shipping, that itself is the important finding \u2014 and worth surfacing to your manager now rather than after an incident, since \"we shipped it fast\" is a very different story in six months if refund approval rates or fraud losses shifted and nobody has data to say whether the model swap was the cause.",
+  "ttft_ms": 2861,
+  "ttft_stream_ms": 1062,
+  "time_to_request_ms": 51,
+  "time_to_request_from_spawn_ms": 613066,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025491893.0132,
+  "type": "result",
+  "duration_ms": 28707,
+  "uuid": "c683ef86-f842-400e-9749-0225a249cdc5",
+  "_skill": "creating-change-records",
+  "_arm": "C1_generic_nudge",
+  "_trial": 2,
+  "_input_spec_sha256": "4546ee653a44bd61beba656a58752ac4f42e8dd9893c59e7ee4c436cd0c43067"
+}

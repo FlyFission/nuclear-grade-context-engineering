@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 8157,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0443248,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 4936,
+    "cache_read_input_tokens": 28166,
+    "output_tokens": 372,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4936,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 120,
+        "cache_read_input_tokens": 11033,
+        "cache_creation_input_tokens": 183,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 183
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 586,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000661,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 372,
+      "cacheReadInputTokens": 28166,
+      "cacheCreationInputTokens": 4936,
+      "webSearchRequests": 0,
+      "costUSD": 0.043663799999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I searched the whole repo (case-insensitive) for \"seperate\" and found no matches \u2014 including no `--export` flag with argparse help text containing that typo. It's possible you're thinking of a different repo/branch, or the CLI code isn't in this working directory.\n\nCould you point me to the file, or confirm this is the right repo? I don't want to guess and edit the wrong string.",
+  "ttft_ms": 1179,
+  "ttft_stream_ms": 808,
+  "time_to_request_ms": 26,
+  "time_to_request_from_spawn_ms": 1742036,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594736454.2153,
+  "type": "result",
+  "duration_ms": 8614,
+  "uuid": "538d3d7a-e8de-40d9-a880-202122f879d8",
+  "_skill": "stress-testing-agent-changes",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "6189f2e5d56c4e8c3d8c9b9ced0b0a460e05aa4034744393e5f1ff30620869fe"
+}

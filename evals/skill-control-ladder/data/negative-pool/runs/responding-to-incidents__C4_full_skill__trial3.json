@@ -1,0 +1,96 @@
+{
+  "is_error": false,
+  "duration_api_ms": 13722,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0442284,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 4327,
+    "cache_read_input_tokens": 26738,
+    "output_tokens": 637,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4327,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 275,
+        "cache_read_input_tokens": 10343,
+        "cache_creation_input_tokens": 264,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 264
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 597,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000672,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 637,
+      "cacheReadInputTokens": 26738,
+      "cacheCreationInputTokens": 4327,
+      "webSearchRequests": 0,
+      "costUSD": 0.043556399999999995,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [
+    {
+      "tool_name": "Grep",
+      "tool_use_id": "toolu_01TPuE52XLTnrWb9RuzdMREA",
+      "tool_input": {
+        "pattern": "apiTimeout",
+        "path": "/",
+        "output_mode": "content",
+        "-n": true,
+        "-i": true
+      }
+    }
+  ],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No matches found in the current project directory for `apiTimeout`. A few things to check on your end:\n\n1. **Which file/repo is this in?** If it's outside `./evals/skill-control-ladder/data/negative-pool/work/responding-to-incidents_C4_full_skill_3`, point me to the path and I'll search there.\n2. It's also worth double-checking the startup script for how it reads env vars \u2014 e.g. `os.environ[\"apiTimeout\"]` vs `os.getenv(\"apiTimeout\")`, or a config loader that uppercases/transforms keys (some frameworks expect `API_TIMEOUT` for env vars, not `api_timeout`).\n\nOnce you tell me the file path (or if it's in a different directory), I'll update the reference to `api_timeout` directly.",
+  "ttft_ms": 3312,
+  "ttft_stream_ms": 2459,
+  "time_to_request_ms": 29,
+  "time_to_request_from_spawn_ms": 1691811,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594686257.469,
+  "type": "result",
+  "duration_ms": 14237,
+  "uuid": "02c9f71d-9342-4667-9368-da678c5cf5d8",
+  "_skill": "responding-to-incidents",
+  "_arm": "C4_full_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "6c3a30c41bd9a21143865455645ec89e1798e59655a22adfb58c605592acf96f"
+}

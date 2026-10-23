@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 15702,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0350192,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2524,
+    "cache_read_input_tokens": 14714,
+    "output_tokens": 982,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2524,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 666,
+        "cache_read_input_tokens": 8434,
+        "cache_creation_input_tokens": 370,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 370
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000719,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 982,
+      "cacheReadInputTokens": 14714,
+      "cacheCreationInputTokens": 2524,
+      "webSearchRequests": 0,
+      "costUSD": 0.0343002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 don't cut over production this week. Vendor marketing claims aren't evidence, and content moderation is a safety-critical path where failures have real consequences (harmful content reaching users, or over-blocking legitimate content).\n\n**What's missing before this is a defensible decision:**\n- **\"99.9% accuracy\" is meaningless without definition.** Accuracy on what dataset, what content categories, what's the false-negative rate specifically for the harm categories you care about (CSAM, violence, self-harm, harassment, etc.)? A vendor can hit 99.9% overall while missing badly on the categories that matter most to you. You need their eval methodology, not their headline number.\n- **SOC2 compliance covers security/availability controls, not moderation quality.** It tells you nothing about false-negative rates or bias in classification.\n- **Case studies are marketing, not benchmarks** \u2014 self-selected, and probably not run on content resembling yours.\n- **You have zero data on your own traffic.** No side-by-side comparison against your current provider on real (or representative) samples from your platform.\n\n**What I'd do instead:**\n1. Run the new API in shadow mode against production traffic (or a recent sample) for a couple weeks, logging its decisions alongside your current provider's, without acting on them.\n2. Compare disagreements by hand, especially false negatives on your highest-severity categories \u2014 that's where the liability and user-harm risk concentrates.\n3. Ask the vendor for their eval methodology and, ideally, an SLA with remedies for missed detections, not just uptime.\n4. Check who owns the risk if this goes wrong (legal/trust & safety, not just engineering) and get their sign-off before any production cutover \u2014 this isn't a call to make on price alone.\n\nPricing being better is a real reason to evaluate the vendor seriously, not a reason to skip the evaluation. If timeline pressure is coming from stakeholders, I'd flag that a rushed cutover on an untested moderation system is the kind of decision that's very expensive to walk back once something slips through.",
+  "ttft_ms": 4931,
+  "ttft_stream_ms": 1640,
+  "time_to_request_ms": 43,
+  "time_to_request_from_spawn_ms": 1220942,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785026099398.9893,
+  "type": "result",
+  "duration_ms": 16529,
+  "uuid": "ccb5de5c-a641-47f9-85f0-40882db67402",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "18d2ee05b64b0e7761a276b206d50734d1bba70b467234fb7cb019d0e50fc967"
+}

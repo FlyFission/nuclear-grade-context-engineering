@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 19905,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.038152,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2238,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1471,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2238,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1471,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2238,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2238
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 689,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000769,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1471,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2238,
+      "webSearchRequests": 0,
+      "costUSD": 0.037383,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The copy doesn't match the architecture you just described, and that's a real problem \u2014 not just wording polish.\n\n**The core issue:** \"Not even we can read them\" is a specific, testable claim that means true end-to-end encryption \u2014 keys generated and held client-side, provider never has access to plaintext or key material. What you described is server-side envelope encryption with a **KMS-managed key**. That means:\n\n- Your backend (or anyone with the right IAM permissions on that KMS key) *can* decrypt the files. That's the whole point of KMS-managed envelope encryption \u2014 centralized key management for rotation, access control, and recovery.\n- The \"restore a deleted file\" feature is the tell: you can't restore/decrypt a file on a customer's behalf unless you hold or can access the decryption key. True E2EE providers can't offer that feature without customer participation (e.g., customer re-uploading their key), precisely because they can't read the data either.\n- \"Encrypted the moment it leaves the browser\" is also ambiguous \u2014 if that's just TLS in transit, it's not doing the work the sentence implies. If it's genuine client-side encryption with a customer-held key, that's a different architecture than what you described next (KMS-managed keys).\n\n**Why this matters more than typical copy nitpicks:** \"Not even we can read them\" is the kind of claim that gets picked apart in a breach disclosure, an FTC complaint, a security researcher's blog post, or a competitor's marketing. It's a factual technical claim, not puffery \u2014 legal reviewing for \"other issues\" (trademark, disclaimers, etc.) likely isn't equipped to catch a crypto-architecture mismatch like this unless someone flags the technical inconsistency specifically. I'd loop them back in on this point before Friday, not skip it.\n\n**What I'd suggest instead**, depending on what's actually true:\n\n- If it's server-side encryption with strong key management (what you described): *\"Your files are encrypted with AES-256 at rest and in transit, with keys managed and rotated through [KMS].\"* \u2014 accurate, still sounds strong, doesn't promise something you can't back up.\n- If you want to claim E2EE, the architecture needs to actually be E2EE (client-held keys, no server-side decrypt path, no delete-recovery via provider), and \"restore deleted file\" would need to be reworked or dropped.\n\nGreen CI and a clean pen test verify the code does what it's supposed to \u2014 they don't verify that \"what it's supposed to\" matches this marketing claim. Worth confirming with whoever owns the KMS key policy whether decrypt access genuinely exists before this ships.",
+  "ttft_ms": 8232,
+  "ttft_stream_ms": 1268,
+  "time_to_request_ms": 22,
+  "time_to_request_from_spawn_ms": 493313,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078267841.8555,
+  "type": "result",
+  "duration_ms": 21162,
+  "uuid": "9f4cdc6c-c339-45d7-873b-dce92d0e9844",
+  "_spec": "dd92a83a3ff8ce478749507b247113f50079838ffe4115a1c753e2f993fb4f71",
+  "_skill": "checking-legal-and-safety-wording",
+  "_cand": 1,
+  "_trial": 2
+}

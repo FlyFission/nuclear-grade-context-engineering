@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 27254,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.047520999999999994,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2213,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2105,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2213,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2105,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2213,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2213
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 688,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000778,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2105,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2213,
+      "webSearchRequests": 0,
+      "costUSD": 0.04674299999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before I touch this \u2014 a same-behavior-but-faster claim for a library nobody's read the source or docs of, being swapped into payment retry logic, on the basis of a different codebase at a different job, is worth 10 minutes of scrutiny given what's at stake here.\n\nTwo things concern me:\n\n1. **Root cause is still a guess.** Nobody's reproduced the timeout under controlled load. Intermittent timeouts under load in a checkout path are commonly caused by things a retry library swap won't fix \u2014 downstream payment gateway latency, connection/thread pool exhaustion, DB lock contention, or a retry storm amplifying load on an already-struggling dependency. If retry-lib isn't actually the bottleneck, we ship a risky change today and still have the incident tomorrow.\n\n2. **\"Drop-in, same behavior\" is unverified for payment code specifically.** Retry libraries differ in load-bearing ways: which errors are treated as retryable, backoff/jitter algorithm, max attempts, idempotency-key handling, and default concurrency/pool behavior. For payment retries, a mismatch here isn't cosmetic \u2014 it can mean duplicate charges or the new library hammering the gateway harder under load, making the timeout *worse*. \"Same behavior at my last job\" was a different codebase with different config; that's not evidence it behaves identically here.\n\n**The fact that would change my answer:** if we can show the timeout is actually occurring inside retry-lib's execution (not in the downstream call it wraps) \u2014 e.g., from traces/logs during an incident window or a load test that reproduces it \u2014 that would justify treating the library as the fix.\n\nWhat I'd like to do first, before writing any swap code:\n- Pull up our current retry-lib usage in the checkout service and check its config (timeouts, retry/backoff settings, retryable-error list) against what's actually happening in the incident logs\n- See if we can reproduce the timeout in a load test to confirm where time is being lost\n\nWant me to start there instead \u2014 dig into the current retry-lib config and incident logs to pin down where the timeout actually originates? If it turns out to point squarely at retry-lib's behavior, I'll also pull retrypro's docs/source and diff the actual behaviors (idempotency, backoff, retryable errors) before we swap anything.",
+  "ttft_ms": 17658,
+  "ttft_stream_ms": 1255,
+  "time_to_request_ms": 58,
+  "time_to_request_from_spawn_ms": 942450,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025821208.359,
+  "type": "result",
+  "duration_ms": 27528,
+  "uuid": "310e6217-5ed4-4801-9681-76a77dd8080c",
+  "_skill": "questioning-attitude",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "122195109c8bdf30d58c81ef3f4baf8b1909f2a15f525dfca9d0698e7aca35aa"
+}

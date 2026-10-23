@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 25794,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0491562,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2463,
+    "cache_read_input_tokens": 14874,
+    "output_tokens": 1945,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2463,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1847,
+        "cache_read_input_tokens": 8594,
+        "cache_creation_input_tokens": 149,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 149
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 634,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000729,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1945,
+      "cacheReadInputTokens": 14874,
+      "cacheCreationInputTokens": 2463,
+      "webSearchRequests": 0,
+      "costUSD": 0.04842719999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I checked the repo here but it's empty in this workspace, so I can't inspect the actual files \u2014 I'll propose a structure from the categories you described, but flag where I need real filenames to place things precisely.\n\n**Recommended layout** (assumes a typical service-based repo; tell me if you use `services/`, `apps/`, `packages/`, or a single app):\n\n```\nconfig/\n  templates/            # the config templates from misc\n\nscripts/\n  migrations/\n    archive/             # completed one-off migration scripts, kept for record\n                          # (only if you still need to run them; otherwise delete)\n\ndocs/\n  compliance/\n    archive/YYYY/         # archived compliance reports, by year\n\npackages/shared/<name>/   # promote the shared helpers to a real package\n  README.md                # who owns it, what it's for, which services use it\n```\n\n**For meeting notes**: these usually don't belong in the code repo at all \u2014 recommend moving them to your wiki/Drive rather than reburying them in `docs/`. If you want them in-repo for history, `docs/archive/meeting-notes/` with a note they're frozen.\n\n**For `utils` (30 files)**: I can't split this safely from a description alone \u2014 a dumping-ground folder like this almost always mixes \"should be its own package,\" \"belongs inside one specific service,\" and \"dead code, delete it.\" I'd need the actual file list (or even just filenames + one-line purpose for each) to sort them into buckets rather than guessing and creating a second `misc`-in-disguise.\n\n**Before moving anything**: one open question \u2014 is there a single owner/source-of-truth for what counts as \"shared\" vs \"service-specific\" in your org, or would this need sign-off from the two services currently depending on those helpers? Moving `misc` helpers into a formal shared package is a breaking import-path change for both, so worth confirming who needs to review that.\n\nWant me to work through this once you share the actual file lists (or even just `ls misc utils`), or do you want to lock in the skeleton above first?",
+  "ttft_ms": 1799,
+  "ttft_stream_ms": 812,
+  "time_to_request_ms": 38,
+  "time_to_request_from_spawn_ms": 868161,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025746978.7617,
+  "type": "result",
+  "duration_ms": 26734,
+  "uuid": "71fcdec0-1ad3-49fa-882f-64fff30fe0b6",
+  "_skill": "organizing-project-folders",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "475e9ddd5fc99b90d48ebac64620a0817620f7aac0af09487fa0f2266cb01a3c"
+}

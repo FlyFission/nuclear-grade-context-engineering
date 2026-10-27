@@ -138,7 +138,14 @@ Supporting numbers:
   ([`GRADER-RELIABILITY-hard.md`](GRADER-RELIABILITY-hard.md)). Reliability, not
   validity: a stable grader can consistently reward the wrong thing.
 - Evidence integrity: `scripts/verify_lineage.py` proves all **1,983** grading
-  rows hash-match the committed transcripts they graded.
+  rows hash-match the committed transcripts they graded, all **1,263** transcripts
+  still match the inputs that produced them, and every rubric grade matches the
+  rubric it was scored against.
+- Skill pin: all four pools were measured against `skills/` tree
+  **`621fc0c1`** (`data/skill-pins.json`). Skill bodies change on main, and a
+  result is a statement about the text that produced it — so the pin is recorded
+  rather than chased. When it differs from HEAD, that is a stated fact, not a
+  defect; a pool needs regenerating only to speak about today's skills.
 
 ## Circularity, the biggest limitation
 

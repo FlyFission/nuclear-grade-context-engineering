@@ -167,6 +167,28 @@ def check_run_specs() -> tuple[int, list[str]]:
     return checked, broken
 
 
+def report_pins() -> None:
+    """Print which skill text each pool was measured against.
+
+    Informational, not a gate. A pool whose pin differs from current HEAD is not
+    broken -- it is a result about the text that produced it. The pin makes that
+    a stated fact instead of silent drift, and tells a reader when a pool would
+    need regenerating to speak about today's skills.
+    """
+    os.environ["NG_LADDER_POOL"] = "v1"
+    import ladder_common
+    importlib.reload(ladder_common)
+    pins = ladder_common.load_pins()
+    head = ladder_common.skills_tree_hash()
+    print(f"\nskills/ tree at HEAD: {head or 'unknown (not a git tree)'}")
+    if not pins:
+        print("  no pins recorded")
+        return
+    for pool, tree in sorted(pins.items()):
+        mark = "matches HEAD" if tree == head else "DIFFERS from HEAD"
+        print(f"  {pool:9} measured against {tree[:12]}  ({mark})")
+
+
 def main() -> int:
     total = total_broken = 0
     all_broken: list[str] = []
@@ -186,6 +208,7 @@ def main() -> int:
     total_broken += len(run_broken)
 
     print(f"{total} grading rows checked, {total_broken} broken")
+    report_pins()
     if all_broken:
         print("\nBroken lineage — these grades do NOT correspond to the committed "
               "transcripts, so the dataset is not reproducible from this branch:")

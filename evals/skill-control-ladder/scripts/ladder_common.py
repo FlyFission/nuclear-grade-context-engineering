@@ -101,6 +101,47 @@ ADOPT_PILOT = _CFG["adopt_pilot"]
 
 COMPRESSIONS_PATH = LADDER_DIR / "data" / "compressed_skills.json"
 
+# Which skill text a pool's numbers were measured against.
+#
+# Skill bodies change on main. Every transcript generated from an older body
+# becomes stale the moment that happens, and chasing main forever is not a
+# viable maintenance model: a result is a statement about the text that produced
+# it, not about whatever the repository holds today. So each pool records the
+# skills-tree hash it was run against, and that pin -- not current HEAD -- is
+# what the dataset is verified against.
+#
+# The tree hash rather than a commit SHA: it changes only when skill content
+# actually changes, so unrelated commits do not invalidate a pool.
+PINS_PATH = LADDER_DIR / "data" / "skill-pins.json"
+
+
+def skills_tree_hash() -> str | None:
+    """Content hash of the `skills/` tree at HEAD, or None outside a git tree."""
+    import subprocess
+    try:
+        out = subprocess.run(["git", "rev-parse", "HEAD:skills"],
+                             cwd=str(REPO_ROOT), capture_output=True, text=True,
+                             check=True, timeout=30)
+        return out.stdout.strip() or None
+    except Exception:  # noqa: BLE001 -- absence is reported, not fatal
+        return None
+
+
+def load_pins() -> dict[str, str]:
+    if not PINS_PATH.exists():
+        return {}
+    try:
+        return json.loads(PINS_PATH.read_text())
+    except (json.JSONDecodeError, OSError):
+        return {}
+
+
+def record_pin(pool: str, tree: str) -> None:
+    pins = load_pins()
+    pins[pool] = tree
+    PINS_PATH.write_text(json.dumps(dict(sorted(pins.items())), indent=2) + "\n")
+
+
 # Pools that share a scenario set must share its rubric. `v1c` re-runs the v1
 # scenarios contemporaneously, so it is graded with the v1 rubric rather than a
 # freshly authored one -- otherwise the comparison between them would confound

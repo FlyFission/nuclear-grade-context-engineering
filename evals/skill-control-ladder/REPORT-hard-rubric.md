@@ -39,7 +39,7 @@ the conservative choice.
 - Informative: **7/7**
 - Ceiling (all arms >= 0.95): **0**
 - Floor (all arms <= 0.05): **0**
-- Rubric checks met: **336/600** (56%) across 105 gradings
+- Rubric checks met: **330/600** (55%) across 105 gradings
 
 ## Primary result
 
@@ -50,14 +50,14 @@ This figure spans **all** skills in the pool, ceilings and floors included. They
 - Mean paired difference: **-0.065** (score scale 0–1; YES=1, PARTIAL=0.5, NO=0)
 - Skills where C4 > C1: **3** · C4 < C1: **4** · tied: **0**
 - Two-sided exact sign test: **p = 1.0000**
-- Two-sided paired permutation test (100,000 resamples, seed 20260726): **p = 0.3144**
+- Two-sided paired permutation test (100,000 resamples, seed 20260726): **p = 0.3765**
 
 
 C4 scores **lower** than C1 on 4 of the 7 skills, and ties on 0:
 
 **4 skills where the full skill scored BELOW the generic control**, which is a result against the skills and is reported as such:
 
-- `briefing-an-agent` (C1 0.56 → C4 0.28)
+- `briefing-an-agent` (C1 0.56 → C4 0.22)
 - `checking-what-a-change-affects` (C1 0.28 → C4 0.22)
 - `creating-change-records` (C1 0.67 → C4 0.56)
 - `vetting-outside-code-and-models` (C1 0.20 → C4 0.00)
@@ -66,9 +66,9 @@ C4 scores **lower** than C1 on 4 of the 7 skills, and ties on 0:
 
 | Comparison | Mean diff | Higher | Lower | Tied | Sign p | Perm p |
 |---|---|---|---|---|---|---|
-| C4_full_skill vs C0_bare | -0.057 | 2 | 4 | 1 | 0.6875 | 0.3456 |
+| C4_full_skill vs C0_bare | -0.057 | 2 | 4 | 1 | 0.6875 | 0.3445 |
 | C1_generic_nudge vs C0_bare | +0.008 | 4 | 3 | 0 | 1.0000 | 0.9689 |
-| C4_full_skill vs C3_compressed | -0.084 | 2 | 4 | 1 | 0.6875 | 0.1574 |
+| C4_full_skill vs C3_compressed | -0.037 | 3 | 3 | 1 | 1.0000 | 0.5962 |
 | C4_full_skill vs C2_description_only | -0.054 | 3 | 2 | 2 | 1.0000 | 0.5641 |
 
 `C4 vs C0` is the comparison the original pilot ran. `C1 vs C0` is how much of
@@ -83,8 +83,8 @@ carrying token cost without a measured behavioral effect.
 | `C0_bare` | 0 | $0.0545 | 2,111 | 0.563 (95% CI 0.24–0.84) |
 | `C1_generic_nudge` | 78 | $0.0572 | 2,201 | 0.571 (95% CI 0.25–0.84) |
 | `C2_description_only` | 60 | $0.0565 | 2,192 | 0.560 (95% CI 0.24–0.84) |
-| `C3_compressed` | 129 | $0.0589 | 2,158 | 0.590 (95% CI 0.26–0.85) |
-| `C4_full_skill` | 1,039 | $0.0792 | 2,723 | 0.506 (95% CI 0.21–0.80) |
+| `C3_compressed` | 132 | $0.0536 | 2,188 | 0.543 (95% CI 0.23–0.82) |
+| `C4_full_skill` | 1,039 | $0.0729 | 2,844 | 0.506 (95% CI 0.21–0.80) |
 
 ## Per-skill scores
 
@@ -109,11 +109,11 @@ their own permutation p-values.
 
 | Skill | `C0` | `C1` | `C2` | `C3` | `C4` | C4−C1 [95% CI] |
 |---|---|---|---|---|---|---|
-| `briefing-an-agent` | 0.33 | 0.56 | 0.11 | 0.44 | 0.28 | -0.28 [-0.44, -0.06] |
+| `briefing-an-agent` | 0.33 | 0.56 | 0.11 | 0.17 | 0.22 | -0.33 [-0.56, -0.17] |
 | `checking-release-readiness` | 0.94 | 0.72 | 0.72 | 0.89 | 0.78 | +0.06 [-0.06, +0.17] · spans 0 |
 | `checking-what-a-change-affects` | 0.17 | 0.28 | 0.22 | 0.22 | 0.22 | -0.06 [-0.17, +0.06] · spans 0 |
 | `creating-change-records` | 0.83 | 0.67 | 0.94 | 0.72 | 0.56 | -0.11 [-0.28, +0.06] · spans 0 |
-| `rating-change-risk` | 0.67 | 0.78 | 0.72 | 0.72 | 0.78 | +0.00 [-0.22, +0.17] · spans 0 |
+| `rating-change-risk` | 0.67 | 0.78 | 0.72 | 0.67 | 0.83 | +0.06 [-0.17, +0.17] · spans 0 |
 | `responding-to-incidents` | 0.93 | 0.80 | 0.93 | 0.87 | 0.93 | +0.13 [+0.00, +0.20] · spans 0 |
 | `vetting-outside-code-and-models` | 0.07 | 0.20 | 0.27 | 0.27 | 0.00 | -0.20 [-0.40, +0.00] · spans 0 |
 

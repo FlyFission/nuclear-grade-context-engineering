@@ -1,84 +1,169 @@
 {
-  "is_error": false,
-  "duration_api_ms": 9539,
-  "num_turns": 5,
+  "duration_api_ms": 13498,
   "stop_reason": "end_turn",
   "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
-  "total_cost_usd": 0.049689500000000004,
+  "total_cost_usd": 0.0237212,
   "usage": {
     "input_tokens": 6,
-    "cache_creation_input_tokens": 5347,
-    "cache_read_input_tokens": 28595,
-    "output_tokens": 554,
+    "cache_creation_input_tokens": 2369,
+    "cache_read_input_tokens": 36199,
+    "output_tokens": 685,
+    "output_tokens_details": {
+      "thinking_tokens": 222
+    },
     "server_tool_use": {
       "web_search_requests": 0,
       "web_fetch_requests": 0
     },
     "service_tier": "standard",
     "cache_creation": {
-      "ephemeral_1h_input_tokens": 5347,
+      "ephemeral_1h_input_tokens": 2369,
       "ephemeral_5m_input_tokens": 0
     },
-    "inference_geo": "not_available",
+    "inference_geo": "global",
     "iterations": [
       {
         "input_tokens": 2,
-        "output_tokens": 81,
-        "cache_read_input_tokens": 11374,
-        "cache_creation_input_tokens": 253,
+        "output_tokens": 236,
+        "cache_read_input_tokens": 12904,
+        "cache_creation_input_tokens": 271,
         "cache_creation": {
           "ephemeral_5m_input_tokens": 0,
-          "ephemeral_1h_input_tokens": 253
+          "ephemeral_1h_input_tokens": 271
         },
         "type": "message"
       }
     ],
-    "speed": "standard"
+    "speed": "standard",
+    "fallback_credit": null
   },
   "modelUsage": {
-    "claude-haiku-4-5-20251001": {
-      "inputTokens": 616,
-      "outputTokens": 17,
+    "claude-haiku-5-5": {
+      "inputTokens": 1309,
+      "outputTokens": 25,
       "cacheReadInputTokens": 0,
       "cacheCreationInputTokens": 0,
       "webSearchRequests": 0,
-      "costUSD": 0.000701,
-      "contextWindow": 200000,
-      "maxOutputTokens": 32000,
-      "canonicalModel": "claude-haiku-4-5",
-      "provider": "firstParty"
+      "costUSD": 0.00014340000000000002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 0,
+      "cacheCreationEphemeral5mInputTokens": 0,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
     },
     "claude-sonnet-5": {
       "inputTokens": 6,
-      "outputTokens": 554,
-      "cacheReadInputTokens": 28595,
-      "cacheCreationInputTokens": 5347,
+      "outputTokens": 685,
+      "cacheReadInputTokens": 36199,
+      "cacheCreationInputTokens": 2369,
       "webSearchRequests": 0,
-      "costUSD": 0.048988500000000004,
+      "costUSD": 0.0235778,
       "contextWindow": 1000000,
       "maxOutputTokens": 64000,
+      "thinkingTokens": 222,
+      "cacheCreationEphemeral5mInputTokens": 0,
+      "cacheCreationEphemeral1hInputTokens": 2369,
       "canonicalModel": "claude-sonnet-5",
-      "provider": "firstParty"
+      "provider": "firstParty",
+      "costBasis": "list"
     }
   },
   "permission_denials": [],
   "terminal_reason": "completed",
   "fast_mode_state": "off",
   "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 4,
   "subtype": "success",
   "api_error_status": null,
-  "result": "I couldn't find a README or CONTRIBUTING.md anywhere in this repo \u2014 this working directory only contains the skill-control-ladder eval data, not an actual project checkout. Can you confirm the repo/path you meant, or point me to it?",
-  "ttft_ms": 2737,
-  "ttft_stream_ms": 836,
-  "time_to_request_ms": 26,
-  "time_to_request_from_spawn_ms": 1611096,
-  "warm_spare_claimed": false,
-  "time_origin_ms": 1785594605360.295,
+  "result": "There's no README or CONTRIBUTING file anywhere in this repo \u2014 so I can't locate the typo or the broken link you're describing.\n\nOn the rating question itself: as described (a wording typo plus a link-casing fix, doc-only, instantly reversible, no trust boundary crossed), this is a good fit for the **administrative floor** \u2014 no formal mode packet needed, just fix it and let the commit message be the record. That holds as long as neither edit touches claim-bearing public wording (e.g., changing what the project claims to do/support) \u2014 pure typo and dead-link/casing fixes don't trip that.\n\nCould you point me to the actual file path (or repo) where you're seeing these? Once I can see it I'll fix both in one pass.",
+  "ttft_ms": 5090,
   "type": "result",
-  "duration_ms": 8593,
-  "uuid": "a1fbc50b-2421-4fab-8167-6750bf3f3ba8",
+  "duration_ms": 14769,
+  "uuid": "2f47b86d-5b93-4b7d-aa29-b4416e4fcfcc",
+  "ttft_stream_ms": 2490,
+  "time_to_request_ms": 207,
+  "time_to_request_phases_ms": {
+    "other": 24,
+    "system_prompt": 14,
+    "resume_other": 0,
+    "process_user_input": 5,
+    "input_attachments": 11,
+    "input_hooks": 3,
+    "tool_pool_refresh": 3,
+    "init_message": 21,
+    "engine_pickup": 2,
+    "message_prep": 1,
+    "model_config_wait": 98,
+    "autocompact": 2,
+    "query_setup": 1,
+    "model_gates": 1,
+    "tool_schema_build": 6,
+    "message_normalization": 2,
+    "client_creation": 2,
+    "request_build": 11
+  },
+  "turn_start_resume_kind": "none",
+  "process_turn_index": 0,
+  "time_to_request_loop_lag_ms": 107,
+  "time_to_request_cpu_ms": 213,
+  "time_to_request_major_faults": 0,
+  "process_rss_mib_turn_start": 217,
+  "process_anon_mib_turn_start": 126,
+  "process_rss_mib_result": 217,
+  "process_anon_mib_result": 120,
+  "process_peak_rss_mib": 236,
+  "process_cpu_ms_turn": 1160,
+  "process_wall_ms_turn": 14768,
+  "process_cpu_ms_streaming": 408,
+  "process_wall_ms_streaming": 8425,
+  "main_stream_count": 3,
+  "main_stream_event_count": 121,
+  "main_stream_chunk_count": 37,
+  "input_attachments_detail": {
+    "slowest_producer": "queued_commands",
+    "slowest_producer_ms": 5,
+    "cpu_ms": 14,
+    "major_faults": 0
+  },
+  "first_content_frame_ms": 2491,
+  "time_to_request_from_spawn_ms": 127930,
+  "warm_spare_claimed": false,
+  "flag_fetch_kick": "not_asked_warm",
+  "time_origin_ms": 1793122227753.7915,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "process_start_tuning": 0,
   "_skill": "rating-change-risk",
   "_arm": "C4_full_skill",
   "_trial": 2,
-  "_input_spec_sha256": "54a2b2ee16dd0d35090ca5219db1a94eb442e97b31d6bd3a4c25210862dc0dbd"
+  "_input_spec_sha256": "ea3c0f9a8bb31cb241f9fd6fedd4d904773076851d4026e2e6109d01c86cce3b"
 }

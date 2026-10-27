@@ -39,7 +39,7 @@ the conservative choice.
 - Informative: **17/27**
 - Ceiling (all arms >= 0.95): **10**
 - Floor (all arms <= 0.05): **0**
-- PARTIAL verdict rate: **21%** of 405 gradings
+- PARTIAL verdict rate: **22%** of 405 gradings
 
 Ceiling skills — these cells cannot express a difference, so they carry no information about the skill either way. They are still INCLUDED in the primary test (see below for why that is the conservative choice): `checking-legal-and-safety-wording`, `checking-release-readiness`, `checking-what-a-change-affects`, `creating-change-records`, `deciding-who-decides`, `rating-change-risk`, `recording-what-an-agent-did`, `responding-to-incidents`, `stress-testing-agent-changes`, `vetting-outside-code-and-models`
 
@@ -75,7 +75,7 @@ C4 is **never worse** than C1 on any of the 27 skills. The 15 ties break down as
 |---|---|---|---|---|---|---|
 | C4_full_skill vs C0_bare | +0.259 | 16 | 0 | 11 | 0.0000 | 0.0001 |
 | C1_generic_nudge vs C0_bare | +0.037 | 9 | 5 | 13 | 0.4240 | 0.5187 |
-| C4_full_skill vs C3_compressed | +0.056 | 5 | 0 | 22 | 0.0625 | 0.0633 |
+| C4_full_skill vs C3_compressed | +0.062 | 6 | 0 | 21 | 0.0312 | 0.0322 |
 | C4_full_skill vs C2_description_only | +0.136 | 11 | 1 | 15 | 0.0063 | 0.0029 |
 
 `C4 vs C0` is the comparison the original pilot ran. `C1 vs C0` is how much of
@@ -90,8 +90,8 @@ carrying token cost without a measured behavioral effect.
 | `C0_bare` | 0 | $0.0322 | 1,179 | 0.679 (95% CI 0.49–0.82) |
 | `C1_generic_nudge` | 78 | $0.0471 | 1,774 | 0.716 (95% CI 0.53–0.85) |
 | `C2_description_only` | 61 | $0.0472 | 1,818 | 0.802 (95% CI 0.62–0.91) |
-| `C3_compressed` | 126 | $0.0524 | 1,953 | 0.883 (95% CI 0.71–0.96) |
-| `C4_full_skill` | 1,100 | $0.0574 | 1,888 | 0.938 (95% CI 0.78–0.98) |
+| `C3_compressed` | 127 | $0.0508 | 1,988 | 0.877 (95% CI 0.70–0.95) |
+| `C4_full_skill` | 1,100 | $0.0551 | 1,874 | 0.938 (95% CI 0.78–0.98) |
 
 ## Per-skill scores
 
@@ -132,7 +132,7 @@ their own permutation p-values.
 | `learning-from-experience` | 0.50 | 0.33 | 0.33 | 1.00 | 1.00 | +0.67 [+0.50, +1.00] |
 | `organizing-project-folders` | 0.33 | 0.50 | 0.50 | 0.33 | 0.50 | +0.00 [+0.00, +0.00] · spans 0 |
 | `proving-claims` | 0.67 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |
-| `questioning-attitude` | 0.50 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |
+| `questioning-attitude` | 0.50 | 1.00 | 1.00 | 0.83 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |
 | `rating-change-risk` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |
 | `recording-a-known-good-version` | 0.00 | 0.00 | 0.67 | 0.33 | 1.00 | +1.00 [+1.00, +1.00] |
 | `recording-what-an-agent-did` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |

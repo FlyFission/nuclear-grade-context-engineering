@@ -124,6 +124,49 @@ def check(rel: str, pool: str) -> tuple[int, int, list[str]]:
     return len(rows), len(broken), broken
 
 
+def check_run_specs() -> tuple[int, list[str]]:
+    """Every committed transcript must still match ladder_spec_hash().
+
+    This is the gap that let 27 stale C4 cells ship. The validator checked
+    grade-to-response and rubric-to-grade lineage, but never response-to-SPEC:
+    when a SKILL.md changed on main, the C4 transcripts generated from the old
+    body kept their recorded hash, no grade or rubric moved, and the validator
+    reported everything clean while the hard and negative pools partly measured
+    superseded skill text. run_ladder refuses to ADOPT a stale transcript, but
+    nothing re-checked one already committed.
+    """
+    broken = []
+    checked = 0
+    for pool, runs in (("v1", "data/runs"),
+                       ("v1c", "data/v1-contemporaneous/runs"),
+                       ("hard", "data/hard-pool/runs"),
+                       ("negative", "data/negative-pool/runs")):
+        base = LADDER_DIR / runs
+        if not base.exists():
+            continue
+        os.environ["NG_LADDER_POOL"] = pool
+        import ladder_common
+        importlib.reload(ladder_common)
+        comp = ladder_common.load_compressions()
+        for path in sorted(base.glob("*.json")):
+            rec = json.loads(path.read_text())
+            skill, arm = rec.get("_skill"), rec.get("_arm")
+            if skill not in ladder_common.TASKS or arm is None:
+                continue
+            try:
+                want = ladder_common.ladder_spec_hash(skill, arm, comp)
+            except KeyError:
+                broken.append(f"{runs}/{path.name}: no compression for {skill}")
+                continue
+            checked += 1
+            if rec.get("_input_spec_sha256") != want:
+                broken.append(
+                    f"{runs}/{path.name}: SPEC MISMATCH — generated from inputs that "
+                    f"no longer match the checked-in SKILL.md/scenario/compression"
+                )
+    return checked, broken
+
+
 def main() -> int:
     total = total_broken = 0
     all_broken: list[str] = []
@@ -136,7 +179,13 @@ def main() -> int:
         total_broken += nb
         all_broken.extend(broken)
 
-    print(f"\n{total} grading rows checked, {total_broken} broken")
+    run_checked, run_broken = check_run_specs()
+    print(f"\n{run_checked} transcripts checked against ladder_spec_hash, "
+          f"{len(run_broken)} stale")
+    all_broken.extend(run_broken)
+    total_broken += len(run_broken)
+
+    print(f"{total} grading rows checked, {total_broken} broken")
     if all_broken:
         print("\nBroken lineage — these grades do NOT correspond to the committed "
               "transcripts, so the dataset is not reproducible from this branch:")

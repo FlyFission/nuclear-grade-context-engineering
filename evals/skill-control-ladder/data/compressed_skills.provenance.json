@@ -4,7 +4,7 @@
     "compressor_model": "claude-sonnet-5"
   },
   "briefing-an-agent": {
-    "body_sha256": "d6a921beb176f1f5664e6babbd95359370c72ec60fbd9cfa1952d1139285f75a",
+    "body_sha256": "d191c4ea8fce46d55ddafb48b3802366e558a6de8624c98657239dbe7d50c3c2",
     "compressor_model": "claude-sonnet-5"
   },
   "checking-legal-and-safety-wording": {
@@ -64,11 +64,11 @@
     "compressor_model": "claude-sonnet-5"
   },
   "questioning-attitude": {
-    "body_sha256": "9e7e41bad82c0e264b40b1ba64be9c2e0d21ea65dff3fa6fee1e9a156c17cb72",
+    "body_sha256": "4188dd8cb9453677eb8a855211ed8c5b828ec963fe2e2a0cd462fdbfb37c7e34",
     "compressor_model": "claude-sonnet-5"
   },
   "rating-change-risk": {
-    "body_sha256": "efe461c7df81333d88c481358646347d8da1812f4d57e85988f3683d59c2adc9",
+    "body_sha256": "9738e55ef9cb9509320828fd33d7089c296c82f6658a7d094080d63fe7851830",
     "compressor_model": "claude-sonnet-5"
   },
   "recording-a-known-good-version": {
@@ -88,7 +88,7 @@
     "compressor_model": "claude-sonnet-5"
   },
   "reviewing-code-quality": {
-    "body_sha256": "1fc6e5597f37b5e659b4a59ded371f3960b3771fb3bb9a9a7cc14eeddebbc2e2",
+    "body_sha256": "7447cd3fa1ac551eb1599a380c6d8511c1a1554263178958a1b6d8477b579d77",
     "compressor_model": "claude-sonnet-5"
   },
   "staying-on-mission": {

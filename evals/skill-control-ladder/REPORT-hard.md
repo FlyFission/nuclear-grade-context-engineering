@@ -39,11 +39,11 @@ the conservative choice.
 - Informative: **6/7**
 - Ceiling (all arms >= 0.95): **0**
 - Floor (all arms <= 0.05): **1**
-- PARTIAL verdict rate: **62%** of 105 gradings
+- PARTIAL verdict rate: **61%** of 105 gradings
 
 Floor skills — these cells cannot express a difference, so they carry no information about the skill either way. They are still INCLUDED in the primary test (see below for why that is the conservative choice): `checking-what-a-change-affects`
 
-> **Resolution warning.** 62% of gradings are PARTIAL, so
+> **Resolution warning.** 61% of gradings are PARTIAL, so
 > most cells sit near 0.5 regardless of arm and real differences are
 > compressed out of view. This is a property of how the pass criteria are
 > worded, not of the skills. Treat any null result from this pool as
@@ -85,7 +85,7 @@ C4 scores **lower** than C1 on 2 of the 7 skills, and ties on 4:
 |---|---|---|---|---|---|---|
 | C4_full_skill vs C0_bare | -0.095 | 1 | 4 | 2 | 0.3750 | 0.3121 |
 | C1_generic_nudge vs C0_bare | -0.071 | 0 | 3 | 4 | 0.2500 | 0.2509 |
-| C4_full_skill vs C3_compressed | -0.024 | 1 | 2 | 4 | 1.0000 | 1.0000 |
+| C4_full_skill vs C3_compressed | +0.000 | 2 | 2 | 3 | 1.0000 | 1.0000 |
 | C4_full_skill vs C2_description_only | -0.048 | 1 | 2 | 4 | 1.0000 | 0.7508 |
 
 `C4 vs C0` is the comparison the original pilot ran. `C1 vs C0` is how much of
@@ -100,8 +100,8 @@ carrying token cost without a measured behavioral effect.
 | `C0_bare` | 0 | $0.0545 | 2,111 | 0.500 (95% CI 0.20–0.80) |
 | `C1_generic_nudge` | 78 | $0.0572 | 2,201 | 0.429 (95% CI 0.16–0.75) |
 | `C2_description_only` | 60 | $0.0565 | 2,192 | 0.452 (95% CI 0.17–0.77) |
-| `C3_compressed` | 129 | $0.0589 | 2,158 | 0.429 (95% CI 0.16–0.75) |
-| `C4_full_skill` | 1,039 | $0.0792 | 2,723 | 0.405 (95% CI 0.14–0.73) |
+| `C3_compressed` | 132 | $0.0536 | 2,188 | 0.405 (95% CI 0.14–0.73) |
+| `C4_full_skill` | 1,039 | $0.0729 | 2,844 | 0.405 (95% CI 0.14–0.73) |
 
 ## Per-skill scores
 
@@ -130,7 +130,7 @@ their own permutation p-values.
 | `checking-release-readiness` | 0.67 | 0.50 | 0.50 | 0.50 | 0.50 | +0.00 [+0.00, +0.00] · spans 0 |
 | `checking-what-a-change-affects` | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | +0.00 [+0.00, +0.00] · spans 0 |
 | `creating-change-records` | 0.50 | 0.50 | 0.67 | 0.50 | 0.50 | +0.00 [+0.00, +0.00] · spans 0 |
-| `rating-change-risk` | 0.67 | 0.50 | 0.50 | 0.50 | 0.50 | +0.00 [+0.00, +0.00] · spans 0 |
+| `rating-change-risk` | 0.67 | 0.50 | 0.50 | 0.33 | 0.50 | +0.00 [+0.00, +0.00] · spans 0 |
 | `responding-to-incidents` | 0.83 | 0.67 | 1.00 | 0.83 | 1.00 | +0.33 [+0.00, +0.50] · spans 0 |
 | `vetting-outside-code-and-models` | 0.50 | 0.50 | 0.50 | 0.33 | 0.17 | -0.33 [-0.50, +0.00] · spans 0 |
 

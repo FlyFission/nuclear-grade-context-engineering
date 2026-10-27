@@ -29,6 +29,7 @@ discriminate; candidates that ceiling again are discarded on evidence.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import subprocess
 import sys
@@ -121,6 +122,20 @@ passes is worthless here.
 """
 
 
+PROVENANCE_PATH = LADDER_DIR / "data" / "hard-pool" / "candidates.provenance.json"
+
+
+def author_spec_hash(skill: str) -> str:
+    """Fingerprint of every input author() consumes, so an edited description,
+    author model, or instruction template regenerates the candidates instead of
+    silently keeping ones derived from a prompt that no longer exists."""
+    fm = skill_frontmatter(skill)
+    return hashlib.sha256(
+        f"{fm.get('name', skill)}::{fm.get('description', '')}::"
+        f"{AUTHOR_MODEL}::{CANDIDATES_PER_SKILL}::{INSTRUCTION}".encode()
+    ).hexdigest()
+
+
 def author(skill: str) -> tuple[str, list[dict]]:
     fm = skill_frontmatter(skill)
     prompt = INSTRUCTION.format(
@@ -151,7 +166,16 @@ def author(skill: str) -> tuple[str, list[dict]]:
 def main() -> int:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     existing = json.loads(CANDIDATES_PATH.read_text()) if CANDIDATES_PATH.exists() else {}
-    todo = [s for s in CEILING_SKILLS if s not in existing]
+    prov = json.loads(PROVENANCE_PATH.read_text()) if PROVENANCE_PATH.exists() else {}
+
+    # Regenerate when any input to author() changes, not only when an entry is
+    # missing. author() depends on the skill's name and description, the author
+    # model, and the INSTRUCTION template; without a stored fingerprint, editing
+    # any of those left candidates -- and the hard-pool task screened from them --
+    # derived from the old authoring prompt, contrary to the cache-safety the
+    # README promises. Matches what the compression and rubric generators do.
+    todo = [s for s in CEILING_SKILLS
+            if s not in existing or prov.get(s) != author_spec_hash(s)]
     if not todo:
         print("All candidates already authored.", file=sys.stderr)
         return 0
@@ -169,9 +193,11 @@ def main() -> int:
                 failures.append(f"{skill}: {type(e).__name__}: {e}")
                 continue
             existing[skill] = cands
+            prov[skill] = author_spec_hash(skill)
             print(f"  ok {skill}", file=sys.stderr)
 
     CANDIDATES_PATH.write_text(json.dumps(dict(sorted(existing.items())), indent=2) + "\n")
+    PROVENANCE_PATH.write_text(json.dumps(dict(sorted(prov.items())), indent=2) + "\n")
     print(f"Wrote {CANDIDATES_PATH}", file=sys.stderr)
     if failures:
         for f in failures:

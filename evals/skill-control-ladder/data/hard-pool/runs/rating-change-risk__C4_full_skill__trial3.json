@@ -1,84 +1,169 @@
 {
-  "is_error": false,
-  "duration_api_ms": 25675,
-  "num_turns": 1,
+  "duration_api_ms": 31969,
   "stop_reason": "end_turn",
   "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
-  "total_cost_usd": 0.061191999999999996,
+  "total_cost_usd": 0.0566303,
   "usage": {
-    "input_tokens": 2,
-    "cache_creation_input_tokens": 4738,
-    "cache_read_input_tokens": 6280,
-    "output_tokens": 2007,
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 7402,
+    "cache_read_input_tokens": 19176,
+    "output_tokens": 2303,
+    "output_tokens_details": {
+      "thinking_tokens": 1250
+    },
     "server_tool_use": {
       "web_search_requests": 0,
       "web_fetch_requests": 0
     },
     "service_tier": "standard",
     "cache_creation": {
-      "ephemeral_1h_input_tokens": 4738,
+      "ephemeral_1h_input_tokens": 7402,
       "ephemeral_5m_input_tokens": 0
     },
-    "inference_geo": "not_available",
+    "inference_geo": "global",
     "iterations": [
       {
         "input_tokens": 2,
-        "output_tokens": 2007,
-        "cache_read_input_tokens": 6280,
-        "cache_creation_input_tokens": 4738,
+        "output_tokens": 1002,
+        "cache_read_input_tokens": 12566,
+        "cache_creation_input_tokens": 1446,
         "cache_creation": {
           "ephemeral_5m_input_tokens": 0,
-          "ephemeral_1h_input_tokens": 4738
+          "ephemeral_1h_input_tokens": 1446
         },
         "type": "message"
       }
     ],
-    "speed": "standard"
+    "speed": "standard",
+    "fallback_credit": null
   },
   "modelUsage": {
-    "claude-haiku-4-5-20251001": {
-      "inputTokens": 679,
-      "outputTokens": 18,
+    "claude-haiku-5-5": {
+      "inputTokens": 1386,
+      "outputTokens": 21,
       "cacheReadInputTokens": 0,
       "cacheCreationInputTokens": 0,
       "webSearchRequests": 0,
-      "costUSD": 0.000769,
-      "contextWindow": 200000,
-      "maxOutputTokens": 32000,
-      "canonicalModel": "claude-haiku-4-5",
-      "provider": "firstParty"
+      "costUSD": 0.00014910000000000002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 0,
+      "cacheCreationEphemeral5mInputTokens": 0,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
     },
     "claude-sonnet-5": {
-      "inputTokens": 2,
-      "outputTokens": 2007,
-      "cacheReadInputTokens": 6280,
-      "cacheCreationInputTokens": 4738,
+      "inputTokens": 4,
+      "outputTokens": 2303,
+      "cacheReadInputTokens": 19176,
+      "cacheCreationInputTokens": 7402,
       "webSearchRequests": 0,
-      "costUSD": 0.060423,
+      "costUSD": 0.0564812,
       "contextWindow": 1000000,
       "maxOutputTokens": 64000,
+      "thinkingTokens": 1250,
+      "cacheCreationEphemeral5mInputTokens": 0,
+      "cacheCreationEphemeral1hInputTokens": 7402,
       "canonicalModel": "claude-sonnet-5",
-      "provider": "firstParty"
+      "provider": "firstParty",
+      "costBasis": "list"
     }
   },
   "permission_denials": [],
   "terminal_reason": "completed",
   "fast_mode_state": "off",
   "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 3,
   "subtype": "success",
   "api_error_status": null,
-  "result": "I don't have git/merge tooling available in this session, but more importantly \u2014 I'd flag this for a second look before it ships, even though it reads as a trivial diff.\n\n**Why this isn't administrative-floor, \"just merge it\" work:** the diff is three lines of JSX, but the *content* is a public compliance/security claim, and you're making it more prominent specifically because a competitor got publicly dinged for not having one. That combination \u2014 claim-bearing public wording + timing that invites scrutiny + pressure to ship before a sales call \u2014 is exactly the pattern that should bump this out of \"routine copy tweak\" territory, regardless of diff size or Dana's prior sign-off.\n\n**Two things worth checking before this goes live:**\n\n1. **Wording accuracy.** SOC 2 (Type I or II) is an *attestation report* under AICPA SSAE 18, not a \"certification\" \u2014 there's no certifying body and no expiration/pass-fail cert to hold. \"SOC 2 Type II certified\" is common marketing shorthand, but it's technically imprecise, and if you're about to draw more eyes to this line (partly *because* a competitor is under scrutiny for their own security claims), that's the moment sloppy wording gets noticed and picked apart \u2014 by the prospect's security team, a competitor, or a journalist.\n2. **Currency and scope.** SOC 2 Type II reports cover a specific period and specific trust service criteria (security, availability, confidentiality, etc.) and go stale. \"We have a report\" isn't the same as \"the report is current and covers what the new prominent copy implies.\" Worth a quick confirm with whoever owns the actual audit artifact \u2014 not just Dana, who owns the copy, not the compliance fact.\n\n**Mode:** I'd call this Standard, not Quick \u2014 it's a lasting, user-visible claim about security posture, touching a compliance trust boundary, made more visible at a moment competitors and prospects are likely to scrutinize it. Quick would be fine for wording-only changes with zero compliance content; this isn't that.\n\n**Least proof needed, and it's fast:** a one-line confirmation from whoever holds the SOC 2 report (compliance/security lead) that it's current, and a decision on \"certified\" vs. \"attested\"/\"audited\" wording. That's a Slack message, not a review cycle \u2014 doable before tomorrow's call without blowing the deadline.\n\nWant me to draft the corrected copy (e.g., \"SOC 2 Type II audited\" or similar) so you have it ready once someone confirms the report status?",
-  "ttft_ms": 15099,
-  "ttft_stream_ms": 810,
-  "time_to_request_ms": 33,
-  "time_to_request_from_spawn_ms": 1908434,
-  "warm_spare_claimed": false,
-  "time_origin_ms": 1785079683211.4622,
+  "result": "Two things before I'd merge anything:\n\n**I don't actually have the diff.** No marketing-site repo or SOC 2 copy exists in this working directory, and the message didn't include the diff text \u2014 so there's nothing here for me to merge even mechanically.\n\n**This isn't actually a Quick-mode change, independent of that.** Walking it through the risk framework:\n\n- **Administrative floor doesn't apply.** The floor only covers changes that cross no trust boundary and make no claim. \"Making it more prominent\" on a security/compliance page is a public, claim-bearing change \u2014 that's a named tripwire, not a typo.\n- **\"Dozens of copy changes without review\" is an effort/habit argument, not a stakes one.** Past low-stakes copy edits don't establish that *this* edit is low-stakes \u2014 the content category (compliance attestation) is what matters, not the diff size.\n- **Dana's approval predates this request.** She approved the *original* line as its author; she hasn't approved emphasizing/amplifying a compliance claim in the context of a competitor just getting publicly called out for the same claim. That's a materially different ask than the one she signed off on.\n- **\"We have a SOC 2 report\" isn't the same as \"the claim as now emphasized is accurate.\"** Prominence raises scrutiny: is it specifically Type II (not Type I), is the report current (bridge letter needed?), does it cover the product/service the prospect is asking about, and who besides marketing can attest to that \u2014 security/compliance/legal, not just copy.\n- **Timing pressure (sales call tomorrow) is a red flag, not a reason to skip review** \u2014 it's exactly the situation \"we can fix it later\" rationalizes away, and a false or overstated SOC 2 claim surfacing publicly right after a competitor got called out for the same thing is a reputational/legal exposure that's hard to undo once live.\n\n**Mode: Standard**, not Quick. Decision question: *does the more prominent claim accurately reflect the current, in-scope, valid SOC 2 Type II report, and has someone with compliance/legal authority (not the copy author) confirmed that before it ships?*\n\nI'd suggest: get a one-line confirmation from whoever owns the actual SOC 2 report (compliance/security lead) that the report is current and in scope, then it's a fast approve \u2014 but I'm not going to merge it on the current approval alone, and I'd want you to send the actual diff/PR link rather than me guessing at the JSX.\n\nWant me to look at the PR if you paste the link or diff, or draft the Slack message to ping compliance for sign-off?",
+  "ttft_ms": 16129,
   "type": "result",
-  "duration_ms": 26229,
-  "uuid": "3a7bfb03-ca74-454f-9622-1ad0eaf69102",
+  "duration_ms": 35637,
+  "uuid": "da5857bd-64a8-4036-843b-7d5b1d2d7b18",
+  "ttft_stream_ms": 1351,
+  "time_to_request_ms": 349,
+  "time_to_request_phases_ms": {
+    "other": 34,
+    "system_prompt": 22,
+    "resume_other": 0,
+    "process_user_input": 6,
+    "input_attachments": 12,
+    "input_hooks": 23,
+    "tool_pool_refresh": 4,
+    "init_message": 10,
+    "engine_pickup": 3,
+    "message_prep": 1,
+    "model_config_wait": 197,
+    "autocompact": 4,
+    "query_setup": 1,
+    "model_gates": 0,
+    "tool_schema_build": 10,
+    "message_normalization": 2,
+    "client_creation": 3,
+    "request_build": 17
+  },
+  "turn_start_resume_kind": "none",
+  "process_turn_index": 0,
+  "time_to_request_loop_lag_ms": 143,
+  "time_to_request_cpu_ms": 407,
+  "time_to_request_major_faults": 0,
+  "process_rss_mib_turn_start": 198,
+  "process_anon_mib_turn_start": 107,
+  "process_rss_mib_result": 213,
+  "process_anon_mib_result": 117,
+  "process_peak_rss_mib": 232,
+  "process_cpu_ms_turn": 1551,
+  "process_wall_ms_turn": 35637,
+  "process_cpu_ms_streaming": 896,
+  "process_wall_ms_streaming": 29287,
+  "main_stream_count": 2,
+  "main_stream_event_count": 297,
+  "main_stream_chunk_count": 277,
+  "input_attachments_detail": {
+    "slowest_producer": "queued_commands",
+    "slowest_producer_ms": 7,
+    "cpu_ms": 13,
+    "major_faults": 0
+  },
+  "first_content_frame_ms": 1351,
+  "time_to_request_from_spawn_ms": 31568,
+  "warm_spare_claimed": false,
+  "flag_fetch_kick": "not_asked_warm",
+  "time_origin_ms": 1793122129423.414,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "process_start_tuning": 0,
   "_skill": "rating-change-risk",
   "_arm": "C4_full_skill",
   "_trial": 3,
-  "_input_spec_sha256": "54edfa36de1336ceff2b66e647cab1040a697ad90db32f54d42a08dcd1535af8"
+  "_input_spec_sha256": "02bc5d5c74aa4424da104bbd482a1db65cd73ee97de8149a206c75cf553fd94a"
 }

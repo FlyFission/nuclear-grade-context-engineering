@@ -1,84 +1,169 @@
 {
-  "is_error": false,
-  "duration_api_ms": 7572,
-  "num_turns": 3,
+  "duration_api_ms": 7595,
   "stop_reason": "end_turn",
   "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
-  "total_cost_usd": 0.0406569,
+  "total_cost_usd": 0.0177464,
   "usage": {
     "input_tokens": 6,
-    "cache_creation_input_tokens": 4442,
-    "cache_read_input_tokens": 27213,
-    "output_tokens": 342,
+    "cache_creation_input_tokens": 2034,
+    "cache_read_input_tokens": 33446,
+    "output_tokens": 277,
+    "output_tokens_details": {
+      "thinking_tokens": 80
+    },
     "server_tool_use": {
       "web_search_requests": 0,
       "web_fetch_requests": 0
     },
     "service_tier": "standard",
     "cache_creation": {
-      "ephemeral_1h_input_tokens": 4442,
+      "ephemeral_1h_input_tokens": 2034,
       "ephemeral_5m_input_tokens": 0
     },
-    "inference_geo": "not_available",
+    "inference_geo": "global",
     "iterations": [
       {
         "input_tokens": 2,
-        "output_tokens": 72,
-        "cache_read_input_tokens": 10584,
-        "cache_creation_input_tokens": 138,
+        "output_tokens": 56,
+        "cache_read_input_tokens": 11845,
+        "cache_creation_input_tokens": 173,
         "cache_creation": {
           "ephemeral_5m_input_tokens": 0,
-          "ephemeral_1h_input_tokens": 138
+          "ephemeral_1h_input_tokens": 173
         },
         "type": "message"
       }
     ],
-    "speed": "standard"
+    "speed": "standard",
+    "fallback_credit": null
   },
   "modelUsage": {
-    "claude-haiku-4-5-20251001": {
-      "inputTokens": 588,
-      "outputTokens": 21,
+    "claude-haiku-5-5": {
+      "inputTokens": 1257,
+      "outputTokens": 27,
       "cacheReadInputTokens": 0,
       "cacheCreationInputTokens": 0,
       "webSearchRequests": 0,
-      "costUSD": 0.0006929999999999999,
-      "contextWindow": 200000,
-      "maxOutputTokens": 32000,
-      "canonicalModel": "claude-haiku-4-5",
-      "provider": "firstParty"
+      "costUSD": 0.00013920000000000002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 0,
+      "cacheCreationEphemeral5mInputTokens": 0,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
     },
     "claude-sonnet-5": {
       "inputTokens": 6,
-      "outputTokens": 342,
-      "cacheReadInputTokens": 27213,
-      "cacheCreationInputTokens": 4442,
+      "outputTokens": 277,
+      "cacheReadInputTokens": 33446,
+      "cacheCreationInputTokens": 2034,
       "webSearchRequests": 0,
-      "costUSD": 0.039963900000000004,
+      "costUSD": 0.0176072,
       "contextWindow": 1000000,
       "maxOutputTokens": 64000,
+      "thinkingTokens": 80,
+      "cacheCreationEphemeral5mInputTokens": 0,
+      "cacheCreationEphemeral1hInputTokens": 2034,
       "canonicalModel": "claude-sonnet-5",
-      "provider": "firstParty"
+      "provider": "firstParty",
+      "costBasis": "list"
     }
   },
   "permission_denials": [],
   "terminal_reason": "completed",
   "fast_mode_state": "off",
   "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 3,
   "subtype": "success",
   "api_error_status": null,
-  "result": "I couldn't find `analytics.py` anywhere in this repo, and there's no `usrCnt` occurrence either \u2014 this looks like it's from a different project. Can you confirm the path, or is this meant to be a new file?",
-  "ttft_ms": 1256,
-  "ttft_stream_ms": 868,
-  "time_to_request_ms": 45,
-  "time_to_request_from_spawn_ms": 1310814,
-  "warm_spare_claimed": false,
-  "time_origin_ms": 1785594303219.1355,
+  "result": "I can't find `analytics.py` or any occurrence of `usrCnt` in this repository. Could you confirm the file path, or is it possibly in a different project/directory?",
+  "ttft_ms": 3263,
   "type": "result",
-  "duration_ms": 6565,
-  "uuid": "d007f672-47af-49b3-b5f0-a188a8552c52",
+  "duration_ms": 7336,
+  "uuid": "f1263fdb-16fb-421d-a2d8-31ac0cdf45ea",
+  "ttft_stream_ms": 2114,
+  "time_to_request_ms": 430,
+  "time_to_request_phases_ms": {
+    "other": 44,
+    "system_prompt": 52,
+    "resume_other": 1,
+    "process_user_input": 3,
+    "input_attachments": 47,
+    "input_hooks": 6,
+    "tool_pool_refresh": 9,
+    "init_message": 25,
+    "engine_pickup": 1,
+    "message_prep": 2,
+    "model_config_wait": 179,
+    "autocompact": 7,
+    "query_setup": 1,
+    "model_gates": 1,
+    "tool_schema_build": 14,
+    "message_normalization": 1,
+    "client_creation": 20,
+    "request_build": 17
+  },
+  "turn_start_resume_kind": "none",
+  "process_turn_index": 0,
+  "time_to_request_loop_lag_ms": 243,
+  "time_to_request_cpu_ms": 273,
+  "time_to_request_major_faults": 0,
+  "process_rss_mib_turn_start": 218,
+  "process_anon_mib_turn_start": 127,
+  "process_rss_mib_result": 213,
+  "process_anon_mib_result": 118,
+  "process_peak_rss_mib": 226,
+  "process_cpu_ms_turn": 756,
+  "process_wall_ms_turn": 7335,
+  "process_cpu_ms_streaming": 109,
+  "process_wall_ms_streaming": 3206,
+  "main_stream_count": 3,
+  "main_stream_event_count": 47,
+  "main_stream_chunk_count": 21,
+  "input_attachments_detail": {
+    "slowest_producer": "queued_commands",
+    "slowest_producer_ms": 25,
+    "cpu_ms": 17,
+    "major_faults": 0
+  },
+  "first_content_frame_ms": 2114,
+  "time_to_request_from_spawn_ms": 119722,
+  "warm_spare_claimed": false,
+  "flag_fetch_kick": "not_asked_warm",
+  "time_origin_ms": 1793122218532.8977,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "process_start_tuning": 0,
   "_skill": "briefing-an-agent",
   "_arm": "C4_full_skill",
   "_trial": 2,
-  "_input_spec_sha256": "9d8b9c52f2ee41bb77cd003e27bc240ec15bd4bd8c5c513f1f5c940b14fb10ba"
+  "_input_spec_sha256": "8569a62ed510fa9b041d3ccffd631afe061982be143554a5046506b5032647fd"
 }

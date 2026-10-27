@@ -39,7 +39,7 @@ the conservative choice.
 - Informative: **24/27**
 - Ceiling (all arms >= 0.95): **3**
 - Floor (all arms <= 0.05): **0**
-- Rubric checks met: **1845/2280** (81%) across 405 gradings
+- Rubric checks met: **1848/2280** (81%) across 405 gradings
 
 Ceiling skills — these cells cannot express a difference, so they carry no information about the skill either way. They are still INCLUDED in the primary test (see below for why that is the conservative choice): `creating-change-records`, `recording-what-an-agent-did`, `staying-on-mission`
 
@@ -74,7 +74,7 @@ C4 scores **lower** than C1 on 1 of the 27 skills, and ties on 7:
 |---|---|---|---|---|---|---|
 | C4_full_skill vs C0_bare | +0.133 | 20 | 2 | 5 | 0.0001 | 0.0001 |
 | C1_generic_nudge vs C0_bare | +0.030 | 13 | 4 | 10 | 0.0490 | 0.1816 |
-| C4_full_skill vs C3_compressed | +0.002 | 8 | 7 | 12 | 1.0000 | 0.9704 |
+| C4_full_skill vs C3_compressed | -0.005 | 6 | 7 | 14 | 1.0000 | 0.8280 |
 | C4_full_skill vs C2_description_only | +0.042 | 12 | 4 | 11 | 0.0768 | 0.0849 |
 
 `C4 vs C0` is the comparison the original pilot ran. `C1 vs C0` is how much of
@@ -89,7 +89,7 @@ carrying token cost without a measured behavioral effect.
 | `C0_bare` | 0 | $0.0400 | 1,389 | 0.736 (95% CI 0.55–0.86) |
 | `C1_generic_nudge` | 78 | $0.0456 | 1,688 | 0.766 (95% CI 0.58–0.89) |
 | `C2_description_only` | 61 | $0.0478 | 1,848 | 0.826 (95% CI 0.65–0.93) |
-| `C3_compressed` | 126 | $0.0510 | 1,881 | 0.867 (95% CI 0.69–0.95) |
+| `C3_compressed` | 127 | $0.0497 | 1,957 | 0.873 (95% CI 0.70–0.95) |
 | `C4_full_skill` | 1,100 | $0.0674 | 2,175 | 0.868 (95% CI 0.69–0.95) |
 
 ## Per-skill scores
@@ -116,7 +116,7 @@ their own permutation p-values.
 | Skill | `C0` | `C1` | `C2` | `C3` | `C4` | C4−C1 [95% CI] |
 |---|---|---|---|---|---|---|
 | `breaking-down-the-work` | 0.60 | 0.67 | 0.73 | 0.80 | 0.73 | +0.07 [-0.07, +0.20] · spans 0 |
-| `briefing-an-agent` | 0.89 | 0.56 | 0.78 | 0.72 | 0.67 | +0.11 [-0.22, +0.50] · spans 0 |
+| `briefing-an-agent` | 0.89 | 0.56 | 0.78 | 0.78 | 0.67 | +0.11 [-0.22, +0.50] · spans 0 |
 | `checking-legal-and-safety-wording` | 0.87 | 0.87 | 0.93 | 1.00 | 1.00 | +0.13 [+0.00, +0.20] · spans 0 |
 | `checking-release-readiness` | 0.94 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |
 | `checking-source-claims` | 0.89 | 0.94 | 0.94 | 1.00 | 1.00 | +0.06 [+0.00, +0.17] · spans 0 |
@@ -131,8 +131,8 @@ their own permutation p-values.
 | `learning-from-experience` | 0.80 | 0.80 | 0.80 | 1.00 | 0.93 | +0.13 [+0.00, +0.20] · spans 0 |
 | `organizing-project-folders` | 0.56 | 0.56 | 0.56 | 0.89 | 0.94 | +0.39 [-0.06, +0.94] · spans 0 |
 | `proving-claims` | 0.72 | 0.89 | 0.89 | 1.00 | 1.00 | +0.11 [+0.00, +0.17] · spans 0 |
-| `questioning-attitude` | 1.00 | 0.93 | 0.93 | 0.93 | 1.00 | +0.07 [+0.00, +0.20] · spans 0 |
-| `rating-change-risk` | 0.94 | 1.00 | 1.00 | 0.94 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |
+| `questioning-attitude` | 1.00 | 0.93 | 0.93 | 1.00 | 1.00 | +0.07 [+0.00, +0.20] · spans 0 |
+| `rating-change-risk` | 0.94 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |
 | `recording-a-known-good-version` | 0.06 | 0.00 | 0.28 | 0.00 | 0.33 | +0.33 [+0.00, +1.00] · spans 0 |
 | `recording-what-an-agent-did` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |
 | `reporting-shared-defects` | 0.78 | 0.83 | 0.83 | 0.89 | 0.94 | +0.11 [+0.00, +0.17] · spans 0 |

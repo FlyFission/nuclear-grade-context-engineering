@@ -1,0 +1,15 @@
+{
+  "briefing-an-agent": "7f077d80f64261dda8997eeed958d4a7fafb6f74ea1898bf1ffd284686dae79f",
+  "checking-legal-and-safety-wording": "d7e07b31f7ba3878936e650ace2b5de630ba453575fdfc5faf948677adfd1ae6",
+  "checking-release-readiness": "3d2d4d282eb604b8ebf22ce109dd53f99f9968ca25edb087d82b3db9d135872e",
+  "checking-what-a-change-affects": "1dad1273cea9980b4781d27721e08ead94ab1f910e401bc3066c878569fcbf00",
+  "creating-change-records": "5001c0057d938b1576c4504d5143edfd8acfb231816c81c0bd4e5c579285d93f",
+  "deciding-who-decides": "0281d8176eb01ed165b80c0a738611a4fe78440c1d5526f17563f3fa9b9f6d3b",
+  "proving-claims": "7218726b7a9be4fd1546a4872824e1887223e927e38978a6e3a97dcd3edcf861",
+  "questioning-attitude": "ff969176df03b13febbf1a50d224b4e36de3491fd92960b341d5b49560803133",
+  "rating-change-risk": "ac5bd1e09e2dff8459c3c8482add1c21906f320c8994b49a5feb599a2eec0823",
+  "recording-what-an-agent-did": "c72cecd27f93c047bff2f728e56d38de8c8ae304ac033fb0eff76cf190715883",
+  "responding-to-incidents": "f0312b43613e633cda8ad21dbdc363f8322034f1b95fc219b76f97a6f72f78f2",
+  "stress-testing-agent-changes": "ae7e89d28c371e99b8959db6f48d4225f8132dc2c21d38225cc7e2773d3fe6b4",
+  "vetting-outside-code-and-models": "5aabce871268e14609547dfecc3adc433a10aa0d920c907cbd71473c80bd4825"
+}

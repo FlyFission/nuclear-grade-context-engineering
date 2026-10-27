@@ -1,84 +1,169 @@
 {
-  "is_error": false,
-  "duration_api_ms": 10761,
-  "num_turns": 5,
+  "duration_api_ms": 13058,
   "stop_reason": "end_turn",
   "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
-  "total_cost_usd": 0.0501341,
+  "total_cost_usd": 0.0398792,
   "usage": {
     "input_tokens": 6,
-    "cache_creation_input_tokens": 5312,
-    "cache_read_input_tokens": 28287,
-    "output_tokens": 606,
+    "cache_creation_input_tokens": 6381,
+    "cache_read_input_tokens": 31339,
+    "output_tokens": 794,
+    "output_tokens_details": {
+      "thinking_tokens": 80
+    },
     "server_tool_use": {
       "web_search_requests": 0,
       "web_fetch_requests": 0
     },
     "service_tier": "standard",
     "cache_creation": {
-      "ephemeral_1h_input_tokens": 5312,
+      "ephemeral_1h_input_tokens": 6381,
       "ephemeral_5m_input_tokens": 0
     },
-    "inference_geo": "not_available",
+    "inference_geo": "global",
     "iterations": [
       {
         "input_tokens": 2,
-        "output_tokens": 94,
-        "cache_read_input_tokens": 11355,
-        "cache_creation_input_tokens": 237,
+        "output_tokens": 312,
+        "cache_read_input_tokens": 12714,
+        "cache_creation_input_tokens": 277,
         "cache_creation": {
           "ephemeral_5m_input_tokens": 0,
-          "ephemeral_1h_input_tokens": 237
+          "ephemeral_1h_input_tokens": 277
         },
         "type": "message"
       }
     ],
-    "speed": "standard"
+    "speed": "standard",
+    "fallback_credit": null
   },
   "modelUsage": {
-    "claude-haiku-4-5-20251001": {
-      "inputTokens": 588,
-      "outputTokens": 16,
+    "claude-haiku-5-5": {
+      "inputTokens": 1259,
+      "outputTokens": 19,
       "cacheReadInputTokens": 0,
       "cacheCreationInputTokens": 0,
       "webSearchRequests": 0,
-      "costUSD": 0.000668,
-      "contextWindow": 200000,
-      "maxOutputTokens": 32000,
-      "canonicalModel": "claude-haiku-4-5",
-      "provider": "firstParty"
+      "costUSD": 0.00013539999999999998,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 0,
+      "cacheCreationEphemeral5mInputTokens": 0,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
     },
     "claude-sonnet-5": {
       "inputTokens": 6,
-      "outputTokens": 606,
-      "cacheReadInputTokens": 28287,
-      "cacheCreationInputTokens": 5312,
+      "outputTokens": 794,
+      "cacheReadInputTokens": 31339,
+      "cacheCreationInputTokens": 6381,
       "webSearchRequests": 0,
-      "costUSD": 0.0494661,
+      "costUSD": 0.039743799999999996,
       "contextWindow": 1000000,
       "maxOutputTokens": 64000,
+      "thinkingTokens": 80,
+      "cacheCreationEphemeral5mInputTokens": 0,
+      "cacheCreationEphemeral1hInputTokens": 6381,
       "canonicalModel": "claude-sonnet-5",
-      "provider": "firstParty"
+      "provider": "firstParty",
+      "costBasis": "list"
     }
   },
   "permission_denials": [],
   "terminal_reason": "completed",
   "fast_mode_state": "off",
   "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 5,
   "subtype": "success",
   "api_error_status": null,
-  "result": "This repo is empty \u2014 there's no `src/config/dashboard.ts` or any files at all in this working directory. Are you sure this is the right repo/path? Point me to the correct location (or confirm you want me to create it fresh) and I'll make the change and check for other usages of the constant before editing.",
-  "ttft_ms": 1580,
-  "ttft_stream_ms": 800,
-  "time_to_request_ms": 27,
-  "time_to_request_from_spawn_ms": 1594891,
-  "warm_spare_claimed": false,
-  "time_origin_ms": 1785594589316.7202,
+  "result": "There's no repository here to work in \u2014 the working directory is empty, and `src/config/dashboard.ts` doesn't exist.\n\nA couple of things worth flagging before I'd touch this anyway, even once I have the right repo:\n\n- Pagination defaults often get read by more than the UI that renders the page size selector \u2014 API request builders, URL query param defaults, or tests can import the same constant. \"Nothing else depends on it that I know of\" is a good starting assumption, not a substitute for a quick grep for the constant's name/usages.\n- If this constant also sizes a backend query (e.g., a default `limit` passed to an API call), bumping it to 50 means 2.5x the payload per page load \u2014 worth a glance at whether that's fine for the data this dashboard pulls.\n\nCan you point me to the right working directory or repo, or should I clone it? Once I'm in the actual codebase, I'll grep for other usages of the constant, make the change, and confirm nothing else assumed 20.",
+  "ttft_ms": 2446,
   "type": "result",
-  "duration_ms": 11056,
-  "uuid": "523d8c40-6f60-4db1-a7f5-ce838ef2a5bf",
+  "duration_ms": 15492,
+  "uuid": "1fe9dd0d-f4a8-4bb5-8cda-1dbcf6332a6d",
+  "ttft_stream_ms": 1657,
+  "time_to_request_ms": 501,
+  "time_to_request_phases_ms": {
+    "other": 56,
+    "system_prompt": 56,
+    "resume_other": 0,
+    "process_user_input": 4,
+    "input_attachments": 26,
+    "input_hooks": 5,
+    "tool_pool_refresh": 2,
+    "init_message": 13,
+    "engine_pickup": 2,
+    "message_prep": 1,
+    "model_config_wait": 314,
+    "autocompact": 2,
+    "query_setup": 1,
+    "model_gates": 0,
+    "tool_schema_build": 5,
+    "message_normalization": 2,
+    "client_creation": 5,
+    "request_build": 7
+  },
+  "turn_start_resume_kind": "none",
+  "process_turn_index": 0,
+  "time_to_request_loop_lag_ms": 169,
+  "time_to_request_cpu_ms": 337,
+  "time_to_request_major_faults": 0,
+  "process_rss_mib_turn_start": 194,
+  "process_anon_mib_turn_start": 103,
+  "process_rss_mib_result": 216,
+  "process_anon_mib_result": 119,
+  "process_peak_rss_mib": 227,
+  "process_cpu_ms_turn": 1273,
+  "process_wall_ms_turn": 15491,
+  "process_cpu_ms_streaming": 570,
+  "process_wall_ms_streaming": 9096,
+  "main_stream_count": 3,
+  "main_stream_event_count": 187,
+  "main_stream_chunk_count": 127,
+  "input_attachments_detail": {
+    "slowest_producer": "queued_commands",
+    "slowest_producer_ms": 15,
+    "cpu_ms": 17,
+    "major_faults": 0
+  },
+  "first_content_frame_ms": 1657,
+  "time_to_request_from_spawn_ms": 120424,
+  "warm_spare_claimed": false,
+  "flag_fetch_kick": "not_asked_warm",
+  "time_origin_ms": 1793122218577.0527,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "process_start_tuning": 0,
   "_skill": "questioning-attitude",
   "_arm": "C4_full_skill",
   "_trial": 3,
-  "_input_spec_sha256": "2a057b5af9afd3f94306af65775a742f9e89488aebdf5147ba400f84d383fec3"
+  "_input_spec_sha256": "89a520754a7c30e53cad41be3352013c1530b4ba74a47f180bb3817958fa67fe"
 }

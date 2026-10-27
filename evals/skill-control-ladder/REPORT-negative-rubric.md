@@ -38,7 +38,7 @@ the conservative choice.
 - Informative: **26/29**
 - Ceiling (all arms >= 0.95): **3**
 - Floor (all arms <= 0.05): **0**
-- Rubric checks met: **1371/1740** (79%) across 348 gradings
+- Rubric checks met: **1370/1740** (79%) across 348 gradings
 
 Ceiling skills — these cells cannot express a difference, so they carry no information about the skill either way. They are still INCLUDED in the primary test (see below for why that is the conservative choice): `breaking-down-the-work`, `checking-release-readiness`, `creating-change-records`
 
@@ -49,22 +49,22 @@ Pre-specified hypothesis: across the 29-skill pool, the full skill (C4) does NOT
 This figure spans **all** skills in the pool, ceilings and floors included. They are not dropped: a cell that cannot express a difference contributes a zero and pulls the mean toward zero, so including it is the conservative choice. Filtering on the validity gate would raise the effect and would be a post-hoc selection that depends on observing the treatment arm.
 
 - Mean paired difference: **+0.030** (score scale 0–1; YES=1, PARTIAL=0.5, NO=0)
-- Skills where C4 > C1: **9** · C4 < C1: **6** · tied: **14**
-- Two-sided exact sign test: **p = 0.6072**
-- Two-sided paired permutation test (100,000 resamples, seed 20260726): **p = 0.3235**
+- Skills where C4 > C1: **10** · C4 < C1: **6** · tied: **13**
+- Two-sided exact sign test: **p = 0.4545**
+- Two-sided paired permutation test (100,000 resamples, seed 20260726): **p = 0.3438**
 
 Restricted to the 26 informative skills (ceilings and floors
-removed): mean **+0.033**, 9 better / 6 worse / 11 tied, sign p = 0.6072, permutation p = 0.3236.
+removed): mean **+0.033**, 10 better / 6 worse / 10 tied, sign p = 0.4545, permutation p = 0.3442.
 
 
-C4 scores **lower** than C1 on 6 of the 29 skills, and ties on 14:
+C4 scores **lower** than C1 on 6 of the 29 skills, and ties on 13:
 
 **6 skills where the full skill scored BELOW the generic control**, which is a result against the skills and is reported as such:
 
 - `choosing-what-to-control` (C1 1.00 → C4 0.93)
 - `closing-stale-packets` (C1 0.73 → C4 0.67)
 - `double-checking-before-acting` (C1 0.67 → C4 0.27)
-- `questioning-attitude` (C1 0.60 → C4 0.53)
+- `questioning-attitude` (C1 0.60 → C4 0.40)
 - `recording-what-an-agent-did` (C1 0.80 → C4 0.73)
 - `responding-to-incidents` (C1 0.80 → C4 0.73)
 
@@ -72,9 +72,8 @@ C4 scores **lower** than C1 on 6 of the 29 skills, and ties on 14:
 
 > `breaking-down-the-work`, `checking-release-readiness`, `creating-change-records`, `using-nuclear-grade`
 
-**10 ties below the ceiling** — both arms scored the same and neither was perfect. Here the generic paragraph genuinely matched the skill with room to spare on both sides, which is the real finding:
+**9 ties below the ceiling** — both arms scored the same and neither was perfect. Here the generic paragraph genuinely matched the skill with room to spare on both sides, which is the real finding:
 
-- `briefing-an-agent` (C1 0.60 = C4 0.60)
 - `checking-source-claims` (C1 0.67 = C4 0.67)
 - `deciding-who-decides` (C1 0.80 = C4 0.80)
 - `declaring-intent` (C1 0.80 = C4 0.80)
@@ -89,9 +88,9 @@ C4 scores **lower** than C1 on 6 of the 29 skills, and ties on 14:
 
 | Comparison | Mean diff | Higher | Lower | Tied | Sign p | Perm p |
 |---|---|---|---|---|---|---|
-| C4_full_skill vs C0_bare | +0.014 | 8 | 9 | 12 | 1.0000 | 0.6788 |
+| C4_full_skill vs C0_bare | +0.014 | 9 | 8 | 12 | 1.0000 | 0.6917 |
 | C1_generic_nudge vs C0_bare | -0.016 | 4 | 10 | 15 | 0.1796 | 0.2901 |
-| C4_full_skill vs C3_compressed | +0.014 | 8 | 8 | 13 | 1.0000 | 0.5419 |
+| C4_full_skill vs C3_compressed | +0.016 | 8 | 8 | 13 | 1.0000 | 0.4954 |
 
 `C4 vs C0` is the comparison the original pilot ran. `C1 vs C0` is how much of
 that gap one reusable generic paragraph buys on its own. `C4 vs C3` is the
@@ -104,8 +103,8 @@ carrying token cost without a measured behavioral effect.
 |---|---|---|---|---|
 | `C0_bare` | 0 | $0.0275 | 404 | 0.789 (95% CI 0.61–0.90) |
 | `C1_generic_nudge` | 78 | $0.0289 | 447 | 0.772 (95% CI 0.59–0.89) |
-| `C3_compressed` | 127 | $0.0304 | 450 | 0.789 (95% CI 0.61–0.90) |
-| `C4_full_skill` | 1,122 | $0.0424 | 429 | 0.802 (95% CI 0.63–0.91) |
+| `C3_compressed` | 127 | $0.0289 | 451 | 0.786 (95% CI 0.61–0.90) |
+| `C4_full_skill` | 1,122 | $0.0391 | 425 | 0.802 (95% CI 0.63–0.91) |
 
 ## Per-skill scores
 
@@ -131,7 +130,7 @@ their own permutation p-values.
 | Skill | `C0` | `C1` | `C3` | `C4` | C4−C1 [95% CI] |
 |---|---|---|---|---|---|
 | `breaking-down-the-work` | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |
-| `briefing-an-agent` | 0.60 | 0.60 | 0.60 | 0.60 | +0.00 [+0.00, +0.00] · spans 0 |
+| `briefing-an-agent` | 0.60 | 0.60 | 0.67 | 0.67 | +0.07 [+0.00, +0.20] · spans 0 |
 | `checking-legal-and-safety-wording` | 0.73 | 0.67 | 0.93 | 0.93 | +0.27 [+0.13, +0.40] |
 | `checking-release-readiness` | 1.00 | 1.00 | 1.00 | 1.00 | +0.00 [+0.00, +0.00] · spans 0 |
 | `checking-source-claims` | 0.60 | 0.67 | 0.67 | 0.67 | +0.00 [-0.13, +0.13] · spans 0 |
@@ -146,8 +145,8 @@ their own permutation p-values.
 | `learning-from-experience` | 0.80 | 0.73 | 0.87 | 0.73 | +0.00 [-0.13, +0.13] · spans 0 |
 | `organizing-project-folders` | 1.00 | 0.93 | 1.00 | 1.00 | +0.07 [+0.00, +0.20] · spans 0 |
 | `proving-claims` | 0.47 | 0.53 | 0.73 | 1.00 | +0.47 [+0.40, +0.60] |
-| `questioning-attitude` | 0.60 | 0.60 | 0.47 | 0.53 | -0.07 [-0.40, +0.27] · spans 0 |
-| `rating-change-risk` | 0.80 | 0.60 | 0.80 | 0.73 | +0.13 [-0.13, +0.53] · spans 0 |
+| `questioning-attitude` | 0.60 | 0.60 | 0.53 | 0.40 | -0.20 [-0.47, +0.07] · spans 0 |
+| `rating-change-risk` | 0.80 | 0.60 | 0.60 | 0.80 | +0.20 [+0.00, +0.60] · spans 0 |
 | `recording-a-known-good-version` | 0.53 | 0.53 | 0.53 | 0.73 | +0.20 [+0.00, +0.47] · spans 0 |
 | `recording-what-an-agent-did` | 0.67 | 0.80 | 0.80 | 0.73 | -0.07 [-0.20, +0.00] · spans 0 |
 | `reporting-shared-defects` | 0.80 | 0.80 | 0.80 | 0.80 | +0.00 [+0.00, +0.00] · spans 0 |

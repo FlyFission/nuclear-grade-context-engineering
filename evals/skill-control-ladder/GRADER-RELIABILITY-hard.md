@@ -18,11 +18,11 @@ reading any individual cell as precise.
 
 | Comparison | Cells | Checks | Raw agreement | Cohen's κ | base true-rate | other true-rate |
 |---|---|---|---|---|---|---|
-| test-retest (claude-haiku-4-5-20251001) | 105 | 600 | 90.7% | 0.811 | 56.0% | 55.7% |
-| cross-model (claude-sonnet-5) | 105 | 600 | 89.2% | 0.782 | 56.0% | 52.2% |
+| test-retest (claude-haiku-4-5-20251001) | 105 | 600 | 90.7% | 0.811 | 55.0% | 55.0% |
+| cross-model (claude-sonnet-5) | 105 | 600 | 90.0% | 0.799 | 55.0% | 51.3% |
 
-- **test-retest (claude-haiku-4-5-20251001)**: disagreed on 56 of 600 checks — 27 where the comparison grader said met and the baseline did not, 29 the other way.
-- **cross-model (claude-sonnet-5)**: disagreed on 65 of 600 checks — 21 where the comparison grader said met and the baseline did not, 44 the other way.
+- **test-retest (claude-haiku-4-5-20251001)**: disagreed on 56 of 600 checks — 28 where the comparison grader said met and the baseline did not, 28 the other way.
+- **cross-model (claude-sonnet-5)**: disagreed on 60 of 600 checks — 19 where the comparison grader said met and the baseline did not, 41 the other way.
 
 κ interpretation (Landis & Koch): <0.40 poor, 0.40–0.60 moderate,
 0.60–0.80 substantial, >0.80 almost perfect.

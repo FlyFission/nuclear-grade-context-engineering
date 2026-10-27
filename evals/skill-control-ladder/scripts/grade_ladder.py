@@ -76,9 +76,20 @@ def load_cache() -> dict:
     return out
 
 
+def prior_rows_on_disk() -> list[dict]:
+    """Rows already in the authoritative file, used to preserve arms a subset
+    run did not grade."""
+    if not GRADED_PATH.exists():
+        return []
+    try:
+        return json.loads(GRADED_PATH.read_text())
+    except (json.JSONDecodeError, OSError):
+        return []
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--arms", nargs="*", default=list(ARMS), choices=list(ARMS))
+    ap.add_argument("--arms", nargs="+", default=list(ARMS), choices=list(ARMS))
     args = ap.parse_args()
 
     cache = load_cache()
@@ -142,6 +153,18 @@ def main() -> int:
             })
             print(f"[{done}/{len(jobs)}] {skill}/{arm}/t{trial} -> "
                   f"{verdict.get('meets_criteria')}", file=sys.stderr)
+
+    # Subset grading must not truncate the authoritative dataset.
+    #
+    # With --arms selecting fewer than all arms, `rows` covers only those arms.
+    # Writing it unconditionally replaced the whole file with that subset, so a
+    # targeted retry silently deleted every other arm's results -- and `--arms`
+    # with no values wrote [] and exited 0. Rows for unselected arms are now
+    # carried over from the existing authoritative file.
+    if set(args.arms) != set(ARMS):
+        graded_arms = set(args.arms)
+        carried = [r for r in prior_rows_on_disk() if r["arm"] not in graded_arms]
+        rows = rows + carried
 
     errors = [r for r in rows if r["verdict"] == "ERROR"]
     rows.sort(key=lambda r: (r["skill"], r["arm"], r["trial"]))

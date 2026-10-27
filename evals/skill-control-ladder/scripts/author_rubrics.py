@@ -138,10 +138,18 @@ def source_hash(skill: str) -> str:
     # would otherwise leave the rubric looking current while its checks still
     # encode the old ground truth -- and every later grade for that scenario
     # would be measured against it.
-    return hashlib.sha256(
-        f"{t['scenario_prompt']}::{t['pass_criteria']}::"
-        f"{t.get('_planted_defect', '')}".encode()
-    ).hexdigest()
+    # Back-compatible: the defect segment is appended ONLY when a defect exists.
+    # Appending an empty segment unconditionally changed the hash for every
+    # pool whose tasks carry no planted defect, which made all 27 v1 and all 7
+    # hard rubrics look stale on a clean run and would have re-authored them with
+    # fresh model sampling -- invalidating every existing rubric grade for no
+    # reason. That would have broken the cache-safe reproduction the README
+    # promises, as a side effect of a fix meant to tighten it.
+    parts = f"{t['scenario_prompt']}::{t['pass_criteria']}"
+    defect = t.get("_planted_defect")
+    if defect:
+        parts += f"::{defect}"
+    return hashlib.sha256(parts.encode()).hexdigest()
 
 
 def main() -> int:

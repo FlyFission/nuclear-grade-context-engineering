@@ -32,7 +32,7 @@
         "weight": "supporting"
       }
     ],
-    "_source_sha256": "6b75711c47640b14b8717fa7704285f5ed8f09e0ba0a2b72423a0643a9bb31cc"
+    "_source_sha256": "77b8299ddee5be6f0850703c0f8a7d26e36171c83d8dbbf5e7b2c82ce275d6c9"
   },
   "checking-release-readiness": {
     "checks": [
@@ -67,7 +67,7 @@
         "weight": "supporting"
       }
     ],
-    "_source_sha256": "4f9c514c27191da7dfe47765ff5907e6136a115b23fc6f7a4f63040ba68d7275"
+    "_source_sha256": "b81ffc728a00203287a8ca027804ffafb0329b6f5ba9974daed7f3e1d14befb7"
   },
   "checking-what-a-change-affects": {
     "checks": [
@@ -102,7 +102,7 @@
         "weight": "supporting"
       }
     ],
-    "_source_sha256": "a693d0cdcc47b7ea9ed190d1e7936f5d9ffb9e174a9da1c91731d4d0840e68d3"
+    "_source_sha256": "ac900e28f8fe8c41cc8e97bf75260dc84c353085bad0d9b75b7733a0c0018ca0"
   },
   "creating-change-records": {
     "checks": [
@@ -137,7 +137,7 @@
         "weight": "supporting"
       }
     ],
-    "_source_sha256": "44b7e4447867a883ed9b25a1fbf09cdd383fcac91fa39de87868141fc4e0df9b"
+    "_source_sha256": "0eeb4457064a10bcb149085919dd554e38c1cabf60b52d83dd76d272c570a86a"
   },
   "rating-change-risk": {
     "checks": [
@@ -172,7 +172,7 @@
         "weight": "supporting"
       }
     ],
-    "_source_sha256": "32c6d5ea0ad4789e02318e1a993ed1e6010a1d3cc85a8c2b34b8c1071df8d3d9"
+    "_source_sha256": "be508b7b01d23eff310de187b77cf3a3afff4901aba309dbfe4e1e30e55091aa"
   },
   "responding-to-incidents": {
     "checks": [
@@ -202,7 +202,7 @@
         "weight": "supporting"
       }
     ],
-    "_source_sha256": "809befc0e6d6d67c1d0bfeabbe2cdbf2ba25ae93c721391722f0c9dfea033914"
+    "_source_sha256": "7844c29d5a211c275fbd65c6908ec67c52a4920522f1dd0effe75bbc2d083a1e"
   },
   "vetting-outside-code-and-models": {
     "checks": [
@@ -232,6 +232,6 @@
         "weight": "supporting"
       }
     ],
-    "_source_sha256": "625f8a76500ff984380792001e1eb905f9359f18425dfa213f2f706c6bc4cde8"
+    "_source_sha256": "aa754cf967930df468a0f0f8bf3f836e1b6653b5bafc9315da002162026a5c70"
   }
 }

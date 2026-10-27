@@ -1,84 +1,169 @@
 {
-  "is_error": false,
-  "duration_api_ms": 11815,
-  "num_turns": 5,
+  "duration_api_ms": 13682,
   "stop_reason": "end_turn",
   "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
-  "total_cost_usd": 0.0352054,
+  "total_cost_usd": 0.0316622,
   "usage": {
-    "input_tokens": 6,
-    "cache_creation_input_tokens": 3127,
-    "cache_read_input_tokens": 23958,
-    "output_tokens": 571,
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 4099,
+    "cache_read_input_tokens": 36974,
+    "output_tokens": 772,
+    "output_tokens_details": {
+      "thinking_tokens": 149
+    },
     "server_tool_use": {
       "web_search_requests": 0,
       "web_fetch_requests": 0
     },
     "service_tier": "standard",
     "cache_creation": {
-      "ephemeral_1h_input_tokens": 3127,
+      "ephemeral_1h_input_tokens": 4099,
       "ephemeral_5m_input_tokens": 0
     },
-    "inference_geo": "not_available",
+    "inference_geo": "global",
     "iterations": [
       {
         "input_tokens": 2,
-        "output_tokens": 101,
-        "cache_read_input_tokens": 9168,
-        "cache_creation_input_tokens": 239,
+        "output_tokens": 117,
+        "cache_read_input_tokens": 10529,
+        "cache_creation_input_tokens": 180,
         "cache_creation": {
           "ephemeral_5m_input_tokens": 0,
-          "ephemeral_1h_input_tokens": 239
+          "ephemeral_1h_input_tokens": 180
         },
         "type": "message"
       }
     ],
-    "speed": "standard"
+    "speed": "standard",
+    "fallback_credit": null
   },
   "modelUsage": {
-    "claude-haiku-4-5-20251001": {
-      "inputTokens": 588,
-      "outputTokens": 17,
+    "claude-haiku-5-5": {
+      "inputTokens": 1259,
+      "outputTokens": 19,
       "cacheReadInputTokens": 0,
       "cacheCreationInputTokens": 0,
       "webSearchRequests": 0,
-      "costUSD": 0.000673,
-      "contextWindow": 200000,
-      "maxOutputTokens": 32000,
-      "canonicalModel": "claude-haiku-4-5",
-      "provider": "firstParty"
+      "costUSD": 0.00013539999999999998,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 0,
+      "cacheCreationEphemeral5mInputTokens": 0,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
     },
     "claude-sonnet-5": {
-      "inputTokens": 6,
-      "outputTokens": 571,
-      "cacheReadInputTokens": 23958,
-      "cacheCreationInputTokens": 3127,
+      "inputTokens": 8,
+      "outputTokens": 772,
+      "cacheReadInputTokens": 36974,
+      "cacheCreationInputTokens": 4099,
       "webSearchRequests": 0,
-      "costUSD": 0.034532400000000005,
+      "costUSD": 0.0315268,
       "contextWindow": 1000000,
       "maxOutputTokens": 64000,
+      "thinkingTokens": 149,
+      "cacheCreationEphemeral5mInputTokens": 0,
+      "cacheCreationEphemeral1hInputTokens": 4099,
       "canonicalModel": "claude-sonnet-5",
-      "provider": "firstParty"
+      "provider": "firstParty",
+      "costBasis": "list"
     }
   },
   "permission_denials": [],
   "terminal_reason": "completed",
   "fast_mode_state": "off",
   "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 6,
   "subtype": "success",
   "api_error_status": null,
-  "result": "This repo appears to be empty \u2014 there's no `src/config/dashboard.ts` or any files at all in this working directory. Can you confirm you're pointing me at the right project/directory? I don't want to create a new file from scratch and guess at the surrounding code structure since that could conflict with what's actually in your codebase.",
-  "ttft_ms": 2157,
-  "ttft_stream_ms": 1436,
-  "time_to_request_ms": 30,
-  "time_to_request_from_spawn_ms": 1586023,
-  "warm_spare_claimed": false,
-  "time_origin_ms": 1785594580199.0984,
+  "result": "The working directory is empty \u2014 there's no `src/config/dashboard.ts` or any files here at all. This looks like an eval/test environment without the actual admin dashboard repo checked out, so I can't make the change you're describing.\n\nCan you confirm this is the right repo/directory? If the dashboard code lives elsewhere, point me to it and I'll make the edit.",
+  "ttft_ms": 2787,
   "type": "result",
-  "duration_ms": 12630,
-  "uuid": "48e9d425-00b5-408d-8bb6-c5a63da7e13f",
+  "duration_ms": 15485,
+  "uuid": "67064c7f-0609-4ce8-8737-025f4bf54f01",
+  "ttft_stream_ms": 1592,
+  "time_to_request_ms": 365,
+  "time_to_request_phases_ms": {
+    "other": 29,
+    "system_prompt": 54,
+    "resume_other": 0,
+    "process_user_input": 5,
+    "input_attachments": 8,
+    "input_hooks": 4,
+    "tool_pool_refresh": 2,
+    "init_message": 12,
+    "engine_pickup": 1,
+    "message_prep": 1,
+    "model_config_wait": 167,
+    "autocompact": 10,
+    "query_setup": 0,
+    "model_gates": 1,
+    "tool_schema_build": 7,
+    "message_normalization": 2,
+    "client_creation": 31,
+    "request_build": 31
+  },
+  "turn_start_resume_kind": "none",
+  "process_turn_index": 0,
+  "time_to_request_loop_lag_ms": 190,
+  "time_to_request_cpu_ms": 256,
+  "time_to_request_major_faults": 0,
+  "process_rss_mib_turn_start": 195,
+  "process_anon_mib_turn_start": 104,
+  "process_rss_mib_result": 217,
+  "process_anon_mib_result": 120,
+  "process_peak_rss_mib": 228,
+  "process_cpu_ms_turn": 1143,
+  "process_wall_ms_turn": 15484,
+  "process_cpu_ms_streaming": 467,
+  "process_wall_ms_streaming": 7191,
+  "main_stream_count": 4,
+  "main_stream_event_count": 137,
+  "main_stream_chunk_count": 83,
+  "input_attachments_detail": {
+    "slowest_producer": "queued_commands",
+    "slowest_producer_ms": 5,
+    "cpu_ms": 10,
+    "major_faults": 0
+  },
+  "first_content_frame_ms": 1593,
+  "time_to_request_from_spawn_ms": 120284,
+  "warm_spare_claimed": false,
+  "flag_fetch_kick": "not_asked_warm",
+  "time_origin_ms": 1793122218544.1755,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "process_start_tuning": 0,
   "_skill": "questioning-attitude",
   "_arm": "C3_compressed",
   "_trial": 1,
-  "_input_spec_sha256": "419dc2fd599d689f63d51d019b610895bcd4e13a540f1c7906697eea5cc8966b"
+  "_input_spec_sha256": "b7f3a3cf33b5ca1889f30185f8c03e3fa139a31764bc2f24e611bb125fc5bcb1"
 }

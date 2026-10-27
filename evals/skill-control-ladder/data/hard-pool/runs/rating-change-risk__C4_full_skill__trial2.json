@@ -1,84 +1,169 @@
 {
-  "is_error": false,
-  "duration_api_ms": 31907,
-  "num_turns": 1,
+  "duration_api_ms": 46148,
   "stop_reason": "end_turn",
   "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
-  "total_cost_usd": 0.06938200000000001,
+  "total_cost_usd": 0.07199830000000002,
   "usage": {
-    "input_tokens": 2,
-    "cache_creation_input_tokens": 4738,
-    "cache_read_input_tokens": 6280,
-    "output_tokens": 2553,
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 8209,
+    "cache_read_input_tokens": 19176,
+    "output_tokens": 3517,
+    "output_tokens_details": {
+      "thinking_tokens": 2643
+    },
     "server_tool_use": {
       "web_search_requests": 0,
       "web_fetch_requests": 0
     },
     "service_tier": "standard",
     "cache_creation": {
-      "ephemeral_1h_input_tokens": 4738,
+      "ephemeral_1h_input_tokens": 8209,
       "ephemeral_5m_input_tokens": 0
     },
-    "inference_geo": "not_available",
+    "inference_geo": "global",
     "iterations": [
       {
         "input_tokens": 2,
-        "output_tokens": 2553,
-        "cache_read_input_tokens": 6280,
-        "cache_creation_input_tokens": 4738,
+        "output_tokens": 1359,
+        "cache_read_input_tokens": 12566,
+        "cache_creation_input_tokens": 2253,
         "cache_creation": {
           "ephemeral_5m_input_tokens": 0,
-          "ephemeral_1h_input_tokens": 4738
+          "ephemeral_1h_input_tokens": 2253
         },
         "type": "message"
       }
     ],
-    "speed": "standard"
+    "speed": "standard",
+    "fallback_credit": null
   },
   "modelUsage": {
-    "claude-haiku-4-5-20251001": {
-      "inputTokens": 679,
-      "outputTokens": 18,
+    "claude-haiku-5-5": {
+      "inputTokens": 1386,
+      "outputTokens": 21,
       "cacheReadInputTokens": 0,
       "cacheCreationInputTokens": 0,
       "webSearchRequests": 0,
-      "costUSD": 0.000769,
-      "contextWindow": 200000,
-      "maxOutputTokens": 32000,
-      "canonicalModel": "claude-haiku-4-5",
-      "provider": "firstParty"
+      "costUSD": 0.00014910000000000002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 0,
+      "cacheCreationEphemeral5mInputTokens": 0,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
     },
     "claude-sonnet-5": {
-      "inputTokens": 2,
-      "outputTokens": 2553,
-      "cacheReadInputTokens": 6280,
-      "cacheCreationInputTokens": 4738,
+      "inputTokens": 4,
+      "outputTokens": 3517,
+      "cacheReadInputTokens": 19176,
+      "cacheCreationInputTokens": 8209,
       "webSearchRequests": 0,
-      "costUSD": 0.06861300000000001,
+      "costUSD": 0.0718492,
       "contextWindow": 1000000,
       "maxOutputTokens": 64000,
+      "thinkingTokens": 2643,
+      "cacheCreationEphemeral5mInputTokens": 0,
+      "cacheCreationEphemeral1hInputTokens": 8209,
       "canonicalModel": "claude-sonnet-5",
-      "provider": "firstParty"
+      "provider": "firstParty",
+      "costBasis": "list"
     }
   },
   "permission_denials": [],
   "terminal_reason": "completed",
   "fast_mode_state": "off",
   "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
   "subtype": "success",
   "api_error_status": null,
-  "result": "I can't merge PRs from here (I only have read/search tools, no git/push access) \u2014 but more importantly, I'd flag this before it goes live, not after.\n\n**This isn't the administrative floor.** It reads like a pure copy tweak, but \"SOC 2 Type II certified\" is a public compliance claim, and you're increasing its prominence specifically because a competitor got burned for a similar claim. That's a named tripwire in our risk-rating process (claim-bearing public wording), so it needs at least a quick check, not a silent merge on precedent.\n\nTwo things worth 5 minutes with whoever owns your SOC 2 report/compliance function, before this goes live:\n\n1. **\"Certified\" is commonly wrong wording for SOC 2.** SOC 2 is an *attestation* (a CPA firm's opinion), not a *certification* \u2014 there's no certifying body. Auditors and legal teams often specifically flag \"SOC 2 certified\" as a claim to avoid, in favor of \"SOC 2 Type II compliant\" or \"we have completed a SOC 2 Type II audit.\" Given a competitor just got called out for compliance-claim issues, shipping the same imprecise term *more prominently* is exactly the kind of thing that draws scrutiny.\n2. **Dana approved the original line, not this one.** Her sign-off was for the existing, low-prominence text. Making a compliance claim more visible is a different call \u2014 it warrants a fresh look from whoever's accountable for the SOC 2 report (is it current, not expired, and is the exact wording something they're comfortable amplifying).\n\nGiven the timeline, my suggestion: ping your compliance/legal contact tonight with the exact new copy and ask two questions \u2014 \"is 'certified' the term we should use, and is the report still current?\" That's a 5-minute Slack message, not a blocker to your sales call, and it closes the actual risk here (an inaccurate or newly-scrutinized compliance claim going live publicly), not just the code risk (which is trivially small, as you said).\n\nIf they confirm the wording and currency, this is a fast Standard-mode change (public/lasting claim, so above Quick) \u2014 no need for a big process, just that one sign-off recorded somewhere. Want me to help draft that message, or review the exact diff wording for compliance-safe phrasing?",
-  "ttft_ms": 21793,
-  "ttft_stream_ms": 889,
-  "time_to_request_ms": 27,
-  "time_to_request_from_spawn_ms": 1894770,
-  "warm_spare_claimed": false,
-  "time_origin_ms": 1785079669591.5525,
+  "result": "I'm not going to merge this one without a quick check first \u2014 the diff size is small, but the thing it touches isn't.\n\n**Why this isn't \"administrative\" despite being 3 lines**\n\nThe skill's own exclusion list calls this out directly: a dead-link fix or typo can skip review, but *claim-bearing public wording* is a named tripwire that pulls it out of the administrative floor regardless of diff size. This change doesn't just reposition text \u2014 it increases the prominence of a compliance claim, specifically *because* a competitor is getting scrutinized for the same claim. That's the context where someone (prospect, journalist, auditor) is most likely to actually click through and check it. Small diff, real trust boundary.\n\n**Why Dana's approval doesn't cover it**\n\nDana wrote and approved the *original* copy as a copywriter \u2014 that's a brand/voice sign-off, not a compliance sign-off. Nothing in what you've described confirms:\n- The SOC 2 Type II report is still *current* (not expired)\n- Its scope actually covers what the more-prominent line will imply\n- \"Certified\" is the right word \u2014 SOC 2 is an attestation report from an auditor, not a certification; that distinction is exactly the kind of thing that gets a company \"called out\" the way your competitor just was\n\nYou confirmed you *have* a report, but that's a different question from whether this specific wording, made more prominent, is still accurate and defensible.\n\n**Mode:** Standard, not Quick. Consequence (public compliance claim, under active competitive scrutiny) and detectability (you won't find out it's wrong until someone calls it out, same as the competitor) both push past the Quick bar, even though reversibility is easy (it's a text revert).\n\n**What I'd need before merging:**\n1. The actual diff/new wording (you referenced it but it wasn't included in your message \u2014 paste it or point me to the file)\n2. Confirmation from whoever owns the SOC 2 relationship (security/compliance, not marketing) that the report is current and the new wording's scope is accurate\n\nDeadline pressure for tomorrow's sales call is a reason to get that confirmation fast, not a reason to skip it \u2014 being wrong on this is exactly the failure mode that just embarrassed your competitor. Can you paste the diff and tell me who on compliance/security can confirm the report status?",
+  "ttft_ms": 25329,
   "type": "result",
-  "duration_ms": 32384,
-  "uuid": "84a178e9-0734-45aa-ab07-42a7a3aa5bd4",
+  "duration_ms": 45672,
+  "uuid": "71cb25f4-2634-4f6a-a02e-8528dbeefb4e",
+  "ttft_stream_ms": 1539,
+  "time_to_request_ms": 298,
+  "time_to_request_phases_ms": {
+    "other": 53,
+    "system_prompt": 63,
+    "resume_other": 0,
+    "process_user_input": 9,
+    "input_attachments": 24,
+    "input_hooks": 10,
+    "tool_pool_refresh": 3,
+    "init_message": 24,
+    "engine_pickup": 21,
+    "message_prep": 2,
+    "model_config_wait": 25,
+    "autocompact": 4,
+    "query_setup": 3,
+    "model_gates": 1,
+    "tool_schema_build": 17,
+    "message_normalization": 2,
+    "client_creation": 11,
+    "request_build": 26
+  },
+  "turn_start_resume_kind": "none",
+  "process_turn_index": 0,
+  "time_to_request_loop_lag_ms": 247,
+  "time_to_request_cpu_ms": 257,
+  "time_to_request_major_faults": 0,
+  "process_rss_mib_turn_start": 186,
+  "process_anon_mib_turn_start": 95,
+  "process_rss_mib_result": 209,
+  "process_anon_mib_result": 112,
+  "process_peak_rss_mib": 223,
+  "process_cpu_ms_turn": 1469,
+  "process_wall_ms_turn": 45672,
+  "process_cpu_ms_streaming": 872,
+  "process_wall_ms_streaming": 42993,
+  "main_stream_count": 2,
+  "main_stream_event_count": 269,
+  "main_stream_chunk_count": 254,
+  "input_attachments_detail": {
+    "slowest_producer": "queued_commands",
+    "slowest_producer_ms": 9,
+    "cpu_ms": 17,
+    "major_faults": 0
+  },
+  "first_content_frame_ms": 1540,
+  "time_to_request_from_spawn_ms": 30891,
+  "warm_spare_claimed": false,
+  "flag_fetch_kick": "not_asked_warm",
+  "time_origin_ms": 1793122129414.376,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "process_start_tuning": 0,
   "_skill": "rating-change-risk",
   "_arm": "C4_full_skill",
   "_trial": 2,
-  "_input_spec_sha256": "54edfa36de1336ceff2b66e647cab1040a697ad90db32f54d42a08dcd1535af8"
+  "_input_spec_sha256": "02bc5d5c74aa4424da104bbd482a1db65cd73ee97de8149a206c75cf553fd94a"
 }

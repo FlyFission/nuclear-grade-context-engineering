@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 360" width="1000" height="360" role="img" aria-labelledby="t d">
 <title id="t">Nuclear-grade lifecycle</title>
-<desc id="d">Question, Discover, Specify, Plan, Execute, Verify, Review, then the Decide gate. Ship or defer leads to Baseline, Operate, Learn; block returns to Plan; Learn feeds the next Question. A separate Cleared-to-apply-now gate sits between Decide and Baseline and holds while clearance is lapsed.</desc>
+<desc id="d">Question, Discover, Specify, Plan, Execute, Verify, Review, then the Decide gate. Ship leads to Baseline, Operate, Learn; block or defer returns to Plan; Learn feeds the next Question. A separate Cleared-to-apply-now gate sits between Decide and Baseline and holds while clearance is lapsed.</desc>
 <style>
 .bg{fill:#F7F6F2} .ink{fill:#0E1A30} .muted{fill:#46536B} .soft{fill:#5A6680}
 .acc{fill:#8A5A00} .lnk{fill:#2F4F94}
@@ -78,10 +78,10 @@
 <text x="736.0" y="320.0" class="name ink" text-anchor="middle">Operate</text>
 <rect class="n-store" stroke-width="1" x="550.0" y="294.0" width="92" height="44" rx="6"/>
 <text x="596.0" y="320.0" class="name ink" text-anchor="middle">Learn</text>
-<rect class="mask" x="627.0" y="60" width="40.0" height="15" rx="2"/>
-<text x="647.0" y="71.5" class="lbl acc" text-anchor="middle">block</text>
-<rect class="mask" x="835.0" y="158" width="82.0" height="15" rx="2"/>
-<text x="876.0" y="169.5" class="lbl acc" text-anchor="middle">ship / defer</text>
+<rect class="mask" x="603.0" y="60" width="88.0" height="15" rx="2"/>
+<text x="647.0" y="71.5" class="lbl acc" text-anchor="middle">block / defer</text>
+<rect class="mask" x="859.0" y="158" width="34.0" height="15" rx="2"/>
+<text x="876.0" y="169.5" class="lbl acc" text-anchor="middle">ship</text>
 <rect class="mask" x="900.0" y="180" width="88.0" height="15" rx="2"/>
 <text x="944.0" y="191.5" class="lbl muted" text-anchor="middle">hold / lapsed</text>
 <rect class="mask" x="862.0" y="267.0" width="28.0" height="15" rx="2"/>

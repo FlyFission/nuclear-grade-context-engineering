@@ -1,10 +1,8 @@
 <div align="center">
 
-<img src="docs/assets/landing-banner.svg" alt="Nuclear-grade Context Engineering: let AI do serious software work and stay in control of what ships. Go fast while exploring; slow down when the work becomes a promise." width="820">
+<img src="docs/assets/landing-banner.svg" alt="Nuclear-grade Context Engineering: let AI do serious software work and stay in control of what ships." width="820">
 
 <br/>
-
-**A simple, evidence-first way to let AI do serious software work and stay in control of what ships.**
 
 [![CI](https://github.com/FlyFission/nuclear-grade-context-engineering/actions/workflows/ci.yml/badge.svg)](https://github.com/FlyFission/nuclear-grade-context-engineering/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-2E7D45.svg)](LICENSE)
@@ -15,17 +13,11 @@
 
 </div>
 
-# Nuclear Grade Context Engineering
+# Nuclear-grade Context Engineering
 
-**Your AI agent wrote the code, the tests, and the PR description. Who checked?**
+**Keep your AI coding agent honest. It does the work, and you stay in control of what ships.**
 
-Agents now edit files, change prompts, call tools, swap dependencies, write their own evidence, and help ship releases. Nuclear-grade is a small, dependency-free toolkit that keeps that work questioned, controlled, and reviewable:
-
-- **Change records that link every claim to evidence** and record *who* generated, selected, and presented it, so a reviewer can see when an agent graded its own work.
-- **Checks that do not depend on the agent's narrative**: a validator for CI, versioned receipts with file digests, and an opt-in hook that denies agent writes to the files that judge the agent.
-- **Rigor that scales with the stakes**: a typo needs nothing; a permission change gets the full record. Agent skills and paste-ready prompts work in Claude Code, Codex, Cursor, and more.
-
-[See it work](#see-it-work-then-make-it-yours) in about a minute, or jump to [Quick start](#quick-start). Want to test your own coding agent? Try the 15-minute [honesty challenge](challenge/README.md). It borrows high-consequence engineering discipline, not its regulations: see [What this is NOT](#what-this-is-not).
+A small guard and a few habits for coding agents. The guard stops an agent from editing the things that judge its work, like your CI and its own settings, and asks you before it tags, publishes, or force-pushes. The habits ask the agent to show its proof for risky changes, so you can see what is still open before you say yes.
 
 <p align="center"><img src="docs/assets/demo/demo.gif" width="900" alt="Terminal demo, about 30 seconds. A simulated agent write to .github/workflows/ci.yml is denied by the PreToolUse gate; a simulated force-push to main is routed to a human; a passing change record's JSON receipt still reports two open evidence items and the badge counts open items; an unfilled change record fails validation."></p>
 
@@ -40,10 +32,44 @@ Agents now edit files, change prompts, call tools, swap dependencies, write thei
 
 </details>
 
+The demo sends simulated tool calls through the real guard script, so no agent runs in it.
+
+## Quick start
+
+**Claude Code.** This repo is its own plugin marketplace.
+
+```bash
+/plugin marketplace add FlyFission/nuclear-grade-context-engineering
+/plugin install nuclear-grade-guard@nuclear-grade   # the guard only
+/plugin install nuclear-grade@nuclear-grade         # the skills and command prompts
+/reload-plugins
+```
+
+**Cursor, Codex, Windsurf, VS Code with Copilot, or any repo.**
+
+```bash
+pipx install nuclear-grade
+nuclear-grade init --all          # records folder, AGENTS.md, the guard, and a CI check
+nuclear-grade install cursor      # or codex, claude, windsurf, vscode
+```
+
+**See how your own agent does.** The [15-minute challenge](challenge/README.md) gives your agent a routine task that quietly widens what a toy agent may do. A scorer checks whether your agent noticed, wrote it down, and left the ship call to you.
+
+## What it does
+
+- **Guards the judge.** Your agent cannot edit your CI workflows, its hook settings, or the guard itself, and it has to ask you before a tag, a publish, a force-push, or a risky delete. It never auto-approves and it fails closed. [How it compares to built-in permission rules](HOOKS.md#why-not-just-use-permission-deny-rules).
+- **Scales with the stakes.** A typo needs nothing. A small, easy-to-undo change gets two short files. A change to permissions, data, dependencies, or a release gets a fuller record that ties each claim to its proof and names what is still unproven.
+- **Shows who checked.** Each record notes who wrote the evidence, so a reviewer can tell when the agent graded its own work.
+- **Stays light.** No build step and no third-party dependencies. The Core skill set adds under 1,000 tokens of skill descriptions to a session (`nuclear-grade install <tool> --core`, the default). `--full` installs all of them.
+
+## What "nuclear-grade" means here
+
+In the nuclear industry, "nuclear-grade" describes parts qualified for safety use. Here it only names a level of care: question first, prove your claims, and keep the approved version under control. The habits come from public sources such as the DOE Human Performance Improvement Handbook (DOE-HDBK-1028), mapped in the [source map](docs/00-standards-foundation/source-map.md). Nothing in this repo qualifies software for safety-related or regulated use. See [What this is NOT](#what-this-is-not).
+
 ## Contents
 
 - [See it work, then make it yours](#see-it-work-then-make-it-yours)
-- [Quick start](#quick-start)
+- [Working from a clone](#working-from-a-clone)
 - [What you get](#what-you-get)
 - [Show your evidence](#show-your-evidence)
 - [What this is](#what-this-is)
@@ -54,8 +80,8 @@ Agents now edit files, change prompts, call tools, swap dependencies, write thei
 - [Works across your tools](#works-across-your-tools)
 - [Who does what](#who-does-what)
 - [Keeping the approved version under control](#keeping-the-approved-version-under-control)
-- [The common way vs. the nuclear-grade way](#the-common-way-vs-the-nuclear-grade-way)
-- [What the comparison does — and does not — show](#what-the-comparison-does--and-does-not--show)
+- [The common way and the nuclear-grade way](#the-common-way-and-the-nuclear-grade-way)
+- [What the comparison shows and what it does not](#what-the-comparison-shows-and-what-it-does-not)
 - [Why this exists](#why-this-exists)
 - [What this is NOT](#what-this-is-not)
 - [License and limits](#license-and-limits)
@@ -93,11 +119,11 @@ python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.n
 # "ok": true, "evidence_statuses": {"pass": 5, "deferred": 2, ...}, "open_evidence_items": 2, "inputs": {"digest": "..."}
 ```
 
-That packet is a complete Standard record: `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, and `ship.md`, plus an `adversarial-review.md` this high-stakes example adds on top. Copy [`docs/03-worked-examples/ai-agent-tool-permissions/`](docs/03-worked-examples/ai-agent-tool-permissions/) as the template for your own changes, keep [`CORE.md`](CORE.md) open for the seven habits behind it, and take the full guided tour in [`QUICKSTART.md`](QUICKSTART.md) when you want depth. It is a worked teaching example, not a production guarantee — see [What this is NOT](#what-this-is-not).
+That packet is a complete Standard record: `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, and `ship.md`, plus an `adversarial-review.md` this high-stakes example adds on top. Copy [`docs/03-worked-examples/ai-agent-tool-permissions/`](docs/03-worked-examples/ai-agent-tool-permissions/) as the template for your own changes, keep [`CORE.md`](CORE.md) open for the seven habits behind it, and take the full guided tour in [`QUICKSTART.md`](QUICKSTART.md) when you want depth. It is a worked teaching example, and it guarantees nothing about production. See [What this is NOT](#what-this-is-not).
 
 **Try it on your agent.** [`challenge/`](challenge/README.md) is a 15-minute game: a routine `fetch_url` request quietly widens a toy agent's authority, and `score.py` checks whether your agent recorded the widening, named what is unproven, and left the release to a human. It covers one seeded trap; it is not a safety rating.
 
-## Quick start
+## Working from a clone
 
 **Claude Code.** This repository is its own plugin marketplace. Add it and install the plugin, then reload to activate it in the current session:
 
@@ -186,7 +212,7 @@ The kind of software engineering people stake decisions on runs on one habit: yo
 
 > **PROVE**: Plan · Run · Observe · Verdict · Educate
 
-(Observe = weigh the evidence; Verdict = decide on purpose; Educate = ship the result, then learn from how it runs.) The same path at a glance is three moves, **PRO**: Plan · Run · Operate — up close it's PROVE, from across the room it's PRO. The step it never lets you fold away is **Verdict**, where a draft becomes a decision: ship it and you can defend every line.
+(Observe = weigh the evidence; Verdict = decide on purpose; Educate = ship the result, then learn from how it runs.) The same path at a glance is three moves, **PRO**: Plan · Run · Operate: up close it's PROVE, and from across the room it's PRO. The step it never lets you fold away is **Verdict**, where a draft becomes a decision: ship it and you can defend every line.
 
 ```text
 Normal AI coding:
@@ -216,14 +242,14 @@ flowchart LR
     Q[Question] --> D[Discover] --> S[Specify] --> P[Plan]
     P --> E[Execute] --> V[Verify] --> R[Review]
     R --> Dec{Decide}
-    Dec -->|ship / defer| B[Baseline] --> O[Operate] --> L[Learn]
-    Dec -->|block| P
+    Dec -->|ship| B[Baseline] --> O[Operate] --> L[Learn]
+    Dec -->|block / defer| P
     L -.feeds future basis.-> Q
 ```
 
 </details>
 
-Those eleven beats are the same path zoomed in. Zoomed out, they're three moves (**PRO**: Plan · Run · Operate) or five with the gate named (**PROVE**: Plan · Run · Observe · Verdict · Educate) — one path, three levels of detail:
+Those eleven beats are the same path zoomed in. Zoomed out, they're three moves (**PRO**: Plan · Run · Operate) or five with the gate named (**PROVE**: Plan · Run · Observe · Verdict · Educate). It is one path at three levels of detail:
 
 <p align="center"><img src="docs/assets/diagrams/pro.svg" alt="PRO: Plan · Run · Operate" width="100%"></p>
 
@@ -236,21 +262,21 @@ flowchart TB
   classDef run fill:#E4DEF7,stroke:#5B49A6,color:#1E1640;
   classDef emb fill:#DCEFDE,stroke:#2E7D45,color:#102810;
   classDef gate fill:#FFD24D,stroke:#B07400,color:#3A2600,stroke-width:2px;
-  subgraph LP["P — PLAN"]
+  subgraph LP["P: PLAN"]
     direction LR
     A1(["Question"]) --> A2(["Discover"]) --> A3(["Specify"]) --> A4(["Plan"])
   end
-  subgraph LRUN["R — RUN"]
+  subgraph LRUN["R: RUN"]
     direction LR
     B1(["Execute"]) --> B2(["Verify"]) --> B3(["Review"]) --> B4{"Decide"}
   end
-  subgraph LOPS["O — OPERATE"]
+  subgraph LOPS["O: OPERATE"]
     direction LR
     C1(["Baseline"]) --> C2(["Operate"]) --> C3(["Learn"])
   end
   A4 --> B1
-  B4 -->|"ship / defer"| C1
-  B4 -.->|"block"| A4
+  B4 -->|"ship"| C1
+  B4 -.->|"block / defer"| A4
   C3 -.->|"lessons feed the next basis"| A1
   class A1,A2,A3,A4 plan
   class B1,B2,B3 run
@@ -262,7 +288,7 @@ flowchart TB
 
 *If the diagrams above do not render (for example on PyPI), the eleven-beat line just above is the same path in text.* The control-point detail (what each step stops and produces) is in [`WORKFLOWS.md`](WORKFLOWS.md), and every diagram here is canonical in [`docs/diagrams.md`](docs/diagrams.md).
 
-Underneath the path sit a few **optional** habits borrowed from high-reliability work — **HPI for AI agents** (Human Performance Improvement). Reach for them only when they change the outcome: brief the work before a risky step, double-check critical actions, hand off cleanly, get a second set of eyes when trust is on the line, and capture the lesson after a near miss. [`WORKFLOWS.md`](WORKFLOWS.md) covers them.
+Underneath the path sit a few **optional** habits borrowed from high-reliability work: **HPI for AI agents** (Human Performance Improvement). Reach for them only when they change the outcome: brief the work before a risky step, double-check critical actions, hand off cleanly, get a second set of eyes when trust is on the line, and capture the lesson after a near miss. [`WORKFLOWS.md`](WORKFLOWS.md) covers them.
 
 ## Adopt at your pace
 
@@ -284,7 +310,7 @@ Ready-made bundles live in [`starter-kit/`](starter-kit/), and [`CORE.md`](CORE.
 ```mermaid
 flowchart TD
     Start([Change request]) --> Q0{Purely administrative,<br/>instantly reversible,<br/>no new trust boundary?}
-    Q0 -->|yes| Floor[Administrative floor<br/>no packet — the commit message is the record]
+    Q0 -->|yes| Floor[Administrative floor<br/>no packet: the commit message is the record]
     Q0 -->|no| Q1{Local, reversible,<br/>obvious proof,<br/>no new trust boundary?}
     Q1 -->|yes| Quick[Quick packet<br/>risk.md + proof.md]
     Q1 -->|no| Q2{User / data / dep /<br/>permission / AI authority /<br/>release consequence?}
@@ -299,7 +325,7 @@ flowchart TD
 
 | Kind | Use it when | Files |
 |---|---|---|
-| Administrative floor | Purely administrative, instantly reversible, no new trust boundary (typo, comment, dead link) | none — the commit message is the record |
+| Administrative floor | Purely administrative, instantly reversible, no new trust boundary (typo, comment, dead link) | none: the commit message is the record |
 | Quick | Low stakes, easy to undo, obvious proof, no new trust boundary | `risk.md`, `proof.md` |
 | Standard | It touches users, dependencies, permissions, data, AI behavior, operations, or a release | `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, `ship.md` |
 
@@ -319,7 +345,7 @@ Use Nuclear-grade if you are:
 
 Cursor, Claude Code, Aider, Codex, and Copilot each read slightly different files for their reasoning and rules. `.nuclear/`, [`AGENTS.md`](AGENTS.md), and the `SKILL.md` contract are a **shared, tool-agnostic shape** that all of them can import as plain markdown: a portable surface for agent authority, change records, and evidence. No matter which IDE ships reasoning steps natively, the packets and habits travel with the repository.
 
-Two tools also have native plugin packages: **Claude Code** (the repo is its own marketplace — skills, command prompts, and PROVE subagents) and **Codex** (`.codex-plugin/plugin.json`, which exports the **skills** only). For what each plugin does and does not install — and why Codex users should still clone the repo for the full workflow — see [`INTEGRATIONS.md`](INTEGRATIONS.md) and [`INSTALL.md`](INSTALL.md).
+Two tools also have native plugin packages: **Claude Code** (the repo is its own marketplace, with skills, command prompts, and PROVE subagents) and **Codex** (`.codex-plugin/plugin.json`, which exports the **skills** only). For what each plugin does and does not install: and why Codex users should still clone the repo for the full workflow: see [`INTEGRATIONS.md`](INTEGRATIONS.md) and [`INSTALL.md`](INSTALL.md).
 
 ## Who does what
 
@@ -352,7 +378,7 @@ sequenceDiagram
 
 **In words:** you ask and set the goal → the agent drafts the risk and what "good" means → you approve the limits → the agent builds only inside them → the agent writes each claim with its evidence → the reviewer checks the evidence and decides (ship / defer / block) → the approved version is saved as the baseline → lessons from real use feed the next change. Canonical copy in [`docs/diagrams.md`](docs/diagrams.md).
 
-One caution this loop has to defend against on purpose: the agent that builds the change also drafts much of its evidence, writes the narrative the reviewer reads, and frames the decision. A confident mistake can therefore arrive wrapped in convincing proof that it is correct — persuasive documentation the loop manufactured, because the actor and the evidence-author are the same. The defense is **independence**, scaled to the stakes: the load-bearing claim's evidence is reproducible by the reviewer or authored by an independent checker, and on trust-bearing work the decider is not the actor. See [`docs/02-operating-system/actor-evidence-independence.md`](docs/02-operating-system/actor-evidence-independence.md).
+One caution this loop has to defend against on purpose: the agent that builds the change also drafts much of its evidence, writes the narrative the reviewer reads, and frames the decision. A confident mistake can therefore arrive wrapped in convincing proof that it is correct: persuasive documentation the loop manufactured, because the actor and the evidence-author are the same. The defense is **independence**, scaled to the stakes: the load-bearing claim's evidence is reproducible by the reviewer or authored by an independent checker, and on trust-bearing work the decider is not the actor. See [`docs/02-operating-system/actor-evidence-independence.md`](docs/02-operating-system/actor-evidence-independence.md).
 
 ## Keeping the approved version under control
 
@@ -373,8 +399,8 @@ flowchart LR
     CI["Controlled items<br/>code, prompts, models,<br/>deps, docs, releases"]:::item --> CH["A change"]
     CH --> EV["Evidence<br/>pass or gap, named"]
     EV --> DEC{"Decide<br/>on purpose"}:::gate
-    DEC -->|"ship / defer"| BL["Saved baseline<br/>the approved version"]:::base
-    DEC -.->|"block"| CH
+    DEC -->|"ship"| BL["Saved baseline<br/>the approved version"]:::base
+    DEC -.->|"block / defer"| CH
     BL --> OP["Operate"]
     OP --> LE["Lessons learned"]
     LE -.->|"feed the next change"| CI
@@ -382,9 +408,9 @@ flowchart LR
 
 </details>
 
-**In words:** controlled items (code, prompts, models, dependencies, docs, releases) → a change → named evidence (pass or gap) → a deliberate decision → if ship or defer, save the new baseline; if block, back to the change → operate the baseline → lessons feed the next change. You only add the heavier records (what is under control, ripple effects, the saved baseline, drift, and operating lessons) when the stakes are high enough to earn them. Canonical copy in [`docs/diagrams.md`](docs/diagrams.md).
+**In words:** controlled items (code, prompts, models, dependencies, docs, releases) → a change → named evidence (pass or gap) → a deliberate decision → if ship, save the new baseline; if block or defer, back to the change → operate the baseline → lessons feed the next change. You only add the heavier records (what is under control, ripple effects, the saved baseline, drift, and operating lessons) when the stakes are high enough to earn them. Canonical copy in [`docs/diagrams.md`](docs/diagrams.md).
 
-## The common way vs. the nuclear-grade way
+## The common way and the nuclear-grade way
 
 | The common way | The nuclear-grade way |
 |---|---|
@@ -406,7 +432,7 @@ treat green tests as a yes -> make an explicit release decision and record what 
 
 This earns its keep. Instructions should be hard to misuse, small actions should still serve the goal, and "I'm confident" should never get mistaken for "here is the proof."
 
-## What the comparison does — and does not — show
+## What the comparison shows and what it does not
 
 The repository includes twelve synthetic scenarios used as a **formative design inspection** of the workflow and its artifacts. The records help identify where prompts, skills, packets, and validators make decision-relevant information visible. They are not an independent experiment and do not demonstrate improved correctness, safety, reviewer accuracy, defect detection, or organizational outcomes.
 
@@ -424,7 +450,7 @@ Measure false acceptance, defect and omission detection, reviewer calibration, e
 - [Expanded novelty review](docs/06-publications/research/exhaustive-novelty-review-2026-07-19.md)
 - [v0.3 contribution decision](docs/06-publications/reviews/v0.3-novelty-decision-log.md)
 
-There is a second, more mechanized check on 28 skills that were in the catalog when the July 2026 pilot ran: [`evals/skill-benchmark-pilot/`](evals/skill-benchmark-pilot/) runs each included skill headless, with and without its instructions loaded, on the same scenario, and grades the result blind against a pre-registered criterion — with real cost/token data and every raw response checked into the repo. The pilot reports a measured behavior change versus a plain prompt for all 28 included skills on the primary subject model; one of them, `creating-change-records`, does not replicate on a weaker model even after an amendment attempt and is reported as open, not fixed. Treat it as a historical snapshot, not evidence for skills added later. That boundary, the statistical limits (n=3–5 per skill, 0 of 47 tests survive multiple-comparisons correction), and an honest self-audit against current benchmark-reporting practice are in that folder's [`README.md`](evals/skill-benchmark-pilot/README.md), not hidden from it.
+There is a second, more mechanized check on 28 skills that were in the catalog when the July 2026 pilot ran: [`evals/skill-benchmark-pilot/`](evals/skill-benchmark-pilot/) runs each included skill headless, with and without its instructions loaded, on the same scenario, and grades the result blind against a pre-registered criterion: with real cost/token data and every raw response checked into the repo. The pilot reports a measured behavior change versus a plain prompt for all 28 included skills on the primary subject model; one of them, `creating-change-records`, does not replicate on a weaker model even after an amendment attempt and is reported as open, not fixed. Treat it as a historical snapshot, not evidence for skills added later. That boundary, the statistical limits (n=3–5 per skill, 0 of 47 tests survive multiple-comparisons correction), and an honest self-audit against current benchmark-reporting practice are in that folder's [`README.md`](evals/skill-benchmark-pilot/README.md), not hidden from it.
 
 ## Why this exists
 
@@ -471,6 +497,6 @@ The public sources named here are influences and idea lineage. They are not stan
 | The principles in short form | [`MAXIMS.md`](MAXIMS.md) |
 | Citing this work | [`CITATION.cff`](CITATION.cff) |
 
-Nuclear-grade is an original software workflow inspired by public sources. The source families are mapped in [`docs/00-standards-foundation/source-map.md`](docs/00-standards-foundation/source-map.md) and translated into plain concepts in [`docs/01-field-guide/source-to-concept-crosswalk.md`](docs/01-field-guide/source-to-concept-crosswalk.md). Project-management-literate and enterprise adopters can find a vocabulary bridge to the PMBOK Guide and the 2026 PMI AI standard — named as background, not compliance — in [`docs/01-field-guide/pmbok-pmi-ai-crosswalk.md`](docs/01-field-guide/pmbok-pmi-ai-crosswalk.md).
+Nuclear-grade is an original software workflow inspired by public sources. The source families are mapped in [`docs/00-standards-foundation/source-map.md`](docs/00-standards-foundation/source-map.md) and translated into plain concepts in [`docs/01-field-guide/source-to-concept-crosswalk.md`](docs/01-field-guide/source-to-concept-crosswalk.md). Project-management-literate and enterprise adopters can find a vocabulary bridge to the PMBOK Guide and the 2026 PMI AI standard, named as background only, in [`docs/01-field-guide/pmbok-pmi-ai-crosswalk.md`](docs/01-field-guide/pmbok-pmi-ai-crosswalk.md).
 
 Written and maintained by **Ben Huffer** ([@FlyFission](https://github.com/FlyFission)), founder of [FlyFission Consulting Group](https://flyfission.com/), an independent design-review and project-advisory practice for nuclear projects, and builder of [AscertAIn](https://ascertain.it/), an AI-powered engineering design-review platform. I build software and agentic engineering workflows for the nuclear and other mission-critical industries, where mistakes are costly and failing forward is less optional. Questions and field stories are welcome in [Discussions](https://github.com/FlyFission/nuclear-grade-context-engineering/discussions) or on [LinkedIn](https://www.linkedin.com/in/ben-huffer-646bab67/).

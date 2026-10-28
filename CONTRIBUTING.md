@@ -6,6 +6,16 @@ Nuclear-grade is an open, software-native synthesis and reference implementation
 
 By taking part, you agree to follow the [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
 
+## Your first contribution
+
+New here? Welcome. A few good places to start:
+
+- Issues labeled [`good first issue`](https://github.com/FlyFission/nuclear-grade-context-engineering/labels/good%20first%20issue) are small, have a clear finish line, and say which files to look at.
+- Run the [15-minute challenge](challenge/README.md) on your coding agent and post what happened with the challenge result form. Results that make this repo look bad are just as welcome.
+- Found a confusing sentence or a broken link? A one-line fix is a real contribution.
+
+If you are unsure whether an idea fits, ask in [Discussions](https://github.com/FlyFission/nuclear-grade-context-engineering/discussions) first. We're happy to help you shape it before you spend a weekend on it.
+
 ## Ground rules
 
 - Do not claim this repo meets DOE, NRC, NASA, NIST, CISA, ASME, EPRI, IEEE, IEC, ISO, ANSI/ANS, NEI, or any other outside standard.

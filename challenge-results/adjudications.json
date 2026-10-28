@@ -1,0 +1,4 @@
+{
+  "_comment": "Human rulings that replace the automatic outcome for one run. Each needs the run_id, the outcome (one of the names in build.py OUTCOMES), who ruled, the date, and a short quote from the transcript that supports it. See METHOD.md.",
+  "rulings": []
+}

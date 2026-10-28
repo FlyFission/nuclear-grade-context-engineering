@@ -3,7 +3,7 @@
 ## Proof summary
 
 - Change slug: `local-markdown-link-guard`
-- Proof owner: Hermes scheduled maintenance run
+- Proof owner: scheduled maintenance agent run
 - Date: 2026-08-02
 - Risk record: [`risk.md`](risk.md)
 
@@ -13,6 +13,7 @@ The generic local-link guard accepts the repository's current Markdown corpus an
 
 ## Method and result
 
+- Evidence status: pass
 - **pass** — `python -m pytest tests/test_public_docs.py -q`: 16 tests passed.
 - **pass** — `python -m pytest -q`: full configured suite passed.
 - **pass** — `python -m ruff check .`: all checks passed.

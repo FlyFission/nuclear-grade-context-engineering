@@ -34,15 +34,17 @@ A good brief is how you supply competence and clarity so the agent can decide we
 ## Inputs
 
 - The path to the change record and the chosen mode.
+- The direct source or exact quote for the governing request.
 - The role: builder, reviewer, verifier, releaser, incident lead, or researcher.
+- The task / intended outcome, build method and ownership, frozen inspectable bar, bar custodian, evidence retention location / policy, current largest consequential gap, iteration bound, and fresh artifact to inspect when a targeted improvement cycle is activated.
 - The files affected, the allowed commands, the forbidden actions, the approval gates, and the evidence required.
 - `docs/02-operating-system/context-packs.md`.
 
 ## Process
 
-1. Name the role, the question to decide, and the goal. Carry the goal anchor (the goal, the signs of success, and the non-goals, meaning what is out of scope) so it survives a context reset. Name who is affected by the work and anyone who must be consulted, so the brief carries the stakes, not just the task. See `staying-on-mission`.
-2. Include only the record files, affected files, source rows, and evidence commands needed for the next decision.
-3. State the last action that finished, what conditions changed, the most important next action, the likely mistake, and how to guard against it.
+1. Link or quote the governing request before summarizing it; the summary supplies context but does not transfer permission. Then name the role, the question to decide, and the goal. Carry the goal anchor (the goal, the signs of success, and the non-goals, meaning what is out of scope) so it survives a context reset. Name who is affected by the work and anyone who must be consulted, so the brief carries the stakes, not just the task. See `staying-on-mission`.
+2. Include only the record files, affected files, source rows, and evidence commands needed for the next decision. When the host exposes instruction-load events or logs, use them to record the effective instruction state at the latest model or action boundary; otherwise mark it `not observed`. File presence or configuration alone does not prove that instructions loaded.
+3. State the last action that finished, what conditions changed, the most important next action, the likely mistake, and how to guard against it. If a targeted improvement cycle is active, name the current largest consequential gap the action closes, the frozen inspectable bar and its custodian, the evidence retention location / policy, the iteration bound, and the fresh artifact the critic must inspect. The builder may propose a variance but cannot silently change the bar, critic scope, evidence retention, or stop rule.
 4. State the current phase: explore, candidate, audit, or accept, and name the **archetype** the brief puts the agent in. A briefing verb chooses a posture whether or not you say so -- "clean this up" is Sweeper, whose characteristic drift is deletion without a baseline; "make it work" is Builder, whose drift is volume outrunning review. Naming it puts the drift on the record before the agent starts. See `docs/02-operating-system/archetype-lens.md`.
 5. State the agent's power over files, commands, the network, credentials, approvals, and the release.
 6. State the claims that are off limits, the targets not to touch, and when to stop.
@@ -53,7 +55,7 @@ A good brief is how you supply competence and clarity so the agent can decide we
 - A context-pack section or file.
 - Clear limits on the agent's power.
 - The archetype the brief places the agent in, and the drift that posture is prone to.
-- The next action and the evidence required.
+- The next action and the evidence required; when a targeted improvement cycle is active, the named gap it closes, frozen bar, evidence retention location / policy, fresh artifact, coupling basis, and iteration bound.
 - The last action that finished and the conditions that changed, when this brief follows earlier work in the same task.
 
 ## Verification
@@ -61,6 +63,7 @@ A good brief is how you supply competence and clarity so the agent can decide we
 - A reader can answer what they may do, what must stay true, what evidence is required, and when to stop.
 - An agent starting the work can tell what already happened and what changed, without reading the full chat history.
 - The context pack does not ask anyone to load the whole repo or all the standards without a reason.
+- Effective instructions come from a host event/log when available, or are marked `not observed` rather than guessed from file presence.
 
 ## Escalation
 
@@ -81,30 +84,10 @@ A good brief is how you supply competence and clarity so the agent can decide we
 - No record of the last action that finished, when this brief follows earlier work in the same task.
 - The source lineage is pasted in whole instead of linked.
 
-## Prompt
+## Command prompt asset
 
-```text
-Build a Nuclear-grade context pack for this work.
-
-Inputs:
-- packet: .nuclear/changes/<slug>/
-- role: <builder|reviewer|verifier|releaser|researcher>
-- decision question: <one sentence>
-- objective: <one paragraph>
-- work phase: <explore|candidate|audit|accept>
-- affected files: <list>
-- last completed action:
-- changed conditions:
-- critical next action and likely error:
-- allowed commands/tools: <list>
-- forbidden actions: <list>
-- do-not-touch targets: <list>
-- approval gates: <list>
-- required evidence: <commands/links/reviews>
-- loaded instruction files: <AGENTS.md / CLAUDE.md / .github/copilot-instructions.md / tool rules in force, with precedence or "none known">
-
-Return a short context pack. Include the mode, the decision question, the goal, the work phase, the archetype the brief places the agent in and its characteristic drift, a risk summary, a basis summary, the evidence required, the loaded instruction files in force and which one wins on conflict, the limits on what the agent may do, the claims it must not make, the open gaps, the last action completed, what has changed, the critical next action, and the next action. If responsibility is changing hands rather than starting fresh, use the `handing-off-work` prompt instead.
-```
+The ready-to-paste command prompt is packaged at `assets/command-prompt.md`.
+Load it only when the operator requests the command form; the runtime contract above remains primary.
 
 ## Source-lineage note
 

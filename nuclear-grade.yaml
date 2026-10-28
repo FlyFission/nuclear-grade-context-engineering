@@ -37,6 +37,8 @@ templates:
     - standard/wbs.md
     - standard/incident.md
     - standard/stage-contract.md
+# Compatibility projection of promoted skills from skill-catalog.json. Keep this
+# flat list for existing consumers; lifecycle tests require exact order and parity.
 skills:
   - questioning-attitude
   - using-nuclear-grade
@@ -99,10 +101,9 @@ commands:
   - ng-verify-artifact.md
   - ng-panel.md
 command_map:
-  # The semantic skill -> command pairing the generator projects each card from
-  # (see nuclear_grade/gen_commands.py and `ng gen-commands`). Declared here, not
-  # in skill frontmatter, so skill frontmatter stays within the Anthropic
-  # skill-creator convention (a closed key set, guarded by test_skill_contracts).
+  # Compatibility projection of promoted command-backed skills from
+  # skill-catalog.json. The lifecycle registry is the semantic owner; this flat map
+  # remains for existing consumers and is checked for exact parity.
   # `using-nuclear-grade` is the always-first dispatcher and has no command.
   questioning-attitude: ng-question
   rating-change-risk: ng-classify
@@ -149,9 +150,21 @@ token_budgets:
   # being a regression guard. Both new ceilings still reject the first draft of that
   # skill (body 4176, card 1724), which `plan.md` refused to raise a limit for, so the
   # precedent holds: the gate admits the accepted corpus plus edit room, not bloat.
+  #
+  # Aggregate ceilings were first seeded on the 29-skill corpus (desc total 3146, body
+  # total 61349, card total 28217). Registering `running-a-review-panel` in the
+  # lifecycle catalog, plus the builder-critic fields (#100), moved the measured totals
+  # to desc 3285, body 65588, cards 30462; the totals are reseeded with roughly the
+  # original proportional headroom (about 4 percent), not a blanket raise.
   description_max: 200
   skill_body_max: 3900
   command_max: 1700
+  skill_description_total_max: 3450
+  skill_body_total_max: 68000
+  skill_body_p95_max: 3400
+  command_total_max: 31600
+  core_description_total_max: 900
+  core_body_total_max: 19500
   repeated_block_max_files: 8
 boundaries:
   license: MIT

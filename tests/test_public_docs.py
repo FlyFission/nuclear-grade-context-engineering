@@ -1,5 +1,6 @@
 import re
 from pathlib import Path
+from urllib.parse import unquote
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -101,6 +102,20 @@ def test_public_top_level_docs_exist():
         assert (ROOT / public_doc).exists(), f"missing {public_doc}"
 
 
+def test_local_markdown_links_resolve():
+    """Keep file moves from silently breaking the repository's navigation."""
+    for doc in ROOT.rglob("*.md"):
+        text = doc.read_text(encoding="utf-8")
+        for raw_target in re.findall(r"\]\(([^)]+)\)", text):
+            target = raw_target.strip().split(maxsplit=1)[0].strip("<>")
+            path = unquote(target.split("#", 1)[0])
+            if not path or path.startswith(("http://", "https://", "mailto:")):
+                continue
+
+            resolved = ROOT / path.lstrip("/") if path.startswith("/") else doc.parent / path
+            assert resolved.exists(), f"{doc.relative_to(ROOT)} links to missing {target}"
+
+
 def test_public_docs_contain_no_internal_residue():
     for public_doc in PUBLIC_DOCS:
         text = (ROOT / public_doc).read_text(encoding="utf-8")
@@ -153,6 +168,114 @@ def test_baseline_is_late_lifecycle_state():
     text = (ROOT / "docs" / "02-operating-system" / "lifecycle.md").read_text(encoding="utf-8")
 
     assert "Decide -> Baseline -> Operate -> Learn" in text
+
+
+def test_workflow_crosswalk_and_build_track_are_explicit():
+    workflows = (ROOT / "WORKFLOWS.md").read_text(encoding="utf-8")
+    core = (ROOT / "CORE.md").read_text(encoding="utf-8")
+
+    for term in (
+        "## One lifecycle, several views",
+        "eight control points",
+        "eleven beats",
+        "PROVE",
+        "explore -> candidate -> audit -> accept",
+        "## Engineering build track",
+        "decision frontier",
+        "tracer bullet",
+        "public seam",
+        "Spec review",
+        "Standards review",
+        "phase-boundary context decision",
+    ):
+        assert term in workflows
+    assert "frontier review" in core
+    assert "reversible mechanical choices" in core.lower()
+
+
+def test_inspectable_builder_critic_cycle_stays_bounded_and_non_authoritative():
+    workflows = (ROOT / "WORKFLOWS.md").read_text(encoding="utf-8")
+    plan = (ROOT / "templates" / "standard" / "plan.md").read_text(encoding="utf-8")
+    verification = (ROOT / "templates" / "standard" / "verification.md").read_text(
+        encoding="utf-8"
+    )
+    briefing = (ROOT / "skills" / "briefing-an-agent" / "SKILL.md").read_text(
+        encoding="utf-8"
+    )
+    source_map = (
+        ROOT / "docs" / "00-standards-foundation" / "source-map.md"
+    ).read_text(encoding="utf-8")
+    docs_readme = (ROOT / "docs" / "README.md").read_text(encoding="utf-8")
+    pilot = (
+        ROOT / "docs" / "05-reference" / "inspectable-builder-critic-pilot.md"
+    ).read_text(encoding="utf-8")
+
+    for term in (
+        "targeted improvement cycle",
+        "inside Execute and Verify",
+        "not a new mode",
+        "largest consequential unresolved gap",
+        "fresh artifact",
+    ):
+        assert term in workflows
+
+    for term in (
+        "Task / intended outcome",
+        "Build method and ownership",
+        "Frozen inspectable bar",
+        "Bar custodian / change authority",
+        "Evidence retention location / policy",
+        "Iteration bound",
+        "coupled work keeps one sequential owner",
+    ):
+        assert term in plan
+
+    for term in (
+        "## Targeted improvement rule",
+        "largest consequential unresolved gap",
+        "fresh artifact",
+        "INCONCLUSIVE",
+        "does not create independent verification",
+        "`ship.md`",
+    ):
+        assert term in verification
+
+    for term in (
+        "inspectable bar",
+        "current largest consequential gap",
+        "iteration bound",
+        "fresh artifact",
+        "evidence retention",
+    ):
+        assert term in briefing
+
+    context_packs = (
+        ROOT / "docs" / "02-operating-system" / "context-packs.md"
+    ).read_text(encoding="utf-8")
+    for term in (
+        "Targeted improvement cycle active",
+        "Frozen inspectable bar",
+        "Evidence retention location / policy",
+        "Iteration bound",
+        "Fresh artifact",
+    ):
+        assert term in context_packs
+
+    for term in (
+        "paired baseline",
+        "visual artifact",
+        "deterministic code",
+        "source-backed technical document",
+        "critic scores are process telemetry, not outcome evidence",
+        "fresh hidden confirmation set",
+        "## promotion gate",
+        "## kill conditions",
+    ):
+        assert term in pilot.lower()
+
+    assert "05-reference/inspectable-builder-critic-pilot.md" in docs_readme
+    assert "https://somethingbig.ai/gauntlet-loop" in source_map
+    assert "does not establish efficacy, independence, or release authority" in source_map
 
 
 def test_hpi_overlay_is_public_operating_doc():

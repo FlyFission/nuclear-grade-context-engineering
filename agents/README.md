@@ -14,7 +14,7 @@ administrative domain from carrying the same error into every stage. That is an 
 | Beat | Subagent | Covers | Tool authority |
 |---|---|---|---|
 | **P — Plan** | `planner` | Question · Discover · Specify · Plan | Read/Grep/Glob/WebFetch + write only to the packet; no Bash, no code edits |
-| **R — Run** | `runner` | Execute | Edit/Write/Bash inside the approved plan; opens after the human gate; may fan out |
+| **R — Run** | `runner` | Execute | Edit/Write/Bash inside the accepted plan; opens after explicit execution authorization; may fan out |
 | **O — Observe** | `observer` | Verify · Review | Read + Bash; no product-code writes |
 | **V — Verdict** | `judge` | Decide | Read-only and context-separated from the runner; still coupled through the orchestrator and possibly model/resources |
 | **E — Educate** | `educator` | Baseline · Operate · Learn | Writes baseline + lessons + charter into `.nuclear/` |

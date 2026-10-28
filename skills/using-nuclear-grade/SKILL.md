@@ -1,23 +1,23 @@
 ---
 name: using-nuclear-grade
-description: The always-first router for AI-assisted work — before acting, state the mode (the administrative floor, Quick, or Standard-plus) and the one fact that sets it, then set up the matching change record and plan the proof. Use at the start of any change, repo adoption, or release call. Do not use for a throwaway experiment with nothing worth reviewing.
+description: The always-first router for AI-assisted work. Perform a bounded read-only preflight, then state the mode and controlling fact before mutation or external effect; route to the matching record and proof. Use at the start of any change, repo adoption, or release call. Do not use for a throwaway experiment with nothing worth reviewing.
 ---
 
 # Using Nuclear-grade
 
 ## Overview
 
-This is the always-first router for Nuclear-grade work. Before you act, classify the change by consequence and route to the matching rigor — move fast while ideas are throwaway, slow down the moment the work becomes a promise. Start by asking the real question the change must answer, then state the mode it earns and the one fact that sets it. Build the smallest change record that does the job, prove the claims that matter, and say the release decision out loud.
+This is the always-first router for Nuclear-grade work. First perform a bounded read-only preflight against the request and accessible source of truth so classification rests on evidence rather than guesswork. Then state the mode the change earns and the one fact that sets it before the first mutation or external side effect. Move fast while ideas are throwaway; slow down when the work becomes a promise. Build the smallest change record that does the job, prove the claims that matter, and say the release decision out loud.
 
 The repo charter (`.nuclear/charter.md`) holds the lasting rules every change follows. Each change also gets a goal anchor — what that one change is for — so the work does not drift off course.
 
 ## Decision contract
 
-- **Claim checked:** this change is named the cheapest-fitting mode -- the administrative floor, Quick, or Standard-plus -- with the one fact that sets it stated before the first tool call, and any Standard-plus trap (auth, user-visible, data, dependency, model/prompt/agent power, CI, release) forces the stronger mode.
-- **Artifact observed:** the request, diff, and any record under `.nuclear/changes/` -> the declared mode, its one-fact reason, and the change-record path that routes the work into its skill cluster.
-- **Decision affected:** block -- the mode declared before the first tool call (the administrative floor, Quick, or Standard-plus) and the skill cluster it routes into.
-- **Failure class:** unclassified-or-downgraded-start (work begun before a mode, or a Standard-plus trap waved off as Quick).
-- **Next action:** state the mode before the first tool call; raise to Standard or human review when a trap or outside-trust claim appears.
+- **Claim checked:** a bounded read-only preflight supports the classification; the administrative floor, Quick, or Standard-plus and its one controlling fact are declared before the first mutation, external side effect, credential use, publication, or release action; any Standard-plus trap forces the stronger mode.
+- **Artifact observed:** the request plus bounded read-only inspection of the source of truth and any record under `.nuclear/changes/` -> the declared mode, controlling fact, and change-record path.
+- **Decision affected:** block -- mutation or an external side effect cannot begin until the evidence-backed mode and controlling fact are declared.
+- **Failure class:** unclassified-or-downgraded-start (mutation or external effect began before a mode, or a Standard-plus trap was waved off as Quick).
+- **Next action:** inspect read-only evidence when needed, declare the mode before mutation or external effect, and raise to Standard or human review when a trap or outside-trust claim appears.
 
 ## When to Use
 
@@ -41,7 +41,7 @@ The repo charter (`.nuclear/charter.md`) holds the lasting rules every change fo
 
 ## Process
 
-**Classify first — out loud.** Before the first tool call, state the mode this change earns — the **administrative floor** (no packet — the commit message is the record), **Quick**, or **Standard-plus** (Standard, or a stronger human-reviewed mode) — and the **one fact** that sets it. This is a declaration of intent, not a request for permission: you name the mode and act. Re-state it whenever the change grows.
+**Preflight read-only, then classify out loud.** Perform only the bounded read-only preflight needed to inspect the request, repository state, existing records, and other accessible source of truth. Do not write files, use credentials, call a mutating API, publish, deploy, merge, or release during preflight. Then state the mode this change earns: the **administrative floor** (no packet; the commit message is the record), **Quick**, or **Standard-plus** (Standard, or a stronger human-reviewed mode), plus the **one fact** that sets it. This declaration of intent is required before the first mutation, external side effect, credential use, publication, or release action. Re-state it whenever the change grows.
 
 The **administrative floor** is the mode below Quick: it fits only a purely administrative, instantly reversible change that crosses no trust boundary — a typo, a comment, formatting, a dead-link fix, a doc-only bump — and carries no packet, with the commit message (the files changed and the one-line reason) as its record. Any trap below lifts it to at least Quick, and **when in doubt it is Quick, not the floor**. The floor never waives the always-on Core habits (see `docs/02-operating-system/activation-thresholds.md` and `MAXIMS.md`).
 
@@ -90,7 +90,8 @@ Then:
 ## Common Rationalizations
 
 - "It's a small change, so it's Quick." Size is not stakes. A one-line edit to auth, a dependency, a model id, a migration, or claim-bearing public wording is Standard-plus.
-- "I'll classify it later." The mode call is the cheapest control and the one most prone to motivated error under pressure. State it before the first tool call, not after the diff exists.
+- "I must classify before I can inspect anything." A guess is not a control. Use a bounded read-only preflight, then declare the mode before mutation or external effect.
+- "I'll classify after I start editing." The mode call is the cheapest control and the one most prone to motivated error under pressure. Read-only inspection may precede it; mutation may not.
 - "The tests pass, so we don't need a record." Passing tests do not save the assumptions, the scope, the leftover risk, or the release decision.
 - "The agent remembers the context." Chat history is not a lasting review record.
 - "This is only documentation." Public docs can create claims about law, trust, and assurance.
@@ -98,7 +99,7 @@ Then:
 
 ## Red Flags
 
-- Work began before a mode was declared. The classification is the entry gate; skip it and everything after is on the honor system.
+- Mutation, credential use, publication, or another external side effect began before a mode and controlling fact were declared.
 - The record cannot name a single claim that matters.
 - The evidence is loose prose instead of commands, links, reviews, or named gaps.
 - The work says or hints at compliance, approval, safety, security, or formal verification and validation. None of those are provided here.

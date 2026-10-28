@@ -34,14 +34,20 @@ packages = ["nuclear_grade"]
 [tool.hatch.build.targets.wheel.force-include]
 "templates" = "nuclear_grade/_bundled/templates"
 "skills" = "nuclear_grade/_bundled/skills"
+"skills-beta" = "nuclear_grade/_bundled/skills-beta"
+"skills-deprecated" = "nuclear_grade/_bundled/skills-deprecated"
 "commands" = "nuclear_grade/_bundled/commands"
+"skill-catalog.json" = "nuclear_grade/_bundled/skill-catalog.json"
 
 [tool.hatch.build.targets.sdist]
 include = [
   "/nuclear_grade",
   "/templates",
   "/skills",
+  "/skills-beta",
+  "/skills-deprecated",
   "/commands",
+  "/skill-catalog.json",
   "/tests",
   "/tools",
   "/docs",

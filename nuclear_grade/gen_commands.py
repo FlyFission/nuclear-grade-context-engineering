@@ -12,18 +12,20 @@ What is projected, and what moved
 The card pulls four sections straight from the skill -- ``When to Use`` ->
 ``Use when``, ``When Not to Use`` -> ``Do not use when``, ``Inputs``, and
 ``Verification`` -- plus the skill's frontmatter ``description`` as the lead.
-The one genuinely command-specific artifact, the ready-to-paste prompt, now
-lives in the skill as a ``## Prompt`` section (moved there verbatim, byte-for-byte
-preserved -- see ``tests/test_command_parity.py``). Everything else a reader
+The one genuinely command-specific artifact, the ready-to-paste prompt, lives in
+the skill as a ``## Prompt`` section or, for the progressive-disclosure pilot, as
+``assets/command-prompt.md`` (byte-for-byte preserved; see
+``tests/test_command_parity.py``). Everything else a reader
 might want (process, outputs, escalation, failure modes, source lineage) stays
 in the skill; the card points at it rather than duplicating it.
 
 The skill -> command link is semantic (``proving-claims`` -> ``ng-prove``), so it
-cannot be computed from names; it is declared once in ``nuclear-grade.yaml`` under
-``command_map:``. The link is NOT stored in skill frontmatter on purpose: skill
-frontmatter follows the Anthropic skill-creator convention (a closed set of keys,
-guarded by ``tests/test_skill_contracts.py``), and a custom key would break both
-that contract and the convention.
+cannot be computed from names; it is declared once in ``skill-catalog.json``. The
+flat ``nuclear-grade.yaml`` blocks are compatibility projections checked in CI.
+The link is NOT stored in skill frontmatter on purpose: skill frontmatter follows
+the Anthropic skill-creator convention (a closed set of keys, guarded by
+``tests/test_skill_contracts.py``), and a custom key would break both that contract
+and the convention.
 
 Boundary
 --------
@@ -36,6 +38,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
+from nuclear_grade.skill_catalog import load_catalog
 from nuclear_grade.tokens import split_frontmatter
 
 # The skill sections a card projects, mapped to the card's own section headers.
@@ -96,30 +99,35 @@ def prompt_from_command(text: str) -> str | None:
     return section_body(text, "## Prompt text")
 
 
-def load_command_map(repo: Path) -> dict[str, str]:
-    """Read ``command_map:`` from ``nuclear-grade.yaml`` as ``{skill: ng-name}``.
+def prompt_from_skill(repo: Path, skill_name: str, text: str) -> str | None:
+    """Return a skill's canonical command prompt from inline text or its asset.
 
-    Parsed with a tiny stdlib reader (the repo carries no YAML dependency, by the
-    same design constraint as ``tokens.load_budgets``): the flat ``key: value``
-    pairs indented under a top-level ``command_map:`` key.
+    Inline ``## Prompt`` remains the compatibility path. A skill may instead place
+    the exact prompt at ``assets/command-prompt.md`` and link that path from
+    ``SKILL.md``. The asset is packaged with the skill but is not loaded until the
+    command generator or an operator needs the ready-to-paste prompt.
     """
 
-    catalog = repo / "nuclear-grade.yaml"
-    mapping: dict[str, str] = {}
-    if not catalog.exists():
-        return mapping
-    text = catalog.read_text(encoding="utf-8").replace("\r\n", "\n")
-    in_block = False
-    for line in text.splitlines():
-        if not line.strip() or line.lstrip().startswith("#"):
-            continue
-        if not line[0].isspace():
-            in_block = line.strip() == "command_map:"
-            continue
-        if in_block and ":" in line:
-            key, _, value = line.strip().partition(":")
-            mapping[key.strip()] = value.strip()
-    return mapping
+    inline = section_body(text, "## Prompt")
+    asset_path = repo / "skills" / skill_name / "assets" / "command-prompt.md"
+    if inline is not None and asset_path.is_file():
+        raise ValueError(f"skills/{skill_name}: prompt exists inline and as an asset")
+    if inline is not None:
+        return inline
+    if asset_path.is_file():
+        return asset_path.read_text(encoding="utf-8").replace("\r\n", "\n").strip("\n")
+    return None
+
+
+def load_command_map(repo: Path) -> dict[str, str]:
+    """Return the promoted skill-to-command projection from the lifecycle registry.
+
+    ``skill-catalog.json`` is the semantic owner. ``nuclear-grade.yaml`` retains a
+    checked compatibility projection for existing consumers, but generation reads
+    the registry so beta, deprecated, and retired skills cannot publish cards.
+    """
+
+    return load_catalog(repo).command_map
 
 
 @dataclass(frozen=True)
@@ -140,7 +148,11 @@ def _parse_skill(repo: Path, skill_name: str, command_stem: str) -> CardSource:
     bodies: dict[str, str] = {}
     missing: list[str] = []
     for skill_header, card_header in _SECTION_MAP:
-        body = section_body(text, skill_header)
+        body = (
+            prompt_from_skill(repo, skill_name, text)
+            if skill_header == "## Prompt"
+            else section_body(text, skill_header)
+        )
         if body is None:
             missing.append(skill_header)
         bodies[card_header] = body or ""

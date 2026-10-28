@@ -304,6 +304,7 @@ def phrase_frequency(root: Path, fragment: str) -> tuple[int, int]:
 class Report:
     files: list[FileTokens] = field(default_factory=list)
     repeated_blocks: list[RepeatedBlock] = field(default_factory=list)
+    root: Path | None = None
 
     def of_kind(self, kind: str) -> list[FileTokens]:
         return [f for f in self.files if f.kind == kind]
@@ -315,6 +316,37 @@ class Report:
     @property
     def skill_body_total(self) -> int:
         return sum(f.body_tokens for f in self.of_kind("skill"))
+
+    @property
+    def command_total(self) -> int:
+        return sum(f.body_tokens for f in self.of_kind("command"))
+
+    @property
+    def skill_body_p95(self) -> int:
+        values = sorted(f.body_tokens for f in self.of_kind("skill"))
+        if not values:
+            return 0
+        # Nearest-rank percentile, deterministic and dependency-free.
+        index = _ceil_div(95 * len(values), 100) - 1
+        return values[index]
+
+    def profile_totals(self, name: str) -> tuple[int, int]:
+        """Return description/body totals for a lifecycle-registry install profile."""
+
+        if self.root is None:
+            raise ValueError("report has no repository root")
+        from nuclear_grade.skill_catalog import load_catalog
+
+        catalog = load_catalog(self.root)
+        names = {entry.id for entry in catalog.profile(name)}
+        files = [file for file in self.of_kind("skill") if file.name in names]
+        if len(files) != len(names):
+            missing = sorted(names - {file.name for file in files})
+            raise ValueError(f"profile {name!r} has unmeasured skill(s): {', '.join(missing)}")
+        return (
+            sum(file.description_tokens for file in files),
+            sum(file.body_tokens for file in files),
+        )
 
     @property
     def total(self) -> int:
@@ -342,7 +374,7 @@ def build_report(root: Path) -> Report:
         + list(_iter_doc_files(root))
     )
     repeated = find_repeated_blocks(corpus, root)
-    return Report(files=files, repeated_blocks=repeated)
+    return Report(files=files, repeated_blocks=repeated, root=root)
 
 
 def cost_per_signal(root: Path) -> dict[str, float]:
@@ -382,6 +414,12 @@ DEFAULT_BUDGETS = {
     "description_max": 200,
     "skill_body_max": 3600,
     "command_max": 1600,
+    "skill_description_total_max": 3300,
+    "skill_body_total_max": 64000,
+    "skill_body_p95_max": 3400,
+    "command_total_max": 29000,
+    "core_description_total_max": 900,
+    "core_body_total_max": 19500,
     "repeated_block_max_files": 8,
 }
 
@@ -433,6 +471,26 @@ def check_budgets(report: Report, budgets: dict[str, int]) -> list[str]:
                 f"{command.path}: {command.body_tokens} tokens "
                 f"> command_max {budgets['command_max']}"
             )
+
+    aggregate_checks = (
+        ("skill_description_total_max", report.skill_description_total),
+        ("skill_body_total_max", report.skill_body_total),
+        ("skill_body_p95_max", report.skill_body_p95),
+        ("command_total_max", report.command_total),
+    )
+    for key, actual in aggregate_checks:
+        if actual > budgets[key]:
+            violations.append(f"aggregate {actual} tokens > {key} {budgets[key]}")
+
+    if report.root is not None and (report.root / "skill-catalog.json").is_file():
+        core_description, core_body = report.profile_totals("core")
+        for key, actual in (
+            ("core_description_total_max", core_description),
+            ("core_body_total_max", core_body),
+        ):
+            if actual > budgets[key]:
+                violations.append(f"core profile {actual} tokens > {key} {budgets[key]}")
+
     for block in report.repeated_blocks:
         if block.file_count > budgets["repeated_block_max_files"]:
             violations.append(

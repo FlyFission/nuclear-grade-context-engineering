@@ -22,6 +22,12 @@ from pathlib import Path
 from nuclear_grade import gen_commands
 
 ROOT = Path(__file__).resolve().parents[1]
+PILOT_PROMPT_ASSETS = {
+    "briefing-an-agent",
+    "breaking-down-the-work",
+    "organizing-project-folders",
+    "reviewing-code-quality",
+}
 GOLDEN = json.loads(
     (ROOT / "tests" / "fixtures" / "command_prompts.json").read_text(encoding="utf-8")
 )
@@ -49,12 +55,20 @@ def test_prompt_preserved_in_skill_byte_for_byte():
     mapping = gen_commands.load_command_map(ROOT)
     for skill_name, stem in mapping.items():
         skill_text = (ROOT / "skills" / skill_name / "SKILL.md").read_text(encoding="utf-8")
-        body = gen_commands.section_body(skill_text, "## Prompt")
-        assert body is not None, f"{skill_name} has no ## Prompt section"
+        body = gen_commands.prompt_from_skill(ROOT, skill_name, skill_text)
         assert body == GOLDEN[f"{stem}.md"], (
-            f"{stem}: skill ## Prompt diverged from the pre-teardown snapshot; "
+            f"{stem}: canonical skill prompt diverged from the pre-teardown snapshot; "
             f"if this prompt change is intentional, update tests/fixtures/command_prompts.json"
         )
+
+
+def test_progressive_disclosure_pilot_uses_packaged_prompt_assets():
+    for skill_name in PILOT_PROMPT_ASSETS:
+        skill_dir = ROOT / "skills" / skill_name
+        skill_text = (skill_dir / "SKILL.md").read_text(encoding="utf-8")
+        assert gen_commands.section_body(skill_text, "## Prompt") is None
+        assert (skill_dir / "assets" / "command-prompt.md").is_file()
+        assert "assets/command-prompt.md" in skill_text
 
 
 def test_prompt_preserved_in_generated_card_byte_for_byte():

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "core": [
+      "using-nuclear-grade",
+      "questioning-attitude",
+      "rating-change-risk",
+      "proving-claims",
+      "double-checking-before-acting",
+      "staying-on-mission",
+      "checking-release-readiness",
+      "learning-from-experience"
+    ]
+  },
+  "skills": [
+    {"id": "questioning-attitude", "path": "skills/questioning-attitude/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-question"},
+    {"id": "using-nuclear-grade", "path": "skills/using-nuclear-grade/SKILL.md", "status": "promoted", "invocation": "model", "role": "router", "command": null},
+    {"id": "choosing-what-to-control", "path": "skills/choosing-what-to-control/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-what-to-control"},
+    {"id": "checking-what-a-change-affects", "path": "skills/checking-what-a-change-affects/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-impact"},
+    {"id": "recording-a-known-good-version", "path": "skills/recording-a-known-good-version/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-baseline"},
+    {"id": "rating-change-risk", "path": "skills/rating-change-risk/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-classify"},
+    {"id": "creating-change-records", "path": "skills/creating-change-records/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-new"},
+    {"id": "briefing-an-agent", "path": "skills/briefing-an-agent/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-context-pack"},
+    {"id": "handing-off-work", "path": "skills/handing-off-work/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-turnover"},
+    {"id": "double-checking-before-acting", "path": "skills/double-checking-before-acting/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-self-check"},
+    {"id": "proving-claims", "path": "skills/proving-claims/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-prove"},
+    {"id": "checking-release-readiness", "path": "skills/checking-release-readiness/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-ship-review"},
+    {"id": "learning-from-experience", "path": "skills/learning-from-experience/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-learn"},
+    {"id": "vetting-outside-code-and-models", "path": "skills/vetting-outside-code-and-models/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-trust-check"},
+    {"id": "checking-source-claims", "path": "skills/checking-source-claims/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-source-check"},
+    {"id": "checking-legal-and-safety-wording", "path": "skills/checking-legal-and-safety-wording/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-legal-check"},
+    {"id": "staying-on-mission", "path": "skills/staying-on-mission/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-drift-check"},
+    {"id": "reviewing-code-quality", "path": "skills/reviewing-code-quality/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-code-review"},
+    {"id": "stress-testing-agent-changes", "path": "skills/stress-testing-agent-changes/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-red-team"},
+    {"id": "recording-what-an-agent-did", "path": "skills/recording-what-an-agent-did/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-trace"},
+    {"id": "breaking-down-the-work", "path": "skills/breaking-down-the-work/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-breakdown"},
+    {"id": "organizing-project-folders", "path": "skills/organizing-project-folders/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-folders"},
+    {"id": "closing-stale-packets", "path": "skills/closing-stale-packets/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-close-packet"},
+    {"id": "deciding-who-decides", "path": "skills/deciding-who-decides/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-decide-authority"},
+    {"id": "declaring-intent", "path": "skills/declaring-intent/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-intent"},
+    {"id": "responding-to-incidents", "path": "skills/responding-to-incidents/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-incident"},
+    {"id": "tracking-deficiencies", "path": "skills/tracking-deficiencies/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-deficiency"},
+    {"id": "reporting-shared-defects", "path": "skills/reporting-shared-defects/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-report-defect"},
+    {"id": "verifying-final-artifacts", "path": "skills/verifying-final-artifacts/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-verify-artifact"}
+  ]
+}

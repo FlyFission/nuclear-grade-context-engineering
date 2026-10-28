@@ -38,7 +38,7 @@ These are portable command prompts: plain Markdown prompt cards you can paste in
 
 ## How the prompt cards are made
 
-Each card is generated from its paired skill by `ng gen-commands`, so the skill is the single source and the two never drift. A card carries the skill's summary, when to use it and when not to, the inputs, the exact prompt text (kept in the skill's `## Prompt` section), how to verify the result, and a pointer back to the skill for the rest. To change a command, edit the skill and regenerate — do not edit the card by hand.
+Each card is generated from its paired skill by `ng gen-commands`, so the skill is the single source and the two never drift. A card carries the first sentence of the skill's summary (shown in Claude Code's `/` menu), when to use it and when not to, the inputs, the exact prompt text (kept in the skill's `## Prompt` section), how to verify the result, and a pointer back to the skill for the rest. To change a command, edit the skill and regenerate — do not edit the card by hand.
 
 See `docs/05-reference/command-authoring-contract.md`.
 

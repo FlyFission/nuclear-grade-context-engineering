@@ -16,8 +16,8 @@ The skill→command pairing is declared in `nuclear-grade.yaml` under `command_m
 
 Every card lives at `commands/<name>.md` and contains, in order:
 
+- frontmatter with the first sentence of the skill's `description`, which Claude Code shows in its `/` menu, and `disable-model-invocation: true`, so the card runs only when a person types it and its description is not loaded into the model's context beside the skill's own,
 - a one-line note naming the source skill,
-- the skill's `description` as a one-line summary,
 - `## Use when` (from the skill's `## When to Use`),
 - `## Do not use when` (from `## When Not to Use`),
 - `## Inputs` (from `## Inputs`),

@@ -17,6 +17,7 @@ These entries record public-facing changes. They do not claim the project is a m
 
 ### Changed
 
+- Command cards now open with Claude Code frontmatter: the first sentence of the skill's description, shown in the `/` menu, and `disable-model-invocation: true`, so a card runs when you type it and is not listed to the model twice beside its skill. Each card is also a little shorter.
 - README first screen rewritten: one headline, the demo, install lines for Claude Code and other tools, the challenge, and a plain note on what "nuclear-grade" means here. Em dashes removed from the README.
 - Diagrams: only a ship decision saves the new baseline; block or defer returns to the change.
 - Token-budget ceilings reseeded: `skill_body_max` 3600 to 3900 and `command_max` 1600 to 1700 in `nuclear-grade.yaml`, with the basis recorded beside the values. `running-a-review-panel` is now the measured max on both gated surfaces (body 3678, card 1632); the old ceilings were calibrated when the largest card was 1515, and review found a correctness fix the gate would not admit — at which point a regression guard has become an obstacle. Both new ceilings still reject that skill's bloated first draft (body 4176, card 1724), which an earlier decision on this packet refused to raise a limit for, so the gate still admits the accepted corpus plus edit room rather than bloat. A checker configuration is a controlled item; the change was taken on the owner's decision and is traced in the packet, not made silently.

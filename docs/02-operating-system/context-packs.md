@@ -65,6 +65,7 @@ Use this structure before adding tooling:
 Mode: Quick / Standard / Nuclear / Incident / Research Board / Release
 Role: builder / reviewer / verifier / releaser / incident lead / researcher
 Packet: .nuclear/changes/<slug>/
+Governing request: <direct source or exact quote; a summary provides context, not permission>
 Objective: <one paragraph>
 Mission anchor: <objective, success criteria, non-goals; survives context resets>
 Charter: <.nuclear/charter.md articles in play>
@@ -151,6 +152,7 @@ A context pack is ready when a competent human or AI agent can answer:
 7. What changed since the prior owner or context?
 8. Which standing agent instructions were observed in force (or were not observable), and do any conflict with this pack?
 9. What critical action needs self-checking or turnover?
+10. What direct source grants the authority stated in this pack?
 
 Archive or refresh a context pack when it goes stale, when the mode changes, or when the packet's risk or evidence state changes.
 

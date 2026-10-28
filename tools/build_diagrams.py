@@ -193,7 +193,7 @@ def lifecycle(clearance: bool):
     f = Fig(name, 1000, 360 if clearance else 300,
             "Nuclear-grade lifecycle",
             "Question, Discover, Specify, Plan, Execute, Verify, Review, then the Decide gate. "
-            "Ship or defer leads to Baseline, Operate, Learn; block returns to Plan; "
+            "Ship leads to Baseline, Operate, Learn; block or defer returns to Plan; "
             "Learn feeds the next Question." + (" A separate Cleared-to-apply-now gate sits between "
                                                 "Decide and Baseline and holds while clearance is lapsed." if clearance else ""),
             "The change lifecycle · eleven beats")
@@ -210,12 +210,12 @@ def lifecycle(clearance: bool):
     f.arrow([n[-1]["r"], dec["l"]])
     # block: Decide -> Plan, over the top
     f.arrow([dec["t"], (dec["cx"], 68), (n[3]["cx"], 68), n[3]["t"]], "ln-acc", dashed=True,
-            label="block", at=((dec["cx"] + n[3]["cx"]) / 2, 68))
+            label="block / defer", at=((dec["cx"] + n[3]["cx"]) / 2, 68))
     y2 = 220 if not clearance else 252
     xs = dec["cx"]
     if clearance:
         clr = f.box(xs - 64, 192, 128, 64, "Cleared to\napply now?", kind="focal", shape="diamond")
-        f.arrow([dec["b"], clr["t"]], "ln-acc", label="ship / defer", at=(xs, 166))
+        f.arrow([dec["b"], clr["t"]], "ln-acc", label="ship", at=(xs, 166))
         # hold / lapsed self-loop on the right
         f.arrow([clr["r"], (clr["r"][0] + 40, clr["cy"]), (clr["r"][0] + 40, clr["y"] - 4),
                  (clr["cx"] + 18, clr["y"] - 4), (clr["cx"] + 18, clr["y"] + 9)],
@@ -232,7 +232,7 @@ def lifecycle(clearance: bool):
     if clearance:
         f.arrow([src["b"], base["t"]], "ln-acc", label="yes")
     else:
-        f.arrow([src["b"], base["t"]], "ln-acc", label="ship / defer")
+        f.arrow([src["b"], base["t"]], "ln-acc", label="ship")
     f.arrow([base["l"], op["r"]])
     f.arrow([op["l"], le["r"]])
     f.arrow([le["l"], (n[0]["cx"], le["cy"]), n[0]["b"]], dashed=True,
@@ -280,16 +280,16 @@ def pro():
     links = [
         lambda P: dict(pts=[P["p"]["b"], (P["p"]["cx"], P["e"]["y"] - 26), (P["e"]["cx"], P["e"]["y"] - 26), P["e"]["t"]]),
         lambda P: dict(pts=[P["dec"]["b"], (P["dec"]["cx"], P["b"]["y"] - 30), (P["b"]["cx"], P["b"]["y"] - 30), P["b"]["t"]],
-                       style="ln-acc", label="ship / defer", at=((P["dec"]["cx"] + P["b"]["cx"]) / 2 + 120, P["b"]["y"] - 30)),
+                       style="ln-acc", label="ship", at=((P["dec"]["cx"] + P["b"]["cx"]) / 2 + 120, P["b"]["y"] - 30)),
         lambda P: dict(pts=[P["dec"]["r"], (P["dec"]["r"][0] + 32, P["dec"]["cy"]), (P["dec"]["r"][0] + 32, P["p"]["cy"]), P["p"]["r"]],
-                       style="ln-acc", dashed=True, label="block", at=(P["dec"]["r"][0] + 32, (P["dec"]["cy"] + P["p"]["cy"]) / 2)),
+                       style="ln-acc", dashed=True, label="block / defer", at=(P["dec"]["r"][0] + 32, (P["dec"]["cy"] + P["p"]["cy"]) / 2)),
         lambda P: dict(pts=[P["l"]["r"], (P["l"]["r"][0] + 40, P["l"]["cy"]), (P["l"]["r"][0] + 40, P["l"]["y"] + 52),
                             (180, P["l"]["y"] + 52), (180, P["q"]["cy"]), P["q"]["l"]],
                        dashed=True, label="lessons feed the next basis", at=(400, P["l"]["y"] + 52)),
     ]
     bands("pro", "PRO: Plan · Run · Operate", "PRO · the path in three moves", rows, links,
           "Three bands. Plan: Question, Discover, Specify, Plan. Run: Execute, Verify, Review, Decide. "
-          "Operate: Baseline, Operate, Learn. Decide ships or defers to Baseline, blocks back to Plan; "
+          "Operate: Baseline, Operate, Learn. Decide ships to Baseline, or blocks or defers back to Plan; "
           "lessons feed the next Question.")
 
 
@@ -298,7 +298,7 @@ def prove():
     f = Fig("prove", 1280, 620, "PROVE: Plan · Run · Observe · Verdict · Educate",
             "Five bands. Plan: Question, Discover, Specify, Plan. Run: Execute. Observe: Verify, Review. "
             "Verdict: Decide, then Cleared to apply now, which holds while clearance is lapsed. "
-            "Educate: Baseline, Operate, Learn. Block returns to Plan; lessons feed the next Question.",
+            "Educate: Baseline, Operate, Learn. Block or defer returns to Plan; lessons feed the next Question.",
             "PROVE · the path in five moves")
     W, H, C, BH = 104, 40, 124, 84
     x0 = 176
@@ -326,7 +326,7 @@ def prove():
         ids = [i[1] for i in items]
         for a, b in zip(ids, ids[1:], strict=False):
             f.arrow([P[a]["r"], P[b]["l"]], "ln-acc" if a == "dec" else "ln",
-                    label="ship / defer" if a == "dec" else None)
+                    label="ship" if a == "dec" else None)
         y += BH + 16
     f.arrow([P["p"]["b"], P["e"]["t"]])
     f.arrow([P["e"]["b"], P["v"]["t"]])
@@ -339,7 +339,7 @@ def prove():
     d, pl = P["dec"], P["p"]
     gx = (cx(2) + cx(3)) / 2
     f.arrow([d["l"], (gx, d["cy"]), (gx, pl["b"][1] + 14), (pl["x"] + 20, pl["b"][1] + 14), (pl["x"] + 20, pl["b"][1])],
-            "ln-acc", dashed=True, label="block", at=(gx, P["e"]["cy"]))
+            "ln-acc", dashed=True, label="block / defer", at=(gx, P["e"]["cy"]))
     lo, q = P["l"], P["q"]
     f.arrow([lo["r"], (lo["r"][0] + 24, lo["cy"]), (lo["r"][0] + 24, 596), (148, 596), (148, q["cy"]), q["l"]],
             dashed=True, label="lessons feed the next basis", at=(600, 596))
@@ -428,8 +428,8 @@ def control_loop(clearance: bool):
     name = "control-loop-cleared" if clearance else "control-loop"
     f = Fig(name, 1040, 300, "Configuration control loop",
             "Controlled items (code, prompts, models, dependencies, docs, releases) receive a change; evidence names "
-            "pass or gap; Decide on purpose. Ship or defer saves the baseline, which is operated and yields lessons "
-            "that feed the next change. Block returns to the change."
+            "pass or gap; Decide on purpose. Only a ship decision saves the baseline, which is operated and yields lessons "
+            "that feed the next change. Block or defer returns to the change."
             + (" A Cleared-to-apply-now gate holds while clearance is lapsed." if clearance else ""),
             "Configuration control · the loop")
     y = 92
@@ -440,12 +440,12 @@ def control_loop(clearance: bool):
     f.arrow([ci["r"], ch["l"]])
     f.arrow([ch["r"], ev["l"]])
     f.arrow([ev["r"], dec["l"]])
-    f.arrow([dec["t"], (dec["cx"], 64), (ch["cx"], 64), ch["t"]], "ln-acc", dashed=True, label="block",
+    f.arrow([dec["t"], (dec["cx"], 64), (ch["cx"], 64), ch["t"]], "ln-acc", dashed=True, label="block / defer",
             at=((dec["cx"] + ch["cx"]) / 2, 64))
     y2 = 220
     if clearance:
         clr = f.box(852, y - 2, 128, 68, "Cleared to\napply now?", kind="focal", shape="diamond")
-        f.arrow([dec["r"], clr["l"]], "ln-acc", label="ship / defer", at=(838, dec["cy"] - 14))
+        f.arrow([dec["r"], clr["l"]], "ln-acc", label="ship", at=(838, dec["cy"] - 14))
         f.arrow([clr["r"], (clr["r"][0] + 20, clr["cy"]), (clr["r"][0] + 20, clr["y"] - 14), (clr["cx"], clr["y"] - 14), clr["t"]],
                 dashed=True, r=6)
         f.label(clr["cx"] + 30, clr["y"] - 14, "hold / lapsed")
@@ -453,7 +453,7 @@ def control_loop(clearance: bool):
         f.arrow([clr["b"], bl["t"]], "ln-acc", label="yes")
     else:
         bl = f.box(dec["cx"] - 96, y2, 192, 52, "Saved baseline", "the approved version", kind="store")
-        f.arrow([dec["b"], bl["t"]], "ln-acc", label="ship / defer")
+        f.arrow([dec["b"], bl["t"]], "ln-acc", label="ship")
     op = f.box(bl["x"] - 180, y2 + 4, 132, 44, "Operate")
     le = f.box(op["x"] - 200, y2 + 4, 152, 44, "Lessons learned")
     f.arrow([bl["l"], op["r"]])

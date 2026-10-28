@@ -1,0 +1,23 @@
+name: Question a challenge result
+description: Tell us if a published result looks wrong. We answer in the open and log every fix.
+title: "Result question: <run id>"
+labels: ["challenge-result", "dispute"]
+body:
+  - type: input
+    id: run
+    attributes:
+      label: Run ID or results row
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What looks wrong
+      description: Point to the transcript lines, diff, or rule in METHOD.md that matter.
+    validations:
+      required: true
+  - type: textarea
+    id: ask
+    attributes:
+      label: What you would like us to do
+      description: For example, rerun with a newer version, read the transcript again, or change a rule.

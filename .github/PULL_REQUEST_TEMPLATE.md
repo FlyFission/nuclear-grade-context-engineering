@@ -26,6 +26,7 @@
   ```
 
 - [ ] Packet validation passes if this PR creates or changes a `.nuclear/changes/<slug>/` packet.
+- [ ] `.nuclear/badge.json` is regenerated (`python tools/ng.py badge . --out .nuclear/badge.json`) if this PR adds or changes a packet.
 - [ ] CM impact/baseline records are updated if controlled items changed.
 - [ ] HPI records are updated if turnover, self-check, OPEX, or dependency/model/API trust is activated.
 - [ ] `git diff --check` passes.

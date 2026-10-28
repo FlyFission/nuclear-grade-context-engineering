@@ -25,11 +25,16 @@ python -m ruff check .
 python tools/ng.py doctor .
 python tools/ng.py tokens .
 python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions --strict-custody
+python -m nuclear_grade.release
+python tools/ng.py badge . --out .nuclear/badge.json
 git diff --check
 ```
 
-The first five commands are the fast local checks shared with CI; `git diff --check`
-catches whitespace errors in the proposed diff. The workflow remains the source of truth.
+The commands before `git diff --check` are the fast local checks shared with CI. If the
+badge command changes `.nuclear/badge.json` (it will whenever you add or edit a change
+record), commit the regenerated file; CI fails when the committed badge does not match the
+records. `git diff --check` catches whitespace errors in the proposed diff. The workflow
+remains the source of truth.
 
 Also scan new public docs for overclaiming. Lean on phrases like:
 

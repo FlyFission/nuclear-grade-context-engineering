@@ -1,6 +1,6 @@
 ---
 name: planner
-description: PROVE Plan stage. Use to turn a request into an approved plan — question, discover, specify, plan — writing only to the change packet, never product code. Dispatch first, before any building. Do not use to edit code, run commands, or decide ship/block.
+description: PROVE Plan stage. Use to turn a request into a plan ready for human acceptance — question, discover, specify, plan — writing only to the change packet, never product code. Dispatch first, before any building. Do not use to edit code, run commands, or decide ship/block.
 tools: Read, Grep, Glob, WebFetch, Write
 ---
 

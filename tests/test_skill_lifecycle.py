@@ -45,7 +45,9 @@ def test_repository_catalog_is_complete_and_matches_compatibility_projections():
     catalog = load_catalog(ROOT)
     projected_skills, projected_commands = load_yaml_projections(ROOT)
 
-    assert len(catalog.entries) == 29
+    # Every promoted skill folder is registered; derive the count so a new skill
+    # cannot silently drift past this check.
+    assert len(catalog.entries) == len(list((ROOT / "skills").glob("*/SKILL.md")))
     assert {entry.id for entry in catalog.promoted} == set(projected_skills)
     assert catalog.command_map == projected_commands
     assert {entry.id for entry in catalog.model_routable} == {entry.id for entry in catalog.promoted}

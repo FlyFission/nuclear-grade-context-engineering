@@ -546,6 +546,130 @@ def test_scaffold_ci_refuses_overwrite_without_force(tmp_path):
     assert run_ng("scaffold-ci", str(tmp_path), "--force").returncode == 0
 
 
+# --- ng init add-ons: --agents, --hook, --ci, --all --------------------------------
+
+
+def _tree(root: Path) -> dict[str, bytes]:
+    return {str(p.relative_to(root)): p.read_bytes() for p in sorted(root.rglob("*")) if p.is_file()}
+
+
+def test_plain_init_still_refuses_existing_files(tmp_path):
+    assert run_ng("init", str(tmp_path)).returncode == 0
+
+    result = run_ng("init", str(tmp_path))
+    assert result.returncode == 2
+    assert "already exists" in result.stderr
+    assert not (tmp_path / "AGENTS.md").exists()
+    assert not (tmp_path / ".claude").exists()
+
+
+def test_init_all_dry_run_lists_every_change_and_writes_nothing(tmp_path):
+    result = run_ng("init", str(tmp_path), "--all", "--dry-run")
+
+    assert result.returncode == 0, result.stderr
+    for rel in ("AGENTS.md", ".claude/hooks/pre_tool_use.py", ".github/workflows/nuclear-grade.yml",
+                ".claude/settings.json", ".nuclear/charter.md"):
+        assert str(tmp_path / rel) in result.stdout, rel
+    assert list(tmp_path.iterdir()) == []
+
+
+def test_init_all_writes_agents_hook_and_ci(tmp_path):
+    result = run_ng("init", str(tmp_path), "--all")
+
+    assert result.returncode == 0, result.stderr
+    assert (tmp_path / "AGENTS.md").read_bytes() == (ROOT / "starter-kit" / "core" / "AGENTS.md").read_bytes()
+    assert (tmp_path / ".claude" / "hooks" / "pre_tool_use.py").read_bytes() == (
+        ROOT / "hooks" / "pre_tool_use.py"
+    ).read_bytes()
+    assert (tmp_path / ".github" / "workflows" / "nuclear-grade.yml").is_file()
+    assert (tmp_path / ".nuclear" / "charter.md").is_file()
+    settings = json.loads((tmp_path / ".claude" / "settings.json").read_text(encoding="utf-8"))
+    assert settings == {"hooks": {"PreToolUse": [ng_cli.gate_hook_entry(ng_cli.PROJECT_GATE_SCRIPT)]}}
+
+
+def test_init_ci_matches_scaffold_ci(tmp_path):
+    assert run_ng("init", str(tmp_path / "a"), "--ci").returncode == 0
+    assert run_ng("scaffold-ci", str(tmp_path / "b")).returncode == 0
+
+    rel = Path(".github") / "workflows" / "nuclear-grade.yml"
+    assert (tmp_path / "a" / rel).read_bytes() == (tmp_path / "b" / rel).read_bytes()
+
+
+def test_init_addon_keeps_existing_files_and_workspace(tmp_path):
+    assert run_ng("init", str(tmp_path)).returncode == 0
+    (tmp_path / ".nuclear" / "charter.md").write_text("my charter\n", encoding="utf-8")
+    (tmp_path / "AGENTS.md").write_text("my agents\n", encoding="utf-8")
+
+    result = run_ng("init", str(tmp_path), "--agents", "--yes")
+    assert result.returncode == 0, result.stderr
+    # --yes overwrites add-on files only; the workspace records are never replaced by an add-on run.
+    assert (tmp_path / ".nuclear" / "charter.md").read_text(encoding="utf-8") == "my charter\n"
+    assert "kept existing" in result.stdout
+    assert "Agent guidance" in (tmp_path / "AGENTS.md").read_text(encoding="utf-8")
+
+    (tmp_path / "AGENTS.md").write_text("my agents\n", encoding="utf-8")
+    result = run_ng("init", str(tmp_path), "--agents")
+    assert result.returncode == 0, result.stderr
+    assert (tmp_path / "AGENTS.md").read_text(encoding="utf-8") == "my agents\n"
+    assert "pass --yes to overwrite" in result.stdout
+
+
+def test_init_hook_merges_into_existing_settings(tmp_path):
+    settings_path = tmp_path / ".claude" / "settings.json"
+    settings_path.parent.mkdir()
+    other_hook = {"matcher": "Bash", "hooks": [{"type": "command", "command": "echo hi"}]}
+    existing = {"model": "x", "permissions": {"deny": ["Read(./.env)"]},
+                "hooks": {"PreToolUse": [other_hook], "Stop": []}}
+    settings_path.write_text(json.dumps(existing), encoding="utf-8")
+
+    assert run_ng("init", str(tmp_path), "--hook").returncode == 0
+    merged = json.loads(settings_path.read_text(encoding="utf-8"))
+    assert merged["model"] == "x" and merged["permissions"] == existing["permissions"]
+    assert merged["hooks"]["Stop"] == []
+    assert merged["hooks"]["PreToolUse"] == [other_hook, ng_cli.gate_hook_entry(ng_cli.PROJECT_GATE_SCRIPT)]
+
+    # Re-running is idempotent: the gate is registered once.
+    result = run_ng("init", str(tmp_path), "--hook", "--yes")
+    assert result.returncode == 0, result.stderr
+    assert "already registered" in result.stdout
+    assert json.loads(settings_path.read_text(encoding="utf-8")) == merged
+
+
+@pytest.mark.parametrize("content", ["{not json", "[]", '{"hooks": []}', '{"hooks": {"PreToolUse": {}}}'])
+def test_init_hook_refuses_settings_it_cannot_merge(tmp_path, content):
+    settings_path = tmp_path / ".claude" / "settings.json"
+    settings_path.parent.mkdir()
+    settings_path.write_text(content, encoding="utf-8")
+
+    result = run_ng("init", str(tmp_path), "--hook", "--yes")
+    assert result.returncode == 2
+    assert "cannot merge" in result.stderr
+    assert settings_path.read_text(encoding="utf-8") == content
+    assert not (tmp_path / ".nuclear").exists(), "nothing is written when the settings file cannot be merged"
+
+
+def test_init_hook_dry_run_leaves_settings_untouched(tmp_path):
+    settings_path = tmp_path / ".claude" / "settings.json"
+    settings_path.parent.mkdir()
+    settings_path.write_text('{"model": "x"}', encoding="utf-8")
+    before = _tree(tmp_path)
+
+    result = run_ng("init", str(tmp_path), "--hook", "--dry-run")
+    assert result.returncode == 0, result.stderr
+    assert f"would update: {settings_path}" in result.stdout
+    assert _tree(tmp_path) == before
+    assert not (tmp_path / ".nuclear").exists()
+
+
+def test_installed_gate_denies_agent_edits_to_its_own_settings(tmp_path):
+    assert run_ng("init", str(tmp_path), "--hook").returncode == 0
+    payload = json.dumps({"tool_name": "Edit", "tool_input": {"file_path": ".claude/settings.json"},
+                          "cwd": str(tmp_path)})
+    proc = subprocess.run([sys.executable, str(tmp_path / ".claude" / "hooks" / "pre_tool_use.py")],
+                          input=payload, text=True, capture_output=True, check=False, cwd=tmp_path)
+    assert json.loads(proc.stdout)["hookSpecificOutput"]["permissionDecision"] == "deny"
+
+
 # --- ng install -----------------------------------------------------------------
 
 

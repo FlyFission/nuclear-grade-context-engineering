@@ -10,6 +10,8 @@ Nuclear-grade should make decisions faster, not pile on paperwork. Move fast whi
 
 You do not need the whole repository to get value. Most adopters need the **Core 7** habits and one ancillary cluster, picked by trigger. See [`CORE.md`](CORE.md) for the decision matrix and [`starter-kit/`](starter-kit/) for drop-in directories.
 
+To set up another repo in one step, `python tools/ng.py init /path/to/your/repo --all --dry-run` shows what it would add: the `.nuclear/` workspace, a starter `AGENTS.md`, the opt-in `PreToolUse` gate for Claude Code, and the CI workflow. Drop `--dry-run` to write them, or pick single pieces with `--agents`, `--hook`, or `--ci` (see [`INSTALL.md`](INSTALL.md#add-to-another-repo)).
+
 The intended loop is **not** "human types out a packet." It is:
 
 ```text

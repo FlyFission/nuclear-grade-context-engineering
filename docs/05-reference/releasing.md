@@ -7,7 +7,7 @@ Pattern lineage: uber/ADR's release procedure (the tag must match the version, a
 ## Before the tag
 
 1. Write or update the ship-readiness record for the release (`checking-release-readiness`). The release stance changes only with that record.
-2. Set the same version in `pyproject.toml`, `.claude-plugin/plugin.json`, `.codex-plugin/plugin.json`, and `CITATION.cff`.
+2. Set the same version in `pyproject.toml`, `.claude-plugin/plugin.json`, `.codex-plugin/plugin.json`, `plugins/nuclear-grade-guard/.claude-plugin/plugin.json`, and `CITATION.cff`.
 3. Move the `[Unreleased]` entries in `CHANGELOG.md` under `## [X.Y.Z] - YYYY-MM-DD`, and set `CITATION.cff` `date-released` to the same date.
 4. Run the gates in `../../GOVERNANCE.md`, plus:
 

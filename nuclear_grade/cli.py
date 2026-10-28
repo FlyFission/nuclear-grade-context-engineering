@@ -69,6 +69,34 @@ def _resolve_resource_root(name: str) -> Path:
 
 SKILLS = _resolve_resource_root("skills")
 COMMANDS = _resolve_resource_root("commands")
+# Sources for the opt-in `init --agents` and `init --hook` add-ons.
+STARTER_AGENTS = _resolve_resource_root("starter-kit") / "core" / "AGENTS.md"
+GATE_SCRIPT = _resolve_resource_root("hooks") / "pre_tool_use.py"
+
+# The Claude Code PreToolUse entry for the blocking gate. HOOKS.md, the
+# nuclear-grade-guard plugin's hooks/hooks.json, and `init --hook` share these
+# values; tests/test_plugin_packaging.py fails if they drift apart.
+GATE_MATCHER = "Write|Edit|MultiEdit|NotebookEdit|Bash|PowerShell"
+GATE_TIMEOUT_SECONDS = 10
+PROJECT_GATE_SCRIPT = "${CLAUDE_PROJECT_DIR}/.claude/hooks/pre_tool_use.py"
+INIT_ADDONS = ("agents", "hook", "ci")
+
+
+def gate_hook_entry(script: str) -> dict:
+    """One PreToolUse matcher group that runs the gate in exec form and blocks the
+    tool call if the gate itself fails or times out."""
+    return {
+        "matcher": GATE_MATCHER,
+        "hooks": [
+            {
+                "type": "command",
+                "command": "python3",
+                "args": [script],
+                "timeout": GATE_TIMEOUT_SECONDS,
+                "onFailure": "block",
+            }
+        ],
+    }
 
 QUICK_FILES = ("risk.md", "proof.md")
 STANDARD_FILES = ("risk.md", "basis.md", "plan.md", "trace.md", "verification.md", "ship.md")
@@ -336,6 +364,18 @@ def build_parser() -> argparse.ArgumentParser:
     init_parser.add_argument("repo", nargs="?", default=".", type=Path)
     init_parser.add_argument("--dry-run", action="store_true")
     init_parser.add_argument("--yes", action="store_true", help="Overwrite managed files when needed.")
+    init_parser.add_argument(
+        "--agents", action="store_true", help="Also copy the starter AGENTS.md into the repo root."
+    )
+    init_parser.add_argument(
+        "--hook",
+        action="store_true",
+        help="Also install the PreToolUse gate for Claude Code (.claude/hooks/ and .claude/settings.json).",
+    )
+    init_parser.add_argument(
+        "--ci", action="store_true", help="Also write the out-of-band CI workflow (the same file as scaffold-ci)."
+    )
+    init_parser.add_argument("--all", action="store_true", help="Same as --agents --hook --ci.")
     init_parser.set_defaults(handler=handle_init)
 
     new_parser = subcommands.add_parser("new", help="Create a packet (quick, standard, cm, or golden-path).")
@@ -514,7 +554,73 @@ def handle_init(args: argparse.Namespace) -> int:
         PlannedWrite(repo / ".nuclear" / "charter.md", content=CHARTER_TEMPLATE),
         PlannedWrite(repo / ".nuclear" / "mission.md", content=MISSION_TEMPLATE),
     ]
-    return apply_writes(writes, dry_run=args.dry_run, overwrite=args.yes)
+    addons = [name for name in INIT_ADDONS if getattr(args, "all", False) or getattr(args, name, False)]
+    if not addons:
+        # Plain `init` keeps its original contract: refuse to touch existing files without --yes.
+        return apply_writes(writes, dry_run=args.dry_run, overwrite=args.yes)
+
+    settings_path = repo / ".claude" / "settings.json"
+    settings = None
+    if "hook" in addons:
+        settings, error = plan_gate_settings(settings_path)
+        if error:
+            print(error, file=sys.stderr)
+            return 2
+
+    # With an add-on, `init` works in a repo that was initialized earlier: workspace files
+    # that already exist are always kept, and an existing add-on file is kept unless --yes.
+    for write in writes:
+        if not write.is_dir and write.path.exists():
+            print(f"kept existing: {write.path}")
+    writes = [write for write in writes if write.is_dir or not write.path.exists()]
+    if "agents" in addons:
+        writes.append(PlannedWrite(repo / "AGENTS.md", source=STARTER_AGENTS))
+    if "hook" in addons:
+        writes.append(PlannedWrite(repo / ".claude" / "hooks", is_dir=True))
+        writes.append(PlannedWrite(repo / ".claude" / "hooks" / GATE_SCRIPT.name, source=GATE_SCRIPT))
+    if "ci" in addons:
+        writes.extend(ci_writes(repo))
+
+    code = apply_writes(writes, dry_run=args.dry_run, overwrite=args.yes, keep_existing=True)
+    if code or "hook" not in addons:
+        return code
+    if settings is None:
+        print(f"already registered: PreToolUse gate in {settings_path}")
+    elif args.dry_run:
+        verb = "update" if settings_path.exists() else "create"
+        print(f"would {verb}: {settings_path} (add the PreToolUse gate entry)")
+    else:
+        verb = "updated" if settings_path.exists() else "created"
+        settings_path.write_text(json.dumps(settings, indent=2) + "\n", encoding="utf-8")
+        print(f"{verb}: {settings_path} (added the PreToolUse gate entry)")
+        print("Start a new Claude Code session so it loads the gate; it needs python3 on PATH. See HOOKS.md.")
+    return 0
+
+
+def plan_gate_settings(path: Path) -> tuple[dict | None, str | None]:
+    """Merge the gate's PreToolUse entry into a Claude Code settings file.
+
+    Returns (settings to write, None), or (None, None) when an entry already runs
+    pre_tool_use.py, or (None, error) when the file cannot be merged safely. Every
+    other key and hook in the file is kept as it is.
+    """
+    data: dict = {}
+    if path.exists():
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as exc:
+            return None, f"cannot merge {path}: not readable JSON ({type(exc).__name__}). Add the entry by hand; see HOOKS.md."
+        if not isinstance(data, dict):
+            return None, f"cannot merge {path}: the top level is not a JSON object. Add the entry by hand; see HOOKS.md."
+    hooks = data.get("hooks", {})
+    entries = hooks.get("PreToolUse", []) if isinstance(hooks, dict) else None
+    if not isinstance(entries, list):
+        return None, f"cannot merge {path}: `hooks` or `hooks.PreToolUse` has an unexpected shape. Add the entry by hand; see HOOKS.md."
+    if any(GATE_SCRIPT.name in json.dumps(entry) for entry in entries):
+        return None, None
+    merged = dict(data)
+    merged["hooks"] = {**hooks, "PreToolUse": [*entries, gate_hook_entry(PROJECT_GATE_SCRIPT)]}
+    return merged, None
 
 
 def _validator_version() -> str:
@@ -550,7 +656,11 @@ def _validator_version() -> str:
 
 
 def handle_scaffold_ci(args: argparse.Namespace) -> int:
-    repo = args.repo.resolve()
+    return apply_writes(ci_writes(args.repo.resolve()), dry_run=args.dry_run, overwrite=args.force)
+
+
+def ci_writes(repo: Path) -> list[PlannedWrite]:
+    """The planned writes for the out-of-band CI workflow (shared by scaffold-ci and init --ci)."""
     pinned = _validator_version()
     content = CI_WORKFLOW_TEMPLATE
     if pinned:
@@ -561,11 +671,10 @@ def handle_scaffold_ci(args: argparse.Namespace) -> int:
         content = content.replace("nuclear-grade==NG_VERSION", "nuclear-grade")
         content = content.replace("@vNG_VERSION", "@main")
     workflow = repo / ".github" / "workflows" / "nuclear-grade.yml"
-    writes = [
+    return [
         PlannedWrite(repo / ".github" / "workflows", is_dir=True),
         PlannedWrite(workflow, content=content),
     ]
-    return apply_writes(writes, dry_run=args.dry_run, overwrite=args.force)
 
 
 def _vscode_user_skills() -> Path:
@@ -1205,9 +1314,18 @@ def handle_gen_commands(args: argparse.Namespace) -> int:
     return 0
 
 
-def apply_writes(writes: list[PlannedWrite], dry_run: bool, overwrite: bool) -> int:
+def apply_writes(writes: list[PlannedWrite], dry_run: bool, overwrite: bool, keep_existing: bool = False) -> int:
+    """Apply planned writes after checking all of them first.
+
+    An existing file stops the run (exit 2) unless ``overwrite``; with ``keep_existing``
+    it is left untouched and reported instead.
+    """
+    kept = set()
     for write in writes:
         if write.path.exists() and not write.is_dir and not overwrite:
+            if keep_existing:
+                kept.add(write.path)
+                continue
             print(f"already exists: {write.path}", file=sys.stderr)
             return 2
         if write.source is not None and not write.source.exists():
@@ -1215,6 +1333,9 @@ def apply_writes(writes: list[PlannedWrite], dry_run: bool, overwrite: bool) -> 
             return 2
 
     for write in writes:
+        if write.path in kept:
+            print(f"kept existing: {write.path} (pass --yes to overwrite)")
+            continue
         if dry_run:
             action = "would create directory" if write.is_dir else "would create"
             print(f"{action}: {write.path}")

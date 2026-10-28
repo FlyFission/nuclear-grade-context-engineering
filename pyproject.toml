@@ -38,6 +38,9 @@ packages = ["nuclear_grade"]
 "skills-deprecated" = "nuclear_grade/_bundled/skills-deprecated"
 "commands" = "nuclear_grade/_bundled/commands"
 "skill-catalog.json" = "nuclear_grade/_bundled/skill-catalog.json"
+# Sources for `init --hook` and `init --agents` when run from an installed wheel.
+"hooks/pre_tool_use.py" = "nuclear_grade/_bundled/hooks/pre_tool_use.py"
+"starter-kit/core/AGENTS.md" = "nuclear_grade/_bundled/starter-kit/core/AGENTS.md"
 
 [tool.hatch.build.targets.sdist]
 include = [
@@ -48,6 +51,8 @@ include = [
   "/skills-deprecated",
   "/commands",
   "/skill-catalog.json",
+  "/hooks",
+  "/starter-kit",
   "/tests",
   "/tools",
   "/docs",

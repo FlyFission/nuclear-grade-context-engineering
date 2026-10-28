@@ -103,3 +103,19 @@ def test_catalog_optional_templates_match_cli():
 
     assert optional, "could not parse templates.optional from nuclear-grade.yaml"
     assert set(optional) == set(OPTIONAL_FILES)
+
+
+def test_every_card_has_a_menu_description_and_is_typed_by_a_person():
+    # Claude Code reads frontmatter only when `---` is the first line. Without a description
+    # its `/` menu falls back to the card's first line, "# ng-...". The paired skill is
+    # already listed to the model, so the card is kept out of the model's context.
+    import json
+
+    for path in sorted(COMMANDS_DIR.glob("ng-*.md")):
+        text = path.read_text(encoding="utf-8")
+        assert text.startswith("---\n"), path.name
+        front = text.split("\n---\n", 1)[0].splitlines()[1:]
+        fields = dict(line.split(": ", 1) for line in front)
+        description = json.loads(fields["description"])
+        assert description.endswith((".", "!", "?")) and len(description) < 300, path.name
+        assert fields["disable-model-invocation"] == "true", path.name

@@ -135,7 +135,7 @@ That packet is a complete Standard record: `risk.md`, `basis.md`, `plan.md`, `tr
 
 That exposes the skills and command prompts as a plugin. No hooks are configured, so nothing runs automatically; the install copies the repo's `ng` CLI into the plugin cache, but the plugin adds no `ng` command to your `PATH` and runs nothing on its own; the CLI is a repo-side tool you run from a checkout (below). Prefer plain files, or using another tool? Use the repo directly:
 
-1. **Get the tool.** Clone the repo and install it (no third-party dependencies). See [`INSTALL.md`](INSTALL.md).
+1. **Get the tool.** Clone the repo and install it (no third-party dependencies; the installed command is `nuclear-grade`). See [`INSTALL.md`](INSTALL.md).
 2. **Check your setup.** Run `python tools/ng.py doctor .` to confirm things are wired up, and `python tools/ng.py list` to see what is available.
 3. **Make your first record.** Run `python tools/ng.py new <slug> --mode quick`, fill in the two files, then prove it with `python tools/ng.py validate .nuclear/changes/<slug>`.
 

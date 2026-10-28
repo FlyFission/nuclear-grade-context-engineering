@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 13965,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.021542000000000002,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 354,
+    "cache_read_input_tokens": 25300,
+    "output_tokens": 742,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 354,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 488,
+        "cache_read_input_tokens": 8580,
+        "cache_creation_input_tokens": 134,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 134
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00068,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 742,
+      "cacheReadInputTokens": 25300,
+      "cacheCreationInputTokens": 354,
+      "webSearchRequests": 0,
+      "costUSD": 0.020862000000000002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory appears to be empty \u2014 there's no actual codebase here for me to inspect the serializer, its callers, or consumers.\n\nGiven that, I can't verify the real blast radius, but I can tell you why \"it's a one-line change\" is the wrong way to size this:\n\n**Short answer: no, don't just merge it.** Renaming a field in a *public* API response is a breaking change for every external consumer, regardless of how small the diff is. Line count has nothing to do with blast radius here.\n\nConcretely, before merging you'd want to know:\n\n- **Who consumes this field?** Any external clients/SDKs, mobile apps, third-party integrations, or webhooks that parse `total` will break silently (KeyError/undefined) the moment this ships.\n- **Is this API versioned?** If so, the fix is to add `order_total` in the next version and deprecate `total` on a timeline \u2014 not mutate the current version in place.\n- **Internal consumers too** \u2014 check your own frontend, other services, and any tests/fixtures that assert on `total` in the response body.\n- **Backward compatibility option** \u2014 often the safer move is to emit *both* `total` and `order_total` for a deprecation window, then remove `total` later once consumers migrate.\n\nSince I don't have access to an actual repo in this session (the working directory is empty), I can't tell you who calls this endpoint or how it's versioned. Can you point me to the actual project directory, or tell me how this API is versioned/consumed? That'll let me give you a real answer instead of general caution.",
+  "ttft_ms": 2179,
+  "ttft_stream_ms": 1049,
+  "time_to_request_ms": 78,
+  "time_to_request_from_spawn_ms": 1278872,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785026157661.4478,
+  "type": "result",
+  "duration_ms": 14301,
+  "uuid": "36340121-56a2-4e1a-9a0c-e988b48defd2",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "749436236d0919a227211a0569a973391280decf83571bb58187d3611b4e2b4c"
+}

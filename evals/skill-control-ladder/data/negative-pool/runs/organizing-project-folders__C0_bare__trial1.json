@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 7436,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0226081,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2175,
+    "cache_read_input_tokens": 14477,
+    "output_tokens": 302,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2175,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 169,
+        "cache_read_input_tokens": 8206,
+        "cache_creation_input_tokens": 240,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 240
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 588,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000673,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 302,
+      "cacheReadInputTokens": 14477,
+      "cacheCreationInputTokens": 2175,
+      "webSearchRequests": 0,
+      "costUSD": 0.0219351,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory here is empty, so I can't see your actual layout, but based on what you described: yes, move it into `scripts/`. If `scripts/` is already the established home for that kind of file, keeping a lone script in root just adds clutter and inconsistency for no benefit.\n\nWant me to do the move? If so, share the path (or confirm it's `parse_csv.py` in the repo root and `scripts/` alongside it) and I'll `git mv` it \u2014 that preserves history and I can grep for any imports/references to update if needed.",
+  "ttft_ms": 1704,
+  "ttft_stream_ms": 960,
+  "time_to_request_ms": 56,
+  "time_to_request_from_spawn_ms": 1537227,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594531659.7002,
+  "type": "result",
+  "duration_ms": 9097,
+  "uuid": "f73f1d60-239b-4639-bad2-2cc0b1a1ea65",
+  "_skill": "organizing-project-folders",
+  "_arm": "C0_bare",
+  "_trial": 1,
+  "_input_spec_sha256": "c49f886c12e0f69f1dd772e996e3ee7d67b1843414c02c1f7687571b9f2d80c5"
+}

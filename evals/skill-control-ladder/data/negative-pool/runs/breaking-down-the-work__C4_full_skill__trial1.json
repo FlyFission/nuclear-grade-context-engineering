@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 9446,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.052350400000000005,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 5960,
+    "cache_read_input_tokens": 30318,
+    "output_tokens": 454,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 5960,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 264,
+        "cache_read_input_tokens": 12091,
+        "cache_creation_input_tokens": 149,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 149
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 592,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000667,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 454,
+      "cacheReadInputTokens": 30318,
+      "cacheCreationInputTokens": 5960,
+      "webSearchRequests": 0,
+      "costUSD": 0.051683400000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't have a `LoginForm.jsx` in this repo \u2014 this looks like an empty/unrelated working directory. Here's the snippet based on your description; paste it into the actual file:\n\n```jsx\nconst [rememberMe, setRememberMe] = useState(false);\n```\n\n```jsx\n<label>\n  <input\n    type=\"checkbox\"\n    checked={rememberMe}\n    onChange={(e) => setRememberMe(e.target.checked)}\n  />\n  Remember me\n</label>\n```\n\nAnd in the submit handler, pass it through to the existing call:\n\n```jsx\nawait login({ email, password, rememberMe });\n```\n\nIf your `login()` takes positional args instead of an object, add it as an extra argument in whatever position the backend expects. Let me know the actual file path if you'd like me to apply the edit directly.",
+  "ttft_ms": 2695,
+  "ttft_stream_ms": 1312,
+  "time_to_request_ms": 51,
+  "time_to_request_from_spawn_ms": 1850978,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594845492.913,
+  "type": "result",
+  "duration_ms": 10113,
+  "uuid": "94a26605-bda8-4a9c-8dca-7fe0c183a5da",
+  "_skill": "breaking-down-the-work",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "f652680d8c5829ed5b81707fb698e87e697adce4afa9f84f678d28ac9e6e9f07"
+}

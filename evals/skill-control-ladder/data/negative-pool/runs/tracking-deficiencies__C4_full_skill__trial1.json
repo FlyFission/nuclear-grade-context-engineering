@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 6476,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.028542,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 3852,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 192,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3852,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 192,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 3852,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3852
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00066,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 192,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 3852,
+      "webSearchRequests": 0,
+      "costUSD": 0.027882,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "That's fine \u2014 it's not a deficiency worth tracking. Deleting a stray debug `print()` before it ever reaches a reviewer is just normal cleanup on your own unclean-yet branch, not something that \"outlived the change\" or got silently normalized. It never shipped, no one relied on it, and there's no consequence/frequency to log.\n\nJust fold it into your existing commit (or amend if you haven't pushed yet) and push normally. Nothing else needed \u2014 save the deficiency register for things you're *choosing* to leave in place with a known owner and date, not things you already fixed pre-review.",
+  "ttft_ms": 5148,
+  "ttft_stream_ms": 1739,
+  "time_to_request_ms": 87,
+  "time_to_request_from_spawn_ms": 1763376,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594757175.589,
+  "type": "result",
+  "duration_ms": 6431,
+  "uuid": "fe2cca06-61a4-4e27-b121-0d4195b6fe8b",
+  "_skill": "tracking-deficiencies",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "5075928dcfd85d3015ea144efa79f2f6b1d7a7762e08485ae94bd88f077e092c"
+}

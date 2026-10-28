@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 27900,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.053258,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2621,
+    "cache_read_input_tokens": 23510,
+    "output_tokens": 1981,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2621,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1709,
+        "cache_read_input_tokens": 8762,
+        "cache_creation_input_tokens": 139,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 139
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 661,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000746,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1981,
+      "cacheReadInputTokens": 23510,
+      "cacheCreationInputTokens": 2621,
+      "webSearchRequests": 0,
+      "costUSD": 0.052512,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A couple of things worth checking before merging, since I don't have access to the actual files here to verify directly:\n\n**1. How were the \"matching\" goldens generated?** If you regenerated the golden outputs *after* making the prompt change and they match \u2014 match what? If the goldens are newly captured from the new prompt's output, that's not a test, it's just recording current behavior. The real question is: do the **old** goldens (from before the typo fix, if they exist for these 3 cases) still match the new prompt's output? If yes, great \u2014 that confirms the typo fix was truly no-op for triage decisions. If the old goldens don't exist because these are brand-new test cases, then you have no evidence the prompt change didn't affect them at all \u2014 you've only confirmed the eval harness runs.\n\n**2. Did you run the full existing eval suite, or just the 3 new cases?** \"The eval suite is green\" and \"the three new test cases match\" read like they might be the same thing. If there's a larger existing corpus of triage test cases beyond the 3 new ones, confirm those all still pass unchanged post-edit too.\n\n**3. Is this actually a no-op for an LLM the way it would be for code?** Unlike the summarizer cleanup, a wording change in a system prompt sent to an LLM isn't guaranteed to be behaviorally inert even if it's a single word \u2014 tokenization and phrasing shifts can move classification boundaries on borderline tickets in ways a small golden set won't catch. \"Same kind of change we did before\" is a reasonable prior, not proof, especially for a triage classifier where borderline cases matter.\n\n**4. Is `triage_v3.txt` also the production prompt**, or purely an eval fixture? If it's shared with live traffic, this is a production prompt change riding in under an eval-cleanup framing, and it deserves the scrutiny of an actual behavior change, not a docs typo.\n\nIf you can confirm (1) old goldens still match and (2) the full suite (not just the 3 new cases) is green, and (3) this prompt file isn't also live in production, I'd say it's safe to merge today. Want me to look at the actual diff/goldens if you point me to the right paths \u2014 the repo here looks empty from where I'm working.",
+  "ttft_ms": 1256,
+  "ttft_stream_ms": 882,
+  "time_to_request_ms": 24,
+  "time_to_request_from_spawn_ms": 565515,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078340355.8103,
+  "type": "result",
+  "duration_ms": 28276,
+  "uuid": "d152adef-3d5b-4f69-b158-b248297a1676",
+  "_spec": "255ede5672a701d97af18876f60cdfd422ec7cf260d55c147e50742e895efa3a",
+  "_skill": "checking-what-a-change-affects",
+  "_cand": 2,
+  "_trial": 2
+}

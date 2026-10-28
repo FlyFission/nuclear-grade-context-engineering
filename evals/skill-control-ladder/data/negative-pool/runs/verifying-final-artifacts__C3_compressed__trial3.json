@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 9779,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.025291,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2330,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 581,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2330,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 581,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2330,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2330
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 641,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007059999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 581,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2330,
+      "webSearchRequests": 0,
+      "costUSD": 0.024585000000000003,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This looks like just the \"after\" version \u2014 no \"before\" code or diff markers, so I can't actually confirm nothing was flipped relative to the original nested if/else. Could you paste the original version too (or an actual diff)?\n\nThat said, looking at this snippet on its own, the logic is internally consistent:\n- Empty/falsy `name` \u2192 `\"unknown\"`\n- Otherwise, strip whitespace\n- If stripped length > 20 \u2192 truncate to 20 chars + `\"...\"`\n- Otherwise \u2192 return the stripped name as-is\n\nOne thing worth double-checking against your original: this strips *before* checking length, so a name like `\"  twenty-char-username  \"` (25 chars raw, 21 after stripping) would get truncated based on the *stripped* length. If the old code checked length before stripping, that'd be a subtle behavior change. Want to paste the original so I can confirm one-to-one?",
+  "ttft_ms": 4639,
+  "ttft_stream_ms": 984,
+  "time_to_request_ms": 28,
+  "time_to_request_from_spawn_ms": 1793656,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594786616.6338,
+  "type": "result",
+  "duration_ms": 8233,
+  "uuid": "92613445-2c0a-41b4-927b-892a2e6c3531",
+  "_skill": "verifying-final-artifacts",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "57b705f8b8ca795d2d42dd27c2faa9b1a45bdef883ebc5a6187a4da41f42dbcf"
+}

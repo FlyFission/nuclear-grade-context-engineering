@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 29860,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0553719,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2711,
+    "cache_read_input_tokens": 14793,
+    "output_tokens": 2257,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2711,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1883,
+        "cache_read_input_tokens": 8513,
+        "cache_creation_input_tokens": 478,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 478
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 691,
+      "outputTokens": 22,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000801,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2257,
+      "cacheReadInputTokens": 14793,
+      "cacheCreationInputTokens": 2711,
+      "webSearchRequests": 0,
+      "costUSD": 0.0545709,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A few gaps between what's been validated (happy-path demo, marketing claims, uptime number) and what you'd actually need if a customer disputes a contract:\n\n**The certificate itself is the weak point.** \"Legally binding with a full audit trail\" is marketing copy \u2014 read SignFast's actual compliance documentation, not the homepage. Specifically check whether the completion certificate is cryptographically verifiable on its own (hash of the document, signer IP/timestamp, tamper-evident seal) or whether proving authenticity requires calling back into SignFast's API later. If it's the latter, your dispute defense depends on SignFast still existing and retaining records \u2014 check their data retention terms and what happens to historical audit data if you ever cancel or they go under.\n\n**The demo only tested the happy path.** Twice, successfully, isn't the same as testing what you'll actually hit in production: declined/expired signature links, multi-signer sequencing, partial completions, webhook delivery failures (if their webhook drops silently, you never learn a contract was signed), and retry/idempotency behavior on the completed-docs API.\n\n**Compliance scope.** Confirm ESIGN/UETA coverage explicitly if this is US-only, or eIDAS/other regimes if you have customers elsewhere \u2014 \"legally binding\" claims are often jurisdiction-specific even when not stated as such.\n\n**Signatures are PII plus you're storing legal documents.** Get their DPA and check for SOC 2 Type II (not Type I \u2014 Type I just means the controls exist on paper, not that they've operated correctly over time). Confirm where data is hosted if you have any residency requirements.\n\n**Uptime number is doing less work than it looks like.** 99.98% aggregate could hide outages concentrated in the signing API specifically (vs. their marketing site). Check their incident history, not just the headline stat, and decide what happens to onboarding if the widget is down \u2014 is there a fallback, or does the whole flow block?\n\n**Bulk export.** Confirm you can pull all historical signed docs/certificates via API in bulk, not just one at a time \u2014 matters both for your own document-store migration and as leverage if you ever need to leave.\n\nGiven this touches legally enforceable contracts and customer PII, I'd want at least a DPA review and a security sign-off before cutover even though the dev lift is small \u2014 that's usually the part that doesn't fit in a Friday timeline, not the integration code itself.",
+  "ttft_ms": 3681,
+  "ttft_stream_ms": 745,
+  "time_to_request_ms": 24,
+  "time_to_request_from_spawn_ms": 1977093,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079751861.5042,
+  "type": "result",
+  "duration_ms": 31887,
+  "uuid": "c213d8b7-8ddc-49dc-ba6b-00f064396830",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C2_description_only",
+  "_trial": 2,
+  "_input_spec_sha256": "0c10a8d236d75edd045ad19567782e25bb400e6c520f5dc8a0d2842a55e93504"
+}

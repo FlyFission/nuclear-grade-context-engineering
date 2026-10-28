@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 17483,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.03954970000000001,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2748,
+    "cache_read_input_tokens": 23679,
+    "output_tokens": 1017,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2748,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 617,
+        "cache_read_input_tokens": 8880,
+        "cache_creation_input_tokens": 148,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 148
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006850000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1017,
+      "cacheReadInputTokens": 23679,
+      "cacheCreationInputTokens": 2748,
+      "webSearchRequests": 0,
+      "costUSD": 0.0388647,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory is empty \u2014 there's no actual codebase here for me to check consumers, docs, or tests against. So I can't verify impact directly; I have to answer based on what a public API field rename generally entails.\n\n**No, this isn't safe to \"just merge\" as a quick change**, regardless of how small the diff is. The one-line size of the change is irrelevant \u2014 what matters is the blast radius: `total` is a public, external-facing contract. Renaming it will silently break any client parsing that field (dashboards, integrations, mobile apps, partner systems) with no error on your side \u2014 they'll just start getting `null`/missing data.\n\nBefore merging, you'd need to check at least:\n- **API docs / OpenAPI spec** \u2014 do they reference `total`? Must update.\n- **Client SDKs** (if you maintain any) \u2014 need updating in lockstep.\n- **Tests** \u2014 any contract/snapshot tests asserting on `total` will break (that's expected, but confirm nothing else silently breaks).\n- **Internal consumers** \u2014 other services/frontends in your own stack calling this endpoint.\n- **External consumers** \u2014 this is the real risk. You likely don't have visibility into who depends on `total`.\n\nThe standard safe path for a breaking public API change:\n1. **Add** `order_total` alongside `total` (don't remove yet).\n2. Announce deprecation of `total` with a timeline, update docs.\n3. Remove `total` only after the deprecation window, ideally with actual evidence of migration (e.g., no more requests hitting the old field, or a version bump).\n\nIf this API is unversioned or has no external consumers (e.g., it's internal-only despite being called \"public\"), the risk profile is very different \u2014 worth confirming that first, since it changes the answer entirely.\n\nSince I can't see the actual repo to check for existing docs/tests/consumers, want me to look once you point me at the right directory, or do you already know whether this API has external consumers?",
+  "ttft_ms": 2776,
+  "ttft_stream_ms": 868,
+  "time_to_request_ms": 70,
+  "time_to_request_from_spawn_ms": 251709,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788890073.447,
+  "type": "result",
+  "duration_ms": 17695,
+  "uuid": "4ca229ba-cbc6-44f5-aaad-10d3cb6a2cc2",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "ad442de17887c6883c7f7bf079b4e00edb13c3d2c7a0774a07a88dac6a6afd3d"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 36118,
+  "num_turns": 6,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.07951599999999999,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 5094,
+    "cache_read_input_tokens": 38340,
+    "output_tokens": 2446,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 5094,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1598,
+        "cache_read_input_tokens": 11035,
+        "cache_creation_input_tokens": 339,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 339
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 656,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000736,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 2446,
+      "cacheReadInputTokens": 38340,
+      "cacheCreationInputTokens": 5094,
+      "webSearchRequests": 0,
+      "costUSD": 0.07877999999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before you ship that PR description, worth separating two things: the code diff genuinely is one line, but the *behavior* change is not \u2014 you're replacing the reasoning engine that decides whether to autonomously hand back customer money. That's exactly the kind of change the skill's mode selection is meant to catch: real AI power (a new model's judgment), real release stakes (autonomous financial approvals), so this should be a **Standard record**, not Quick.\n\nNote: this working directory is empty (no `.nuclear/` scaffold or `tools/ng.py` here), so I can't run the actual tool for you \u2014 but here's what the record needs, so you can create it in your real repo with `python tools/ng.py new <slug> --mode standard`.\n\n**Required files: `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, `ship.md`**\n\n- **`risk.md`** \u2014 Why Standard, not Quick: this is an autonomous agent that moves money without human-in-the-loop; a model swap changes its judgment, not just its plumbing. Name the specific risks: different approval/denial calibration, different susceptibility to prompt injection or social-engineering in refund requests, different behavior on ambiguous/edge-case tickets, different refusal/escalation habits.\n\n- **`basis.md`** \u2014 What the change must actually do: preserve (or improve) refund-approval accuracy and false-approval rate at equal or better cost/latency. State the source of the swap decision (the cost review) and what \"safe\" means here in concrete terms \u2014 e.g., false-approval rate must not regress beyond X%.\n\n- **`plan.md`** \u2014 How you're rolling it out: shadow mode or canary percentage before full cutover, rollback trigger and mechanism (revert the model ID \u2014 should be as fast as the swap itself), who signs off.\n\n- **`trace.md`** \u2014 Link each safety claim to evidence: e.g., \"Provider B does not increase false-approval rate\" \u2192 link to the eval/regression run comparing both models on a labeled set of past refund decisions (including adversarial/edge cases), not just \"unit tests pass.\"\n\n- **`verification.md`** \u2014 The actual proof, with plain status labels (`pass`/`fail`/`gap`): eval results old vs. new model on approve/deny accuracy, false-approval rate, injection resistance, latency, cost. If you didn't test something (e.g., multi-turn manipulation attempts), mark it `gap` or `deferred` \u2014 don't imply coverage you don't have.\n\n- **`ship.md`** \u2014 The release decision itself: go/no-go, based on the verification results, plus the rollback plan and who owns monitoring post-swap (e.g., watching false-approval rate for the first N days).\n\nThe core thing a skeptical reviewer needs six months from now isn't \"the diff was one line\" \u2014 it's **evidence that the new model was evaluated against the old one on the actual refund-approval task**, including edge cases and adversarial inputs, before it started approving real refunds. \"Swapped model per cost review\" in the PR is fine as a summary line, as long as it links to this record instead of standing in for it.\n\nWant me to scaffold these six files with the specifics filled in for this swap?",
+  "ttft_ms": 5990,
+  "ttft_stream_ms": 1605,
+  "time_to_request_ms": 32,
+  "time_to_request_from_spawn_ms": 1005793,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789644358.6406,
+  "type": "result",
+  "duration_ms": 36442,
+  "uuid": "05a9a0ad-08c0-4836-acaa-e69f719d037f",
+  "_skill": "creating-change-records",
+  "_arm": "C4_full_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "d34833729a77f62c818b6c95866bf607e2d7312595419bce930936a6ccbfd925"
+}

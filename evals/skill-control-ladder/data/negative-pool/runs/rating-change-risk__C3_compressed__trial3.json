@@ -1,0 +1,169 @@
+{
+  "duration_api_ms": 9334,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.020509199999999998,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2292,
+    "cache_read_input_tokens": 38059,
+    "output_tokens": 357,
+    "output_tokens_details": {
+      "thinking_tokens": 68
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2292,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 81,
+        "cache_read_input_tokens": 10219,
+        "cache_creation_input_tokens": 180,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 180
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-haiku-5-5": {
+      "inputTokens": 1309,
+      "outputTokens": 25,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00014340000000000002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 0,
+      "cacheCreationEphemeral5mInputTokens": 0,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 357,
+      "cacheReadInputTokens": 38059,
+      "cacheCreationInputTokens": 2292,
+      "webSearchRequests": 0,
+      "costUSD": 0.020365799999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 68,
+      "cacheCreationEphemeral5mInputTokens": 0,
+      "cacheCreationEphemeral1hInputTokens": 2292,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 5,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "There's no README, CONTRIBUTING.md, or any files at all in this repo \u2014 the working directory is empty. I can't fix a typo or a link that doesn't exist here.\n\nCan you confirm the repo/path, or point me to where these files actually live?",
+  "ttft_ms": 2731,
+  "type": "result",
+  "duration_ms": 9124,
+  "uuid": "083e16a9-e83a-4c34-b1e5-62468bf97a13",
+  "ttft_stream_ms": 1665,
+  "time_to_request_ms": 365,
+  "time_to_request_phases_ms": {
+    "other": 53,
+    "system_prompt": 83,
+    "resume_other": 0,
+    "process_user_input": 3,
+    "input_attachments": 26,
+    "input_hooks": 3,
+    "tool_pool_refresh": 1,
+    "init_message": 5,
+    "engine_pickup": 1,
+    "message_prep": 1,
+    "model_config_wait": 127,
+    "autocompact": 11,
+    "query_setup": 1,
+    "model_gates": 0,
+    "tool_schema_build": 20,
+    "message_normalization": 7,
+    "client_creation": 10,
+    "request_build": 13
+  },
+  "turn_start_resume_kind": "none",
+  "process_turn_index": 0,
+  "time_to_request_loop_lag_ms": 203,
+  "time_to_request_cpu_ms": 177,
+  "time_to_request_major_faults": 0,
+  "process_rss_mib_turn_start": 196,
+  "process_anon_mib_turn_start": 104,
+  "process_rss_mib_result": 209,
+  "process_anon_mib_result": 113,
+  "process_peak_rss_mib": 209,
+  "process_cpu_ms_turn": 745,
+  "process_wall_ms_turn": 9124,
+  "process_cpu_ms_streaming": 157,
+  "process_wall_ms_streaming": 3743,
+  "main_stream_count": 4,
+  "main_stream_event_count": 66,
+  "main_stream_chunk_count": 26,
+  "input_attachments_detail": {
+    "slowest_producer": "queued_commands",
+    "slowest_producer_ms": 23,
+    "cpu_ms": 10,
+    "major_faults": 0
+  },
+  "first_content_frame_ms": 1665,
+  "time_to_request_from_spawn_ms": 120190,
+  "warm_spare_claimed": false,
+  "flag_fetch_kick": "not_asked_warm",
+  "time_origin_ms": 1793122218586.6648,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "process_start_tuning": 0,
+  "_skill": "rating-change-risk",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "bf29a986da6dc267bd0658a3ae3c1a4c0d63556a1ed742096b508576f0ee6b55"
+}

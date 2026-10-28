@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 6064,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0220471,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2102,
+    "cache_read_input_tokens": 14507,
+    "output_tokens": 293,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2102,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 211,
+        "cache_read_input_tokens": 8236,
+        "cache_creation_input_tokens": 137,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 137
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 606,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000676,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 293,
+      "cacheReadInputTokens": 14507,
+      "cacheCreationInputTokens": 2102,
+      "webSearchRequests": 0,
+      "costUSD": 0.021371100000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Quick check first \u2014 what's the folder path and the column name/header to sum?\n\nHere's the script, just fill in the two variables at the top:\n\n```python\nimport csv\nimport glob\n\nFOLDER = \"./exports\"      # <-- path to your folder of CSVs\nCOLUMN = \"amount\"          # <-- header name of the column to sum\n\ntotal = 0\nfor path in glob.glob(f\"{FOLDER}/*.csv\"):\n    with open(path) as f:\n        for row in csv.DictReader(f):\n            total += float(row[COLUMN])\n\nprint(total)\n```\n\nUpdate `FOLDER` and `COLUMN`, then run `python sum.py`.",
+  "ttft_ms": 1876,
+  "ttft_stream_ms": 964,
+  "time_to_request_ms": 62,
+  "time_to_request_from_spawn_ms": 1385461,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594379768.725,
+  "type": "result",
+  "duration_ms": 6460,
+  "uuid": "24d15557-fec9-4f1f-8e5f-abbfd8d3fcee",
+  "_skill": "choosing-what-to-control",
+  "_arm": "C0_bare",
+  "_trial": 1,
+  "_input_spec_sha256": "a6be9e52ecb789946b25bce7e674e517736d74371a1a4d5ef5098b4c600a7131"
+}

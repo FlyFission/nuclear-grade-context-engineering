@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 6087,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0216008,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2165,
+    "cache_read_input_tokens": 14516,
+    "output_tokens": 238,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2165,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 99,
+        "cache_read_input_tokens": 8245,
+        "cache_creation_input_tokens": 191,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 191
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 604,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000674,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 238,
+      "cacheReadInputTokens": 14516,
+      "cacheCreationInputTokens": 2165,
+      "webSearchRequests": 0,
+      "costUSD": 0.0209268,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Didn't find that comment via search \u2014 could you point me to the file/function, or paste the snippet? That'll let me tailor the wording to what the function actually guarantees (e.g., which failure modes it truly can't hit, whether locking/atomics back the thread-safety claim) rather than just softening the language generically.",
+  "ttft_ms": 1504,
+  "ttft_stream_ms": 715,
+  "time_to_request_ms": 31,
+  "time_to_request_from_spawn_ms": 1860015,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594854408.6355,
+  "type": "result",
+  "duration_ms": 6677,
+  "uuid": "bb528ff9-c2fa-4b51-97db-e56a697974a6",
+  "_skill": "checking-legal-and-safety-wording",
+  "_arm": "C0_bare",
+  "_trial": 1,
+  "_input_spec_sha256": "ee0aede554e38a26a07d4c06301ad8493c3330b83ff5a55e41beb670c82d0585"
+}

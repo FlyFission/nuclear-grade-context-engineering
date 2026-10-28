@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 10185,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.022522300000000002,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2003,
+    "cache_read_input_tokens": 6271,
+    "output_tokens": 528,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2003,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 528,
+        "cache_read_input_tokens": 6271,
+        "cache_creation_input_tokens": 2003,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2003
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 627,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006969999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 528,
+      "cacheReadInputTokens": 6271,
+      "cacheCreationInputTokens": 2003,
+      "webSearchRequests": 0,
+      "costUSD": 0.021825300000000002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 it shouldn't rotate this one autonomously tonight, even though the \"rotate stale credentials it owns\" policy technically covers it.\n\nThe standing instruction was almost certainly written with the implicit assumption that the credential is exclusive to services the agent owns. A shared database credential used by at least two other teams' services fails that assumption: the agent only has evidence its own service works against the new credential, and it has no visibility into whether the other teams' services will break \u2014 different connection pooling behavior, cached credentials, hardcoded configs, secrets-manager sync delays, etc. If it rotates in prod and one of those other services goes down at night, that's an outage caused by an action taken outside the agent's actual knowledge/ownership boundary, on a resource it doesn't fully control.\n\nThis is a case where the letter of the policy and its intent diverge, and the blast radius (production, shared dependency, other teams unaware) is exactly the kind of situation that warrants a pause rather than a judgment call by the agent alone. Concretely, before rotating:\n\n- Notify the other owning teams (or their on-call) and get explicit acknowledgment/sign-off, not just an FYI.\n- Coordinate a rotation window, ideally with a rollback plan (dual-credential support / grace period if the DB supports it) rather than a hard cutover.\n- Have someone from those teams \u2014 or at minimum a human on your side with authority over the shared resource \u2014 approve the prod rotation.\n\nIf your agent has a way to escalate (\"this action is nominally permitted but affects resources outside my ownership, requesting human review\"), that's the right move tonight rather than proceeding solo.",
+  "ttft_ms": 9145,
+  "ttft_stream_ms": 834,
+  "time_to_request_ms": 30,
+  "time_to_request_from_spawn_ms": 426444,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789064999.3113,
+  "type": "result",
+  "duration_ms": 11084,
+  "uuid": "c6a1a091-bb70-4299-971e-4337dd8fd465",
+  "_skill": "deciding-who-decides",
+  "_arm": "C0_bare",
+  "_trial": 3,
+  "_input_spec_sha256": "748086d354ca801429fe477f58b4c0220aeb5c708f2be28959964158e14b2ca9"
+}

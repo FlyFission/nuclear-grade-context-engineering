@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 12112,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0251413,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2015,
+    "cache_read_input_tokens": 6271,
+    "output_tokens": 696,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2015,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 696,
+        "cache_read_input_tokens": 6271,
+        "cache_creation_input_tokens": 2015,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2015
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 696,
+      "cacheReadInputTokens": 6271,
+      "cacheCreationInputTokens": 2015,
+      "webSearchRequests": 0,
+      "costUSD": 0.0244173,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 don't cut production over this week without independent validation. A few reasons:\n\n- **Marketing claims aren't evidence.** \"99.9% accuracy\" is meaningless without knowing the benchmark dataset, class balance, and what counts as an error (false positives vs. false negatives matter very differently for moderation). SOC2 compliance covers security/operational controls, not moderation quality. Case studies are selected by the vendor to look good.\n- **Content moderation is a trust & safety-critical system.** A regression here isn't just a bug \u2014 it can mean CSAM, harassment, or illegal content getting through, or legitimate users/content getting wrongly blocked at scale. The cost of an untested failure is asymmetric and hard to reverse (harm already done, users churned, legal/regulatory exposure).\n- **Pricing being better is exactly when to be more skeptical**, not less \u2014 cheap-and-untested is a classic setup for hidden quality gaps.\n\nWhat I'd do instead:\n1. **Shadow-test it**: run the new API in parallel against real production traffic (or a representative sample) without acting on its decisions, and diff results against your current provider for a couple weeks.\n2. **Build your own eval set** \u2014 especially edge cases and known-hard examples from your own data/history \u2014 since vendor benchmarks won't reflect your traffic.\n3. **Check latency, uptime SLA, rate limits, and appeals/audit-trail support**, not just accuracy.\n4. **If it looks good, roll out gradually** (e.g., 5% \u2192 25% \u2192 100% traffic) with monitoring and an easy rollback, rather than a hard cutover.\n\nHappy to help you set up a shadow-testing harness or an eval script comparing the two providers' outputs if that's useful.",
+  "ttft_ms": 2589,
+  "ttft_stream_ms": 1044,
+  "time_to_request_ms": 29,
+  "time_to_request_from_spawn_ms": 521329,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789159699.5889,
+  "type": "result",
+  "duration_ms": 12886,
+  "uuid": "65009925-f24a-480a-9fbe-02d989084983",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C0_bare",
+  "_trial": 3,
+  "_input_spec_sha256": "f4a6c2be0ac2917f10e71d220585fc6c0c0f67f6182aa46cab8c5fa7fbe4c3ee"
+}

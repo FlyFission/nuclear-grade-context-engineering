@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 29420,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0492519,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2492,
+    "cache_read_input_tokens": 14793,
+    "output_tokens": 1938,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2492,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1729,
+        "cache_read_input_tokens": 8513,
+        "cache_creation_input_tokens": 259,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 259
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 695,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00078,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1938,
+      "cacheReadInputTokens": 14793,
+      "cacheCreationInputTokens": 2492,
+      "webSearchRequests": 0,
+      "costUSD": 0.0484719,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Not quite \u2014 the shadow-mode track record is solid, but the timing is the problem, not the bot.\n\n**The core issue: unattended first live run, on a payments repo, during an offsite.**\n- 40+ matched decisions proves the *criteria* are sound, but it doesn't prove the *merge execution path* is sound \u2014 that's untested. Recommending vs. actually writing to the repo (branch protection interactions, race conditions, partial failures) is a different code path than what's been validated for two weeks.\n- \"Alerts wired into #payments-infra-alerts\" only helps if someone is actually watching that channel over the weekend. With most of the team at an offsite, confirm there's a named on-call person checking it in near-real-time \u2014 not just that the wiring exists.\n- If something does go sideways (bad transitive break, a compromised dev-tooling package, a lockfile conflict cascading across PRs), you want fast response time. Weekend + offsite is the worst-case window for that, regardless of how clean the history is.\n\n**Also worth separating:** Sana signed off on the *merge criteria config*. Has anyone signed off on *granting the bot write/merge permission* on payments-infra specifically? Those are two different approvals, and the second one is the actual risk-owning decision here.\n\n**Recommendation:** Flip it on, but let its first live runs happen during the week with people around and able to react fast \u2014 not as an unattended weekend debut. Once you've watched it actually merge (not just recommend) a handful of real PRs with someone nearby, then unattended weekend windows are a reasonable next step. If the weekend timing genuinely matters, at minimum: name an on-call owner actively monitoring alerts, confirm you can quickly revoke merge permission or pause the bot if needed, and get explicit sign-off on the permission grant itself.",
+  "ttft_ms": 5447,
+  "ttft_stream_ms": 2649,
+  "time_to_request_ms": 30,
+  "time_to_request_from_spawn_ms": 528461,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078303215.5405,
+  "type": "result",
+  "duration_ms": 30040,
+  "uuid": "c9fcce51-4eaf-45ea-a27d-b14a8a810b49",
+  "_spec": "305019d71060b6d9bc7c72af4d6895ff579028c1a1dde8dcf5f91ce3a5b13f78",
+  "_skill": "checking-release-readiness",
+  "_cand": 2,
+  "_trial": 1
+}

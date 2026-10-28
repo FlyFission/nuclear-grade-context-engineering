@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 30053,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0460777,
+  "usage": {
+    "input_tokens": 10,
+    "cache_creation_input_tokens": 2850,
+    "cache_read_input_tokens": 40759,
+    "output_tokens": 1071,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2850,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 507,
+        "cache_read_input_tokens": 8848,
+        "cache_creation_input_tokens": 282,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 282
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-sonnet-5": {
+      "inputTokens": 10,
+      "outputTokens": 1071,
+      "cacheReadInputTokens": 40759,
+      "cacheCreationInputTokens": 2850,
+      "webSearchRequests": 0,
+      "costUSD": 0.0454227,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    },
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 575,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000655,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't have the tools here to actually verify this \u2014 I only have file-search/read access in this session (no shell/git access), and this working directory doesn't contain a `CONTRIBUTING.md` at all (or any files, actually \u2014 the repo appears empty from what I can see).\n\nSo I can't independently confirm the diff is just that one typo fix. A few options:\n\n1. If you're working in a different local checkout/branch than what's mounted here, paste the actual diff (`git diff` or `git show`) and I'll review it directly.\n2. If you have shell/GitHub CLI access in this environment, run `git diff main -- CONTRIBUTING.md` (or `gh pr diff <number>`) and share the output.\n\nSince it's a docs-only typo fix, the risk is low either way \u2014 but I'd rather confirm the diff is actually scoped to that one line before giving a \"go ahead,\" especially since I can't see it myself right now.",
+  "ttft_ms": 4841,
+  "ttft_stream_ms": 3515,
+  "time_to_request_ms": 174,
+  "time_to_request_from_spawn_ms": 1563718,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594557059.4238,
+  "type": "result",
+  "duration_ms": 22188,
+  "uuid": "53b1f92a-46a9-4e79-a0a8-32409c31c580",
+  "_skill": "proving-claims",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "e17b49c899d809f5ace146a19ca0909463e139382d2a5eee46ce8cacb0360046"
+}

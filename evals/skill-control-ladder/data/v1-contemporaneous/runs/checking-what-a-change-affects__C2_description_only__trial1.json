@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 15991,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0335288,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2430,
+    "cache_read_input_tokens": 23186,
+    "output_tokens": 753,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2430,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 477,
+        "cache_read_input_tokens": 8576,
+        "cache_creation_input_tokens": 134,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 134
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00068,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 753,
+      "cacheReadInputTokens": 23186,
+      "cacheCreationInputTokens": 2430,
+      "webSearchRequests": 0,
+      "costUSD": 0.0328488,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory is empty \u2014 there's no actual codebase here for me to trace usages of the `total` field. So I can't verify impact directly, but I can tell you why \"it's a single line, so it's quick\" is the wrong frame for this change.\n\nRenaming a field in a **public** API response is a breaking change regardless of how small the diff is, because the blast radius isn't the serializer line \u2014 it's every consumer that reads `total` from the response body. Before merging, you'd want to check:\n\n- **API consumers**: any client code (internal services, SDKs, mobile/web frontends) that parses `response.total`\n- **API contract/docs**: OpenAPI/Swagger spec, published API reference docs\n- **Tests**: any test asserting on the `total` key in response fixtures\n- **Versioning/deprecation policy**: does your API have a versioning scheme (e.g., `/v1/orders`) that requires additive-only changes, or a deprecation window for renames?\n- **Webhooks or downstream integrations** if `total` is also emitted elsewhere (events, exports, webhooks)\n\nIf this is truly a public API with external consumers, the safe path is usually: add `order_total` alongside `total`, deprecate `total` with a notice period, then remove it later \u2014 not a straight rename in one PR.\n\nCan you point me to the actual repo/files (this directory is empty), or tell me whether this API has external/third-party consumers vs. only internal ones? That determines whether a straight rename is even viable.",
+  "ttft_ms": 2016,
+  "ttft_stream_ms": 855,
+  "time_to_request_ms": 45,
+  "time_to_request_from_spawn_ms": 1149962,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789788518.1045,
+  "type": "result",
+  "duration_ms": 16288,
+  "uuid": "0326c93f-4d43-4626-9138-d62a7936a7f8",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "6e3e254eac13ff94661d637b0eb5b65d3c5b9effa4cf24ea787f2c0bac8cdcf9"
+}

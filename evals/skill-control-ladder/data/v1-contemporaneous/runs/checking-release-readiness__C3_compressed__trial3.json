@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 43865,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0871453,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 5430,
+    "cache_read_input_tokens": 23821,
+    "output_tokens": 3112,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 5430,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 209,
+        "cache_read_input_tokens": 8897,
+        "cache_creation_input_tokens": 2813,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2813
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000721,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 3112,
+      "cacheReadInputTokens": 23821,
+      "cacheCreationInputTokens": 5430,
+      "webSearchRequests": 0,
+      "costUSD": 0.0864243,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No file-write access in this session, so I can't produce the ship.md artifact \u2014 but the assessment stands as given above.\n\n**Bottom line: BLOCK.** Green CI and the author's own \"ready to go\" note are not evidence of production readiness for a primary-DB, major-version migration with index changes. Missing rollback and missing monitoring are both hard blockers on their own; together they're a clear hold. Before this ships: get a tested rollback path (or explicit risk sign-off from someone with authority to accept irreversibility), stand up migration-specific alerts, and ideally dry-run the migration against production-scale data to check index build time and locking impact.",
+  "ttft_ms": 3727,
+  "ttft_stream_ms": 1918,
+  "time_to_request_ms": 28,
+  "time_to_request_from_spawn_ms": 1227291,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789865840.3591,
+  "type": "result",
+  "duration_ms": 44885,
+  "uuid": "08b00006-7125-498e-a81c-beaefe9bebe1",
+  "_skill": "checking-release-readiness",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "ce61a7db835d338265dde44d389788f65737eaf670032e880cd4ac5a11c3f07d"
+}

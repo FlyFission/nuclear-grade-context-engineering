@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 28832,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0492913,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2060,
+    "cache_read_input_tokens": 6271,
+    "output_tokens": 2285,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2060,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2285,
+        "cache_read_input_tokens": 6271,
+        "cache_creation_input_tokens": 2060,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2060
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 679,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000769,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2285,
+      "cacheReadInputTokens": 6271,
+      "cacheCreationInputTokens": 2060,
+      "webSearchRequests": 0,
+      "costUSD": 0.048522300000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I can help with the text change, but I'd pause before merging this one without a quick compliance check, even though it's small.\n\nA couple of specific reasons this particular change is higher-stakes than a typical copy tweak:\n\n- **\"Certified\" is technically imprecise for SOC 2.** SOC 2 is an *attestation report*, not a certification \u2014 there's no certifying body. Many compliance/legal teams specifically avoid the word \"certified\" in marketing copy for this reason, since it can be read as an overstatement in a sales or regulatory context. If you're making this claim *more prominent*, that imprecision becomes more visible, not less.\n- **Type II reports cover a specific audit period and scope.** If the new copy implies broader or more current assurance than what the report actually covers (e.g., no \"as of [date]\" or scope caveat), that's a real exposure \u2014 especially since this is going live specifically to influence a sales conversation with a prospect who's already asking pointed questions about it.\n- **Dana approving the original copy isn't the same as compliance sign-off on a more prominent claim.** She wrote the wording, but making it a headline-level claim in response to competitive pressure is a different risk profile than the original mention \u2014 worth a quick check with whoever owns your compliance attestations (security/legal), not because the fact is wrong, but because prominence + timing + audience (a diligence-minded prospect) is exactly when someone tends to ask for the report and check the wording against it.\n\nIf you get a thumbs-up from whoever owns the SOC 2 relationship (even a one-line Slack confirmation that the wording matches what the report supports), I'm happy to make the edit and merge it right away \u2014 this isn't a \"run it through a formal review cycle\" ask, just a sanity check on claim accuracy before it goes in front of a prospect tomorrow.\n\nWant me to go ahead and apply the diff now so it's ready, and you just need that one confirmation before pushing? If so, paste the diff or point me to the file/repo path.",
+  "ttft_ms": 19909,
+  "ttft_stream_ms": 903,
+  "time_to_request_ms": 36,
+  "time_to_request_from_spawn_ms": 1849948,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079624556.6213,
+  "type": "result",
+  "duration_ms": 29474,
+  "uuid": "fa710690-fa6c-4f32-83ce-10520bc650e6",
+  "_skill": "rating-change-risk",
+  "_arm": "C0_bare",
+  "_trial": 3,
+  "_input_spec_sha256": "40fd4c7106447e067c1f8baa74e39b19b2402aa6e67462b622061d1638333640"
+}

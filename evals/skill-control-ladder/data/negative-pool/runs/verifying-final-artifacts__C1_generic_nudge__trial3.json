@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 9842,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.022902000000000002,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2161,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 489,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2161,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 489,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2161,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2161
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 641,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007109999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 489,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2161,
+      "webSearchRequests": 0,
+      "costUSD": 0.022191000000000002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I can only see the new version here \u2014 the diff didn't come through, just the final `format_username` function. To confirm no logic got flipped I'd need the original nested if/else to compare against. Could you paste the \"before\" version (or the actual diff with `-`/`+` lines)?\n\nThat said, a couple things worth flagging just from reading this version on its own:\n\n1. **Order of checks**: `not name` is checked before `.strip()`. If `name` is a string of only whitespace (e.g. `\"   \"`), it's truthy, so it skips the \"unknown\" branch, gets stripped to `\"\"`, and then falls through to `return name` \u2014 returning an empty string rather than `\"unknown\"`. Worth checking whether the original handled that case (stripping before the falsy check) \u2014 if so, this would be a behavior change, not just a refactor.\n2. **Boundary case**: `len(name) > 20` truncates to `name[:20] + \"...\"`. Confirm the original used `> 20` (not `>= 20` or a different length) and truncated to the same slice length \u2014 off-by-one errors are common in this kind of refactor.\n\nSend over the original and I'll do a line-by-line comparison.",
+  "ttft_ms": 2782,
+  "ttft_stream_ms": 1146,
+  "time_to_request_ms": 82,
+  "time_to_request_from_spawn_ms": 1786741,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594780414.3943,
+  "type": "result",
+  "duration_ms": 10209,
+  "uuid": "7b1c9666-8991-4833-91b3-93b8e944bab7",
+  "_skill": "verifying-final-artifacts",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "ad6ca75cceba38678b955527b3a320b649b06b4e7a3a865df0cd83bf9b126d8c"
+}

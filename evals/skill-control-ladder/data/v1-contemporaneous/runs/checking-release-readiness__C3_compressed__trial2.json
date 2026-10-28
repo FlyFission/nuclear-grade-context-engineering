@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 18774,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0416802,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2735,
+    "cache_read_input_tokens": 14924,
+    "output_tokens": 1339,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2735,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1072,
+        "cache_read_input_tokens": 8644,
+        "cache_creation_input_tokens": 371,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 371
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000696,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1339,
+      "cacheReadInputTokens": 14924,
+      "cacheCreationInputTokens": 2735,
+      "webSearchRequests": 0,
+      "costUSD": 0.0409842,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 this should be blocked, not merged this afternoon.\n\n**Why:**\n- **Evidence is confidence, not verification.** \"CI is green\" and \"the engineer says it's ready\" are both self-reported signals from the same change, not independent confirmation that the migration behaves correctly under production load/data volume. Index changes and version bumps (PG12\u219215) often pass CI on small/synthetic datasets but hit issues at scale (planner behavior changes, lock contention during index builds, replication compatibility).\n- **No rollback = irreversible risk.** A primary user database migration with index changes is a trust-bearing, hard-to-reverse action. Without rollback scripts, if something goes wrong post-deploy (data corruption, index bloat, query regressions, replication break), you have no defined path back. This alone is a blocking gap, not a \"ship with known risk\" item \u2014 you can't accept a risk you have no mitigation for.\n- **No monitoring = no way to detect failure.** Even a clean deploy needs alerts on query latency, lock waits, replication lag, connection errors, and index health specific to this migration. Without them, a slow-burning problem could run unnoticed for hours.\n\n**What \"ready\" looks like before this ships:**\n1. Rollback scripts written and tested (ideally rehearsed in staging) \u2014 owner: the engineer who wrote the migration, reviewed by whoever owns the DB/infra.\n2. Monitoring/alerts added for the specific failure modes this migration introduces (index-related query plans, lock timeouts, replication lag) \u2014 owner: DB/infra on-call.\n3. Some independent verification beyond \"CI green\" \u2014 e.g., a staging run against production-scale data, or a second engineer confirming they exercised the specific index/query paths that changed.\n4. A named rollback trigger/abort criteria (e.g., \"if p99 query latency exceeds X for Y minutes, roll back\") and someone on-call during the deploy window.\n\n**Verdict: block.** Defer the deploy until rollback + monitoring exist and are owned by a named person. Green CI and the author's own write-up aren't sufficient authority to approve an irreversible production database migration.\n\nWant help drafting the rollback script or a monitoring checklist for this specific migration?",
+  "ttft_ms": 3105,
+  "ttft_stream_ms": 1351,
+  "time_to_request_ms": 26,
+  "time_to_request_from_spawn_ms": 1425656,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785790064221.7888,
+  "type": "result",
+  "duration_ms": 17889,
+  "uuid": "3bec7783-1bbc-44e4-928e-06606c84724a",
+  "_skill": "checking-release-readiness",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "ce61a7db835d338265dde44d389788f65737eaf670032e880cd4ac5a11c3f07d"
+}

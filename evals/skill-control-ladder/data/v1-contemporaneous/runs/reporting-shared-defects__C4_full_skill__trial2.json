@@ -1,0 +1,93 @@
+{
+  "is_error": false,
+  "duration_api_ms": 19313,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0529336,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 4590,
+    "cache_read_input_tokens": 27412,
+    "output_tokens": 1091,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4590,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 835,
+        "cache_read_input_tokens": 10662,
+        "cache_creation_input_tokens": 208,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 208
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 702,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000787,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1091,
+      "cacheReadInputTokens": 27412,
+      "cacheCreationInputTokens": 4590,
+      "webSearchRequests": 0,
+      "costUSD": 0.0521466,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [
+    {
+      "tool_name": "Glob",
+      "tool_use_id": "toolu_0146fEfnqewTtbkRd6KDKYw3",
+      "tool_input": {
+        "pattern": "**/*.md",
+        "path": "<sandbox-path>"
+      }
+    }
+  ],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 you're not good yet. You've done the local fix, but that's only half the obligation here. This is a textbook shared-defect case: a bug in `prompt-common`, consumed as-is by sales, onboarding, and internal-tools, that can leak internal tool/DB identifiers to customers. A code comment in your own repo does nothing for the other three teams \u2014 they won't read your override's comment, and this is also a potential data/security exposure (internal tool identifiers leaking to customers), which raises the bar further.\n\nWhat's still missing:\n\n1. **Report the defect against `prompt-common` itself**, not just note it in your fork. File it wherever that package tracks issues (ticket/repo issue), with:\n   - Description: prompt-truncation edge case causes internal tool identifiers to leak into customer-facing output.\n   - Affected consumers: support (patched locally), sales, onboarding, internal-tools (still exposed).\n   - Severity: treat as security/data-exposure relevant \u2014 internal tool/query identifiers reaching customers is an information-disclosure issue, not just a cosmetic bug.\n   - The fix or workaround you already built (your override), so others can apply it immediately without re-deriving it.\n\n2. **Notify the other three teams directly** \u2014 don't rely on them noticing a ticket. A message naming the bot owners, the risk, and the workaround/fix, with an owner assigned to land the real fix in `prompt-common` (ideally you, since you already have a working patch, or whoever owns that package).\n\n3. **Push the actual fix upstream into `prompt-common`**, not just your local override, so the other teams get it by updating a dependency rather than each having to hand-roll the same patch. Your local override should ideally be temporary, removed once upstream is fixed.\n\n4. **Log it in your deficiency/OPEX tracking** (if you have one) so it's auditable that the defect was found, evaluated for downstream impact, and notice was sent \u2014 not just fixed silently in one place.\n\n5. **Escalate**, given this touches potential customer-facing leakage of internal system details \u2014 flag to whoever owns security/privacy review, since \"internal tool names leaking to customers\" is the kind of thing that can matter for both security posture and customer trust, and it's the kind of call that shouldn't rest on one engineer's judgment alone.\n\nGiven the severity (customer-facing leak of internal identifiers, three teams unknowingly exposed), I'd treat this as urgent enough to notify today rather than batch it into routine backlog grooming \u2014 want help drafting the notice or the upstream issue/PR?",
+  "ttft_ms": 2765,
+  "ttft_stream_ms": 1244,
+  "time_to_request_ms": 30,
+  "time_to_request_from_spawn_ms": 763315,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789401867.4736,
+  "type": "result",
+  "duration_ms": 18434,
+  "uuid": "86d0f149-5328-40b6-8b04-659d46714fc2",
+  "_skill": "reporting-shared-defects",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "7912033376cc4af1f6ec5fb29b3e2ec73aa9d4ae41ee51ac2c01006fd37cf04d"
+}

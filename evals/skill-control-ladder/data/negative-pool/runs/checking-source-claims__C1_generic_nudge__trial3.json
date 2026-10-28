@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 16551,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0329144,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2666,
+    "cache_read_input_tokens": 32078,
+    "output_tokens": 440,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2666,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 51,
+        "cache_read_input_tokens": 8803,
+        "cache_creation_input_tokens": 143,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 143
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 601,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006709999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 440,
+      "cacheReadInputTokens": 32078,
+      "cacheCreationInputTokens": 2666,
+      "webSearchRequests": 0,
+      "costUSD": 0.032243400000000005,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory appears to be empty \u2014 I can't find any files, including a version-parsing helper. Could you paste the function here, or let me know the file path where you added it?",
+  "ttft_ms": 2416,
+  "ttft_stream_ms": 2032,
+  "time_to_request_ms": 87,
+  "time_to_request_from_spawn_ms": 1356775,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594351167.767,
+  "type": "result",
+  "duration_ms": 14912,
+  "uuid": "4ce86d83-0c84-4b8e-bae1-dd53f0463a58",
+  "_skill": "checking-source-claims",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "a1c0b94baa08b22782d74ccd38d359f050001f64a9e5911479c241c369edbe26"
+}

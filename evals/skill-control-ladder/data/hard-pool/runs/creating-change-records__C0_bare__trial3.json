@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 27875,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0444548,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2553,
+    "cache_read_input_tokens": 23276,
+    "output_tokens": 1423,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2553,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1115,
+        "cache_read_input_tokens": 8648,
+        "cache_creation_input_tokens": 176,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 176
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 701,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000791,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1423,
+      "cacheReadInputTokens": 23276,
+      "cacheCreationInputTokens": 2553,
+      "webSearchRequests": 0,
+      "costUSD": 0.0436638,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before I draft this, one thing needs pinning down: was build #9012 run on the commit **after** you rebased onto main (i.e., the actual SHA that will be merged), or was it the run from before the rebase?\n\nThis matters because if #9012 predates the rebase, it wasn't run against the code that's actually going out \u2014 it wouldn't have exercised the interaction with yesterday's queue-timeout fix at all, even though your diff is just the one constant. \"Fully tested\" as a claim should point to CI evidence for the exact commit being merged, not a prior one.\n\nCan you confirm which commit #9012 built? If it's the post-rebase one, I'll write the record now with that as evidence. If it's pre-rebase, we should either wait for a fresh CI run on the rebased branch or note the gap explicitly in the record rather than asserting full test coverage.",
+  "ttft_ms": 2336,
+  "ttft_stream_ms": 1628,
+  "time_to_request_ms": 25,
+  "time_to_request_from_spawn_ms": 1778449,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079553237.5427,
+  "type": "result",
+  "duration_ms": 28186,
+  "uuid": "c0728422-c39f-48a7-a3b2-40e3fbb8b131",
+  "_skill": "creating-change-records",
+  "_arm": "C0_bare",
+  "_trial": 3,
+  "_input_spec_sha256": "b7e0a836d6efd3701790c8ba9c3bd4a03e5481eece6d357ec920dfc7943a50e0"
+}

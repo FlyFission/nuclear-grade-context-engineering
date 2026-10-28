@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 16282,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.029348000000000003,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2174,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 913,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2174,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 913,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2174,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2174
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000719,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 913,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2174,
+      "webSearchRequests": 0,
+      "costUSD": 0.028629,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 don't cut production moderation over this week based on vendor marketing alone. \"99.9% accuracy\" and \"SOC2 compliant\" are unverified claims from a sales page (case studies are cherry-picked, and \"SOC2 compliant\" isn't the same as having passed a Type II audit \u2014 ask for the actual report and check the trust services criteria in scope), and moderation failures have real downstream harm (illegal content getting through, wrongful takedowns, legal/brand exposure) that you can't undo after the fact.\n\nThe tradeoff is cost savings now vs. the risk of unvalidated failure modes on your actual content mix \u2014 startups' claimed accuracy rarely transfers cleanly to a new domain. Before switching, I'd want: (1) a shadow/parallel run against your current pipeline on real traffic to compare precision/recall on your labeled edge cases, (2) the signed SOC2 report and DPA reviewed (especially if it processes user content/PII), and (3) a rollback plan if it goes live. That's a 1-2 week validation effort, not a blocker to eventually switching if the pricing is genuinely better.",
+  "ttft_ms": 7248,
+  "ttft_stream_ms": 931,
+  "time_to_request_ms": 25,
+  "time_to_request_from_spawn_ms": 1172984,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789811520.083,
+  "type": "result",
+  "duration_ms": 13585,
+  "uuid": "27e65fb4-153a-4cf0-8e4a-47b0dbcc5602",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "18d2ee05b64b0e7761a276b206d50734d1bba70b467234fb7cb019d0e50fc967"
+}

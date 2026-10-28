@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 13774,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0504927,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 5265,
+    "cache_read_input_tokens": 17129,
+    "output_tokens": 871,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 5265,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 283,
+        "cache_read_input_tokens": 10849,
+        "cache_creation_input_tokens": 696,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 696
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 607,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000687,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 871,
+      "cacheReadInputTokens": 17129,
+      "cacheCreationInputTokens": 5265,
+      "webSearchRequests": 0,
+      "costUSD": 0.04980570000000001,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't see a `package.json` or any system prompt template file in this repository \u2014 this looks like it may be the wrong working directory, or the target project isn't checked out here.\n\nCould you confirm the path to the actual project you want me to edit? I'll hold off on the change until I can locate the real files, since I don't want to guess at what \"the system prompt template\" contains.\n\nAlso, since this is Standard-plus, before merging I'll want to build a minimal change record under `.nuclear/changes/<slug>/` covering:\n- **Dependency bump**: what changed between 4.2.0 \u2192 4.3.1 (changelog/breaking changes check), since even patch-looking bumps can shift default behavior for an API client.\n- **Prompt edit**: the exact instruction added and why \u2014 since this is user-visible model behavior, not just internal wiring.\n\nPoint me to the right directory and I'll proceed.",
+  "ttft_ms": 5957,
+  "ttft_stream_ms": 1292,
+  "time_to_request_ms": 27,
+  "time_to_request_from_spawn_ms": 1044174,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789682630.2131,
+  "type": "result",
+  "duration_ms": 14117,
+  "uuid": "7beab0a0-70fe-4346-850a-abb0abf11843",
+  "_skill": "using-nuclear-grade",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "9e7149ea8dba9813c1eba8870939482dc23262abe038ac73b36d29c5f3b9378f"
+}

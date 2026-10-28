@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 27356,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0531823,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2700,
+    "cache_read_input_tokens": 23581,
+    "output_tokens": 1941,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2700,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1612,
+        "cache_read_input_tokens": 8814,
+        "cache_creation_input_tokens": 166,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 166
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 680,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007750000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1941,
+      "cacheReadInputTokens": 23581,
+      "cacheCreationInputTokens": 2700,
+      "webSearchRequests": 0,
+      "costUSD": 0.052407300000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "That repo directory here is empty \u2014 I can't actually inspect the schema, validator, or configs you're describing to verify anything myself. So the below is generic guidance, not something I've confirmed against your code.\n\nThe main risk with this rename isn't test coverage \u2014 it's **who else reads that field name that your test suite doesn't cover**:\n\n1. **Is this field customer-facing/persisted, not just internal?** A billing config schema field, unlike a variable name, likely gets written into config files that already exist on customer systems or in your DB. If any live customer already has `graceperiod_days` in a saved config, renaming it in the validator means their existing config now fails validation (or worse, silently drops the field and falls back to a default). Worth checking: is `apikey`\u2192`api_key` actually comparable, or was that an internal-only key never persisted in customer data? If it *was* persisted, did you add a compatibility shim (accept both keys) rather than a hard rename?\n\n2. **Search scope** \u2014 grep the whole codebase (and any other repos/services that consume this schema) for the literal string, not just the files you listed: serialization code, DB columns/migrations, API request/response schemas, error message strings, log parsers, CLI flags, env vars, any JSON Schema `$id`/examples elsewhere, terraform/IaC, and generated/compiled artifacts. A schema rename with no deserialization shim is the classic way to silently break something outside the four files you touched.\n\n3. **Given the customer call tomorrow**: if there's any chance an existing customer config on disk/in prod uses the old name, breaking on merge day is worse than the typo. Safer path is usually: accept both field names in the validator (old one deprecated/warned), ship the new name in templates/docs now, remove the old alias later.\n\n4. **Schema version bump** \u2014 if the schema has a version field, bump it so old configs are distinguishable rather than silently reinterpreted.\n\nIf you can point me at the actual repo/files, I can check the rename's blast radius directly instead of speaking generically.",
+  "ttft_ms": 1880,
+  "ttft_stream_ms": 1079,
+  "time_to_request_ms": 25,
+  "time_to_request_from_spawn_ms": 560963,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078335755.5232,
+  "type": "result",
+  "duration_ms": 28114,
+  "uuid": "f0b1a51c-0887-4879-9d0e-d5fbd0e9790b",
+  "_spec": "be400f96bbb2a095d695890fe97fa0df023946f5415fc136ea9e9ebf0fc1dc47",
+  "_skill": "checking-what-a-change-affects",
+  "_cand": 1,
+  "_trial": 3
+}

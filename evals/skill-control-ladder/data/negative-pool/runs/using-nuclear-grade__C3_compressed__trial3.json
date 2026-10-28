@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 5449,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.019655,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2307,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 217,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2307,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 217,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2307,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2307
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 598,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000668,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 217,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2307,
+      "webSearchRequests": 0,
+      "costUSD": 0.018987,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This is a trivial, throwaway snippet \u2014 administrative floor, no need for any process overhead.\n\n```python\nimport pandas as pd\n\ndf = pd.read_csv(\"your_file.csv\")\nempty_count = df[\"email\"].isna().sum() + (df[\"email\"].astype(str).str.strip() == \"\").sum()\nprint(empty_count)\n```\n\nNote: `isna()` catches actual NaN/missing values, and the second part catches empty strings (`\"\"`) that pandas might read as non-null. If your CSV only has one of those cases, you can drop the other half.",
+  "ttft_ms": 2819,
+  "ttft_stream_ms": 2147,
+  "time_to_request_ms": 128,
+  "time_to_request_from_spawn_ms": 1775829,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594769063.3616,
+  "type": "result",
+  "duration_ms": 6052,
+  "uuid": "56f41423-e3e8-421e-a60d-5d294d23037e",
+  "_skill": "using-nuclear-grade",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "03bd70788f5c22a036cad6f5c16ffe5326bdeb65e55bff7355b97515003c5ca0"
+}

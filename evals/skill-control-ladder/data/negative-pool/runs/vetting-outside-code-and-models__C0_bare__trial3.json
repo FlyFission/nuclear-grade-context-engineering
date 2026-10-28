@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 6758,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0201835,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2099,
+    "cache_read_input_tokens": 14465,
+    "output_tokens": 172,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2099,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 50,
+        "cache_read_input_tokens": 8194,
+        "cache_creation_input_tokens": 176,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 176
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 573,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006580000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 172,
+      "cacheReadInputTokens": 14465,
+      "cacheCreationInputTokens": 2099,
+      "webSearchRequests": 0,
+      "costUSD": 0.0195255,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No remaining references to `calcTotal` anywhere in the repo \u2014 your rename and the two updated callers are the only spots, so nothing else should break the build.",
+  "ttft_ms": 1459,
+  "ttft_stream_ms": 1070,
+  "time_to_request_ms": 145,
+  "time_to_request_from_spawn_ms": 1800166,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594793741.8188,
+  "type": "result",
+  "duration_ms": 6642,
+  "uuid": "0e8fbbe7-f8a7-4f47-953d-5d70a3a47dd0",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C0_bare",
+  "_trial": 3,
+  "_input_spec_sha256": "d5213e22b83026480f19ed36efee2abdb1550d3a43439cb9a6d6077bd0a7f9aa"
+}

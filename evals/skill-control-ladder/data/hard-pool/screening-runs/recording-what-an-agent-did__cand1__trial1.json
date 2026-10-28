@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 27598,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.04457799999999999,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2247,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1895,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2247,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1895,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2247,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2247
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 701,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000781,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1895,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2247,
+      "webSearchRequests": 0,
+      "costUSD": 0.043796999999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Yes \u2014 this breaks the exact guarantee you just built the feature to provide.\n\nThe trace stores the diff hash \"from the moment of approval,\" but if you auto-commit formatting changes after that and before merge, the code that actually ships no longer matches the approved hash. If a release is ever questioned, your answer to \"does the hash match what merged?\" becomes \"no, we ran an automated, unreviewed change in between\" \u2014 which is precisely the gap this system exists to close. And \"it's just formatting\" isn't a safe assumption to bake into an audit trail: goimports can reorder/drop imports in ways that aren't purely cosmetic, and more importantly, anyone with write access to that hook now has a window to inject anything post-approval without a human re-reviewing it. One clean run on Marcus's branch doesn't test for that \u2014 it's a structural gap, not a bug that shows up in normal use.\n\nBetter options, in order of preference:\n1. Run gofmt/goimports **before** the approval request goes out (as a pre-check that fails/auto-fixes prior to review), so the diff the approver sees and hashes is already the final formatted code \u2014 no post-approval mutation needed.\n2. If you must format after approval, re-hash the post-format diff and store both hashes with a note that an automated step ran \u2014 but this quietly weakens \"approver signed off on this exact code\" to \"approver signed off on a similar-but-not-identical diff,\" so I'd avoid it.\n3. Alternative: make formatting a CI gate that fails the merge job (rather than auto-commits), forcing a re-approval loop on the rare case it's needed \u2014 slower, but keeps the hash meaningful.\n\nI'd hold this out of today's cut and go with option 1 \u2014 it's a small reorder of your hook (format-then-approve instead of approve-then-format), not a redesign. Want me to look at where the approval hook currently fires so we can move the formatter before it?",
+  "ttft_ms": 17966,
+  "ttft_stream_ms": 1537,
+  "time_to_request_ms": 66,
+  "time_to_request_from_spawn_ms": 785082,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078559789.8264,
+  "type": "result",
+  "duration_ms": 27496,
+  "uuid": "5e3abfd2-1bcf-4302-a21b-b77452bc6257",
+  "_spec": "1cc94828f5a61926c2acc52aefd4c178d3c118170f4678b387f65ec9ee435d87",
+  "_skill": "recording-what-an-agent-did",
+  "_cand": 1,
+  "_trial": 1
+}

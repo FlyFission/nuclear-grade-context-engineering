@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 47645,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.102312,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 6426,
+    "cache_read_input_tokens": 18600,
+    "output_tokens": 3830,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 6426,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 3549,
+        "cache_read_input_tokens": 12320,
+        "cache_creation_input_tokens": 386,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 386
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 634,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000714,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 3830,
+      "cacheReadInputTokens": 18600,
+      "cacheCreationInputTokens": 6426,
+      "webSearchRequests": 0,
+      "costUSD": 0.101598,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Since I can't see your actual repo (it's not in this working directory), I'll work from the categories you described. Here's a proposed layout using the folder-decision checklist \u2014 you'll need to fill in real service/domain names.\n\n## Folder map\n\n| Work-breakdown piece | Current home | New home | Disposition |\n|---|---|---|---|\n| Config templates | `misc/` | `config/templates/` | **kept** \u2014 versioned reference, changes with deploy/setup process |\n| One-off migration scripts (already run) | `misc/` | `scripts/migrations/archive/` | **archive** \u2014 historical record, never re-run, read-only |\n| Archived compliance reports | `misc/` | `docs/compliance/archive/` | **archive** \u2014 audit trail, read-only |\n| Shared helpers used by 2+ services | `misc/` + scattered in `utils/` | `packages/<domain-name>/` (one package per cohesive concern, e.g. `packages/http-client/`, `packages/date-format/`) | **kept** \u2014 actively maintained, real dependency of multiple services |\n| Old meeting notes | `misc/` | *not code* \u2014 move to wiki/drive, or `docs/meeting-notes/archive/` if it must stay in-repo | **archive/remove** \u2014 flagged below |\n| Helpers used by only one service (from `utils/`) | `utils/` | `services/<that-service>/internal/` (co-located with its only consumer) | **kept** \u2014 changes with that service |\n| Dead/unused helpers (from `utils/`) | `utils/` | delete | n/a |\n\nThe key fix: **`misc` and `utils` both die.** Neither maps to one work-breakdown piece or one disposition rule \u2014 that's exactly why they became junk drawers. Everything gets a home based on *who owns it* and *what happens to it over time*, not \"things we didn't know where to put.\"\n\n## Why `packages/<domain-name>/` instead of one shared folder\n\nA single `packages/shared/` would just be `utils` with a new name \u2014 same junk-drawer failure mode. Instead, group the shared helpers by what they actually do (e.g., `http-client`, `date-format`, `validation`), so each package has one reason to change and a single home. This requires a quick audit of the 30 `utils` files and the shared subset of `misc` \u2014 grep for import sites to confirm which are genuinely multi-service vs. single-consumer vs. dead.\n\n## Naming / depth / single-source check\n\n- **Naming:** all-lowercase, hyphen-separated, no spaces \u2014 pass, as proposed above.\n- **Depth:** max path is `services/<name>/internal/<file>` or `packages/<domain>/<file>` \u2014 3-4 levels, well under the ~8-level cap.\n- **Single source of truth:** shared code lives only in `packages/`, never duplicated into a service; service-only helpers live only in that service's `internal/`. No file has two homes.\n\n## Escalation\n\n- **Meeting notes**: these don't map to any work-breakdown piece or code disposition rule \u2014 they're not really a code-repo artifact. Recommend moving them out of the repo (wiki/Drive) rather than giving them an in-repo home. Flagging this for you to decide rather than silently relocating team history.\n- **Split point between \"shared\" vs \"service-internal\"**: I can't determine this without seeing actual filenames/import graphs. Recommend a quick script to grep cross-service imports before finalizing which of the ~77 files land in `packages/` vs a specific service's `internal/`.\n\nEach non-trivial new folder should get a short README stating: purpose, what belongs, what doesn't, owner, and disposition (e.g., `scripts/migrations/archive/README.md`: \"Completed migrations, kept for audit history, never re-run, do not add new active migrations here\").\n\nWant me to turn this into an actual migration script/checklist once you share the real top-level structure and service names?",
+  "ttft_ms": 3745,
+  "ttft_stream_ms": 1203,
+  "time_to_request_ms": 32,
+  "time_to_request_from_spawn_ms": 1003386,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789641846.992,
+  "type": "result",
+  "duration_ms": 48913,
+  "uuid": "5b4f35f0-0174-4727-bf8b-cb7717dd73c3",
+  "_skill": "organizing-project-folders",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "eec37f5bbfd5123534f4b44cf4c516104a6a6c8bd23501514e309cffebb1a2ab"
+}

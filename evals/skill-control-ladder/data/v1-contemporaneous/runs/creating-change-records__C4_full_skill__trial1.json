@@ -1,0 +1,93 @@
+{
+  "is_error": false,
+  "duration_api_ms": 37907,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0790746,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 4983,
+    "cache_read_input_tokens": 27492,
+    "output_tokens": 2678,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4983,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1895,
+        "cache_read_input_tokens": 10962,
+        "cache_creation_input_tokens": 301,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 301
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 656,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000741,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2678,
+      "cacheReadInputTokens": 27492,
+      "cacheCreationInputTokens": 4983,
+      "webSearchRequests": 0,
+      "costUSD": 0.0783336,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [
+    {
+      "tool_name": "Glob",
+      "tool_use_id": "toolu_01MEN3T6UjHTrPRTxKhsRiRt",
+      "tool_input": {
+        "pattern": "**/risk.md",
+        "path": "/"
+      }
+    }
+  ],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A one-line diff doesn't mean one-line risk here. The line is a *model ID string*, but what actually changes is the reasoning engine deciding whether to hand customers money with no human in the loop. Run the questioning-attitude checks and this trips several: uncertainty (a different model will make different judgment calls on edge-case refunds), AI power (fully autonomous financial authority), dependency trust (new provider), and release stakes (real money, real customers, fraud exposure). That combination argues for a **Standard** record, not Quick \u2014 \"swapped model per cost review\" can't answer a reviewer asking \"did the new model actually approve/deny refunds the same way, and where's the evidence?\"\n\n**Standard mode needs six files:** `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, `ship.md`.\n\nWhat each should actually contain for this swap:\n\n- **risk.md** \u2014 mode chosen and why (autonomy over money + a model swap is enough uncertainty to leave Quick), blast radius if the new model is worse (wrong approvals, wrong denials, exploitable prompt-injection differences), and whether the swap is instantly reversible (can you flip the config back with no data loss).\n- **basis.md** \u2014 what \"safe\" means for this agent: existing refund policy/thresholds/escalation rules the model must still honor, stated as the requirement the new model is being held to.\n- **plan.md** \u2014 how you'll check equivalence before shipping: replay a labeled set of historical refund decisions through the new model, compare approve/deny/escalate outcomes vs. the old model, specifically flag high-value and edge cases, check guardrail/jailbreak behavior, note latency and cost.\n- **trace.md** \u2014 each claim linked to its evidence: e.g. \"new model matches old model's decisions on N% of the historical set\" \u2192 link to the eval run; \"no new approvals above $X without escalation\" \u2192 link to that test's output.\n- **verification.md** \u2014 plain pass/fail/gap per check (decision parity, guardrail behavior, latency/cost, rollback tested) \u2014 not a narrative.\n- **ship.md** \u2014 the actual release decision, rollback plan, and what you're monitoring post-launch for drift (since the model can behave differently in production than in the eval set).\n\nIf you want, I can scaffold this now with `ng.py new <slug> --mode standard` and start filling in `risk.md` and `basis.md` \u2014 I'd need the historical-decision dataset/eval approach you plan to use for `plan.md` and `trace.md` before those two can be more than placeholders. Want me to do that?",
+  "ttft_ms": 9464,
+  "ttft_stream_ms": 3200,
+  "time_to_request_ms": 1782,
+  "time_to_request_from_spawn_ms": 394784,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789031190.5361,
+  "type": "result",
+  "duration_ms": 40141,
+  "uuid": "cfdc5d92-65f8-4c60-bd8c-ad454ec47149",
+  "_skill": "creating-change-records",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "d34833729a77f62c818b6c95866bf607e2d7312595419bce930936a6ccbfd925"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 9700,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.028952900000000004,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2577,
+    "cache_read_input_tokens": 23253,
+    "output_tokens": 387,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2577,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 67,
+        "cache_read_input_tokens": 8601,
+        "cache_creation_input_tokens": 256,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 256
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 592,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000692,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 387,
+      "cacheReadInputTokens": 23253,
+      "cacheCreationInputTokens": 2577,
+      "webSearchRequests": 0,
+      "costUSD": 0.0282609,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I can't find `utils/date.js` or a `formatTimestamp` function anywhere in this repo \u2014 neither the file nor the function exists here. Can you double check the path, or point me to the right repo/branch?",
+  "ttft_ms": 3324,
+  "ttft_stream_ms": 2765,
+  "time_to_request_ms": 150,
+  "time_to_request_from_spawn_ms": 1456641,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594450876.5527,
+  "type": "result",
+  "duration_ms": 8703,
+  "uuid": "51fd0940-10f5-4c5d-b54b-e29154fdfbd9",
+  "_skill": "declaring-intent",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "7693a4682f858eac2d281fcd4c4c9e556267770b6a470908ee5aa9d8004024e4"
+}

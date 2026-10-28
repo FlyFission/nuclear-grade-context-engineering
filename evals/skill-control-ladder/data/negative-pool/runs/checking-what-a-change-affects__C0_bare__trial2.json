@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 11457,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.026300899999999995,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2382,
+    "cache_read_input_tokens": 23003,
+    "output_tokens": 295,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2382,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 70,
+        "cache_read_input_tokens": 8519,
+        "cache_creation_input_tokens": 134,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 134
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 585,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000665,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 295,
+      "cacheReadInputTokens": 23003,
+      "cacheCreationInputTokens": 2382,
+      "webSearchRequests": 0,
+      "costUSD": 0.025635899999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I couldn't find `scripts/backup.sh` in this repo \u2014 there's no such file or matching path anywhere in the working directory. Could you confirm the correct path, or is this perhaps in a different repo/directory?",
+  "ttft_ms": 1563,
+  "ttft_stream_ms": 1171,
+  "time_to_request_ms": 28,
+  "time_to_request_from_spawn_ms": 1365629,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594359511.3108,
+  "type": "result",
+  "duration_ms": 10512,
+  "uuid": "4cb4c743-18d9-46dd-8091-875f2cd689ae",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "55e8610723bda98e1638d38faa6dbed6bdb07be45f9196a4081baa4e9060514e"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 32350,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0499093,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2087,
+    "cache_read_input_tokens": 6271,
+    "output_tokens": 2315,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2087,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2315,
+        "cache_read_input_tokens": 6271,
+        "cache_creation_input_tokens": 2087,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2087
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 700,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000775,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2315,
+      "cacheReadInputTokens": 6271,
+      "cacheCreationInputTokens": 2087,
+      "webSearchRequests": 0,
+      "costUSD": 0.0491343,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Good instinct to pause here \u2014 \"diff is tiny\" is a bad proxy for risk when the change grants an AI agent autonomous financial authority. The three changes are small individually but compound each other in ways a line-count review won't catch. Here's what I'd track:\n\n**1. The three changes aren't independent \u2014 treat them as one system change**\n- \"More proactive\" + autonomous refund tool is the risky combination. A prompt nudging the agent to be more assertive, paired with new spending authority, can shift refund-approval behavior in ways neither change alone would predict. Test them together, not as separate smoke tests.\n- If something goes wrong later (refund rate spikes, wrong refunds issued), you want to be able to attribute it to a specific cause. Bundling all three in one PR makes that forensics harder. Consider whether the prompt wording tweak and the tool addition should even ship in the same release.\n\n**2. The tool itself needs guardrails beyond \"$50 cap per call\"**\n- Does `issue_refund` validate that the order exists, isn't already refunded, and belongs to the customer in the conversation? A cap on amount doesn't stop duplicate or fraudulent calls.\n- Per-customer and per-day aggregate limits \u2014 $50 x many refunds x many customers is not a $50 exposure.\n- Idempotency \u2014 can the agent be tricked (or hallucinate its way) into calling it twice for the same order?\n- A kill switch / feature flag to disable the tool instantly without a redeploy, since this is now customer-facing and financial.\n\n**3. Prompt injection is now a financial attack surface, not just an annoyance**\n- Support bots are a classic injection target. Previously the worst case was embarrassing output; now the worst case is unauthorized money leaving the company. You need adversarial testing \u2014 deliberately try to social-engineer the bot into issuing refunds it shouldn't (wrong order, inflated amount, fake urgency) \u2014 not just a happy-path smoke test.\n\n**4. Audit logging and monitoring, from day one**\n- Every `issue_refund` call should log amount, order_id, full conversation transcript, and which prompt/tool version was active. Without this you can't investigate a bad refund after the fact.\n- Set up alerting for anomalies: refund velocity, repeated near-cap amounts, same customer/order repeatedly.\n\n**5. The deleted sentence is a policy change, not a docs cleanup**\n- \"A human always reviews refunds before they are issued\" was a customer-facing commitment. Removing it is you formally changing that policy and telling the public. That decision \u2014 not just the sentence \u2014 deserves explicit sign-off from whoever owns customer trust/legal/finance, separate from code review. Don't let it ride through as a side effect of an engineering PR.\n- If leadership does approve autonomous refunds, the replacement copy should say something accurate (e.g., \"Refunds under $50 may be issued automatically; larger refunds are reviewed by a human\") rather than just silently deleting the guarantee.\n\n**6. Ongoing drift, not just this merge**\n- Log/version the system prompt so future \"small wording tweaks\" are diffable against behavior, not just text.\n- Re-run your adversarial/eval suite whenever the prompt *or* the tool changes, even slightly \u2014 this is exactly the kind of change where a future one-line prompt edit could quietly widen the refund behavior again.\n\nBottom line: line count says small, blast radius says this needs an actual review cycle \u2014 security/adversarial testing on the tool, explicit business/legal sign-off on the public policy change, and logging/alerting before it's live, not after.",
+  "ttft_ms": 14551,
+  "ttft_stream_ms": 768,
+  "time_to_request_ms": 81,
+  "time_to_request_from_spawn_ms": 695311,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789333868.2368,
+  "type": "result",
+  "duration_ms": 33279,
+  "uuid": "a8e5fa7e-9b68-4cd0-9300-0fd75c21b64e",
+  "_skill": "choosing-what-to-control",
+  "_arm": "C0_bare",
+  "_trial": 1,
+  "_input_spec_sha256": "e02328072cf0d9f2d7c03acedcbed1f868c7139595cf3007615c8e71c29324ec"
+}

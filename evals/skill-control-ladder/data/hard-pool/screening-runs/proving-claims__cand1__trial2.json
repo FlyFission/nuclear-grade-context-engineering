@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 29589,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.060873300000000005,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2989,
+    "cache_read_input_tokens": 23921,
+    "output_tokens": 2332,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2989,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1685,
+        "cache_read_input_tokens": 9122,
+        "cache_creation_input_tokens": 147,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 147
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 700,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000765,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2332,
+      "cacheReadInputTokens": 23921,
+      "cacheCreationInputTokens": 2989,
+      "webSearchRequests": 0,
+      "costUSD": 0.0601083,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before finalizing this as \"guaranteed,\" one gap in the evidence chain concerns me: the implementation you described \u2014 look up idempotency key, insert charge if not found \u2014 is a check-then-act pattern. It's not atomic unless the idempotency key column has a DB-level unique constraint (or you're using something like `INSERT ... ON CONFLICT`).\n\nWhy this matters for the specific claim:\n- The test you have (mock timeout \u2192 resend \u2192 assert cached charge returned) validates the **sequential** retry case. It doesn't tell you what happens when two requests with the same key arrive **concurrently** \u2014 e.g., a client retries before the first request's insert has committed, or a network duplicates a packet. In that race window, both requests can pass the lookup (find nothing) before either commits, and you get two charge records.\n- Marcus's review confirms the logic reads cleanly, not that it's race-free \u2014 concurrency bugs are notoriously easy to miss in review since the code \"looks\" correct.\n- \"No tickets on the similar refunds pattern\" is weak evidence for a \"guaranteed\" claim \u2014 absence of reports isn't proof of absence of races, especially if refunds' concurrency profile (retry timing, traffic volume) differs from payments.\n\nTwo ways to close this out today:\n\n1. **Ask a quick question first**: does the idempotency key column have a unique constraint in the DB schema? If yes, the guarantee actually holds (DB rejects the second insert, code just needs to catch that and return the cached row) \u2014 worth confirming that error path is handled, then the claim is solid.\n2. **If there's no unique constraint**, either add one (small change, high value) and add a concurrent-request test, or soften the claim to something the current evidence actually supports, e.g. \"Duplicate charge prevention is verified for sequential retries; concurrent-retry safety not yet tested.\"\n\nCan you check whether that unique constraint exists? That's the one fact that determines whether \"guaranteed\" is accurate or needs qualifying.",
+  "ttft_ms": 4939,
+  "ttft_stream_ms": 935,
+  "time_to_request_ms": 40,
+  "time_to_request_from_spawn_ms": 670118,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078444737.915,
+  "type": "result",
+  "duration_ms": 29898,
+  "uuid": "8615dd42-dbfd-4ab0-8c76-7da15925efaf",
+  "_spec": "658493cbfcee3615de9e4c911ee8d06825b9112da67789ce04d03785ca2d10ca",
+  "_skill": "proving-claims",
+  "_cand": 1,
+  "_trial": 2
+}

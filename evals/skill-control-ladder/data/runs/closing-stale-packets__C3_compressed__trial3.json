@@ -1,0 +1,105 @@
+{
+  "is_error": false,
+  "duration_api_ms": 31276,
+  "num_turns": 9,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0763939,
+  "usage": {
+    "input_tokens": 14,
+    "cache_creation_input_tokens": 4415,
+    "cache_read_input_tokens": 62563,
+    "output_tokens": 2018,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4415,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 554,
+        "cache_read_input_tokens": 10433,
+        "cache_creation_input_tokens": 262,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 262
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 748,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000823,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 14,
+      "outputTokens": 2018,
+      "cacheReadInputTokens": 62563,
+      "cacheCreationInputTokens": 4415,
+      "webSearchRequests": 0,
+      "costUSD": 0.0755709,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [
+    {
+      "tool_name": "Grep",
+      "tool_use_id": "toolu_017f7GCiphPZ9hkutNyqVthY",
+      "tool_input": {
+        "pattern": "NUCLEAR-GRADE-CLOSED",
+        "path": "/",
+        "output_mode": "files_with_matches",
+        "head_limit": 20
+      }
+    },
+    {
+      "tool_name": "Grep",
+      "tool_use_id": "toolu_01MJr4hpxC9UkkLKy6QLH5nH",
+      "tool_input": {
+        "pattern": "NUCLEAR-GRADE-CLOSED",
+        "path": "~",
+        "output_mode": "files_with_matches",
+        "head_limit": 20
+      }
+    }
+  ],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No packet files exist in the current working directory, so I'll answer based on what you've told me and the standard workflow for this tool.\n\nGiven what you've described, `add-dark-mode-toggle` should be **closed, not deleted or completed**:\n\n- **Not completed** \u2014 the underlying change was explicitly rejected by the team, so filling in the placeholders would encode work nobody wants.\n- **Not deleted** \u2014 even though every file is still placeholder text, the packet isn't \"nothing to learn\": the reason it died (design hadn't finalized the color palette, team decided to punt dark mode this quarter) is exactly the kind of rationale worth preserving so nobody re-litigates or re-starts it by accident later.\n- **Close it** by adding a `NUCLEAR-GRADE-CLOSED:` line to the packet with:\n  - **Rationale:** Team decided in a [date] meeting not to pursue dark mode this quarter; design had not finalized the color palette.\n  - **Replacement:** None (or link a future packet if/when design finalizes the palette and this gets revisited).\n  - **Decider:** whoever owned that call in the meeting (you, if you made/relayed the decision \u2014 name the actual decider, not just \"the team\").\n\nOnce that line is added, `ng status .` should stop tagging it `scaffold` and instead show it `closed`, which removes the noise without erasing why the idea was shelved.\n\nFor `refactor-auth-flow`, since a teammate is actively working on it, that's a different action: don't close or delete it \u2014 flag it to them so they add the missing required file (or coordinate a completion timeline), since leaving it `invalid` risks looking like abandoned/dead work to anyone else scanning the report.",
+  "ttft_ms": 1080,
+  "ttft_stream_ms": 717,
+  "time_to_request_ms": 52,
+  "time_to_request_from_spawn_ms": 608186,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025486898.421,
+  "type": "result",
+  "duration_ms": 32151,
+  "uuid": "c7119e27-35b8-438a-b77d-76ba57c78ce4",
+  "_skill": "closing-stale-packets",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "9158a8eeba31bd6599daae93ed82fc9b643498d2a53280ab59cdac230fb4ad66"
+}

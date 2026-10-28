@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 22436,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.052377099999999996,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 3458,
+    "cache_read_input_tokens": 32707,
+    "output_tokens": 1398,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3458,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 465,
+        "cache_read_input_tokens": 8995,
+        "cache_creation_input_tokens": 743,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 743
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 748,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000823,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 1398,
+      "cacheReadInputTokens": 32707,
+      "cacheCreationInputTokens": 3458,
+      "webSearchRequests": 0,
+      "costUSD": 0.051554100000000005,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory is empty, so there's no actual packet tool/files here to operate on \u2014 this is a description-only scenario, so I'll answer based on the facts you've given.\n\nFor `add-dark-mode-toggle`: **close it with a recorded rationale**, don't delete it.\n\nReasoning:\n- It's genuinely abandoned (placeholder-only content, untouched for three weeks, nothing merged) \u2014 no ongoing work to protect, unlike `refactor-auth-flow`.\n- It's not \"complete\" \u2014 there's no real work to finish, so completing isn't applicable.\n- Deleting would erase the paper trail. The decision was to deprioritize dark mode *this quarter* pending the design team finalizing the color palette \u2014 that's a scoped, possibly-temporary decision, not a permanent rejection. If someone revisits dark mode later, a closed packet with rationale (\"deferred \u2014 blocked on design finalizing color palette, team decision [date]\") gives them context instead of them wondering whether it was rejected outright or just forgotten.\n\nLeave `refactor-auth-flow` alone entirely \u2014 it's actively being worked on by a teammate, so it's out of scope for this cleanup regardless of its `invalid` tag; that tag will resolve itself once they add the missing file.\n\nIf you'd like, I can help you draft the closure rationale text once I can see the actual packet tool/format in your repo (this directory appears empty from where I'm running).",
+  "ttft_ms": 2899,
+  "ttft_stream_ms": 2537,
+  "time_to_request_ms": 46,
+  "time_to_request_from_spawn_ms": 283982,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788922504.6057,
+  "type": "result",
+  "duration_ms": 24112,
+  "uuid": "4fda139e-1d99-4962-b597-421be5fc340c",
+  "_skill": "closing-stale-packets",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "46fb51598673e8e765a801adeea814bb1b035054f2d38133b5487d736eb7770d"
+}

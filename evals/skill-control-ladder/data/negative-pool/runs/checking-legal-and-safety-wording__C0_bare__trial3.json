@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 11012,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.023445800000000003,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2155,
+    "cache_read_input_tokens": 14516,
+    "output_tokens": 365,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2155,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 237,
+        "cache_read_input_tokens": 8245,
+        "cache_creation_input_tokens": 181,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 181
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 604,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000674,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 365,
+      "cacheReadInputTokens": 14516,
+      "cacheCreationInputTokens": 2155,
+      "webSearchRequests": 0,
+      "costUSD": 0.022771800000000002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Didn't find it via search \u2014 mind pointing me to the file/function, or pasting the surrounding code? That way I can suggest wording that actually matches what the function does (e.g., whether it's lock-free, uses a mutex, can throw on OOM, etc.) rather than just softening the language generically.\n\nIf you just want a generic placeholder in the meantime, something like:\n\n```\n// Thread-safe (uses internal locking); may throw on allocation failure.\n```\n\nor if it truly can't fail and is truly safe under concurrent access for a specific reason:\n\n```\n// Thread-safe: no shared mutable state. Does not throw.\n```\n\nThe right version depends on the actual guarantees the code provides, so let me know the function and I'll tailor it.",
+  "ttft_ms": 2340,
+  "ttft_stream_ms": 1619,
+  "time_to_request_ms": 49,
+  "time_to_request_from_spawn_ms": 1861529,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594855963.2937,
+  "type": "result",
+  "duration_ms": 10284,
+  "uuid": "2fd57da7-5e05-4081-980e-d567210b2fb6",
+  "_skill": "checking-legal-and-safety-wording",
+  "_arm": "C0_bare",
+  "_trial": 3,
+  "_input_spec_sha256": "ee0aede554e38a26a07d4c06301ad8493c3330b83ff5a55e41beb670c82d0585"
+}

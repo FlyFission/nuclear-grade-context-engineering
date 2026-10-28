@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 27291,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.057857000000000006,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3831,
+    "cache_read_input_tokens": 16070,
+    "output_tokens": 1952,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3831,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1740,
+        "cache_read_input_tokens": 9790,
+        "cache_creation_input_tokens": 321,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 321
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000758,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1952,
+      "cacheReadInputTokens": 16070,
+      "cacheCreationInputTokens": 3831,
+      "webSearchRequests": 0,
+      "costUSD": 0.057099,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This directory is empty \u2014 there's no existing `controlled-items.md`, `change-impact.md`, `verification.md`, or `ship.md` to link into the baseline. I can still draft the record from what you've told me, but a baseline is only as good as its evidence links, so I need a few things from you before I write the file:\n\n1. **Exact commit SHA** merged for PR #482 (PR number alone isn't enough to guarantee rebuildability if the branch moves or gets rebased).\n2. **Where the eval suite results live** (a report, dashboard, or file) \u2014 I don't want to just assert \"precision/recall improved\" without a pointer to the evidence.\n3. **What version this replaces** \u2014 was there a prior known-good baseline for `embed-v1` I should name as the rollback target?\n4. **Owner for accepted risks** \u2014 e.g., who owns monitoring for regressions in edge cases the new eval suite might not cover (cold-start queries, non-English queries, etc. \u2014 whatever's relevant to this service)?\n5. **Where should `baseline.md` live** in this repo (e.g. `docs/baselines/`, root)?\n\nIf any of these don't exist yet (e.g., no separate eval report, no formal `ship.md`), that's fine \u2014 I'll record them as explicit gaps rather than gloss over them, since a baseline that claims evidence it doesn't have isn't trustworthy.",
+  "ttft_ms": 2223,
+  "ttft_stream_ms": 1157,
+  "time_to_request_ms": 128,
+  "time_to_request_from_spawn_ms": 596951,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789235276.391,
+  "type": "result",
+  "duration_ms": 28485,
+  "uuid": "d3183abf-a614-4111-971d-8c37dae92940",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C4_full_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "d28c9c68b0162373c880502a64ded3327b05d69b5d07552dc4b6ca7244d9047a"
+}

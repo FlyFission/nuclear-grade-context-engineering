@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 31053,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.066837,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 4505,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2481,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4505,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2481,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 4505,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4505
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 617,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000702,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2481,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 4505,
+      "webSearchRequests": 0,
+      "costUSD": 0.066135,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before drafting text, one thing worth flagging: \"safe and fully backward compatible,\" backed only by tests you ran yourself and a self-review of your own diff, is a claim that reaches past its evidence. That combination is a **self-check**, not independent verification \u2014 the same person who wrote the refactor also ran the proof and reviewed the diff. For a payments module specifically, that's a high-consequence area (financial correctness, downstream integrations), so I'd narrow the wording rather than assert \"safe.\"\n\nHere's why each piece falls short of \"fully backward compatible\":\n- **Existing test suite green** \u2014 proves the suite's existing assertions still hold. It only proves \"fully backward compatible\" if that suite already had complete coverage of every consumer-facing contract (which is worth stating explicitly, not assumed).\n- **Self-reviewed diff** \u2014 useful, but it's the same actor checking their own work, so it can't stand in for peer/independent review.\n\nSuggested evidence section \u2014 states what you actually know, and separates it from what still needs someone else's eyes:\n\n```markdown\n## Evidence\n\n**Claim:** No behavioral regressions in payment-processing paths covered by the existing test suite.\n- Evidence: `<test command>` \u2014 full suite green (self-run, not yet re-run by CI/reviewer)\n- Status: pass (self-check only \u2014 pending independent CI run)\n\n**Claim:** Public API/interface surface is unchanged where consumers depend on it.\n- Evidence: self-review of diff, line-by-line\n- Status: gap \u2014 self-review only; needs an independent reviewer to confirm, especially around [call sites / serialization formats / error codes \u2014 name the actual risk areas]\n\n**Known gaps:**\n- No independent test execution yet (CI run pending / not yet reviewed by a second person)\n- Backward compatibility for [any code paths not covered by existing tests, e.g. edge cases in retries, currency rounding, webhook payloads] not yet exercised \u2014 call these out explicitly if they exist\n\n**Not claimed:** \"Safe\" and \"fully backward compatible\" are not asserted here \u2014 this PR is requesting the review and test run needed to support that claim.\n```\n\nI'd avoid the phrase \"safe and fully backward compatible\" until someone other than you has run the tests or reviewed the diff \u2014 that's exactly what this PR is for. Want me to tighten this further once you tell me the actual test command and any code paths you know aren't covered by the existing suite?",
+  "ttft_ms": 20389,
+  "ttft_stream_ms": 739,
+  "time_to_request_ms": 41,
+  "time_to_request_from_spawn_ms": 912693,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025791522.161,
+  "type": "result",
+  "duration_ms": 31275,
+  "uuid": "d2ebb892-d8ea-4609-93d2-9bb3eeb85a8e",
+  "_skill": "proving-claims",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "8cd93abb9bf584a6a8b2d6026ecb8b290f73525140c10b7a042570ed17826884"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 20926,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0541397,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 4195,
+    "cache_read_input_tokens": 26439,
+    "output_tokens": 1356,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4195,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 893,
+        "cache_read_input_tokens": 10329,
+        "cache_creation_input_tokens": 146,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 146
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00068,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1356,
+      "cacheReadInputTokens": 26439,
+      "cacheCreationInputTokens": 4195,
+      "webSearchRequests": 0,
+      "costUSD": 0.0534597,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 the empty diff size is misleading you. This repo has no files in it (I checked), so I can't verify the actual serializer, consumers, or docs, but the framework answer holds regardless: **this is not a \"quick\" change**, it's a runtime/API contract change with a wide blast radius.\n\n**Why \"one line\" isn't the right measure**\n\nA public API response field is a contract external and internal consumers depend on by name. Renaming `total` \u2192 `order_total` breaks anyone parsing the JSON by key: front-end clients, mobile apps, partner integrations, webhooks, internal services, SDKs, monitoring/alerting that parses response bodies, and any customer-written scripts if this is a public API.\n\n**Screen before merging**\n\n| Surface | Action needed |\n|---|---|\n| API docs / OpenAPI spec | Update \u2014 must reflect new field name, and probably a changelog/deprecation note |\n| Client SDKs (if you maintain any) | Update \u2014 regenerate/bump version |\n| Tests (contract/integration tests asserting on `total`) | Update \u2014 will silently pass/fail wrong if they use loose assertions |\n| Internal consumers (other services calling this API) | Update in lockstep, or you break them |\n| External/partner consumers | Can't be \"updated\" by you \u2014 need backward compatibility |\n| Monitoring/analytics parsing this field | Update dashboards/parsers |\n| Rollback | If you ship this and roll back, do downstream consumers that adapted to `order_total` break again? |\n\n**The real question: is this a breaking change or not?**\n\n- If this API has *any* external consumers (or even internal ones you don't control the deploy timing of), a straight rename is a **breaking change**, not a refactor. The safe pattern is to add `order_total` alongside `total` (dual-write in the response), deprecate `total` with a sunset date, update docs/changelog, then remove `total` in a later release once consumers migrate.\n- If this is genuinely internal-only, with no external consumers, and you control every caller, then a coordinated rename (serializer + all consumers + tests + docs, all in the same deploy) is fine \u2014 but it's still a coordinated multi-file change, not a single-line one.\n\nI can't tell which case applies from an empty repo \u2014 can you point me to the actual serializer and tell me whether this API has external/partner consumers? That determines whether this needs a deprecation period or can just be a coordinated rename.",
+  "ttft_ms": 2644,
+  "ttft_stream_ms": 1522,
+  "time_to_request_ms": 27,
+  "time_to_request_from_spawn_ms": 674263,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789312686.2778,
+  "type": "result",
+  "duration_ms": 21506,
+  "uuid": "3cdfd970-8f7e-4fc8-9d07-0ee6aa5072fc",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C4_full_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "cb9792f55f02ab213ee934b4629f747698e3120ae737e7fbba43976a6222637a"
+}

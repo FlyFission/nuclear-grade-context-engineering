@@ -1,0 +1,159 @@
+{
+  "duration_api_ms": 30078,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.035999,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3007,
+    "cache_read_input_tokens": 17972,
+    "output_tokens": 2022,
+    "output_tokens_details": {
+      "thinking_tokens": 1279
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3007,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 924,
+        "cache_read_input_tokens": 9865,
+        "cache_creation_input_tokens": 1249,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1249
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-haiku-5-5": {
+      "inputTokens": 1386,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0001486,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2022,
+      "cacheReadInputTokens": 17972,
+      "cacheCreationInputTokens": 3007,
+      "webSearchRequests": 0,
+      "costUSD": 0.035850400000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 1279,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 3,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't see a marketing site repo or any SOC 2 copy here \u2014 this working directory doesn't contain it, and no diff was actually attached to your message. Before I'd merge anything, two things:\n\n1. **Send me the actual diff or PR link.** I haven't seen the real wording yet \u2014 \"literally three lines of JSX\" doesn't tell me what the new copy says.\n\n2. **This isn't really a plain copy-tweak, even though the code change is tiny.** Dana's approval covered the *original* line (\"SOC 2 Type II certified\"), not a new, more prominent claim written specifically to one-up a competitor who just got burned for *not* having a cert. That context is exactly why I'd want someone other than the copywriter to glance at the new wording before it goes live \u2014 things like:\n   - Does it say \"certified\" when SOC 2 is technically an *audit/attestation*, not a certification? (Common but legally sloppy phrasing \u2014 fine if it's always said this, riskier if the new line doubles down on it.)\n   - Does the new line reference the competitor or imply something about them? That's a different risk category (comparative advertising).\n   - Is the report still current (not expired), and does the scope match what's being implied?\n\nIf the new line is just bolder/bigger styling of the identical, already-reviewed sentence, I'd merge it without ceremony \u2014 that really is Quick-mode work. If it adds or changes wording (e.g., \"fully audited,\" \"unlike other vendors,\" specific dates/auditor names), that's a one-line Slack/email ping to whoever owns compliance claims (legal or security) before it ships, even on a tight timeline \u2014 a 10-minute check now is cheaper than walking back a public compliance claim later.\n\nPaste me the actual diff and I'll tell you which bucket it falls in.",
+  "ttft_ms": 12479,
+  "type": "result",
+  "duration_ms": 29904,
+  "uuid": "49ce9e9a-d1fc-4e50-83fc-d500ec6131fd",
+  "ttft_stream_ms": 1606,
+  "time_to_request_ms": 356,
+  "time_to_request_phases_ms": {
+    "other": 44,
+    "system_prompt": 30,
+    "resume_other": 0,
+    "process_user_input": 16,
+    "input_attachments": 18,
+    "input_hooks": 6,
+    "tool_pool_refresh": 2,
+    "init_message": 20,
+    "engine_pickup": 25,
+    "message_prep": 8,
+    "model_config_wait": 131,
+    "autocompact": 2,
+    "query_setup": 1,
+    "model_gates": 5,
+    "tool_schema_build": 17,
+    "message_normalization": 2,
+    "client_creation": 14,
+    "request_build": 15
+  },
+  "turn_start_resume_kind": "none",
+  "process_turn_index": 0,
+  "time_to_request_loop_lag_ms": 183,
+  "time_to_request_cpu_ms": 243,
+  "time_to_request_major_faults": 0,
+  "process_rss_mib_turn_start": 240,
+  "process_anon_mib_turn_start": 124,
+  "process_rss_mib_result": 243,
+  "process_anon_mib_result": 124,
+  "process_peak_rss_mib": 260,
+  "process_cpu_ms_turn": 1355,
+  "process_wall_ms_turn": 29896,
+  "input_attachments_detail": {
+    "slowest_producer": "model",
+    "slowest_producer_ms": 11,
+    "cpu_ms": 9,
+    "major_faults": 0
+  },
+  "first_content_frame_ms": 1606,
+  "time_to_request_from_spawn_ms": 2187368,
+  "warm_spare_claimed": false,
+  "flag_fetch_kick": "not_asked_warm",
+  "time_origin_ms": 1792509945151.5955,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "_skill": "rating-change-risk",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "0f7928aaf747ea34fa507da9891b39382d9ba81c27f0869a19dcc13f2adbc927"
+}

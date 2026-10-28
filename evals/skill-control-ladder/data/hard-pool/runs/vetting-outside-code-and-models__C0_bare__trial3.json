@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 23149,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0413373,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2104,
+    "cache_read_input_tokens": 6271,
+    "output_tokens": 1735,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2104,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1735,
+        "cache_read_input_tokens": 6271,
+        "cache_creation_input_tokens": 2104,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2104
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 691,
+      "outputTokens": 22,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000801,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1735,
+      "cacheReadInputTokens": 6271,
+      "cacheCreationInputTokens": 2104,
+      "webSearchRequests": 0,
+      "costUSD": 0.0405363,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A few things worth checking before Friday:\n\n- **Test failure paths, not just the happy path.** Two clean sales demos won't surface what actually breaks things: declined signers, expired signing links, multi-party ordering, webhook retries/duplicates. Contract signing is exactly the flow where the failure modes matter more than the happy path.\n- **Verify webhook authenticity.** If your document store ingests \"signing completed\" events via webhook, confirm SignFast signs those payloads (HMAC or similar) and you're validating it \u2014 otherwise a forged webhook could get a fake \"signed\" doc into your store.\n- **Don't take \"legally binding\" at face value.** That's marketing copy. Confirm the certificate actually captures what you'd need in a real dispute \u2014 signer IP, timestamp, consent-checkbox language, hash of the signed document tied to the certificate \u2014 and that it satisfies ESIGN/UETA (or relevant jurisdiction) requirements. Worth a quick pass from legal/compliance, not just engineering sign-off.\n- **99.98% uptime doesn't tell you what happens *during* the 0.02%.** For a step that blocks onboarding, decide what the degraded-mode behavior is (queue and retry? show an error? fall back to manual?) rather than assuming it won't matter.\n- **Confirm you can bulk-export existing signed docs/audit trails** if you ever need to migrate away \u2014 some e-sign vendors make this harder than it should be.\n- **Friday is tight** if webhook auth, error-path testing, and a compliance skim aren't done yet \u2014 worth flagging which of these you're willing to punt post-launch vs. which block cutover.\n\nHappy to dig into any of these with you \u2014 e.g., I can look at SignFast's webhook docs or help you write the failure-path test cases if you want to paste them in.",
+  "ttft_ms": 15135,
+  "ttft_stream_ms": 934,
+  "time_to_request_ms": 25,
+  "time_to_request_from_spawn_ms": 1960592,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079735435.4263,
+  "type": "result",
+  "duration_ms": 24384,
+  "uuid": "a37ebed8-7114-4260-9a3a-89a51e8e8270",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C0_bare",
+  "_trial": 3,
+  "_input_spec_sha256": "701aff90001727582676bedf69d3653098fc7feaf83c0e2164b1336ff3fb3bcf"
+}

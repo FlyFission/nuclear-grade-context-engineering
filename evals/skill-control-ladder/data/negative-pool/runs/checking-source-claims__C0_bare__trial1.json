@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 10700,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0309314,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2447,
+    "cache_read_input_tokens": 31498,
+    "output_tokens": 407,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2447,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 80,
+        "cache_read_input_tokens": 8587,
+        "cache_creation_input_tokens": 131,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 131
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 601,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006709999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 407,
+      "cacheReadInputTokens": 31498,
+      "cacheCreationInputTokens": 2447,
+      "webSearchRequests": 0,
+      "costUSD": 0.0302604,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory appears to be completely empty \u2014 I can't find any files, let alone the version-parsing helper you mentioned. Could you either paste the function here or point me to its file path? I don't want to guess at your regex/split logic without seeing the actual code.",
+  "ttft_ms": 1264,
+  "ttft_stream_ms": 878,
+  "time_to_request_ms": 24,
+  "time_to_request_from_spawn_ms": 1347084,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594341443.3528,
+  "type": "result",
+  "duration_ms": 10627,
+  "uuid": "78d4ce7a-b314-4dfb-b709-7aeab3ddeaa5",
+  "_skill": "checking-source-claims",
+  "_arm": "C0_bare",
+  "_trial": 1,
+  "_input_spec_sha256": "c9d9515ec2f166d7c8b20873bfcf478f5c797af0969fd76523ef5af36eb1f88c"
+}

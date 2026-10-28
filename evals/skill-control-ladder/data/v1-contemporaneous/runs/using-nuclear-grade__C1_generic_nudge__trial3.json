@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 9923,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.029298300000000003,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2565,
+    "cache_read_input_tokens": 23361,
+    "output_tokens": 413,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2565,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 125,
+        "cache_read_input_tokens": 8684,
+        "cache_creation_input_tokens": 161,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 161
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 607,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000687,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 413,
+      "cacheReadInputTokens": 23361,
+      "cacheCreationInputTokens": 2565,
+      "webSearchRequests": 0,
+      "costUSD": 0.028611300000000003,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This working directory appears to be empty \u2014 there's no `package.json`, no source files, nothing matching a system prompt template anywhere here. I can't make the edits you're describing because the repo/project isn't actually present in this environment.\n\nBefore I can do anything: is this the wrong directory, or does the project need to be checked out/cloned here first? Let me know where the actual files live and I'll make both edits.",
+  "ttft_ms": 1395,
+  "ttft_stream_ms": 871,
+  "time_to_request_ms": 36,
+  "time_to_request_from_spawn_ms": 470796,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789109196.9424,
+  "type": "result",
+  "duration_ms": 10045,
+  "uuid": "91a027d9-74a8-4af1-a72b-4f1b2abff702",
+  "_skill": "using-nuclear-grade",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "b17ad0392cfe87e79b57e6b6b1a955875f5a5f3c55dede94225dcb2d9c3b3b24"
+}

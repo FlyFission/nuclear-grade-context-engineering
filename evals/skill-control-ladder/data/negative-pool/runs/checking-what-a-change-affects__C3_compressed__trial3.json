@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 9817,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.033197700000000004,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2824,
+    "cache_read_input_tokens": 32599,
+    "output_tokens": 386,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2824,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 66,
+        "cache_read_input_tokens": 8965,
+        "cache_creation_input_tokens": 139,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 139
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 585,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00066,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 386,
+      "cacheReadInputTokens": 32599,
+      "cacheCreationInputTokens": 2824,
+      "webSearchRequests": 0,
+      "costUSD": 0.0325377,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "There's no `scripts/backup.sh` file in this repo, and no text matching \"Succesfully backed up database\" anywhere in it. Could you double-check the path, or point me to the right repo/branch?",
+  "ttft_ms": 1270,
+  "ttft_stream_ms": 879,
+  "time_to_request_ms": 71,
+  "time_to_request_from_spawn_ms": 1377821,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594372306.1587,
+  "type": "result",
+  "duration_ms": 8076,
+  "uuid": "46e3865a-ab58-42c8-98b1-56cd440ecafc",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "995a5dc0e47b2d6990f43e1da43e81f5e9a6407a74998369945f5cc1876f269f"
+}

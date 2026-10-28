@@ -76,6 +76,10 @@ Plan dependency-aware vertical slices. The first slice is a **tracer bullet** th
 
 Where a stable seam exists, work red before green through the public seam, one behavior slice at a time. Existing accepted specs, interfaces, ADRs, and repository conventions may establish the seam without another human interruption. Run narrow checks continuously and integrated verification at the end.
 
+For an outcome with a concrete reference, benchmark, test, or rendered artifact, an optional **targeted improvement cycle** may run inside Execute and Verify. It is not a new mode, lifecycle, acceptance gate, or release decision. Freeze the inspectable bar from the accepted requirements before the builder starts; the builder may propose a variance but cannot silently weaken the bar, critic scope, evidence retention, or stop rule.
+
+Decompose only independently judgeable slices. Parallel work needs explicit contracts and an integration owner; coupled work keeps one sequential owner. In each bounded round, change the candidate, regenerate or rerun it, and have a fresh critic inspect the fresh artifact against the frozen bar and source requirements. Order unresolved findings by consequence, target the **largest consequential unresolved gap**, preserve adverse findings, and re-observe the assembled candidate. Fresh context reduces one coupling axis but is not independent verification by itself. A critic supplies findings and evidence status, never Review, Decide, Baseline, or apply clearance. If the bar is not met before the planned iteration, budget, evidence, or authority bound, stop as NOT VERIFIED, INCONCLUSIVE, or BLOCKED and carry the gaps into `ship.md`.
+
 ### Review
 
 Keep two axes distinct:

@@ -84,6 +84,22 @@ and consistent with repository standards. Record separate findings and let
 | Spec review | | | planned / pass / gap |
 | Standards review | | | planned / pass / gap |
 
+## Targeted improvement rule
+
+Use only when `plan.md` activates the bounded cycle. Rank unresolved claim rows and negative
+checks by consequence, then name the **largest consequential unresolved gap**. The next builder
+action targets that gap; after the change, regenerate or rerun the candidate and have the critic
+inspect the **fresh artifact** against the frozen bar and source requirements. Record the round in
+`Commands, evals, and reviews`, update the originating `Gap / follow-up`, and retain adverse
+findings rather than opening a competing ledger.
+
+A fresh context or agent changes the context axis; it **does not create independent verification**.
+Record actor, context, mechanism, authority, and resource coupling in the existing profile. The
+critic reports findings and evidence status, not acceptance or release authority. At the
+`plan.md` iteration, budget, evidence, or authority bound, unmet criteria terminate as NOT
+VERIFIED, **INCONCLUSIVE**, or BLOCKED and flow into `ship.md`. After component rounds, regenerate
+and directly observe the assembled candidate before Review.
+
 ## Negative / failure-mode checks
 
 What did you try to break?

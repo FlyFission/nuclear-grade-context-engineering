@@ -71,6 +71,24 @@ def test_progressive_disclosure_pilot_uses_packaged_prompt_assets():
         assert "assets/command-prompt.md" in skill_text
 
 
+def test_context_pack_prompt_carries_bounded_targeted_iteration_fields():
+    prompt = (ROOT / "skills" / "briefing-an-agent" / "assets" / "command-prompt.md").read_text(
+        encoding="utf-8"
+    )
+    for term in (
+        "task / intended outcome",
+        "build method and ownership",
+        "frozen inspectable bar",
+        "bar custodian / change authority",
+        "evidence retention location / policy",
+        "current largest consequential gap",
+        "iteration bound",
+        "fresh artifact",
+    ):
+        assert term in prompt.lower()
+    assert prompt.rstrip("\n") == GOLDEN["ng-context-pack.md"]
+
+
 def test_prompt_preserved_in_generated_card_byte_for_byte():
     for filename, content in gen_commands.generate(ROOT).items():
         assert gen_commands.prompt_from_command(content) == GOLDEN[filename], (

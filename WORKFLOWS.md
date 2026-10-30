@@ -75,8 +75,8 @@ The workflow has two speeds. While you explore and try ideas you can throw away,
 ## Quick change
 
 ```bash
-python tools/ng.py new typo-fix --mode quick
-python tools/ng.py validate .nuclear/changes/typo-fix
+python tools/ng.py new fix-badge-count --mode quick
+python tools/ng.py validate .nuclear/changes/fix-badge-count
 ```
 
 Use Quick only when the change is low-stakes, easy to undo, and easy to prove, with no new trust boundary.

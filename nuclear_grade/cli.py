@@ -11,6 +11,7 @@ import json
 import os
 import re
 import shutil
+import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -18,7 +19,7 @@ from pathlib import Path
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from nuclear_grade import gen_commands
+from nuclear_grade import consequence, gen_commands
 from nuclear_grade.badge import build_badge, summarize
 from nuclear_grade.efficacy import run_all as run_efficacy
 from nuclear_grade.metrics import build_inventory
@@ -494,6 +495,39 @@ def build_parser() -> argparse.ArgumentParser:
     )
     badge_parser.set_defaults(handler=handle_badge)
 
+    required_parser = subcommands.add_parser(
+        "required-mode",
+        help="Required change-record mode for a diff, from the consequence policy (structural check).",
+    )
+    required_parser.add_argument("--repo", type=Path, default=Path("."))
+    required_parser.add_argument(
+        "--base", default=None, help="Base ref. Default: merge-base of HEAD with origin/main, then main."
+    )
+    required_parser.add_argument(
+        "--head", default=None, help="Head ref; must be checked out in --repo. Default: the working tree."
+    )
+    required_parser.add_argument(
+        "--policy-ref",
+        default="base",
+        help="Where to read .nuclear/consequence-policy.json: base (default), head, WORKTREE, or a ref.",
+    )
+    required_parser.add_argument(
+        "--policy-file", type=Path, default=None, help="Read the policy from this file instead (backtests)."
+    )
+    required_parser.add_argument(
+        "--approvals-json",
+        type=Path,
+        default=None,
+        help="PR reviews as returned by the GitHub API (a JSON list); CI supplies this.",
+    )
+    required_parser.add_argument("--pr-author", default=None, help="PR author login; CI supplies this.")
+    required_parser.add_argument("--json", action="store_true", help="Print the JSON receipt.")
+    required_parser.add_argument("--advisory", action="store_true", help="Report the verdict but exit 0.")
+    required_parser.add_argument(
+        "--print-table", action="store_true", help="Print the policy as a Markdown table and exit."
+    )
+    required_parser.set_defaults(handler=handle_required_mode)
+
     return parser
 
 
@@ -897,6 +931,74 @@ def handle_badge(args: argparse.Namespace) -> int:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(text, encoding="utf-8")
         print(f"wrote {args.out}: {badge['label']} | {badge['message']}")
+    return 0
+
+
+def _default_base(repo: Path) -> str | None:
+    for candidate in ("origin/main", "main"):
+        result = subprocess.run(
+            ["git", "-C", str(repo), "merge-base", "HEAD", candidate], capture_output=True, text=True
+        )
+        if result.returncode == 0 and result.stdout.strip():
+            return result.stdout.strip()
+    return None
+
+
+def handle_required_mode(args: argparse.Namespace) -> int:
+    repo = args.repo.resolve()
+    try:
+        base = args.base or _default_base(repo)
+        if base is None:
+            print("required-mode: no base found; pass --base <ref>", file=sys.stderr)
+            return 2
+        if args.head is not None:
+            want = consequence._git(repo, "rev-parse", f"{args.head}^{{commit}}").strip()
+            have = consequence._git(repo, "rev-parse", "HEAD").strip()
+            if want != have:
+                print(f"required-mode: --head {args.head} is not checked out in {repo}", file=sys.stderr)
+                return 2
+        ref = {"base": base, "head": args.head or consequence.WORKTREE}.get(args.policy_ref, args.policy_ref)
+        policy = consequence.load_policy(repo, ref, args.policy_file)
+        if args.print_table:
+            print(consequence.mode_table(policy))
+            return 0
+        approvals = []
+        if args.approvals_json is not None:
+            approvals = json.loads(args.approvals_json.read_text(encoding="utf-8"))
+            if not isinstance(approvals, list):
+                raise consequence.PolicyError("--approvals-json must hold a JSON list of reviews")
+        receipt = consequence.evaluate(
+            repo,
+            base,
+            args.head,
+            policy,
+            base_policy_text=consequence.policy_text(repo, base),
+            head_policy_text=consequence.policy_text(repo, args.head or consequence.WORKTREE),
+            approvals=approvals,
+            pr_author=args.pr_author,
+        )
+    except (consequence.PolicyError, consequence.GitError, OSError, ValueError) as error:
+        print(f"required-mode: {error}", file=sys.stderr)
+        return 2
+    if args.json:
+        print(json.dumps(receipt, indent=2, ensure_ascii=False))
+    else:
+        for entry in receipt["paths"]:
+            if entry["required"] == "none":
+                continue
+            cover = ", ".join(entry["covered_by"]) or "-"
+            print(f"{entry['path']} -> {entry['required']} [{', '.join(entry['rules']) or 'default'}]  "
+                  f"covered_by: {cover}")
+        print(f"required mode: {receipt['required_mode']}  verdict: {receipt['verdict'].upper()}")
+        for failure in receipt["failures"]:
+            print(f"- {failure}")
+        if receipt["skills"]:
+            print(f"skills this change calls for: {', '.join(receipt['skills'])}")
+        if receipt["verdict"] == "fail":
+            print("fix: python tools/ng.py new <slug> --mode <mode>; name the changed paths in its risk.md; "
+                  "fill it until `ng validate` passes")
+    if receipt["verdict"] == "fail" and not args.advisory:
+        return 1
     return 0
 
 

@@ -23,6 +23,9 @@ cp templates/quick/{risk.md,proof.md} "$TARGET/templates/quick/"
 
 Then fill in the `<fill-in>` markers in `AGENTS.md` and `.nuclear/charter.md`.
 
+By default, Claude Code reads `AGENTS.md` only when your repo has no `CLAUDE.md` or `CLAUDE.local.md`. If you
+already have one, add the line `@AGENTS.md` to it so these rules load.
+
 ## What this kit contains
 
 - [`AGENTS.md`](AGENTS.md) — authority boundaries and a completion standard, derived from this

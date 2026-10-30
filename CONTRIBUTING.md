@@ -25,9 +25,14 @@ python -m ruff check .
 python tools/ng.py doctor .
 python tools/ng.py tokens .
 python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions --strict-custody
+python -m nuclear_grade.release
+python tools/ng.py validate .nuclear/changes/<slug>   # each change record you added or changed
+python tools/ng.py badge . --out .nuclear/badge.json  # CI fails if the committed badge is stale
 ```
 
 These are the fast local checks shared with CI; the workflow remains the source of truth.
+
+Create change records with `python tools/ng.py new <slug> --mode <mode>` rather than by hand, and write `~/` in records, never an absolute home path: the residue test rejects absolute paths.
 
 Also scan new public docs for overclaiming. Lean on phrases like:
 

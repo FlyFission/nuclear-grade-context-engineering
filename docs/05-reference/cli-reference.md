@@ -14,6 +14,7 @@ python tools/ng.py status [repo]
 python tools/ng.py eval [repo]
 python tools/ng.py decisions [repo] [--all]
 python tools/ng.py badge [repo] [--out .nuclear/badge.json]
+python tools/ng.py required-mode [--base REF] [--head REF] [--policy-ref base|head|WORKTREE|REF] [--approvals-json FILE] [--pr-author LOGIN] [--json] [--advisory] [--print-table]
 python -m nuclear_grade.release [--repo .] [--tag vX.Y.Z]
 ```
 
@@ -29,6 +30,7 @@ python -m nuclear_grade.release [--repo .] [--tag vX.Y.Z]
 - `decisions` is the **operator receipt**: it rolls up every skill's `## Decision contract` and prints the `block` and `warn` signals (the one decision each skill can move and its tier), keeping `observe`-tier skills in telemetry so the receipt does not become audit-the-audit. `--all` also lists the telemetry rows. It is the generated, single-source view a reviewer scans instead of reading 30 skills; the per-skill receipt stays the source of truth. See `docs/05-reference/skill-authoring-contract.md`.
 
 - `badge` writes a shields.io endpoint JSON counting active change records and their open evidence items (fail, gap, deferred, planned) as declared in Status, Result, or Outcome table cells and `Status:` lines; status words in free prose are not read, and a record with no readable declaration counts as needing attention. It turns yellow when items are open and red when a record needs attention. Closed records are left out. It never says certified, compliant, or passing.
+- `required-mode` reads a git diff (base to head, or base to the working tree) and `.nuclear/consequence-policy.json` (read from the base by default, so a change cannot loosen the policy that judges it; with no policy file, a built-in default covers `.github/workflows/**` and the gate's own files). Each changed path gets a minimum mode (`none`, `quick`, `standard`, `standard+authority`) from the highest matching rule; claim rules count only net-new, non-negated claim wording. A requirement is covered only by a change record **added in this diff** that is open, declares a high enough mode, names the path in its `risk.md`, and passes `validate` with the flags that mode needs (`--strict-custody` from Standard; `--strict-authority` too for `standard+authority`). `standard+authority`, policy overrides, and the dependency lane also need an APPROVED review from an account other than the PR author and the configured bot identities, read from `--approvals-json` (CI passes the GitHub reviews). Editing the policy itself always requires `standard+authority`. Exit 0 pass, 1 fail (0 with `--advisory`), 2 for a bad ref or malformed policy. `--json` prints a versioned receipt. The result is a mechanical minimum that judgment can raise; it is a structural check, not a finding that the change or its evidence is adequate. `tools/ng_policy_backtest.py` classifies past commits with a candidate policy before it is enforced.
 - `python -m nuclear_grade.release` checks that `pyproject.toml`, both plugin manifests, `CITATION.cff`, and a dated `CHANGELOG.md` section declare the same version and date; with `--tag`, that the tag is `v<version>`. See `releasing.md`.
 
 ## Boundary note

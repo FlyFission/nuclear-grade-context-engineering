@@ -974,8 +974,10 @@ def handle_required_mode(args: argparse.Namespace) -> int:
         approvals = []
         if args.approvals_json is not None:
             approvals = json.loads(args.approvals_json.read_text(encoding="utf-8"))
-            if not isinstance(approvals, list):
-                raise consequence.PolicyError("--approvals-json must hold a JSON list of reviews")
+            if not isinstance(approvals, list) or not all(
+                isinstance(review, dict) and isinstance(review.get("user") or {}, dict) for review in approvals
+            ):
+                raise consequence.PolicyError("--approvals-json must hold a JSON list of review objects")
         receipt = consequence.evaluate(
             repo,
             base,

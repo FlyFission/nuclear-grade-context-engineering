@@ -414,6 +414,14 @@ def test_cli_rejects_a_head_that_is_not_checked_out(repo):
     assert _cli(repo, "--base", "main", "--head", "feature").returncode == 2
 
 
+@pytest.mark.parametrize("bad", ['{"state": "APPROVED"}', '["APPROVED"]', '[{"user": "alice", "state": "APPROVED"}]'])
+def test_cli_malformed_approvals_exit_2(repo, bad):
+    write(repo / "reviews.json", bad)
+    result = _cli(repo, "--base", "main", "--approvals-json", str(repo / "reviews.json"))
+    assert result.returncode == 2, result.stderr
+    assert "Traceback" not in result.stderr
+
+
 def test_cli_print_table_lists_every_rule(repo):
     out = _cli(repo, "--base", "main", "--print-table").stdout
     for rule in POLICY["rules"]:

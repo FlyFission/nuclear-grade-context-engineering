@@ -3,7 +3,8 @@
 How to get the Nuclear-grade skills into official, discoverable directories — beyond
 installing from this repo with `ng install` (see [`../../INTEGRATIONS.md`](../../INTEGRATIONS.md)).
 
-Two directories are worth submitting to today; the rest are deferred or not a fit. Steps
+Two directories and one community list are worth submitting to today; the rest are
+deferred or not a fit. Steps
 marked **(repo)** are done here in this repository; steps marked **(you)** are manual
 actions only a repository owner can take — a web form, or a PR to a repo this project does
 not control.
@@ -56,6 +57,39 @@ single catalog skill cannot carry the charter, the docs, and the CLI, so treat t
 
 > This project's tooling cannot open that PR for you — `openai/skills` is outside its
 > repository scope, so the fork and PR are your steps.
+
+## Community list — awesome-ai-plugins
+
+A curated, community-maintained README list run by Hashgraph Online (HOL), not a platform
+directory: it adds discovery, not an install channel. The maintainers invited this listing in
+[issue #105](https://github.com/FlyFission/nuclear-grade-context-engineering/issues/105).
+
+- **Fit.** It belongs under **Community Plugins → Agent Skills**. The list's
+  [`CONTRIBUTING.md`](https://github.com/hashgraph-online/awesome-ai-plugins/blob/main/CONTRIBUTING.md)
+  requires one-sentence entries, alphabetical order within a section, recent activity, and,
+  for Agent Skills, a README that documents tested install steps and supported clients.
+- **(repo, done)** The root [`README.md`](../../README.md) documents the Claude Code install
+  (Quick start) and names the supported clients (the opening summary, and the "Who it is for"
+  line), with per-tool detail in [`INSTALL.md`](../../INSTALL.md) and
+  [`INTEGRATIONS.md`](../../INTEGRATIONS.md).
+- **(you)** Edit the list's
+  [`README.md`](https://github.com/hashgraph-online/awesome-ai-plugins/edit/main/README.md)
+  and add this line to Agent Skills, in alphabetical position:
+
+  ```markdown
+  - [nuclear-grade-context-engineering](https://github.com/FlyFission/nuclear-grade-context-engineering) - Agent skills, command prompts, and change-record templates that keep AI-assisted software work questioned, controlled, and reviewable.
+  ```
+
+- **(you)** In the PR body, give what their guide asks for: a one-line description, the repo
+  link, the target section (Agent Skills), and a short verification note, such as
+  `claude plugin validate .` passing and the README's one-command validator run.
+- **Trust note.** The list runs its own source scan and publishes a "trust score" (their
+  guide requires a normalized score of at least 75 before merge). That score is the list's
+  own third-party signal. Do not cite it here as an assurance, security, or quality claim.
+- After merge, close issue #105 with a link to the merged PR.
+
+> This project's tooling cannot open that PR for you: `hashgraph-online/awesome-ai-plugins`
+> is outside its repository scope, so the edit and the PR are your steps.
 
 ## Deferred / not a fit
 

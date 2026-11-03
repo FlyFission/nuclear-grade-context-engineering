@@ -421,6 +421,9 @@ def _check_evidence_custody(
     `pass` claim has a declared second party without re-parsing the tables.
     """
 
+    # Read only what a reader sees: a commented-out or fenced custody section is
+    # an illustration, not a record, and must not supply second parties.
+    text = _strip_html_comments(_strip_code_blocks(text))
     heading = "## evidence custody and coupling"
     if heading not in text.lower():
         if required:

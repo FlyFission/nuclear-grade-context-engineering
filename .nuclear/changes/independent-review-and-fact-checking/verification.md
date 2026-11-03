@@ -100,11 +100,12 @@ A second round (Codex on `1e956bc` and `3adf16c`; Copilot on `1e956bc`) raised m
 | CX-15 | An authorship example indented four spaces still supplied verifiers (Codex on `a6867fa`) | yes | fixed by a general rule rather than another special case: declarations are read strictly, so any line indented four or more spaces is code and counts for nothing, in both the authorship and the custody parser; tests added for both |
 | CX-16 | A claim row cut short before its status cell was skipped (Codex on `a6867fa`) | yes | fixed by the matching rule: claims are read generously, so the row is kept with an unreadable status and strict mode fails it; test added |
 | CX-17 | A fence opener inside an HTML comment hid the visible claim table after it, because fences were stripped before comments (Codex on `a50edba`) | yes | fixed at the root: one pass tracks comments and fences together, so a marker of either kind inside the other is just hidden text; the custody parser now uses the same function; tests cover both nestings and inline comments |
+| CX-18 | A literal `<!--` inside inline code opened a comment and hid a visible claim table (Codex on `9b920ee`) | yes | fixed by closing the class: claims are now read from the raw file, so no markup can hide a claim; declarations stay visible-only. No existing verification file has a claim row inside a comment or fence (40 checked), so nothing else changes; tests cover inline code, comments, fences, and plain text |
 | CX-11 | `ben + reviewer` passes against actor `ben` | yes | kept by design: a cell counts when at least one name in it is outside the excluded set, the same rule CX-9 asks for |
 
 Default-mode and `--strict-custody` output stays identical to `main` across all 56 packets (112 runs).
 
-CX-3 to CX-16 are one failure class: a lenient Markdown parser letting text drop out of, or slip into, the gate. After CX-15 the parser follows one stated rule instead of a growing list of cases. Claims are read generously, so an odd row fails rather than vanishing. Declarations are read strictly, so anything a reader would see as a comment, a fence, or indented code is ignored.
+CX-3 to CX-16 are one failure class: a lenient Markdown parser letting text drop out of, or slip into, the gate. After CX-15 the parser follows one stated rule instead of a growing list of cases, and after CX-18 the rule is complete on the claim side. Claims are read from the raw file, so no markup can hide one, and an odd row fails rather than vanishing. Declarations are read strictly, so anything a reader would see as a comment, a fence, or indented code is ignored. Every parsing mistake on either side now fails closed.
 
 ## External reviews forwarded by the owner (Grok, ChatGPT)
 

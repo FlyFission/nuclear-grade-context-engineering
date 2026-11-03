@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 1176" width="1280" height="1176" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1304 1210" width="1304" height="1210" role="img" aria-labelledby="t d">
 <title id="t">Skill map</title>
-<desc id="d">The core path runs from using-nuclear-grade through questioning-attitude, rating-change-risk, creating-change-records, proving-claims, checking-release-readiness, recording-a-known-good-version and learning-from-experience, which feeds back to questioning-attitude. Rating-change-risk branches to choosing-what-to-control and checking-what-a-change-affects. Heavier overlays switch on by consequence, each labeled with its trigger.</desc>
+<desc id="d">The core path runs from using-nuclear-grade through questioning-attitude, rating-change-risk, creating-change-records, proving-claims, checking-release-readiness, recording-a-known-good-version and learning-from-experience, which feeds back to questioning-attitude. Rating-change-risk branches to choosing-what-to-control and checking-what-a-change-affects. Heavier overlays switch on by consequence, each labeled with its trigger. A colored stripe gives each skill&#x27;s family (start here, before you act, records and versions, evidence and verdicts, trust and public claims, delegation and structure, when it goes wrong); a gold dot marks the Core 7, which apply to every change.</desc>
 <style>
 .bg{fill:#F7F6F2} .ink{fill:#0E1A30} .muted{fill:#46536B} .soft{fill:#5A6680}
 .acc{fill:#8A5A00} .lnk{fill:#2F4F94}
@@ -31,151 +31,212 @@
 .ln{stroke:#9DB0CE} .ln-acc{stroke:#FFD24D} .ln-lnk{stroke:#8FB0E6}
 .life{stroke:rgba(244,247,252,0.28)} .mask{fill:#0E1A30} .rule{stroke:rgba(244,247,252,0.16)}
 }
+
+.fam0{fill:#0E1A30} .fam1{fill:#B4531A} .fam2{fill:#2F5FB3} .fam3{fill:#2E7D45}
+.fam4{fill:#6B4BA8} .fam5{fill:#1F7A7A} .fam6{fill:#B23A48}
+@media (prefers-color-scheme: dark){
+.fam0{fill:#F4F7FC} .fam1{fill:#F2A066} .fam2{fill:#8FB0E6} .fam3{fill:#7BCB8E}
+.fam4{fill:#B9A2E8} .fam5{fill:#6FCFCF} .fam6{fill:#F08A96}
+}
 </style>
 <defs>
 <marker id="m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="muted" points="0 0, 8 3, 0 6"/></marker>
 <marker id="m-acc" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="acc" points="0 0, 8 3, 0 6"/></marker>
 <marker id="m-lnk" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="lnk" points="0 0, 8 3, 0 6"/></marker>
 </defs>
-<rect class="bg" width="1280" height="1176" rx="10"/>
+<rect class="bg" width="1304" height="1210" rx="10"/>
 <text x="28" y="34" class="eye soft">SKILL MAP · CORE PATH AND CONSEQUENCE OVERLAYS</text>
-<line class="rule" x1="28" y1="44" x2="1252" y2="44"/>
-<rect class="grp" x="764" y="60" width="488" height="1076" rx="8"/>
-<text x="778" y="78" class="eye soft" text-anchor="start">HEAVIER OVERLAYS — SWITCH ON BY CONSEQUENCE</text>
-<rect class="band" x="316" y="60" width="296" height="1076" rx="8"/>
-<text x="330" y="78" class="eye soft" text-anchor="start">CORE PATH</text>
-<path class="ln" stroke-width="1.2" d="M588,156.0 L788,156.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M588,208.0 L788,208.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M964,208.0 L996,208.0" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M588,216.0 L604,216.0 Q612,216.0 612,224.0 L612,252 Q612,260 620,260 L788,260.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M588,216.0 L604,216.0 Q612,216.0 612,224.0 L612,304 Q612,312 620,312 L788,312.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M976,312.0 L1008,312.0" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M588,364.0 L788,364.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M940,364.0 L972,364.0" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M588,372.0 L604,372.0 Q612,372.0 612,380.0 L612,408 Q612,416 620,416 L788,416.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M588,468.0 L788,468.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M588,476.0 L604,476.0 Q612,476.0 612,484.0 L612,512 Q612,520 620,520 L788,520.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M588,476.0 L604,476.0 Q612,476.0 612,484.0 L612,564 Q612,572 620,572 L788,572.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M588,476.0 L604,476.0 Q612,476.0 612,484.0 L612,616 Q612,624 620,624 L788,624.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M588,476.0 L604,476.0 Q612,476.0 612,484.0 L612,668 Q612,676 620,676 L788,676.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M588,728.0 L788,728.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M588,736.0 L604,736.0 Q612,736.0 612,744.0 L612,772 Q612,780 620,780 L788,780.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M588,736.0 L604,736.0 Q612,736.0 612,744.0 L612,824 Q612,832 620,832 L788,832.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M588,936.0 L788,936.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M588,944.0 L604,944.0 Q612,944.0 612,952.0 L612,980 Q612,988 620,988 L788,988.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M588,944.0 L604,944.0 Q612,944.0 612,952.0 L612,1032 Q612,1040 620,1040 L788,1040.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M588,944.0 L604,944.0 Q612,944.0 612,952.0 L612,1084 Q612,1092 620,1092 L788,1092.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M464.0,128 L464.0,136" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M464.0,176 L464.0,188" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M464.0,228 L464.0,344" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M464.0,384 L464.0,448" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M464.0,488 L464.0,708" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M464.0,748 L464.0,864" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M464.0,904 L464.0,916" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M340,208.0 L160.0,208.0 Q152.0,208.0 152.0,216.0 L152.0,240" marker-end="url(#m-muted)"/>
-<path class="ln" stroke-width="1.2" d="M152.0,280 L152.0,312" marker-end="url(#m-muted)"/>
-<path class="ln-acc" stroke-width="1.2" d="M340,936.0 L332,936.0 Q324,936.0 324,928.0 L324,164.0 Q324,156.0 332,156.0 L340,156.0" stroke-dasharray="5 4" marker-end="url(#m-acc)"/>
-<rect class="n-focal" stroke-width="1.4" x="340" y="84" width="248" height="44" rx="6"/>
-<text x="464.0" y="103.5" class="name ink" text-anchor="middle">using-nuclear-grade</text>
-<text x="464.0" y="118.5" class="sub soft" text-anchor="middle">router · entry point</text>
-<rect class="n-step" stroke-width="1" x="340" y="136" width="248" height="40" rx="6"/>
-<text x="464.0" y="160.0" class="name ink" text-anchor="middle">questioning-attitude</text>
-<rect class="n-opt" stroke-width="1" x="788" y="136" width="160" height="40" rx="6"/>
-<text x="868.0" y="160.0" class="name ink" text-anchor="middle">staying-on-mission</text>
-<rect class="n-step" stroke-width="1" x="340" y="188" width="248" height="40" rx="6"/>
-<text x="464.0" y="212.0" class="name ink" text-anchor="middle">rating-change-risk</text>
-<rect class="n-opt" stroke-width="1" x="788" y="188" width="176" height="40" rx="6"/>
-<text x="876.0" y="212.0" class="name ink" text-anchor="middle">deciding-who-decides</text>
-<rect class="n-opt" stroke-width="1" x="996" y="188" width="150" height="40" rx="6"/>
-<text x="1071.0" y="212.0" class="name ink" text-anchor="middle">declaring-intent</text>
-<rect class="n-opt" stroke-width="1" x="788" y="240" width="256" height="40" rx="6"/>
-<text x="916.0" y="264.0" class="name ink" text-anchor="middle">vetting-outside-code-and-models</text>
-<rect class="n-opt" stroke-width="1" x="788" y="292" width="188" height="40" rx="6"/>
-<text x="882.0" y="316.0" class="name ink" text-anchor="middle">breaking-down-the-work</text>
-<rect class="n-opt" stroke-width="1" x="1008" y="292" width="220" height="40" rx="6"/>
-<text x="1118.0" y="316.0" class="name ink" text-anchor="middle">organizing-project-folders</text>
-<rect class="n-step" stroke-width="1" x="340" y="344" width="248" height="40" rx="6"/>
-<text x="464.0" y="368.0" class="name ink" text-anchor="middle">creating-change-records</text>
-<rect class="n-opt" stroke-width="1" x="788" y="344" width="152" height="40" rx="6"/>
-<text x="864.0" y="368.0" class="name ink" text-anchor="middle">briefing-an-agent</text>
-<rect class="n-opt" stroke-width="1" x="972" y="344" width="150" height="40" rx="6"/>
-<text x="1047.0" y="368.0" class="name ink" text-anchor="middle">handing-off-work</text>
-<rect class="n-opt" stroke-width="1" x="788" y="396" width="240" height="40" rx="6"/>
-<text x="908.0" y="420.0" class="name ink" text-anchor="middle">double-checking-before-acting</text>
-<rect class="n-step" stroke-width="1" x="340" y="448" width="248" height="40" rx="6"/>
-<text x="464.0" y="472.0" class="name ink" text-anchor="middle">proving-claims</text>
-<rect class="n-opt" stroke-width="1" x="788" y="448" width="188" height="40" rx="6"/>
-<text x="882.0" y="472.0" class="name ink" text-anchor="middle">reviewing-code-quality</text>
-<rect class="n-opt" stroke-width="1" x="788" y="500" width="212" height="40" rx="6"/>
-<text x="894.0" y="524.0" class="name ink" text-anchor="middle">verifying-final-artifacts</text>
-<rect class="n-opt" stroke-width="1" x="788" y="552" width="150" height="40" rx="6"/>
-<text x="863.0" y="576.0" class="name ink" text-anchor="middle">checking-facts</text>
-<rect class="n-opt" stroke-width="1" x="788" y="604" width="272" height="40" rx="6"/>
-<text x="924.0" y="628.0" class="name ink" text-anchor="middle">checking-legal-and-safety-wording</text>
-<rect class="n-opt" stroke-width="1" x="788" y="656" width="188" height="40" rx="6"/>
-<text x="882.0" y="680.0" class="name ink" text-anchor="middle">checking-source-claims</text>
-<rect class="n-step" stroke-width="1" x="340" y="708" width="248" height="40" rx="6"/>
-<text x="464.0" y="732.0" class="name ink" text-anchor="middle">checking-release-readiness</text>
-<rect class="n-opt" stroke-width="1" x="788" y="708" width="232" height="40" rx="6"/>
-<text x="904.0" y="732.0" class="name ink" text-anchor="middle">stress-testing-agent-changes</text>
-<rect class="n-opt" stroke-width="1" x="788" y="760" width="224" height="40" rx="6"/>
-<text x="900.0" y="784.0" class="name ink" text-anchor="middle">recording-what-an-agent-did</text>
-<rect class="n-opt" stroke-width="1" x="788" y="812" width="188" height="40" rx="6"/>
-<text x="882.0" y="836.0" class="name ink" text-anchor="middle">running-a-review-panel</text>
-<rect class="n-step" stroke-width="1" x="340" y="864" width="248" height="40" rx="6"/>
-<text x="464.0" y="888.0" class="name ink" text-anchor="middle">recording-a-known-good-version</text>
-<rect class="n-step" stroke-width="1" x="340" y="916" width="248" height="40" rx="6"/>
-<text x="464.0" y="940.0" class="name ink" text-anchor="middle">learning-from-experience</text>
-<rect class="n-opt" stroke-width="1" x="788" y="916" width="180" height="40" rx="6"/>
-<text x="878.0" y="940.0" class="name ink" text-anchor="middle">closing-stale-packets</text>
-<rect class="n-opt" stroke-width="1" x="788" y="968" width="196" height="40" rx="6"/>
-<text x="886.0" y="992.0" class="name ink" text-anchor="middle">responding-to-incidents</text>
-<rect class="n-opt" stroke-width="1" x="788" y="1020" width="180" height="40" rx="6"/>
-<text x="878.0" y="1044.0" class="name ink" text-anchor="middle">tracking-deficiencies</text>
-<rect class="n-opt" stroke-width="1" x="788" y="1072" width="204" height="40" rx="6"/>
-<text x="890.0" y="1096.0" class="name ink" text-anchor="middle">reporting-shared-defects</text>
-<rect class="n-step" stroke-width="1" x="28" y="240" width="248" height="40" rx="6"/>
-<text x="152.0" y="264.0" class="name ink" text-anchor="middle">choosing-what-to-control</text>
-<rect class="n-step" stroke-width="1" x="28" y="312" width="248" height="40" rx="6"/>
-<text x="152.0" y="336.0" class="name ink" text-anchor="middle">checking-what-a-change-affects</text>
-<rect class="mask" x="632.0" y="148" width="136.0" height="15" rx="2"/>
-<text x="700.0" y="159.5" class="lbl muted" text-anchor="middle">long drifting session</text>
-<rect class="mask" x="638.0" y="200" width="124.0" height="15" rx="2"/>
-<text x="700.0" y="211.5" class="lbl muted" text-anchor="middle">irreversible action</text>
-<rect class="mask" x="638.0" y="252" width="124.0" height="15" rx="2"/>
-<text x="700.0" y="263.5" class="lbl muted" text-anchor="middle">outside dep / model</text>
-<rect class="mask" x="653.0" y="304" width="94.0" height="15" rx="2"/>
-<text x="700.0" y="315.5" class="lbl muted" text-anchor="middle">scope to split</text>
-<rect class="mask" x="644.0" y="356" width="112.0" height="15" rx="2"/>
-<text x="700.0" y="367.5" class="lbl muted" text-anchor="middle">delegate / resume</text>
-<rect class="mask" x="650.0" y="408" width="100.0" height="15" rx="2"/>
-<text x="700.0" y="419.5" class="lbl muted" text-anchor="middle">critical action</text>
-<rect class="mask" x="626.0" y="460" width="148.0" height="15" rx="2"/>
-<text x="700.0" y="471.5" class="lbl muted" text-anchor="middle">standards drift in diff</text>
-<rect class="mask" x="635.0" y="512" width="130.0" height="15" rx="2"/>
-<text x="700.0" y="523.5" class="lbl muted" text-anchor="middle">rendered deliverable</text>
-<rect class="mask" x="620.0" y="564" width="160.0" height="15" rx="2"/>
-<text x="700.0" y="575.5" class="lbl muted" text-anchor="middle">relies on an outside fact</text>
-<rect class="mask" x="629.0" y="616" width="142.0" height="15" rx="2"/>
-<text x="700.0" y="627.5" class="lbl muted" text-anchor="middle">public assurance words</text>
-<rect class="mask" x="653.0" y="668" width="94.0" height="15" rx="2"/>
-<text x="700.0" y="679.5" class="lbl muted" text-anchor="middle">cites a source</text>
-<rect class="mask" x="638.0" y="720" width="124.0" height="15" rx="2"/>
-<text x="700.0" y="731.5" class="lbl muted" text-anchor="middle">new agent authority</text>
-<rect class="mask" x="629.0" y="772" width="142.0" height="15" rx="2"/>
-<text x="700.0" y="783.5" class="lbl muted" text-anchor="middle">execution path matters</text>
-<rect class="mask" x="620.0" y="824" width="160.0" height="15" rx="2"/>
-<text x="700.0" y="835.5" class="lbl muted" text-anchor="middle">one reviewer, high stakes</text>
-<rect class="mask" x="641.0" y="928" width="118.0" height="15" rx="2"/>
-<text x="700.0" y="939.5" class="lbl muted" text-anchor="middle">stale packet sweep</text>
-<rect class="mask" x="647.0" y="980" width="106.0" height="15" rx="2"/>
-<text x="700.0" y="991.5" class="lbl muted" text-anchor="middle">live harm: first</text>
-<rect class="mask" x="632.0" y="1032" width="136.0" height="15" rx="2"/>
-<text x="700.0" y="1043.5" class="lbl muted" text-anchor="middle">problem stays for now</text>
-<rect class="mask" x="650.0" y="1084" width="100.0" height="15" rx="2"/>
-<text x="700.0" y="1095.5" class="lbl muted" text-anchor="middle">others carry it</text>
-<rect class="mask" x="96.0" y="200.0" width="160.0" height="15" rx="2"/>
-<text x="176.0" y="211.5" class="lbl muted" text-anchor="middle">controlled config touched</text>
-<text x="312" y="926.0" class="lbl acc" text-anchor="end">durable control</text>
-<text x="312" y="940.0" class="lbl acc" text-anchor="end">update ↺</text>
+<line class="rule" x1="28" y1="44" x2="1276" y2="44"/>
+<rect class="grp" x="764" y="94" width="512" height="1076" rx="8"/>
+<text x="778" y="112" class="eye soft" text-anchor="start">HEAVIER OVERLAYS — SWITCH ON BY CONSEQUENCE</text>
+<rect class="band" x="316" y="94" width="296" height="1076" rx="8"/>
+<text x="330" y="112" class="eye soft" text-anchor="start">CORE PATH</text>
+<path class="ln" stroke-width="1.2" d="M588,190.0 L788,190.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M588,242.0 L788,242.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M976,242.0 L1008,242.0" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M588,250.0 L604,250.0 Q612,250.0 612,258.0 L612,286 Q612,294 620,294 L788,294.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M588,250.0 L604,250.0 Q612,250.0 612,258.0 L612,338 Q612,346 620,346 L788,346.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M988,346.0 L1020,346.0" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M588,398.0 L788,398.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M952,398.0 L984,398.0" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M588,406.0 L604,406.0 Q612,406.0 612,414.0 L612,442 Q612,450 620,450 L788,450.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M588,502.0 L788,502.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M588,510.0 L604,510.0 Q612,510.0 612,518.0 L612,546 Q612,554 620,554 L788,554.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M588,510.0 L604,510.0 Q612,510.0 612,518.0 L612,598 Q612,606 620,606 L788,606.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M588,510.0 L604,510.0 Q612,510.0 612,518.0 L612,650 Q612,658 620,658 L788,658.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M588,510.0 L604,510.0 Q612,510.0 612,518.0 L612,702 Q612,710 620,710 L788,710.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M588,762.0 L788,762.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M588,770.0 L604,770.0 Q612,770.0 612,778.0 L612,806 Q612,814 620,814 L788,814.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M588,770.0 L604,770.0 Q612,770.0 612,778.0 L612,858 Q612,866 620,866 L788,866.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M588,970.0 L788,970.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M588,978.0 L604,978.0 Q612,978.0 612,986.0 L612,1014 Q612,1022 620,1022 L788,1022.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M588,978.0 L604,978.0 Q612,978.0 612,986.0 L612,1066 Q612,1074 620,1074 L788,1074.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M588,978.0 L604,978.0 Q612,978.0 612,986.0 L612,1118 Q612,1126 620,1126 L788,1126.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M464.0,162 L464.0,170" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M464.0,210 L464.0,222" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M464.0,262 L464.0,378" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M464.0,418 L464.0,482" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M464.0,522 L464.0,742" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M464.0,782 L464.0,898" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M464.0,938 L464.0,950" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M340,242.0 L160.0,242.0 Q152.0,242.0 152.0,250.0 L152.0,274" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M152.0,314 L152.0,346" marker-end="url(#m-muted)"/>
+<path class="ln-acc" stroke-width="1.2" d="M340,970.0 L332,970.0 Q324,970.0 324,962.0 L324,198.0 Q324,190.0 332,190.0 L340,190.0" stroke-dasharray="5 4" marker-end="url(#m-acc)"/>
+<rect class="fam0" x="28" y="58" width="4" height="12" rx="2"/>
+<text x="38" y="68" class="lbl muted" text-anchor="start">start here</text>
+<rect class="fam1" x="122" y="58" width="4" height="12" rx="2"/>
+<text x="132" y="68" class="lbl muted" text-anchor="start">before you act</text>
+<rect class="fam2" x="241" y="58" width="4" height="12" rx="2"/>
+<text x="251" y="68" class="lbl muted" text-anchor="start">records and versions</text>
+<rect class="fam3" x="397" y="58" width="4" height="12" rx="2"/>
+<text x="407" y="68" class="lbl muted" text-anchor="start">evidence and verdicts</text>
+<rect class="fam4" x="560" y="58" width="4" height="12" rx="2"/>
+<text x="570" y="68" class="lbl muted" text-anchor="start">trust and public claims</text>
+<rect class="fam5" x="735" y="58" width="4" height="12" rx="2"/>
+<text x="745" y="68" class="lbl muted" text-anchor="start">delegation and structure</text>
+<rect class="fam6" x="916" y="58" width="4" height="12" rx="2"/>
+<text x="926" y="68" class="lbl muted" text-anchor="start">when it goes wrong</text>
+<circle class="acc" cx="1062" cy="64" r="3.5"/>
+<text x="1070" y="68" class="lbl muted" text-anchor="start">core 7: every change</text>
+<rect class="n-focal" stroke-width="1.4" x="340" y="118" width="248" height="44" rx="6"/>
+<text x="464.0" y="137.5" class="name ink" text-anchor="middle">using-nuclear-grade</text>
+<text x="464.0" y="152.5" class="sub soft" text-anchor="middle">router · entry point</text>
+<rect class="fam0" x="341.5" y="124" width="4" height="32" rx="2"/>
+<rect class="n-step" stroke-width="1" x="340" y="170" width="248" height="40" rx="6"/>
+<text x="464.0" y="194.0" class="name ink" text-anchor="middle">questioning-attitude</text>
+<rect class="fam0" x="341.5" y="176" width="4" height="28" rx="2"/>
+<circle class="acc" cx="576" cy="190.0" r="3.5"/>
+<rect class="n-opt" stroke-width="1" x="788" y="170" width="172" height="40" rx="6"/>
+<text x="874.0" y="194.0" class="name ink" text-anchor="middle">staying-on-mission</text>
+<rect class="fam1" x="789.5" y="176" width="4" height="28" rx="2"/>
+<circle class="acc" cx="948" cy="190.0" r="3.5"/>
+<rect class="n-step" stroke-width="1" x="340" y="222" width="248" height="40" rx="6"/>
+<text x="464.0" y="246.0" class="name ink" text-anchor="middle">rating-change-risk</text>
+<rect class="fam0" x="341.5" y="228" width="4" height="28" rx="2"/>
+<circle class="acc" cx="576" cy="242.0" r="3.5"/>
+<rect class="n-opt" stroke-width="1" x="788" y="222" width="188" height="40" rx="6"/>
+<text x="882.0" y="246.0" class="name ink" text-anchor="middle">deciding-who-decides</text>
+<rect class="fam1" x="789.5" y="228" width="4" height="28" rx="2"/>
+<rect class="n-opt" stroke-width="1" x="1008" y="222" width="156" height="40" rx="6"/>
+<text x="1086.0" y="246.0" class="name ink" text-anchor="middle">declaring-intent</text>
+<rect class="fam1" x="1009.5" y="228" width="4" height="28" rx="2"/>
+<rect class="n-opt" stroke-width="1" x="788" y="274" width="268" height="40" rx="6"/>
+<text x="922.0" y="298.0" class="name ink" text-anchor="middle">vetting-outside-code-and-models</text>
+<rect class="fam4" x="789.5" y="280" width="4" height="28" rx="2"/>
+<rect class="n-opt" stroke-width="1" x="788" y="326" width="200" height="40" rx="6"/>
+<text x="888.0" y="350.0" class="name ink" text-anchor="middle">breaking-down-the-work</text>
+<rect class="fam5" x="789.5" y="332" width="4" height="28" rx="2"/>
+<rect class="n-opt" stroke-width="1" x="1020" y="326" width="232" height="40" rx="6"/>
+<text x="1136.0" y="350.0" class="name ink" text-anchor="middle">organizing-project-folders</text>
+<rect class="fam5" x="1021.5" y="332" width="4" height="28" rx="2"/>
+<rect class="n-step" stroke-width="1" x="340" y="378" width="248" height="40" rx="6"/>
+<text x="464.0" y="402.0" class="name ink" text-anchor="middle">creating-change-records</text>
+<rect class="fam2" x="341.5" y="384" width="4" height="28" rx="2"/>
+<rect class="n-opt" stroke-width="1" x="788" y="378" width="164" height="40" rx="6"/>
+<text x="870.0" y="402.0" class="name ink" text-anchor="middle">briefing-an-agent</text>
+<rect class="fam5" x="789.5" y="384" width="4" height="28" rx="2"/>
+<rect class="n-opt" stroke-width="1" x="984" y="378" width="156" height="40" rx="6"/>
+<text x="1062.0" y="402.0" class="name ink" text-anchor="middle">handing-off-work</text>
+<rect class="fam5" x="985.5" y="384" width="4" height="28" rx="2"/>
+<rect class="n-opt" stroke-width="1" x="788" y="430" width="252" height="40" rx="6"/>
+<text x="914.0" y="454.0" class="name ink" text-anchor="middle">double-checking-before-acting</text>
+<rect class="fam1" x="789.5" y="436" width="4" height="28" rx="2"/>
+<circle class="acc" cx="1028" cy="450.0" r="3.5"/>
+<rect class="n-step" stroke-width="1" x="340" y="482" width="248" height="40" rx="6"/>
+<text x="464.0" y="506.0" class="name ink" text-anchor="middle">proving-claims</text>
+<rect class="fam3" x="341.5" y="488" width="4" height="28" rx="2"/>
+<circle class="acc" cx="576" cy="502.0" r="3.5"/>
+<rect class="n-opt" stroke-width="1" x="788" y="482" width="200" height="40" rx="6"/>
+<text x="888.0" y="506.0" class="name ink" text-anchor="middle">reviewing-code-quality</text>
+<rect class="fam3" x="789.5" y="488" width="4" height="28" rx="2"/>
+<rect class="n-opt" stroke-width="1" x="788" y="534" width="224" height="40" rx="6"/>
+<text x="900.0" y="558.0" class="name ink" text-anchor="middle">verifying-final-artifacts</text>
+<rect class="fam3" x="789.5" y="540" width="4" height="28" rx="2"/>
+<rect class="n-opt" stroke-width="1" x="788" y="586" width="150" height="40" rx="6"/>
+<text x="863.0" y="610.0" class="name ink" text-anchor="middle">checking-facts</text>
+<rect class="fam3" x="789.5" y="592" width="4" height="28" rx="2"/>
+<rect class="n-opt" stroke-width="1" x="788" y="638" width="284" height="40" rx="6"/>
+<text x="930.0" y="662.0" class="name ink" text-anchor="middle">checking-legal-and-safety-wording</text>
+<rect class="fam4" x="789.5" y="644" width="4" height="28" rx="2"/>
+<rect class="n-opt" stroke-width="1" x="788" y="690" width="200" height="40" rx="6"/>
+<text x="888.0" y="714.0" class="name ink" text-anchor="middle">checking-source-claims</text>
+<rect class="fam4" x="789.5" y="696" width="4" height="28" rx="2"/>
+<rect class="n-step" stroke-width="1" x="340" y="742" width="248" height="40" rx="6"/>
+<text x="464.0" y="766.0" class="name ink" text-anchor="middle">checking-release-readiness</text>
+<rect class="fam3" x="341.5" y="748" width="4" height="28" rx="2"/>
+<circle class="acc" cx="576" cy="762.0" r="3.5"/>
+<rect class="n-opt" stroke-width="1" x="788" y="742" width="244" height="40" rx="6"/>
+<text x="910.0" y="766.0" class="name ink" text-anchor="middle">stress-testing-agent-changes</text>
+<rect class="fam3" x="789.5" y="748" width="4" height="28" rx="2"/>
+<rect class="n-opt" stroke-width="1" x="788" y="794" width="236" height="40" rx="6"/>
+<text x="906.0" y="818.0" class="name ink" text-anchor="middle">recording-what-an-agent-did</text>
+<rect class="fam2" x="789.5" y="800" width="4" height="28" rx="2"/>
+<rect class="n-opt" stroke-width="1" x="788" y="846" width="200" height="40" rx="6"/>
+<text x="888.0" y="870.0" class="name ink" text-anchor="middle">running-a-review-panel</text>
+<rect class="fam3" x="789.5" y="852" width="4" height="28" rx="2"/>
+<rect class="n-step" stroke-width="1" x="340" y="898" width="248" height="40" rx="6"/>
+<text x="464.0" y="922.0" class="name ink" text-anchor="middle">recording-a-known-good-version</text>
+<rect class="fam2" x="341.5" y="904" width="4" height="28" rx="2"/>
+<rect class="n-step" stroke-width="1" x="340" y="950" width="248" height="40" rx="6"/>
+<text x="464.0" y="974.0" class="name ink" text-anchor="middle">learning-from-experience</text>
+<rect class="fam6" x="341.5" y="956" width="4" height="28" rx="2"/>
+<circle class="acc" cx="576" cy="970.0" r="3.5"/>
+<rect class="n-opt" stroke-width="1" x="788" y="950" width="192" height="40" rx="6"/>
+<text x="884.0" y="974.0" class="name ink" text-anchor="middle">closing-stale-packets</text>
+<rect class="fam2" x="789.5" y="956" width="4" height="28" rx="2"/>
+<rect class="n-opt" stroke-width="1" x="788" y="1002" width="208" height="40" rx="6"/>
+<text x="892.0" y="1026.0" class="name ink" text-anchor="middle">responding-to-incidents</text>
+<rect class="fam6" x="789.5" y="1008" width="4" height="28" rx="2"/>
+<rect class="n-opt" stroke-width="1" x="788" y="1054" width="192" height="40" rx="6"/>
+<text x="884.0" y="1078.0" class="name ink" text-anchor="middle">tracking-deficiencies</text>
+<rect class="fam6" x="789.5" y="1060" width="4" height="28" rx="2"/>
+<rect class="n-opt" stroke-width="1" x="788" y="1106" width="216" height="40" rx="6"/>
+<text x="896.0" y="1130.0" class="name ink" text-anchor="middle">reporting-shared-defects</text>
+<rect class="fam6" x="789.5" y="1112" width="4" height="28" rx="2"/>
+<rect class="n-step" stroke-width="1" x="28" y="274" width="248" height="40" rx="6"/>
+<text x="152.0" y="298.0" class="name ink" text-anchor="middle">choosing-what-to-control</text>
+<rect class="fam2" x="29.5" y="280" width="4" height="28" rx="2"/>
+<rect class="n-step" stroke-width="1" x="28" y="346" width="248" height="40" rx="6"/>
+<text x="152.0" y="370.0" class="name ink" text-anchor="middle">checking-what-a-change-affects</text>
+<rect class="fam2" x="29.5" y="352" width="4" height="28" rx="2"/>
+<rect class="mask" x="632.0" y="182" width="136.0" height="15" rx="2"/>
+<text x="700.0" y="193.5" class="lbl muted" text-anchor="middle">long drifting session</text>
+<rect class="mask" x="638.0" y="234" width="124.0" height="15" rx="2"/>
+<text x="700.0" y="245.5" class="lbl muted" text-anchor="middle">irreversible action</text>
+<rect class="mask" x="638.0" y="286" width="124.0" height="15" rx="2"/>
+<text x="700.0" y="297.5" class="lbl muted" text-anchor="middle">outside dep / model</text>
+<rect class="mask" x="653.0" y="338" width="94.0" height="15" rx="2"/>
+<text x="700.0" y="349.5" class="lbl muted" text-anchor="middle">scope to split</text>
+<rect class="mask" x="644.0" y="390" width="112.0" height="15" rx="2"/>
+<text x="700.0" y="401.5" class="lbl muted" text-anchor="middle">delegate / resume</text>
+<rect class="mask" x="650.0" y="442" width="100.0" height="15" rx="2"/>
+<text x="700.0" y="453.5" class="lbl muted" text-anchor="middle">critical action</text>
+<rect class="mask" x="626.0" y="494" width="148.0" height="15" rx="2"/>
+<text x="700.0" y="505.5" class="lbl muted" text-anchor="middle">standards drift in diff</text>
+<rect class="mask" x="635.0" y="546" width="130.0" height="15" rx="2"/>
+<text x="700.0" y="557.5" class="lbl muted" text-anchor="middle">rendered deliverable</text>
+<rect class="mask" x="620.0" y="598" width="160.0" height="15" rx="2"/>
+<text x="700.0" y="609.5" class="lbl muted" text-anchor="middle">relies on an outside fact</text>
+<rect class="mask" x="629.0" y="650" width="142.0" height="15" rx="2"/>
+<text x="700.0" y="661.5" class="lbl muted" text-anchor="middle">public assurance words</text>
+<rect class="mask" x="653.0" y="702" width="94.0" height="15" rx="2"/>
+<text x="700.0" y="713.5" class="lbl muted" text-anchor="middle">cites a source</text>
+<rect class="mask" x="638.0" y="754" width="124.0" height="15" rx="2"/>
+<text x="700.0" y="765.5" class="lbl muted" text-anchor="middle">new agent authority</text>
+<rect class="mask" x="629.0" y="806" width="142.0" height="15" rx="2"/>
+<text x="700.0" y="817.5" class="lbl muted" text-anchor="middle">execution path matters</text>
+<rect class="mask" x="620.0" y="858" width="160.0" height="15" rx="2"/>
+<text x="700.0" y="869.5" class="lbl muted" text-anchor="middle">one reviewer, high stakes</text>
+<rect class="mask" x="641.0" y="962" width="118.0" height="15" rx="2"/>
+<text x="700.0" y="973.5" class="lbl muted" text-anchor="middle">stale packet sweep</text>
+<rect class="mask" x="647.0" y="1014" width="106.0" height="15" rx="2"/>
+<text x="700.0" y="1025.5" class="lbl muted" text-anchor="middle">live harm: first</text>
+<rect class="mask" x="632.0" y="1066" width="136.0" height="15" rx="2"/>
+<text x="700.0" y="1077.5" class="lbl muted" text-anchor="middle">problem stays for now</text>
+<rect class="mask" x="650.0" y="1118" width="100.0" height="15" rx="2"/>
+<text x="700.0" y="1129.5" class="lbl muted" text-anchor="middle">others carry it</text>
+<rect class="mask" x="96.0" y="234.0" width="160.0" height="15" rx="2"/>
+<text x="176.0" y="245.5" class="lbl muted" text-anchor="middle">controlled config touched</text>
+<text x="312" y="960.0" class="lbl acc" text-anchor="end">durable control</text>
+<text x="312" y="974.0" class="lbl acc" text-anchor="end">update ↺</text>
 </svg>

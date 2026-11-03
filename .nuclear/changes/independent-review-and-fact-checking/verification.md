@@ -94,6 +94,7 @@ A second round (Codex on `1e956bc` and `3adf16c`; Copilot on `1e956bc`) raised m
 | CX-8 | A `## Claim authorship` heading with no readable rows did not opt a packet in | yes | fixed: the heading alone opts in; test added |
 | CX-9 | A custody verifier cell naming the generator plus a separate witness (`alice + carol`) needed the R-9 disclosure | yes | fixed: R-9 applies only when every eligible verifier also generated the evidence; test added |
 | CX-10 | MCP `two_party` forwarding untested; MCP docstring said "distinct from its evidence author" for custody rows; `trace.md` cited a missing symbol | yes | fixed: MCP test added; docstring now states the custody and authorship rules separately; trace symbol corrected |
+| CX-12 | A custody section inside an HTML comment or a fence still exported second parties (Codex on `931448b`) | yes | fixed: `_check_evidence_custody` removes comments and fences before locating the section, as CX-5 does for authorship; test added |
 | CX-11 | `ben + reviewer` passes against actor `ben` | yes | kept by design: a cell counts when at least one name in it is outside the excluded set, the same rule CX-9 asks for |
 
 Default-mode and `--strict-custody` output stays identical to `main` across all 56 packets (112 runs).

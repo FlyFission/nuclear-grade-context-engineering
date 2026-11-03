@@ -471,3 +471,36 @@ def test_mixed_verifier_cell_keeps_the_independent_witness(tmp_path):
     messages: list[str] = []
     check_two_party(pkt, messages, custody_parties=parties)
     assert messages == []
+
+
+@pytest.mark.parametrize("wrap", [("<!--\n", "-->\n\n"), ("```markdown\n", "```\n\n")])
+def test_hidden_custody_section_supplies_no_second_party(tmp_path, wrap):
+    # Codex on 931448b: a custody record inside a comment or fence still passed.
+    pkt = _copy_worked(tmp_path)
+    vfile = pkt / "verification.md"
+    text = vfile.read_text(encoding="utf-8")
+    custody_row = (
+        "| E-002 | C-001 / C-004a | yes | reviewer re-ran pytest from a clean clone | "
+        "AI-assisted maintainer process | second reviewer | second reviewer | second reviewer | "
+        "second reviewer | second reviewer | second reviewer | second reviewer |\n"
+    )
+    profile_row = (
+        "| E-002 | separated; a different person | partially separated; read the packet | "
+        "partially separated; same tests | partially separated; reviewer owns the verdict | "
+        "separated; own machine | independent reproduction | admitted; see `ship.md` |\n"
+    )
+    for anchor, row in (("| E-001 | C-001 / C-004a | yes |", custody_row), ("| E-001 | **coupled**", profile_row)):
+        head, tail = text.split(anchor, 1)
+        first_line, rest = tail.split("\n", 1)
+        text = head + anchor + first_line + "\n" + row + rest
+    assert validate_packet_text(pkt, vfile, text).ok  # visible: passes
+    start = text.index("## Evidence custody and coupling")
+    end = text.index("## Security / dependency")
+    hidden = text[:start] + wrap[0] + text[start:end] + wrap[1] + text[end:]
+    result = validate_packet_text(pkt, vfile, hidden)
+    assert not result.ok
+
+
+def validate_packet_text(pkt, vfile, text):
+    vfile.write_text(text, encoding="utf-8")
+    return validate_packet(pkt, require_custody=True, require_two_party=True)

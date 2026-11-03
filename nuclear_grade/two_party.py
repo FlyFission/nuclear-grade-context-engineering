@@ -269,13 +269,19 @@ def _visible(text: str) -> str:
     One pass tracks both contexts, so a fence marker inside a comment, or a
     comment marker inside a fence, is just hidden text. Stripping one kind and
     then the other lets a marker of the first kind hide visible content.
+    A ``<!--`` inside an inline code span is text, and a ``<!--`` that is not at
+    the start of a line opens a comment only if a ``-->`` follows somewhere;
+    otherwise it is literal, as Markdown renders it.
     Hidden characters become spaces; line structure is kept.
     """
     out: list[str] = []
     in_comment = False
     fence_character: str | None = None
     fence_length = 0
+    offset = 0
     for line in text.splitlines(keepends=True):
+        line_start = offset
+        offset += len(line)
         body = line.rstrip("\r\n")
         ending = line[len(body):]
         if fence_character is not None:
@@ -301,13 +307,23 @@ def _visible(text: str) -> str:
                 if end != -1:
                     in_comment = False
                 i = stop
-            else:
-                start = body.find("<!--", i)
-                stop = len(body) if start == -1 else start
-                kept.append(body[i:stop])
-                if start != -1:
-                    in_comment = True
+                continue
+            if body[i] == "`":
+                run = len(body[i:]) - len(body[i:].lstrip("`"))
+                close = re.compile(rf"(?<!`)`{{{run}}}(?!`)").search(body, i + run)
+                stop = close.end() if close else i + run
+                kept.append(body[i:stop])  # a code span, or literal backticks
                 i = stop
+                continue
+            if body.startswith("<!--", i):
+                at_block_start = i <= 3 and not body[:i].strip()
+                if at_block_start or text.find("-->", line_start + i + 4) != -1:
+                    in_comment = True
+                    kept.append("    ")
+                    i += 4
+                    continue
+            kept.append(body[i])
+            i += 1
         out.append("".join(kept) + ending)
     return "".join(out)
 

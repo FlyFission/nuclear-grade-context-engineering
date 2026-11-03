@@ -35,6 +35,7 @@ These are portable command prompts: plain Markdown prompt cards you can paste in
 | [`ng-report-defect`](commands/ng-report-defect.md) | A defect you found lives in a shared or supplied artifact others depend on, not just your copy | An outward notice to the affected consumers, plus the local fix |
 | [`ng-verify-artifact`](commands/ng-verify-artifact.md) | The deliverable is a produced artifact (figure, PDF, SVG, screenshot, build, deployed response) and correctness lives in the rendered output | The freshly regenerated artifact, findings tied to the observed output, and one verdict |
 | [`ng-panel`](commands/ng-panel.md) | A trust-bearing or irreversible verdict rests on one reviewer, or on several that share a model and brief, and you need checks that can fail differently | A panel record with each seat's diversity axis, preserved dissent, panel health, and host-verified findings |
+| [`ng-fact-check`](commands/ng-fact-check.md) | A packet, doc, review, or release note relies on an outside fact — a number, quote, date, version, limit, or API behavior | A fact ledger tying each load-bearing fact to a primary source and a second independent means, plus corrected wording |
 
 ## How the prompt cards are made
 

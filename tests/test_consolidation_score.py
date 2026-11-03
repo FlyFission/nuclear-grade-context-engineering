@@ -1,0 +1,57 @@
+"""The consolidation scores must be reproducible from the committed inputs.
+
+`evals/skill-consolidation/REPORT.md` justifies a catalog change with these
+numbers, so the published command has to run and give the committed result.
+"""
+
+from __future__ import annotations
+
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+EVAL = ROOT / "evals" / "skill-consolidation"
+
+
+def test_published_score_command_reproduces_committed_scores():
+    result = subprocess.run(
+        [sys.executable, str(EVAL / "score.py"), str(EVAL / "data")],
+        capture_output=True, text=True, check=True, cwd=ROOT,
+    )
+    produced = json.loads(result.stdout)
+    committed = json.loads((EVAL / "data" / "score.json").read_text(encoding="utf-8"))
+    assert produced["routing"] == committed["routing"]
+    assert produced["labeler_agreement"] == committed["labeler_agreement"]
+    assert json.dumps(produced["fit"], sort_keys=True) == json.dumps(committed["fit"], sort_keys=True)
+
+
+def _reject_constant(name: str):
+    raise ValueError(f"non-standard JSON constant {name}")
+
+
+def test_committed_scores_are_strict_json():
+    # NaN or Infinity is not JSON; a metric with no rows must be null.
+    for path in sorted(EVAL.rglob("*.json")):
+        json.loads(path.read_text(encoding="utf-8"), parse_constant=_reject_constant)
+
+
+def test_fit_is_counted_per_scenario_not_per_row():
+    # Codex on 0cfcf4a: a scenario needing two originals has two rows but is one scenario.
+    sys.path.insert(0, str(EVAL))
+    try:
+        import score
+    finally:
+        sys.path.remove(str(EVAL))
+    mid = next(iter(score.MERGES))
+    other = "not-" + score.TARGETS[mid]
+    rows = [
+        {"id": "S-1", "merge": mid, "origin": other, "misses_needed_work": False, "forces_unneeded_work": True},
+        {"id": "S-1", "merge": mid, "origin": other + "-2", "misses_needed_work": False, "forces_unneeded_work": True},
+    ] + [
+        {"id": f"S-{i}", "merge": mid, "origin": other, "misses_needed_work": False, "forces_unneeded_work": False}
+        for i in range(2, 11)
+    ]
+    fit = score.score_fit(rows)[mid]
+    assert (fit["n"], fit["rows"], fit["forced"], fit["forced_rate"]) == (10, 11, ["S-1"], 10.0)

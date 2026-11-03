@@ -530,3 +530,43 @@ def test_distinct_verifiers_still_pass_with_slashes(tmp_path, verifier):
     messages: list[str] = []
     check_two_party(pkt, messages)
     assert messages == [], verifier
+
+
+# --- Codex on c164d8b --------------------------------------------------------
+
+
+def test_longer_outer_fence_is_not_closed_by_an_inner_fence(tmp_path):
+    hidden = "````markdown\n```markdown\n" + AUTH_HEADER + "| C-001 | ben | carol |\n```\n````\n"
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n", hidden)
+    messages: list[str] = []
+    check_two_party(pkt, messages)
+    assert any("C-001" in m and "no authorship or custody row" in m for m in messages)
+
+
+@pytest.mark.parametrize("conj", ["AND", "And", "and"])
+def test_actor_conjunction_splits_in_any_case(tmp_path, conj):
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n", AUTH_HEADER + f"| C-001 | ben {conj} agent:claude | agent:claude |\n")
+    messages: list[str] = []
+    check_two_party(pkt, messages)
+    assert any("C-001" in m for m in messages), conj
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "a\n```\nx\n```\nb\n",
+        "````md\n```\ninner\n```\n````\nafter\n",
+        "~~~\n```\n~~~\nafter\n",
+        "  ```py\ncode\n  ```\n",
+        "```\nunclosed\n",
+        "``` `not a fence`\ntext\n",
+        "````\n```\nstill hidden\n",
+    ],
+)
+def test_fence_stripping_matches_the_validator(text):
+    # The two parsers must agree on what is hidden, or a declaration could be
+    # visible to one and hidden from the other.
+    from nuclear_grade.ng_validate import _strip_code_blocks
+    from nuclear_grade.two_party import strip_code_blocks
+
+    assert strip_code_blocks(text) == _strip_code_blocks(text)

@@ -79,11 +79,10 @@ from typing import NamedTuple
 _RECORD_ID = re.compile(r"^[A-Z][A-Z0-9]*-[0-9][A-Za-z0-9._-]*$")
 _STATUSES = ("not applicable", "pass", "fail", "gap", "deferred", "planned")
 _LINK = re.compile(r"\[([^\]]*)\]\([^)]*\)")
-_CODE_FENCE = re.compile(r"^\s*(```|~~~)")
 _ID_SPLIT = re.compile(r"\s*[,;/]\s*")
 # A slash separates names only when spaced (`ben / carol`); unspaced it is part of
 # one identifier (`anthropic/claude-3.5-sonnet`, `N/A`).
-_ACTOR_SPLIT = re.compile(r"\s*(?:\+|,|;|&|\band\b)\s*|\s+/\s+")
+_ACTOR_SPLIT = re.compile(r"\s*(?:\+|,|;|&|\band\b)\s*|\s+/\s+", re.IGNORECASE)
 _PUNCT = " \t.,;:!?()[]{}\"'"
 # Cells that declare the absence of a verifier, or name the actor indirectly,
 # rather than naming a second party. Compared after normalization.
@@ -263,17 +262,40 @@ def _visible(text: str) -> str:
     Declarations inside a comment or a fenced example are illustrations, not
     records, so they must not satisfy (or trip) the gate.
     """
-    text = _HTML_COMMENT.sub("", text)
-    lines: list[str] = []
-    fence = ""
-    for line in text.splitlines():
-        match = _CODE_FENCE.match(line)
-        if match and (not fence or match.group(1) == fence):
-            fence = "" if fence else match.group(1)
-            lines.append("")
+    return _HTML_COMMENT.sub("", strip_code_blocks(text))
+
+
+def strip_code_blocks(text: str) -> str:
+    """Blank fenced code blocks, keeping line structure (CommonMark fence rules).
+
+    A fence closes only on the same character repeated at least as many times as
+    it opened, so a ```` block may contain a ``` example. This mirrors
+    ``ng_validate._strip_code_blocks``; a test keeps the two in step.
+    """
+    output: list[str] = []
+    fence_character: str | None = None
+    fence_length = 0
+    for line in text.splitlines(keepends=True):
+        content = line.rstrip("\r\n")
+        if fence_character is None:
+            opening = re.match(r"^ {0,3}(`{3,}|~{3,})(.*)$", content)
+            if opening is None:
+                output.append(line)
+                continue
+            marker, info = opening.groups()
+            if marker.startswith("`") and "`" in info:
+                output.append(line)
+                continue
+            fence_character = marker[0]
+            fence_length = len(marker)
+            output.append(re.sub(r"\S", " ", line))
             continue
-        lines.append("" if fence else line)
-    return "\n".join(lines)
+        output.append(re.sub(r"\S", " ", line))
+        closing = rf"^ {{0,3}}{re.escape(fence_character)}{{{fence_length},}}[ \t]*$"
+        if re.fullmatch(closing, content):
+            fence_character = None
+            fence_length = 0
+    return "".join(output)
 
 
 def _cells(line: str) -> list[str]:

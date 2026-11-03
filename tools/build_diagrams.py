@@ -38,6 +38,7 @@ STYLE = f"""
 .life{{stroke:rgba(14,26,48,0.25);stroke-dasharray:3 4}}
 .mask{{fill:#F7F6F2}} .rule{{stroke:rgba(14,26,48,0.14)}}
 .name{{font-family:{SANS};font-size:13px;font-weight:600}}
+.nm{{font-family:{SANS};font-size:12px;font-weight:600}}
 .sub{{font-family:{MONO};font-size:10px}}
 .eye{{font-family:{MONO};font-size:9.5px;font-weight:600;letter-spacing:0.16em}}
 .lbl{{font-family:{MONO};font-size:9.5px;letter-spacing:0.04em}}
@@ -482,17 +483,19 @@ def skill_map(name, overlays_on):
     rows_for = {sid: max(1, len(overlays_on.get(sid, []))) for sid, *_ in spine}
     total_rows = sum(rows_for.values())
     h = 96 + total_rows * ROW + 40
-    f = Fig(name, 1200, h, "Skill map",
+    WIDTH = 1280
+    f = Fig(name, WIDTH, h, "Skill map",
             "The core path runs from using-nuclear-grade through questioning-attitude, rating-change-risk, "
             "creating-change-records, proving-claims, checking-release-readiness, recording-a-known-good-version and "
             "learning-from-experience, which feeds back to questioning-attitude. Rating-change-risk branches to "
-            "choosing-what-to-control and checking-what-a-change-affects. Heavier overlays switch on by consequence.",
+            "choosing-what-to-control and checking-what-a-change-affects. "
+            "Heavier overlays switch on by consequence, each labeled with its trigger.",
             "Skill map · core path and consequence overlays")
     SX, SW = 340, 248
     OX = SX + SW + 200
     y = 80
     pos = {}
-    f.group(OX - 24, 60, 1200 - OX - 4, total_rows * ROW + 36, "Heavier overlays — switch on by consequence")
+    f.group(OX - 24, 60, WIDTH - OX - 4, total_rows * ROW + 36, "Heavier overlays — switch on by consequence")
     f.group(SX - 24, 60, SW + 48, total_rows * ROW + 36, "Core path", cls="band")
     for sid, nm, sub in spine:
         kind = "focal" if sid == "ung" else "step"
@@ -541,21 +544,29 @@ def skill_map(name, overlays_on):
 FULL_OVERLAYS = {
     "qa": [[("staying-on-mission", "long drifting session")]],
     "ccr": [[("deciding-who-decides", "irreversible action"), ("declaring-intent", None)],
-            [("vetting-outside-code-and-models", "outside dep / model")]],
+            [("vetting-outside-code-and-models", "outside dep / model")],
+            [("breaking-down-the-work", "scope to split"), ("organizing-project-folders", None)]],
     "ccp": [[("briefing-an-agent", "delegate / resume"), ("handing-off-work", None)],
             [("double-checking-before-acting", "critical action")]],
     "pc": [[("reviewing-code-quality", "standards drift in diff")],
-           [("verifying-final-artifacts", "rendered deliverable")]],
+           [("verifying-final-artifacts", "rendered deliverable")],
+           [("checking-facts", "relies on an outside fact")],
+           [("checking-legal-and-safety-wording", "public assurance words")],
+           [("checking-source-claims", "cites a source")]],
     "rsr": [[("stress-testing-agent-changes", "new agent authority")],
-            [("recording-what-an-agent-did", "execution path matters")]],
-    "lfo": [[("closing-stale-packets", "stale packet sweep")]],
+            [("recording-what-an-agent-did", "execution path matters")],
+            [("running-a-review-panel", "one reviewer, high stakes")]],
+    "lfo": [[("closing-stale-packets", "stale packet sweep")],
+            [("responding-to-incidents", "live harm: first")],
+            [("tracking-deficiencies", "problem stays for now")],
+            [("reporting-shared-defects", "others carry it")]],
 }
 SHORT_OVERLAYS = {
     "qa": FULL_OVERLAYS["qa"],
     "ccp": FULL_OVERLAYS["ccp"],
     "pc": FULL_OVERLAYS["pc"][:1],
-    "rsr": FULL_OVERLAYS["rsr"],
-    "lfo": FULL_OVERLAYS["lfo"],
+    "rsr": FULL_OVERLAYS["rsr"][:2],
+    "lfo": FULL_OVERLAYS["lfo"][:1],
 }
 
 
@@ -643,6 +654,182 @@ def planes():
     f.save()
 
 
+# =========================================================================
+# 10. Verification depth and method
+# =========================================================================
+def verification_ladder():
+    f = Fig("verification-ladder", 1100, 560, "Verification depth and method",
+            "Five rungs rise left to right. Self-check examines your own action and catches slips. A check follows "
+            "the originator's path and catches execution errors. Design review judges the basis itself and catches "
+            "a wrong method or input. An alternate method reaches the result a second way and catches the first "
+            "method's blind spot. A qualification test runs the real artifact under worst-case conditions. The first "
+            "two confirm work was executed as planned; the last three confirm it is right for its purpose. Mode "
+            "minimums: Quick needs a self-check; Standard needs a check plus a design review or alternate method by "
+            "someone other than the originator; Nuclear needs a design review plus an alternate method or "
+            "qualification test, a verifier with freedom of thought from the performer, and a human.",
+            "Verification · depth and method")
+    f.text(28, 74, "Independent review: one result reached by two or more methods that can fail differently, "
+           "at least one of them by someone other than the originator.", "call", "acc", anchor="start")
+    rungs = [
+        ("Self-check", "your own action\ncatches slips", "ext"),
+        ("Check", "the originator's path\ncatches execution errors", "step"),
+        ("Design review", "the basis itself\ncatches wrong method, input", "indep"),
+        ("Alternate method", "a second route, compared\ncatches method-level errors", "indep"),
+        ("Qualification test", "the real artifact, worst case\ncatches wrong predictions", "indep"),
+    ]
+    W, H, STEP, X0, Y0, PITCH = 184, 68, 52, 40, 330, 208
+    f.group(28, 240, 414, 176, "Checking · executed as planned")
+    f.group(446, 96, 626, 320, "Verifying · right for its purpose", label_fill="lnk")
+    boxes = []
+    for i, (name, sub, kind) in enumerate(rungs):
+        x, y = X0 + i * PITCH, Y0 - i * STEP
+        boxes.append(f.box(x, y, W, H, name, sub, kind=kind, eyebrow=f"rung {i}"))
+    for a, b in zip(boxes, boxes[1:], strict=False):
+        f.arrow([(a["x"] + a["w"] - 28, a["y"]), (a["x"] + a["w"] - 28, b["cy"]), b["l"]], r=6)
+    f.group(28, 436, 1044, 104, "Minimum for a load-bearing claim, by mode", cls="band")
+    modes = [
+        ("Quick", "rung 0, recorded"),
+        ("Standard", "rung 1 + rung 2 or 3\nnot by the originator"),
+        ("Nuclear / Tier 0", "rung 2 + rung 3 or 4 · a human\nverifier with freedom of thought"),
+    ]
+    for i, (name, sub) in enumerate(modes):
+        f.box(52 + i * 344, 466, 316, 56, name, sub, kind="store")
+    f.save()
+
+
+# =========================================================================
+# 11. How a skill is invoked
+# =========================================================================
+def skill_invocation():
+    f = Fig("skill-invocation", 1100, 452, "How a skill is invoked",
+            "Three ways in: the host matches the situation to a skill's name and description, which cost about "
+            "100 tokens each and are always visible; the using-nuclear-grade router, optionally reinforced by "
+            "session hooks, sends the change to a skill; or a person runs the skill's /ng- command card. Only then "
+            "does the skill body load. Its decision contract names the claim it checks, the work leaves a record in "
+            "the change packet, ng validate and the CI gate check the record's structure, and the skill's tier "
+            "(block, warn, or observe) decides whether the work proceeds, stops, or goes to a human.",
+            "Skills · how one is invoked and what it leaves behind")
+    f.group(28, 64, 248, 360, "Ways in", cls="band")
+    e1 = f.box(44, 96, 216, 72, "Auto-match", "host reads name + description\n~100 tokens each, always", kind="ext")
+    e2 = f.box(44, 200, 216, 72, "Router", "using-nuclear-grade\n+ optional session hooks", kind="ext")
+    e3 = f.box(44, 304, 216, 72, "Explicit command", "a person runs /ng-<card>\nbuilt from the skill's Prompt", kind="ext")
+    sk = f.box(328, 196, 196, 80, "Skill body loads", "SKILL.md, only when\nselected", kind="focal")
+    for e in (e1, e2, e3):
+        f.arrow([e["r"], (300, e["cy"]), (300, sk["cy"]), sk["l"]], r=8)
+    ct = f.box(568, 96, 196, 72, "Decision contract", "the claim it checks\nand its failure class")
+    rc = f.box(808, 96, 252, 72, "Record", ".nuclear/changes/<slug>/\nrisk · verification · ship ...", kind="store")
+    f.arrow([sk["t"], (sk["cx"], ct["cy"]), ct["l"]], r=8)
+    f.arrow([ct["r"], rc["l"]])
+    gt = f.box(808, 236, 252, 72, "ng validate · CI gate", "structure and evidence status,\nnot engineering adequacy")
+    f.arrow([rc["b"], gt["t"]])
+    tr = f.box(568, 236, 196, 72, "Tier", "block · warn · observe\nrolled up by ng decisions")
+    f.arrow([gt["l"], tr["r"]])
+    oc = f.box(568, 356, 492, 56, "Proceed  ·  stop  ·  escalate to a human",
+               "irreversible, trust-bearing, or thinly evidenced work goes to a person", kind="indep")
+    f.arrow([(tr["cx"], tr["y"] + tr["h"]), (tr["cx"], oc["y"])])
+    f.save()
+
+
+# =========================================================================
+# 12. The skill catalog, by family
+# =========================================================================
+CORE7 = {
+    "questioning-attitude", "rating-change-risk", "proving-claims", "double-checking-before-acting",
+    "staying-on-mission", "checking-release-readiness", "learning-from-experience",
+}
+SKILL_FAMILIES = [
+    ("Start here", [
+        ("using-nuclear-grade", "router: the start of any change"),
+        ("questioning-attitude", "the fact that would change the call"),
+        ("rating-change-risk", "floor, Quick, Standard, or stronger"),
+    ]),
+    ("Before you act", [
+        ("double-checking-before-acting", "a risky step is next"),
+        ("declaring-intent", "a reviewer must see the why first"),
+        ("deciding-who-decides", "may the agent act alone?"),
+        ("staying-on-mission", "work drifts, loops, or slips"),
+    ]),
+    ("Records and versions", [
+        ("creating-change-records", "open or update a change record"),
+        ("closing-stale-packets", "finish, close, or delete a draft"),
+        ("choosing-what-to-control", "what must stay under control"),
+        ("recording-a-known-good-version", "record the accepted version"),
+        ("checking-what-a-change-affects", "what else goes stale?"),
+        ("recording-what-an-agent-did", "reconstruct the agent's run"),
+    ]),
+    ("Evidence and verdicts", [
+        ("proving-claims", "each claim to its evidence"),
+        ("checking-facts", "is the outside fact true?"),
+        ("reviewing-code-quality", "a diff's maintainability"),
+        ("verifying-final-artifacts", "look at the rendered output"),
+        ("stress-testing-agent-changes", "attack a widened agent"),
+        ("running-a-review-panel", "one reviewer is not enough"),
+        ("checking-release-readiness", "ship, block, or defer"),
+    ]),
+    ("Trust and public claims", [
+        ("vetting-outside-code-and-models", "relying on code you did not write"),
+        ("checking-legal-and-safety-wording", "assurance words in public text"),
+        ("checking-source-claims", "how a source is cited"),
+    ]),
+    ("Delegation and structure", [
+        ("briefing-an-agent", "before an agent starts"),
+        ("handing-off-work", "open work changes hands"),
+        ("breaking-down-the-work", "split scope into deliverables"),
+        ("organizing-project-folders", "lay the work out on disk"),
+    ]),
+    ("When it goes wrong", [
+        ("responding-to-incidents", "live harm: stabilize first"),
+        ("learning-from-experience", "change a control afterward"),
+        ("tracking-deficiencies", "a problem you live with for now"),
+        ("reporting-shared-defects", "others carry the same defect"),
+    ]),
+]
+
+
+def skill_catalog():
+    total = sum(len(skills) for _, skills in SKILL_FAMILIES)
+    f = Fig("skill-catalog", 1180, 640, "The skill catalog",
+            f"{total} skills in seven families, each with the situation that calls for it. Start here: the "
+            "using-nuclear-grade router, questioning-attitude, rating-change-risk. Before you act: double-checking, "
+            "declaring intent, deciding who decides, staying on mission. Records and versions: change records, stale "
+            "records, approved versions, change impact, agent run records. Evidence and verdicts: proving claims, "
+            "checking facts, code review, final artifacts, stress tests, review panels, release readiness. Trust and "
+            "public claims: outside code and models, legal and safety wording, source claims. Delegation and "
+            "structure: briefing, handoffs, work breakdown, folders. When it goes wrong: incidents, lessons, "
+            "deficiencies, shared defects. A gold dot marks the Core 7, which apply to every change.",
+            f"Skills · {total} jobs in seven families")
+    W, GAP, X0, PITCH, HEAD = 270, 16, 30, 34, 40
+
+    def card(col, y, title, skills):
+        x = X0 + col * (W + GAP)
+        h = HEAD + len(skills) * PITCH + 8
+        f.group(x, y, W, h, title, cls="band")
+        for k, (name, when) in enumerate(skills):
+            ty = y + HEAD + 14 + k * PITCH
+            if name in CORE7:
+                f.nodes.append(f'<circle class="acc" cx="{x + 16}" cy="{ty - 4}" r="3.5"/>')
+            f.text(x + 26, ty, name, "nm", "ink", anchor="start")
+            f.text(x + 26, ty + 13, when, "sub", "soft", anchor="start")
+        return h
+
+    row1 = max(len(s) for _, s in SKILL_FAMILIES[:4])
+    for col, (title, skills) in enumerate(SKILL_FAMILIES[:4]):
+        card(col, 64, title, skills)
+    y2 = 64 + HEAD + row1 * PITCH + 8 + 20
+    for col, (title, skills) in enumerate(SKILL_FAMILIES[4:]):
+        card(col, y2, title, skills)
+    lx = X0 + 3 * (W + GAP)
+    f.nodes.append(f'<circle class="acc" cx="{lx + 16}" cy="{y2 + 26}" r="3.5"/>')
+    f.text(lx + 26, y2 + 30, "Core 7: every change", "name", "ink", anchor="start")
+    f.text(lx + 26, y2 + 52, "everything else loads", "sub", "soft", anchor="start")
+    f.text(lx + 26, y2 + 65, "by trigger (CORE.md)", "sub", "soft", anchor="start")
+    f.text(lx + 26, y2 + 87, "catalog: name + one line", "sub", "soft", anchor="start")
+    f.text(lx + 26, y2 + 100, "~100 tokens each; the body", "sub", "soft", anchor="start")
+    f.text(lx + 26, y2 + 113, "loads only when picked", "sub", "soft", anchor="start")
+    f.h = y2 + HEAD + max(len(s) for _, s in SKILL_FAMILIES[4:]) * PITCH + 8 + 28
+    f.save()
+
+
 def main():
     lifecycle(False)
     lifecycle(True)
@@ -657,6 +844,9 @@ def main():
     evidence_chain()
     independence()
     planes()
+    verification_ladder()
+    skill_invocation()
+    skill_catalog()
     print(f"wrote {len(list(OUT.glob('*.svg')))} SVGs to {OUT}")
 
 

@@ -34,6 +34,7 @@ def validate_change_record(
     packet_path: str,
     strict_custody: bool = False,
     strict_authority: bool = False,
+    two_party: bool = False,
 ) -> str:
     """Structurally validate a change-record packet directory.
 
@@ -41,7 +42,11 @@ def validate_change_record(
     internal links resolve, and evidence statuses are set. With `strict_custody`,
     a Standard packet must also disclose all custody roles and coupling axes. With
     `strict_authority`, it must include the activated evidence-conditioned decision
-    rights record. Returns OK or the list of structural gaps. It does not judge
+    rights record. With `two_party`, every `pass` claim must name a verifier who
+    is not its change actor (custody rows; an independent reproducer may generate
+    and witness its own re-run if ship.md discloses it) or, in a Claim authorship
+    row, not its evidence author or any change actor. These are declared
+    identities, not proof of independence. Returns OK or the list of structural gaps. It does not judge
     whether the code is correct, safe, secure, compliant, authorized, or genuinely
     independent.
     """
@@ -50,6 +55,7 @@ def validate_change_record(
         Path(packet_path),
         require_custody=strict_custody,
         require_authority=strict_authority,
+        require_two_party=two_party,
     )
     if result.ok:
         return f"OK: {packet_path} is structurally complete."

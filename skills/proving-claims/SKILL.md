@@ -31,6 +31,7 @@ Boundary: this skill builds the claim-to-evidence trace that feeds other decisio
 - The request is to make the final ship/defer/block decision; use `checking-release-readiness` after the trace is built.
 - The request is to judge public legal, safety, security, certification, or compliance wording; use `checking-legal-and-safety-wording`.
 - The request is to validate citation lineage or source authority; use `checking-source-claims`.
+- The claim is an assertion about the outside world (a number, quote, version, or API behavior) rather than about this change; use `checking-facts`.
 
 ## Inputs
 

@@ -4,11 +4,11 @@
 
 ## Mode
 
-<!-- Quick / Standard / stronger. One line on why a lower mode is insufficient. -->
+<!-- Administrative floor / Quick / Standard / stronger. Name why this is the lightest honest mode. -->
 
 ## Change packet
 
-<!-- For non-trivial changes, link .nuclear/changes/<slug>/. For trivial docs-only changes, write N/A and explain why. -->
+<!-- Link .nuclear/changes/<slug>/, or write N/A when the administrative floor applies and explain why. -->
 
 ## Proof command + result
 
@@ -26,6 +26,7 @@
   ```
 
 - [ ] Packet validation passes if this PR creates or changes a `.nuclear/changes/<slug>/` packet.
+- [ ] `.nuclear/badge.json` is regenerated (`python tools/ng.py badge . --out .nuclear/badge.json`) if this PR adds or changes a packet.
 - [ ] CM impact/baseline records are updated if controlled items changed.
 - [ ] HPI records are updated if turnover, self-check, OPEX, or dependency/model/API trust is activated.
 - [ ] `git diff --check` passes.

@@ -65,6 +65,9 @@ Keep confidence apart from evidence before any derived claim is accepted.
 - Data classes affected:
 - Human approval boundaries:
 - AI/model/tool authority boundaries:
+- Stable public seam for behavior tests:
+- Deep-module boundary (complexity hidden behind a small interface):
+- Prototype question and disposal boundary, if activated:
 
 ## Dependency / model / supplier intended use
 

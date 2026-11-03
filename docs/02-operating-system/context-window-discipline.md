@@ -14,7 +14,7 @@ claim is made.
 
 A context window is a finite, degradable resource — not a bucket you fill.
 
-Public research keeps converging on the same three facts:
+Public research keeps converging on the same four facts:
 
 - **Attention is a budget.** As input grows, a transformer's ability to use any one fact in
   it shrinks. Anthropic's engineering guidance calls this the *attention budget* and frames
@@ -26,6 +26,14 @@ Public research keeps converging on the same three facts:
 - **Position matters.** Models use information at the start and end of a long context far
   better than information buried in the middle
   ([Lost in the Middle, Liu et al.](https://arxiv.org/abs/2307.03172)).
+- **Repository instructions are an exception sheet, not an overview.** Gloaguen et al. found
+  no general task-success gain and an average inference-cost increase above 20% from context
+  files; Khatri's smaller two-agent ablation likewise found no measurable correctness shift,
+  but did find a narrow time saving when one file warned about a slow full test suite
+  ([arXiv 2602.11988](https://arxiv.org/abs/2602.11988);
+  [arXiv 2607.27250](https://arxiv.org/abs/2607.27250)). These are benchmark-scoped results,
+  not a universal rule. Keep exact commands, constraints, and non-obvious gotchas that change
+  action in always-loaded files; retrieve discoverable architecture only when the task needs it.
 
 Nuclear-grade already acts on this: the context pack is a deliberately small briefing, and
 the packet — not the chat transcript — is the source of truth. This page is the reasoning a
@@ -196,8 +204,8 @@ This page is an original Nuclear-grade operating doctrine. It draws on public
 context-engineering sources — Anthropic's engineering guidance, LangChain's
 context-engineering documentation, Neo4j's practical guide, Breunig's failure-mode taxonomy,
 Chroma's context-rot report, OpenAI's Model Spec chain-of-command wording on untrusted data,
-OWASP LLM01 prompt-injection guidance, and the Lost-in-the-Middle, ACE, LLMLingua, cAST, and
-LongCodeZip papers — mapped in
+OWASP LLM01 prompt-injection guidance, and the AGENTS.md evaluation, context-file ablation,
+Lost-in-the-Middle, ACE, LLMLingua, cAST, and LongCodeZip papers — mapped in
 [`../00-standards-foundation/source-map.md`](../00-standards-foundation/source-map.md)
 (Tiers 6 and 9). Benchmark numbers quoted here are those papers' claims on their benchmarks.
 This page creates no compliance, certification, or fitness claim.

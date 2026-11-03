@@ -1,3 +1,4 @@
+import json
 import shutil
 import subprocess
 import sys
@@ -6,6 +7,7 @@ from pathlib import Path
 import pytest
 
 from nuclear_grade.ng_validate import CLOSURE_MARKER
+from nuclear_grade.skill_catalog import load_catalog
 from tests.test_ng_validate import (
     COMMON_TAIL,
     add_decision_authority,
@@ -546,6 +548,17 @@ def test_scaffold_ci_refuses_overwrite_without_force(tmp_path):
 
 # --- ng install -----------------------------------------------------------------
 
+
+def test_cli_help_builds_without_loading_lifecycle_catalog(monkeypatch):
+    def fail_if_loaded(_root):
+        raise AssertionError("catalog loaded during parser construction")
+
+    monkeypatch.setattr(ng_cli, "load_catalog", fail_if_loaded)
+    parser = ng_cli.build_parser()
+
+    assert parser.parse_args(["list"]).command == "list"
+
+
 ALL_SKILLS = sorted(path.parent.name for path in (ROOT / "skills").glob("*/SKILL.md"))
 
 
@@ -563,8 +576,9 @@ def test_install_core_installs_router_plus_core_seven(tmp_path):
     result = run_ng("install", "codex", "--dest", str(dest))
 
     assert result.returncode == 0, result.stderr
-    installed = sorted(path.name for path in dest.iterdir())
-    assert installed == sorted(ng_cli.CORE_SKILLS)
+    installed = sorted(path.name for path in dest.iterdir() if path.is_dir())
+    expected_core = [entry.id for entry in load_catalog(ROOT).profile("core")]
+    assert installed == sorted(expected_core)
     assert len(installed) == 8
     assert (dest / "using-nuclear-grade" / "SKILL.md").exists()
 
@@ -574,7 +588,7 @@ def test_install_full_installs_every_skill(tmp_path):
     result = run_ng("install", "codex", "--full", "--dest", str(dest))
 
     assert result.returncode == 0, result.stderr
-    installed = sorted(path.name for path in dest.iterdir())
+    installed = sorted(path.name for path in dest.iterdir() if path.is_dir())
     assert installed == ALL_SKILLS
     assert len(installed) >= 20
 
@@ -594,7 +608,42 @@ def test_install_is_idempotent_update(tmp_path):
     second = run_ng("install", "codex", "--dest", str(dest))
 
     assert second.returncode == 0, second.stderr
-    assert len(list(dest.iterdir())) == 8
+    assert len([path for path in dest.iterdir() if path.is_dir()]) == 8
+
+
+def test_install_blocks_premanifest_profile_shrink_with_known_skill_dirs(tmp_path):
+    dest = tmp_path / "skills"
+    core_ids = {entry.id for entry in load_catalog(ROOT).profile("core")}
+    extra = next(name for name in ALL_SKILLS if name not in core_ids)
+    (dest / "using-nuclear-grade").mkdir(parents=True)
+    (dest / "using-nuclear-grade" / "SKILL.md").write_text("legacy\n", encoding="utf-8")
+    (dest / extra).mkdir()
+    (dest / extra / "SKILL.md").write_text("legacy\n", encoding="utf-8")
+
+    result = run_ng("install", "codex", "--dest", str(dest))
+
+    assert result.returncode == 2
+    assert "pre-manifest Nuclear-grade skill(s) are outside the selected profile" in result.stderr
+    assert extra in result.stderr
+    assert not (dest / ".nuclear-grade-install.json").exists()
+
+
+def test_install_blocks_when_previously_owned_skill_becomes_stale(tmp_path):
+    dest = tmp_path / "skills"
+    assert run_ng("install", "codex", "--dest", str(dest)).returncode == 0
+
+    manifest = json.loads((dest / ".nuclear-grade-install.json").read_text(encoding="utf-8"))
+    manifest["skills"].append("obsolete-skill")
+    (dest / ".nuclear-grade-install.json").write_text(json.dumps(manifest), encoding="utf-8")
+    (dest / "obsolete-skill").mkdir()
+    (dest / "obsolete-skill" / "SKILL.md").write_text("stale\n", encoding="utf-8")
+
+    result = run_ng("install", "codex", "--dest", str(dest))
+
+    assert result.returncode == 2
+    assert "previously installed skill(s) are no longer in the selected profile" in result.stderr
+    assert "obsolete-skill" in result.stderr
+    assert (dest / "obsolete-skill" / "SKILL.md").exists()
 
 
 def test_install_unverified_tool_warns_to_verify_path(tmp_path):

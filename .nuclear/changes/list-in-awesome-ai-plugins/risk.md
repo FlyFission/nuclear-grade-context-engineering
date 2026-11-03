@@ -1,0 +1,88 @@
+# Quick Risk Record
+
+## Selected mode
+
+- **Mode:** Quick
+- **Why this mode:** docs-only, additive, reversible. It drafts a public listing line but does not publish it; the external PR is a manual owner action.
+
+**Purpose:** Decide whether a small change can safely stay in Quick mode, and name the proof it needs.
+
+**Activation threshold:** Use for low-stakes changes you can undo and check easily, with no new line of user trust, no dependency trust decision, no effect on security or privacy, no change in release stance, and no change in AI power.
+
+**Minimum useful version:** Fill the short fields below. If any answer feels uncertain, move up to Standard.
+
+**Overhead trap:** Do not write a risk essay for a tiny diff. The goal is to catch hidden reasons to escalate, not to run a full design review.
+
+---
+
+## Change
+
+- Slug: list-in-awesome-ai-plugins
+- PR / issue: issue #105; PR on branch `claude/happy-ramanujan-q603z0`
+- Owner: FlyFission (Ben Huffer)
+- Date: 2026-11-03
+- Summary: Add an `awesome-ai-plugins` section to `docs/04-adoption/listing-and-discovery.md` with the vetted entry line, the target section, the list's requirements, and the owner's manual PR steps. Index it from the adoption README and note it in `CHANGELOG.md`.
+
+## Scope
+
+- Affected files/configs/docs: `docs/04-adoption/listing-and-discovery.md`, `docs/04-adoption/README.md`, `CHANGELOG.md`, this packet.
+- User-visible behavior changed? no; documentation only.
+- Dependency/model/API/prompt/tool permission changed? no.
+- Release or rollback posture changed? no.
+
+## Quick-mode screen
+
+| Question | Answer |
+|---|---|
+| Consequence if wrong | the drafted entry overstates the project, or a stale requirement sends the owner's PR back |
+| Reversibility | high; revert the doc. The external listing is a separate owner action and can be edited or withdrawn there |
+| Detectability | high; the entry is one line and the requirements link to the list's own `CONTRIBUTING.md` |
+| Exposure | documentation only here; the public claim lands only when the owner opens the external PR |
+| Uncertainty | low; the list's guide and README were read on 2026-11-03 (README read only to 100k of ~271k characters) |
+| Why Quick is enough | no code, dependency, security, or release change; the outward-facing step stays with a person |
+
+## Public-claim screen
+
+- Entry wording: "Agent skills, command prompts, and change-record templates that keep AI-assisted software work questioned, controlled, and reviewable." It names shipped artifacts (`skills/`, `commands/`, `templates/`) and a purpose already stated in `AGENTS.md`. No compliance, assurance, safety, or efficacy claim.
+- The list's scan "trust score" is a third-party signal; the doc says not to cite it as an assurance claim.
+
+## Required proof
+
+- Command/check/eval to run: `git diff --check`, `python tools/ng.py doctor .`, `python tools/ng.py tokens .`, `python tools/ng.py validate .nuclear/changes/list-in-awesome-ai-plugins`, and the public-doc/link tests in `pytest`.
+- Expected result: all green.
+- Evidence link/location: `proof.md`.
+
+## Critical-action self-check
+
+- Exact target: the three documentation files plus this packet.
+- Expected result: only docs change.
+- Stop condition: stop if any non-doc file would change, or if the external PR would be opened by the agent.
+
+## Escalation check
+
+Move up to Standard if any of these are true:
+
+- users, data, security, permissions, operations, or architecture are affected;
+- a trust decision about a dependency, model, or API changed;
+- a failure could be silent, delayed, costly, or hard to undo;
+- the AI had the power to write, run commands, use the network, or approve actions, beyond just drafting;
+- the proof will not fit in one small `proof.md`.
+
+The agent wrote files, ran commands, and read two public pages over the network, but only to draft docs in this repo; it took no outward action. None of the other triggers apply.
+
+## Required links
+
+- Packet: `.nuclear/changes/list-in-awesome-ai-plugins/`
+- Related PR/issue: issue #105
+- Proof record: `proof.md`
+- Prior listing packet: `.nuclear/changes/list-in-official-directories/`
+
+## Exit criteria
+
+- The mode is justified as Quick.
+- The required proof is named before or during the change.
+- No trigger for Standard or Nuclear mode is hidden.
+
+## Source-lineage note
+
+Original Nuclear-grade record inspired by public ideas on matching rigor to stakes, keeping the approved version under control (CM), software assurance, and secure development, mapped in `docs/00-standards-foundation/source-map.md` and `docs/01-field-guide/source-to-concept-crosswalk.md`. No compliance claim is made.

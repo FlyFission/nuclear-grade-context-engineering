@@ -714,3 +714,20 @@ def test_authorship_table_with_unrecognized_headers_declares_nothing(tmp_path):
     messages: list[str] = []
     check_two_party(pkt, messages)
     assert any("C-001" in m and "no authorship or custody row" in m for m in messages)
+
+
+@pytest.mark.parametrize("verifier", ["ben + agent:TBD", "agent:self", "agent: assistant", "human:none", "agent:<reviewer>", "ben + reviewer:N/A"])
+def test_role_prefixed_placeholders_name_no_second_party(tmp_path, verifier):
+    # Codex on 8e23443: a role prefix hid a placeholder.
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n", AUTH_HEADER + f"| C-001 | ben | {verifier} |\n")
+    messages: list[str] = []
+    check_two_party(pkt, messages)
+    assert any("C-001" in m for m in messages), verifier
+
+
+@pytest.mark.parametrize("verifier", ["agent:carol-bot", "human:carol", "ben + human:carol"])
+def test_role_prefixed_real_names_still_count(tmp_path, verifier):
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n", AUTH_HEADER + f"| C-001 | ben | {verifier} |\n")
+    messages: list[str] = []
+    check_two_party(pkt, messages)
+    assert messages == [], verifier

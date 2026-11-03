@@ -44,7 +44,7 @@ A "does it work" check proves what an agent produced, not how it got there. Some
 1. Find the steps that matter and need trace evidence: any tool call, file edit, command run, API call, or approval step.
 2. For each step that matters, record:
    - The tool or action name.
-   - The inputs passed (just the content, not the full raw payload).
+   - The inputs passed (just the content, not the full raw payload). Never copy secret or credential values into the trace; redact the value while preserving the field name and the result needed for review.
    - The output or result.
    - The evidence status: `pass`, `gap`, `fail`, or `not applicable`.
 3. At decision points, record what the agent chose, what limits applied, and whether the choice was within its allowed power.
@@ -89,6 +89,7 @@ A "does it work" check proves what an agent produced, not how it got there. Some
 - Odd token cost or delay shows up but is never explained.
 - Decision points are written as "agent chose X" with no limit or power reference.
 - Human approval steps are claimed but not documented with reviewer and date.
+- A trace row or linked export exposes a secret or credential value.
 
 ## Prompt
 
@@ -106,6 +107,7 @@ For each consequential step (tool call, file edit, command run, API call,
 approval gate):
 - Name the action and the tool.
 - Record the inputs (shortened) and the output or result.
+- Redact secret and credential values; keep only the field name and result needed for review.
 - Set an evidence status: pass, gap, fail, or not applicable.
 - At decision points: record the choice made, the limit applied, and the authority check.
 - For approval gates: the reviewer, the date, and the decision.

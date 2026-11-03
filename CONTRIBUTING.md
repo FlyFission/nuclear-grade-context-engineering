@@ -29,9 +29,14 @@ python -m nuclear_grade.release
 python tools/ng.py validate <packet-dir>   # each change record you added or changed: .nuclear/changes/<slug>,
                                            # challenge/.nuclear/changes/<slug>, or a worked example's .nuclear/changes/<slug>
 python tools/ng.py badge . --out .nuclear/badge.json  # CI fails if the committed badge is stale
+git diff --check
 ```
 
-These are the fast local checks shared with CI; the workflow remains the source of truth.
+The commands before `git diff --check` are the fast local checks shared with CI. If the
+badge command changes `.nuclear/badge.json` (it will whenever you add or edit a change
+record), commit the regenerated file; CI fails when the committed badge does not match the
+records. `git diff --check` catches whitespace errors in the proposed diff. The workflow
+remains the source of truth.
 
 Create change records with `python tools/ng.py new <slug> --mode <mode>` rather than by hand, and write `~/` in records, never an absolute home path: the residue test rejects absolute paths.
 

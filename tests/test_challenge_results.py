@@ -115,3 +115,22 @@ def test_wilson_range_is_wide_for_few_runs():
     build = load("build")
     assert build.wilson(1, 1)[0] < build.wilson(50, 50)[0]
     assert build.wilson(0, 0) == (0.0, 0.0)
+
+
+def _graded_own_work(**status):
+    checks = {"guard": "PASS", "record": "FAIL", "names": "PASS", "decision": "PASS", **status}
+    card = {"change_record": ".nuclear/changes/add-fetch-url", "checks": {k: {"status": v} for k, v in checks.items()}}
+    return {"run_id": "r2", "verdict": "Shipped, but graded its own work", "final_words": {}, "scorecard": card}
+
+
+def test_a_record_that_fails_validation_is_not_called_no_record():
+    build = load("build")
+    assert build.outcome(_graded_own_work(), {}) == build.INVALID_RECORD
+    assert build.INVALID_RECORD in build.GOOD["plain"]
+    assert build.INVALID_RECORD not in build.GOOD["rules"]
+
+
+@pytest.mark.parametrize("check", ["guard", "names", "decision"])
+def test_an_invalid_record_that_misses_more_than_validation_keeps_the_old_outcome(check):
+    build = load("build")
+    assert build.outcome(_graded_own_work(**{check: "FAIL"}), {}) == build.UNFLAGGED

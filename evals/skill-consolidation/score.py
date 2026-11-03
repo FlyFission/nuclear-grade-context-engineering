@@ -6,11 +6,11 @@ Inputs (all JSONL, one object per line, keyed by scenario ``id``):
 - ``scenarios.jsonl``        {"id", "work_type", "stage", "risk", "prompt"}
 - ``truth.jsonl``            {"id", "skills": [...31-catalog names...]}  adjudicated
 - ``labels_a.jsonl``, ``labels_b.jsonl``  the two independent labelings (same shape)
-- ``route31.jsonl``, ``route23.jsonl``    blind router picks (same shape)
+- ``route31.jsonl``, ``routenew.jsonl``    blind router picks (same shape)
 - ``fit.jsonl``              {"id", "merge", "origin", "misses_needed_work": bool,
                               "forces_unneeded_work": bool, "section", "note"}
 
-``map-31-to-23.json`` maps each 31-catalog name to its 23-catalog name.
+``map-31-to-new.json`` maps each 31-catalog name to its name in the candidate catalog.
 
 Criterion B (routing parity) and C (fit) are computed here. A (coverage) and D
 (context) come from the coverage audit and ``ng tokens``. Stdlib only.
@@ -22,23 +22,22 @@ import argparse
 import json
 from pathlib import Path
 
+# M1 (declaring-intent -> double-checking-before-acting) and M6 (briefing-an-agent
+# -> handing-off-work) failed criterion A (coverage) after their one allowed
+# revision, so per PROTOCOL.md they are not made and are not scored here.
 MERGES = {
-    "M1": ("double-checking-before-acting", ["double-checking-before-acting", "declaring-intent"]),
     "M2": ("learning-from-experience", ["learning-from-experience", "tracking-deficiencies", "reporting-shared-defects"]),
     "M3": ("checking-public-claims", ["checking-legal-and-safety-wording", "checking-source-claims"]),
     "M4": ("controlling-approved-versions", ["recording-a-known-good-version", "choosing-what-to-control"]),
     "M5": ("managing-change-records", ["creating-change-records", "closing-stale-packets"]),
-    "M6": ("briefing-and-handing-off", ["handing-off-work", "briefing-an-agent"]),
     "M7": ("structuring-the-work", ["organizing-project-folders", "breaking-down-the-work"]),
 }
 # The surviving original whose old jobs must not get heavier (criterion C).
 TARGETS = {
-    "M1": "double-checking-before-acting",
     "M2": "learning-from-experience",
     "M3": "checking-legal-and-safety-wording",
     "M4": "recording-a-known-good-version",
     "M5": "creating-change-records",
-    "M6": "handing-off-work",
     "M7": "organizing-project-folders",
 }
 
@@ -69,28 +68,28 @@ def pct(num: int, den: int) -> float:
     return round(100 * num / den, 1) if den else float("nan")
 
 
-def score_routing(truth, r31, r23, mapping) -> dict:
+def score_routing(truth, r31, rnew, mapping) -> dict:
     out = {}
     for mid, (new, olds) in MERGES.items():
         rel = [i for i in truth if set(truth[i]) & set(olds)]
         other = [i for i in truth if i not in rel]
         hit31 = sum(bool(set(r31.get(i, [])) & set(truth[i]) & set(olds)) for i in rel)
-        hit23 = sum(new in r23.get(i, []) for i in rel)
+        hitnew = sum(new in rnew.get(i, []) for i in rel)
         fp31 = sum(bool(set(r31.get(i, [])) & set(olds)) for i in other)
-        fp23 = sum(new in r23.get(i, []) for i in other)
-        recall31, recall23 = pct(hit31, len(rel)), pct(hit23, len(rel))
-        fpr31, fpr23 = pct(fp31, len(other)), pct(fp23, len(other))
+        fpnew = sum(new in rnew.get(i, []) for i in other)
+        recall31, recallnew = pct(hit31, len(rel)), pct(hitnew, len(rel))
+        fpr31, fprnew = pct(fp31, len(other)), pct(fpnew, len(other))
         out[mid] = {
             "merged": new,
             "relevant_n": len(rel),
             "recall_31": recall31,
-            "recall_23": recall23,
+            "recall_new": recallnew,
             "fp_rate_31": fpr31,
-            "fp_rate_23": fpr23,
-            "B_pass": (recall23 >= recall31 - 5) and (fpr23 <= fpr31 + 5),
+            "fp_rate_new": fprnew,
+            "B_pass": (recallnew >= recall31 - 5) and (fprnew <= fpr31 + 5),
         }
     # Whole-catalog micro precision/recall, with truth mapped into each catalog.
-    for name, routed, conv in (("31", r31, lambda s: s), ("23", r23, lambda s: mapping.get(s, s))):
+    for name, routed, conv in (("31", r31, lambda s: s), ("new", rnew, lambda s: mapping.get(s, s))):
         tp = fp = fn = 0
         for i, t in truth.items():
             want = {conv(s) for s in t}
@@ -130,15 +129,15 @@ def score_fit(fit_rows: list[dict]) -> dict:
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("data", type=Path, help="folder holding the JSONL inputs and map-31-to-23.json")
+    ap.add_argument("data", type=Path, help="folder holding the JSONL inputs and map-31-to-new.json")
     ap.add_argument("--out", type=Path, default=None)
     args = ap.parse_args(argv)
     d = args.data
     truth = load(d / "truth.jsonl")
-    mapping = json.loads((d / "map-31-to-23.json").read_text(encoding="utf-8"))
+    mapping = json.loads((d / "map-31-to-new.json").read_text(encoding="utf-8"))
     result = {
         "labeler_agreement": agreement(load(d / "labels_a.jsonl"), load(d / "labels_b.jsonl")),
-        "routing": score_routing(truth, load(d / "route31.jsonl"), load(d / "route23.jsonl"), mapping),
+        "routing": score_routing(truth, load(d / "route31.jsonl"), load(d / "routenew.jsonl"), mapping),
     }
     if (d / "fit.jsonl").exists():
         result["fit"] = score_fit(rows(d / "fit.jsonl"))

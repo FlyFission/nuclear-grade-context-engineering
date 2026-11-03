@@ -567,9 +567,9 @@ def test_fence_stripping_matches_the_validator(text):
     # The two parsers must agree on what is hidden, or a declaration could be
     # visible to one and hidden from the other.
     from nuclear_grade.ng_validate import _strip_code_blocks
-    from nuclear_grade.two_party import strip_code_blocks
+    from nuclear_grade.two_party import _visible
 
-    assert strip_code_blocks(text) == _strip_code_blocks(text)
+    assert _visible(text) == _strip_code_blocks(text)
 
 
 # --- Codex on a6867fa: read claims generously, declarations strictly ---------
@@ -605,3 +605,33 @@ def test_claim_row_missing_its_status_cell_fails_strict(tmp_path):
     messages: list[str] = []
     check_two_party(tmp_path, messages)
     assert any("C-001" in m and "cannot read it" in m for m in messages)
+
+
+# --- Codex on a50edba: one pass for comments and fences ----------------------
+
+_T = "| Claim ID | Result status |\n|---|---|\n"
+
+
+@pytest.mark.parametrize(
+    "between",
+    [
+        "<!--\n```md\n-->\n",          # fence opener inside a comment
+        "```\n<!--\n```\n",            # comment opener inside a fence
+        "text <!-- ``` --> more\n",    # fence marker inside an inline comment
+        "<!-- a --> ~~~ <!-- b\n-->\n",
+    ],
+)
+def test_markers_inside_the_other_context_cannot_hide_visible_claims(tmp_path, between):
+    body = "# V\n## A\n" + _T + "| C-004a | deferred |\n\n" + between + "\n## B\n" + _T + "| C-001 | pass |\n"
+    (tmp_path / "verification.md").write_text(body, encoding="utf-8")
+    messages: list[str] = []
+    check_two_party(tmp_path, messages)
+    assert any("C-001" in m for m in messages), between
+
+
+def test_visible_keeps_text_around_an_inline_comment():
+    from nuclear_grade.two_party import _visible
+
+    out = _visible("keep <!-- hide --> keep\n```\nhidden\n```\nshown\n")
+    assert out.split() == ["keep", "keep", "shown"]
+    assert out.count("\n") == 5

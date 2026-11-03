@@ -1,0 +1,170 @@
+{"id": "R-001", "skills": ["questioning-attitude", "double-checking-before-acting"]}
+{"id": "R-002", "skills": ["questioning-attitude"]}
+{"id": "R-003", "skills": ["questioning-attitude", "vetting-outside-code-and-models", "checking-release-readiness"]}
+{"id": "R-004", "skills": ["questioning-attitude"]}
+{"id": "R-005", "skills": ["rating-change-risk", "questioning-attitude"]}
+{"id": "R-006", "skills": []}
+{"id": "R-007", "skills": []}
+{"id": "R-008", "skills": ["using-nuclear-grade"]}
+{"id": "R-009", "skills": ["using-nuclear-grade", "deciding-who-decides"]}
+{"id": "R-010", "skills": ["using-nuclear-grade", "questioning-attitude", "checking-release-readiness"]}
+{"id": "R-011", "skills": []}
+{"id": "R-012", "skills": []}
+{"id": "R-013", "skills": ["controlling-approved-versions"]}
+{"id": "R-014", "skills": ["controlling-approved-versions"]}
+{"id": "R-015", "skills": ["controlling-approved-versions"]}
+{"id": "R-016", "skills": []}
+{"id": "R-017", "skills": []}
+{"id": "R-018", "skills": ["checking-what-a-change-affects"]}
+{"id": "R-019", "skills": ["checking-what-a-change-affects"]}
+{"id": "R-020", "skills": ["checking-what-a-change-affects", "controlling-approved-versions"]}
+{"id": "R-021", "skills": ["checking-what-a-change-affects"]}
+{"id": "R-022", "skills": ["managing-change-records"]}
+{"id": "R-023", "skills": []}
+{"id": "R-024", "skills": ["controlling-approved-versions"]}
+{"id": "R-025", "skills": ["controlling-approved-versions"]}
+{"id": "R-026", "skills": ["controlling-approved-versions"]}
+{"id": "R-027", "skills": []}
+{"id": "R-028", "skills": ["using-nuclear-grade"]}
+{"id": "R-029", "skills": ["rating-change-risk"]}
+{"id": "R-030", "skills": ["rating-change-risk"]}
+{"id": "R-031", "skills": ["rating-change-risk", "deciding-who-decides"]}
+{"id": "R-032", "skills": ["rating-change-risk"]}
+{"id": "R-033", "skills": ["proving-claims"]}
+{"id": "R-034", "skills": ["checking-public-claims"]}
+{"id": "R-035", "skills": ["managing-change-records"]}
+{"id": "R-036", "skills": ["managing-change-records"]}
+{"id": "R-037", "skills": ["managing-change-records"]}
+{"id": "R-038", "skills": ["checking-release-readiness"]}
+{"id": "R-039", "skills": ["controlling-approved-versions"]}
+{"id": "R-040", "skills": ["briefing-an-agent"]}
+{"id": "R-041", "skills": ["briefing-an-agent"]}
+{"id": "R-042", "skills": ["handing-off-work", "briefing-an-agent"]}
+{"id": "R-043", "skills": ["briefing-an-agent"]}
+{"id": "R-044", "skills": []}
+{"id": "R-045", "skills": ["rating-change-risk"]}
+{"id": "R-046", "skills": ["handing-off-work"]}
+{"id": "R-047", "skills": ["handing-off-work", "checking-release-readiness"]}
+{"id": "R-048", "skills": ["handing-off-work"]}
+{"id": "R-049", "skills": []}
+{"id": "R-050", "skills": []}
+{"id": "R-051", "skills": ["double-checking-before-acting"]}
+{"id": "R-052", "skills": ["checking-public-claims", "double-checking-before-acting"]}
+{"id": "R-053", "skills": ["double-checking-before-acting"]}
+{"id": "R-054", "skills": ["double-checking-before-acting", "checking-public-claims"]}
+{"id": "R-055", "skills": []}
+{"id": "R-056", "skills": ["managing-change-records"]}
+{"id": "R-057", "skills": ["proving-claims"]}
+{"id": "R-058", "skills": ["proving-claims"]}
+{"id": "R-059", "skills": ["proving-claims"]}
+{"id": "R-060", "skills": ["proving-claims", "questioning-attitude"]}
+{"id": "R-061", "skills": ["managing-change-records"]}
+{"id": "R-062", "skills": ["checking-public-claims"]}
+{"id": "R-063", "skills": ["checking-release-readiness"]}
+{"id": "R-064", "skills": ["checking-release-readiness", "vetting-outside-code-and-models"]}
+{"id": "R-065", "skills": ["checking-release-readiness", "deciding-who-decides"]}
+{"id": "R-066", "skills": ["controlling-approved-versions", "checking-release-readiness"]}
+{"id": "R-067", "skills": ["controlling-approved-versions"]}
+{"id": "R-068", "skills": ["rating-change-risk"]}
+{"id": "R-069", "skills": ["learning-from-experience"]}
+{"id": "R-070", "skills": ["learning-from-experience"]}
+{"id": "R-071", "skills": ["learning-from-experience", "controlling-approved-versions"]}
+{"id": "R-072", "skills": ["learning-from-experience"]}
+{"id": "R-073", "skills": ["responding-to-incidents"]}
+{"id": "R-074", "skills": []}
+{"id": "R-075", "skills": ["vetting-outside-code-and-models"]}
+{"id": "R-076", "skills": ["vetting-outside-code-and-models", "controlling-approved-versions"]}
+{"id": "R-077", "skills": ["vetting-outside-code-and-models", "checking-release-readiness"]}
+{"id": "R-078", "skills": ["checking-public-claims"]}
+{"id": "R-079", "skills": []}
+{"id": "R-080", "skills": ["checking-public-claims"]}
+{"id": "R-081", "skills": ["checking-public-claims"]}
+{"id": "R-082", "skills": ["checking-public-claims"]}
+{"id": "R-083", "skills": []}
+{"id": "R-084", "skills": ["briefing-an-agent"]}
+{"id": "R-085", "skills": ["checking-public-claims"]}
+{"id": "R-086", "skills": ["checking-public-claims"]}
+{"id": "R-087", "skills": ["checking-public-claims"]}
+{"id": "R-088", "skills": []}
+{"id": "R-089", "skills": []}
+{"id": "R-090", "skills": ["staying-on-mission"]}
+{"id": "R-091", "skills": ["staying-on-mission"]}
+{"id": "R-092", "skills": ["staying-on-mission"]}
+{"id": "R-093", "skills": ["staying-on-mission"]}
+{"id": "R-094", "skills": []}
+{"id": "R-095", "skills": []}
+{"id": "R-096", "skills": ["reviewing-code-quality"]}
+{"id": "R-097", "skills": ["reviewing-code-quality"]}
+{"id": "R-098", "skills": ["reviewing-code-quality"]}
+{"id": "R-099", "skills": []}
+{"id": "R-100", "skills": ["checking-public-claims"]}
+{"id": "R-101", "skills": ["stress-testing-agent-changes"]}
+{"id": "R-102", "skills": ["stress-testing-agent-changes", "vetting-outside-code-and-models"]}
+{"id": "R-103", "skills": ["stress-testing-agent-changes"]}
+{"id": "R-104", "skills": []}
+{"id": "R-105", "skills": []}
+{"id": "R-106", "skills": ["recording-what-an-agent-did", "proving-claims"]}
+{"id": "R-107", "skills": ["recording-what-an-agent-did"]}
+{"id": "R-108", "skills": ["recording-what-an-agent-did"]}
+{"id": "R-109", "skills": []}
+{"id": "R-110", "skills": []}
+{"id": "R-111", "skills": ["structuring-the-work"]}
+{"id": "R-112", "skills": ["structuring-the-work"]}
+{"id": "R-113", "skills": ["structuring-the-work"]}
+{"id": "R-114", "skills": ["structuring-the-work", "briefing-an-agent"]}
+{"id": "R-115", "skills": []}
+{"id": "R-116", "skills": []}
+{"id": "R-117", "skills": ["structuring-the-work"]}
+{"id": "R-118", "skills": ["structuring-the-work"]}
+{"id": "R-119", "skills": ["structuring-the-work", "briefing-an-agent"]}
+{"id": "R-120", "skills": []}
+{"id": "R-121", "skills": []}
+{"id": "R-122", "skills": ["managing-change-records"]}
+{"id": "R-123", "skills": ["managing-change-records"]}
+{"id": "R-124", "skills": ["managing-change-records"]}
+{"id": "R-125", "skills": ["managing-change-records"]}
+{"id": "R-126", "skills": ["managing-change-records"]}
+{"id": "R-127", "skills": []}
+{"id": "R-128", "skills": ["deciding-who-decides"]}
+{"id": "R-129", "skills": ["deciding-who-decides"]}
+{"id": "R-130", "skills": ["deciding-who-decides", "vetting-outside-code-and-models"]}
+{"id": "R-131", "skills": []}
+{"id": "R-132", "skills": []}
+{"id": "R-133", "skills": ["declaring-intent", "double-checking-before-acting"]}
+{"id": "R-134", "skills": ["declaring-intent"]}
+{"id": "R-135", "skills": ["declaring-intent", "double-checking-before-acting"]}
+{"id": "R-136", "skills": []}
+{"id": "R-137", "skills": []}
+{"id": "R-138", "skills": ["responding-to-incidents"]}
+{"id": "R-139", "skills": ["responding-to-incidents"]}
+{"id": "R-140", "skills": ["responding-to-incidents"]}
+{"id": "R-141", "skills": []}
+{"id": "R-142", "skills": ["learning-from-experience"]}
+{"id": "R-143", "skills": ["learning-from-experience"]}
+{"id": "R-144", "skills": ["learning-from-experience"]}
+{"id": "R-145", "skills": ["learning-from-experience"]}
+{"id": "R-146", "skills": []}
+{"id": "R-147", "skills": ["using-nuclear-grade"]}
+{"id": "R-148", "skills": ["learning-from-experience"]}
+{"id": "R-149", "skills": ["learning-from-experience", "vetting-outside-code-and-models"]}
+{"id": "R-150", "skills": ["learning-from-experience"]}
+{"id": "R-151", "skills": []}
+{"id": "R-152", "skills": ["responding-to-incidents"]}
+{"id": "R-153", "skills": ["verifying-final-artifacts"]}
+{"id": "R-154", "skills": ["verifying-final-artifacts"]}
+{"id": "R-155", "skills": ["verifying-final-artifacts"]}
+{"id": "R-156", "skills": ["verifying-final-artifacts"]}
+{"id": "R-157", "skills": []}
+{"id": "R-158", "skills": ["proving-claims"]}
+{"id": "R-159", "skills": ["running-a-review-panel"]}
+{"id": "R-160", "skills": ["running-a-review-panel"]}
+{"id": "R-161", "skills": ["running-a-review-panel"]}
+{"id": "R-162", "skills": ["running-a-review-panel"]}
+{"id": "R-163", "skills": []}
+{"id": "R-164", "skills": ["reviewing-code-quality"]}
+{"id": "R-165", "skills": ["checking-facts"]}
+{"id": "R-166", "skills": ["checking-facts"]}
+{"id": "R-167", "skills": ["checking-facts"]}
+{"id": "R-168", "skills": ["checking-facts"]}
+{"id": "R-169", "skills": ["checking-public-claims"]}
+{"id": "R-170", "skills": ["proving-claims"]}

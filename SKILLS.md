@@ -6,6 +6,10 @@ For directional pilot evidence on the 28 skills included in the July 2026 run â€
 
 ## The skills
 
+<p align="center"><img src="docs/assets/diagrams/skill-catalog.svg" alt="The skill catalog: 31 skills in seven families (start here; before you act; records and versions; evidence and verdicts; trust and public claims; delegation and structure; when it goes wrong), each with the situation that calls for it, Core 7 marked" width="100%"></p>
+
+How a skill gets picked and what it leaves behind: [`docs/diagrams.md`](docs/diagrams.md#10-how-a-skill-is-invoked).
+
 | Skill | Use it when | What you get |
 |---|---|---|
 | [`questioning-attitude`](skills/questioning-attitude/SKILL.md) | You need to challenge assumptions before work, review, or a release moves ahead | The assumptions, the gaps in evidence, and clear stop conditions |
@@ -65,37 +69,24 @@ flowchart TD
     BC --> LFO[learning-from-experience]
     LFO -.durable control update.-> QA
 
-    subgraph overlays[heavier overlays - switch on by consequence]
-      PAC[briefing-an-agent]
-      TOW[handing-off-work]
-      SCA[double-checking-before-acting]
-      TAE[recording-what-an-agent-did]
-      RTA[stress-testing-agent-changes]
-      CMD[staying-on-mission]
-      RCQ[reviewing-code-quality]
-      VFA[verifying-final-artifacts]
-      CSP[closing-stale-packets]
-      DWD[deciding-who-decides]
-      DI[declaring-intent]
-      VOC[vetting-outside-code-and-models]
-      RRP[running-a-review-panel]
-      CF[checking-facts]
-    end
-
-    CCP -.delegate / resume.-> PAC
-    PAC --> TOW
-    CCP -.critical action.-> SCA
-    RSR -.new agent authority.-> RTA
-    RSR -.execution path matters.-> TAE
-    QA -.long drifting session.-> CMD
-    PC -.standards drift in diff.-> RCQ
-    PC -.deliverable is a produced/rendered artifact.-> VFA
-    LFO -.stale packet sweep.-> CSP
-    CCR -.irreversible action.-> DWD
-    DWD --> DI
-    CCR -.outside dependency / model.-> VOC
-    RSR -.trust-bearing verdict on one reviewer.-> RRP
-    PC -.relies on an outside fact.-> CF
+    QA -.long drifting session.-> CMD[staying-on-mission]
+    CCR -.irreversible action.-> DWD[deciding-who-decides] --> DI[declaring-intent]
+    CCR -.outside dependency / model.-> VOC[vetting-outside-code-and-models]
+    CCR -.scope to split.-> BDW[breaking-down-the-work] --> OPF[organizing-project-folders]
+    CCP -.delegate / resume.-> PAC[briefing-an-agent] --> TOW[handing-off-work]
+    CCP -.critical action.-> SCA[double-checking-before-acting]
+    PC -.standards drift in diff.-> RCQ[reviewing-code-quality]
+    PC -.rendered deliverable.-> VFA[verifying-final-artifacts]
+    PC -.relies on an outside fact.-> CF[checking-facts]
+    PC -.public assurance words.-> CLS[checking-legal-and-safety-wording]
+    PC -.cites a source.-> CSC[checking-source-claims]
+    RSR -.new agent authority.-> RTA[stress-testing-agent-changes]
+    RSR -.execution path matters.-> TAE[recording-what-an-agent-did]
+    RSR -.one reviewer, high stakes.-> RRP[running-a-review-panel]
+    LFO -.stale packet sweep.-> CSP[closing-stale-packets]
+    LFO -.live harm, first.-> RTI[responding-to-incidents]
+    LFO -.problem stays for now.-> TDF[tracking-deficiencies]
+    LFO -.others carry it.-> RSD[reporting-shared-defects]
 ```
 
 </details>

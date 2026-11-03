@@ -646,6 +646,21 @@ def test_changed_lines_whose_text_starts_with_dashes_are_inspected(repo):
     assert diff.removed == ["--model claude-old \\"] and diff.added == ["--model generic \\"]
 
 
+def test_gitattributes_cannot_hide_changed_content(repo):
+    write(repo / ".gitattributes", "src/app.py -diff\n")
+    write(repo / "src" / "app.py", "MODEL = 'claude-opus-5-5'\n")
+    assert path_entry(run(repo), "src/app.py")["rules"] == ["model-id"]
+    git(repo, "add", "-A")
+    git(repo, "commit", "-qm", "hide the model change")
+    assert path_entry(consequence.evaluate(repo, "HEAD~1", "HEAD", consequence.load_policy(repo, "HEAD~1")),
+                      "src/app.py")["rules"] == ["model-id"]
+
+
+def test_an_untracked_file_with_invalid_utf8_is_still_inspected(repo):
+    (repo / "src" / "new.py").write_bytes(b"\xff\xfeMODEL = 'claude-opus-5-5'\n")
+    assert path_entry(run(repo), "src/new.py")["rules"] == ["model-id"]
+
+
 def test_dependency_lane_inspects_lines_whose_text_starts_with_dashes(repo):
     workflow = repo / ".github" / "workflows" / "ci.yml"
     workflow.write_text(workflow.read_text() + "--x\n")

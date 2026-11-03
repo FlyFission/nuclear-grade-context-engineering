@@ -333,18 +333,23 @@ class Diff:
     before: list[list[tuple[str, bool]]] = field(default_factory=list)
 
 
+# Read every changed file as text. The candidate tree controls `.gitattributes`, so a
+# `-diff`, `diff=<driver>` or textconv attribute must not hide content from the rules.
+_TEXT_DIFF = ("--text", "--no-textconv", "--no-ext-diff", "--no-color", "--no-renames")
+
+
 def diff_lines(repo: Path, base: str, head: str | None, path: str, status: str) -> Diff:
-    """The diff for one path. Binary or oversized content yields an empty diff."""
+    """The diff for one path, always read as text (see `_TEXT_DIFF`)."""
 
     if head is None and status == "A" and not _tracked_at(repo, base, path):
         try:
-            lines = (repo / path).read_text(encoding="utf-8").splitlines()
-        except (OSError, UnicodeDecodeError):
+            lines = (repo / path).read_bytes().decode("utf-8", errors="replace").splitlines()
+        except OSError:
             return Diff()
         return Diff(added=lines, after=[[(line, True) for line in lines]])
     refs = [base] if head is None else [base, head]
     # Wide context so a negated lead-in well above a changed list item stays in its hunk.
-    out = subprocess.run(["git", "-C", str(repo), "diff", f"-U{CLAIM_CONTEXT_LINES}", "--no-color", "--no-renames",
+    out = subprocess.run(["git", "-C", str(repo), "diff", f"-U{CLAIM_CONTEXT_LINES}", *_TEXT_DIFF,
                           *refs, "--", path],
                          capture_output=True, text=True, errors="replace")
     diff = Diff()
@@ -564,7 +569,7 @@ def _pin_substitutions_only(repo: Path, base: str, head: str | None, path: str) 
     once versions and SHAs are masked. A reorder, insertion, or deletion fails."""
 
     refs = [base] if head is None else [base, head]
-    out = subprocess.run(["git", "-C", str(repo), "diff", "-U0", "--no-color", "--no-renames", *refs, "--", path],
+    out = subprocess.run(["git", "-C", str(repo), "diff", "-U0", *_TEXT_DIFF, *refs, "--", path],
                          capture_output=True, text=True, errors="replace").stdout
     hunks: list[tuple[tuple[int, int, int, int], list[str], list[str]]] = []
     for line in out.splitlines():

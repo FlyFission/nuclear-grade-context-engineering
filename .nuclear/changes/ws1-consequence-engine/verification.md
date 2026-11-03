@@ -57,7 +57,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 
 | Method | Command / review / eval | Environment | Result | Evidence link |
 |---|---|---|---|---|
-| Unit tests | `python -m pytest -q tests/test_consequence.py tests/test_globmatch.py` | Linux container, Python 3.11 | pass (68 tests: 51 engine, 17 glob parity) | E-001..E-004, E-006 |
+| Unit tests | `python -m pytest -q tests/test_consequence.py tests/test_globmatch.py` | Linux container, Python 3.11 | pass (82 tests: 65 engine, 17 glob parity) | E-001..E-004, E-006 |
 | Full suite | `python -m pytest -q` | same | pass (exit 0) | CI run on the PR |
 | Lint | `python -m ruff check .` | same | pass | CI run on the PR |
 | Repo checks | `python tools/ng.py doctor .`; `python tools/ng.py tokens .` | same | pass | CI run on the PR |
@@ -77,6 +77,11 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 | Uncommitted record files cover a committed head (review finding) | `test_explicit_head_refuses_a_dirty_working_tree` | refused, exit 2 | E-002 |
 | Reordered workflow steps pass the dependency lane (review finding) | `test_dependency_lane_rejects_reordered_workflow_steps` | lane refused | E-003 |
 | Naming one file covers its siblings (review finding) | `test_naming_one_file_does_not_name_its_siblings` | not covered | E-002 |
+| Override in an unrelated record lowers a path (review finding) | `test_an_override_in_a_record_that_does_not_name_the_path_does_not_apply` | not applied | E-003 |
+| Self-approval counts when the PR author is unknown (review finding) | `test_approval_checks_fail_closed_without_the_pr_author` | fails closed | E-003 |
+| Non-pin number change passes the dependency lane (review finding) | `test_dependency_lane_rejects_non_pin_number_changes` | lane refused | E-003 |
+| Malformed or wrongly typed policy (review finding) | `test_a_malformed_head_policy_fails_closed`, `test_wrongly_typed_policy_fields_fail_closed` | fails closed | E-004 |
+| Claim split across lines, or lead-in far above (review finding) | `test_a_claim_completed_by_an_added_line_counts`, `test_a_negated_lead_in_far_above_a_changed_item_still_applies` | classified correctly | E-005 |
 
 ## AI-assisted work checks
 

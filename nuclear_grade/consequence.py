@@ -48,6 +48,7 @@ WORKTREE = "WORKTREE"
 MODES = ("none", "quick", "standard", "standard+authority")
 RANK = {mode: index for index, mode in enumerate(MODES)}
 CLAIM_KINDS = ("general", "efficacy", "assurance")
+CLAIM_CONTEXT_LINES = 40
 BOUNDARY = (
     "Structural check only: it shows that the change record and approval this policy "
     "requires exist and validate. It does not show the change, its evidence, or the "
@@ -168,7 +169,7 @@ def parse_policy(data: object, *, source: str = "built-in", digest: str = "") ->
     if not isinstance(data, dict):
         raise PolicyError("policy must be a JSON object")
     default = data.get("default", "none")
-    if default not in RANK:
+    if not isinstance(default, str) or default not in RANK:
         raise PolicyError(f"unknown default mode {default!r}")
     raw_rules = data.get("rules", [])
     if not isinstance(raw_rules, list):
@@ -185,7 +186,7 @@ def parse_policy(data: object, *, source: str = "built-in", digest: str = "") ->
             raise PolicyError(f"duplicate rule id {rule_id!r}")
         seen.add(rule_id)
         mode = raw.get("mode")
-        if mode not in RANK:
+        if not isinstance(mode, str) or mode not in RANK:
             raise PolicyError(f"rule {rule_id!r}: unknown mode {mode!r}")
         paths = raw.get("paths")
         if not isinstance(paths, list) or not paths or not all(isinstance(p, str) and p for p in paths):
@@ -203,7 +204,7 @@ def parse_policy(data: object, *, source: str = "built-in", digest: str = "") ->
             except re.error as error:
                 raise PolicyError(f"rule {rule_id!r}: bad 'content' regex: {error}") from None
         claims = raw.get("claims")
-        if claims is not None and claims not in CLAIM_KINDS:
+        if claims is not None and (not isinstance(claims, str) or claims not in CLAIM_KINDS):
             raise PolicyError(f"rule {rule_id!r}: 'claims' must be one of {', '.join(CLAIM_KINDS)}")
         if pattern is not None and claims is not None:
             raise PolicyError(f"rule {rule_id!r}: use 'content' or 'claims', not both")
@@ -219,12 +220,13 @@ def parse_policy(data: object, *, source: str = "built-in", digest: str = "") ->
     if not isinstance(lane, dict):
         raise PolicyError("'dependency_lane' must be an object")
     for key in ("record_edit_mode", "record_delete_mode"):
-        if data.get(key, "quick" if key == "record_edit_mode" else "standard") not in RANK:
+        value = data.get(key, "quick" if key == "record_edit_mode" else "standard")
+        if not isinstance(value, str) or value not in RANK:
             raise PolicyError(f"unknown {key} {data.get(key)!r}")
     return Policy(
         default=default,
         rules=tuple(rules),
-        records_root=str(data.get("records_root", ".nuclear/changes")).strip("/"),
+        records_root=_records_root(data.get("records_root", ".nuclear/changes")),
         record_edit_mode=data.get("record_edit_mode", "quick"),
         record_delete_mode=data.get("record_delete_mode", "standard"),
         bot_identities=tuple(_string_list(data.get("bot_identities", []), "bot_identities")),
@@ -233,6 +235,17 @@ def parse_policy(data: object, *, source: str = "built-in", digest: str = "") ->
         source=source,
         digest=digest,
     )
+
+
+def _records_root(value: object) -> str:
+    """A non-empty, repo-relative directory with no '.' or '..' components."""
+
+    if not isinstance(value, str) or not value.strip("/"):
+        raise PolicyError("'records_root' must be a non-empty relative path")
+    parts = PurePosixPath(value).parts
+    if value.startswith("/") or "\\" in value or any(part in {".", ".."} for part in parts):
+        raise PolicyError(f"'records_root' must be a plain relative path, not {value!r}")
+    return value.strip("/")
 
 
 def _string_list(value: object, name: str) -> list[str]:
@@ -316,15 +329,17 @@ def diff_lines(repo: Path, base: str, head: str | None, path: str, status: str) 
 
     if head is None and status == "A" and not _tracked_at(repo, base, path):
         try:
-            lines = (repo / path).read_text(encoding="utf-8").splitlines()[:20000]
+            lines = (repo / path).read_text(encoding="utf-8").splitlines()
         except (OSError, UnicodeDecodeError):
             return Diff()
         return Diff(added=lines, after=[[(line, True) for line in lines]])
     refs = [base] if head is None else [base, head]
-    out = subprocess.run(["git", "-C", str(repo), "diff", "-U3", "--no-color", "--no-renames", *refs, "--", path],
+    # Wide context so a negated lead-in well above a changed list item stays in its hunk.
+    out = subprocess.run(["git", "-C", str(repo), "diff", f"-U{CLAIM_CONTEXT_LINES}", "--no-color", "--no-renames",
+                          *refs, "--", path],
                          capture_output=True, text=True, errors="replace")
     diff = Diff()
-    for line in out.stdout.splitlines()[:60000]:
+    for line in out.stdout.splitlines():
         if line.startswith(("+++", "---", "diff ", "index ", "new file", "deleted file", "Binary files")):
             continue
         if line.startswith("@@"):
@@ -410,7 +425,7 @@ def _claims_in(kind: str, hunks: list[list[tuple[str, bool]]]) -> list[str]:
                     text += line + " "
                     offset = len(text)
                 for start, end in _claim_spans(kind, text):
-                    if not any(a <= start < b for a, b in spans):
+                    if not any(start < b and end > a for a, b in spans):
                         continue
                     before = text[:start]
                     ends = list(_SENTENCE_END.finditer(before))
@@ -508,6 +523,13 @@ def _names_path(risk_text: str, path: str) -> bool:
     return False
 
 
+# Lines that carry a pin: an action reference (`uses: owner/action@ref`) or a package
+# requirement with a version operator. A bare number (`timeout: 1.0`) is not a pin.
+_PIN_LINE = re.compile(
+    r"\buses:\s*\S+@\S+"
+    r"|[\"']?[A-Za-z0-9_.\-]+(?:\[[^\]]*\])?[\"']?\s*(?:===|==|>=|<=|~=|!=|>|<)\s*v?\d"
+    r"|[\"'][\^~]v?\d"
+)
 _HUNK = re.compile(r"^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@")
 
 
@@ -547,8 +569,9 @@ def _pin_substitutions_only(repo: Path, base: str, head: str | None, path: str) 
     for (old_start, old_len, new_start, new_len), removed, added in hunks:
         if old_len != new_len or old_start != new_start or not removed or len(removed) != len(added):
             return False
-        if any(_mask_pins(r) != _mask_pins(a) for r, a in zip(removed, added, strict=True)):
-            return False
+        for r, a in zip(removed, added, strict=True):
+            if _mask_pins(r) != _mask_pins(a) or not (_PIN_LINE.search(r) and _PIN_LINE.search(a)):
+                return False
     return True
 
 
@@ -584,8 +607,17 @@ def evaluate(
     root = policy.records_root
     rule_by_id = {rule.id: rule for rule in policy.rules}
     _evaluate_policy_self(results, base_policy_text, head_policy_text)
-    return _cover(repo, base, head, policy, changes, lines, results, new_slugs, skills, rule_by_id, root,
-                  approvals, pr_author)
+    receipt = _cover(repo, base, head, policy, changes, lines, results, new_slugs, skills, rule_by_id, root,
+                     approvals, pr_author)
+    # The base policy judges the change, but a changed head policy must still parse:
+    # merging a malformed policy would leave every later PR failing closed.
+    if head_policy_text is not None and head_policy_text != base_policy_text:
+        try:
+            parse_policy(json.loads(head_policy_text))
+        except (json.JSONDecodeError, PolicyError) as error:
+            receipt["failures"].append(f"{POLICY_PATH} in this change is malformed: {error}")
+            receipt["verdict"] = "fail"
+    return receipt
 
 
 def classify(repo: Path, base: str, head: str | None, policy: Policy):
@@ -674,7 +706,10 @@ def _cover(repo, base, head, policy, changes, lines, results, new_slugs, skills,
             continue
         required = entry.required
         # An override lowers an overridable rule's requirement to Quick, never to none.
-        overridden = sorted({rule_id for packet in packets if not packet["closed"] for rule_id in packet["overrides"]})
+        # An override counts only from an open record that names this path.
+        overridden = sorted({rule_id for packet in packets
+                             if not packet["closed"] and _names_path(packet["risk_text"], entry.path)
+                             for rule_id in packet["overrides"]})
         fired_rules = [rule_by_id[r] for r in entry.rules if r in rule_by_id]
         if fired_rules and overridden:
             remaining = [r.mode for r in fired_rules if not (r.id in overridden and r.overridable)]
@@ -709,7 +744,10 @@ def _cover(repo, base, head, policy, changes, lines, results, new_slugs, skills,
 
     required_mode = _max_mode(*(entry.required for entry in results.values()))
     needs_human = required_mode == "standard+authority" or lane or bool(overrides_used)
-    if needs_human and not approvers:
+    if needs_human and not pr_author:
+        failures.append("an approval is required but the PR author is unknown, so an independent approver "
+                        "cannot be confirmed (pass --pr-author)")
+    elif needs_human and not approvers:
         why = ("dependency lane" if lane else "standard+authority" if required_mode == "standard+authority"
                else "policy override")
         failures.append(f"{why}: needs an APPROVED review from a human account other than the PR author "

@@ -506,3 +506,72 @@ def test_an_explicit_directory_names_the_files_under_it(repo):
     write(repo / "src" / "checker.py", "def check():\n    return False\n")
     standard_record(repo, "src-wide", "`src/`")
     assert run(repo)["verdict"] == "pass"
+
+
+# ------------------------------------------------------------------ review findings (Copilot, PR #123)
+
+
+def test_an_override_in_a_record_that_does_not_name_the_path_does_not_apply(repo):
+    write(repo / "src" / "checker.py", "def check():\n    return False\n")
+    unrelated = quick_record(repo, "unrelated", "`src/app.py`")
+    _override(unrelated, "checker")
+    quick_record(repo, "checker-quick", "`src/checker.py`")
+    receipt = run(repo, pr_author="agent-bot", approvals=[{"user": {"login": "reviewer"}, "state": "APPROVED"}])
+    assert receipt["overrides"] == []
+    assert receipt["verdict"] == "fail"  # still needs Standard
+
+
+def test_approval_checks_fail_closed_without_the_pr_author(repo):
+    write(repo / "hooks" / "gate.py", "print('narrowed')\n")
+    standard_record(repo, "narrow-gate", "`hooks/gate.py`", authority=True)
+    receipt = run(repo, approvals=APPROVED_BY_OWNER)  # no pr_author: owner's self-approval must not count
+    assert receipt["verdict"] == "fail"
+    assert any("PR author is unknown" in failure for failure in receipt["failures"])
+
+
+def test_dependency_lane_rejects_non_pin_number_changes(repo):
+    workflow = repo / ".github" / "workflows" / "ci.yml"
+    workflow.write_text(workflow.read_text() + "    timeout: 1.0\n")
+    git(repo, "commit", "-qam", "timeout")
+    workflow.write_text(workflow.read_text().replace("timeout: 1.0", "timeout: 2.0"))
+    receipt = run(repo, pr_author="dependabot[bot]", approvals=[{"user": {"login": "reviewer"}, "state": "APPROVED"}])
+    assert receipt["approvals"]["dependency_lane"] is False
+
+
+def test_a_malformed_head_policy_fails_closed(repo):
+    write(repo / consequence.POLICY_PATH, "{not json")
+    receipt = run(repo)
+    assert receipt["verdict"] == "fail"
+    assert any("malformed" in failure for failure in receipt["failures"])
+
+
+@pytest.mark.parametrize("bad, message", [
+    ({"default": []}, "unknown default"),
+    ({"rules": [{"id": "a", "mode": [], "paths": ["x"]}]}, "unknown mode"),
+    ({"rules": [{"id": "a", "mode": "quick", "paths": ["x"], "claims": []}]}, "'claims' must be"),
+    ({"record_edit_mode": {}}, "unknown record_edit_mode"),
+    ({"records_root": ""}, "non-empty relative path"),
+    ({"records_root": "../outside"}, "plain relative path"),
+    ({"records_root": "/abs"}, "plain relative path"),
+    ({"records_root": 3}, "non-empty relative path"),
+])
+def test_wrongly_typed_policy_fields_fail_closed(bad, message):
+    with pytest.raises(consequence.PolicyError, match=message):
+        consequence.parse_policy(bad)
+
+
+def test_a_claim_completed_by_an_added_line_counts(repo):
+    write(repo / "docs" / "about.md", "The project is endorsed\n\nOther text.\n")
+    git(repo, "add", "-A")
+    git(repo, "commit", "-qm", "about")
+    write(repo / "docs" / "about.md", "The project is endorsed\nby the regulator.\n\nOther text.\n")
+    assert path_entry(run(repo), "docs/about.md")["required"] == "standard"
+
+
+def test_a_negated_lead_in_far_above_a_changed_item_still_applies(repo):
+    items = "".join(f"- item {n} is plain;\n" for n in range(6))
+    write(repo / "docs" / "claims.md", f"Do not state or imply that the tool:\n\n{items}- is fast.\n")
+    git(repo, "add", "-A")
+    git(repo, "commit", "-qm", "claims page")
+    write(repo / "docs" / "claims.md", f"Do not state or imply that the tool:\n\n{items}- is endorsed by any regulator.\n")
+    assert run(repo)["verdict"] == "pass-floor"

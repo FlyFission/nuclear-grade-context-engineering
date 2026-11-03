@@ -35,7 +35,7 @@
 |---|---|---|
 | Consequence | medium | a future gate will rely on this classification |
 | Reversibility | high | not wired into CI; revert the commit |
-| Detectability | high | deterministic, covered by 68 tests and a backtest |
+| Detectability | high | deterministic, covered by 82 tests and a backtest |
 | Trust boundary | yes | it is a checker; its output will decide merges later |
 | Uncertainty | medium | claim detection is heuristic; tuned against 49 real commits |
 

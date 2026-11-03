@@ -29,6 +29,7 @@ Claim: the listing doc records the `awesome-ai-plugins` requirements as its own 
 
 - Status: pass
 - Actual result: `git diff --check` clean; `ruff` clean; `pytest` 783 passed, 1 skipped; doctor OK; token budget OK; packet validates; `claude plugin validate .` passes with warnings (missing frontmatter on `commands/*.md` and `agents/README.md`). The warnings are already on the base commit; this change adds none.
+- Re-run after merging `main` (2026-11-03): `pytest` 891 passed, 1 skipped; `ruff` clean; doctor, tokens, worked-example `--strict-custody`, `nuclear_grade.release`, and this packet all OK. `.nuclear/badge.json` was regenerated (59 to 60 records) because this packet adds one. The README section the doc pointed to ("Works across your tools") was removed on `main`, so the doc now points to where the README names the supported clients.
 - Evidence link or artifact path: the PR checks, plus the local run recorded here.
 - If failed/gap: (1) the list's README was read only to about 100k of ~271k characters, so the exact alphabetical slot in Agent Skills is for the owner to confirm. (2) The list's source-scan score was not run here.
 

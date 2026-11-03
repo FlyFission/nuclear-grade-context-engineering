@@ -25,7 +25,7 @@
 
 ## Scope
 
-- Affected files/configs/docs: `docs/04-adoption/listing-and-discovery.md`, `docs/04-adoption/README.md`, `CHANGELOG.md`, this packet.
+- Affected files/configs/docs: `docs/04-adoption/listing-and-discovery.md`, `docs/04-adoption/README.md`, `CHANGELOG.md`, `.nuclear/badge.json` (regenerated count), this packet.
 - User-visible behavior changed? no; documentation only.
 - Dependency/model/API/prompt/tool permission changed? no.
 - Release or rollback posture changed? no.

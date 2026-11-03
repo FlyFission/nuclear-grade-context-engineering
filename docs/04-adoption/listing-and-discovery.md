@@ -69,8 +69,9 @@ directory: it adds discovery, not an install channel. The maintainers invited th
   requires one-sentence entries, alphabetical order within a section, recent activity, and,
   for Agent Skills, a README that documents tested install steps and supported clients.
 - **(repo, done)** The root [`README.md`](../../README.md) documents the Claude Code install
-  (Quick start) and the supported clients (Works across your tools), with per-tool detail in
-  [`INSTALL.md`](../../INSTALL.md) and [`INTEGRATIONS.md`](../../INTEGRATIONS.md).
+  (Quick start) and names the supported clients (the opening summary, and the "Who it is for"
+  line), with per-tool detail in [`INSTALL.md`](../../INSTALL.md) and
+  [`INTEGRATIONS.md`](../../INTEGRATIONS.md).
 - **(you)** Edit the list's
   [`README.md`](https://github.com/hashgraph-online/awesome-ai-plugins/edit/main/README.md)
   and add this line to Agent Skills, in alphabetical position:

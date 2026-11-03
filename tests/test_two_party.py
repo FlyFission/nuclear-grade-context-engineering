@@ -731,3 +731,16 @@ def test_role_prefixed_real_names_still_count(tmp_path, verifier):
     messages: list[str] = []
     check_two_party(pkt, messages)
     assert messages == [], verifier
+
+
+def test_pipe_free_body_row_does_not_end_a_delimited_table(tmp_path):
+    # Codex on ff6f7f2: GitHub Markdown keeps a pipe-free line as a one-cell row.
+    body = (
+        "# V\n\nClaim ID | Result status\n--- | ---\nC-001\nC-002 | pass\n\n"
+        "## Other\n" + _T + "| C-004a | deferred |\n"
+    )
+    (tmp_path / "verification.md").write_text(body, encoding="utf-8")
+    messages: list[str] = []
+    check_two_party(tmp_path, messages)
+    assert any("C-002" in m for m in messages), messages
+    assert any("C-001" in m and "cannot read it" in m for m in messages), messages

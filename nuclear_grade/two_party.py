@@ -390,7 +390,13 @@ def _tables(text: str) -> list[tuple[list[str], list[list[str]]]]:
             continue
         block = [line]
         i += 1
-        while i < len(lines) and lines[i].strip() and "|" in lines[i]:
+        # GitHub Markdown: a table with a delimiter row runs to the next blank
+        # line or block start, and a body line with no pipe is a one-cell row.
+        # A pipe-led block without one ends at the first line with no pipe.
+        while i < len(lines) and lines[i].strip():
+            nxt = lines[i].lstrip()
+            if "|" not in nxt and (not delimited or nxt.startswith(("#", "```", "~~~", ">"))):
+                break
             block.append(lines[i])
             i += 1
         if len(block) >= 2:

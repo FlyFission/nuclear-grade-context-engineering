@@ -635,3 +635,26 @@ def test_visible_keeps_text_around_an_inline_comment():
     out = _visible("keep <!-- hide --> keep\n```\nhidden\n```\nshown\n")
     assert out.split() == ["keep", "keep", "shown"]
     assert out.count("\n") == 5
+
+
+# --- Codex on 9b920ee: no markup can hide a claim ----------------------------
+
+
+@pytest.mark.parametrize(
+    "wrap",
+    [
+        ("Use `<!--` to open a comment.\n\n", "\nClose with `-->`.\n"),
+        ("<!--\n", "-->\n"),
+        ("```\n", "```\n"),
+        ("", ""),
+    ],
+)
+def test_claims_are_read_from_the_raw_file(tmp_path, wrap):
+    body = (
+        "# V\n## A\n" + _T + "| C-004a | deferred |\n\n" + wrap[0]
+        + "## B\n" + _T + "| C-001 | pass |\n" + wrap[1]
+    )
+    (tmp_path / "verification.md").write_text(body, encoding="utf-8")
+    messages: list[str] = []
+    check_two_party(tmp_path, messages)
+    assert any("C-001" in m for m in messages), wrap

@@ -23,12 +23,14 @@ The check reads two declarations, whichever the packet carries:
    Its verifier must be neither the evidence author nor any change actor the
    packet declares.
 
-Only what a reader sees is read: HTML comments and fenced code blocks are
-removed first, so a commented-out or illustrative declaration counts for
-nothing. Declarations (authorship and custody) are read strictly: a line
-indented four or more spaces is code, not a declaration. Claims are read
-generously: a claim row cut short before its status cell is kept with an
-unreadable status, so strict mode fails it. Claims are read from every table (outer pipes optional) whose header
+The parser is asymmetric on purpose, so every parsing mistake fails closed:
+
+- Claims are read generously, from the raw file. No markup (comment, fence,
+  inline code, indentation) can hide a claim from the gate, and a claim row cut
+  short before its status cell is kept with an unreadable status.
+- Declarations (authorship and custody) are read strictly, from visible
+  Markdown only: HTML comments, fenced code blocks, and lines indented four or
+  more spaces count for nothing. Hiding too much there only removes verifiers. Claims are read from every table (outer pipes optional) whose header
 has a claim (or requirement) column and a status column, found by header rather
 than by position, with Markdown emphasis, code spans, and links stripped from
 cells. A status cell is
@@ -392,7 +394,9 @@ def _claim_columns(headers: list[str]) -> tuple[int, int] | None:
 def parse_claim_rows(verification_text: str) -> list[ClaimRow]:
     """Return every claim row from tables that carry a claim and a status column."""
     rows: list[ClaimRow] = []
-    for headers, body in _tables(_visible(verification_text)):
+    # Claims come from the raw file: no markup can hide a claim from the gate.
+    # A claim row inside a comment or an example is still checked (fails closed).
+    for headers, body in _tables(verification_text):
         columns = _claim_columns(headers)
         if columns is None:
             continue

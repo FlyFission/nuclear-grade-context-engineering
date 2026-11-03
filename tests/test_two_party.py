@@ -80,7 +80,7 @@ def test_missing_authorship_table_is_flagged(tmp_path):
     pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n")
     messages: list[str] = []
     check_two_party(pkt, messages)
-    assert any("two-party integrity cannot be confirmed" in m for m in messages)
+    assert any("no authorship or custody row" in m for m in messages)
 
 
 def test_empty_verifier_blocks(tmp_path):
@@ -121,16 +121,17 @@ def _copy_worked(tmp_path: Path) -> Path:
 
 
 def test_suffixed_claim_ids_are_parsed():
-    statuses = parse_claim_status("| C-004a | m | c | pass | e | - |\n")
+    statuses = parse_claim_status(CLAIM_TABLE + "| C-004a | m | c | pass | e | - |\n")
     assert statuses == {"C-004a": "pass"}
 
 
 def test_custody_and_authorship_rows_are_not_read_as_claims():
     text = (
-        "## Claim-to-evidence table\n| C-001 | m | c | gap | e | - |\n"
+        CLAIM_TABLE + "| C-001 | m | c | gap | e | - |\n\n"
         "## Evidence custody and coupling\n### Custody record\n"
-        "| E-001 | C-001 | yes | pass | a | a | a | a | a | a | a | b |\n"
-        "## Claim authorship\n| C-009 | a | pass |\n"
+        "| Evidence ID | Claim ID | Decisive? | Artifact | Change actor | Verified by |\n|---|---|---|---|---|---|\n"
+        "| E-001 | C-001 | yes | pass | a | b |\n\n"
+        + AUTH_HEADER + "| C-009 | a | pass |\n"
     )
     assert parse_claim_status(text) == {"C-001": "gap"}
 
@@ -233,3 +234,112 @@ def test_two_party_requires_standard_packet(tmp_path):
     (tmp_path / "risk.md").write_text("## Selected mode\n- **Mode:** Quick\n", encoding="utf-8")
     result = validate_packet(tmp_path, require_two_party=True)
     assert any("requires a Standard packet" in m for m in result.messages)
+
+
+# --- regressions from the independent review of this wiring -----------------
+# Each case below passed `--two-party` (or failed an honest packet) before the
+# fix; they are kept so the rule cannot quietly regress.
+
+import pytest  # noqa: E402
+
+SELF_CHECK = {"C-001": [ClaimParty("custody E-001", "a", "no separate verifier", "a", "self-check")]}
+
+
+@pytest.mark.parametrize(
+    "row",
+    [
+        "| C-001 | m | c | **pass** | e | - |",
+        "| C-001 | m | c | pass (local) | e | - |",
+        "| C-001 | m | c | pass — 4 passed | e | - |",
+        "| `C-001` | m | c | pass | e | - |",
+        "| **C-001** | m | c | pass | e | - |",
+        "| C-001: workspace boundary | m | c | pass | e | - |",
+        "| [C-001](trace.md) | m | c | pass | e | - |",
+    ],
+)
+def test_formatted_rows_are_still_read(tmp_path, row):
+    pkt = _packet(tmp_path, row + "\n| C-002 | m | c | deferred | e | - |\n")
+    messages: list[str] = []
+    check_two_party(pkt, messages, custody_parties=SELF_CHECK)
+    assert any("C-001" in m for m in messages), messages
+
+
+@pytest.mark.parametrize(
+    "verifier",
+    ["TBD.", "none.", "(none)", "self", "the author", "same process", "?", "<reviewer>", "a."],
+)
+def test_placeholder_or_actor_spellings_are_not_second_parties(tmp_path, verifier):
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n")
+    parties = {"C-001": [ClaimParty("custody E-001", "x", verifier, "a", "independent reproduction")]}
+    messages: list[str] = []
+    check_two_party(pkt, messages, custody_parties=parties)
+    assert any("C-001" in m for m in messages), verifier
+
+
+def test_multi_actor_cell_excludes_each_actor(tmp_path):
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n")
+    parties = {
+        "C-001": [ClaimParty("custody E-001", "x", "agent:claude", "ben + agent:claude", "independent reproduction")]
+    }
+    messages: list[str] = []
+    check_two_party(pkt, messages, custody_parties=parties)
+    assert any("change actor" in m for m in messages)
+
+
+def test_authorship_cannot_override_custody_self_check(tmp_path):
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n", AUTH_HEADER + "| C-001 | a | ben |\n")
+    messages: list[str] = []
+    check_two_party(pkt, messages, custody_parties=SELF_CHECK)
+    assert any("C-001" in m for m in messages)
+
+
+def test_authorship_verifier_cannot_be_a_packet_change_actor(tmp_path):
+    pkt = _packet(
+        tmp_path,
+        "| C-001 | m | c | pass | e | - |\n| C-002 | m | c | pass | e | - |\n",
+        AUTH_HEADER + "| C-002 | agent:claude | Maintainer |\n",
+    )
+    parties = {"C-001": [ClaimParty("custody E-001", "ci", "ben", "maintainer", "independent reproduction")]}
+    messages: list[str] = []
+    check_two_party(pkt, messages, custody_parties=parties)
+    assert any("C-002" in m and "change actor" in m for m in messages), messages
+    assert not any("C-001" in m for m in messages)
+
+
+def test_tables_without_claim_and_status_columns_are_ignored(tmp_path):
+    body = (
+        "| C-001 | m | c | pass | e | - |\n\n"
+        "## Commands\n| Method | Command | Result |\n|---|---|---|\n| E2E smoke | make e2e | pass |\n"
+        "| SHA256 digest matches | sha256sum | pass |\n"
+    )
+    pkt = _packet(tmp_path, body, AUTH_HEADER + "| C-001 | agent:claude | ben |\n")
+    messages: list[str] = []
+    check_two_party(pkt, messages)
+    assert messages == []
+
+
+def test_unreadable_status_fails_strict(tmp_path):
+    pkt = _packet(tmp_path, "| C-001 | m | c | passed locally | e | - |\n", AUTH_HEADER + "| C-001 | a | ben |\n")
+    messages: list[str] = []
+    check_two_party(pkt, messages)
+    assert any("cannot read it" in m for m in messages)
+
+
+def test_custody_claim_missing_from_claim_table_fails(tmp_path):
+    pkt = _packet(tmp_path, "| C-001 | m | c | gap | e | - |\n")
+    parties = {"C-007": [ClaimParty("custody E-001", "a", "ben", "a", "independent reproduction")]}
+    messages: list[str] = []
+    check_two_party(pkt, messages, custody_parties=parties)
+    assert any("C-007" in m and "no claim-to-evidence row" in m for m in messages)
+
+
+def test_authorship_only_packet_can_pass_strict_without_custody(tmp_path):
+    pkt = _copy_worked(tmp_path)
+    vfile = pkt / "verification.md"
+    text = vfile.read_text(encoding="utf-8")
+    start = text.index("## Evidence custody and coupling")
+    end = text.index("## Security / dependency")
+    authorship = AUTH_HEADER + "| C-001 | agent:claude | ben |\n| C-004a | agent:claude | ben |\n\n"
+    vfile.write_text(text[:start] + authorship + text[end:], encoding="utf-8")
+    result = validate_packet(pkt, require_two_party=True)
+    assert result.ok, result.messages

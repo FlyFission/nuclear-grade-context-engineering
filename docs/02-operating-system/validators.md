@@ -81,11 +81,15 @@ pinned validator and an expected packet mode supplied outside the candidate's wr
 
 **Built opt-in check: two-party verification.** `ng validate <packet> --two-party` fails any `pass`
 claim in a Standard packet's claim-to-evidence table that has no declared second party. A second
-party comes from the custody record (a row whose verifier is not the change actor and whose profile
-is not classified `self-check`) or from a `## Claim authorship` table (a verifier who is neither the
-evidence author nor the change actor). Placeholder verifiers such as `none`, `pending`, or
-`no separate verifier` count as empty. A strict run that finds no claim rows fails closed rather
-than passing. Without the flag, existing packets are unaffected, except one that declares a
+party comes from the custody record (a row whose verifier is none of its change actors and whose
+profile is not classified `self-check`). For a claim the custody record does not cover, it can come
+from a `## Claim authorship` table (a verifier who is neither the evidence author nor any change
+actor the packet declares). Custody governs a claim it covers, so a lighter table cannot override a
+self-check. Claims are read from any table with a claim column and a status column, located by
+header; emphasis, code spans, and links are stripped, and a status is read by its leading word.
+Placeholder verifiers such as `none`, `TBD.`, `<reviewer>`, `self`, or `no separate verifier` count as
+empty. A strict run fails on a claim row whose status cannot be read, on a claim the custody record
+cites but no claim table lists, and when it finds no claim rows at all. Without the flag, existing packets are unaffected, except one that declares a
 `## Claim authorship` table, which is held to it. The check compares declared identity strings. It
 cannot detect two names for one actor or two agent instances of one model family; that coupling
 belongs in the five-axis profile. Depth and method vocabulary for the `Verification type` column is

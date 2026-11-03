@@ -21,12 +21,18 @@ regulation, compliance, certification, or any safety, security, or regulatory gu
   basis itself (design review) or by reaching the result another way (alternate method, qualification
   test). Verification can disagree with a flawless check.
 
-Public nuclear QA language keeps this distinction explicit. 10 CFR 50 Appendix B, Criterion III,
-calls for "verifying or checking the adequacy of design, such as by the performance of design
-reviews, by the use of alternate or simplified calculational methods, or by the performance of a
-suitable testing program," performed "by individuals or groups other than those who performed the
-original design, but who may be from the same organization." Three distinct methods, and a
-separation rule that is about the *originator*, not the organization.
+These two definitions are this repo's own. The sources below do not draw the line the same way.
+10 CFR 50 Appendix B, Criterion III, treats "verifying or checking the adequacy of design" as one
+process and gives examples of how: "such as by the performance of design reviews, by the use of
+alternate or simplified calculational methods, or by the performance of a suitable testing program."
+It requires that process to be performed "by individuals or groups other than those who performed the
+original design, but who may be from the same organization." The separation is from the
+*originator*, not from the organization. DOE-HDBK-1028-2009 uses the words differently again:
+“Checking” refers to the confirmation of a correct action – prevention of an error by a performer.
+“Verification” refers to the confirmation of the condition of equipment or accuracy of documents
+consistent with the requirements of the governing documents. What this page takes from Appendix B is
+the set of example methods (review, an alternate route to the answer, and testing) and the
+originator-separation rule. It does not take a check/verify distinction from it.
 
 ## The ladder
 
@@ -41,8 +47,8 @@ they catch different failures.
 | 3 | **Alternate method** | the same result, reached by a different route, then compared | errors common to the original method, including ones a reviewer would also read past | errors common to *both* methods (name the common cause) | an independent oracle or second implementation; a property test beside example tests; a hand derivation against the code's output; a second primary source for a fact; a different model family for a judgment |
 | 4 | **Qualification test** | the real artifact under the most adverse credible conditions | behavior the source and the review both predicted wrongly | conditions nobody thought to include | run the produced artifact on worst-case, boundary, and fault-injected inputs ([`verifying-final-artifacts`](../../skills/verifying-final-artifacts/SKILL.md), [`stress-testing-agent-changes`](../../skills/stress-testing-agent-changes/SKILL.md)) |
 
-Appendix B states that when a test program is used *in lieu of* other verifying or checking
-processes, it "shall include suitable qualifications testing of a prototype unit under the most
+Appendix B's third example is "a suitable testing program." It adds that when a test program is used
+*in lieu of* other verifying or checking processes, it "shall include suitable qualifications testing of a prototype unit under the most
 adverse design conditions." The software reading: a happy-path test run is not a substitute for
 review or an alternate method; only a deliberately adverse test can stand in for them.
 
@@ -51,7 +57,8 @@ review or an alternate method; only a deliberately adverse test can stand in for
 The human-performance vocabulary in DOE-HDBK-1028-2009 grades *when* and *how separately* a second
 person confirms:
 
-- **Peer-check** — a second person watches the performer *before* the action, to stop a wrong one.
+- **Peer-check** — two people at the same time and place, before and during a specific action, both
+  self-checking in parallel, to stop the performer's error.
 - **Concurrent verification** — two people, same time and place, separately confirm a condition
   before, during, and after an action.
 - **Independent verification** — one person, separated in time and distance from the performer,
@@ -126,11 +133,13 @@ behind a `pass`.
 
 ## Source-lineage note
 
-Original Nuclear-grade operating doc. Concept lineage: the three design-verification methods
-(design review, alternate or simplified calculation, qualification testing under the most adverse
-design conditions) and the originator-separation rule from 10 CFR 50 Appendix B, Criterion III; the
-peer-check, concurrent verification, independent verification ("freedom of thought from the
-performer"), and peer review definitions from DOE-HDBK-1028-2009 Volume 2. Both are mapped in
+Original Nuclear-grade operating doc. The check/verify definitions and the rung ladder are this
+repo's own. Concept lineage: the example methods for verifying or checking a design (design reviews,
+alternate or simplified calculational methods, a suitable testing program, with qualification
+testing under the most adverse design conditions when testing stands in for the others) and the
+originator-separation rule from 10 CFR 50 Appendix B, Criterion III; the peer-check, concurrent
+verification, independent verification ("freedom of thought from the performer"), and peer review
+definitions from DOE-HDBK-1028-2009 Volume 2. Both are mapped in
 [`../00-standards-foundation/source-map.md`](../00-standards-foundation/source-map.md); quotations were
 checked against the eCFR text and the DOE handbook PDF on 2026-11-03. This page borrows vocabulary;
 it does not claim to meet either source.

@@ -44,10 +44,10 @@ Boundary: `checking-source-claims` asks whether a citation is *worded* honestly 
 2. Mark the load-bearing ones: a decision, claim, or public statement fails if they are wrong.
 3. Find the primary source, the origin rather than a page about it. Record a locator: URL or path, section or line, version, and date accessed.
 4. Read it this pass. Memory, training data, a snippet, an LLM summary (including your own earlier turn), and the citing doc's paraphrase are leads.
-5. Confirm by a second means that cannot share the first's common cause: an independent authoritative copy; running the code or calling the API against the docs; recomputing a number from raw data another way; an exact-string match for a quote; a minimal reproduction at the pinned version. Two pages repeating one upstream are one source. Two model answers are one source.
+5. Confirm by a second means that cannot share the first's common cause: an independent authoritative copy; running the code or calling the API against the docs; recomputing a number from raw data another way; an exact-string match for a quote against a second, independently published copy; a minimal reproduction at the pinned version. Re-reading the same copy is a check, not a second means. Two pages repeating one upstream are one source. Two model answers are one source.
 6. Record a verdict: confirmed, confirmed with qualification, contradicted, or unverifiable. Note the version or date the fact holds for.
 7. Rewrite to exactly what the sources support, with scope and locator. Present a conflict as a conflict. Label or remove what you could not verify.
-8. Grade by mode. Quick: primary source for load-bearing facts. Standard: plus the second means. Nuclear: the second means is done by someone other than the author, briefed without the author's answer.
+8. Grade by who does the second means. Quick: the author may do both. Standard: someone other than the author does or re-runs the second means. Nuclear: that person is also briefed without the author's answer.
 
 ## Outputs
 
@@ -108,4 +108,4 @@ Do not treat memory, a snippet, or a model summary as a source. Do not imply for
 
 ## Source-lineage note
 
-An original fact-checking workflow, not a claim to have invented source verification. Concept lineage: verification by an alternate method, by someone other than the originator (10 CFR 50 Appendix B, Criterion III), and independent verification as "freedom of thought from the performer" plus validating assumptions (DOE-HDBK-1028-2009), both mapped in `docs/00-standards-foundation/source-map.md`. It does not create formal verification and validation, compliance, certification, or any safety, security, or regulatory guarantee.
+An original fact-checking workflow, not a claim to have invented source verification. Concept lineage: alternate or simplified calculational methods as one way of verifying or checking a design, by someone other than the originator (10 CFR 50 Appendix B, Criterion III), and independent verification as "freedom of thought from the performer" plus validating assumptions (DOE-HDBK-1028-2009), both mapped in `docs/00-standards-foundation/source-map.md`. It does not create formal verification and validation, compliance, certification, or any safety, security, or regulatory guarantee.

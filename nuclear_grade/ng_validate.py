@@ -280,7 +280,7 @@ def validate_packet(
                     evidence_file,
                     evidence_text,
                     messages,
-                    required=require_custody or require_authority or require_two_party,
+                    required=require_custody or require_authority,
                     parties_out=custody_parties,
                 )
                 check_two_party(

@@ -38,7 +38,16 @@ Enforcement is graded:
 - ``required=False`` (default): legacy packets stay valid, but a packet that
   *opts in* by declaring a ``## Claim authorship`` table is held to it.
 
-What this does not do: it compares declared identity strings after light
+Identity comparison splits multi-name cells, treats generic names (``assistant``,
+``the agent``, ``me``) as no verifier, and matches aliases by root (``Claude``,
+``claude-opus-5.5``, and ``agent:claude`` are one identity). That fails closed, so
+verifiers should be recorded as full, stable identities. When the only second
+party generated and verified its own evidence (legitimate for an independent
+reproducer, indistinguishable in text from an actor's agent grading its own work),
+the coupling-profile disposition must link ``ship.md``.
+
+This is a *declared two-party integrity check*: it checks declared actor
+separation. What it does not do: it compares declared identity strings after light
 normalization. It cannot detect two names for one actor, two agent instances of
 one model family sharing an orchestrator, a classification the author declared
 falsely, or a verifier who rubber-stamped. Those couplings are what the
@@ -92,6 +101,25 @@ _EMPTY_PARTY = {
     "same person",
     "change actor",
     "the change actor",
+    # Generic agent and first-person aliases name no stable second party.
+    "me",
+    "myself",
+    "i",
+    "we",
+    "us",
+    "assistant",
+    "the assistant",
+    "ai",
+    "the ai",
+    "ai assistant",
+    "agent",
+    "the agent",
+    "an agent",
+    "model",
+    "the model",
+    "llm",
+    "bot",
+    "the bot",
 }
 _EMPTY_PARTY_PREFIXES = (
     "no separate",
@@ -114,12 +142,15 @@ class ClaimParty(NamedTuple):
     change_actor: str = ""
     # Empty for the authorship table (no classification is declared there).
     classification: str = ""
+    # The coupling profile's admissibility / residual-risk disposition (custody only).
+    disposition: str = ""
 
 
 class ClaimRow(NamedTuple):
     claim_ids: tuple[str, ...]
     status: str | None
     raw_status: str
+    raw_claim: str = ""
 
 
 def _clean_cell(cell: str) -> str:
@@ -127,8 +158,11 @@ def _clean_cell(cell: str) -> str:
     return cell.replace("**", "").replace("__", "").replace("`", "").strip()
 
 
+_EMPHASIS = "*_~"
+
+
 def _norm(value: str) -> str:
-    return " ".join(_clean_cell(value).casefold().split()).strip(_PUNCT)
+    return " ".join(_clean_cell(value).casefold().split()).strip(_PUNCT + _EMPHASIS)
 
 
 def _is_empty_party(value: str) -> bool:
@@ -146,18 +180,45 @@ def _identities(value: str) -> set[str]:
     return ({whole} | parts) - {""}
 
 
+_ALIAS_PREFIX = re.compile(r"^[a-z]+:")
+_CORE = re.compile(r"[a-z]+")
+
+
+def _core(name: str) -> str:
+    """The stable root of an identity: `agent:claude-opus-5.5` and `Claude` share `claude`."""
+    match = _CORE.match(_ALIAS_PREFIX.sub("", name))
+    return match.group(0) if match and len(match.group(0)) >= 3 else name
+
+
+def _is_excluded(name: str, excluded: set[str]) -> bool:
+    """True when ``name`` is an excluded identity or an alias sharing its root.
+
+    Fails closed on purpose: two different people who share a first name are
+    treated as one, so record verifiers as full, stable identities (a handle).
+    """
+    return name in excluded or _core(name) in {_core(e) for e in excluded}
+
+
+def _named_verifiers(value: str) -> set[str]:
+    """The individual, non-placeholder identities a verifier cell names."""
+    if _is_empty_party(value):
+        return set()
+    parts = {_norm(part) for part in _ACTOR_SPLIT.split(_clean_cell(value))}
+    return {part for part in parts if part and not _is_empty_party(part)}
+
+
 def _claim_ids(cell: str) -> tuple[str, ...]:
     """Return the record ids in a claim cell: `C-001`, `C-001 / C-004a`, `C-001: text`."""
     ids: list[str] = []
     for part in _ID_SPLIT.split(_clean_cell(cell)):
-        token = part.split()[0].strip(_PUNCT) if part.split() else ""
+        token = part.split()[0].strip(_PUNCT + _EMPHASIS) if part.split() else ""
         if _RECORD_ID.fullmatch(token):
             ids.append(token)
     return tuple(ids)
 
 
 def _status(cell: str) -> str | None:
-    text = _norm(cell)
+    text = re.sub(rf"[{re.escape(_EMPHASIS)}]", "", _norm(cell))
     for status in _STATUSES:
         if text == status or re.match(rf"{re.escape(status)}\b", text):
             return status
@@ -214,8 +275,9 @@ def parse_claim_rows(verification_text: str) -> list[ClaimRow]:
             if max(claim_col, status_col) >= len(row):
                 continue
             ids = _claim_ids(row[claim_col])
-            if ids:
-                rows.append(ClaimRow(ids, _status(row[status_col]), row[status_col]))
+            raw_claim = _clean_cell(row[claim_col])
+            if ids or raw_claim:
+                rows.append(ClaimRow(ids, _status(row[status_col]), row[status_col], raw_claim))
     return rows
 
 
@@ -276,11 +338,23 @@ def _is_second_party(party: ClaimParty, packet_actors: set[str]) -> bool:
         excluded = _identities(party.change_actor)
     else:
         excluded = _identities(party.author) | packet_actors
+    # Every identity a multi-verifier cell names is compared on its own; at least
+    # one must be outside the excluded set.
+    if not any(not _is_excluded(name, excluded) for name in _named_verifiers(party.verifier)):
+        return False
     if verifier in excluded:
         return False
     # A custody row's own classification is the stronger declaration: a row the
     # author classified as self-check is not a second party, whatever it names.
     return _norm(party.classification) != "self-check"
+
+
+def _self_generated(party: ClaimParty) -> bool:
+    """A custody row whose verifier also generated the evidence."""
+    if not party.source.startswith("custody") or _is_empty_party(party.author):
+        return False
+    generators = _identities(party.author)
+    return any(_is_excluded(name, generators) for name in _named_verifiers(party.verifier))
 
 
 def _why_not(cid: str, parties: list[ClaimParty], packet_actors: set[str]) -> str:
@@ -294,7 +368,10 @@ def _why_not(cid: str, parties: list[ClaimParty], packet_actors: set[str]) -> st
         excluded = _identities(party.change_actor)
         if not party.source.startswith("custody"):
             excluded |= _identities(party.author) | packet_actors
-        if _norm(party.verifier) in excluded:
+        names = _named_verifiers(party.verifier)
+        if _norm(party.verifier) in excluded or (
+            names and all(_is_excluded(n, excluded) for n in names)
+        ):
             return (
                 f"verification.md: claim {cid} verified by its own evidence author or "
                 f"change actor ('{party.verifier}', {party.source}); an independent "
@@ -329,7 +406,18 @@ def check_two_party(
     if not (required or authorship):
         return
     custody = custody_parties or {}
-    rows = parse_claim_rows(text)
+    all_rows = parse_claim_rows(text)
+    rows = [row for row in all_rows if row.claim_ids]
+
+    # A row that says `pass` but whose claim cell yields no readable id would
+    # otherwise drop out of the gate silently; fail it instead.
+    for row in all_rows:
+        if not row.claim_ids and row.status == "pass":
+            messages.append(
+                f"verification.md: a claim row marked 'pass' has no readable Claim ID "
+                f"('{row.raw_claim}'); write the id plainly (for example C-001) so "
+                "two-party verification can check it."
+            )
 
     if not rows:
         messages.append(
@@ -373,6 +461,22 @@ def check_two_party(
                 "custody row; cannot confirm an independent verifier."
             )
             continue
-        if any(_is_second_party(p, packet_actors) for p in parties):
+        seconds = [p for p in parties if _is_second_party(p, packet_actors)]
+        if any(not _self_generated(p) for p in seconds):
+            continue
+        if seconds:
+            # R-9: the only second party generated and verified its own evidence.
+            # That is a legitimate independent reproduction only if the reproducer
+            # was separate from the change; text cannot prove it, so the packet
+            # must say so where the release decision reads it.
+            if any("ship.md" in p.disposition.casefold() for p in seconds):
+                continue
+            sources = ", ".join(p.source for p in seconds)
+            messages.append(
+                f"verification.md: claim {cid}'s only second party ({sources}) generated "
+                "and verified its own evidence. That can be a legitimate independent "
+                "reproduction, but it must be disclosed: link the coupling-profile "
+                "disposition to ship.md, or name a verifier who did not generate the evidence."
+            )
             continue
         messages.append(_why_not(cid, parties, packet_actors))

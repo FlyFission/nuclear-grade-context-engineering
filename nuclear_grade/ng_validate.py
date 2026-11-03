@@ -490,6 +490,7 @@ def _check_evidence_custody(
     custody_controls: dict[str, tuple[str, str, str, str, str]] = {}
     custody_claims: dict[str, list[str]] = {}
     profile_classes: dict[str, str] = {}
+    profile_dispositions: dict[str, str] = {}
 
     for row in custody_rows:
         if len(row) != len(custody_headers):
@@ -591,6 +592,7 @@ def _check_evidence_custody(
         disposition = _table_value(
             row, profile_index, "admissibility residual risk disposition"
         ).lower()
+        profile_dispositions[evidence_id] = disposition
         if not disposition:
             messages.append(
                 f"{md_file.name} evidence {evidence_id} missing admissibility/residual-risk disposition"
@@ -630,6 +632,7 @@ def _check_evidence_custody(
                 verifier=verified_by,
                 change_actor=change_actor,
                 classification=profile_classes.get(evidence_id, ""),
+                disposition=profile_dispositions.get(evidence_id, ""),
             )
             for claim in claim_ids:
                 parties_out.setdefault(claim, []).append(party)
@@ -1448,7 +1451,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--two-party",
         action="store_true",
-        help="Require every `pass` claim in a Standard packet to name a verifier distinct from its evidence author and change actor.",
+        help="Declared two-party integrity check: every `pass` claim must name a verifier distinct from its change actor (declared identities, not proof of independence). Recommended for any Standard packet that contains a pass claim.",
     )
     args = parser.parse_args(argv)
 

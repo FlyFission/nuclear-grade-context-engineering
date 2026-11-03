@@ -110,22 +110,31 @@ def score_routing(truth, r31, rnew, mapping) -> dict:
 
 
 def score_fit(fit_rows: list[dict]) -> dict:
+    """Criterion C, counted per scenario as PROTOCOL.md states it.
+
+    A scenario that needed two originals of one merge has one row per origin; it
+    is one scenario. It misses (or forces) work if any of its rows does, and it
+    forces work on a target job if a forcing row's origin is the target skill.
+    """
     out = {}
     for mid in MERGES:
         rs = [r for r in fit_rows if r.get("merge") == mid]
-        misses = [r["id"] for r in rs if r.get("misses_needed_work")]
-        forced = [r["id"] for r in rs if r.get("forces_unneeded_work")]
-        forced_target = [
-            r["id"] for r in rs if r.get("forces_unneeded_work") and r.get("origin") == TARGETS[mid]
-        ]
-        n = len(rs)
+        ids = sorted({r["id"] for r in rs})
+        misses = sorted({r["id"] for r in rs if r.get("misses_needed_work")})
+        forced = sorted({r["id"] for r in rs if r.get("forces_unneeded_work")})
+        forced_target = sorted(
+            {r["id"] for r in rs if r.get("forces_unneeded_work") and r.get("origin") == TARGETS[mid]}
+        )
+        n = len(ids)
+        rate = pct(len(forced), n)
         out[mid] = {
             "n": n,
+            "rows": len(rs),
             "misses": misses,
             "forced": forced,
             "forced_on_target_jobs": forced_target,
-            "forced_rate": pct(len(forced), n),
-            "C_pass": n > 0 and not misses and pct(len(forced), n) <= 10 and not forced_target,
+            "forced_rate": rate,
+            "C_pass": n > 0 and not misses and rate <= 10 and not forced_target,
         }
     return out
 

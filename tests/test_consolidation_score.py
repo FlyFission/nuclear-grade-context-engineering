@@ -35,3 +35,23 @@ def test_committed_scores_are_strict_json():
     # NaN or Infinity is not JSON; a metric with no rows must be null.
     for path in sorted(EVAL.rglob("*.json")):
         json.loads(path.read_text(encoding="utf-8"), parse_constant=_reject_constant)
+
+
+def test_fit_is_counted_per_scenario_not_per_row():
+    # Codex on 0cfcf4a: a scenario needing two originals has two rows but is one scenario.
+    sys.path.insert(0, str(EVAL))
+    try:
+        import score
+    finally:
+        sys.path.remove(str(EVAL))
+    mid = next(iter(score.MERGES))
+    other = "not-" + score.TARGETS[mid]
+    rows = [
+        {"id": "S-1", "merge": mid, "origin": other, "misses_needed_work": False, "forces_unneeded_work": True},
+        {"id": "S-1", "merge": mid, "origin": other + "-2", "misses_needed_work": False, "forces_unneeded_work": True},
+    ] + [
+        {"id": f"S-{i}", "merge": mid, "origin": other, "misses_needed_work": False, "forces_unneeded_work": False}
+        for i in range(2, 11)
+    ]
+    fit = score.score_fit(rows)[mid]
+    assert (fit["n"], fit["rows"], fit["forced"], fit["forced_rate"]) == (10, 11, ["S-1"], 10.0)

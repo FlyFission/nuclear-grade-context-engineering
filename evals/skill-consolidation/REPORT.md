@@ -13,7 +13,7 @@ One merge, `choosing-what-to-control` + `recording-a-known-good-version` → `co
 | M1 | `declaring-intent` → `double-checking-before-acting` | fail, rounds 1 and 2 | not run | not run | pass | not made |
 | M2 | `tracking-deficiencies` + `reporting-shared-defects` → `learning-from-experience` | pass (round 2) | pass | **fail**: 1 miss of 27 | pass | not made |
 | M3 | `checking-source-claims` → `checking-legal-and-safety-wording` (as `checking-public-claims`) | pass (round 2) | pass | **fail**: 1 forced of 4, on the target's own job | pass | not made |
-| M4 | `choosing-what-to-control` → `recording-a-known-good-version` (as `controlling-approved-versions`) | pass (round 2) | pass on the 25-skill catalog; **fail** on the final 30-skill catalog (see below) | pass on 9 rows; **fail** on 40 targeted rows (1 miss) | pass | made, then **reverted** |
+| M4 | `choosing-what-to-control` → `recording-a-known-good-version` (as `controlling-approved-versions`) | pass (round 2) | pass on the 25-skill catalog; **fail** on the final 30-skill catalog (see below) | pass on 8 scenarios; **fail** on 40 targeted scenarios (1 miss) | pass | made, then **reverted** |
 | M5 | `closing-stale-packets` → `creating-change-records` (as `managing-change-records`) | pass (round 2) | **fail** | not run | pass | not made |
 | M6 | `briefing-an-agent` → `handing-off-work` | fail, rounds 1 and 2 | not run | not run | pass | not made |
 | M7 | `breaking-down-the-work` → `organizing-project-folders` (as `structuring-the-work`) | pass (round 2) | pass | **fail**: 1 miss + 1 forced of 13 | pass | not made |
@@ -38,7 +38,7 @@ These are the concrete reasons. Each is the kind of loss the "hammer for a screw
 | Adjudication | The 37 disagreements settled against the skill text ([`data/adjudicated.jsonl`](data/adjudicated.jsonl)) | 18 intersection, 5 labeler 2, 3 labeler 1, 3 union, 8 other |
 | Coverage (A) | Capability map of all 15 originals against each draft ([`coverage-round1.md`](coverage-round1.md), [`coverage-round2.md`](coverage-round2.md)) | Round 1: 0/7 pass (19 losses, 8 over-applications). Round 2: 5/7 pass. |
 | Routing (B) | Blind routers seeing names and descriptions only, on the 31-skill and 25-skill catalogs ([`data/route31.jsonl`](data/route31.jsonl), [`data/routenew.jsonl`](data/routenew.jsonl)) | Per-merge recall and false-positive rate in [`data/score.json`](data/score.json). Secondary set of 170 existing routing cases: 100.0% vs 99.4%; the one difference is a key artifact (see below). |
-| Fit (C) | A judge read each merged draft against the original for every scenario that needed an original (53 rows, [`data/fit.jsonl`](data/fit.jsonl)) | Findings above |
+| Fit (C) | A judge read each merged draft against the original for every scenario that needed an original (53 rows, one per original a scenario needed: 46 scenarios across the merges, [`data/fit.jsonl`](data/fit.jsonl)). Rates are per scenario, as criterion C states | Findings above |
 | Size (D) | `ng tokens` counting | Every draft is within `skill_body_max` 3900 and `description_max` 200 |
 
 Whole catalog on the 180 scenarios: precision 70.7 → 72.8 and recall 81.9 → 78.7 (31 → 25 skills). The recall dip is not attributable to the merges. The misses that moved are mostly on skills whose descriptions are identical in both catalogs: `checking-facts` went from 0 misses to 4, and `staying-on-mission` from 4 to 2. That is run-to-run variance between two router instances, which this protocol did not measure with a repeat run.
@@ -47,7 +47,7 @@ Secondary-set note: R-126 ("I am actively filling this packet right now and abou
 
 ## Final-state evidence (requested by external reviews)
 
-The external reviews (Codex, plus Grok and ChatGPT forwarded by the owner) noted that the routing comparison had used a 25-skill catalog, not the 30 that would ship, that no repeat run measured noise, and that M4's clean fit rested on 9 rows. Three follow-ups ran after M4 was applied:
+The external reviews (Codex, plus Grok and ChatGPT forwarded by the owner) noted that the routing comparison had used a 25-skill catalog, not the 30 that would ship, that no repeat run measured noise, and that M4's clean fit rested on 8 scenarios (9 rows). Three follow-ups ran after M4 was applied:
 
 1. **Paired routing on the actual catalogs.** Two runs each on the current 31 and the final 30, with catalog order shuffled per run ([`data/final/`](data/final/)).
 
@@ -76,7 +76,7 @@ No skill or command changed. Kept from this work:
 ## Limits
 
 - **One model family.** Every agent here is the same model family as the author, briefed by the author's session: generator, both labelers, adjudicator, both routers, coverage auditor, and fit judge. This is a structured check, not independent verification. LLM errors are strongly correlated across models (Kim et al., ICML 2025).
-- **Small samples per merge.** Relevant scenarios were 1 for M5, 4 for M3, 8–9 for M4, 11–13 for M7, and 23–27 for M2. A clean result on n items bounds the miss rate only near 3/n. M4's clean fit on 9 rows did not survive a 40-row test.
+- **Small samples per merge.** Relevant scenarios were 1 for M5, 4 for M3, 8 for M4, 11 for M7, and 23 for M2. A clean result on n items bounds the miss rate only near 3/n. M4's clean fit on 8 scenarios did not survive a 40-scenario test.
 - **Frontmatter only.** Routing used frontmatter as the host shows it; truncation under catalog pressure was not simulated.
 - **Strict pass/fail.** The bars are strict, and some failures are small wording losses (M2's especially). A merge that failed is not proof that no merge could work. It means this draft did not clear the bar this protocol set, so it was not made.
 

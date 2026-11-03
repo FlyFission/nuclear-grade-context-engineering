@@ -658,3 +658,27 @@ def test_claims_are_read_from_the_raw_file(tmp_path, wrap):
     messages: list[str] = []
     check_two_party(tmp_path, messages)
     assert any("C-001" in m for m in messages), wrap
+
+
+@pytest.mark.parametrize(
+    "prose, counts",
+    [
+        ("Docs mention `<!--` in inline code.\n\n", True),     # code span: text
+        ("An unclosed <!-- opener mid-line.\n\n", True),       # no closer: literal
+        ("<!--\n", False),                                     # block comment to EOF
+        ("Inline <!-- hidden --> comment.\n\n", True),
+    ],
+)
+def test_comment_markers_follow_markdown_rules_for_declarations(tmp_path, prose, counts):
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n", prose + AUTH_HEADER + "| C-001 | ben | carol |\n")
+    messages: list[str] = []
+    check_two_party(pkt, messages)
+    assert (messages == []) is counts, (prose, messages)
+
+
+def test_this_change_record_passes_strict_custody():
+    # It once failed: a literal `<!--` in its own review log hid its custody
+    # section. Keep the packet that ships the parser valid under its own rules.
+    packet = Path(__file__).resolve().parents[1] / ".nuclear" / "changes" / "independent-review-and-fact-checking"
+    result = validate_packet(packet, require_custody=True)
+    assert result.ok, result.messages

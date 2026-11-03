@@ -101,6 +101,7 @@ A second round (Codex on `1e956bc` and `3adf16c`; Copilot on `1e956bc`) raised m
 | CX-16 | A claim row cut short before its status cell was skipped (Codex on `a6867fa`) | yes | fixed by the matching rule: claims are read generously, so the row is kept with an unreadable status and strict mode fails it; test added |
 | CX-17 | A fence opener inside an HTML comment hid the visible claim table after it, because fences were stripped before comments (Codex on `a50edba`) | yes | fixed at the root: one pass tracks comments and fences together, so a marker of either kind inside the other is just hidden text; the custody parser now uses the same function; tests cover both nestings and inline comments |
 | CX-18 | A literal `<!--` inside inline code opened a comment and hid a visible claim table (Codex on `9b920ee`) | yes | fixed by closing the class: claims are now read from the raw file, so no markup can hide a claim; declarations stay visible-only. No existing verification file has a claim row inside a comment or fence (40 checked), so nothing else changes; tests cover inline code, comments, fences, and plain text |
+| CX-19 | Follow-on from CX-18, found by the author: a literal `<!--` in inline code, or one with no closing `-->`, hid the rest of a file on the declaration side, so this packet's own custody section disappeared | yes | fixed: code spans are skipped and a mid-line `<!--` opens a comment only if a `-->` follows, as Markdown renders it; tests added, including one that this packet passes `--strict-custody`; see the near-miss note below |
 | CX-11 | `ben + reviewer` passes against actor `ben` | yes | kept by design: a cell counts when at least one name in it is outside the excluded set, the same rule CX-9 asks for |
 
 Default-mode and `--strict-custody` output stays identical to `main` across all 56 packets (112 runs).
@@ -125,7 +126,7 @@ Each claim was checked against the code before acting.
 | GX-10 | Gemini | Do not require `--two-party` repo-wide yet; scope it to new or modified packets | n/a | agrees with the open owner decision in `ship.md` |
 | GX-11 | Gemini | R-9: same-agent generator and verifier should count only as an isolated independent reproduction | n/a | matches the rule as built: a `self-check` classification never counts, an agent named as change actor is excluded, and the remaining case needs the `ship.md` disclosure |
 
-
+## Near miss during build (OPEX)
 
 While adding the source-map row for the adjudication study, the author wrote author names from memory
 ("Mathes, Klassen, and Pieper (or as listed)") before reading the record. The check on the next step
@@ -134,6 +135,17 @@ E-utilities record (E, Saldanha, Canner, Schmid, Le, Li) and corrected before co
 the failure `checking-facts` names ("I know this"), and it was caught only because the second lookup was
 done. Lesson carried into the skill: a citation's metadata is a fact, and it gets the same primary-source
 read as its content.
+
+A second near miss came late in review. The pre-commit check for this packet was run as
+`ng validate ... | tail -1 && git add ... && git commit`. Because the pipe's exit status is `tail`'s,
+the failing validation ("missing required section: Evidence custody and coupling") printed but did not
+stop the commit, and the commit was pushed. The failure was real: the CX-18 row added to this file
+contains a literal `<!--` in inline code, and the parser hid everything after it. The author read the
+printed line, stopped, fixed the parser so it follows Markdown's rules (a `<!--` in a code span, or one
+with no closing `-->`, is text), and added `test_this_change_record_passes_strict_custody` so this
+packet must validate under its own rules. Lessons: never pipe a gate through a filter that drops its
+exit status; and the parser's first real-world false fail came from its own change record.
+Also restored here: this section's heading, which an earlier edit (`3adf16c`) dropped by accident.
 
 ## Evidence custody and coupling
 

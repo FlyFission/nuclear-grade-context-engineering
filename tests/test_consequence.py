@@ -460,3 +460,49 @@ def test_emphasis_does_not_hide_a_negation(repo):
 def test_a_list_after_a_positive_lead_in_still_counts(repo):
     write(repo / "README.md", "# Demo\n\nThe tool is:\n\n- endorsed by the regulator;\n- fast.\n")
     assert path_entry(run(repo), "README.md")["required"] == "standard"
+
+
+# ------------------------------------------------------------------ review findings (Codex, PR #123)
+
+
+def test_explicit_head_refuses_a_dirty_working_tree(repo):
+    git(repo, "checkout", "-q", "-b", "feature")
+    write(repo / "pyproject.toml", '[project]\nname = "demo"\ndependencies = ["rich"]\n')
+    packet = standard_record(repo, "add-rich", "`pyproject.toml`")
+    git(repo, "add", "pyproject.toml", str(packet / "risk.md"))  # commit only risk.md of the record
+    git(repo, "commit", "-qm", "partial record")
+    with pytest.raises(consequence.GitError, match="uncommitted or untracked"):
+        run(repo, head=git(repo, "rev-parse", "HEAD"))
+    assert _cli(repo, "--base", "main", "--head", "HEAD").returncode == 2
+
+
+def test_dependency_lane_rejects_reordered_workflow_steps(repo):
+    workflow = repo / ".github" / "workflows" / "ci.yml"
+    workflow.write_text("steps:\n  - run: ./check.sh\n  - run: ./deploy.sh\n")
+    git(repo, "commit", "-qam", "two steps")
+    workflow.write_text("steps:\n  - run: ./deploy.sh\n  - run: ./check.sh\n")
+    receipt = run(repo, pr_author="dependabot[bot]", approvals=[{"user": {"login": "reviewer"}, "state": "APPROVED"}])
+    assert receipt["approvals"]["dependency_lane"] is False
+    assert receipt["verdict"] == "fail"
+
+
+def test_dependency_lane_accepts_an_in_place_sha_bump(repo):
+    workflow = repo / ".github" / "workflows" / "ci.yml"
+    workflow.write_text(workflow.read_text().replace("a" * 40, "b" * 40))
+    receipt = run(repo, pr_author="dependabot[bot]", approvals=[{"user": {"login": "reviewer"}, "state": "APPROVED"}])
+    assert receipt["approvals"]["dependency_lane"] is True
+    assert receipt["verdict"] == "pass", receipt["failures"]
+
+
+def test_naming_one_file_does_not_name_its_siblings(repo):
+    write(repo / "src" / "checker.py", "def check():\n    return False\n")
+    standard_record(repo, "app-only", "`src/app.py`")
+    receipt = run(repo)
+    assert receipt["verdict"] == "fail"
+    assert path_entry(receipt, "src/checker.py")["covered_by"] == []
+
+
+def test_an_explicit_directory_names_the_files_under_it(repo):
+    write(repo / "src" / "checker.py", "def check():\n    return False\n")
+    standard_record(repo, "src-wide", "`src/`")
+    assert run(repo)["verdict"] == "pass"

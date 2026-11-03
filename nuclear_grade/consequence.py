@@ -490,34 +490,64 @@ def _policy_overrides(packet: Path) -> list[str]:
 
 
 def _names_path(risk_text: str, path: str) -> bool:
-    """True when risk.md names ``path``: exactly, by a parent directory, or by a glob."""
+    """True when risk.md names ``path`` as a whole token: the exact path, a directory
+    written with a trailing slash that contains it, or a glob that matches it.
 
-    if path in risk_text:
-        return True
-    parts = PurePosixPath(path).parts
-    for index in range(1, len(parts)):
-        if "/".join(parts[:index]) + "/" in risk_text:
+    A file path never names its siblings: `src/app.py` does not name `src/checker.py`.
+    """
+
+    tokens = set(re.findall(r"`([^`\s]+)`", risk_text))
+    tokens |= {t.strip(".,;:()[]{}<>'\"*") for t in risk_text.split()}
+    for token in tokens:
+        if not token:
+            continue
+        if token == path or (token.endswith("/") and path.startswith(token)):
             return True
-    for token in re.findall(r"`([^`\s]+)`", risk_text):
         if ("*" in token or "?" in token) and glob_regex(token).match(path):
             return True
     return False
 
 
-def _dependency_lane(policy: Policy, pr_author: str | None, changes: dict[str, str],
-                     lines: dict[str, Diff]) -> bool:
-    """A bot dependency PR that only moves version pins or action SHAs."""
+_HUNK = re.compile(r"^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@")
+
+
+def _dependency_lane(repo: Path, base: str, head: str | None, policy: Policy, pr_author: str | None,
+                     changes: dict[str, str]) -> bool:
+    """A bot dependency PR that only substitutes version pins or action SHAs in place."""
 
     if not pr_author or pr_author not in policy.dependency_lane_authors or not changes:
         return False
     for path, status in changes.items():
         if status != "M" or not match_any(path, policy.dependency_lane_paths):
             return False
-        diff = lines.get(path, Diff())
-        added, removed = diff.added, diff.removed
-        # Once versions and SHAs are masked, the changed lines must be identical: the diff
-        # may move pins, nothing else (no new package, step, or option).
-        if not added or sorted(map(_mask_pins, added)) != sorted(map(_mask_pins, removed)):
+        if not _pin_substitutions_only(repo, base, head, path):
+            return False
+    return True
+
+
+def _pin_substitutions_only(repo: Path, base: str, head: str | None, path: str) -> bool:
+    """Every hunk replaces lines one for one, at the same position, and each pair is identical
+    once versions and SHAs are masked. A reorder, insertion, or deletion fails."""
+
+    refs = [base] if head is None else [base, head]
+    out = subprocess.run(["git", "-C", str(repo), "diff", "-U0", "--no-color", "--no-renames", *refs, "--", path],
+                         capture_output=True, text=True, errors="replace").stdout
+    hunks: list[tuple[tuple[int, int, int, int], list[str], list[str]]] = []
+    for line in out.splitlines():
+        match = _HUNK.match(line)
+        if match:
+            old_start, old_len, new_start, new_len = (int(g) if g is not None else 1 for g in match.groups())
+            hunks.append(((old_start, old_len, new_start, new_len), [], []))
+        elif hunks and line.startswith("-") and not line.startswith("---"):
+            hunks[-1][1].append(line[1:])
+        elif hunks and line.startswith("+") and not line.startswith("+++"):
+            hunks[-1][2].append(line[1:])
+    if not hunks:
+        return False
+    for (old_start, old_len, new_start, new_len), removed, added in hunks:
+        if old_len != new_len or old_start != new_start or not removed or len(removed) != len(added):
+            return False
+        if any(_mask_pins(r) != _mask_pins(a) for r, a in zip(removed, added, strict=True)):
             return False
     return True
 
@@ -537,8 +567,19 @@ def evaluate(
     approvals: list[dict] | None = None,
     pr_author: str | None = None,
 ) -> dict:
-    """Evaluate a diff against a policy and return the receipt (a JSON-ready dict)."""
+    """Evaluate a diff against a policy and return the receipt (a JSON-ready dict).
 
+    Records are read and validated from the working tree, so with an explicit ``head`` the
+    working tree must be that commit, clean: otherwise uncommitted or untracked record files
+    could "cover" a commit that does not contain them.
+    """
+
+    if head is not None:
+        if _git(repo, "rev-parse", f"{head}^{{commit}}").strip() != _git(repo, "rev-parse", "HEAD").strip():
+            raise GitError(f"head {head} is not checked out in {repo}")
+        if _git(repo, "status", "--porcelain", "--untracked-files=all").strip():
+            raise GitError("head was given but the working tree has uncommitted or untracked changes; "
+                           "commit or stash them, or evaluate the working tree (omit --head)")
     changes, lines, results, new_slugs, skills = classify(repo, base, head, policy)
     root = policy.records_root
     rule_by_id = {rule.id: rule for rule in policy.rules}
@@ -597,7 +638,7 @@ def _cover(repo, base, head, policy, changes, lines, results, new_slugs, skills,
     approvers = _human_approvers(approvals or [], pr_author, policy.bot_identities)
     failures: list[str] = []
     overrides_used: list[dict] = []
-    lane = _dependency_lane(policy, pr_author, changes, lines)
+    lane = _dependency_lane(repo, base, head, policy, pr_author, changes)
 
     # Candidate cover: records added in this diff, open, with a declared mode.
     packets: list[dict] = []

@@ -57,7 +57,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 
 | Method | Command / review / eval | Environment | Result | Evidence link |
 |---|---|---|---|---|
-| Unit tests | `python -m pytest -q tests/test_consequence.py tests/test_globmatch.py` | Linux container, Python 3.11 | pass (63 tests: 46 engine, 17 glob parity) | E-001..E-004, E-006 |
+| Unit tests | `python -m pytest -q tests/test_consequence.py tests/test_globmatch.py` | Linux container, Python 3.11 | pass (68 tests: 51 engine, 17 glob parity) | E-001..E-004, E-006 |
 | Full suite | `python -m pytest -q` | same | pass (exit 0) | CI run on the PR |
 | Lint | `python -m ruff check .` | same | pass | CI run on the PR |
 | Repo checks | `python tools/ng.py doctor .`; `python tools/ng.py tokens .` | same | pass | CI run on the PR |
@@ -74,6 +74,9 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 | Smuggle a new package into a dependency-bot PR | `test_dependency_lane_rejects_non_pin_changes` | lane refused | E-003 |
 | Negated, quoted, or listed boundary wording read as a claim | four regression tests from real backtest false positives | not counted | E-005 |
 | Malformed policy | `test_malformed_policy_fails_closed`, CLI exit 2 | fails closed | E-004 |
+| Uncommitted record files cover a committed head (review finding) | `test_explicit_head_refuses_a_dirty_working_tree` | refused, exit 2 | E-002 |
+| Reordered workflow steps pass the dependency lane (review finding) | `test_dependency_lane_rejects_reordered_workflow_steps` | lane refused | E-003 |
+| Naming one file covers its siblings (review finding) | `test_naming_one_file_does_not_name_its_siblings` | not covered | E-002 |
 
 ## AI-assisted work checks
 

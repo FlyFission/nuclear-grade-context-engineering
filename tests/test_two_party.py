@@ -343,3 +343,40 @@ def test_authorship_only_packet_can_pass_strict_without_custody(tmp_path):
     vfile.write_text(text[:start] + authorship + text[end:], encoding="utf-8")
     result = validate_packet(pkt, require_two_party=True)
     assert result.ok, result.messages
+
+
+# --- regressions from the Codex review of PR #124 ---------------------------
+
+
+def test_multi_verifier_cell_naming_only_the_actors_is_not_a_second_party(tmp_path):
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n")
+    same = {"C-001": [ClaimParty("custody E-002", "x", "agent:claude + ben", "ben + agent:claude", "independent reproduction")]}
+    messages: list[str] = []
+    check_two_party(pkt, messages, custody_parties=same)
+    assert any("C-001" in m for m in messages)
+    other = {"C-001": [ClaimParty("custody E-002", "x", "agent:claude + carol", "ben + agent:claude", "independent reproduction")]}
+    messages = []
+    check_two_party(pkt, messages, custody_parties=other)
+    assert messages == []
+
+
+@pytest.mark.parametrize("cell", ["*C-001*", "_C-001_", "~C-001~"])
+def test_single_emphasis_claim_ids_are_still_checked(tmp_path, cell):
+    pkt = _packet(tmp_path, f"| {cell} | m | c | pass | e | - |\n| C-004a | m | c | deferred | e | - |\n")
+    messages: list[str] = []
+    check_two_party(pkt, messages)
+    assert any("C-001" in m for m in messages), messages
+
+
+def test_single_emphasis_status_is_read(tmp_path):
+    pkt = _packet(tmp_path, "| C-001 | m | c | *pass* | e | - |\n")
+    messages: list[str] = []
+    check_two_party(pkt, messages)
+    assert any("C-001" in m and "no authorship or custody row" in m for m in messages)
+
+
+def test_pass_row_without_a_readable_id_fails_strict(tmp_path):
+    pkt = _packet(tmp_path, "| see above | m | c | pass | e | - |\n| C-004a | m | c | deferred | e | - |\n")
+    messages: list[str] = []
+    check_two_party(pkt, messages)
+    assert any("no readable Claim ID" in m for m in messages)

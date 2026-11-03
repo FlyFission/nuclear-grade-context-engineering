@@ -71,6 +71,17 @@ Its design judgments and skill review were re-reading, so they count as a check,
 
 After the fixes, the reviewer's probe script gives: 10–16, 20–21, 30–40 and 60 fail strict; 50, 51 and 62 pass; 52 and 61 fail for the right reason, the honest self-check. Default and `--strict-custody` output for all 57 pre-existing packets is still byte-identical to `main`. Under `--two-party`, 56 fail and 1 passes. The pass is `trust-propagation-two-party`, which declares a `## Claim authorship` table with `maintainer-at-merge` as verifier.
 
+## External review (Codex, on the PR)
+
+A second automated reviewer from a different vendor's model reviewed head `63d84c9` and raised two P2 findings. The author reproduced both before fixing them.
+
+| # | Finding | Reproduced? | Disposition |
+|---|---|---|---|
+| CX-1 | A multi-verifier cell (`agent:claude + ben`) was compared as one identity, so it counted as a second party against the actors `ben + agent:claude` | yes | fixed: every name in a verifier cell is compared on its own, and at least one non-placeholder name must fall outside the excluded set; test added |
+| CX-2 | A single-emphasis claim ID (`*C-001*`, `_C-001_`) was not read, so a `pass` row silently left the gate | yes | fixed: single emphasis is stripped from IDs and statuses; a `pass` row whose claim cell yields no readable ID now fails strict mode instead of being skipped; tests added |
+
+These are the same class of bypass as R-1 and R-4: strict parsing that let ordinary Markdown move a claim out of the gate. A reviewer on a different model family found two the same-family reviewer missed, which is the diversity argument in `docs/02-operating-system/independence-architecture.md` working as written.
+
 ## Near miss during build (OPEX)
 
 While adding the source-map row for the adjudication study, the author wrote author names from memory

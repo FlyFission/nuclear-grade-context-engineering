@@ -134,7 +134,12 @@ def main(argv: list[str] | None = None) -> int:
     args = ap.parse_args(argv)
     d = args.data
     truth = load(d / "truth.jsonl")
-    mapping = json.loads((d / "map-31-to-new.json").read_text(encoding="utf-8"))
+    # The mapping is a fixed artifact of the evaluation, kept beside this script;
+    # a copy in the data folder wins if present.
+    map_path = d / "map-31-to-new.json"
+    if not map_path.exists():
+        map_path = Path(__file__).resolve().parent / "map-31-to-new.json"
+    mapping = json.loads(map_path.read_text(encoding="utf-8"))
     result = {
         "labeler_agreement": agreement(load(d / "labels_a.jsonl"), load(d / "labels_b.jsonl")),
         "routing": score_routing(truth, load(d / "route31.jsonl"), load(d / "routenew.jsonl"), mapping),

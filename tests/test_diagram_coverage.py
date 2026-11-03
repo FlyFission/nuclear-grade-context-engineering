@@ -47,3 +47,16 @@ def test_full_skill_map_shows_every_skill():
     svg = (ROOT / "docs" / "assets" / "diagrams" / "skill-map.svg").read_text(encoding="utf-8")
     shown = set(re.findall(r">([a-z]+(?:-[a-z]+)+)</text>", svg))
     assert _catalog_skills() <= shown, f"rebuild diagrams: missing {sorted(_catalog_skills() - shown)}"
+
+
+def test_committed_svgs_match_a_fresh_build(tmp_path):
+    """Catch a stale figure, not just a missing name: rebuild every SVG and compare."""
+    module = _diagrams()
+    module.OUT = tmp_path
+    module.main()
+    committed = ROOT / "docs" / "assets" / "diagrams"
+    stale = sorted(
+        p.name for p in tmp_path.glob("*.svg")
+        if (committed / p.name).read_text(encoding="utf-8") != p.read_text(encoding="utf-8")
+    )
+    assert not stale, f"run `python tools/build_diagrams.py`; stale: {stale}"

@@ -1,6 +1,6 @@
 {
   "name": "nuclear-grade-guard",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Opt-in Nuclear-grade PreToolUse gate for Claude Code. It denies agent edits to trust surfaces (CI workflows, Claude settings and hooks, the charter) and asks a human before force pushes, tags, releases, package publishes, and risky deletes. It never auto-allows.",
   "author": {
     "name": "FlyFission"

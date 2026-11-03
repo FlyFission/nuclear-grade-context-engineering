@@ -16,6 +16,17 @@ For Claude Code users, this repository is its own plugin marketplace. Add it, in
 
 The plugin exposes the existing skills (`skills/`) and command prompts (`commands/`). It configures **no hooks**, so nothing runs automatically when you install it or start a session. Because the marketplace source is the repository root, the install also copies the repo's `ng` Python CLI into Claude's plugin cache — but the plugin adds no `ng` command to your `PATH` and runs nothing on its own. The CLI is a separate, repo-side tool: to use it, work from a checkout of this repo (the **Use in this repo** and **Add to another repo** steps below), not from the plugin install alone.
 
+### Optional: turn on the guard
+
+The same marketplace lists a second, separate plugin with one job: it registers the blocking `PreToolUse` gate described in [`HOOKS.md`](HOOKS.md). Install it only if you want that gate on for you in every project:
+
+```bash
+/plugin install nuclear-grade-guard@nuclear-grade
+/reload-plugins
+```
+
+It denies agent edits to trust surfaces (CI workflows, Claude settings and hooks, the charter) and asks you before a force push, a tag or release, a package publish, or an `rm -rf` outside the working folder. It never answers allow. It needs `python3` on your `PATH`; if `python3` is missing, the matched tool calls are blocked until you fix it. Turn it off with `/plugin disable nuclear-grade-guard@nuclear-grade`, or remove it with `/plugin uninstall nuclear-grade-guard@nuclear-grade`. To put the gate in one repo for everyone on it, use `init --hook` (below).
+
 ## Install into Codex, Cursor, Windsurf, or VS Code
 
 Nuclear-grade's skills are plain `SKILL.md` files that every modern agent tool
@@ -95,6 +106,20 @@ python tools/ng.py init /path/to/your/repo --dry-run
 python tools/ng.py init /path/to/your/repo
 python tools/ng.py doctor /path/to/your/repo
 ```
+
+`init` can also add three opt-in pieces. Each flag works on a repo you set up earlier:
+
+- `--agents` copies the starter [`AGENTS.md`](starter-kit/core/AGENTS.md) to the repo root.
+- `--hook` copies the `PreToolUse` gate to `.claude/hooks/` and adds its entry to `.claude/settings.json`, keeping everything else in that file (see [`HOOKS.md`](HOOKS.md)).
+- `--ci` writes the out-of-band CI workflow, the same file as `scaffold-ci`.
+- `--all` does all three.
+
+```bash
+python tools/ng.py init /path/to/your/repo --all --dry-run   # shows each file it would create or update
+python tools/ng.py init /path/to/your/repo --all
+```
+
+With an add-on flag, files that already exist are kept and reported. `--yes` overwrites the add-on files only; your `.nuclear/` records are left as they are.
 
 Make a packet:
 

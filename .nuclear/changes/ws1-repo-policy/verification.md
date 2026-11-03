@@ -51,7 +51,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 
 | Method | Command / review / eval | Environment | Result | Evidence link |
 |---|---|---|---|---|
-| Policy tests | `python -m pytest -q tests/test_repo_policy.py` | Linux container, Python 3.11 | pass (21 tests) | E-001 |
+| Policy tests | `python -m pytest -q tests/test_repo_policy.py` | Linux container, Python 3.11 | pass (23 tests) | E-001 |
 | Full suite | `python -m pytest -q` | same | pass (exit 0) | CI run on the PR |
 | Lint and repo checks | `python -m ruff check .`; `python tools/ng.py doctor .`; `python tools/ng.py tokens .` | same | pass | CI run on the PR |
 | Rule table | `python tools/ng.py required-mode --policy-ref WORKTREE --print-table` | same | 12 rules rendered | E-001 |
@@ -94,6 +94,7 @@ The `ws1-consequence-engine` verification recorded a backtest of 22 none, 12 qui
 | A prose typo asks for a record | `docs/guide.md` case | stays at `none` | E-001 |
 | The root `CLAUDE.md` is missed because `**/CLAUDE.md` matches only nested files (review finding) | `CLAUDE.md` case | Quick | E-001 |
 | A validator's delegated module is unprotected: `ng_validate.py` calls `two_party.check_two_party` (review finding) | `nuclear_grade/two_party.py` and `tests/test_two_party.py` cases | Standard | E-001 |
+| A validator's own test suite is left at the floor: receipt, release, badge, MCP server (review finding) | `tests/test_receipt.py` case; `test_every_validator_with_a_test_suite_has_that_suite_in_trust_tests` | Standard; future validators checked | E-001 |
 
 ## AI-assisted work checks
 

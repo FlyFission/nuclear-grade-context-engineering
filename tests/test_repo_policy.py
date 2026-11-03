@@ -43,6 +43,7 @@ BEFORE = {
     "nuclear_grade/tokens.py": "LIMIT = 1\n",
     "tests/test_hooks.py": "def test_x():\n    pass\n",
     "tests/test_two_party.py": "def test_x():\n    pass\n",
+    "tests/test_receipt.py": "def test_x():\n    pass\n",
     "tests/test_metrics.py": "def test_x():\n    pass\n",
     "pyproject.toml": "[project]\nname = 'demo'\n",
     "skills/rating-change-risk/SKILL.md": "# Rating\n",
@@ -64,6 +65,7 @@ AFTER = {
     "nuclear_grade/tokens.py": "LIMIT = 2\n",
     "tests/test_hooks.py": "def test_x():\n    assert True\n",
     "tests/test_two_party.py": "def test_x():\n    assert True\n",
+    "tests/test_receipt.py": "def test_x():\n    assert True\n",
     "tests/test_metrics.py": "def test_x():\n    assert True\n",
     "pyproject.toml": "[project]\nname = 'demo'\ndependencies = ['rich']\n",
     "skills/rating-change-risk/SKILL.md": "# Rating change risk\n",
@@ -85,6 +87,7 @@ EXPECTED = {
     "nuclear_grade/tokens.py": "none",  # ordinary code needs tests only (owner decision 1)
     "tests/test_hooks.py": "standard",  # guards a trust surface
     "tests/test_two_party.py": "standard",
+    "tests/test_receipt.py": "standard",  # guards a validators-rule module
     "tests/test_metrics.py": "none",
     "pyproject.toml": "standard",
     "skills/rating-change-risk/SKILL.md": "standard",
@@ -130,6 +133,17 @@ def test_gate_wiring_in_the_cli_needs_standard(tmp_path):
     results = consequence.classify(repo, "main", None, consequence.load_policy(repo, "main"))[2]
     assert results["nuclear_grade/cli.py"].required == "standard"
     assert results["nuclear_grade/cli.py"].rules == ["gate-cli"]
+
+
+def test_every_validator_with_a_test_suite_has_that_suite_in_trust_tests():
+    policy = consequence.load_policy(ROOT, consequence.WORKTREE)
+    rules = {rule.id: rule for rule in policy.rules}
+    for module in rules["validators"].paths:
+        if not module.startswith("nuclear_grade/") or "*" in module:
+            continue
+        suite = f"tests/test_{Path(module).stem}.py"
+        if (ROOT / suite).is_file():
+            assert suite in rules["trust-tests"].paths, suite
 
 
 def test_ci_and_gate_rules_cannot_be_overridden():

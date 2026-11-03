@@ -14,6 +14,7 @@
 .life{stroke:rgba(14,26,48,0.25);stroke-dasharray:3 4}
 .mask{fill:#F7F6F2} .rule{stroke:rgba(14,26,48,0.14)}
 .name{font-family:system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;font-size:13px;font-weight:600}
+.nm{font-family:system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;font-size:12px;font-weight:600}
 .sub{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:10px}
 .eye{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:9.5px;font-weight:600;letter-spacing:0.16em}
 .lbl{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:9.5px;letter-spacing:0.04em}

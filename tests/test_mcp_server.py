@@ -112,3 +112,12 @@ def test_build_server_registers_expected_tools():
     tools = asyncio.run(server.list_tools())
     names = {tool.name for tool in tools}
     assert {"validate_change_record", "doctor", "status", "new_change_record"} <= names
+
+
+def test_validate_change_record_forwards_two_party(tmp_path):
+    from tests.test_two_party import WORKED
+
+    assert validate_change_record(str(WORKED), strict_custody=True).startswith("OK")
+    strict = validate_change_record(str(WORKED), strict_custody=True, two_party=True)
+    assert strict.startswith("FAILED")
+    assert "C-001" in strict

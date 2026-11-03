@@ -82,6 +82,22 @@ A second automated reviewer from a different vendor's model reviewed head `63d84
 
 These are the same class of bypass as R-1 and R-4: strict parsing that let ordinary Markdown move a claim out of the gate. A reviewer on a different model family found two the same-family reviewer missed, which is the diversity argument in `docs/02-operating-system/independence-architecture.md` working as written.
 
+A second round (Codex on `1e956bc` and `3adf16c`; Copilot on `1e956bc`) raised more of the same class. The author reproduced each one first, and each passed before its fix.
+
+| # | Finding | Reproduced? | Disposition |
+|---|---|---|---|
+| CX-3 | `no verifier` and similar negative phrases counted as a named verifier | yes | fixed: cells starting `no `, `not `, `unverified`, and the like name no party; tests added |
+| CX-4 | `ben + N/A` split into `n` and `a`, which counted as second parties | yes | fixed: `N/A` is kept whole before splitting, and one-character fragments never count; tests added |
+| CX-5 | Authorship rows inside an HTML comment or a fenced example counted | yes | fixed at the root: the parser reads only visible Markdown (comments and fences removed), as the custody parser already did; tests added |
+| CX-6 | A claim table without outer pipes was skipped | yes | fixed: GitHub-style tables with a delimiter row are read with or without outer pipes; test added |
+| CX-7 | Conflicting duplicate authorship rows: the last row won | yes | fixed: rows naming different parties for one claim fail closed; identical duplicates pass; test added |
+| CX-8 | A `## Claim authorship` heading with no readable rows did not opt a packet in | yes | fixed: the heading alone opts in; test added |
+| CX-9 | A custody verifier cell naming the generator plus a separate witness (`alice + carol`) needed the R-9 disclosure | yes | fixed: R-9 applies only when every eligible verifier also generated the evidence; test added |
+| CX-10 | MCP `two_party` forwarding untested; MCP docstring said "distinct from its evidence author" for custody rows; `trace.md` cited a missing symbol | yes | fixed: MCP test added; docstring now states the custody and authorship rules separately; trace symbol corrected |
+| CX-11 | `ben + reviewer` passes against actor `ben` | yes | kept by design: a cell counts when at least one name in it is outside the excluded set, the same rule CX-9 asks for |
+
+Default-mode and `--strict-custody` output stays identical to `main` across all 56 packets (112 runs).
+
 ## External reviews forwarded by the owner (Grok, ChatGPT)
 
 Each claim was checked against the code before acting.

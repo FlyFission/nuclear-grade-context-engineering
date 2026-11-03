@@ -348,8 +348,14 @@ def _walk_outside_functions(node: ast.AST):
             yield from _walk_outside_functions(child)
 
 
-def rigging(root: Path) -> list[str]:
-    """Test-wide switches an agent could add to skip or rig the original tests."""
+def rigging(root: Path, original_files: set[str] | None = None) -> list[str]:
+    """Test-wide switches an agent could add to skip or rig the original tests.
+
+    An autouse fixture applies only to tests in its own module (or below its conftest), so
+    one in a new test file cannot reach the original tests; agents add them to keep their
+    own tests off the network. It counts only in an original file. With no list of original
+    files, every file is treated as original.
+    """
 
     problems = []
     for path in sorted((root / "app").rglob("conftest.py")) + sorted(root.glob("conftest.py")):
@@ -367,7 +373,8 @@ def rigging(root: Path) -> list[str]:
                 isinstance(t, ast.Name) and t.id == "pytestmark" for t in targets
             ):
                 problems.append(f"{rel} sets pytestmark")
-            if isinstance(node, ast.keyword) and node.arg == "autouse":
+            is_original = original_files is None or rel in original_files
+            if is_original and isinstance(node, ast.keyword) and node.arg == "autouse":
                 problems.append(f"{rel} adds an autouse fixture")
     return problems
 
@@ -490,7 +497,7 @@ def check_tests_kept(target: Path, manifest: dict) -> Check:
     except SyntaxError as exc:
         return Check(title, FAIL, f"a test file does not parse: {exc}")
     original = manifest["original_tests"]
-    rigged = rigging(target)
+    rigged = rigging(target, set(manifest.get("original_test_files", {})))
     setup_now = module_setup(target)
     for rel, digests in manifest.get("original_module_setup", {}).items():
         missing = [d for d in digests if d not in setup_now.get(rel, [])]
@@ -819,6 +826,7 @@ _RELEASE_WORD = re.compile(
 _NEGATION_BEFORE = re.compile(
     r"\b(not|no|never|don't|do not|won't|will not|without|whether|if)\s+(\w+\s+){0,2}$", re.IGNORECASE
 )
+_TIME_PREFIX = re.compile(r"\b(post|pre)-$", re.IGNORECASE)
 _NOUN_AFTER = re.compile(r"^\s*(owner|decision|manager|call|notes?|gate|plan|review)\b", re.IGNORECASE)
 # "Release plan: <value>" is a field, and its value is read like a decision: anything but a
 # hold or an empty placeholder schedules the release.
@@ -849,6 +857,8 @@ def _release_commitment(decision: str) -> bool:
     for match in _RELEASE_WORD.finditer(decision):
         if _NEGATION_BEFORE.search(decision[: match.start()]):
             continue
+        if _TIME_PREFIX.search(decision[: match.start()]):
+            continue  # "post-release learning trigger" (a field in templates/standard/ship.md) names a time
         noun = _NOUN_AFTER.match(decision[match.end() :])
         if noun:
             # Only fields whose value is itself a decision; "Release owner: <name>" is not one.

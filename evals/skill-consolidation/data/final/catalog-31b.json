@@ -1,0 +1,126 @@
+[
+ {
+  "name": "proving-claims",
+  "description": "Builds claim-to-evidence trace rows with statuses, gaps, tests, evals, reviews, and narrower non-claims. Use when a packet asserts something a reviewer must trust. Do not use to make the final ship decision, judge public legal wording, or invent evidence that does not exist."
+ },
+ {
+  "name": "checking-legal-and-safety-wording",
+  "description": "Reviews public text for license, warranty, compliance, safety, security, certification, and fitness claims that go too far, then rewrites them to stay inside the real limits. Use when shipping or editing public docs, READMEs, or rollout copy. Do not use for internal code comments, or for deciding actual legal fitness, which needs a qualified lawyer."
+ },
+ {
+  "name": "running-a-review-panel",
+  "description": "Convenes several reviewers on one frozen evidence packet, names the diversity axis each seat actually varies, preserves dissent, and verifies every finding against live source before it counts as actionable. Use when a trust-bearing or irreversible verdict currently rests on a single reviewer, or on several that cannot fail differently. Do not use for reversible low-stakes work where a second opinion is ceremony, and do not use it to overrule direct contradictory evidence by majority."
+ },
+ {
+  "name": "handing-off-work",
+  "description": "Hands off unfinished work with a closed-loop briefing of state, changed conditions, remaining scope, authority limits, and open evidence. Use when AI-agent, reviewer, verifier, releaser, or resumed-thread work transfers to a new owner. Do not use when the same owner continues uninterrupted with full context."
+ },
+ {
+  "name": "recording-a-known-good-version",
+  "description": "Records the version everyone agreed is correct, the evidence behind it, and what would make that record out of date. Use when a standard change ships, when prompts, models, tools, dependencies, docs, or release items are accepted, or when a lesson forces a re-record. Do not use for a tiny local edit with nothing to release or trust, or while the work is still under review."
+ },
+ {
+  "name": "declaring-intent",
+  "description": "States what an agent intends to do and why before a critical or irreversible action, so a reviewer can challenge the thinking and not just the result. Use before deploys, migrations, public claims, or trust changes that deserve a stated intent, expected result, abort criteria, and backup. Do not use for routine reversible edits, and never treat the stated intent as proof the agent understood."
+ },
+ {
+  "name": "stress-testing-agent-changes",
+  "description": "Attacks your own agent change, tool grant, dependency, model, or release on purpose, across risk types such as prompt injection, gaining extra power, unsafe output, and tool misuse, and records what you tried, what happened, and the leftover risk. Use when a change widens an agent's power, data access, or network reach before release. Do not use for a typo fix with no agent power involved, or to produce a certified penetration test or formal security audit."
+ },
+ {
+  "name": "verifying-final-artifacts",
+  "description": "Verifies the delivered artifact a consumer actually receives (a figure, chart, PDF, SVG, screenshot, compiled build, or deployed response) by regenerating it fresh and directly observing the output, not the source that produces it, and ends in one honest verdict. Use when the deliverable is a produced artifact and correctness lives in the rendered result. Do not use for a pure source or code diff with no separate produced output; use reviewing-code-quality instead."
+ },
+ {
+  "name": "using-nuclear-grade",
+  "description": "The always-first router for AI-assisted work \u2014 before acting, state the mode (the administrative floor, Quick, or Standard-plus) and the one fact that sets it, then set up the matching change record and plan the proof. Use at the start of any change, repo adoption, or release call. Do not use for a throwaway experiment with nothing worth reviewing."
+ },
+ {
+  "name": "reviewing-code-quality",
+  "description": "Reviews a diff or module for slipping standards, favoring deletion over rearranging, and ends in one honest verdict. Use when a change risks oversized files, needless layers, feature logic leaking into shared code, or clever indirection. Do not use for a trivial obvious edit, or for a check that is only about whether the code works."
+ },
+ {
+  "name": "recording-what-an-agent-did",
+  "description": "Captures an agent run's tool calls, decision points, inputs, outputs, token use, and approval steps as a clear, repeatable record linked into the packet trace and verification record. Use when how the agent got there matters for debugging, auditing, cost review, or defending a release decision. Do not use for a read-only run that changes nothing, or to produce a certified compliance audit trail."
+ },
+ {
+  "name": "checking-what-a-change-affects",
+  "description": "Screens what a controlled change might leave out of date across docs, tests, skills, commands, templates, checkers, prompts, releases, saved versions, and evidence, and names the triggers to re-check. Use when a change touches a controlled item. Do not use for a single edit that nothing else depends on."
+ },
+ {
+  "name": "breaking-down-the-work",
+  "description": "Splits scope into a product-first work breakdown that follows the 100% rule, keeps pieces from overlapping, uses outline numbers, and gives every piece a dictionary entry. Use when an epic, feature, or new subsystem needs a clean split into deliverables, or one source of truth before folders or work begin. Do not use for a one-file edit or a backlog item already broken down."
+ },
+ {
+  "name": "questioning-attitude",
+  "description": "Challenges the assumptions behind a change before an agent builds, merges, or releases, and names the one fact that would change the decision. Use when a request, plan, diff, dependency, agent action, public claim, or release is vague, high-stakes, or easy to talk yourself into. Do not use for a tiny, obvious, easy-to-undo edit, or when someone wants a formal guarantee."
+ },
+ {
+  "name": "responding-to-incidents",
+  "description": "Runs a live incident the stabilize-first way \u2014 name a commander, separate facts from hypotheses, prefer reversible actions, communicate on a cadence, and drive corrective actions to closure. Use when production is broken, data is at risk, or an agent action caused harm. Do not use for routine non-incident work, or as a substitute for the post-incident learning record."
+ },
+ {
+  "name": "staying-on-mission",
+  "description": "Tests the current work against a written, lasting mission anchor and forces one choice, re-anchor, escalate, or stop. Use when an agent keeps finishing tasks but the work drifts from the goal, scope creeps, the same action repeats in a loop, or standards slip one small step at a time. Do not use for a tiny edit with an obvious goal, or while you are still containing a live incident."
+ },
+ {
+  "name": "reporting-shared-defects",
+  "description": "Routes a defect found in a shared or supplied artifact (a shared prompt, skill, dependency, model, eval, or template) to the downstream teams, agents, and releases that depend on it, not just a local fix. Use when a discovered defect affects others who consume the same artifact. Do not use for a defect local to your own change, which is an ordinary fix, or for a live incident still being contained."
+ },
+ {
+  "name": "double-checking-before-acting",
+  "description": "Checks a critical agent action against its exact target, expected result, and stop condition before and after execution. Use when an agent is about to make a critical edit, run a command or migration, use a credential or tool, change a dependency or model, make a public claim, or affect a release. Do not use for low-stakes reversible edits."
+ },
+ {
+  "name": "tracking-deficiencies",
+  "description": "Keeps a standing register of known deficiencies so flaky tests, noisy alerts, unowned services, and recurring incidents get aged, owned, and fixed or formally risk-accepted instead of quietly normalized. Use when a known problem will outlive a single change. Do not use for a one-off lesson already closed inside a packet, or for brand-new work with no accepted deficiency yet."
+ },
+ {
+  "name": "checking-source-claims",
+  "description": "Checks that the way you cite source families, agencies, standards, or borrowed ideas is honest and does not claim too much. Use when public docs, templates, skills, change records, or rollout copy point to outside sources. Do not use for private notes, or for checking whether code actually works."
+ },
+ {
+  "name": "checking-facts",
+  "description": "Checks factual assertions (numbers, quotes, dates, versions, API or tool behavior, what a source actually says) against primary sources read this pass, confirming each load-bearing fact by a second independent means. Use before a packet, doc, review, or release note relies on a fact. Do not use for citation-lineage wording (checking-source-claims) or mapping claims to local test evidence (proving-claims)."
+ },
+ {
+  "name": "briefing-an-agent",
+  "description": "Prepares focused context for an AI agent, reviewer, verifier, or releaser at the start of a task, with a clear role, goal anchor, authority, evidence to produce, forbidden actions, and stop conditions. Use when an agent or reviewer is about to begin work and needs bounded context before it starts. Do not use for a tiny self-contained task that needs no briefing, or for transferring already-open work to a new owner, which is handing-off-work."
+ },
+ {
+  "name": "deciding-who-decides",
+  "description": "Decides who holds authority for a change \u2014 the agent at the edge or a human gate \u2014 by matching decision rights to reversibility, evidence, and consequence, and names the escalation trigger. Use when an agent could act on something irreversible, trust-bearing, or thinly evidenced. Do not use for trivial reversible edits, or to justify skipping a required human approval."
+ },
+ {
+  "name": "learning-from-experience",
+  "description": "Turns incidents, near misses, bad handoffs, review surprises, escaped bugs, and signals from real use into lasting fixes to your safeguards. Use after something went wrong or nearly did and a future safeguard should change. Do not use during a live incident, which comes first, or to blame someone."
+ },
+ {
+  "name": "organizing-project-folders",
+  "description": "Designs a clean folder and file layout as real architecture, building it from a work breakdown or an existing tree, grouping by what changes together and what happens to it, with platform-safe sortable names and a short note per folder. Use when laying out a repo or agent workspace, deciding where a file belongs, or fixing a junk-drawer folder. Do not use for a single obvious file path or renaming inside an already-clean tree."
+ },
+ {
+  "name": "choosing-what-to-control",
+  "description": "Decides which code, prompts, models, tools, dependencies, docs, tests, evals, releases, or claims need their approved state tracked. Use when scoping what a change puts at risk or what must stay reviewable. Do not use for scratch work that nothing else depends on."
+ },
+ {
+  "name": "closing-stale-packets",
+  "description": "Brings an abandoned or half-filled change packet to an honest terminal state by completing it, closing it with a recorded rationale, or deleting it. Use when ng status flags a scaffold or invalid packet, a long session left a draft behind, or work was abandoned mid-packet. Do not use for an actively in-progress packet, or to bypass validation on a packet you intend to ship."
+ },
+ {
+  "name": "checking-release-readiness",
+  "description": "Records a ship, block, defer, or ship-with-risk decision that ties baseline, evidence status, residual risk, rollback, monitoring, and handoff together. Use when a packet, PR, release, dependency change, or agent-authority change approaches merge. Do not use early in development before evidence exists."
+ },
+ {
+  "name": "rating-change-risk",
+  "description": "Picks Quick, Standard, or a stronger human-reviewed mode based on consequence, how easy it is to undo, and how much is unknown. Use when you start a change to code, docs, dependencies, AI power, releases, or public claims and the right level of care is unclear. Do not use for a tiny easy-to-undo edit with obvious proof, which is Quick by default, or for a purely administrative reversible edit crossing no trust boundary, which needs no packet at all."
+ },
+ {
+  "name": "vetting-outside-code-and-models",
+  "description": "Checks dependencies, models, APIs, SaaS tools, generated files, and vendor claims against how you will actually use them, the proof you have, the gaps, and the release impact. Use when any of these affect evidence, permissions, data, releases, or public trust. Do not use for an internal cleanup with no outside dependency, or for a does-it-work question."
+ },
+ {
+  "name": "creating-change-records",
+  "description": "Creates or updates Quick or Standard change records, adds the required files, and refreshes what each claim must prove for an evidence-backed pull request. Use when starting or revising a change record. Do not use for a one-off throwaway script, or for work that belongs in an existing record rather than a new one."
+ }
+]

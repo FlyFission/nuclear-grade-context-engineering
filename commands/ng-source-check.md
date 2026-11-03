@@ -18,6 +18,7 @@ Portable command prompt generated from `skills/checking-source-claims/SKILL.md`.
 
 - The change is private code with no method claim and no source claim.
 - A source cannot be made public; use private, project-specific controls outside this public repo.
+- The question is whether a cited fact, number, or quotation is *true*, not whether the citation is worded honestly; use `checking-facts`.
 
 ## Inputs
 

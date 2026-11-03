@@ -51,7 +51,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 
 | Method | Command / review / eval | Environment | Result | Evidence link |
 |---|---|---|---|---|
-| Policy tests | `python -m pytest -q tests/test_repo_policy.py` | Linux container, Python 3.11 | pass (29 tests) | E-001 |
+| Policy tests | `python -m pytest -q tests/test_repo_policy.py` | Linux container, Python 3.11 | pass (31 tests) | E-001 |
 | Full suite | `python -m pytest -q` | same | pass (exit 0) | CI run on the PR |
 | Lint and repo checks | `python -m ruff check .`; `python tools/ng.py doctor .`; `python tools/ng.py tokens .` | same | pass | CI run on the PR |
 | Rule table | `python tools/ng.py required-mode --policy-ref WORKTREE --print-table` | same | 12 rules rendered | E-001 |
@@ -98,6 +98,7 @@ The `ws1-consequence-engine` verification recorded a backtest of 22 none, 12 qui
 | A claim in public markdown outside the listed doc trees, such as `challenge/README.md` or an eval report (review finding) | claim rules now cover `**.md` except records, `CHANGELOG.md` and generated cards; nested README and eval-report cases | Standard; backtest adds 2 Standard commits, both already declared Standard, so no new shortfall | E-001, E-003 |
 | The CLI wrapper CI runs its checks through (`tools/ng.py`) is at the floor (review finding) | `tools/ng.py` case; `test_every_check_ci_runs_by_name_needs_at_least_standard` parses the workflows and requires a Standard path rule for every script, module and test suite they name | Standard; future CI entry points checked | E-001 |
 | The policy's own pinning test is at the floor (review finding) | `tests/test_repo_policy.py` case | Standard | E-001 |
+| A second copy of the gate hook arrives in `plugins/nuclear-grade-guard/` (merged from #116) | `gate` covers `plugins/*/hooks/**`, `deps-release` covers `plugins/*/.claude-plugin/**`, `tests/test_plugin_packaging.py` (which keeps the copy identical) joins `trust-tests`; plugin hook and manifest cases | standard+authority; Standard | E-001 |
 
 ## AI-assisted work checks
 

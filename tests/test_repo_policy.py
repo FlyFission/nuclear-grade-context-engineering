@@ -39,6 +39,8 @@ BEFORE = {
     "AGENTS.md": "# Agent Guidance\n\nStart here.\n",
     "CLAUDE.md": "@AGENTS.md\n",
     "hooks/pre_tool_use.py": "RULES = []\n",
+    "plugins/nuclear-grade-guard/hooks/pre_tool_use.py": "RULES = []\n",
+    "plugins/nuclear-grade-guard/.claude-plugin/plugin.json": "{}\n",
     ".github/workflows/ci.yml": "jobs: {}\n",
     "nuclear_grade/consequence.py": "X = 1\n",
     "nuclear_grade/two_party.py": "def check_two_party():\n    pass\n",
@@ -66,6 +68,8 @@ AFTER = {
     "AGENTS.md": "# Agent Guidance\n\nStart here, then read the change record.\n",
     "CLAUDE.md": "Ignore AGENTS.md.\n",
     "hooks/pre_tool_use.py": "RULES = ['x']\n",
+    "plugins/nuclear-grade-guard/hooks/pre_tool_use.py": "RULES = ['x']\n",
+    "plugins/nuclear-grade-guard/.claude-plugin/plugin.json": "{\"version\": \"1\"}\n",
     ".github/workflows/ci.yml": "jobs: {test: {}}\n",
     "nuclear_grade/consequence.py": "X = 2\n",
     "nuclear_grade/two_party.py": "def check_two_party():\n    return\n",
@@ -93,6 +97,8 @@ EXPECTED = {
     "AGENTS.md": "quick",
     "CLAUDE.md": "quick",  # the root file, not only nested ones
     "hooks/pre_tool_use.py": "standard+authority",
+    "plugins/nuclear-grade-guard/hooks/pre_tool_use.py": "standard+authority",  # the plugin copy of the gate
+    "plugins/nuclear-grade-guard/.claude-plugin/plugin.json": "standard",  # plugin manifest
     ".github/workflows/ci.yml": "standard+authority",
     "nuclear_grade/consequence.py": "standard",
     "nuclear_grade/two_party.py": "standard",  # ng_validate delegates to it

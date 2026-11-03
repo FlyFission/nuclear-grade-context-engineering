@@ -17,7 +17,7 @@
 
 ## Scope
 
-- Affected files/configs/docs: `CONTRIBUTING.md`; `docs/00-standards-foundation/source-map.md`; `docs/06-publications/research/related-work-matrix.md`; `docs/06-publications/arxiv/references.bib`; `docs/06-publications/nuclear-grade-context-engineering-white-paper.md` (erratum line only); `starter-kit/core/README.md`; `WORKFLOWS.md`.
+- Affected files/configs/docs: `CONTRIBUTING.md`; `docs/00-standards-foundation/source-map.md`; `docs/06-publications/research/related-work-matrix.md`; `docs/06-publications/arxiv/references.bib` and `paper.bbl`; `docs/06-publications/nuclear-grade-context-engineering-white-paper.md` (erratum line only); `starter-kit/core/README.md`; `WORKFLOWS.md`.
 - Controlled items touched: contributor instructions (`CONTRIBUTING.md`), public source wording (`source-map.md` rows), and publication citations.
 - User-visible behavior changed? yes/no: no (documentation only)
 - Dependency/model/API/prompt/tool permission changed? yes/no: no

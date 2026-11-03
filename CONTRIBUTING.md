@@ -26,7 +26,8 @@ python tools/ng.py doctor .
 python tools/ng.py tokens .
 python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions --strict-custody
 python -m nuclear_grade.release
-python tools/ng.py validate .nuclear/changes/<slug>   # each change record you added or changed
+python tools/ng.py validate <packet-dir>   # each change record you added or changed: .nuclear/changes/<slug>,
+                                           # challenge/.nuclear/changes/<slug>, or a worked example's .nuclear/changes/<slug>
 python tools/ng.py badge . --out .nuclear/badge.json  # CI fails if the committed badge is stale
 ```
 

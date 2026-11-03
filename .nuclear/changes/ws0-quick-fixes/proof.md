@@ -33,6 +33,9 @@ Claim: the seven text edits are accurate to their sources, keep every pinned pub
 | `source-map.md` Gloaguen row | https://arxiv.org/abs/2602.11988 (v3, 29 Sep 2026) and its HTML | Abstract: context files "do not generally improve task success rates, while increasing inference cost by over 20% on average"; "instructions in the context files are well followed"; "repository overviews ... are not helpful". Body: LLM-generated -0.5 and -2 points (not significant), developer-written +2.4 points (p=0.21), LLM-generated cost +20% and +23%. | pass: row matches, bounded to their benchmarks |
 | Citations to v3 | arXiv submission history | v1 12 Feb 2026, v2 23 Jun 2026, v3 29 Sep 2026. | pass |
 | `CONTRIBUTING.md` checklist | `.github/workflows/ci.yml` | CI runs release identity, regenerates and diffs `.nuclear/badge.json`, and validates every open packet. | pass |
+| `CONTRIBUTING.md` packet locations (review follow-up) | `.github/workflows/ci.yml` | CI validates packets under `.nuclear/changes/`, `challenge/.nuclear/changes/`, and worked examples' `.nuclear/changes/`. | pass |
+| `starter-kit/core/README.md` nested import (review follow-up) | https://code.claude.com/docs/en/memory | `.claude/CLAUDE.md` counts as a `CLAUDE.md`; "Relative paths resolve relative to the file containing the import, not the working directory." | pass |
+| `paper.bbl` note (review follow-up) | `references.bib` `note` field | BibTeX copies the `note` field verbatim into the `.bbl`; the one line was updated to match because Tectonic, the documented build tool, is not installed in this environment. Recompile before arXiv submission as the arXiv README already requires. | pass |
 
 ## Result
 

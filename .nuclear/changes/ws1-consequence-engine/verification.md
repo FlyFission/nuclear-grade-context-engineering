@@ -57,7 +57,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 
 | Method | Command / review / eval | Environment | Result | Evidence link |
 |---|---|---|---|---|
-| Unit tests | `python -m pytest -q tests/test_consequence.py tests/test_globmatch.py` | Linux container, Python 3.11 | pass (97 tests: 80 engine, 17 glob parity) | E-001..E-004, E-006 |
+| Unit tests | `python -m pytest -q tests/test_consequence.py tests/test_globmatch.py` | Linux container, Python 3.11 | pass (98 tests: 81 engine, 17 glob parity) | E-001..E-004, E-006 |
 | Full suite | `python -m pytest -q` | same | pass (exit 0) | CI run on the PR |
 | Lint | `python -m ruff check .` | same | pass | CI run on the PR |
 | Repo checks | `python tools/ng.py doctor .`; `python tools/ng.py tokens .` | same | pass | CI run on the PR |
@@ -81,6 +81,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 | Self-approval counts when the PR author is unknown (review finding) | `test_approval_checks_fail_closed_without_the_pr_author` | fails closed | E-003 |
 | Non-pin number change passes the dependency lane (review finding) | `test_dependency_lane_rejects_non_pin_number_changes` | lane refused | E-003 |
 | Malformed or wrongly typed policy (review finding) | `test_a_malformed_head_policy_fails_closed`, `test_wrongly_typed_policy_fields_fail_closed` | fails closed | E-004 |
+| A misspelled `--policy-ref` falls back to the built-in policy (review finding) | `test_cli_an_unresolved_policy_ref_exits_2` | exit 2 | E-004 |
 | Malformed `--approvals-json` entries crash instead of exiting 2 (review finding) | `test_cli_malformed_approvals_exit_2` | exit 2, no traceback | E-004 |
 | Backtest omits the policy-self rule (review finding) | `test_backtest_applies_the_policy_self_rule` | standard+authority reported | E-005 |
 | Non-pin argument on a pin line passes the dependency lane (review finding) | `test_dependency_lane_masks_only_pin_values`, `test_pin_masking` | lane refused | E-003 |

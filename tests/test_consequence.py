@@ -414,6 +414,15 @@ def test_cli_rejects_a_head_that_is_not_checked_out(repo):
     assert _cli(repo, "--base", "main", "--head", "feature").returncode == 2
 
 
+def test_cli_an_unresolved_policy_ref_exits_2(repo):
+    write(repo / "pyproject.toml", '[project]\nname = "demo"\ndependencies = ["requests==2.32.0"]\n')
+    assert _cli(repo, "--base", "main").returncode == 1
+    result = _cli(repo, "--base", "main", "--policy-ref", "typo-ref")
+    assert result.returncode == 2, result.stdout
+    with pytest.raises(consequence.GitError):
+        consequence.policy_text(repo, "typo-ref")
+
+
 @pytest.mark.parametrize("bad", ['{"state": "APPROVED"}', '["APPROVED"]', '[{"user": "alice", "state": "APPROVED"}]'])
 def test_cli_malformed_approvals_exit_2(repo, bad):
     write(repo / "reviews.json", bad)

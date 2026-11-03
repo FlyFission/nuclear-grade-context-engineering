@@ -261,14 +261,17 @@ def _string_list(value: object, name: str) -> list[str]:
 
 
 def policy_text(repo: Path, ref: str) -> str | None:
-    """The policy file's text at ``ref`` (or on disk for WORKTREE), or None if absent."""
+    """The policy file's text at ``ref`` (or on disk for WORKTREE), or None if the file is
+    absent from that snapshot. A ref that does not resolve to a commit raises GitError,
+    so a typo never falls back to the built-in policy."""
 
     if ref == WORKTREE:
         path = repo / POLICY_PATH
         return path.read_text(encoding="utf-8") if path.is_file() else None
-    result = subprocess.run(["git", "-C", str(repo), "show", f"{ref}:{POLICY_PATH}"],
-                            capture_output=True, text=True)
-    return result.stdout if result.returncode == 0 else None
+    commit = _git(repo, "rev-parse", "--verify", "--end-of-options", f"{ref}^{{commit}}").strip()
+    if not _git(repo, "ls-tree", "--name-only", commit, "--", POLICY_PATH).strip():
+        return None
+    return _git(repo, "show", f"{commit}:{POLICY_PATH}")
 
 
 def load_policy(repo: Path, ref: str, policy_file: Path | None = None) -> Policy:

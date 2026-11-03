@@ -92,7 +92,7 @@ five focus areas) because the per-item names are not reproduced here.
 | Complexity | Work breakdown (100% rule, no overlaps) before building (`breaking-down-the-work`) |
 | Risk | Risk rating + failure-mode naming (`rating-change-risk`) |
 | Adaptability & resiliency | Incident response; learning from experience into durable controls (`responding-to-incidents`, `learning-from-experience`) |
-| Change | Configuration management: controlled items, baselines, change impact (`choosing-what-to-control`, `recording-a-known-good-version`) |
+| Change | Configuration management: controlled items, baselines, change impact (`controlling-approved-versions`, `checking-what-a-change-affects`) |
 
 | PMBOK 7 performance domain | Nuclear-grade rhyme |
 |---|---|

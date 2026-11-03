@@ -20,9 +20,9 @@ Use this from `questioning-attitude`, alongside the work-type lens, before picki
 |---|---|---|---|
 | **Prototyper** | Exploration silently becomes a promise. | Administrative floor or Quick — **until** the work is exposed to a user, a dependency, or a trust boundary | `questioning-attitude`, `rating-change-risk`; the mission anchor must name **"shipping this prototype"** as an explicit non-goal, so the low floor rests on a stated boundary rather than an assumption |
 | **Builder** | Volume outruns review; the promise is made before the evidence exists. | Standard | `declaring-intent`, `proving-claims`, `creating-change-records`, `checking-release-readiness`; `verifying-final-artifacts` when the deliverable is a produced artifact rather than source |
-| **Sweeper** | Deletion without a baseline; "cleanup" that is quietly behavior change; unshipping something someone depended on. | Standard — unshipping crosses a trust boundary | `reviewing-code-quality` (its home archetype), `checking-what-a-change-affects`, `recording-a-known-good-version` |
+| **Sweeper** | Deletion without a baseline; "cleanup" that is quietly behavior change; unshipping something someone depended on. | Standard — unshipping crosses a trust boundary | `reviewing-code-quality` (its home archetype), `checking-what-a-change-affects`, `controlling-approved-versions` |
 | **Grower** | Iterating on a metric until the metric becomes the goal. | Standard | `staying-on-mission`, `rating-change-risk`, `evaluation-integrity.md` |
-| **Maintainer** | Normalization of deviance — the standing exception becomes the norm. | Nuclear on trust-bearing surfaces | `tracking-deficiencies`, `recording-a-known-good-version`, `rebaseline.md`, `responding-to-incidents`, `learning-from-experience` |
+| **Maintainer** | Normalization of deviance — the standing exception becomes the norm. | Nuclear on trust-bearing surfaces | `tracking-deficiencies`, `controlling-approved-versions`, `rebaseline.md`, `responding-to-incidents`, `learning-from-experience` |
 
 ## Two rules that make the lens load-bearing
 

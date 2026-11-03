@@ -77,7 +77,7 @@ Three things can wreck it. Under-coverage: some scope is orphaned and no one own
 - Stop when you cannot name one top deliverable. The goal is a goal, not a product.
 - Escalate to the owner when the children cannot add up to the parent without overlap, or when the breakdown reveals work you cannot estimate or do not understand.
 - Escalate when the user needs an official cost or schedule document, which is outside this skill.
-- Escalate before forcing a boundary that conflicts with a saved known-good structure. See `recording-a-known-good-version`.
+- Escalate before forcing a boundary that conflicts with a saved known-good structure. See `controlling-approved-versions`.
 
 ## Common Rationalizations
 

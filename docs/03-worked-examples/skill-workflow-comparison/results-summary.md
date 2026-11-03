@@ -39,9 +39,8 @@
 |---|---|
 | `questioning-attitude` | U02, U03, U04, U05, U06, U07, U08, U09, U10, U11, U12 |
 | `using-nuclear-grade` | U01, U02, U03, U04, U05, U06, U07, U08, U09, U10, U11, U12 |
-| `choosing-what-to-control` | U02, U03, U05, U07, U08, U09, U11 |
 | `checking-what-a-change-affects` | U02, U03, U04, U05, U07, U08, U09, U10, U12 |
-| `recording-a-known-good-version` | U03, U05, U08, U09, U11 |
+| `controlling-approved-versions` | U02, U03, U05, U07, U08, U09, U11 (as `choosing-what-to-control` and `recording-a-known-good-version` before the 2026-11 merge) |
 | `rating-change-risk` | U01, U02, U03, U04, U05, U06, U07, U08, U09, U10, U11, U12 |
 | `creating-change-records` | U01, U02, U03, U04, U06, U07, U08, U09, U10, U11, U12 |
 | `briefing-an-agent` | U02, U06, U07, U10, U11 |

@@ -48,14 +48,6 @@ If a skill changes decisions but says so only in vague prose, amend its receipt 
 - Should not trigger: Summarize the README in five bullets.
 - Should not trigger: What license does this repository use?
 
-### `choosing-what-to-control`
-
-- Should trigger: Which prompts, dependencies, docs, and CI files become controlled items for this release?
-- Should trigger: Identify the controlled items for an agent tool-permission change.
-- Should trigger: After this public launch, what approved-state tracking do we need?
-- Should not trigger: Run the unit tests and paste the failing assertion.
-- Should not trigger: Convert these notes into cleaner prose.
-
 ### `checking-what-a-change-affects`
 
 - Should trigger: This lifecycle rename may stale docs, skills, commands, validators, and examples; screen the impact.
@@ -65,11 +57,16 @@ If a skill changes decisions but says so only in vague prose, amend its receipt 
 - Should not trigger: Create an empty Standard packet folder.
 - Should not trigger: What does the changelog say changed last week?
 
-### `recording-a-known-good-version`
+### `controlling-approved-versions`
 
+- Should trigger: Which prompts, dependencies, docs, and CI files become controlled items for this release?
+- Should trigger: Identify the controlled items for an agent tool-permission change.
+- Should trigger: After this public launch, what approved-state tracking do we need?
 - Should trigger: Record the accepted prompt, model, tool, doc, and validator state after this release.
 - Should trigger: Baseline this dependency update after review and verification pass.
 - Should trigger: Create the accepted configuration record for the public docs and validator change.
+- Should not trigger: Run the unit tests and paste the failing assertion.
+- Should not trigger: Convert these notes into cleaner prose.
 - Should not trigger: Brainstorm better names for the workflow phases.
 - Should not trigger: Classify whether this typo fix is Quick or Standard.
 

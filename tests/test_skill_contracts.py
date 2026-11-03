@@ -23,9 +23,8 @@ SKILL_NAME_PATTERN = re.compile(r"^[a-z][a-z0-9]*(-[a-z0-9]+)*$")
 EXPECTED_SKILLS = {
     "questioning-attitude",
     "using-nuclear-grade",
-    "choosing-what-to-control",
     "checking-what-a-change-affects",
-    "recording-a-known-good-version",
+    "controlling-approved-versions",
     "rating-change-risk",
     "creating-change-records",
     "briefing-an-agent",

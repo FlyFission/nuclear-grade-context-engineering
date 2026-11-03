@@ -2,7 +2,7 @@
 
 A strategic spine for adopting Nuclear-grade *without* adopting all of it.
 
-The full system has 31 skills, command prompts, templates, a checker, change-control packets,
+The full system has 30 skills, command prompts, templates, a checker, change-control packets,
 governance docs, and an operating model. Most projects need a few of those at once. This page
 names the **Core 7** habits every disciplined AI-agent change uses, and the **decision matrix**
 that says which **ancillary cluster** to invoke for which kind of change.
@@ -54,7 +54,7 @@ Scan the triggers. For every "yes," invoke that cluster. Default is Core only.
 |---|---|---|
 | **Every change** (no trigger required) | **Core** | the 7 above |
 | Agent has write / run / network / approval authority over its own working set | **Agent authority** | [`deciding-who-decides`](skills/deciding-who-decides/SKILL.md), [`declaring-intent`](skills/declaring-intent/SKILL.md), [`stress-testing-agent-changes`](skills/stress-testing-agent-changes/SKILL.md), [`vetting-outside-code-and-models`](skills/vetting-outside-code-and-models/SKILL.md), [`recording-what-an-agent-did`](skills/recording-what-an-agent-did/SKILL.md), [`briefing-an-agent`](skills/briefing-an-agent/SKILL.md), [`handing-off-work`](skills/handing-off-work/SKILL.md) — plus [`running-a-review-panel`](skills/running-a-review-panel/SKILL.md) *only when a trust-bearing or irreversible verdict in that working set rests on one reviewer* |
-| You produce controlled artifacts — packets, baselines, multi-PR threads, owned configurations | **Configuration management** | [`creating-change-records`](skills/creating-change-records/SKILL.md), [`choosing-what-to-control`](skills/choosing-what-to-control/SKILL.md), [`checking-what-a-change-affects`](skills/checking-what-a-change-affects/SKILL.md), [`recording-a-known-good-version`](skills/recording-a-known-good-version/SKILL.md), [`closing-stale-packets`](skills/closing-stale-packets/SKILL.md), [`breaking-down-the-work`](skills/breaking-down-the-work/SKILL.md) |
+| You produce controlled artifacts — packets, baselines, multi-PR threads, owned configurations | **Configuration management** | [`creating-change-records`](skills/creating-change-records/SKILL.md), [`controlling-approved-versions`](skills/controlling-approved-versions/SKILL.md), [`checking-what-a-change-affects`](skills/checking-what-a-change-affects/SKILL.md), [`closing-stale-packets`](skills/closing-stale-packets/SKILL.md), [`breaking-down-the-work`](skills/breaking-down-the-work/SKILL.md) |
 | The change makes public claims about safety, security, compliance, licensing, or provenance — or a decision, doc, or release note relies on an outside fact (a number, quote, version, limit, or API behavior) | **Claims discipline** | [`checking-legal-and-safety-wording`](skills/checking-legal-and-safety-wording/SKILL.md), [`checking-source-claims`](skills/checking-source-claims/SKILL.md), [`checking-facts`](skills/checking-facts/SKILL.md) |
 | Production failure, data loss, or agent-caused harm | **Incident & deficiency** | [`responding-to-incidents`](skills/responding-to-incidents/SKILL.md), [`tracking-deficiencies`](skills/tracking-deficiencies/SKILL.md), [`reporting-shared-defects`](skills/reporting-shared-defects/SKILL.md) |
 | Repo layout / structure decision, visible code-quality drift in a diff, or a deliverable that is a produced artifact whose correctness lives in the rendered output (figure, PDF, SVG, screenshot, build, deployed response) | **Hygiene** | [`organizing-project-folders`](skills/organizing-project-folders/SKILL.md), [`reviewing-code-quality`](skills/reviewing-code-quality/SKILL.md), [`verifying-final-artifacts`](skills/verifying-final-artifacts/SKILL.md) |
@@ -70,7 +70,7 @@ a mode floor, and when the archetype shifts mid-change — the prototype somebod
 the change gets re-graded even though the diff did not move. Both lenses are doctrine pages, not
 skills; they shape the questions and the mode, then hand off to the matrix below.
 
-All 31 skills are accounted for: 7 Core + 23 ancillary across 5 clusters + 1 router
+All 30 skills are accounted for: 7 Core + 22 ancillary across 5 clusters + 1 router
 ([`using-nuclear-grade`](skills/using-nuclear-grade/SKILL.md)). The workflow-architecture
 trigger above composes existing skills rather than adding a sixth cluster or a new skill — its
 home is the doctrine page, not a new `SKILL.md`. The review-panel row is an overlay for the same

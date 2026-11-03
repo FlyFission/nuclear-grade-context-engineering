@@ -40,9 +40,8 @@ templates:
 skills:
   - questioning-attitude
   - using-nuclear-grade
-  - choosing-what-to-control
   - checking-what-a-change-affects
-  - recording-a-known-good-version
+  - controlling-approved-versions
   - rating-change-risk
   - creating-change-records
   - briefing-an-agent
@@ -73,9 +72,8 @@ commands:
   - ng-question.md
   - ng-classify.md
   - ng-new.md
-  - ng-what-to-control.md
   - ng-impact.md
-  - ng-baseline.md
+  - ng-control.md
   - ng-context-pack.md
   - ng-turnover.md
   - ng-self-check.md
@@ -109,9 +107,8 @@ command_map:
   questioning-attitude: ng-question
   rating-change-risk: ng-classify
   creating-change-records: ng-new
-  choosing-what-to-control: ng-what-to-control
   checking-what-a-change-affects: ng-impact
-  recording-a-known-good-version: ng-baseline
+  controlling-approved-versions: ng-control
   briefing-an-agent: ng-context-pack
   handing-off-work: ng-turnover
   double-checking-before-acting: ng-self-check

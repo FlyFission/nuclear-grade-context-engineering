@@ -605,3 +605,28 @@ def test_the_default_applies_only_when_no_rule_matches(tmp_path):
     receipt = consequence.evaluate(root, "main", None, consequence.load_policy(root, "main"))
     assert path_entry(receipt, "docs/guide.md")["required"] == "none"  # explicit lower rule wins
     assert path_entry(receipt, "src/a.py")["required"] == "standard"  # default for unmatched paths
+
+
+def test_dependency_lane_masks_only_pin_values(repo):
+    workflow = repo / ".github" / "workflows" / "ci.yml"
+    workflow.write_text(workflow.read_text() + "    run: pip install requests==2.31.0 && python deploy.py --dry-run=1\n")
+    git(repo, "commit", "-qam", "deploy step")
+    workflow.write_text(workflow.read_text().replace("--dry-run=1", "--dry-run=0"))
+    approvals = [{"user": {"login": "reviewer"}, "state": "APPROVED"}]
+    assert run(repo, pr_author="dependabot[bot]", approvals=approvals)["approvals"]["dependency_lane"] is False
+    git(repo, "checkout", "-q", "--", ".github/workflows/ci.yml")
+    workflow.write_text(workflow.read_text().replace("requests==2.31.0", "requests==2.32.3"))
+    assert run(repo, pr_author="dependabot[bot]", approvals=approvals)["approvals"]["dependency_lane"] is True
+
+
+@pytest.mark.parametrize("before, after, same", [
+    ("  - uses: actions/checkout@" + "a" * 40, "  - uses: actions/checkout@" + "b" * 40, True),
+    ("  - uses: actions/setup-python@v5", "  - uses: actions/setup-python@v6", True),
+    ('dependencies = ["rich>=13.1"]', 'dependencies = ["rich>=13.7.1"]', True),
+    ('"lodash": "^4.17.20"', '"lodash": "^4.17.21"', True),
+    ("    timeout: 1.0", "    timeout: 2.0", False),
+    ("run: tool --level=1", "run: tool --level=2", False),
+    ('dependencies = ["rich>=13"]', 'dependencies = ["rich<=13"]', False),  # operator change
+])
+def test_pin_masking(before, after, same):
+    assert (consequence._mask_pins(before) == consequence._mask_pins(after)) is same

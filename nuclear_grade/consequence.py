@@ -91,8 +91,14 @@ _NEGATIONS = (
     " not ", "no ", "never ", "without ", "n't ", "does not", "do not", "is not",
     "cannot", "can't", "neither", "nor ", "inspired by", "influenced by",
 )
-_SHA = re.compile(r"\b[0-9a-f]{40}\b")
-_VERSION_SPEC = re.compile(r"(?:[=<>~!^]=?\s*v?\d+(?:\.\d+)*|\bv?\d+\.\d+(?:\.\d+)?\b)")
+# Pin values that the dependency lane may change, and nothing else on the line:
+# - the ref after "@" in an action reference (a SHA or a version tag);
+# - the version after a requirement operator attached to a package name;
+# - a caret or tilde version string ("^1.2.3", "~1.2").
+_ACTION_REF = re.compile(r"(\buses:\s*[\w./-]+@)(?:[0-9a-f]{40}|v?\d+(?:\.\d+)*)\b")
+_REQUIREMENT = re.compile(r"(\b[A-Za-z0-9][A-Za-z0-9_.\-]*(?:\[[^\]]*\])?\s*(?:===|==|>=|<=|~=|!=|>|<)\s*)"
+                          r"v?\d+(?:\.\d+)*(?:[a-z]+\d*)?")
+_RANGE = re.compile(r"(?<=[\"'])[\^~]v?\d+(?:\.\d+)*")
 
 
 class PolicyError(ValueError):
@@ -580,7 +586,9 @@ def _pin_substitutions_only(repo: Path, base: str, head: str | None, path: str) 
 
 def _mask_pins(line: str) -> str:
     # Leading whitespace is kept: in YAML and shell heredocs indentation is behavior.
-    return _VERSION_SPEC.sub("<v>", _SHA.sub("<sha>", line)).rstrip()
+    line = _ACTION_REF.sub(r"\1<ref>", line)
+    line = _REQUIREMENT.sub(r"\1<v>", line)
+    return _RANGE.sub("<v>", line).rstrip()
 
 
 def evaluate(

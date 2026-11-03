@@ -37,8 +37,10 @@ If you must cross a non-goal or a charter article, record why here:
 
 ## Build sequence
 
-Number the fewest steps needed to finish the change. Stamp each step with the
-requirement IDs it delivers (`REQ-NNN` from `basis.md` or `spec.md`) so the chain
+Number the fewest vertical slices needed to finish the change. When possible, make
+the first slice a tracer bullet through the real path and prove it at a stable public
+seam. Stamp each step with the requirement IDs it delivers (`REQ-NNN` from `basis.md`
+or `spec.md`) so the chain
 requirement → task → code → evidence stays unbroken. Every requirement should
 appear against at least one step; a step with no requirement is either scaffolding
 or scope creep — say which.
@@ -52,15 +54,33 @@ the full form in `templates/standard/stage-contract.md`, and the doctrine in
 `docs/02-operating-system/agentic-workflow-architecture.md`. Writing the inputs here is what
 lets a human review what each fan-out slice will and will not load before build authority opens.
 
-| # | Task | Reqs | Prereqs | Inputs (`file#section`) + budget | Outputs / artifact | Proof | Stop/done |
-|---|---|---|---|---|---|---|---|
-| 1 | | REQ-001 | | | | | |
-| 2 | | | | | | | |
-| 3 | | | | | | | |
+| # | Task / vertical slice | Reqs | Blocked by | Public seam | Inputs (`file#section`) + budget | Outputs / artifact | Integrated proof | Stop/done |
+|---|---|---|---|---|---|---|---|---|
+| 1 | tracer bullet | REQ-001 | | | | | | |
+| 2 | | | | | | | | |
+| 3 | | | | | | | | |
 
 For any slice whose work is model-mediated, record its **determinism posture** (model id,
 prompt reference, and which steps are replayable vs human judgment) — a disclosure of what can
 be reproduced, not a guarantee. See `docs/02-operating-system/agentic-workflow-architecture.md`.
+
+### Optional targeted improvement cycle
+
+Use only when the candidate has an artifact and a concrete bar that can be inspected repeatedly.
+This is an Execute/Verify technique, not another lifecycle or acceptance path.
+
+- **Task / intended outcome:**
+- **Build method and ownership:** independently judgeable slices may fan out under explicit contracts; coupled work keeps one sequential owner; name the integration owner.
+- **Frozen inspectable bar:** requirement IDs, reference/benchmark/test, candidate scope, and acceptance threshold:
+- **Bar custodian / change authority:** who may approve a variance; the builder cannot change the bar, critic scope, evidence retention, or stop rule:
+- **Evidence retention location / policy:** where raw critic findings, adverse results, and rejected findings are kept; builder cannot change this unilaterally:
+- **Critic inputs and artifact:** source requirements, candidate digest, raw results, and the fresh artifact to inspect:
+- **Coupling profile:** actor, context, mechanism, authority, and resource basis; fresh context alone is not independence:
+- **Iteration bound:** maximum rounds/time/tokens and the NOT VERIFIED / INCONCLUSIVE / BLOCKED terminal condition:
+- **Integration observation:** who regenerates and directly checks the assembled candidate after slice work:
+
+Record each round in the existing command/review evidence table and update the originating
+claim's `Gap / follow-up`; do not create a second acceptance ledger.
 
 ## Two-speed work plan
 
@@ -111,10 +131,12 @@ Use only if activated.
 
 ## Review checkpoints
 
-Approve the work in stages, not all at once. Each gate is approved by a human (or
-an out-of-band check the agent cannot rewrite) before the next phase opens — an
-agent that drafts and self-approves its own spec is the "ships green by editing its
-own test" trap. See the agent-drafts-spec workflow in `CORE.md`.
+Use a decision frontier: batch currently independent consequential choices with a
+recommendation, evidence, alternatives, and downstream impact. Keep dependent choices
+closed until prerequisites resolve, and leave reversible mechanical choices delegated.
+Separate gates remain when scope, architecture, authority, trust, or release evidence
+materially changes. A human or out-of-band check the agent cannot rewrite owns each
+trust-bearing approval; an agent does not self-approve its own spec.
 
 | Checkpoint | Required before moving on | Status |
 |---|---|---|

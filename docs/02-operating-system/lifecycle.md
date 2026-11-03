@@ -62,7 +62,8 @@ issued. So a `ship` verdict is not a standing authorization. Apply-clearance is 
 call (rung 4-5 on trust-bearing or irreversible work), context- and time-sensitive, and **re-checked at
 apply-time** — a stale "go" can otherwise apply an accepted change in the wrong context. The read-only
 decider that authors the verdict is, by design, blind to live operational context, so it cannot own this
-call; clearance is the operator's, mirroring the way Execute opens only after a human approves the plan.
+call; clearance is the operator's, mirroring the way Execute opens only after a human explicitly authorizes
+execution of the accepted plan.
 Today the loop's `Execute` beat builds a *draft*, so the gap is narrow; it widens as agents take real
 external actions, which is exactly when an explicit clearance state earns its place. The apply-clearance
 checklist lives in `ship.md`.

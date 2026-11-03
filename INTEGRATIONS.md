@@ -57,7 +57,26 @@ surfaces the skills **and** the command prompts with no copying:
 ```
 
 The plugin configures **no hooks**, so nothing runs automatically. The optional
-always-on routing hooks remain opt-in — see [`HOOKS.md`](HOOKS.md).
+hooks stay opt-in; see [`HOOKS.md`](HOOKS.md).
+
+**Optional guard plugin.** The same marketplace lists `nuclear-grade-guard`, a
+separate plugin whose only job is to register the blocking `PreToolUse` gate:
+
+```bash
+/plugin install nuclear-grade-guard@nuclear-grade
+/reload-plugins
+```
+
+It denies agent edits to trust surfaces (CI workflows, Claude settings and
+hooks, the charter, the gate's own files) and asks you before a force push, a
+tag or release, a package publish, an `rm -rf` outside the working folder, or a
+download piped into a shell. It never answers allow, and it blocks the call if
+the gate itself cannot run, so it needs `python3` on your `PATH`. Turn it off
+with `/plugin disable nuclear-grade-guard@nuclear-grade`, or remove it with
+`/plugin uninstall nuclear-grade-guard@nuclear-grade`. For one repo and everyone
+on it, `nuclear-grade init --hook` writes the same gate into the project's
+`.claude/` folder instead. [`HOOKS.md`](HOOKS.md) covers what it guards, how it
+compares with Claude Code's own permission rules, and where it falls short.
 
 ### Codex: the plugin package and skill installer
 
@@ -108,7 +127,9 @@ Codex pulls in the matching skill on its own — no slash command needed.
 plugin surfaces both the skills **and** the `commands/` prompt cards as native
 slash commands with no copying, and it ships the PROVE subagents in `agents/`.
 The Codex plugin exports skills only; commands and agents stay repo-side. Both
-tiers configure **no hooks**, so nothing runs automatically on install.
+the main Claude Code plugin and the Codex plugin configure **no hooks**, so
+nothing runs automatically on install. The gate comes only from the separate,
+opt-in `nuclear-grade-guard` plugin above.
 
 **Verified manifest constraints.** Codex's manifest loader caps each
 `interface.defaultPrompt` entry at **128 characters** — an over-long prompt is

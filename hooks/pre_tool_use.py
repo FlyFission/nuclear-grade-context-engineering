@@ -37,6 +37,7 @@ DENY_PATHS = (
     ".nuclear/gate-policy.json",  # the policy can only add rules; protect the additions too
     "~/.claude/settings*.json",
     "~/.claude/hooks/**",
+    "~/.claude/plugins/**",  # an installed plugin copy of this gate (nuclear-grade-guard) lives here
 )
 ASK_PATHS = ()
 
@@ -64,6 +65,10 @@ ASK_COMMANDS = (
     (r"\btwine\s+" + _OPTS + r"upload\b", "package publish is irreversible"),
     # npm accepts any unambiguous prefix of "publish" down to its `pub` alias.
     (r"\b(npm|pnpm|yarn|uv|poetry|cargo)\s+" + _OPTS + r"pub(?:l(?:i(?:s(?:h)?)?)?)?\b", "package publish is irreversible"),
+    # Turning off a plugin from the shell can switch off this gate when it came from a plugin.
+    (r"\bclaude\s+" + _OPTS + r"plugins?\s+" + _OPTS
+     + r"(disable|uninstall|remove|marketplace\s+" + _OPTS + r"(remove|rm))\b",
+     "disabling or removing a plugin can switch off this gate"),
     (r"\b(curl|wget)\b[^;&\n]*\|\s*(sudo\s+)?(ba|z|da|k)?sh\b", "piping a download into a shell runs unreviewed code"),
     (r"\b(ba|z)?sh\s+<\(\s*(curl|wget)\b", "running a downloaded script runs unreviewed code"),
 )
@@ -72,8 +77,8 @@ ASK_COMMANDS = (
 # rm and its PowerShell spellings (Remove-Item and aliases).
 RM_VERBS = ("rm", "remove-item", "ri", "del", "erase", "rd", "rmdir")
 CMD_RM_VERBS = ("del", "erase", "rd", "rmdir")
-SHELL_TRUST_TOKENS = (".github/workflows", ".claude/settings", ".claude/hooks", ".nuclear/charter.md",
-                      ".nuclear/gate-policy.json")
+SHELL_TRUST_TOKENS = (".github/workflows", ".claude/settings", ".claude/hooks", ".claude/plugins",
+                      ".nuclear/charter.md", ".nuclear/gate-policy.json")
 
 WINDOWS_SUFFIX = re.compile(r"(\w)\.(exe|cmd|bat|com|ps1)\b", re.IGNORECASE)
 

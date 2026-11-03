@@ -25,3 +25,13 @@ def test_published_score_command_reproduces_committed_scores():
     assert produced["routing"] == committed["routing"]
     assert produced["labeler_agreement"] == committed["labeler_agreement"]
     assert json.dumps(produced["fit"], sort_keys=True) == json.dumps(committed["fit"], sort_keys=True)
+
+
+def _reject_constant(name: str):
+    raise ValueError(f"non-standard JSON constant {name}")
+
+
+def test_committed_scores_are_strict_json():
+    # NaN or Infinity is not JSON; a metric with no rows must be null.
+    for path in sorted(EVAL.rglob("*.json")):
+        json.loads(path.read_text(encoding="utf-8"), parse_constant=_reject_constant)

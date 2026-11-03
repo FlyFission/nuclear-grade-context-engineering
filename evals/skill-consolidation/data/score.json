@@ -99,7 +99,7 @@
       "misses": [],
       "forced": [],
       "forced_on_target_jobs": [],
-      "forced_rate": NaN,
+      "forced_rate": null,
       "C_pass": false
     },
     "M7": {

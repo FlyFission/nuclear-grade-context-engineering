@@ -64,8 +64,9 @@ def agreement(a: dict[str, list[str]], b: dict[str, list[str]]) -> dict:
     return {"n": len(ids), "exact_set_match": exact, "jaccard_micro": round(inter / union, 3) if union else 1.0}
 
 
-def pct(num: int, den: int) -> float:
-    return round(100 * num / den, 1) if den else float("nan")
+def pct(num: int, den: int) -> float | None:
+    """A percentage, or None (JSON null) when there is nothing to divide by."""
+    return round(100 * num / den, 1) if den else None
 
 
 def score_routing(truth, r31, rnew, mapping) -> dict:
@@ -86,7 +87,9 @@ def score_routing(truth, r31, rnew, mapping) -> dict:
             "recall_new": recallnew,
             "fp_rate_31": fpr31,
             "fp_rate_new": fprnew,
-            "B_pass": (recallnew >= recall31 - 5) and (fprnew <= fpr31 + 5),
+            "B_pass": None
+            if None in (recall31, recallnew, fpr31, fprnew)
+            else (recallnew >= recall31 - 5) and (fprnew <= fpr31 + 5),
         }
     # Whole-catalog micro precision/recall, with truth mapped into each catalog.
     for name, routed, conv in (("31", r31, lambda s: s), ("new", rnew, lambda s: mapping.get(s, s))):
@@ -146,7 +149,7 @@ def main(argv: list[str] | None = None) -> int:
     }
     if (d / "fit.jsonl").exists():
         result["fit"] = score_fit(rows(d / "fit.jsonl"))
-    text = json.dumps(result, indent=2)
+    text = json.dumps(result, indent=2, allow_nan=False)
     if args.out:
         args.out.write_text(text + "\n", encoding="utf-8")
     print(text)

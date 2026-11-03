@@ -48,6 +48,9 @@ def backtest(repo: Path, policy: consequence.Policy, commits: list[str], labels:
         if not parents:
             continue
         _, _, results, new_slugs, _ = consequence.classify(repo, parents[0], commit, policy)
+        # The same non-removable rule evaluate() applies: editing the policy needs the top mode.
+        consequence._evaluate_policy_self(results, consequence.policy_text(repo, parents[0]),
+                                          consequence.policy_text(repo, commit))
         required = consequence._max_mode(*(entry.required for entry in results.values()))
         fired = sorted({rule for entry in results.values() for rule in entry.rules})
         declared = declared_modes(repo, commit, new_slugs, policy.records_root)

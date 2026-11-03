@@ -630,3 +630,16 @@ def test_dependency_lane_masks_only_pin_values(repo):
 ])
 def test_pin_masking(before, after, same):
     assert (consequence._mask_pins(before) == consequence._mask_pins(after)) is same
+
+
+def test_backtest_applies_the_policy_self_rule(repo):
+    spec = importlib.util.spec_from_file_location("ng_policy_backtest", ROOT / "tools" / "ng_policy_backtest.py")
+    backtest = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(backtest)
+    loosened = dict(POLICY, rules=[r for r in POLICY["rules"] if r["id"] != "gate"])
+    write(repo / consequence.POLICY_PATH, json.dumps(loosened))
+    git(repo, "commit", "-qam", "policy-only change")
+    policy = consequence.load_policy(repo, consequence.WORKTREE)
+    rows = backtest.backtest(repo, policy, [git(repo, "rev-parse", "HEAD")], {})
+    assert rows[0]["required"] == "standard+authority"
+    assert "policy-self" in rows[0]["rules"]

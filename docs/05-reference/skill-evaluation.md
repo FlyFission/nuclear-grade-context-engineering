@@ -284,6 +284,16 @@ If a skill changes decisions but says so only in vague prose, amend its receipt 
 - Should not trigger: Read this diff for oversized files and needless abstraction layers.
 - Should not trigger: Stabilize the outage first and write the timeline afterward.
 
+### `checking-facts`
+
+- Should trigger: The release note says the API rate limit is 600 requests per minute; confirm that against the provider's current docs before we publish.
+- Should trigger: The design doc quotes the statute; make sure the quotation is exact and the section number is right.
+- Should trigger: The agent says this library's retry helper defaults to exponential backoff; check whether that is true at the version we pin.
+- Should trigger: Two blog posts agree on the benchmark number we cite; verify it against the original paper or data.
+- Should not trigger: Does our README call the DOE handbook an influence or imply we comply with it?
+- Should not trigger: Map each claim in this change record to the tests that back it.
+- Should not trigger: Fix the typo in the contributing guide.
+
 ## Source-lineage note
 
 This evaluation prompt bank is an original Nuclear-grade artifact informed by public skill-authoring practice: concise skills, realistic trigger prompts, baseline-vs-skill comparison, and iterative trigger-description improvement. It does not create formal assurance, compliance, certification, safety, security, or regulatory adequacy.

@@ -79,6 +79,19 @@ This repository does not yet claim mandatory protected enforcement for strict cu
 validator or packet mode can weaken an in-repository check. Mandatory policy therefore requires a
 pinned validator and an expected packet mode supplied outside the candidate's writable tree.
 
+**Built opt-in check: two-party verification.** `ng validate <packet> --two-party` fails any `pass`
+claim in a Standard packet's claim-to-evidence table that has no declared second party. A second
+party comes from the custody record (a row whose verifier is not the change actor and whose profile
+is not classified `self-check`) or from a `## Claim authorship` table (a verifier who is neither the
+evidence author nor the change actor). Placeholder verifiers such as `none`, `pending`, or
+`no separate verifier` count as empty. A strict run that finds no claim rows fails closed rather
+than passing. Without the flag, existing packets are unaffected, except one that declares a
+`## Claim authorship` table, which is held to it. The check compares declared identity strings. It
+cannot detect two names for one actor or two agent instances of one model family; that coupling
+belongs in the five-axis profile. Depth and method vocabulary for the `Verification type` column is
+in [`verification-methods-and-depth.md`](verification-methods-and-depth.md). Source:
+[`../../nuclear_grade/two_party.py`](../../nuclear_grade/two_party.py).
+
 This stays inside the validator principle: it checks that the packet **exposes** custody and coupling,
 not that the declared profile is true or adequate. The check is opt-in during migration because a
 structural check the authoring agent runs on its own packet is itself actor-controlled evidence. The
@@ -142,6 +155,7 @@ Required checks:
 - `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, and `ship.md` exist;
 - important claims have an evidence status or a named gap;
 - `--strict-custody`, when enabled, confirms that evidence IDs, custody roles, decisive status, matching five-axis profiles, classifications, and dispositions are structurally consistent;
+- `--two-party`, when enabled, confirms that every `pass` claim names a verifier distinct from the change actor on evidence not classified as a self-check;
 - `--strict-authority`, when enabled, confirms that the activated decision-right record is structurally consistent with declared verification evidence and its apply result;
 - trust decisions about a dependency, model, or API are scoped to how you will actually use it;
 - the release record names the baseline, the rollback, the monitoring, and the open risks.

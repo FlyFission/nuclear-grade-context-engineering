@@ -67,6 +67,7 @@
 | `reporting-shared-defects` | (new skill; applies conceptually to U03, U10; formal trial records pending) |
 | `verifying-final-artifacts` | (new skill; applies conceptually to U01, U04 where the deliverable is a rendered or produced artifact; formal trial records pending) |
 | `running-a-review-panel` | (new skill; applies conceptually to U08, U11; formal trial records pending) |
+| `checking-facts` | (new skill; applies conceptually to U04, U05 where a packet relies on an outside fact; formal trial records pending) |
 
 ## Workflow Coverage
 

@@ -12,6 +12,8 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 
+from nuclear_grade.two_party import ClaimParty, check_two_party
+
 PLACEHOLDER_MARKER = "NUCLEAR-GRADE-PLACEHOLDER"
 # A packet deliberately abandoned with a recorded rationale carries this marker.
 # `ng status` reports such a packet as `closed` (a terminal state), not as needing
@@ -191,6 +193,7 @@ def validate_packet(
     *,
     require_custody: bool = False,
     require_authority: bool = False,
+    require_two_party: bool = False,
 ) -> ValidationResult:
     packet_path = Path(packet)
     messages: list[str] = []
@@ -235,6 +238,8 @@ def validate_packet(
     effective_mode = mode if mode != UNSPECIFIED_MODE else declared
     if require_authority and effective_mode == QUICK_MODE:
         messages.append("strict authority requires a Standard packet")
+    if require_two_party and effective_mode == QUICK_MODE:
+        messages.append("two-party verification requires a Standard packet")
     authority_file = packet_path / "decision-authority.md"
     if effective_mode == STANDARD_MODE and require_authority:
         if not authority_file.exists():
@@ -253,11 +258,19 @@ def validate_packet(
             if not _contains_status(evidence_text):
                 messages.append(f"{evidence_file.name} must include at least one evidence status")
             if effective_mode == STANDARD_MODE:
+                custody_parties: dict[str, list[ClaimParty]] = {}
                 _check_evidence_custody(
                     evidence_file,
                     evidence_text,
                     messages,
-                    required=require_custody or require_authority,
+                    required=require_custody or require_authority or require_two_party,
+                    parties_out=custody_parties,
+                )
+                check_two_party(
+                    packet_path,
+                    messages,
+                    custody_parties=custody_parties,
+                    required=require_two_party,
                 )
 
     ship = packet_path / "ship.md"
@@ -378,12 +391,17 @@ def _check_evidence_custody(
     messages: list[str],
     *,
     required: bool,
+    parties_out: dict[str, list[ClaimParty]] | None = None,
 ) -> None:
     """Structurally lint a Standard packet's declared custody and coupling.
 
     This checks record consistency, not authenticated identity, semantic adequacy,
     or substantive independence. `required=False` keeps legacy packets valid while
     still rejecting a partial disclosure; `--strict-custody` requires the section.
+
+    When `parties_out` is given, it is filled with ``{claim_id: [ClaimParty]}``
+    from the custody and coupling rows so the two-party check can ask whether a
+    `pass` claim has a declared second party without re-parsing the tables.
     """
 
     heading = "## evidence custody and coupling"
@@ -453,6 +471,8 @@ def _check_evidence_custody(
     custody_ids: set[str] = set()
     decisive_ids: set[str] = set()
     custody_controls: dict[str, tuple[str, str, str, str, str]] = {}
+    custody_claims: dict[str, list[str]] = {}
+    profile_classes: dict[str, str] = {}
 
     for row in custody_rows:
         if len(row) != len(custody_headers):
@@ -502,6 +522,7 @@ def _check_evidence_custody(
         if evidence_id in custody_ids:
             messages.append(f"{md_file.name} duplicate evidence custody ID: {evidence_id}")
         custody_ids.add(evidence_id)
+        custody_claims[evidence_id] = claim_ids
         custody_controls[evidence_id] = (
             change_actor,
             generated_by,
@@ -544,6 +565,8 @@ def _check_evidence_custody(
 
         classification = _table_value(row, profile_index, "classification").lower()
         matched_class = classification if classification in EVIDENCE_CLASSIFICATIONS else None
+        if matched_class is not None:
+            profile_classes[evidence_id] = matched_class
         if matched_class is None:
             messages.append(
                 f"{md_file.name} evidence {evidence_id} has invalid classification"
@@ -580,6 +603,19 @@ def _check_evidence_custody(
                 messages.append(
                     f"{md_file.name} self-check evidence {evidence_id} must link its admissibility or residual-risk disposition to ship.md"
                 )
+
+    if parties_out is not None:
+        for evidence_id, claim_ids in custody_claims.items():
+            change_actor, generated_by, _selected, _presented, verified_by = custody_controls[evidence_id]
+            party = ClaimParty(
+                source=f"custody {evidence_id}",
+                author=generated_by,
+                verifier=verified_by,
+                change_actor=change_actor,
+                classification=profile_classes.get(evidence_id, ""),
+            )
+            for claim in claim_ids:
+                parties_out.setdefault(claim, []).append(party)
 
     for evidence_id in sorted(custody_ids - profile_ids):
         messages.append(f"{md_file.name} evidence {evidence_id} has no matching coupling profile")
@@ -1392,12 +1428,18 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="Require and validate an evidence-conditioned decision-authority record for Standard packets.",
     )
+    parser.add_argument(
+        "--two-party",
+        action="store_true",
+        help="Require every `pass` claim in a Standard packet to name a verifier distinct from its evidence author and change actor.",
+    )
     args = parser.parse_args(argv)
 
     result = validate_packet(
         args.packet,
         require_custody=args.strict_custody,
         require_authority=args.strict_authority,
+        require_two_party=args.two_party,
     )
     if result.ok:
         print(f"OK: {args.packet}")

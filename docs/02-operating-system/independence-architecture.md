@@ -76,6 +76,9 @@ it runs, or whether its verdict is accepted.*
 - [`configuration-management.md`](configuration-management.md) — the control stack and the
   "layers only add up when they fail independently" rule this page expands.
 - [`authority-and-intent.md`](authority-and-intent.md) — forceful backup and stop-work.
+- [`verification-methods-and-depth.md`](verification-methods-and-depth.md) — the other dimension:
+  how deep the check went (check, design review, alternate method, qualification test) and
+  whether the result was reached by more than one means.
 - [`actor-evidence-independence.md`](actor-evidence-independence.md) — the managerial axis applied
   to the verify/decide step: the decider and the load-bearing evidence are independent of the
   actor that produced the change.

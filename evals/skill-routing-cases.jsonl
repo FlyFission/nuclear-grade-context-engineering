@@ -162,3 +162,9 @@
 {"id": "running-a-review-panel-trigger-04", "skill": "running-a-review-panel", "prompt": "The second opinion came back clean, but two reviewers timed out and the report never mentions it.", "expected": "trigger"}
 {"id": "running-a-review-panel-nontrigger-01", "skill": "running-a-review-panel", "prompt": "Give this one-line README typo fix a quick sanity check.", "expected": "not-trigger"}
 {"id": "running-a-review-panel-nontrigger-02", "skill": "running-a-review-panel", "prompt": "Read this diff for oversized files and needless abstraction layers.", "expected": "not-trigger"}
+{"id": "checking-facts-trigger-01", "skill": "checking-facts", "prompt": "The release note says the API rate limit is 600 requests per minute; confirm that against the provider's current docs before we publish.", "expected": "trigger"}
+{"id": "checking-facts-trigger-02", "skill": "checking-facts", "prompt": "The design doc quotes the statute; make sure the quotation is exact and the section number is right.", "expected": "trigger"}
+{"id": "checking-facts-trigger-03", "skill": "checking-facts", "prompt": "The agent says this library's retry helper defaults to exponential backoff; check whether that is true at the version we pin.", "expected": "trigger"}
+{"id": "checking-facts-trigger-04", "skill": "checking-facts", "prompt": "Two blog posts agree on the benchmark number we cite; verify it against the original paper or data.", "expected": "trigger"}
+{"id": "checking-facts-nontrigger-01", "skill": "checking-facts", "prompt": "Does our README call the DOE handbook an influence or imply we comply with it?", "expected": "not-trigger"}
+{"id": "checking-facts-nontrigger-02", "skill": "checking-facts", "prompt": "Map each claim in this change record to the tests that back it.", "expected": "not-trigger"}

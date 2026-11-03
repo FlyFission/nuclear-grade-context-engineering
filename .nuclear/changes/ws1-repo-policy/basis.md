@@ -42,8 +42,8 @@ The engine merged in #123 has only a built-in policy covering CI and the gate fi
 | Statement | Fact / assumption / unknown / source claim / local proof / decision authority | Evidence or source | Decision impact |
 |---|---|---|---|
 | Each owner decision maps to a rule | local proof | `tests/test_repo_policy.py` | correctness of the mapping |
-| The policy would have failed 12 of 49 merged commits | local proof | backtest in `verification.md` | the enforcement decision |
-| Those 12 are real misses rather than over-classification | unknown | needs owner labels | tuning before enforcement |
+| The policy would have failed 13 of 49 merged commits | local proof | backtest in `verification.md` | the enforcement decision |
+| Those 13 are real misses rather than over-classification | unknown | needs owner labels | tuning before enforcement |
 
 ## Interfaces and trust boundaries
 

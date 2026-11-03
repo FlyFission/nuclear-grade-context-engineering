@@ -15,8 +15,8 @@
 
 ## Questioning-attitude summary
 
-- The fact that would change the decision: if the policy asked for records on most ordinary commits, it would recreate the always-on cost that the 352-run study measured. The backtest says 24 of 49 commits need nothing and 11 need Quick only.
-- The fact still unknown: whether the 12 commits the policy would have failed are real misses or over-classification. Owner labels on about 20 commits decide that before enforcement.
+- The fact that would change the decision: if the policy asked for records on most ordinary commits, it would recreate the always-on cost that the 352-run study measured. The backtest says 22 of 49 commits need nothing and 11 need Quick only.
+- The fact still unknown: whether the 13 commits the policy would have failed are real misses or over-classification. Owner labels on about 20 commits decide that before enforcement.
 
 ## Affected configuration items
 

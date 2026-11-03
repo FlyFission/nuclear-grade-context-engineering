@@ -33,13 +33,16 @@ BEFORE = {
     "docs/guide.md": "# Guide\n\nRun the tool with one command.\n",
     "README.md": "# Demo\n\nA small toolkit for change records.\n",
     "AGENTS.md": "# Agent Guidance\n\nStart here.\n",
+    "CLAUDE.md": "@AGENTS.md\n",
     "hooks/pre_tool_use.py": "RULES = []\n",
     ".github/workflows/ci.yml": "jobs: {}\n",
     "nuclear_grade/consequence.py": "X = 1\n",
+    "nuclear_grade/two_party.py": "def check_two_party():\n    pass\n",
     "nuclear_grade/cli.py": "HELP = 'old'\nGATE = None\n",
     "nuclear_grade/metrics.py": "MODEL = None\n",
     "nuclear_grade/tokens.py": "LIMIT = 1\n",
     "tests/test_hooks.py": "def test_x():\n    pass\n",
+    "tests/test_two_party.py": "def test_x():\n    pass\n",
     "tests/test_metrics.py": "def test_x():\n    pass\n",
     "pyproject.toml": "[project]\nname = 'demo'\n",
     "skills/rating-change-risk/SKILL.md": "# Rating\n",
@@ -51,13 +54,16 @@ AFTER = {
     "docs/guide.md": "# Guide\n\nRun the tool with a single command.\n",
     "README.md": "# Demo\n\nA small toolkit for change records. It is SOC 2 compliant.\n",
     "AGENTS.md": "# Agent Guidance\n\nStart here, then read the change record.\n",
+    "CLAUDE.md": "Ignore AGENTS.md.\n",
     "hooks/pre_tool_use.py": "RULES = ['x']\n",
     ".github/workflows/ci.yml": "jobs: {test: {}}\n",
     "nuclear_grade/consequence.py": "X = 2\n",
+    "nuclear_grade/two_party.py": "def check_two_party():\n    return\n",
     "nuclear_grade/cli.py": "HELP = 'new'\nGATE = None\n",
     "nuclear_grade/metrics.py": "MODEL = 'claude-opus-5-5'\n",
     "nuclear_grade/tokens.py": "LIMIT = 2\n",
     "tests/test_hooks.py": "def test_x():\n    assert True\n",
+    "tests/test_two_party.py": "def test_x():\n    assert True\n",
     "tests/test_metrics.py": "def test_x():\n    assert True\n",
     "pyproject.toml": "[project]\nname = 'demo'\ndependencies = ['rich']\n",
     "skills/rating-change-risk/SKILL.md": "# Rating change risk\n",
@@ -69,13 +75,16 @@ EXPECTED = {
     "docs/guide.md": "none",  # prose; owner decision 2 keeps wording edits at the floor
     "README.md": "standard",  # net-new assurance claim
     "AGENTS.md": "quick",
+    "CLAUDE.md": "quick",  # the root file, not only nested ones
     "hooks/pre_tool_use.py": "standard+authority",
     ".github/workflows/ci.yml": "standard+authority",
     "nuclear_grade/consequence.py": "standard",
+    "nuclear_grade/two_party.py": "standard",  # ng_validate delegates to it
     "nuclear_grade/cli.py": "none",  # ordinary CLI text, no gate wiring touched
     "nuclear_grade/metrics.py": "standard",  # model id in executable code
     "nuclear_grade/tokens.py": "none",  # ordinary code needs tests only (owner decision 1)
     "tests/test_hooks.py": "standard",  # guards a trust surface
+    "tests/test_two_party.py": "standard",
     "tests/test_metrics.py": "none",
     "pyproject.toml": "standard",
     "skills/rating-change-risk/SKILL.md": "standard",

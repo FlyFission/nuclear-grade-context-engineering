@@ -13,7 +13,7 @@ This validator checks record structure and declared consistency only. It does no
 - **Policy custodian:** FlyFission (repository owner); the rule ships in the engine merged as #123.
 - **Policy digest:** sha256:cddfb6f3ba08960ac405262ece164fb13bfb2c31d9d07488a937b1671569cf44
 - **Policy valid through:** not applicable: the rule holds until a later change to `nuclear_grade/consequence.py` alters it, and that change is itself gated.
-- **Action identity:** `.nuclear/consequence-policy.json` with sha256 `dc3171a4417f23d275d68a4bfb22699c264fb971439f70e07356087bc3919f14`, on branch `claude/ws1-repo-policy`.
+- **Action identity:** `.nuclear/consequence-policy.json` with sha256 `b069000e4afda479f79a3b4e1e8342ae23e3ba02539689e131b89ac0cb001199`, on branch `claude/ws1-repo-policy`.
 - **Decision status:** pending maintainer review
 - **Reversible:** yes; revert the commit, and CI does not read the file yet.
 - **Consequence if wrong:** once CI reads it, a wrong rule either leaves a trust surface without a record or asks for records on ordinary work.
@@ -26,7 +26,7 @@ Allowed coded source states (the field remains named `Raw state`) are `observed`
 
 | Evidence ID | Raw state | Scope / basis | Intended use / V&V status | Custody / profile link |
 |---|---|---|---|---|
-| E-001 | observed | `tests/test_repo_policy.py`, 18 tests, run locally and in CI on the PR | supports the rule mapping; self-check | [verification.md custody profile](verification.md#evidence-custody-and-coupling) |
+| E-001 | observed | `tests/test_repo_policy.py`, 21 tests, run locally and in CI on the PR | supports the rule mapping; self-check | [verification.md custody profile](verification.md#evidence-custody-and-coupling) |
 | E-002 | observed | the `dependency_lane` block and the path-match check against `git ls-files` | supports lane configuration; self-check | [verification.md custody profile](verification.md#evidence-custody-and-coupling) |
 | E-003 | observed | backtest over the 49 first-parent commits ending at `31e0a9e` | supports the cost and shortfall picture; not ground truth | [verification.md custody profile](verification.md#evidence-custody-and-coupling) |
 
@@ -48,7 +48,7 @@ Allowed authority values are:
 | prepare | AI agent | not applicable | AI agent | owner request "start the policy file PR" | agent_permitted | transfer when preparation would touch CI, hooks, or the engine |
 | recommend | AI agent | E-001, E-003 | AI agent | owner decisions 1-6 | agent_permitted | transfer when a rule departs from a recorded owner decision |
 | verify | AI agent; GitHub Actions re-runs the test | E-001 | AI agent | CI on the PR | agent_permitted | transfer when CI fails or a reviewer disputes a rule |
-| validate | maintainer (FlyFission) | E-001, E-003 | maintainer (FlyFission) | policy-self rule | human_required | transfer or block when the 12 shortfalls are judged over-classification |
+| validate | maintainer (FlyFission) | E-001, E-003 | maintainer (FlyFission) | policy-self rule | human_required | transfer or block when the 13 shortfalls are judged over-classification |
 | verdict | maintainer (FlyFission) | E-001, E-003 | maintainer (FlyFission) | policy-self rule | human_required | block when review finds a rule wrong |
 | accept | maintainer (FlyFission) | E-001, E-003 | maintainer (FlyFission) | policy-self rule | human_required | block when residual risks in `ship.md` lack an owner |
 | apply | maintainer (FlyFission) merges | E-001, E-003 | maintainer (FlyFission) | policy-self rule; owner decision 3 (human merge) | human_required | block while CI is red or a review thread is open |

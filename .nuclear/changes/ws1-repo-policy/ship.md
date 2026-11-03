@@ -23,7 +23,7 @@
 ## Residual risks and gaps
 
 - **Self-check evidence.** The agent wrote the policy and the test that pins it. CI re-runs the test; maintainer review is the independent check.
-- **No ground truth yet.** The policy would have failed 12 of 49 merged commits. Before enforcement, the owner labels about 20 commits with the mode they should have needed, and the policy is tuned against those labels.
+- **No ground truth yet.** The policy would have failed 13 of 49 merged commits. Before enforcement, the owner labels about 20 commits with the mode they should have needed, and the policy is tuned against those labels.
 - **`gate-cli` is partial.** It fires when changed lines in `nuclear_grade/cli.py` name gate-wiring identifiers. A change to `handle_required_mode` that names none of them stays at the floor. The durable fix is to move the handler into `nuclear_grade/consequence.py`, which the `validators` rule covers by path.
 - **`bot_identities` is empty.** The engine still excludes any `[bot]` login and the PR author, but agent pushes under the owner's account cannot be told apart from the owner until the bot identity exists (owner decision 4).
 - **The policy cannot gate itself.** Any change to it needs `standard+authority`, which needs an approving review from someone other than the PR author. While the agent pushes as the owner, the owner's merge is the only approval available.

@@ -33,7 +33,7 @@ Six owner decisions (master plan WS1)
 
 | Gap | Why it matters | Disposition | Owner | Recheck trigger |
 |---|---|---|---|---|
-| No owner-labelled ground truth | the 12 shortfalls may be over-classification | carry to `ship.md`; label before enforcing | maintainer | enforcement change |
+| No owner-labelled ground truth | the 13 shortfalls may be over-classification | carry to `ship.md`; label before enforcing | maintainer | enforcement change |
 | `gate-cli` matches identifiers, not every gate-relevant line | an edit to `handle_required_mode` that names none of them stays at the floor | carry to `ship.md`; move the handler into `consequence.py` | maintainer | next engine change |
 
 ## Required links

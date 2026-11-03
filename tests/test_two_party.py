@@ -691,3 +691,26 @@ def test_pass_row_cut_short_before_its_claim_cell_fails_strict(tmp_path):
     messages: list[str] = []
     check_two_party(tmp_path, messages)
     assert any("no readable Claim ID" in m for m in messages)
+
+
+# --- Codex on 4e951a1: authorship roles come from headers --------------------
+
+
+def test_reordered_authorship_columns_are_read_by_header(tmp_path):
+    swapped = "## Claim authorship\n| Claim ID | Verified by | Evidence author |\n|---|---|---|\n"
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n", swapped + "| C-001 | TBD | agent:claude |\n")
+    messages: list[str] = []
+    check_two_party(pkt, messages)
+    assert any("C-001" in m for m in messages)
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n", swapped + "| C-001 | carol | agent:claude |\n")
+    messages = []
+    check_two_party(pkt, messages)
+    assert messages == []
+
+
+def test_authorship_table_with_unrecognized_headers_declares_nothing(tmp_path):
+    vague = "## Claim authorship\n| Claim ID | Person A | Person B |\n|---|---|---|\n"
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n", vague + "| C-001 | ben | carol |\n")
+    messages: list[str] = []
+    check_two_party(pkt, messages)
+    assert any("C-001" in m and "no authorship or custody row" in m for m in messages)

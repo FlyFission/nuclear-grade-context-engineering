@@ -30,8 +30,9 @@ The parser is asymmetric on purpose, so every parsing mistake fails closed:
   inline code, indentation) can hide a claim from the gate, and a claim row cut
   short before its status cell is kept with an unreadable status.
 - Declarations (authorship and custody) are read strictly, from visible
-  Markdown only: HTML comments, fenced code blocks, and lines indented four or
-  more spaces count for nothing. Hiding too much there only removes verifiers. Claims are read from every table (outer pipes optional) whose header
+  Markdown only: HTML comments, fenced code blocks, lines indented four or
+  more spaces, and raw HTML blocks (``<pre>``, ``<details>``, ...) count for
+  nothing. Hiding too much there only removes verifiers. Claims are read from every table (outer pipes optional) whose header
 has a claim (or requirement) column and a status column, found by header rather
 than by position, with Markdown emphasis, code spans, and links stripped from
 cells. A status cell is
@@ -350,13 +351,57 @@ def strip_indented_code(text: str) -> str:
     )
 
 
+_HTML_RAW_OPEN = re.compile(r"^ {0,3}<(pre|script|style|textarea)(?:[\s>]|$)", re.IGNORECASE)
+_HTML_BLOCK_OPEN = re.compile(r"^ {0,3}</?[A-Za-z][A-Za-z0-9-]*(?:[\s/>]|$)")
+
+
+def strip_html_blocks(text: str) -> str:
+    """Blank raw HTML blocks, following CommonMark's block rules.
+
+    A ``<pre>``, ``<script>``, ``<style>`` or ``<textarea>`` block runs to its
+    closing tag; any other block that starts with an HTML tag (``<details>``,
+    ``<div>``, ...) runs to the next blank line. Nothing inside raw HTML is a
+    declaration, so this fails closed.
+    """
+    out: list[str] = []
+    raw_tag: str | None = None
+    in_block = False
+    for line in text.splitlines(keepends=True):
+        if raw_tag is not None:
+            out.append(re.sub(r"\S", " ", line))
+            if f"</{raw_tag}" in line.casefold():
+                raw_tag = None
+            continue
+        if in_block:
+            if not line.strip():
+                in_block = False
+                out.append(line)
+            else:
+                out.append(re.sub(r"\S", " ", line))
+            continue
+        raw = _HTML_RAW_OPEN.match(line)
+        if raw:
+            tag = raw.group(1).casefold()
+            out.append(re.sub(r"\S", " ", line))
+            if f"</{tag}" not in line.casefold()[raw.end():]:
+                raw_tag = tag
+            continue
+        if _HTML_BLOCK_OPEN.match(line):
+            in_block = True
+            out.append(re.sub(r"\S", " ", line))
+            continue
+        out.append(line)
+    return "".join(out)
+
+
 def declarations_text(text: str) -> str:
     """The text verifier declarations are read from: visible, and not code.
 
     Claims are read generously (an odd row fails rather than vanishing);
-    declarations are read strictly (anything shown as code counts for nothing).
+    declarations are read strictly (anything shown as code or raw HTML counts
+    for nothing).
     """
-    return strip_indented_code(_visible(text))
+    return strip_html_blocks(strip_indented_code(_visible(text)))
 
 
 def _cells(line: str) -> list[str]:

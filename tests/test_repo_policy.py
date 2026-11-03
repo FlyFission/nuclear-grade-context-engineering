@@ -3,6 +3,7 @@ the modes the owner decided (master plan WS1, decisions 1-2)."""
 
 import json
 import os
+import re
 import shutil
 import subprocess
 from pathlib import Path
@@ -47,6 +48,8 @@ BEFORE = {
     "tests/test_hooks.py": "def test_x():\n    pass\n",
     "tests/test_two_party.py": "def test_x():\n    pass\n",
     "tests/test_receipt.py": "def test_x():\n    pass\n",
+    "tests/test_repo_policy.py": "def test_x():\n    pass\n",
+    "tools/ng.py": "raise SystemExit(main())\n",
     "tests/test_metrics.py": "def test_x():\n    pass\n",
     "pyproject.toml": "[project]\nname = 'demo'\n",
     "skills/rating-change-risk/SKILL.md": "# Rating\n",
@@ -72,6 +75,8 @@ AFTER = {
     "tests/test_hooks.py": "def test_x():\n    assert True\n",
     "tests/test_two_party.py": "def test_x():\n    assert True\n",
     "tests/test_receipt.py": "def test_x():\n    assert True\n",
+    "tests/test_repo_policy.py": "def test_x():\n    assert True\n",
+    "tools/ng.py": "main()\n",
     "tests/test_metrics.py": "def test_x():\n    assert True\n",
     "pyproject.toml": "[project]\nname = 'demo'\ndependencies = ['rich']\n",
     "skills/rating-change-risk/SKILL.md": "# Rating change risk\n",
@@ -97,6 +102,8 @@ EXPECTED = {
     "tests/test_hooks.py": "standard",  # guards a trust surface
     "tests/test_two_party.py": "standard",
     "tests/test_receipt.py": "standard",  # guards a validators-rule module
+    "tests/test_repo_policy.py": "standard",  # pins this policy
+    "tools/ng.py": "standard",  # the entry point CI runs its checks through
     "tests/test_metrics.py": "none",
     "pyproject.toml": "standard",
     "skills/rating-change-risk/SKILL.md": "standard",
@@ -153,6 +160,22 @@ def test_every_validator_with_a_test_suite_has_that_suite_in_trust_tests():
         suite = f"tests/test_{Path(module).stem}.py"
         if (ROOT / suite).is_file():
             assert suite in rules["trust-tests"].paths, suite
+
+
+def test_every_check_ci_runs_by_name_needs_at_least_standard():
+    """A script, module or test suite a workflow invokes by name is part of the gate."""
+    named = set()
+    for workflow in sorted((ROOT / ".github" / "workflows").glob("*.yml")):
+        text = workflow.read_text(encoding="utf-8")
+        named |= set(re.findall(r"python3? +(?:-I +)?(tools/[\w/.-]+\.py)", text))
+        named |= {f"{m.replace('.', '/')}.py" for m in re.findall(r"python3? +(?:-I +)?-m +(nuclear_grade\.\w+)", text)}
+        named |= set(re.findall(r"\b(tests/test_\w+\.py)\b", text))
+    assert named, "no checks found in the workflows"
+    policy = consequence.load_policy(ROOT, consequence.WORKTREE)
+    path_rules = [rule for rule in policy.rules if rule.content is None and rule.claims is None]
+    for path in sorted(named):
+        modes = [rule.mode for rule in path_rules if consequence.match_any(path, rule.paths)]
+        assert any(consequence.RANK[mode] >= consequence.RANK["standard"] for mode in modes), path
 
 
 def test_ci_and_gate_rules_cannot_be_overridden():

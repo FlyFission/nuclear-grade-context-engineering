@@ -51,6 +51,7 @@ EXPECTED_SKILLS = {
     "reporting-shared-defects",
     "verifying-final-artifacts",
     "running-a-review-panel",
+    "checking-facts",
 }
 
 REQUIRED_SECTIONS = (

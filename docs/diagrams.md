@@ -349,6 +349,33 @@ flowchart TB
 
 ---
 
+## 9. Verification depth and method
+
+How deep a check went and by what means. The first two rungs confirm the work was executed as planned; the last three confirm it is right for its purpose. An independent review reaches one result by two or more methods that can fail differently. Defined in [`02-operating-system/verification-methods-and-depth.md`](02-operating-system/verification-methods-and-depth.md).
+
+<p align="center"><img src="assets/diagrams/verification-ladder.svg" alt="Verification depth and method" width="100%"></p>
+
+<details>
+<summary>Mermaid source (text version)</summary>
+
+```mermaid
+flowchart LR
+    subgraph CHECK["Checking: executed as planned"]
+      R0[Rung 0 · Self-check<br/>your own action] --> R1[Rung 1 · Check<br/>the originator's path]
+    end
+    subgraph VERIFY["Verifying: right for its purpose"]
+      R2[Rung 2 · Design review<br/>the basis itself] --> R3[Rung 3 · Alternate method<br/>a second route, compared] --> R4[Rung 4 · Qualification test<br/>the real artifact, worst case]
+    end
+    R1 --> R2
+    Q[Quick: rung 0, recorded]
+    S[Standard: rung 1 + rung 2 or 3, not by the originator]
+    N[Nuclear / Tier 0: rung 2 + rung 3 or 4, a human verifier with freedom of thought]
+```
+
+</details>
+
+---
+
 ## Source-lineage note
 
 These diagrams are an original visual restatement of the Nuclear-grade workflow, influenced by public lifecycle, configuration-management, and software-assurance sources mapped in [`00-standards-foundation/source-map.md`](00-standards-foundation/source-map.md). They do not create formal V&V, compliance, certification, safety, security, or regulatory adequacy.

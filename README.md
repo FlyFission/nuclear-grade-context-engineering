@@ -74,15 +74,16 @@ Copy [that example](docs/03-worked-examples/ai-agent-tool-permissions/) as your 
 
 ```bash
 /plugin marketplace add FlyFission/nuclear-grade-context-engineering
-/plugin install nuclear-grade@nuclear-grade
+/plugin install nuclear-grade@nuclear-grade         # skills and command cards
+/plugin install nuclear-grade-guard@nuclear-grade   # optional: the guard
 /reload-plugins
 ```
 
-Adds the skills and command cards. No hooks, nothing runs on its own, and no `ng` on your `PATH`; the CLI runs from a checkout.
+The main plugin adds the skills and command cards: no hooks, nothing runs on its own, and no `ng` on your `PATH`; the CLI runs from a checkout. The optional guard is a separate plugin that stops the agent editing the files that judge it and asks before a tag, publish, or force-push ([`HOOKS.md`](HOOKS.md)).
 
 **Any tool, or plain files:**
 
-1. Clone and install (no third-party dependencies): [`INSTALL.md`](INSTALL.md).
+1. Clone and install (no third-party dependencies; the installed command is `nuclear-grade`): [`INSTALL.md`](INSTALL.md).
 2. `python tools/ng.py doctor .` and `python tools/ng.py list`.
 3. `python tools/ng.py new <slug> --mode quick`, fill two files, then `python tools/ng.py validate .nuclear/changes/<slug>`.
 
@@ -135,8 +136,8 @@ flowchart TB
     C1(["Baseline"]) --> C2(["Operate"]) --> C3(["Learn"])
   end
   A4 --> B1
-  B4 -->|"ship / defer"| C1
-  B4 -.->|"block"| A4
+  B4 -->|"ship"| C1
+  B4 -.->|"block / defer"| A4
   C3 -.->|"lessons feed the next basis"| A1
   class A1,A2,A3,A4 plan
   class B1,B2,B3 run
@@ -230,8 +231,8 @@ flowchart LR
     CI["Controlled items<br/>code, prompts, models,<br/>deps, docs, releases"]:::item --> CH["A change"]
     CH --> EV["Evidence<br/>pass or gap, named"]
     EV --> DEC{"Decide<br/>on purpose"}:::gate
-    DEC -->|"ship / defer"| BL["Saved baseline<br/>the approved version"]:::base
-    DEC -.->|"block"| CH
+    DEC -->|"ship"| BL["Saved baseline<br/>the approved version"]:::base
+    DEC -.->|"block / defer"| CH
     BL --> OP["Operate"]
     OP --> LE["Lessons learned"]
     LE -.->|"feed the next change"| CI

@@ -174,11 +174,11 @@ flowchart LR
 
 </details>
 
-All 31, by family, with the situation that calls for each (gold dot = the Core 7, used on every change):
+How they fit together: the core path every change walks, and the heavier skills that switch on when the change calls for them (each arrow is labeled with its trigger):
 
-<p align="center"><img src="docs/assets/diagrams/skill-catalog.svg" alt="The skill catalog: 31 skills in seven families, each with the situation that calls for it, Core 7 marked" width="100%"></p>
+<p align="center"><img src="docs/assets/diagrams/skill-map.svg" alt="Skill map: the core path runs from using-nuclear-grade through questioning-attitude, rating-change-risk, creating-change-records, proving-claims, checking-release-readiness, recording-a-known-good-version, and learning-from-experience, which loops back to questioning-attitude. Each core step branches to heavier skills that switch on by consequence, each arrow labeled with its trigger; all 31 skills appear." width="100%"></p>
 
-Text list, full map, and how they compose: [`SKILLS.md`](SKILLS.md). Which skills fire for which kind of change: [`CORE.md`](CORE.md).
+All 31 by family, with a one-line "use when" for each: [`SKILLS.md`](SKILLS.md). Which skills fire for which kind of change: [`CORE.md`](CORE.md).
 
 ## Adopt at your pace
 

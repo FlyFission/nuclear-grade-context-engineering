@@ -113,7 +113,7 @@ def test_cli_json_flag_keeps_exit_codes(tmp_path):
     assert ok.returncode == 0, ok.stdout + ok.stderr
     receipt = json.loads(ok.stdout)
     assert receipt["ok"] is True
-    assert receipt["strict"] == {"custody": True, "authority": False}
+    assert receipt["strict"] == {"custody": True, "authority": False, "two_party": False}
     assert receipt["evidence_statuses"]["deferred"] >= 1
 
     packet = minimal_quick_packet(tmp_path)

@@ -28,7 +28,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 
 | Claim / requirement ID | Support type | Verification type | Verification method | Acceptance criteria | Result status | Evidence link | Gap / follow-up |
 |---|---|---|---|---|---|---|---|
-| REQ-001 | fact / assumption / unknown / source claim / local proof / decision authority | deterministic test / eval / self-check / peer-check / concurrent verification / independent verification / peer review | | | | | |
+| REQ-001 | fact / assumption / unknown / source claim / local proof / decision authority | deterministic test / eval / self-check / peer-check / concurrent verification / independent verification / peer review / check / design review / alternate method / qualification test | | | | | |
 
 ## Verification type guide
 
@@ -40,6 +40,12 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 | independent verification | the final state must be checked apart from the doer's claim |
 | peer review | artifact quality, maintainability, usability, or boundary wording matters |
 | deterministic test / eval | there is repeatable evidence of the behavior |
+| check | a second party follows the originator's path to confirm it was executed correctly |
+| design review | the basis itself (inputs, assumptions, method) must be judged right for the purpose |
+| alternate method | the result must be reached a second, different way and compared |
+| qualification test | the real artifact must be run under the most adverse credible conditions |
+
+Depth and method are defined in `docs/02-operating-system/verification-methods-and-depth.md`. `ng validate --two-party` fails any `pass` claim with no declared verifier distinct from the change actor.
 
 ## Evidence custody and coupling
 

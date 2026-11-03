@@ -79,6 +79,30 @@ This repository does not yet claim mandatory protected enforcement for strict cu
 validator or packet mode can weaken an in-repository check. Mandatory policy therefore requires a
 pinned validator and an expected packet mode supplied outside the candidate's writable tree.
 
+**Built opt-in check: declared two-party integrity.** Recommended for any Standard packet that contains a `pass` claim. `ng validate <packet> --two-party` fails any `pass`
+claim in a Standard packet's claim-to-evidence table that has no declared second party. A second
+party comes from the custody record (a row whose verifier is none of its change actors and whose
+profile is not classified `self-check`). For a claim the custody record does not cover, it can come
+from a `## Claim authorship` table (a verifier who is neither the evidence author nor any change
+actor the packet declares). Custody governs a claim it covers, so a lighter table cannot override a
+self-check. Claims are read from any table with a claim column and a status column, located by
+header; emphasis, code spans, and links are stripped, and a status is read by its leading word.
+Placeholder verifiers such as `none`, `TBD.`, `<reviewer>`, `self`, or `no separate verifier` count as
+empty. A strict run fails on a claim row whose status cannot be read, on a claim the custody record
+cites but no claim table lists, and when it finds no claim rows at all. Without the flag, existing packets are unaffected, except one that declares a
+`## Claim authorship` table, which is held to it. The check compares declared identity strings. It
+uses each identity's root to catch common aliases (`Claude`, `claude-opus-5.5`, and
+`agent:claude` count as one) and treats generic names (`assistant`, `the agent`, `me`) as no verifier.
+That fails closed: two different people sharing a first name read as one, so record verifiers as full,
+stable identities such as a handle. When the only second party both generated and verified the
+evidence, which is legitimate for an independent reproducer, the coupling-profile disposition must link
+`ship.md` so the release decision sees it. What this checks is *declared actor separation*. It does not
+check evidence independence (a different generation or selection path) or method independence (a check
+that can catch a different failure class); those stay in the five-axis profile and the reviewer's
+judgment. Depth and method vocabulary for the `Verification type` column is
+in [`verification-methods-and-depth.md`](verification-methods-and-depth.md). Source:
+[`../../nuclear_grade/two_party.py`](../../nuclear_grade/two_party.py).
+
 This stays inside the validator principle: it checks that the packet **exposes** custody and coupling,
 not that the declared profile is true or adequate. The check is opt-in during migration because a
 structural check the authoring agent runs on its own packet is itself actor-controlled evidence. The
@@ -142,6 +166,7 @@ Required checks:
 - `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, and `ship.md` exist;
 - important claims have an evidence status or a named gap;
 - `--strict-custody`, when enabled, confirms that evidence IDs, custody roles, decisive status, matching five-axis profiles, classifications, and dispositions are structurally consistent;
+- `--two-party`, when enabled, confirms that every `pass` claim names a verifier distinct from the change actor on evidence not classified as a self-check;
 - `--strict-authority`, when enabled, confirms that the activated decision-right record is structurally consistent with declared verification evidence and its apply result;
 - trust decisions about a dependency, model, or API are scoped to how you will actually use it;
 - the release record names the baseline, the rollback, the monitoring, and the open risks.

@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 656" width="1200" height="656" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 656" width="1280" height="656" role="img" aria-labelledby="t d">
 <title id="t">Skill map</title>
-<desc id="d">The core path runs from using-nuclear-grade through questioning-attitude, rating-change-risk, creating-change-records, proving-claims, checking-release-readiness, recording-a-known-good-version and learning-from-experience, which feeds back to questioning-attitude. Rating-change-risk branches to choosing-what-to-control and checking-what-a-change-affects. Heavier overlays switch on by consequence.</desc>
+<desc id="d">The core path runs from using-nuclear-grade through questioning-attitude, rating-change-risk, creating-change-records, proving-claims, checking-release-readiness, recording-a-known-good-version and learning-from-experience, which feeds back to questioning-attitude. Rating-change-risk branches to choosing-what-to-control and checking-what-a-change-affects. Heavier overlays switch on by consequence, each labeled with its trigger.</desc>
 <style>
 .bg{fill:#F7F6F2} .ink{fill:#0E1A30} .muted{fill:#46536B} .soft{fill:#5A6680}
 .acc{fill:#8A5A00} .lnk{fill:#2F4F94}
@@ -14,6 +14,7 @@
 .life{stroke:rgba(14,26,48,0.25);stroke-dasharray:3 4}
 .mask{fill:#F7F6F2} .rule{stroke:rgba(14,26,48,0.14)}
 .name{font-family:system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;font-size:13px;font-weight:600}
+.nm{font-family:system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;font-size:12px;font-weight:600}
 .sub{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:10px}
 .eye{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:9.5px;font-weight:600;letter-spacing:0.16em}
 .lbl{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:9.5px;letter-spacing:0.04em}
@@ -36,10 +37,10 @@
 <marker id="m-acc" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="acc" points="0 0, 8 3, 0 6"/></marker>
 <marker id="m-lnk" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="lnk" points="0 0, 8 3, 0 6"/></marker>
 </defs>
-<rect class="bg" width="1200" height="656" rx="10"/>
+<rect class="bg" width="1280" height="656" rx="10"/>
 <text x="28" y="34" class="eye soft">SKILL MAP · CORE PATH AND CONSEQUENCE OVERLAYS</text>
-<line class="rule" x1="28" y1="44" x2="1172" y2="44"/>
-<rect class="grp" x="764" y="60" width="408" height="556" rx="8"/>
+<line class="rule" x1="28" y1="44" x2="1252" y2="44"/>
+<rect class="grp" x="764" y="60" width="488" height="556" rx="8"/>
 <text x="778" y="78" class="eye soft" text-anchor="start">HEAVIER OVERLAYS — SWITCH ON BY CONSEQUENCE</text>
 <rect class="band" x="316" y="60" width="296" height="556" rx="8"/>
 <text x="330" y="78" class="eye soft" text-anchor="start">CORE PATH</text>

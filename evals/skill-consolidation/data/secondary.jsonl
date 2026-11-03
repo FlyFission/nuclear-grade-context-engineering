@@ -1,0 +1,170 @@
+{"id": "R-001", "prompt": "Before this agent changes the billing webhook, grill the assumptions and stop conditions."}
+{"id": "R-002", "prompt": "Review this plan for hidden risks before we let the coding agent edit files."}
+{"id": "R-003", "prompt": "What facts would change the release decision for this dependency update?"}
+{"id": "R-004", "prompt": "The agent is asking many plausible questions but has not named the decision question the evidence must answer."}
+{"id": "R-005", "prompt": "This is a brownfield change to the billing schema \u2014 classify the work type and name the migration and rollback questions it forces."}
+{"id": "R-006", "prompt": "Fix a README typo and show the diff."}
+{"id": "R-007", "prompt": "Explain what this small Python helper function does."}
+{"id": "R-008", "prompt": "Use Nuclear-grade for an AI-assisted API behavior change and tell me the packet and evidence path."}
+{"id": "R-009", "prompt": "Set up the Nuclear-grade workflow for this repo before we let an agent change permissions."}
+{"id": "R-010", "prompt": "Walk this proposed coding-agent change through the workflow from question to release decision."}
+{"id": "R-011", "prompt": "Summarize the README in five bullets."}
+{"id": "R-012", "prompt": "What license does this repository use?"}
+{"id": "R-013", "prompt": "Which prompts, dependencies, docs, and CI files become controlled items for this release?"}
+{"id": "R-014", "prompt": "Identify the controlled items for an agent tool-permission change."}
+{"id": "R-015", "prompt": "After this public launch, what approved-state tracking do we need?"}
+{"id": "R-016", "prompt": "Run the unit tests and paste the failing assertion."}
+{"id": "R-017", "prompt": "Convert these notes into cleaner prose."}
+{"id": "R-018", "prompt": "This lifecycle rename may stale docs, skills, commands, validators, and examples; screen the impact."}
+{"id": "R-019", "prompt": "If we change the packet template, what downstream artifacts need revalidation?"}
+{"id": "R-020", "prompt": "Does a prompt/model baseline update affect release docs or evidence?"}
+{"id": "R-021", "prompt": "This change alters a database schema other services read \u2014 screen the runtime blast radius and backward-compatibility, not just repo docs."}
+{"id": "R-022", "prompt": "Create an empty Standard packet folder."}
+{"id": "R-023", "prompt": "What does the changelog say changed last week?"}
+{"id": "R-024", "prompt": "Record the accepted prompt, model, tool, doc, and validator state after this release."}
+{"id": "R-025", "prompt": "Baseline this dependency update after review and verification pass."}
+{"id": "R-026", "prompt": "Create the accepted configuration record for the public docs and validator change."}
+{"id": "R-027", "prompt": "Brainstorm better names for the workflow phases."}
+{"id": "R-028", "prompt": "Classify whether this typo fix is Quick or Standard."}
+{"id": "R-029", "prompt": "Classify whether this API permission plus docs change is Quick, Standard, or stronger."}
+{"id": "R-030", "prompt": "Pick the right mode for a dependency bump that changes authentication behavior."}
+{"id": "R-031", "prompt": "This small diff touches agent authority; classify the risk and evidence obligation."}
+{"id": "R-032", "prompt": "The decision question is clear, but we do not know whether Quick proof is enough to answer it."}
+{"id": "R-033", "prompt": "Fill out the verification table for already-selected Standard mode."}
+{"id": "R-034", "prompt": "Write the source-lineage note for a citation change."}
+{"id": "R-035", "prompt": "The Standard packet exists but is missing `basis.md`, `proof.md`, and a validation receipt; repair the packet structure without deciding release readiness."}
+{"id": "R-036", "prompt": "The proof command changed after review; update this Quick packet's files and validator-facing status labels."}
+{"id": "R-037", "prompt": "The agent completed an AI-assisted workflow change but left no evidence-backed PR packet; create the required record shell and links."}
+{"id": "R-038", "prompt": "Decide whether this packet should ship."}
+{"id": "R-039", "prompt": "Only identify which files are controlled items."}
+{"id": "R-040", "prompt": "Build a focused context pack for an agent that can edit tests and run commands."}
+{"id": "R-041", "prompt": "Prepare one-screen reviewer context with authority, proof, and stop conditions."}
+{"id": "R-042", "prompt": "Distill this long implementation thread into what the next agent may do and must prove."}
+{"id": "R-043", "prompt": "Package this work for a downstream agent with the decision question, work phase, forbidden claims, and stop conditions."}
+{"id": "R-044", "prompt": "Run the packet validator."}
+{"id": "R-045", "prompt": "Classify the change mode only."}
+{"id": "R-046", "prompt": "Hand this half-finished validator change to a new agent with last completed action, changed conditions, proof gaps, and stop criteria."}
+{"id": "R-047", "prompt": "Prepare a release handoff for support after this Standard packet ships with residual risk and monitoring."}
+{"id": "R-048", "prompt": "We are resuming a long thread after CI changed; create a turnover record before the next agent edits files."}
+{"id": "R-049", "prompt": "Summarize this README section without assigning follow-up work."}
+{"id": "R-050", "prompt": "Run a Quick proof command for a completed typo fix."}
+{"id": "R-051", "prompt": "Before running this broad file move command, self-check the exact target, expected result, stop condition, and after-action proof."}
+{"id": "R-052", "prompt": "Self-check this public README claim before release because it says the workflow is secure."}
+{"id": "R-053", "prompt": "The agent is about to update dependency and API permission files; check the intended action and evidence first."}
+{"id": "R-054", "prompt": "This candidate doc wording is about to become accepted public baseline wording; check the target, expected result, and stop condition."}
+{"id": "R-055", "prompt": "Explain what this shell command would do without running it."}
+{"id": "R-056", "prompt": "Create a whole Standard packet for a normal feature change."}
+{"id": "R-057", "prompt": "Map these release claims to evidence, gaps, and narrowed non-claims."}
+{"id": "R-058", "prompt": "Tests passed, but which claims do they actually prove?"}
+{"id": "R-059", "prompt": "Turn this basis and trace into a verification table with pass, gap, and deferred statuses."}
+{"id": "R-060", "prompt": "Separate these claims into fact, assumption, unknown, source claim, local proof, and decision authority before ship review."}
+{"id": "R-061", "prompt": "Create the packet directory structure."}
+{"id": "R-062", "prompt": "Make the README more concise."}
+{"id": "R-063", "prompt": "Review this Standard packet and decide ship, defer, block, or ship-with-risk."}
+{"id": "R-064", "prompt": "CI is green; decide whether the dependency update is release-ready and name residual risk."}
+{"id": "R-065", "prompt": "Is this agent-authority change ready to release with the evidence we have?"}
+{"id": "R-066", "prompt": "This fast candidate is being promoted to an accepted baseline; slow-audit the evidence, rollback, monitoring, and residual risk."}
+{"id": "R-067", "prompt": "Identify controlled items before implementation starts."}
+{"id": "R-068", "prompt": "Draft the risk.md threshold screen."}
+{"id": "R-069", "prompt": "An agent edited outside its context pack but tests caught it; create an OPEX record and durable control update."}
+{"id": "R-070", "prompt": "A reviewer found a hallucinated source claim after merge; turn the near miss into a template or validator update."}
+{"id": "R-071", "prompt": "Users misunderstood the release note and support needed a workaround; capture operating experience and rebaseline triggers."}
+{"id": "R-072", "prompt": "A doctrine update produced nice prose but no durable control change; turn the review surprise into OPEX."}
+{"id": "R-073", "prompt": "Fix the failing unit test immediately during incident containment."}
+{"id": "R-074", "prompt": "Assign blame for who approved the PR."}
+{"id": "R-075", "prompt": "A dependency bump changes authentication behavior; separate vendor claims from local evidence and release impact."}
+{"id": "R-076", "prompt": "We are switching models for an agent workflow; check intended use, eval evidence, gaps, and revalidation triggers."}
+{"id": "R-077", "prompt": "This SaaS API will receive credentials and affect release automation; screen trust before shipping."}
+{"id": "R-078", "prompt": "Cite a public DOE handbook as source lineage for a docs paragraph."}
+{"id": "R-079", "prompt": "Fix a local typo in package comments with no dependency behavior change."}
+{"id": "R-080", "prompt": "This doc cites DOE and NIST concepts; check whether the wording is source-safe."}
+{"id": "R-081", "prompt": "Review these source-lineage claims before public launch."}
+{"id": "R-082", "prompt": "Does this adoption doc imply we satisfy external standards?"}
+{"id": "R-083", "prompt": "Fix the Python test failure."}
+{"id": "R-084", "prompt": "Create a context pack for the next coding agent."}
+{"id": "R-085", "prompt": "Review the README for license, warranty, compliance, and assurance boundary problems."}
+{"id": "R-086", "prompt": "This public copy may overpromise safety, security, certification, or adequacy; clean it up."}
+{"id": "R-087", "prompt": "Does this text confuse MIT license permission with formal engineering adequacy?"}
+{"id": "R-088", "prompt": "List changed files in the PR."}
+{"id": "R-089", "prompt": "Run the worked-example tests."}
+{"id": "R-090", "prompt": "We are twenty steps into this task and I cannot tell if the current edit still serves the original goal."}
+{"id": "R-091", "prompt": "The agent keeps adding features no one asked for; check whether we have drifted from the objective."}
+{"id": "R-092", "prompt": "We have retried this fix three times without progress; should we re-anchor, escalate, or stop?"}
+{"id": "R-093", "prompt": "This small edit looks useful locally, but I cannot trace it to a mission success criterion."}
+{"id": "R-094", "prompt": "Fix a README typo and show the diff."}
+{"id": "R-095", "prompt": "Explain what this small helper function does."}
+{"id": "R-096", "prompt": "Review this 1500-line module for needless complexity and tell me what to delete."}
+{"id": "R-097", "prompt": "Does this new wrapper earn its keep, or is it just indirection?"}
+{"id": "R-098", "prompt": "Check whether feature-specific logic is leaking into the shared layer in this diff."}
+{"id": "R-099", "prompt": "Confirm the unit test passes and paste the output."}
+{"id": "R-100", "prompt": "Cite a public DOE handbook as source lineage for a docs paragraph."}
+{"id": "R-101", "prompt": "Before releasing an agent that can write files and call APIs, enumerate the adversarial classes, state probe intents, and record outcomes."}
+{"id": "R-102", "prompt": "A dependency update changes how the agent processes user input; adversarially review for prompt injection and retrieval poisoning before shipping."}
+{"id": "R-103", "prompt": "This change expands the agent's network access; run a red-team review and link the posture note to ship.md."}
+{"id": "R-104", "prompt": "Fix a README typo with no agent authority component."}
+{"id": "R-105", "prompt": "Run a formal penetration test or produce a certified security report."}
+{"id": "R-106", "prompt": "The packet claims the agent only edited auth.py but the release reviewer cannot see the step-level execution evidence; trace the run and link each step to a verification claim."}
+{"id": "R-107", "prompt": "Capture execution evidence from this agent run \u2014 tool calls, decision points, token use, and approval gates \u2014 and structure it for trace.md."}
+{"id": "R-108", "prompt": "A post-incident review needs to reconstruct what the agent did without reading a raw chat log; produce a structured execution trace."}
+{"id": "R-109", "prompt": "The agent read a config file and printed a summary with no side effects."}
+{"id": "R-110", "prompt": "Produce a formal audit trail or certified compliance record of agent behavior."}
+{"id": "R-111", "prompt": "Break this billing-revamp epic into a clean deliverable breakdown that covers all the scope with no overlaps before we plan."}
+{"id": "R-112", "prompt": "We keep discovering work mid-sprint; give me a product WBS with a dictionary for this new ingestion subsystem."}
+{"id": "R-113", "prompt": "Decompose this feature into work packages and check that the children actually sum to the whole."}
+{"id": "R-114", "prompt": "We are handing these work packages to separate agents \u2014 turn the WBS leaves into delegable build-sequence slices with prereqs, per-slice proof, and stop conditions."}
+{"id": "R-115", "prompt": "Fix this typo in the README and show the diff."}
+{"id": "R-116", "prompt": "This backlog item is already broken down and owned; just start coding it."}
+{"id": "R-117", "prompt": "Lay out the folder and file structure for this new service derived from our WBS, with safe sortable names."}
+{"id": "R-118", "prompt": "Our shared utils folder has become a junk drawer; restructure it by what changes together."}
+{"id": "R-119", "prompt": "Design this sequential agent workflow as numbered stage folders with a context contract per stage."}
+{"id": "R-120", "prompt": "Rename this one file from helper to parser in an already-clean tree."}
+{"id": "R-121", "prompt": "Run the unit tests and paste the failing assertion."}
+{"id": "R-122", "prompt": "`ng status` shows three scaffold packets nobody can explain; decide what to do with each."}
+{"id": "R-123", "prompt": "This long session left a half-filled packet behind and the change was dropped; close it properly."}
+{"id": "R-124", "prompt": "Our `.nuclear/changes` directory is full of abandoned drafts; bring each to a terminal state."}
+{"id": "R-125", "prompt": "That packet's feature was cut last sprint but its packet is still sitting there as invalid."}
+{"id": "R-126", "prompt": "I am actively filling this packet right now and about to validate it."}
+{"id": "R-127", "prompt": "Delete the placeholder marker so this packet I am shipping passes validation."}
+{"id": "R-128", "prompt": "The agent wants to delete a production table; decide whether it may act or must escalate, and name the trigger."}
+{"id": "R-129", "prompt": "Set this coding agent's standing authority so reversible edits proceed but releases and permission changes escalate."}
+{"id": "R-130", "prompt": "Who should decide this dependency bump given the evidence is only the vendor's changelog?"}
+{"id": "R-131", "prompt": "Fix a typo in a comment and show the diff."}
+{"id": "R-132", "prompt": "The director already approved this; just record that approval."}
+{"id": "R-133", "prompt": "Before the agent deploys the new pricing path to 5% of traffic, state intent, expected result, and abort criteria."}
+{"id": "R-134", "prompt": "Write the release brief for this schema migration so a reviewer can challenge the plan before it runs."}
+{"id": "R-135", "prompt": "The agent is about to rotate the signing key; declare the intent and the verified rollback first."}
+{"id": "R-136", "prompt": "Reformat this file with the linter and commit it."}
+{"id": "R-137", "prompt": "Summarize what this helper function returns."}
+{"id": "R-138", "prompt": "Checkout is failing for 30% of users right now; run this as an incident."}
+{"id": "R-139", "prompt": "An agent deleted rows it should not have and customers are affected; stabilize and coordinate."}
+{"id": "R-140", "prompt": "The canary tripped its abort threshold and the release is half-rolled-out; take it as a live incident."}
+{"id": "R-141", "prompt": "Plan next quarter's reliability roadmap."}
+{"id": "R-142", "prompt": "Write the postmortem for the outage that was fully resolved last week."}
+{"id": "R-143", "prompt": "This test has been flaky for months and everyone ignores it; log it so it is owned and dispositioned."}
+{"id": "R-144", "prompt": "We keep getting paged by the same noisy alert; put it on the deficiency register with an owner."}
+{"id": "R-145", "prompt": "Review surfaced an unowned service we have all been avoiding; record it as fix-or-accept."}
+{"id": "R-146", "prompt": "I just fixed this bug and closed the packet; no standing tracking is needed."}
+{"id": "R-147", "prompt": "Start a brand-new feature that has no known deficiencies yet."}
+{"id": "R-148", "prompt": "I found a bug in the shared prompt template three other teams import; I patched ours but the rest still have it."}
+{"id": "R-149", "prompt": "The pinned model version we all depend on jailbreaks on a category we rely on; who downstream needs to know?"}
+{"id": "R-150", "prompt": "An OPEX review traced the incident to a defect in the shared eval harness other repos run."}
+{"id": "R-151", "prompt": "I fixed a typo in my own service that nothing else consumes."}
+{"id": "R-152", "prompt": "Production is down right now and I need to stabilize it first."}
+{"id": "R-153", "prompt": "The chart in the report still has overlapping axis labels after the last fix -- check the actual rendered figure."}
+{"id": "R-154", "prompt": "Confirm the exported PDF paginates correctly on every page before we send it."}
+{"id": "R-155", "prompt": "The agent said the diagram is fixed but only read the plotting script. Verify the delivered output itself."}
+{"id": "R-156", "prompt": "Regenerate the built UI screen and compare the screenshot against the reference design."}
+{"id": "R-157", "prompt": "Refactor this helper function for readability."}
+{"id": "R-158", "prompt": "Map these release claims to their supporting evidence."}
+{"id": "R-159", "prompt": "One reviewer cleared this irreversible credential rotation; I want checks that can fail differently before we accept that verdict."}
+{"id": "R-160", "prompt": "Four agents approved this migration plan, but they were the same model on the same brief. How much is that agreement worth?"}
+{"id": "R-161", "prompt": "Get an independent second opinion on this authorization redesign and show me where the reviewers disagreed instead of averaging them."}
+{"id": "R-162", "prompt": "The second opinion came back clean, but two reviewers timed out and the report never mentions it."}
+{"id": "R-163", "prompt": "Give this one-line README typo fix a quick sanity check."}
+{"id": "R-164", "prompt": "Read this diff for oversized files and needless abstraction layers."}
+{"id": "R-165", "prompt": "The release note says the API rate limit is 600 requests per minute; confirm that against the provider's current docs before we publish."}
+{"id": "R-166", "prompt": "The design doc quotes the statute; make sure the quotation is exact and the section number is right."}
+{"id": "R-167", "prompt": "The agent says this library's retry helper defaults to exponential backoff; check whether that is true at the version we pin."}
+{"id": "R-168", "prompt": "Two blog posts agree on the benchmark number we cite; verify it against the original paper or data."}
+{"id": "R-169", "prompt": "Does our README call the DOE handbook an influence or imply we comply with it?"}
+{"id": "R-170", "prompt": "Map each claim in this change record to the tests that back it."}

@@ -70,6 +70,7 @@ skills:
   - reporting-shared-defects
   - verifying-final-artifacts
   - running-a-review-panel
+  - checking-facts
 commands:
   - ng-question.md
   - ng-classify.md
@@ -100,6 +101,7 @@ commands:
   - ng-report-defect.md
   - ng-verify-artifact.md
   - ng-panel.md
+  - ng-fact-check.md
 command_map:
   # Compatibility projection of promoted command-backed skills from
   # skill-catalog.json. The lifecycle registry is the semantic owner; this flat map
@@ -134,6 +136,7 @@ command_map:
   reporting-shared-defects: ng-report-defect
   verifying-final-artifacts: ng-verify-artifact
   running-a-review-panel: ng-panel
+  checking-facts: ng-fact-check
 token_budgets:
   # Per-file token ceilings enforced by `ng tokens` (see nuclear_grade/tokens.py).
   # Seeded above the measured maxima with headroom, so the gate blocks regression,
@@ -156,13 +159,18 @@ token_budgets:
   # lifecycle catalog, plus the builder-critic fields (#100), moved the measured totals
   # to desc 3285, body 65588, cards 30462; the totals are reseeded with roughly the
   # original proportional headroom (about 4 percent), not a blanket raise.
+  #
+  # Reseeded again when this branch met `checking-facts` (skill 31, merged in #124):
+  # measured totals desc 3409, body 68023, cards 31475 (30 cards). The same headroom
+  # rule as above gives desc 3580 (+5%), body 70500 (+3.6%), cards 32600 (+3.6%).
+  # Per-file ceilings, the body p95, and the core-profile ceilings are unchanged.
   description_max: 200
   skill_body_max: 3900
   command_max: 1700
-  skill_description_total_max: 3450
-  skill_body_total_max: 68000
+  skill_description_total_max: 3580
+  skill_body_total_max: 70500
   skill_body_p95_max: 3400
-  command_total_max: 31600
+  command_total_max: 32600
   core_description_total_max: 900
   core_body_total_max: 19500
   repeated_block_max_files: 8

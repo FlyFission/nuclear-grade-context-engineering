@@ -120,3 +120,25 @@ def test_every_card_has_a_menu_description_and_is_typed_by_a_person():
         description = json.loads(fields["description"])
         assert description.endswith((".", "!", "?")) and len(description) < 300, path.name
         assert fields["disable-model-invocation"] == "true", path.name
+
+
+def test_each_card_description_is_the_first_sentence_of_its_skill():
+    # Checked against the skill itself, not through gen_commands, so a generator that
+    # picks the wrong sentence, or a hand-edited card, fails here.
+    import json
+    import re
+
+    from nuclear_grade.gen_commands import load_command_map
+
+    for skill_name, stem in load_command_map(ROOT).items():
+        card = (COMMANDS_DIR / f"{stem}.md").read_text(encoding="utf-8")
+        fields = dict(line.split(": ", 1) for line in card.split("\n---\n", 1)[0].splitlines()[1:])
+        shown = json.loads(fields["description"])
+        skill = (ROOT / "skills" / skill_name / "SKILL.md").read_text(encoding="utf-8")
+        match = re.search(r"^description:\s*(.+)$", skill, re.MULTILINE)
+        assert match, skill_name
+        full = match.group(1).strip().strip("\"'")
+        stem_text = shown[:-1] if not full.startswith(shown) else shown
+        assert full.startswith(stem_text), (stem, shown, full[:120])
+        rest = full[len(shown):]
+        assert rest == "" or rest[0].isspace(), (stem, shown)

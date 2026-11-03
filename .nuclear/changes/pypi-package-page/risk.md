@@ -16,7 +16,7 @@ Get the package ready for its first PyPI upload without publishing anything:
 
 Main failure modes and controls:
 
-- **The new build dependency is compromised or breaks the build.** It runs only at build time and only rewrites the long description. Control: it is a small, widely used hatch plugin from a long-time PyPA contributor, pinned to `>=24.1`; the wheel's code files are unchanged (compared against the base build), and CI's wheel-smoke installs the built wheel.
+- **The new build dependency is compromised or breaks the build.** It runs only at build time and only rewrites the long description. Control: it is a small, widely used hatch plugin from a long-time PyPA contributor, with a minimum version of `>=24.1` (a floor, so a newer release can be picked up at build time); the wheel's code files are unchanged (compared against the base build), and CI's wheel-smoke installs the built wheel.
 - **A substitution mangles the README on PyPI.** Control: the built metadata was checked to hold no relative link or image source, and `twine check --strict` passes. The patterns skip absolute URLs, anchors, and `mailto:`.
 - **The page claims more than the project does.** Control: classifiers name only the audience, Python versions, and topic. "Development Status :: 4 - Beta" matches a 0.x release with a changelog and release gates.
 - **Something publishes early.** Control: no tag, no version bump, and the `pypi` job still needs `PUBLISH_TO_PYPI=true`, the `pypi` environment, and a trusted publisher, none of which this change sets.

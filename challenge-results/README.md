@@ -8,7 +8,8 @@ two tracks, the outcomes, and the limits.
 
 Use a throwaway container or VM. The agent commands in `agents.json` let the agent act without
 asking, and the scorer runs code the agent wrote. You need Python 3.11+, `git`, `pytest`, and
-the agent's own CLI, signed in.
+the agent's own CLI, signed in. Set `NG_CONTAINER_IMAGE` to the image you run in, so each
+result records it.
 
 ```bash
 python challenge-results/run.py --agent claude-code --model <model-id> --track rules --trials 5

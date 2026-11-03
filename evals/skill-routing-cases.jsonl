@@ -10,22 +10,22 @@
 {"id": "using-nuclear-grade-trigger-03", "skill": "using-nuclear-grade", "prompt": "Walk this proposed coding-agent change through the workflow from question to release decision.", "expected": "trigger"}
 {"id": "using-nuclear-grade-not-trigger-01", "skill": "using-nuclear-grade", "prompt": "Summarize the README in five bullets.", "expected": "not-trigger"}
 {"id": "using-nuclear-grade-not-trigger-02", "skill": "using-nuclear-grade", "prompt": "What license does this repository use?", "expected": "not-trigger"}
-{"id": "controlling-approved-versions-scope-trigger-01", "skill": "controlling-approved-versions", "prompt": "Which prompts, dependencies, docs, and CI files become controlled items for this release?", "expected": "trigger"}
-{"id": "controlling-approved-versions-scope-trigger-02", "skill": "controlling-approved-versions", "prompt": "Identify the controlled items for an agent tool-permission change.", "expected": "trigger"}
-{"id": "controlling-approved-versions-scope-trigger-03", "skill": "controlling-approved-versions", "prompt": "After this public launch, what approved-state tracking do we need?", "expected": "trigger"}
-{"id": "controlling-approved-versions-scope-not-trigger-01", "skill": "controlling-approved-versions", "prompt": "Run the unit tests and paste the failing assertion.", "expected": "not-trigger"}
-{"id": "controlling-approved-versions-scope-not-trigger-02", "skill": "controlling-approved-versions", "prompt": "Convert these notes into cleaner prose.", "expected": "not-trigger"}
+{"id": "choosing-what-to-control-trigger-01", "skill": "choosing-what-to-control", "prompt": "Which prompts, dependencies, docs, and CI files become controlled items for this release?", "expected": "trigger"}
+{"id": "choosing-what-to-control-trigger-02", "skill": "choosing-what-to-control", "prompt": "Identify the controlled items for an agent tool-permission change.", "expected": "trigger"}
+{"id": "choosing-what-to-control-trigger-03", "skill": "choosing-what-to-control", "prompt": "After this public launch, what approved-state tracking do we need?", "expected": "trigger"}
+{"id": "choosing-what-to-control-not-trigger-01", "skill": "choosing-what-to-control", "prompt": "Run the unit tests and paste the failing assertion.", "expected": "not-trigger"}
+{"id": "choosing-what-to-control-not-trigger-02", "skill": "choosing-what-to-control", "prompt": "Convert these notes into cleaner prose.", "expected": "not-trigger"}
 {"id": "checking-what-a-change-affects-trigger-01", "skill": "checking-what-a-change-affects", "prompt": "This lifecycle rename may stale docs, skills, commands, validators, and examples; screen the impact.", "expected": "trigger"}
 {"id": "checking-what-a-change-affects-trigger-02", "skill": "checking-what-a-change-affects", "prompt": "If we change the packet template, what downstream artifacts need revalidation?", "expected": "trigger"}
 {"id": "checking-what-a-change-affects-trigger-03", "skill": "checking-what-a-change-affects", "prompt": "Does a prompt/model baseline update affect release docs or evidence?", "expected": "trigger"}
 {"id": "checking-what-a-change-affects-trigger-04", "skill": "checking-what-a-change-affects", "prompt": "This change alters a database schema other services read — screen the runtime blast radius and backward-compatibility, not just repo docs.", "expected": "trigger"}
 {"id": "checking-what-a-change-affects-not-trigger-01", "skill": "checking-what-a-change-affects", "prompt": "Create an empty Standard packet folder.", "expected": "not-trigger"}
 {"id": "checking-what-a-change-affects-not-trigger-02", "skill": "checking-what-a-change-affects", "prompt": "What does the changelog say changed last week?", "expected": "not-trigger"}
-{"id": "controlling-approved-versions-baseline-trigger-01", "skill": "controlling-approved-versions", "prompt": "Record the accepted prompt, model, tool, doc, and validator state after this release.", "expected": "trigger"}
-{"id": "controlling-approved-versions-baseline-trigger-02", "skill": "controlling-approved-versions", "prompt": "Baseline this dependency update after review and verification pass.", "expected": "trigger"}
-{"id": "controlling-approved-versions-baseline-trigger-03", "skill": "controlling-approved-versions", "prompt": "Create the accepted configuration record for the public docs and validator change.", "expected": "trigger"}
-{"id": "controlling-approved-versions-baseline-not-trigger-01", "skill": "controlling-approved-versions", "prompt": "Brainstorm better names for the workflow phases.", "expected": "not-trigger"}
-{"id": "controlling-approved-versions-baseline-not-trigger-02", "skill": "controlling-approved-versions", "prompt": "Classify whether this typo fix is Quick or Standard.", "expected": "not-trigger"}
+{"id": "recording-a-known-good-version-trigger-01", "skill": "recording-a-known-good-version", "prompt": "Record the accepted prompt, model, tool, doc, and validator state after this release.", "expected": "trigger"}
+{"id": "recording-a-known-good-version-trigger-02", "skill": "recording-a-known-good-version", "prompt": "Baseline this dependency update after review and verification pass.", "expected": "trigger"}
+{"id": "recording-a-known-good-version-trigger-03", "skill": "recording-a-known-good-version", "prompt": "Create the accepted configuration record for the public docs and validator change.", "expected": "trigger"}
+{"id": "recording-a-known-good-version-not-trigger-01", "skill": "recording-a-known-good-version", "prompt": "Brainstorm better names for the workflow phases.", "expected": "not-trigger"}
+{"id": "recording-a-known-good-version-not-trigger-02", "skill": "recording-a-known-good-version", "prompt": "Classify whether this typo fix is Quick or Standard.", "expected": "not-trigger"}
 {"id": "rating-change-risk-trigger-01", "skill": "rating-change-risk", "prompt": "Classify whether this API permission plus docs change is Quick, Standard, or stronger.", "expected": "trigger"}
 {"id": "rating-change-risk-trigger-02", "skill": "rating-change-risk", "prompt": "Pick the right mode for a dependency bump that changes authentication behavior.", "expected": "trigger"}
 {"id": "rating-change-risk-trigger-03", "skill": "rating-change-risk", "prompt": "This small diff touches agent authority; classify the risk and evidence obligation.", "expected": "trigger"}

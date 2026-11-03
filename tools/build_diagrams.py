@@ -476,7 +476,7 @@ def skill_map(name, overlays_on):
         ("ccp", "creating-change-records", None),
         ("pc", "proving-claims", None),
         ("rsr", "checking-release-readiness", None),
-        ("bc", "controlling-approved-versions", "accept · record the baseline"),
+        ("bc", "recording-a-known-good-version", None),
         ("lfo", "learning-from-experience", None),
     ]
     ROW = 52
@@ -486,9 +486,9 @@ def skill_map(name, overlays_on):
     WIDTH = 1280
     f = Fig(name, WIDTH, h, "Skill map",
             "The core path runs from using-nuclear-grade through questioning-attitude, rating-change-risk, "
-            "creating-change-records, proving-claims, checking-release-readiness, controlling-approved-versions (recording "
-            "the baseline) and learning-from-experience, which feeds back to questioning-attitude. Rating-change-risk "
-            "branches to controlling-approved-versions (scoping what is controlled) and checking-what-a-change-affects. "
+            "creating-change-records, proving-claims, checking-release-readiness, recording-a-known-good-version and "
+            "learning-from-experience, which feeds back to questioning-attitude. Rating-change-risk branches to "
+            "choosing-what-to-control and checking-what-a-change-affects. "
             "Heavier overlays switch on by consequence, each labeled with its trigger.",
             "Skill map · core path and consequence overlays")
     SX, SW = 340, 248
@@ -527,7 +527,7 @@ def skill_map(name, overlays_on):
         f.arrow([pos[a]["b"], pos[b]["t"]])
     # side branch: controlled config touched
     ccr, _ccp = pos["ccr"], pos["ccp"]
-    ici = f.box(28, ccr["y"] + 52, 248, 44, "controlling-approved-versions", "scope · what is controlled")
+    ici = f.box(28, ccr["y"] + 52, 248, 40, "choosing-what-to-control")
     sci = f.box(28, ici["y"] + 72, 248, 40, "checking-what-a-change-affects")
     f.arrow([ccr["l"], (ici["cx"], ccr["cy"]), ici["t"]], label="controlled config touched",
             at=(ici["cx"] + 24, ccr["cy"]))
@@ -752,7 +752,8 @@ SKILL_FAMILIES = [
     ("Records and versions", [
         ("creating-change-records", "open or update a change record"),
         ("closing-stale-packets", "finish, close, or delete a draft"),
-        ("controlling-approved-versions", "what is controlled; the baseline"),
+        ("choosing-what-to-control", "what must stay under control"),
+        ("recording-a-known-good-version", "record the accepted version"),
         ("checking-what-a-change-affects", "what else goes stale?"),
         ("recording-what-an-agent-did", "reconstruct the agent's run"),
     ]),

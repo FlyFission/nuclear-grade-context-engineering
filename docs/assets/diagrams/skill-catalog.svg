@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 582" width="1180" height="582" role="img" aria-labelledby="t d">
 <title id="t">The skill catalog</title>
-<desc id="d">30 skills in seven families, each with the situation that calls for it. Start here: the using-nuclear-grade router, questioning-attitude, rating-change-risk. Before you act: double-checking, declaring intent, deciding who decides, staying on mission. Records and versions: change records, stale records, approved versions, change impact, agent run records. Evidence and verdicts: proving claims, checking facts, code review, final artifacts, stress tests, review panels, release readiness. Trust and public claims: outside code and models, legal and safety wording, source claims. Delegation and structure: briefing, handoffs, work breakdown, folders. When it goes wrong: incidents, lessons, deficiencies, shared defects. A gold dot marks the Core 7, which apply to every change.</desc>
+<desc id="d">31 skills in seven families, each with the situation that calls for it. Start here: the using-nuclear-grade router, questioning-attitude, rating-change-risk. Before you act: double-checking, declaring intent, deciding who decides, staying on mission. Records and versions: change records, stale records, approved versions, change impact, agent run records. Evidence and verdicts: proving claims, checking facts, code review, final artifacts, stress tests, review panels, release readiness. Trust and public claims: outside code and models, legal and safety wording, source claims. Delegation and structure: briefing, handoffs, work breakdown, folders. When it goes wrong: incidents, lessons, deficiencies, shared defects. A gold dot marks the Core 7, which apply to every change.</desc>
 <style>
 .bg{fill:#F7F6F2} .ink{fill:#0E1A30} .muted{fill:#46536B} .soft{fill:#5A6680}
 .acc{fill:#8A5A00} .lnk{fill:#2F4F94}
@@ -38,13 +38,13 @@
 <marker id="m-lnk" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="lnk" points="0 0, 8 3, 0 6"/></marker>
 </defs>
 <rect class="bg" width="1180" height="582" rx="10"/>
-<text x="28" y="34" class="eye soft">SKILLS · 30 JOBS IN SEVEN FAMILIES</text>
+<text x="28" y="34" class="eye soft">SKILLS · 31 JOBS IN SEVEN FAMILIES</text>
 <line class="rule" x1="28" y1="44" x2="1152" y2="44"/>
 <rect class="band" x="30" y="64" width="270" height="150" rx="8"/>
 <text x="44" y="82" class="eye soft" text-anchor="start">START HERE</text>
 <rect class="band" x="316" y="64" width="270" height="184" rx="8"/>
 <text x="330" y="82" class="eye soft" text-anchor="start">BEFORE YOU ACT</text>
-<rect class="band" x="602" y="64" width="270" height="218" rx="8"/>
+<rect class="band" x="602" y="64" width="270" height="252" rx="8"/>
 <text x="616" y="82" class="eye soft" text-anchor="start">RECORDS AND VERSIONS</text>
 <rect class="band" x="888" y="64" width="270" height="286" rx="8"/>
 <text x="902" y="82" class="eye soft" text-anchor="start">EVIDENCE AND VERDICTS</text>
@@ -76,12 +76,14 @@
 <text x="628" y="131" class="sub soft" text-anchor="start">open or update a change record</text>
 <text x="628" y="152" class="nm ink" text-anchor="start">closing-stale-packets</text>
 <text x="628" y="165" class="sub soft" text-anchor="start">finish, close, or delete a draft</text>
-<text x="628" y="186" class="nm ink" text-anchor="start">controlling-approved-versions</text>
-<text x="628" y="199" class="sub soft" text-anchor="start">what is controlled; the baseline</text>
-<text x="628" y="220" class="nm ink" text-anchor="start">checking-what-a-change-affects</text>
-<text x="628" y="233" class="sub soft" text-anchor="start">what else goes stale?</text>
-<text x="628" y="254" class="nm ink" text-anchor="start">recording-what-an-agent-did</text>
-<text x="628" y="267" class="sub soft" text-anchor="start">reconstruct the agent&#x27;s run</text>
+<text x="628" y="186" class="nm ink" text-anchor="start">choosing-what-to-control</text>
+<text x="628" y="199" class="sub soft" text-anchor="start">what must stay under control</text>
+<text x="628" y="220" class="nm ink" text-anchor="start">recording-a-known-good-version</text>
+<text x="628" y="233" class="sub soft" text-anchor="start">record the accepted version</text>
+<text x="628" y="254" class="nm ink" text-anchor="start">checking-what-a-change-affects</text>
+<text x="628" y="267" class="sub soft" text-anchor="start">what else goes stale?</text>
+<text x="628" y="288" class="nm ink" text-anchor="start">recording-what-an-agent-did</text>
+<text x="628" y="301" class="sub soft" text-anchor="start">reconstruct the agent&#x27;s run</text>
 <circle class="acc" cx="904" cy="114" r="3.5"/>
 <text x="914" y="118" class="nm ink" text-anchor="start">proving-claims</text>
 <text x="914" y="131" class="sub soft" text-anchor="start">each claim to its evidence</text>

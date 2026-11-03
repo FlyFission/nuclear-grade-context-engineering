@@ -1,6 +1,8 @@
 # Skill Consolidation: Report
 
-**Result:** 1 of 7 proposed merges cleared every pre-registered bar. The catalog goes from 31 skills to 30, not to the 23 the audit hoped for. `choosing-what-to-control` and `recording-a-known-good-version` become `controlling-approved-versions`. The other six merges are not made, and the 13 skills they would have combined stay as they are.
+**Result:** none of the 7 proposed merges is made. The catalog stays at 31 skills.
+
+One merge, `choosing-what-to-control` + `recording-a-known-good-version` → `controlling-approved-versions` (M4), passed every pre-registered bar and was applied at first. External reviews then asked for final-state evidence: routing on the actual 31- and 30-skill catalogs, repeated, plus a larger targeted fit test. Under the same bars, M4 failed both, so it was reverted. Two reviewers asked for that evidence; it took the last merge away, and that is the result.
 
 **Protocol:** [`PROTOCOL.md`](PROTOCOL.md), committed before any result. Deviations are listed at the end.
 
@@ -11,7 +13,7 @@
 | M1 | `declaring-intent` → `double-checking-before-acting` | fail, rounds 1 and 2 | not run | not run | pass | not made |
 | M2 | `tracking-deficiencies` + `reporting-shared-defects` → `learning-from-experience` | pass (round 2) | pass | **fail**: 1 miss of 27 | pass | not made |
 | M3 | `checking-source-claims` → `checking-legal-and-safety-wording` (as `checking-public-claims`) | pass (round 2) | pass | **fail**: 1 forced of 4, on the target's own job | pass | not made |
-| M4 | `choosing-what-to-control` → `recording-a-known-good-version` (as `controlling-approved-versions`) | pass (round 2) | pass | pass: 0 of 9 | pass | **made** |
+| M4 | `choosing-what-to-control` → `recording-a-known-good-version` (as `controlling-approved-versions`) | pass (round 2) | pass on the 25-skill catalog; **fail** on the final 30-skill catalog (see below) | pass on 9 rows; **fail** on 40 targeted rows (1 miss) | pass | made, then **reverted** |
 | M5 | `closing-stale-packets` → `creating-change-records` (as `managing-change-records`) | pass (round 2) | **fail** | not run | pass | not made |
 | M6 | `briefing-an-agent` → `handing-off-work` | fail, rounds 1 and 2 | not run | not run | pass | not made |
 | M7 | `breaking-down-the-work` → `organizing-project-folders` (as `structuring-the-work`) | pass (round 2) | pass | **fail**: 1 miss + 1 forced of 13 | pass | not made |
@@ -43,17 +45,38 @@ Whole catalog on the 180 scenarios: precision 70.7 → 72.8 and recall 81.9 → 
 
 Secondary-set note: R-126 ("I am actively filling this packet right now and about to validate it") was keyed "do not trigger `closing-stale-packets`". The 25-skill router picked the merged `managing-change-records`, which covers creating and validating a record, so the pick is correct and the key was written for the narrower skill.
 
-## What changed in the repo (M4 only)
+## Final-state evidence (requested by external reviews)
 
-- `skills/controlling-approved-versions/` replaces `skills/choosing-what-to-control/` and `skills/recording-a-known-good-version/`. The skill now has two explicit phases: scoping what is controlled, and recording the baseline at acceptance.
-- `/ng-control` replaces `/ng-what-to-control` and `/ng-baseline`.
-- The routing and output cases for both originals were relabeled to the merged skill, with their prompts kept.
-- Catalog wiring, counts, the comparison table, the prompt bank, and the diagrams were updated. Dated historical records (trial records, benchmark plans, the token audit) keep the old names.
+The external reviews (Codex, plus Grok and ChatGPT forwarded by the owner) noted that the routing comparison had used a 25-skill catalog, not the 30 that would ship, that no repeat run measured noise, and that M4's clean fit rested on 9 rows. Three follow-ups ran after M4 was applied:
+
+1. **Paired routing on the actual catalogs.** Two runs each on the current 31 and the final 30, with catalog order shuffled per run ([`data/final/`](data/final/)).
+
+   | Run | Precision | Recall | M4 recall | M4 false positives |
+   |---|---|---|---|---|
+   | 31a | 75.3 | 80.4 | 7/8 | 2/172 |
+   | 31b | 76.6 | 76.6 | 7/8 | 1/172 |
+   | 30a | 74.6 | 78.0 | 6/8 | 3/172 |
+   | 30b | 73.7 | 74.2 | 6/8 | 5/172 |
+
+   - Whole-catalog differences (recall −2.4 on average) are within run-to-run spread: two runs of the *same* catalog differ by 3.8 recall points and agree exactly on only 136/180 (31) and 128/180 (30) scenarios.
+   - The M4-specific loss is consistent: S-067 ("23 hand-run SQL files, nobody knows which were applied to prod") routes to `choosing-what-to-control` in both 31 runs and is missed in both 30 runs.
+   - The merged skill also fires on model-swap requests (S-053, S-089, S-101, S-173), which is debatable because a model ID is a controlled item.
+   - Recall 75 vs 87.5 fails criterion B's 5-point tolerance. With n=8, any single scenario moves recall by 12.5 points.
+2. **Targeted fit, 40 scenarios** ([`data/final/m4-scenarios.jsonl`](data/final/m4-scenarios.jsonl), [`data/final/m4-fit.jsonl`](data/final/m4-fit.jsonl)). These cover scope-only, accept-only, both, stale, premature, neither, and external cases. 39 fit; none forced unneeded work. In 1 the merged skill would miss needed work (M4-034): it dropped `recording-a-known-good-version`'s escalation for safety and outside-trust claims, so a vendor-moderation safety sign-off loses its explicit escalation. That fails criterion C (zero misses).
+3. **A re-score by a different model family** was asked for and has not been done in this repo. It is still the largest gap, and it matters less now that no merge is made.
+
+M4 had already used its one revision, so under the protocol it is not made. It was reverted and the two skills and their `/ng-what-to-control` and `/ng-baseline` cards are restored unchanged. The README, skill visuals, diagram tests, and this evaluation stay.
+
+## What changed in the repo
+
+No skill or command changed. Kept from this work:
+- the evaluation (protocol, data, two coverage rounds, both draft rounds, final-state evidence, scorer, and a test that reruns the scorer against the committed scores);
+- the skill catalog, invocation, and full-map figures, with tests that keep them in step with the catalog and with a fresh build.
 
 ## Limits
 
 - **One model family.** Every agent here is the same model family as the author, briefed by the author's session: generator, both labelers, adjudicator, both routers, coverage auditor, and fit judge. This is a structured check, not independent verification. LLM errors are strongly correlated across models (Kim et al., ICML 2025).
-- **Small samples per merge.** Relevant scenarios were 1 for M5, 4 for M3, 8–9 for M4, 11–13 for M7, and 23–27 for M2. A clean result on n items bounds the miss rate only near 3/n, so M4's clean fit on 9 rows bounds its miss rate below about 30%.
+- **Small samples per merge.** Relevant scenarios were 1 for M5, 4 for M3, 8–9 for M4, 11–13 for M7, and 23–27 for M2. A clean result on n items bounds the miss rate only near 3/n. M4's clean fit on 9 rows did not survive a 40-row test.
 - **Frontmatter only.** Routing used frontmatter as the host shows it; truncation under catalog pressure was not simulated.
 - **Strict pass/fail.** The bars are strict, and some failures are small wording losses (M2's especially). A merge that failed is not proof that no merge could work. It means this draft did not clear the bar this protocol set, so it was not made.
 

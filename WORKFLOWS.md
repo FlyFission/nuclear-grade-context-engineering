@@ -125,7 +125,7 @@ Turn on CM records (keeping the approved version under control) when the change 
 controlled-items.md -> change-impact.md -> baseline.md -> variance.md -> opex.md
 ```
 
-Start with `skills/controlling-approved-versions/SKILL.md` and `docs/02-operating-system/configuration-management.md`.
+Start with `skills/choosing-what-to-control/SKILL.md` and `docs/02-operating-system/configuration-management.md`.
 
 ## Agent authority change
 

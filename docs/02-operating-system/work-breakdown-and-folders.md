@@ -40,7 +40,7 @@ Use `templates/standard/wbs.md` when the work breakdown and folder map are worth
 
 ## Relationship to mission drift, baselines, and enforcement
 
-The work breakdown bounds the scope, so `staying-on-mission` has a concrete anchor to test growth against. The folder layout respects, and does not quietly overwrite, a layout that has been baselined. Conflicts go to `controlling-approved-versions`. Ownership, CI gates, and supply-chain trust are left out here on purpose. They belong to `controlling-approved-versions`, `checking-release-readiness`, and `vetting-outside-code-and-models`. This doc shapes the work and the layout. It does not enforce them.
+The work breakdown bounds the scope, so `staying-on-mission` has a concrete anchor to test growth against. The folder layout respects, and does not quietly overwrite, a layout that has been baselined. Conflicts go to `recording-a-known-good-version`. Ownership, CI gates, and supply-chain trust are left out here on purpose. They belong to `choosing-what-to-control`, `checking-release-readiness`, and `vetting-outside-code-and-models`. This doc shapes the work and the layout. It does not enforce them.
 
 ## Boundaries
 

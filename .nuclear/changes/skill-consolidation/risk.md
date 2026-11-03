@@ -7,7 +7,7 @@
 - Owner: FlyFission
 - Date: 2026-11-03
 - Current lifecycle phase: Verify / Review / Decide
-- Summary: The owner allowed consolidating the skill catalog "if we're high confident", as long as the smaller set still covers what the larger did and no merged skill becomes "a hammer to drive a screw". The owner also asked for a simpler README and excellent visuals. Seven merges were tested under a pre-registered protocol and one passed. That one is applied (31 → 30 skills), the README is rewritten, and the skill visuals are rebuilt.
+- Summary: The owner allowed consolidating the skill catalog "if we're high confident", as long as the smaller set still covers what the larger did and no merged skill becomes "a hammer to drive a screw". The owner also asked for a simpler README and excellent visuals. Seven merges were tested under a pre-registered protocol. One passed and was applied, then failed the final-state evidence the external reviews asked for, and was reverted. The catalog stays at 31 skills. The README is rewritten and the skill visuals are rebuilt.
 
 ## Questioning-attitude summary
 
@@ -20,8 +20,7 @@
 
 | Item | Type | Why it matters | Link |
 |---|---|---|---|
-| `skills/controlling-approved-versions/` (new); `skills/choosing-what-to-control/`, `skills/recording-a-known-good-version/` (removed) | skills | The one applied merge | repo |
-| `commands/ng-control.md` (new); `ng-what-to-control.md`, `ng-baseline.md` (removed) | generated cards | Adopters' slash commands change | repo |
+| `skills/`, `commands/` | skills and cards | Unchanged in the end: the one merge was reverted | repo |
 | `nuclear-grade.yaml`, tests, `tests/fixtures/command_prompts.json` | manifest and contracts | Catalog membership and the parity snapshot | repo |
 | `README.md` | public landing page | Rewritten for brevity; boundary wording must survive | repo |
 | `tools/build_diagrams.py`, `docs/assets/diagrams/skill-*.svg`, `docs/diagrams.md`, `SKILLS.md` | diagrams | Visual catalog, invocation flow, full skill map | repo |

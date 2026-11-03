@@ -174,9 +174,9 @@ flowchart LR
 
 </details>
 
-All 30, by family, with the situation that calls for each (gold dot = the Core 7, used on every change):
+All 31, by family, with the situation that calls for each (gold dot = the Core 7, used on every change):
 
-<p align="center"><img src="docs/assets/diagrams/skill-catalog.svg" alt="The skill catalog: 30 skills in seven families, each with the situation that calls for it, Core 7 marked" width="100%"></p>
+<p align="center"><img src="docs/assets/diagrams/skill-catalog.svg" alt="The skill catalog: 31 skills in seven families, each with the situation that calls for it, Core 7 marked" width="100%"></p>
 
 Text list, full map, and how they compose: [`SKILLS.md`](SKILLS.md). Which skills fire for which kind of change: [`CORE.md`](CORE.md).
 

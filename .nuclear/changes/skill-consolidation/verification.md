@@ -16,7 +16,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 
 | Claim / requirement ID | Support type | Verification type | Verification method | Acceptance criteria | Result status | Evidence link | Gap / follow-up |
 |---|---|---|---|---|---|---|---|
-| REQ-001 | local proof | alternate method | Pre-registered protocol; blind corpus; double labeling with adjudication; blind routing; coverage audit; fit judge | Only merges passing all four criteria applied | pass | `../../../evals/skill-consolidation/REPORT.md` | One model family throughout; small per-merge samples |
+| REQ-001 | local proof | alternate method | Pre-registered protocol; blind corpus; double labeling with adjudication; blind routing; coverage audit; fit judge; then final-catalog paired routing (2 runs each) and a 40-row targeted fit | Only merges passing all four criteria applied; none did once the final-state evidence was in | pass | `../../../evals/skill-consolidation/REPORT.md` | One model family throughout; no cross-family re-score yet |
 | REQ-002 | local proof | deterministic test | Full suite; doctor; grep for removed names outside dated records | Green; no live reference | pass | V-3, V-4 | none |
 | REQ-003 | local proof | deterministic test | `tests/test_diagram_coverage.py`; rendered figures viewed | Every catalog skill in both figures | pass | V-4, V-5 | none |
 | REQ-004 | local proof | check | Public-doc tests, link check, rendered read-through | Pass; every boundary statement present | pass | V-4, V-6 | A human read is pending |
@@ -27,7 +27,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 |---|---|---|---|---|
 | V-1 | Protocol before data | git history: `PROTOCOL.md` and `score.py` committed before corpus, labels, or routes | pass | branch history |
 | V-2 | Criteria scores | `python evals/skill-consolidation/score.py <data>` | B pass for M2, M3, M4, M7; C pass only for M4 | `../../../evals/skill-consolidation/data/score.json` |
-| V-3 | Reference sweep | grep for `choosing-what-to-control`, `recording-a-known-good-version`, `ng-what-to-control`, `ng-baseline` | Only in dated records, evals history, and the CHANGELOG migration note | session output |
+| V-3 | Reference sweep after the revert | grep for `controlling-approved-versions` and `ng-control` outside `evals/` and history; skill table, catalog figure, and map back at 31 | none found; 31 rows in SKILLS.md | session output |
 | V-4 | Full pre-PR gate | `python -m pytest -q`; `ruff check .`; `ng doctor .`; `ng tokens .`; strict-custody worked example | all pass | session output |
 | V-5 | Figures | `python tools/build_diagrams.py`; catalog, invocation, and full map rendered in light and dark and viewed | all 30 skills shown; no overlap after one width fix | session output |
 | V-6 | README | Rendered and read end to end; anchors and relative links checked | 476 → 273 lines; all links resolve | session output |

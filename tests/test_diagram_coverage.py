@@ -38,7 +38,7 @@ def test_catalog_figure_lists_every_skill_once():
 def test_full_skill_map_shows_every_skill():
     module = _diagrams()
     on_map = {"using-nuclear-grade", "questioning-attitude", "rating-change-risk", "creating-change-records",
-              "proving-claims", "checking-release-readiness", "controlling-approved-versions",
+              "proving-claims", "checking-release-readiness", "recording-a-known-good-version", "choosing-what-to-control",
               "learning-from-experience", "checking-what-a-change-affects"}
     for chains in module.FULL_OVERLAYS.values():
         for chain in chains:

@@ -9,7 +9,7 @@ The catalog audit (`evals/skill-catalog-audit/2026-11-03.md`) found no skill nam
 | ID | Requirement | Acceptance |
 |---|---|---|
 | REQ-001 | A merge is applied only if it passes all four pre-registered criteria: coverage, routing parity, fit, and size | `evals/skill-consolidation/PROTOCOL.md`, `REPORT.md` |
-| REQ-002 | The applied merge leaves no dangling reference to the removed names in live docs, skills, code, tests, or eval cases | grep; full test suite; `ng doctor` |
+| REQ-002 | A merge that is reverted leaves the catalog exactly as it was: no dangling reference to a merged name, and every count back at 31 | grep; full test suite; `ng doctor` |
 | REQ-003 | Every figure that shows skills shows every catalog skill, and stays in step with the catalog | `tests/test_diagram_coverage.py` |
 | REQ-004 | The README is shorter and keeps every boundary statement, the pinned strings tests require, and working links | public-doc tests; link check; rendered read-through |
 

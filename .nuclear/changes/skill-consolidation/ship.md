@@ -11,7 +11,7 @@
 
 ## Scope and exclusions
 
-- Included: the M4 merge; README rewrite; skill catalog, invocation, and full-map figures; diagram-coverage test; evaluation protocol, data, and report.
+- Included: the evaluation (with the M4 merge applied and then reverted); README rewrite; skill catalog, invocation, and full-map figures; diagram-coverage test; evaluation protocol, data, and report.
 - Excluded: the six merges that failed; re-testing them.
 - Known non-goals: changing any other skill.
 
@@ -33,8 +33,8 @@
 | Risk / gap | Impact | Disposition | Owner | Recheck trigger |
 |---|---|---|---|---|
 | Every evaluation agent shares one model family and orchestrator | Correlated blind spots could pass a bad merge or fail a good one | accept for this decision, with the bars fixed in advance; owner review | FlyFission | owner review |
-| M4's clean fit rests on 9 rows (miss-rate bound about 30%) | A rare loss in the merged skill could go unseen | accept; watch for `controlling-approved-versions` surprises in OPEX | FlyFission | first OPEX touching CM |
-| `/ng-what-to-control` and `/ng-baseline` disappear | Adopters' muscle memory breaks | accept; migration line in CHANGELOG | FlyFission | an issue about the old names |
+| No merge is made, so the catalog keeps the overlaps the audit found | Routing cost and some trigger overlap remain | accept: the evidence showed each merge lost something | FlyFission | a new, separately pre-registered test |
+| No cross-family re-score of the evaluation | Correlated blind spots in every evaluator | defer; it matters less now that nothing merged | FlyFission | any future merge proposal |
 | Narrow failures (M2) may be worth a retest | Possible missed simplification | defer to a new pre-registered test if the owner wants it | FlyFission | owner request |
 
 ## Rollback / restore plan
@@ -64,7 +64,7 @@
 
 - Decision: defer
 - Decision maker: FlyFission (the author recommends ship-with-named-risk)
-- Rationale: the bars were fixed before any result and only the merge that cleared all four is applied; the README and figures pass tests and a rendered read. All decisive evidence is self-check.
+- Rationale: the bars were fixed before any result. The only merge that cleared them failed the reviewers' final-state evidence and was reverted, so no skill changes. The README and figures pass tests and a rendered read. All decisive evidence is self-check.
 - Decision question answered by evidence? yes, by self-check evidence against pre-registered bars
 - Verdict owner's authority axis relative to the actor: separated
 - Minimum coupling profile for this consequence met? no; gap: human second party

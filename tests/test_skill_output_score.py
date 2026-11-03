@@ -15,14 +15,14 @@ def test_skill_output_score_detects_skill_win(tmp_path):
             [
                 json.dumps(
                     {
-                        "case_id": "controlling-approved-versions-output-01",
+                        "case_id": "choosing-what-to-control-output-01",
                         "variant": "baseline",
                         "output": "Track the files that matter and update the release notes.",
                     }
                 ),
                 json.dumps(
                     {
-                        "case_id": "controlling-approved-versions-output-01",
+                        "case_id": "choosing-what-to-control-output-01",
                         "variant": "skill",
                         "output": (
                             "Controlled item rows must name the approved state, current state, "
@@ -56,8 +56,8 @@ def test_skill_output_score_detects_skill_win(tmp_path):
     )
 
     assert result.returncode == 0, result.stdout + result.stderr
-    assert "controlling-approved-versions-output-01 baseline:" in result.stdout
-    assert "controlling-approved-versions-output-01 skill:" in result.stdout
+    assert "choosing-what-to-control-output-01 baseline:" in result.stdout
+    assert "choosing-what-to-control-output-01 skill:" in result.stdout
 
 
 def test_skill_output_score_fails_when_skill_does_not_beat_baseline(tmp_path):
@@ -67,8 +67,8 @@ def test_skill_output_score_fails_when_skill_does_not_beat_baseline(tmp_path):
     runs.write_text(
         "\n".join(
             [
-                json.dumps({"case_id": "controlling-approved-versions-output-01", "variant": "baseline", "output": weak}),
-                json.dumps({"case_id": "controlling-approved-versions-output-01", "variant": "skill", "output": weak}),
+                json.dumps({"case_id": "choosing-what-to-control-output-01", "variant": "baseline", "output": weak}),
+                json.dumps({"case_id": "choosing-what-to-control-output-01", "variant": "skill", "output": weak}),
             ]
         )
         + "\n",
@@ -101,8 +101,8 @@ def test_skill_output_score_rejects_duplicate_case_variant_rows(tmp_path):
     runs.write_text(
         "\n".join(
             [
-                json.dumps({"case_id": "controlling-approved-versions-output-01", "variant": "skill", "output": "first"}),
-                json.dumps({"case_id": "controlling-approved-versions-output-01", "variant": "skill", "output": "second"}),
+                json.dumps({"case_id": "choosing-what-to-control-output-01", "variant": "skill", "output": "first"}),
+                json.dumps({"case_id": "choosing-what-to-control-output-01", "variant": "skill", "output": "second"}),
             ]
         )
         + "\n",
@@ -126,7 +126,7 @@ def test_skill_output_score_rejects_invalid_variant(tmp_path):
     runs.write_text(
         json.dumps(
             {
-                "case_id": "controlling-approved-versions-output-01",
+                "case_id": "choosing-what-to-control-output-01",
                 "variant": "skil",
                 "output": "approved state",
             }
@@ -152,7 +152,7 @@ def test_skill_output_score_requires_baseline_and_skill_pair_for_observed_case(t
     runs.write_text(
         json.dumps(
             {
-                "case_id": "controlling-approved-versions-output-01",
+                "case_id": "choosing-what-to-control-output-01",
                 "variant": "skill",
                 "output": "approved state current state intended state reason controlled evidence gap re-check trigger",
             }
@@ -191,7 +191,7 @@ def test_skill_output_score_requires_complete_manifest_without_allow_partial(tmp
                     {
                         "id": "CASE-A",
                         "title": "Case A",
-                        "skill_set": ["controlling-approved-versions"],
+                        "skill_set": ["choosing-what-to-control"],
                         "required": ["approved state"],
                         "forbidden": [],
                     }
@@ -200,7 +200,7 @@ def test_skill_output_score_requires_complete_manifest_without_allow_partial(tmp
                     {
                         "id": "CASE-B",
                         "title": "Case B",
-                        "skill_set": ["controlling-approved-versions"],
+                        "skill_set": ["choosing-what-to-control"],
                         "required": ["approved state"],
                         "forbidden": [],
                     }

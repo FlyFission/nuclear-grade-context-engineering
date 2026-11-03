@@ -177,12 +177,12 @@ flowchart TD
     UNG([using-nuclear-grade<br/>router / entry point])
     UNG --> QA[questioning-attitude]
     QA --> CCR[rating-change-risk]
-    CCR -->|controlled config touched| ICI[controlling-approved-versions<br/>scope: what is controlled]
+    CCR -->|controlled config touched| ICI[choosing-what-to-control]
     CCR --> CCP[creating-change-records]
     ICI --> SCI[checking-what-a-change-affects]
     CCP --> PC[proving-claims]
     PC --> RSR[checking-release-readiness]
-    RSR --> BC[controlling-approved-versions<br/>accept: record the baseline]
+    RSR --> BC[recording-a-known-good-version]
     BC --> LFO[learning-from-experience]
     LFO -.durable control update.-> QA
 
@@ -416,7 +416,7 @@ flowchart LR
       b1[double-checking-before-acting *] --- b2[declaring-intent] --- b3[deciding-who-decides] --- b4[staying-on-mission *]
     end
     subgraph C["Records and versions"]
-      c1[creating-change-records] --- c2[closing-stale-packets] --- c3[controlling-approved-versions] --- c4[checking-what-a-change-affects] --- c5[recording-what-an-agent-did]
+      c1[creating-change-records] --- c2[closing-stale-packets] --- c3[choosing-what-to-control] --- c4[checking-what-a-change-affects] --- c5[recording-a-known-good-version] --- c6[recording-what-an-agent-did]
     end
     subgraph D["Evidence and verdicts"]
       d1[proving-claims *] --- d2[checking-facts] --- d3[reviewing-code-quality] --- d4[verifying-final-artifacts] --- d5[stress-testing-agent-changes] --- d6[running-a-review-panel] --- d7[checking-release-readiness *]

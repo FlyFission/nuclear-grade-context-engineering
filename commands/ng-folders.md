@@ -17,7 +17,7 @@ Portable command prompt generated from `skills/organizing-project-folders/SKILL.
 - A single file with an obvious home, or a rename inside an already-clean, conventional tree.
 - A live incident you have to contain first.
 - A layout fully fixed by an outside framework's required structure. Follow that instead.
-- Enforcing ownership, CI gates, or supply-chain trust. Those belong to `controlling-approved-versions`, `checking-release-readiness`, and `vetting-outside-code-and-models`.
+- Enforcing ownership, CI gates, or supply-chain trust. Those belong to `choosing-what-to-control`, `checking-release-readiness`, and `vetting-outside-code-and-models`.
 
 ## Inputs
 

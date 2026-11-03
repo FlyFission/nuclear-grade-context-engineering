@@ -32,7 +32,7 @@ This skill puts a folder-decision checklist in front of the agent, so folders ge
 - A single file with an obvious home, or a rename inside an already-clean, conventional tree.
 - A live incident you have to contain first.
 - A layout fully fixed by an outside framework's required structure. Follow that instead.
-- Enforcing ownership, CI gates, or supply-chain trust. Those belong to `controlling-approved-versions`, `checking-release-readiness`, and `vetting-outside-code-and-models`.
+- Enforcing ownership, CI gates, or supply-chain trust. Those belong to `choosing-what-to-control`, `checking-release-readiness`, and `vetting-outside-code-and-models`.
 
 ## Inputs
 
@@ -72,7 +72,7 @@ This skill puts a folder-decision checklist in front of the agent, so folders ge
 
 ## Escalation
 
-- Escalate when the proposed tree conflicts with an established or saved known-good convention. The owner decides; do not override it quietly (see `controlling-approved-versions`).
+- Escalate when the proposed tree conflicts with an established or saved known-good convention. The owner decides; do not override it quietly (see `recording-a-known-good-version`).
 - Escalate when you cannot reach one source of truth without an architecture decision.
 - Escalate to `breaking-down-the-work` when there is no breakdown to build from.
 - For ownership, CI, or supply-chain enforcement, route to the dedicated skills instead of building it in here.

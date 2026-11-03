@@ -103,6 +103,7 @@ _EMPTY_PARTY = {
     "nobody",
     "no one",
     "n/a",
+    "n.a",
     "na",
     "tbd",
     "todo",
@@ -193,7 +194,10 @@ def _is_empty_party(value: str) -> bool:
     if raw.startswith("<") and raw.endswith(">"):
         return True  # an unfilled `<reviewer>` placeholder
     norm = _norm(value)
-    return norm in _EMPTY_PARTY or norm.startswith(_EMPTY_PARTY_PREFIXES)
+    # `agent:TBD`, `human: self`: a role prefix does not turn a placeholder into
+    # a name. The prefix is stripped only for this test; identities keep it.
+    bare = re.sub(r"^[a-z]+:\s*", "", norm).strip(_PUNCT + _EMPHASIS)
+    return any(v in _EMPTY_PARTY or v.startswith(_EMPTY_PARTY_PREFIXES) or (v.startswith("<") and v.endswith(">")) for v in (norm, bare))
 
 
 def _split_names(value: str) -> set[str]:
@@ -239,7 +243,7 @@ def _named_verifiers(value: str) -> set[str]:
     return {
         part
         for part in _split_names(value)
-        if len(part) > 1 and not _is_empty_party(part) and part != "n.a"
+        if len(part) > 1 and not _is_empty_party(part)
     }
 
 

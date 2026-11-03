@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 452" width="1100" height="452" role="img" aria-labelledby="t d">
+<title id="t">How a skill is invoked</title>
+<desc id="d">Three ways in: the host matches the situation to a skill&#x27;s name and description, which cost about 100 tokens each and are always visible; the using-nuclear-grade router, optionally reinforced by session hooks, sends the change to a skill; or a person runs the skill&#x27;s /ng- command card. Only then does the skill body load. Its decision contract names the claim it checks, the work leaves a record in the change packet, ng validate and the CI gate check the record&#x27;s structure, and the skill&#x27;s tier (block, warn, or observe) decides whether the work proceeds, stops, or goes to a human.</desc>
+<style>
+.bg{fill:#F7F6F2} .ink{fill:#0E1A30} .muted{fill:#46536B} .soft{fill:#5A6680}
+.acc{fill:#8A5A00} .lnk{fill:#2F4F94}
+.n-step{fill:#FFFFFF;stroke:#0E1A30} .n-store{fill:rgba(14,26,48,0.05);stroke:#46536B}
+.n-focal{fill:rgba(255,210,77,0.22);stroke:#8A5A00} .n-ext{fill:rgba(14,26,48,0.03);stroke:rgba(14,26,48,0.32)}
+.n-opt{fill:rgba(14,26,48,0.02);stroke:rgba(14,26,48,0.36);stroke-dasharray:4 3}
+.n-indep{fill:rgba(47,79,148,0.07);stroke:#2F4F94}
+.grp{fill:none;stroke:rgba(14,26,48,0.22);stroke-dasharray:4 4}
+.band{fill:rgba(14,26,48,0.035);stroke:rgba(14,26,48,0.10)}
+.ln{fill:none;stroke:#46536B} .ln-acc{fill:none;stroke:#8A5A00} .ln-lnk{fill:none;stroke:#2F4F94}
+.life{stroke:rgba(14,26,48,0.25);stroke-dasharray:3 4}
+.mask{fill:#F7F6F2} .rule{stroke:rgba(14,26,48,0.14)}
+.name{font-family:system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;font-size:13px;font-weight:600}
+.sub{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:10px}
+.eye{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:9.5px;font-weight:600;letter-spacing:0.16em}
+.lbl{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:9.5px;letter-spacing:0.04em}
+.ttl{font-family:'Iowan Old Style', Georgia, 'Times New Roman', serif;font-size:22px}
+.call{font-family:'Iowan Old Style', Georgia, 'Times New Roman', serif;font-style:italic;font-size:14px}
+@media (prefers-color-scheme: dark){
+.bg{fill:#0E1A30} .ink{fill:#F4F7FC} .muted{fill:#B3C2DA} .soft{fill:#9DB0CE}
+.acc{fill:#FFD24D} .lnk{fill:#8FB0E6}
+.n-step{fill:#16263F;stroke:#D7E0EE} .n-store{fill:rgba(244,247,252,0.05);stroke:#9DB0CE}
+.n-focal{fill:rgba(255,210,77,0.14);stroke:#FFD24D} .n-ext{fill:rgba(244,247,252,0.03);stroke:rgba(244,247,252,0.34)}
+.n-opt{fill:rgba(244,247,252,0.02);stroke:rgba(244,247,252,0.40)}
+.n-indep{fill:rgba(143,176,230,0.10);stroke:#8FB0E6}
+.grp{stroke:rgba(244,247,252,0.26)} .band{fill:rgba(244,247,252,0.035);stroke:rgba(244,247,252,0.10)}
+.ln{stroke:#9DB0CE} .ln-acc{stroke:#FFD24D} .ln-lnk{stroke:#8FB0E6}
+.life{stroke:rgba(244,247,252,0.28)} .mask{fill:#0E1A30} .rule{stroke:rgba(244,247,252,0.16)}
+}
+</style>
+<defs>
+<marker id="m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="muted" points="0 0, 8 3, 0 6"/></marker>
+<marker id="m-acc" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="acc" points="0 0, 8 3, 0 6"/></marker>
+<marker id="m-lnk" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="lnk" points="0 0, 8 3, 0 6"/></marker>
+</defs>
+<rect class="bg" width="1100" height="452" rx="10"/>
+<text x="28" y="34" class="eye soft">SKILLS · HOW ONE IS INVOKED AND WHAT IT LEAVES BEHIND</text>
+<line class="rule" x1="28" y1="44" x2="1072" y2="44"/>
+<rect class="band" x="28" y="64" width="248" height="360" rx="8"/>
+<text x="42" y="82" class="eye soft" text-anchor="start">WAYS IN</text>
+<path class="ln" stroke-width="1.2" d="M260,132.0 L292,132.0 Q300,132.0 300,140.0 L300,228.0 Q300,236.0 308,236.0 L328,236.0" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M260,236.0 L300.0,236.0 Q300,236.0 300.0,236.0 L300.0,236.0 Q300,236.0 300.0,236.0 L328,236.0" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M260,340.0 L292,340.0 Q300,340.0 300,332.0 L300,244.0 Q300,236.0 308,236.0 L328,236.0" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M426.0,196 L426.0,140.0 Q426.0,132.0 434.0,132.0 L568,132.0" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M764,132.0 L808,132.0" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M934.0,168 L934.0,236" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M808,272.0 L764,272.0" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M666.0,308 L666.0,356" marker-end="url(#m-muted)"/>
+<rect class="n-ext" stroke-width="1" x="44" y="96" width="216" height="72" rx="6"/>
+<text x="152.0" y="123.0" class="name ink" text-anchor="middle">Auto-match</text>
+<text x="152.0" y="138.0" class="sub soft" text-anchor="middle">host reads name + description</text>
+<text x="152.0" y="151.0" class="sub soft" text-anchor="middle">~100 tokens each, always</text>
+<rect class="n-ext" stroke-width="1" x="44" y="200" width="216" height="72" rx="6"/>
+<text x="152.0" y="227.0" class="name ink" text-anchor="middle">Router</text>
+<text x="152.0" y="242.0" class="sub soft" text-anchor="middle">using-nuclear-grade</text>
+<text x="152.0" y="255.0" class="sub soft" text-anchor="middle">+ optional session hooks</text>
+<rect class="n-ext" stroke-width="1" x="44" y="304" width="216" height="72" rx="6"/>
+<text x="152.0" y="331.0" class="name ink" text-anchor="middle">Explicit command</text>
+<text x="152.0" y="346.0" class="sub soft" text-anchor="middle">a person runs /ng-&lt;card&gt;</text>
+<text x="152.0" y="359.0" class="sub soft" text-anchor="middle">built from the skill&#x27;s Prompt</text>
+<rect class="n-focal" stroke-width="1.4" x="328" y="196" width="196" height="80" rx="6"/>
+<text x="426.0" y="227.0" class="name ink" text-anchor="middle">Skill body loads</text>
+<text x="426.0" y="242.0" class="sub soft" text-anchor="middle">SKILL.md, only when</text>
+<text x="426.0" y="255.0" class="sub soft" text-anchor="middle">selected</text>
+<rect class="n-step" stroke-width="1" x="568" y="96" width="196" height="72" rx="6"/>
+<text x="666.0" y="123.0" class="name ink" text-anchor="middle">Decision contract</text>
+<text x="666.0" y="138.0" class="sub soft" text-anchor="middle">the claim it checks</text>
+<text x="666.0" y="151.0" class="sub soft" text-anchor="middle">and its failure class</text>
+<rect class="n-store" stroke-width="1" x="808" y="96" width="252" height="72" rx="6"/>
+<text x="934.0" y="123.0" class="name ink" text-anchor="middle">Record</text>
+<text x="934.0" y="138.0" class="sub soft" text-anchor="middle">.nuclear/changes/&lt;slug&gt;/</text>
+<text x="934.0" y="151.0" class="sub soft" text-anchor="middle">risk · verification · ship ...</text>
+<rect class="n-step" stroke-width="1" x="808" y="236" width="252" height="72" rx="6"/>
+<text x="934.0" y="263.0" class="name ink" text-anchor="middle">ng validate · CI gate</text>
+<text x="934.0" y="278.0" class="sub soft" text-anchor="middle">structure and evidence status,</text>
+<text x="934.0" y="291.0" class="sub soft" text-anchor="middle">not engineering adequacy</text>
+<rect class="n-step" stroke-width="1" x="568" y="236" width="196" height="72" rx="6"/>
+<text x="666.0" y="263.0" class="name ink" text-anchor="middle">Tier</text>
+<text x="666.0" y="278.0" class="sub soft" text-anchor="middle">block · warn · observe</text>
+<text x="666.0" y="291.0" class="sub soft" text-anchor="middle">rolled up by ng decisions</text>
+<rect class="n-indep" stroke-width="1.4" x="568" y="356" width="492" height="56" rx="6"/>
+<text x="814.0" y="381.5" class="name ink" text-anchor="middle">Proceed  ·  stop  ·  escalate to a human</text>
+<text x="814.0" y="396.5" class="sub soft" text-anchor="middle">irreversible, trust-bearing, or thinly evidenced work goes to a person</text>
+</svg>

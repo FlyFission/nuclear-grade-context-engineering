@@ -687,6 +687,39 @@ def verification_ladder():
     f.save()
 
 
+# =========================================================================
+# 11. How a skill is invoked
+# =========================================================================
+def skill_invocation():
+    f = Fig("skill-invocation", 1100, 452, "How a skill is invoked",
+            "Three ways in: the host matches the situation to a skill's name and description, which cost about "
+            "100 tokens each and are always visible; the using-nuclear-grade router, optionally reinforced by "
+            "session hooks, sends the change to a skill; or a person runs the skill's /ng- command card. Only then "
+            "does the skill body load. Its decision contract names the claim it checks, the work leaves a record in "
+            "the change packet, ng validate and the CI gate check the record's structure, and the skill's tier "
+            "(block, warn, or observe) decides whether the work proceeds, stops, or goes to a human.",
+            "Skills · how one is invoked and what it leaves behind")
+    f.group(28, 64, 248, 360, "Ways in", cls="band")
+    e1 = f.box(44, 96, 216, 72, "Auto-match", "host reads name + description\n~100 tokens each, always", kind="ext")
+    e2 = f.box(44, 200, 216, 72, "Router", "using-nuclear-grade\n+ optional session hooks", kind="ext")
+    e3 = f.box(44, 304, 216, 72, "Explicit command", "a person runs /ng-<card>\nbuilt from the skill's Prompt", kind="ext")
+    sk = f.box(328, 196, 196, 80, "Skill body loads", "SKILL.md, only when\nselected", kind="focal")
+    for e in (e1, e2, e3):
+        f.arrow([e["r"], (300, e["cy"]), (300, sk["cy"]), sk["l"]], r=8)
+    ct = f.box(568, 96, 196, 72, "Decision contract", "the claim it checks\nand its failure class")
+    rc = f.box(808, 96, 252, 72, "Record", ".nuclear/changes/<slug>/\nrisk · verification · ship ...", kind="store")
+    f.arrow([sk["t"], (sk["cx"], ct["cy"]), ct["l"]], r=8)
+    f.arrow([ct["r"], rc["l"]])
+    gt = f.box(808, 236, 252, 72, "ng validate · CI gate", "structure and evidence status,\nnot engineering adequacy")
+    f.arrow([rc["b"], gt["t"]])
+    tr = f.box(568, 236, 196, 72, "Tier", "block · warn · observe\nrolled up by ng decisions")
+    f.arrow([gt["l"], tr["r"]])
+    oc = f.box(568, 356, 492, 56, "Proceed  ·  stop  ·  escalate to a human",
+               "irreversible, trust-bearing, or thinly evidenced work goes to a person", kind="indep")
+    f.arrow([(tr["cx"], tr["y"] + tr["h"]), (tr["cx"], oc["y"])])
+    f.save()
+
+
 def main():
     lifecycle(False)
     lifecycle(True)
@@ -702,6 +735,7 @@ def main():
     independence()
     planes()
     verification_ladder()
+    skill_invocation()
     print(f"wrote {len(list(OUT.glob('*.svg')))} SVGs to {OUT}")
 
 

@@ -106,6 +106,7 @@ A second round (Codex on `1e956bc` and `3adf16c`; Copilot on `1e956bc`) raised m
 | CX-21 | Authorship columns were read by position, so `Claim ID \| Verified by \| Evidence author` made the author the verifier (Codex on `4e951a1`) | yes | fixed: author and verifier columns are found by header in any order; a table whose headers do not name all three roles declares nothing; tests added |
 | CX-22 | A role prefix hid a placeholder: `ben + agent:TBD` passed (Codex on `8e23443`) | yes | fixed: the placeholder test also checks the name with any `role:` prefix removed; real prefixed names (`human:carol`) still count; tests added both ways |
 | CX-23 | In a table without outer pipes, a pipe-free body line ended the table, hiding it and every later `pass` row (Codex on `ff6f7f2`) | yes | fixed: a delimited table runs to the next blank line or block start, as GitHub Markdown renders it, so the line becomes a one-cell row with an unreadable status; test added |
+| CX-24 | A heading containing a pipe (`## Claims \| local`) was absorbed into the table above it, hiding the claim table after it (Codex on `b37030d`) | yes | fixed: a heading, fence, quote, or new table header always ends a table, pipe or not, as GitHub Markdown does; tests added |
 | CX-11 | `ben + reviewer` passes against actor `ben` | yes | kept by design: a cell counts when at least one name in it is outside the excluded set, the same rule CX-9 asks for |
 
 Default-mode and `--strict-custody` output stays identical to `main` across all 56 packets (112 runs).

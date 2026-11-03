@@ -744,3 +744,17 @@ def test_pipe_free_body_row_does_not_end_a_delimited_table(tmp_path):
     check_two_party(tmp_path, messages)
     assert any("C-002" in m for m in messages), messages
     assert any("C-001" in m and "cannot read it" in m for m in messages), messages
+
+
+@pytest.mark.parametrize("between", ["## Claims | local\n", "### Claims | local\n", "> note | x\n", ""])
+def test_block_start_with_a_pipe_ends_the_previous_table(tmp_path, between):
+    # Codex on b37030d: a heading containing a pipe was absorbed into the table above it.
+    body = (
+        "# V\n| Meta | Value |\n|---|---|\n| owner | ben |\n" + between
+        + "| Claim ID | Result status |\n|---|---|\n| C-001 | pass |\n\n"
+        "## Other\n" + _T + "| C-004a | deferred |\n"
+    )
+    (tmp_path / "verification.md").write_text(body, encoding="utf-8")
+    messages: list[str] = []
+    check_two_party(tmp_path, messages)
+    assert any("C-001" in m for m in messages), (between, messages)

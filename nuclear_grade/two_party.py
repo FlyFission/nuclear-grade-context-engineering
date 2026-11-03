@@ -395,7 +395,12 @@ def _tables(text: str) -> list[tuple[list[str], list[list[str]]]]:
         # A pipe-led block without one ends at the first line with no pipe.
         while i < len(lines) and lines[i].strip():
             nxt = lines[i].lstrip()
-            if "|" not in nxt and (not delimited or nxt.startswith(("#", "```", "~~~", ">"))):
+            # Another block always ends the table, pipe or not: a heading, a
+            # fence, a quote, or the header line of a new table.
+            starts_table = i + 1 < len(lines) and "|" in lines[i + 1] and _TABLE_DELIM.match(lines[i + 1])
+            if nxt.startswith(("#", "```", "~~~", ">")) or starts_table:
+                break
+            if "|" not in nxt and not delimited:
                 break
             block.append(lines[i])
             i += 1

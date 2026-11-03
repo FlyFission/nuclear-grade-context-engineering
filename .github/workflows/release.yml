@@ -43,6 +43,10 @@ jobs:
           python tools/ng.py tokens .
       - name: Build
         run: python -m build --outdir dist
+      - name: Package page renders on PyPI
+        run: |
+          python -m pip install twine
+          python -m twine check --strict dist/*
       - name: Receipts and checksums
         shell: bash
         run: |

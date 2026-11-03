@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 25039,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0577273,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 4868,
+    "cache_read_input_tokens": 17071,
+    "output_tokens": 1511,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4868,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1258,
+        "cache_read_input_tokens": 10791,
+        "cache_creation_input_tokens": 357,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 357
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000721,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1511,
+      "cacheReadInputTokens": 17071,
+      "cacheCreationInputTokens": 4868,
+      "webSearchRequests": 0,
+      "costUSD": 0.0570063,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No packet exists yet for this change, so here's the assessment based on what you've described.\n\n**Release decision: block.**\n\n**Does the evidence answer the decision question?** No. Green CI tells you the migration runs correctly in the test environment \u2014 it doesn't tell you the release is safe to ship. Release readiness needs evidence on leftover risk, rollback, and monitoring, none of which is present here.\n\n**Evidence custody problem:** the sole basis for \"ready to go\" is the engineer's own PR description. That's the author narrating their own work \u2014 there's no independent actor, mechanism, or authority reviewing the claim. For a change this consequential (primary user DB, major version bump, index changes), a self-report from the author is not sufficient coupling. You need at least one of: a second engineer's independent review of the migration plan against a staging/prod-like dataset, or an actual dry-run against a production-sized copy with before/after query plan comparison on the changed indexes.\n\n**Why this is trust-bearing / high-stakes:**\n- Postgres 12\u219215 changes planner behavior, default settings (e.g., `default_toast_compression`, JIT defaults), and can silently alter query plans even without touching indexes.\n- Index changes compound that risk \u2014 a plan regression or a missed `CONCURRENTLY` on an index build can lock the primary user table in production.\n- \"Primary user database\" implies broad blast radius if anything goes wrong.\n\n**Leftover risks (currently unnamed/unowned):**\n1. No rollback/restore path if the migration fails partway or if post-migration query performance regresses \u2014 owner: needs to be assigned before merge.\n2. No monitoring/alerting for this migration specifically (e.g., query latency on affected tables, replication lag during upgrade, lock wait times, index bloat/usage) \u2014 owner: needs to be assigned.\n3. Version-skew risk: is this a rolling upgrade or a cutover? What happens to in-flight connections/app compatibility during the switch?\n\n**What's missing before this can ship:**\n1. **Rollback plan** \u2014 at minimum: how do you get back to Postgres 12 (snapshot/restore point before migration) and how long does that take? Is it a hard cutover or can you fail forward? \"We haven't prepared any rollback scripts\" is a hard blocker on its own for a primary DB migration.\n2. **Monitoring** \u2014 alerts on query latency, error rates, connection pool health, and index-specific metrics (scan counts, bloat) for the affected tables, active *before* the deploy window, not added after something breaks.\n3. **Independent verification** \u2014 someone other than the author should confirm the migration was tested against production-scale/production-shaped data, not just CI fixtures.\n4. **Apply-clearance separate from verdict** \u2014 even once evidence exists, \"ship\" isn't a standing authorization. At apply-time this afternoon you'd still need: change window open, approvals present, and rollback verified ready right before you pull the trigger.\n\n**Defeater hunt** \u2014 what would have to be true for \"ship this afternoon\" to be wrong, and does current evidence rule it out?\n- Migration fails partway through \u2192 no rollback script \u2192 **not ruled out**.\n- New index causes plan regression under real prod query patterns \u2192 no monitoring to catch it \u2192 **not ruled out**.\n- Both are live, unaddressed defeaters. That alone is enough to block.\n\n**Recommended next action:** don't merge/deploy today. Have the team produce a rollback/restore procedure and stand up minimal monitoring (latency + error rate + lock waits on the affected tables) before this goes to production. If you want, I can help draft the `ship.md` packet (decision, risks, owners, rollback/monitoring notes) once those two items exist, or help sketch the rollback script and alert queries themselves.",
+  "ttft_ms": 3285,
+  "ttft_stream_ms": 1817,
+  "time_to_request_ms": 33,
+  "time_to_request_from_spawn_ms": 639667,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789278165.5078,
+  "type": "result",
+  "duration_ms": 25682,
+  "uuid": "18d7b414-a2c0-4d9e-b9b6-980f99a259e2",
+  "_skill": "checking-release-readiness",
+  "_arm": "C4_full_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "bae7b4b4280755dae9e6fb19a3751e253b9934cbcebc15f91e20e63979e651e4"
+}

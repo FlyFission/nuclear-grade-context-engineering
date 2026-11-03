@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 21183,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.050860899999999994,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 4521,
+    "cache_read_input_tokens": 16713,
+    "output_tokens": 1199,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4521,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 939,
+        "cache_read_input_tokens": 10433,
+        "cache_creation_input_tokens": 368,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 368
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1199,
+      "cacheReadInputTokens": 16713,
+      "cacheCreationInputTokens": 4521,
+      "webSearchRequests": 0,
+      "costUSD": 0.0501369,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 don't cut production over this week. Here's why, using the vetting framework:\n\n**The problem:** Every piece of evidence you have (\"99.9% accuracy, SOC2 compliant, enterprise-grade safety,\" case studies) is vendor marketing, not evidence from your own repo/pipeline. Vendor wording is input, never acceptance proof. You've run zero tests of your own.\n\n**Critical characteristics your use relies on** (content moderation, so these are non-negotiable):\n- **Accuracy/recall on your actual content distribution** \u2014 \"99.9% accuracy\" on their benchmark tells you nothing about your traffic, your edge cases, your abuse patterns.\n- **False-negative behavior** \u2014 what slips through, and what happens downstream when it does (this is usually the highest-consequence failure mode for moderation).\n- **False-positive behavior** \u2014 over-blocking legitimate content, and user/business impact.\n- **SOC2 scope** \u2014 \"SOC2 compliant\" needs a Type II report with the actual trust criteria in scope (security? availability? confidentiality?), not just the claim. Type I \u2260 Type II; scope varies wildly.\n- **Latency/availability** under your production load.\n- **API/data contract stability** \u2014 what happens to your data (is it logged, retained, used for their training?).\n\n**Acceptance methods you actually need before this counts as verified:**\n- Your own eval set (ideally including known-hard/adversarial content from your domain) run against the API, compared to your current pipeline's output.\n- Request and read the actual SOC2 Type II report (not the badge on their site) \u2014 verify scope and exceptions noted by the auditor.\n- Shadow-mode run: route production traffic through the new API in parallel (not live) and diff results against your current pipeline for at least a couple weeks of real traffic variance.\n- Check data handling terms against your data/credential/privacy requirements.\n\n**Gate:** Right now every one of these is an unverified gap, and \"content moderation accuracy/safety\" is exactly the kind of critical characteristic that blocks acceptance if unverified \u2014 this isn't a low-stakes dev dependency, it's a control on what content reaches users.\n\n**Recommendation:** Defer the cutover. Run a shadow/parallel evaluation against your own eval set for at least 1-2 weeks, pull the actual SOC2 report, and compare false-positive/false-negative rates against your current provider before switching anything live. Price alone shouldn't drive a swap on an unverified safety-critical dependency.\n\nWant me to set up a `supplier-trust.md` in this repo capturing this decision (use, gaps, re-check trigger) so it's tracked, or help scaffold the shadow-mode comparison harness?",
+  "ttft_ms": 3812,
+  "ttft_stream_ms": 2185,
+  "time_to_request_ms": 30,
+  "time_to_request_from_spawn_ms": 693274,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789331759.4204,
+  "type": "result",
+  "duration_ms": 20021,
+  "uuid": "52997e41-b27b-4321-ac35-5738c69f7edf",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "09bebff115fd340254ced75f0db14a5449f851f0afc0e1b3462cc8e2577f5162"
+}

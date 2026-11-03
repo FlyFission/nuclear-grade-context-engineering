@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 36230,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.056713,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2447,
+    "cache_read_input_tokens": 14730,
+    "output_tokens": 2455,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2447,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2232,
+        "cache_read_input_tokens": 8450,
+        "cache_creation_input_tokens": 277,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 277
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 700,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000775,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2455,
+      "cacheReadInputTokens": 14730,
+      "cacheCreationInputTokens": 2447,
+      "webSearchRequests": 0,
+      "costUSD": 0.055938,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The \"tiny diff\" framing is the trap here \u2014 three changes with very different blast radii are bundled into one PR, and the diff size tells you nothing about the risk. Here's what to track separately, and why the smoke test won't catch the real risks:\n\n**1. The system prompt wording**\nTrack the exact prompt text as its own versioned artifact, not just \"part of the diff.\" \"More proactive\" is vague enough that its effect can only be judged in combination with what tools the agent has \u2014 which is exactly the problem, since you're adding a refund tool in the same PR. A smoke test checks that the bot responds; it won't reveal whether \"proactive\" now means \"offers refunds unprompted.\" Test the prompt+tool combination together, adversarially, not just the prompt alone.\n\n**2. `issue_refund(amount, order_id)` \u2014 this is the real control surface**\nThis isn't a code change, it's a grant of autonomous financial authority. Track it like one:\n- **Who owns the $50 threshold?** It should be reviewable config with a named owner (support ops/finance), not a number buried in code \u2014 so raising it later isn't just \"another small diff.\"\n- **Sign-off**: did anyone outside engineering (finance, support leadership) actually approve letting the bot issue money without a human? That approval should be recorded, not implied by the PR being merged.\n- **Audit trail**: every call needs to log amount, order_id, and the triggering conversation *before* this ships, not as a follow-up.\n- **Abuse cases a smoke test won't find**: prompt-injection from customer messages coercing a refund, repeat customers draining $50 increments, boundary behavior at exactly $50.\n- **Kill switch**: a way to disable the tool without a redeploy, and ideally a rollout with a capped total daily refund amount before full autonomy.\n\n**3. The help-center edit \u2014 treat this as a compliance change, not a docs tweak**\nYou're deleting a public promise (\"a human always reviews refunds\") at the same moment you're making that promise false. Two things to check before merging:\n- Does that same claim exist anywhere else \u2014 ToS, other help articles, internal agent scripts, compliance docs? If so, deleting it in one place creates silent inconsistency, not a clean update.\n- Who owns customer-facing commitments? That deletion probably shouldn't be approved by the same engineering review that approves the code \u2014 it's a different kind of decision with a different owner.\n\n**The bundling itself is a risk**\nBecause all three land in one commit, if something goes wrong later (a bad refund, a complaint about the deleted promise) it'll be hard to know which change caused it or to revert one without the others. I'd push back on merging this as a single PR \u2014 at minimum, tag it as an \"agent capability change\" so it's discoverable in history, and record the specific eval/test results tied to this exact prompt+tool+threshold combo as the approved baseline, so a future \"tiny\" tweak to any one of the three doesn't get waved through without re-testing the combination.",
+  "ttft_ms": 3528,
+  "ttft_stream_ms": 1320,
+  "time_to_request_ms": 79,
+  "time_to_request_from_spawn_ms": 547217,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025426101.5615,
+  "type": "result",
+  "duration_ms": 37181,
+  "uuid": "e042ce31-7177-4732-ba59-df68024c290e",
+  "_skill": "choosing-what-to-control",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "9d23836dc38aee412ba4b94aeb50fbcac54b1182e832a2e8e8ef833c367bbcac"
+}

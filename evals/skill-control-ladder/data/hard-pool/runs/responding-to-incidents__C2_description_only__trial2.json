@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 15645,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.033565,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2204,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1179,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2204,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1179,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2204,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2204
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 686,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000766,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1179,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2204,
+      "webSearchRequests": 0,
+      "costUSD": 0.032798999999999995,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "That EU migration detail is the thing I'd stop on before posting all-clear. If EU checkout traffic moved to a new routing cluster last month and this dashboard hasn't been updated since, \"flat at zero for 25 minutes\" could mean two very different things:\n\n1. The revert actually fixed it everywhere, or\n2. The dashboard is only showing the old cluster's traffic and silently excludes EU \u2014 so it'd read as flat regardless of what's happening there.\n\nSince the pricing-service config push this morning was suspected to affect checkout broadly, and you don't yet know if EU was in scope for that config or the revert, I wouldn't close on this dashboard alone.\n\nBefore posting all-clear, I'd suggest:\n- Confirm with whoever owns the EU routing cluster (or check its logs/metrics directly) whether error rates there also dropped after the revert.\n- If you can't verify that in the next few minutes, post a status update instead of all-clear \u2014 something like \"reverted pricing-service config at 2:35, primary dashboard flat for 25min, confirming EU cluster coverage before declaring resolved\" \u2014 and close it right after the all-hands once confirmed.\n\nThat keeps you from prematurely closing on a monitoring blind spot while still giving the channel a real update before you step into the meeting. Want help drafting that interim message?",
+  "ttft_ms": 9684,
+  "ttft_stream_ms": 916,
+  "time_to_request_ms": 24,
+  "time_to_request_from_spawn_ms": 1932438,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079707282.6135,
+  "type": "result",
+  "duration_ms": 14752,
+  "uuid": "48c1d0f3-85d1-4ca6-a11c-d4b5b8ebb287",
+  "_skill": "responding-to-incidents",
+  "_arm": "C2_description_only",
+  "_trial": 2,
+  "_input_spec_sha256": "74b753bf5d8e4830e17d1c032da90ecc7f85398919392e5d376c265d3fbffbd8"
+}

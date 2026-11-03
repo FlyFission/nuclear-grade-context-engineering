@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 20475,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0463036,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3042,
+    "cache_read_input_tokens": 14712,
+    "output_tokens": 1529,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3042,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 693,
+        "cache_read_input_tokens": 8432,
+        "cache_creation_input_tokens": 890,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 890
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 626,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000691,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1529,
+      "cacheReadInputTokens": 14712,
+      "cacheCreationInputTokens": 3042,
+      "webSearchRequests": 0,
+      "costUSD": 0.0456126,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No, this needs changes before publishing \u2014 two separate problems:\n\n**\"Fully compliant with the framework\" is a claim you likely can't back up.** NIST SP 800-61 is a guidance document, not a certifiable standard \u2014 there's no official \"compliance\" designation for it, so this phrase is ambiguous at best and misleading at worst. Readers (including potential customers, auditors, or security researchers evaluating your tool) may read \"fully compliant\" as an audited/verified claim. Unless you can point to a specific mapping (e.g., \"our workflow implements the four phases of SP 800-61: Preparation, Detection & Analysis, Containment/Eradication/Recovery, Post-Incident Activity\") or an actual third-party assessment, drop \"fully compliant\" and instead describe concretely what you follow \u2014 e.g., \"Our workflow is structured around the incident-handling lifecycle described in NIST SP 800-61.\"\n\n**The uncited conference talk shouldn't ship as-is.** Publishing \"we don't have a link or citation for it handy\" in public docs is a real liability, not just a style issue: if that talk contained someone else's original ideas or methodology, presenting them without attribution in your public material is an uncredited-borrowing problem, and it's also just unprofessional to admit in print that you didn't bother to track down the source. You have two real options:\n1. Track down the talk (speaker, conference, year) and cite it properly, or\n2. Cut the reference entirely if you can't verify/attribute it \u2014 you can still say \"informed by common SRE practices\" without pointing to a specific uncited source.\n\nSuggested rewrite:\n> \"Our workflow is structured around the incident-handling lifecycle in NIST SP 800-61 (Preparation, Detection & Analysis, Containment/Eradication/Recovery, Post-Incident Activity), incorporating common SRE incident-response practices.\"\n\nBefore you publish, I'd also confirm internally that someone has actually checked your workflow against SP 800-61's phases \u2014 even the softened wording should be true, not aspirational.",
+  "ttft_ms": 10886,
+  "ttft_stream_ms": 1295,
+  "time_to_request_ms": 90,
+  "time_to_request_from_spawn_ms": 618804,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789257188.6055,
+  "type": "result",
+  "duration_ms": 21694,
+  "uuid": "d5a70ae0-5dce-4386-be03-4063552860c8",
+  "_skill": "checking-source-claims",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "03f8276aac4036f023be13a46507794192801d10364728914ee88797ad433685"
+}

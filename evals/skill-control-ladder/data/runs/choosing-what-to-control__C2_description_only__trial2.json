@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 34068,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.053265999999999994,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2166,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2507,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2166,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2507,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2166,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2166
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 700,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000775,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2507,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2166,
+      "webSearchRequests": 0,
+      "costUSD": 0.052490999999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The \"tiny diff\" framing is the trap here \u2014 line count doesn't track risk. These three changes touch three different control surfaces, each with a different owner and a different way to drift silently. Here's what I'd pin down before merging:\n\n**1. The system prompt wording (\"more proactive\")**\n- Prompt text isn't self-documenting like code \u2014 track it as a versioned artifact with a diff history separate from \"just another file in the PR,\" since future edits to it can silently change agent behavior without any code change at all.\n- \"Proactive\" is vague and now sits next to an autonomous refund tool. Run adversarial/eval conversations, not just a smoke test: does \"proactive\" make the bot *offer* refunds unprompted, retry `issue_refund`, or upsell/refund in situations no one intended? A couple of happy-path chats won't surface this.\n- Any future prompt tweak should re-run that same eval set \u2014 prompt changes are exactly the kind of thing that drifts without anyone noticing because no test suite fails.\n\n**2. `issue_refund(amount, order_id)` \u2014 this is the real control point**\n- This is a permission grant, not a feature. Track it like one: the $50 cap, the fact that it's uncapped in total (is it $50 once, or $50 x unlimited calls per conversation/day?), and any authorization check (does it verify `order_id` actually belongs to the requesting customer?) all need to be explicit, reviewed, and hard to change quietly later.\n- Audit logging is now load-bearing. It's replacing the human-in-the-loop check, so every autonomous refund needs a durable log (amount, order, reasoning/trace) someone actually reviews \u2014 not \"logs exist somewhere,\" an assigned owner checking them.\n- Test for prompt injection specifically: can text embedded in an order note or customer message manipulate the agent into calling this tool for the wrong order or amount?\n- Have a kill switch \u2014 a way to disable just this tool without rolling back the whole PR if it misbehaves post-launch.\n\n**3. Deleting \"A human always reviews refunds before they are issued.\"**\n- This isn't a copyedit, it's a compliance claim being retracted to match new behavior. It needs sign-off from whoever owns support policy/compliance, not just engineering review.\n- Check for drift: does that sentence (or the claim it makes) appear anywhere else \u2014 other help articles, ToS, support macros, internal runbooks? If you don't grep for it now, you'll end up with public docs contradicting each other about whether a human reviews refunds.\n\n**The bundling itself is the risk**\nPackaging a wording tweak, a new financial autonomy grant, and a public policy claim change into one PR makes it easy for a quick smoke test to rubber-stamp all three when only #1 is genuinely low-stakes. I'd split the review: let engineering smoke-test the prompt wording, but require explicit sign-off from whoever owns refund/financial risk on the tool's cap and auth logic, and from whoever owns customer-facing policy on the doc deletion \u2014 before merge, not after.",
+  "ttft_ms": 21219,
+  "ttft_stream_ms": 1882,
+  "time_to_request_ms": 41,
+  "time_to_request_from_spawn_ms": 540171,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025419095.152,
+  "type": "result",
+  "duration_ms": 34991,
+  "uuid": "7e7fd95d-d8be-4373-b465-43855d4f9431",
+  "_skill": "choosing-what-to-control",
+  "_arm": "C2_description_only",
+  "_trial": 2,
+  "_input_spec_sha256": "9d23836dc38aee412ba4b94aeb50fbcac54b1182e832a2e8e8ef833c367bbcac"
+}

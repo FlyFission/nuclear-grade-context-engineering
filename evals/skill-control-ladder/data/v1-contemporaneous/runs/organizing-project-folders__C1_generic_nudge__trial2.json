@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 18158,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0423831,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2721,
+    "cache_read_input_tokens": 32347,
+    "output_tokens": 1041,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2721,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 710,
+        "cache_read_input_tokens": 8873,
+        "cache_creation_input_tokens": 128,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 128
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 634,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000714,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 1041,
+      "cacheReadInputTokens": 32347,
+      "cacheCreationInputTokens": 2721,
+      "webSearchRequests": 0,
+      "costUSD": 0.0416691,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This repo is actually empty \u2014 there's no `misc` or `utils` folder here, so I can't inspect your actual 47+30 files to tailor a structure to their real contents. I can still give you a solid proposal based on the categories you described, but treat it as a starting template to validate against your real file list rather than a data-driven recommendation.\n\n**Proposed structure**\n\n```\nscripts/\n  migrations/        # one-off migration scripts\n  templates/          # config templates\ncompliance/\n  archive/            # archived compliance reports\ndocs/\n  meeting-notes/       # old meeting notes (or delete if stale/unneeded)\nshared/\n  <lib-name>/          # helpers used by 2+ services, split by concern\n    # e.g. shared/auth/, shared/http-client/\nservices/\n  <service>/lib/       # helpers used by only ONE service move here, not shared/\n```\n\n**Reasoning / key decisions you'll need to make:**\n\n1. **`misc` isn't one category \u2014 split it by lifecycle, not by \"misc-ness.\"** Migration scripts, templates, compliance reports, and meeting notes have nothing in common except that no one filed them properly. Each gets its own home above.\n2. **Shared helpers need the \"used by 2+ services\" test applied file-by-file.** If a helper is only used by one service today despite living in a shared spot, move it into that service's own lib \u2014 don't let \"shared\" become the new dumping ground.\n3. **Compliance reports and meeting notes are probably archival, not active code** \u2014 consider whether they belong in the repo at all vs. a wiki/drive, or at minimum keep them out of any path that gets built/linted/tested.\n4. **For `utils` (30 files), the real fix is naming by domain, not consolidating into one folder still called `utils`.** I'd want the actual file list to group them (e.g., `date/`, `string/`, `validation/`, `http/`) \u2014 \"utils\" as a folder name is exactly how you got here.\n\nIf you can share the actual file names (or even just categories/one-line descriptions) in `misc` and `utils`, I can turn this into a concrete file-by-file move plan and check for things like circular imports or naming collisions before you execute it.",
+  "ttft_ms": 1989,
+  "ttft_stream_ms": 1202,
+  "time_to_request_ms": 66,
+  "time_to_request_from_spawn_ms": 661989,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789300361.9336,
+  "type": "result",
+  "duration_ms": 19430,
+  "uuid": "d4ba4e25-e36e-4489-b169-5c3dfae6214d",
+  "_skill": "organizing-project-folders",
+  "_arm": "C1_generic_nudge",
+  "_trial": 2,
+  "_input_spec_sha256": "3c0342844fd85d63a677995ba34ac215eb41302896467edfe33343249a2ab95d"
+}

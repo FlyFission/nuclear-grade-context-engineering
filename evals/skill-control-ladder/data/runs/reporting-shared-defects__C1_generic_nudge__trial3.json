@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 19764,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0423844,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2536,
+    "cache_read_input_tokens": 14798,
+    "output_tokens": 1462,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2536,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1214,
+        "cache_read_input_tokens": 8518,
+        "cache_creation_input_tokens": 298,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 298
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 702,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000787,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1462,
+      "cacheReadInputTokens": 14798,
+      "cacheCreationInputTokens": 2536,
+      "webSearchRequests": 0,
+      "costUSD": 0.0415974,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 this isn't resolved, and I'd treat it as more urgent than a normal bug fix. Your local override only stops the leak in your bot. The other three teams are still shipping a template that leaks internal tool identifiers to customers, right now, and they don't know it. A code comment in your repo won't reach them \u2014 they're not reading your codebase.\n\nWhat's actually missing:\n\n1. **Tell the other teams today.** This is customer-facing disclosure of internal system internals (exact DB query tool names), which has real security value to anyone probing your infra. That's not a \"get to it next sprint\" bug \u2014 it's closer to an incident. File a ticket or message the sales/onboarding/internal-tools owners directly with what you found, the repro condition (long conversation \u2192 truncation edge case), and your patch as a reference fix.\n\n2. **Fix `prompt-common` itself, not just your fork.** Right now you have a local override drifting from the shared package \u2014 that's a maintenance trap (next `prompt-common` upgrade, someone forgets why the override exists, or a new dev \"cleans up\" the duplication and reintroduces the bug). Upstream your fix as a PR to the shared package so all four consumers get it, then delete your local override once you're back on the patched version.\n\n3. **Check if it already leaked in production.** \"Occasionally\" + \"long enough conversations\" means this has probably already fired for sales/onboarding/internal-tools, not just support. Someone should grep recent transcripts/logs for the leaked identifiers across all four bots to know if this is theoretical or already happened \u2014 that materially changes urgency and whether security/incident response needs to be looped in.\n\n4. **Confirm your local fix is actually correct upstream-compatible**, not just a patch that happens to work for support's specific usage.\n\nSo: your bot is fixed, but the actual bug \u2014 and the exposure \u2014 is still fully live for three other teams. That's the part that needs action now, not just documentation of why you diverged.",
+  "ttft_ms": 3493,
+  "ttft_stream_ms": 819,
+  "time_to_request_ms": 93,
+  "time_to_request_from_spawn_ms": 1057750,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025936451.885,
+  "type": "result",
+  "duration_ms": 20874,
+  "uuid": "e4888e8c-4cd1-4319-a47b-76fa08f6df1a",
+  "_skill": "reporting-shared-defects",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "7b751a3ea055f01711c4aeef851f9e1cab80281b5104369665d78a55644ede6b"
+}

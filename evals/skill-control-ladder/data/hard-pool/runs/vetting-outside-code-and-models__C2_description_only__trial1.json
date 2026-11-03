@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 31051,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.050549,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2233,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2298,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2233,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2298,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2233,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2233
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 691,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000791,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2298,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2233,
+      "webSearchRequests": 0,
+      "costUSD": 0.049758,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A few things I'd nail down before Friday, roughly in order of how much they'd hurt you in an actual dispute:\n\n**Signer authentication is the real gap, not \"legally binding.\"** ESIGN/UETA make e-signatures legally binding in general \u2014 that's a low bar every vendor clears. What actually matters in a dispute is *who* signed, which is only as strong as SignFast's identity check. If it's just \"click a link sent to an email,\" that's weak evidence a customer can plausibly deny. Check what auth options exist (SMS OTP, KBA) and whether you're actually using one for contracts, not just the default.\n\n**Inspect an actual completion certificate, don't trust the marketing copy.** Pull a sample and confirm it captures signer IP, timestamp, consent-to-electronic-records, and \u2014 critically \u2014 a hash/cryptographic binding of the certificate to the specific signed PDF. If the cert is just a separate summary PDF with no tamper-evident link to the document, it's much weaker if challenged in court.\n\n**Sales ran the happy path twice \u2014 that tells you nothing about failure modes.** Before cutover, actually test: declined/expired signing links, multi-party ordering, customer abandons mid-signature, voiding and resending, and what your webhook/API does when SignFast's callback fails or arrives late. You need a reconciliation job that catches \"contract completed on their side, never landed in your store,\" not just a happy-path webhook handler.\n\n**99.98% is their self-reported API uptime, not webhook delivery reliability.** Those are different failure surfaces \u2014 plenty of vendors have solid uptime but drop or delay webhooks under load. If webhook delivery is how you're pulling completed docs, build in polling/retry as a backstop.\n\n**Storage timing.** If you're pulling signed docs + certs via their REST API into your own store, confirm their retention window and pull promptly \u2014 don't assume documents stay retrievable indefinitely on their end.\n\n**Paperwork you'll want before go-live:** their DPA (contracts likely contain customer PII), a SOC 2 report (not just a self-attestation page), and confirmation you can bulk-export all historical docs/certs if you ever leave them.\n\nGiven this becomes your dispute evidence for customer contracts, I'd push back a bit on the Friday deadline if the auth/certificate checks above haven't happened yet \u2014 worth a day or two more to verify rather than finding out the audit trail is thin during an actual dispute.",
+  "ttft_ms": 20855,
+  "ttft_stream_ms": 1123,
+  "time_to_request_ms": 23,
+  "time_to_request_from_spawn_ms": 1967807,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079742553.8142,
+  "type": "result",
+  "duration_ms": 33395,
+  "uuid": "247e2ae4-9069-4eef-ac53-d06a7af42986",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "0c10a8d236d75edd045ad19567782e25bb400e6c520f5dc8a0d2842a55e93504"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 16000,
+  "num_turns": 6,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0433585,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2984,
+    "cache_read_input_tokens": 32625,
+    "output_tokens": 988,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2984,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 586,
+        "cache_read_input_tokens": 9010,
+        "cache_creation_input_tokens": 254,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 254
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 748,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000823,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 988,
+      "cacheReadInputTokens": 32625,
+      "cacheCreationInputTokens": 2984,
+      "webSearchRequests": 0,
+      "costUSD": 0.042535500000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory is completely empty \u2014 there's no change-packets tool, no packet folders, and no repo content here for me to inspect or act on.\n\nGiven what you've described, though, here's what I'd actually recommend for `add-dark-mode-toggle`:\n\n**Delete the packet, don't just relabel it.** The reasons:\n- It's still 100% placeholder scaffold \u2014 no real work was ever done, so there's nothing to preserve as a draft.\n- The team explicitly decided *not* to pursue it this quarter, and that decision was made elsewhere (the meeting), not in the packet itself \u2014 so the packet's `scaffold` tag is now stale/misleading rather than informative.\n- Nothing merged from it, so deleting it has zero blast radius on shipped code.\n- Three weeks of no activity + an explicit \"not now\" decision means keeping it around just to re-tag it (e.g., as `on-hold` or `abandoned`) adds a status category to maintain for a packet that has no real content backing it.\n\nIf your tool supports an explicit `abandoned`/`archived` tag and you want a paper trail tied to the meeting decision, that's a reasonable alternative to outright deletion \u2014 but if it's pure placeholder text with no unique work, deleting the folder is cleaner than inventing a new status just to explain away noise.\n\nFor `refactor-auth-flow`: since it's actively being worked on, don't touch it \u2014 the `invalid` tag reflects a real, temporary state (missing file mid-edit) and will resolve itself once your teammate finishes, not something to suppress.\n\nSince I can't see the actual repo/tool from here, let me know the real path to the packets folder (or share `bash -lc \"pwd && ls -la\"` output) and I can find the `add-dark-mode-toggle` directory and remove it for you.",
+  "ttft_ms": 1786,
+  "ttft_stream_ms": 1047,
+  "time_to_request_ms": 87,
+  "time_to_request_from_spawn_ms": 578754,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025456778.0225,
+  "type": "result",
+  "duration_ms": 16646,
+  "uuid": "2f83c5b5-4c4e-40d4-89bf-5c788bf9a0da",
+  "_skill": "closing-stale-packets",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "64e5a906a5e816e3e9dd1b7900262f854498c1721b33630e0afc0e709052810d"
+}

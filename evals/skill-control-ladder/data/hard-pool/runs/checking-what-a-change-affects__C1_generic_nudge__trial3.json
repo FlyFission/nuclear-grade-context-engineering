@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 34013,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0669592,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 3075,
+    "cache_read_input_tokens": 32834,
+    "output_tokens": 2525,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3075,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1892,
+        "cache_read_input_tokens": 9213,
+        "cache_creation_input_tokens": 142,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 142
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 680,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00076,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 2525,
+      "cacheReadInputTokens": 32834,
+      "cacheCreationInputTokens": 3075,
+      "webSearchRequests": 0,
+      "costUSD": 0.0661992,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I can't actually inspect your repo here \u2014 it appears empty in this environment \u2014 so I can't verify any of this directly. Based on what you've described, though, a few things are worth checking before you merge, because \"field name typo fix\" and \"customer-facing billing config field rename\" are not the same risk category even when the change itself is small:\n\n- **Is `graceperiod_days` already in any deployed/persisted customer configs** (not just the sample configs in the repo)? If real customers already have this field in stored billing config \u2014 DB rows, saved YAML/JSON, an API they've integrated against \u2014 renaming it is a breaking change for them, not a cleanup. Grep the repo isn't enough; check production/staging data or wherever configs actually live.\n- **Does the validator reject unknown fields?** If it's a strict schema, any config still carrying the old key will start failing validation the moment this ships, silently or loudly depending on how errors surface.\n- **Was `apikey`\u2192`api_key` actually externally facing too?** If that rename only touched internal code paths (no customer ever set `apikey` in their own config), it's not a great precedent for this one \u2014 the failure modes are different for a field customers type themselves.\n- **Green tests only cover what's tested.** Unless your suite includes a config fixture using the *old* field name to confirm graceful handling (or explicit rejection with a clear error), tests passing tells you the new name works, not that old configs won't break.\n- **Other consumers a text find-replace across schema/validator/docs might miss**: API request/response serializers, frontend forms, CLI/SDK code, env-var-to-field mappings, dashboards/alerts referencing the field, other services that import this schema if it's not a single-repo concern.\n\nGiven there's a customer onboarding call tomorrow, the real question is: **is this field already live for any existing customer?** If yes, ship it with a backward-compat alias (accept both names, maybe warn on the old one) rather than a hard cutover \u2014 renaming later once nothing depends on the old name is cheap; breaking a customer's config the day before an onboarding call is not. If this schema has no real customer data against it yet, then it's genuinely low-risk and your plan is fine.",
+  "ttft_ms": 3506,
+  "ttft_stream_ms": 1692,
+  "time_to_request_ms": 27,
+  "time_to_request_from_spawn_ms": 1737396,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079512143.8997,
+  "type": "result",
+  "duration_ms": 34639,
+  "uuid": "0d52d0f2-7025-4bdd-a6c5-de2aea908ab2",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "4ee1a6ff8c86a5b43c9e32348128441c4590ac175d07d24171b4f0a2384023cf"
+}

@@ -1,0 +1,99 @@
+{
+  "is_error": false,
+  "duration_api_ms": 27443,
+  "num_turns": 6,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.05995690000000001,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 3413,
+    "cache_read_input_tokens": 24033,
+    "output_tokens": 2101,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3413,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1098,
+        "cache_read_input_tokens": 9358,
+        "cache_creation_input_tokens": 335,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 335
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 656,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000736,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2101,
+      "cacheReadInputTokens": 24033,
+      "cacheCreationInputTokens": 3413,
+      "webSearchRequests": 0,
+      "costUSD": 0.05922090000000001,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [
+    {
+      "tool_name": "Glob",
+      "tool_use_id": "toolu_016QVYLkfu3xQbJWTe7fo2qw",
+      "tool_input": {
+        "pattern": "/root/.claude/skills/**"
+      }
+    },
+    {
+      "tool_name": "Glob",
+      "tool_use_id": "toolu_01DF83dW6ejXHJ2BBN9uGJjo",
+      "tool_input": {
+        "pattern": "~/**/skills/**/SKILL.md"
+      }
+    }
+  ],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Ship-fast instinct makes sense for a literal one-line diff, but the risk here isn't in the code \u2014 it's in the *behavior* of an autonomous financial-approval agent, which a model swap can change in ways a diff review can't reveal. \"Swapped model per cost review\" tells a future reader nothing about whether that's true.\n\nThis is a **Standard change record**, not Quick \u2014 because the blast radius is \"autonomous system approves/denies real money,\" not \"internal tool.\" What it needs to actually let a skeptical reviewer in six months judge safety:\n\n**1. What changed and why**\n- Old model ID \u2192 new model ID, and the actual business driver (cost review \u2014 link the numbers, not just the phrase).\n\n**2. Evidence the behavior didn't regress**\n- Before/after eval results run against the *same* fixed test set of refund decisions (ideally hundreds of real historical cases with known-correct outcomes), covering: approval accuracy, false-approve rate (money lost), false-deny rate (customer harm), and dollar-amount sensitivity (does it still hold the line on high-value refunds?).\n- Adversarial/edge-case tests: prompt-injection attempts via customer-supplied text, ambiguous or fraudulent-looking requests, refund amount manipulation \u2014 since susceptibility to these varies significantly across models.\n- If the agent uses structured output / tool calls to execute the refund, confirmation that the new model's tool-calling reliability (format compliance, no hallucinated parameters) was tested, not assumed.\n\n**3. Decision boundary comparison**\n- Where the two models *disagree* on the eval set \u2014 not just aggregate accuracy. A reviewer needs to see the diff set of cases, not just a pass rate, because aggregate metrics can hide a shift toward riskier failure modes (e.g., new model approves fewer legitimate refunds but occasionally approves a much larger fraudulent one).\n\n**4. Guardrails and blast-radius limits**\n- What dollar/volume caps, human-in-the-loop thresholds, or kill-switch exists independent of the model, and confirmation those still apply unchanged.\n\n**5. Rollback plan**\n- Literally just \"revert the model ID string\" \u2014 but state it, plus the monitoring signal that would trigger the revert (e.g., refund $ volume or dispute rate deviating from baseline by X%).\n\n**6. Sign-off**\n- Given financial/customer impact, whoever owns risk or fraud policy for refunds should be a named approver, not just engineering.\n\n**7. Post-deploy monitoring window**\n- What's being watched for the first N days/weeks (approval rate, $ volume, dispute/chargeback rate, manual override rate) and who's watching it.\n\nThe \"one-line diff\" framing is the trap: the code change is trivial, but the record needs to prove the *decisions the agent makes* didn't shift, which requires eval evidence, not a description.\n\nWant me to draft this as an actual Standard change record now, or do you have eval results/a test set already that I should pull into it?",
+  "ttft_ms": 8495,
+  "ttft_stream_ms": 805,
+  "time_to_request_ms": 113,
+  "time_to_request_from_spawn_ms": 622984,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025501702.0205,
+  "type": "result",
+  "duration_ms": 28303,
+  "uuid": "fecc9738-150e-4cc1-be19-fa54ef7d9e76",
+  "_skill": "creating-change-records",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "a5e3eca321fe02f530a96247bd792b8f13259e823fa3d5c6cea880f7be8bc00e"
+}

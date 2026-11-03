@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 16237,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0376163,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2537,
+    "cache_read_input_tokens": 23271,
+    "output_tokens": 981,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2537,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 574,
+        "cache_read_input_tokens": 8681,
+        "cache_creation_input_tokens": 136,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 136
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00068,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 981,
+      "cacheReadInputTokens": 23271,
+      "cacheCreationInputTokens": 2537,
+      "webSearchRequests": 0,
+      "costUSD": 0.0369363,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The repo here is empty, so I'm answering based on your description alone. Given that, no \u2014 I wouldn't merge this as just a one-line change. Renaming a field in a **public** API response is a breaking change to a contract that other things depend on, even though the code diff is small. Things worth checking before merging:\n\n- **External consumers**: any client (mobile app, partner integrations, third-party API users) reading `total` will silently break or get `undefined`/missing data \u2014 this isn't caught by your own tests.\n- **API docs / OpenAPI spec**: needs `total` \u2192 `order_total` updated, or it'll be wrong.\n- **Versioning/deprecation policy**: does your public API have a stability guarantee (e.g., semver, \"no breaking changes without a major version bump\")? If so, this likely needs an additive change (add `order_total`, deprecate `total`, remove later) rather than a rename in place.\n- **Tests**: any integration/contract tests asserting on `total` in the response will need updating \u2014 and their passing doesn't prove external consumers are safe.\n- **SDKs/generated clients**: if you publish a client library generated from this API, it needs regenerating and a version bump.\n- **Changelog/release notes**: consumers need advance notice, not a silent merge.\n\nIf this is truly internal-only (no external consumers, no published docs/SDK), then it's low risk and fine to merge as described. But \"public API\" strongly suggests otherwise \u2014 worth confirming who consumes this response before treating it as trivial.",
+  "ttft_ms": 3521,
+  "ttft_stream_ms": 1559,
+  "time_to_request_ms": 38,
+  "time_to_request_from_spawn_ms": 516666,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025395590.869,
+  "type": "result",
+  "duration_ms": 16897,
+  "uuid": "c611f0c6-8706-4b02-8f22-a6992e58e7af",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C2_description_only",
+  "_trial": 2,
+  "_input_spec_sha256": "6e3e254eac13ff94661d637b0eb5b65d3c5b9effa4cf24ea787f2c0bac8cdcf9"
+}

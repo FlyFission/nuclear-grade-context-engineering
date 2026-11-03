@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 29152,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.054744999999999995,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 3610,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2028,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3610,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2028,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 3610,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3610
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 700,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000775,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2028,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 3610,
+      "webSearchRequests": 0,
+      "costUSD": 0.05397,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Here's the breakdown using the controlled-items framework \u2014 this diff is small but it touches three separate control surfaces (behavior wording, agent money-authority, public trust claim), which is exactly the case where \"diff is tiny\" is misleading.\n\n| Item | Type | Current state | Intended state | Why controlled | Evidence / gap | Owner | Re-check trigger |\n|---|---|---|---|---|---|---|---|\n| System prompt wording | Prompt | Existing tone/instructions | \"More proactive\" phrasing | Shapes how aggressively the agent acts, including how eagerly it invokes new tools like `issue_refund` | PR diff \u2014 no gap | Eng lead for the bot | Any further prompt edit; observed shift in bot behavior/complaint volume |\n| `issue_refund(amount, order_id)` tool + $50 autonomous limit | Tool / agent power | Agent cannot issue refunds | Agent can approve refunds \u2264$50 with **no human sign-off** | Direct grant of financial authority to an autonomous agent \u2014 security, fraud, and cost-control risk, not just a code change | **Gap**: no logging/audit spec, no fraud-abuse review, no sign-off from finance/support-ops, only a \"smoke test\" as evidence | Eng lead **+ finance/support-ops** (should co-own, not just eng) | Any change to the $ limit, call frequency, or eligible order types; any chargeback/abuse pattern; any incident |\n| Help-center article \u2014 refund review claim | Public doc / claim | \"A human always reviews refunds before they are issued.\" | Sentence deleted, nothing added in its place | Public-facing claim about the process; deleting it silently makes the doc stop disclosing something material, and the claim is now **false** for the new automated path | **Gap**: no replacement sentence describing the new automated-refund behavior; PR treats this as a cleanup edit, not a disclosure change | Support/comms **+ eng lead** | Any further change to refund process; any customer/legal question about undisclosed automation |\n\n**The real issue:** items 2 and 3 are coupled \u2014 the tool silently makes the deleted sentence false. That's the \"public claims change but stay uncontrolled\" red flag from the skill, and it's also an agent-power increase with no recorded permission-state approval. A smoke test verifies the tool *works*; it doesn't verify the refund limit, abuse potential, or disclosure accuracy were reviewed by anyone with authority over money or customer comms.\n\n**Recommendation before merging:** don't treat this as one 40-line diff. Split the sign-off: eng can own the prompt wording, but the refund tool needs finance/support-ops approval (with an audit log requirement, since there's currently none), and the doc edit needs an accurate replacement sentence rather than a deletion. If you can't get those owners before merging, at minimum land the prompt change now and hold the tool + doc edit as a separate PR with real review \u2014 those two are the ones that can drift silently and bite you.",
+  "ttft_ms": 14386,
+  "ttft_stream_ms": 759,
+  "time_to_request_ms": 29,
+  "time_to_request_from_spawn_ms": 590441,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789228949.6367,
+  "type": "result",
+  "duration_ms": 30179,
+  "uuid": "7d085bdd-32d3-4b93-8000-5cb90ae4188a",
+  "_skill": "choosing-what-to-control",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "9e3d906a4466c368b6c060ab46756868587d281dbc46bfe0497613c248ded3fb"
+}

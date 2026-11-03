@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 22698,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.049370500000000005,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3144,
+    "cache_read_input_tokens": 14695,
+    "output_tokens": 1690,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3144,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 789,
+        "cache_read_input_tokens": 8415,
+        "cache_creation_input_tokens": 1009,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1009
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 656,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000736,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1690,
+      "cacheReadInputTokens": 14695,
+      "cacheCreationInputTokens": 3144,
+      "webSearchRequests": 0,
+      "costUSD": 0.048634500000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No existing change-record convention in this repo, so here's the general guidance.\n\nDon't treat this as a Quick record just because the diff is one line \u2014 the diff size doesn't reflect the blast radius. The actual change is \"an agent that autonomously moves money now uses different judgment,\" and that's a Standard-record-worthy change: model swaps can shift approval thresholds, susceptibility to prompt injection/social engineering in refund requests, and edge-case reasoning, even with identical prompts.\n\nFor a reviewer six months from now to judge safety, the record needs to prove behavior was verified, not just that the config changed:\n\n1. **Why** \u2014 the actual cost/capability rationale (not just \"cost review\"), and what specifically was compared (price, latency, eval scores).\n2. **What changed** \u2014 the model ID diff, plus confirmation nothing else (prompt, temperature, tool schemas) shifted implicitly.\n3. **Evidence of safety** \u2014 results from replaying a fixed eval set of past refund decisions (approvals, denials, edge cases, adversarial/fraud attempts) through the new model, compared against Provider A's actual outcomes. Flag any decision that flipped.\n4. **Guardrails checked** \u2014 confirmation that approval limits, human-escalation triggers, and refusal behavior on ambiguous/fraudulent requests still hold.\n5. **Rollout plan** \u2014 canary %, monitoring window, and rollback trigger (e.g., refund-approval-rate or dispute-rate delta thresholds).\n6. **Sign-off** \u2014 who reviewed the eval results, since \"swapped model per cost review\" gives no reviewer a way to verify anyone actually looked at behavior.\n\nWant me to set up the actual Standard change record for this now?",
+  "ttft_ms": 8784,
+  "ttft_stream_ms": 785,
+  "time_to_request_ms": 31,
+  "time_to_request_from_spawn_ms": 1346151,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789984059.694,
+  "type": "result",
+  "duration_ms": 23199,
+  "uuid": "fd2363b9-1b3d-4d33-a3ca-bd8cd4253483",
+  "_skill": "creating-change-records",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "a5e3eca321fe02f530a96247bd792b8f13259e823fa3d5c6cea880f7be8bc00e"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 15011,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.031908,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2132,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1102,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2132,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1102,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2132,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2132
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 626,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000696,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1102,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2132,
+      "webSearchRequests": 0,
+      "costUSD": 0.031212,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No, this needs changes before publishing. Two issues stand out:\n\n**1. \"Fully compliant with the framework\" is a risky, likely unverifiable claim.**\nNIST SP 800-61 is a guidance document, not a certifiable standard \u2014 there's no official \"compliance\" audit for it the way there is for PCI-DSS or ISO 27001. Stating \"fully compliant\" as fact in public docs creates a claim that:\n- A security researcher, customer, or competitor could scrutinize and find gaps in, damaging credibility\n- Could carry contractual/liability weight if customers rely on it for their own compliance posture\n- Implies a formal assessment was done, which it sounds like it wasn't\n\nUnless you've actually mapped your workflow point-by-point against 800-61 and can back up \"fully,\" soften this to something accurate, e.g. \"follows the incident-handling lifecycle described in NIST SP 800-61\" or \"is aligned with NIST SP 800-61.\" Also confirm which revision (Rev. 2 vs. the newer Rev. 3) you're actually following, since the phase names differ between them.\n\n**2. The uncited talk reference shouldn't go out as-is.**\n\"We don't have a link or citation for it handy\" is a red flag for public docs, not a throwaway caveat:\n- If specific ideas, terminology, or frameworks were lifted from that talk, omitting attribution risks a real credit/plagiarism problem for the speaker \u2014 this is worth resolving properly, not shipping with a shrug.\n- If you can't find and confirm the source, the honest and safer move is to just drop the reference rather than gesture at an unverifiable one.\n\nMy recommendation: find the talk and cite it properly, or cut that clause entirely. Don't publish \"we don't have a citation\" as the citation.",
+  "ttft_ms": 7234,
+  "ttft_stream_ms": 974,
+  "time_to_request_ms": 52,
+  "time_to_request_from_spawn_ms": 487873,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025364702.8804,
+  "type": "result",
+  "duration_ms": 14918,
+  "uuid": "c4b28c86-32e1-4aac-bc4e-6e1abfbd82e3",
+  "_skill": "checking-source-claims",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "03f8276aac4036f023be13a46507794192801d10364728914ee88797ad433685"
+}

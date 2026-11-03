@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 21957,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0447733,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2419,
+    "cache_read_input_tokens": 14721,
+    "output_tokens": 1671,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2419,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1463,
+        "cache_read_input_tokens": 8441,
+        "cache_creation_input_tokens": 258,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 258
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 676,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000766,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1671,
+      "cacheReadInputTokens": 14721,
+      "cacheCreationInputTokens": 2419,
+      "webSearchRequests": 0,
+      "costUSD": 0.044007300000000006,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Here's a handoff note you can drop into Slack/Confluence/email. I've left bracketed placeholders for specifics I don't have (service names, PR links, ticket IDs, escalation contact) \u2014 fill those in before sending.\n\n---\n\n## Handoff: Billing Service OAuth2 Migration\n\n**From:** Benjamin Huffer\n**Date:** 2026-07-26\n**Away:** [tomorrow] through [return date] \u2014 [escalation contact / how to reach you if truly urgent, or \"not reachable\"]\n**Branch:** `oauth-migration`\n**Tracking:** [ticket/issue link]\n\n### Where things stand\nMigrating the billing service from API-key auth to OAuth2.\n\n**Done, merged to `oauth-migration`, unit tests passing:**\n- Auth middleware updated to support OAuth2\n- Token-refresh logic implemented\n\n**Not started:**\n- Migrating the three downstream services that still call the old auth endpoints: [name them]\n- Production config changes\n- Rotating/revoking the old API keys\n\n### \u26a0\ufe0f Critical constraint \u2014 do not break this\n**The old API keys must stay active until all three downstream services are migrated.** If they're rotated or disabled early, those services will start failing with 401s. Do not touch prod config or key rotation until the downstream migration is confirmed complete and verified end-to-end.\n\n### Suggested order of remaining work\n1. Migrate the three downstream services to call the new OAuth2 endpoints (one at a time, verify each before moving to the next)\n2. Confirm all three are fully cut over and working\n3. Only then: update production config and rotate/revoke the old API keys\n4. [Any rollback plan / who to loop in before the prod config + key rotation step]\n\n### Authority limits\n- OK to continue on `oauth-migration` branch and merge downstream service changes there\n- **Do not** touch production config or rotate any API keys without [sign-off from X / confirming all three downstream services are migrated] \u2014 this is the one irreversible, blast-radius step in this project\n- [Any other guardrails: who owns prod deploys, whether this needs a change-review process, etc.]\n\n### Evidence / where to look\n- Branch: `oauth-migration`\n- PRs merged so far: [links]\n- Unit tests: [where they live / how to run them]\n- The three downstream services and their current auth calls: [links to code/repos]\n\n---\n\nWant me to adjust tone (more casual for Slack vs. formal for a doc), or do you have the downstream service names and PR links handy so I can fill those in?",
+  "ttft_ms": 4292,
+  "ttft_stream_ms": 1937,
+  "time_to_request_ms": 87,
+  "time_to_request_from_spawn_ms": 776709,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025654578.0002,
+  "type": "result",
+  "duration_ms": 21100,
+  "uuid": "2dc13bd3-5ecd-4174-b669-8f81cb7c9f94",
+  "_skill": "handing-off-work",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "069a3cad5969cd02cf089969cc5ecebaf6f957303631046dcbc3d623eb2430cc"
+}

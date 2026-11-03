@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 25868,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0542221,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 3262,
+    "cache_read_input_tokens": 23977,
+    "output_tokens": 1778,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3262,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 680,
+        "cache_read_input_tokens": 9375,
+        "cache_creation_input_tokens": 158,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 158
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 679,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000769,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1778,
+      "cacheReadInputTokens": 23977,
+      "cacheCreationInputTokens": 3262,
+      "webSearchRequests": 0,
+      "costUSD": 0.0534531,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "There's no repo checked out here \u2014 this working directory is empty, and you haven't actually shared the diff yet, so I can't merge anything right now regardless.\n\nBut before we get to mechanics, I want to flag something on the substance, because \"make the SOC 2 claim more prominent\" is a different risk category than a typical copy tweak, even though it's the same line count:\n\n- **\"SOC 2 Type II certified\" is imprecise language that gets riskier the more prominent it is.** SOC 2 Type II is an *attestation report* from an auditor, not a certification (there's no certifying body, unlike ISO 27001). Regulators and prospects' security/legal teams do notice this distinction \u2014 it's a common reason companies get called out publicly, which is literally the scenario you're reacting to. Amplifying imprecise wording right now is exactly the move that invites the same scrutiny you're trying to preempt.\n- **Having \"a SOC 2 report\" isn't the same as the claim being currently accurate.** Worth a quick check before this goes prominent: is it Type I or Type II, is the report current (SOC 2 reports typically cover a 12-month window and go stale), and does it cover the systems/services actually being sold to this prospect? None of that is visible from a JSX diff.\n- **Dana's approval covered the original, less prominent copy.** \"She wrote it originally\" and \"she signed off on making it more prominent, under time pressure, for a specific sales claim\" aren't the same review. Compliance-adjacent claims are usually the one category orgs carve out from the \"we ship copy without a review cycle\" norm, precisely because the downside (misrepresentation to a prospect, potential breach-of-contract or FTC exposure) is asymmetric to the upside (a few hours saved).\n\nI'm not trying to block a 3-line change \u2014 if legal/compliance or whoever owns your SOC 2 report can confirm the Type II report is current and covers the relevant scope, this is fine to ship fast. Can you point me at the actual repo/diff, and can you confirm someone's checked report currency/scope rather than just \"we have one\"?",
+  "ttft_ms": 11470,
+  "ttft_stream_ms": 878,
+  "time_to_request_ms": 27,
+  "time_to_request_from_spawn_ms": 1849171,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079623988.6687,
+  "type": "result",
+  "duration_ms": 24867,
+  "uuid": "d9019cf8-98af-4027-928b-cd5351168fbb",
+  "_skill": "rating-change-risk",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "40fd4c7106447e067c1f8baa74e39b19b2402aa6e67462b622061d1638333640"
+}

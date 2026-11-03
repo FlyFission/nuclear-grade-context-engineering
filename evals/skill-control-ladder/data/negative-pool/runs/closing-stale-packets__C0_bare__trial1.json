@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 14417,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0337461,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2520,
+    "cache_read_input_tokens": 31487,
+    "output_tokens": 566,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2520,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 136,
+        "cache_read_input_tokens": 8609,
+        "cache_creation_input_tokens": 182,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 182
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 581,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000666,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 566,
+      "cacheReadInputTokens": 31487,
+      "cacheCreationInputTokens": 2520,
+      "webSearchRequests": 0,
+      "costUSD": 0.0330801,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't see any occurrences of `retryCount` (or anything related to a login rate limiter) anywhere in this repo, and there's no matching diff. Can you confirm:\n\n1. Is this the right working directory/repo for PKT-118?\n2. Do you have uncommitted changes elsewhere, or on a different branch, that I should check?\n\nI don't want to guess at files to edit \u2014 let me know where the diff actually lives.",
+  "ttft_ms": 1997,
+  "ttft_stream_ms": 1241,
+  "time_to_request_ms": 49,
+  "time_to_request_from_spawn_ms": 1398922,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594393307.2366,
+  "type": "result",
+  "duration_ms": 12777,
+  "uuid": "bd3034b7-96d3-4d1d-bf31-4a06f14e599a",
+  "_skill": "closing-stale-packets",
+  "_arm": "C0_bare",
+  "_trial": 1,
+  "_input_spec_sha256": "d1076e8f4ef5697c1310b6840c74ef35450e50a34383149e9619db97034d08fe"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 9336,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.027489,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2651,
+    "cache_read_input_tokens": 23680,
+    "output_tokens": 250,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2651,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 69,
+        "cache_read_input_tokens": 8764,
+        "cache_creation_input_tokens": 167,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 167
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 611,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000711,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 250,
+      "cacheReadInputTokens": 23680,
+      "cacheCreationInputTokens": 2651,
+      "webSearchRequests": 0,
+      "costUSD": 0.026777999999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No `formatters.py` and no references to `fmt_dt` anywhere in this repo. Can you confirm the path (maybe it's in a different directory or you're pointing me at the wrong repo/branch)?",
+  "ttft_ms": 2947,
+  "ttft_stream_ms": 2471,
+  "time_to_request_ms": 39,
+  "time_to_request_from_spawn_ms": 1445958,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594440025.554,
+  "type": "result",
+  "duration_ms": 8471,
+  "uuid": "94699302-f53f-490a-bc18-67a236d7064a",
+  "_skill": "deciding-who-decides",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "c821a18e462213211f2729784701f5029c6fecc3e99588fc00707bb9039971d8"
+}

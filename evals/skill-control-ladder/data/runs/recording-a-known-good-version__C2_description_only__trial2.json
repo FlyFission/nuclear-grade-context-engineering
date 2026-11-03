@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 25886,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0504693,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2488,
+    "cache_read_input_tokens": 23351,
+    "output_tokens": 1851,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2488,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1618,
+        "cache_read_input_tokens": 8642,
+        "cache_creation_input_tokens": 126,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 126
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000753,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1851,
+      "cacheReadInputTokens": 23351,
+      "cacheCreationInputTokens": 2488,
+      "webSearchRequests": 0,
+      "costUSD": 0.0497163,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This repo has no files I can pull evidence from (no PR diff, eval report, or changelog present), so the record needs to be built from what you've told me plus a few specifics I don't have yet. Here's a draft \u2014 please fill in the bracketed items:\n\n---\n\n## Known-Good Version Record: Recommendation Service v2.3.0\n\n**Status:** Accepted / Known-good\n**Accepted:** 2026-07-26\n**Deployed to production:** 2026-07-26, via PR #482\n**Rollback target if this version fails:** [prior known-good version, e.g. v2.2.x \u2014 please confirm]\n\n### What changed\n- Upgraded embedding model dependency: `embed-v1` \u2192 `embed-v2`\n- [Any other changes bundled in this release, if applicable, or confirm this was the only substantive change]\n- Commit / tag: [commit SHA or git tag for v2.3.0]\n\n### Why we're accepting it (evidence)\n- New eval suite run against `embed-v2`: precision and recall both improved over the prior baseline\n  - Baseline precision/recall: [values]\n  - New precision/recall: [values]\n  - Eval suite version/report link: [link or file]\n- QA sign-off: [name/team, date]\n- Production stability check: stable for [duration] post-deploy as of this writing, no incident/alerts triggered\n- Reviewed and merged via PR #482: [link]\n\n### What would make this record out of date\n- Production metrics (precision/recall, latency, error rate) diverging materially from eval suite results once real traffic volume/distribution is observed\n- Any downstream consumer or feature that depended on `embed-v1`-specific embedding characteristics (dimensionality, similarity distribution, etc.) breaking\n- A newly discovered defect, security issue, or regression in `embed-v2` upstream\n- Eval suite itself found to be flawed or non-representative (e.g. gap between eval distribution and production traffic)\n- Subsequent release superseding this as the accepted version\n\n---\n\nA few things I need from you to make this accurate rather than templated:\n1. The actual precision/recall numbers (baseline vs. new).\n2. Commit SHA/tag for v2.3.0 and a link to PR #482 if you want it referenced.\n3. Who signed off on QA (name/team).\n4. What the rollback target version is (v2.2.x specifically?).\n5. Where this record should live (e.g. a `CHANGELOG`/`docs/known-good-versions.md` file in the repo) \u2014 the repo looks empty right now, so let me know the intended path.",
+  "ttft_ms": 2279,
+  "ttft_stream_ms": 1353,
+  "time_to_request_ms": 114,
+  "time_to_request_from_spawn_ms": 1005039,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025883157.9226,
+  "type": "result",
+  "duration_ms": 26801,
+  "uuid": "736ccf27-93fd-4bb9-8f87-6111f51c5fbc",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C2_description_only",
+  "_trial": 2,
+  "_input_spec_sha256": "e4b397fecb333c773679ae125a0df3e537437af52fae1a737ef0b4cd0d8c29c8"
+}

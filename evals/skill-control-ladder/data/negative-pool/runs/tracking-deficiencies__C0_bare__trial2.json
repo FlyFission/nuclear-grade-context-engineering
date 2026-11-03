@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 7370,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0176823,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1940,
+    "cache_read_input_tokens": 6271,
+    "output_tokens": 233,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1940,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 233,
+        "cache_read_input_tokens": 6271,
+        "cache_creation_input_tokens": 1940,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1940
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00066,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 233,
+      "cacheReadInputTokens": 6271,
+      "cacheCreationInputTokens": 1940,
+      "webSearchRequests": 0,
+      "costUSD": 0.0170223,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "That's fine \u2014 a debug `print()` you catch and remove before pushing doesn't need special treatment. Just fold it into your normal commit (or amend if it hasn't been pushed yet and you'd rather keep history clean) and push as usual.\n\nQuick checks before you push:\n- If you'd already pushed the branch with the `print()` in it and want to amend rather than add a new commit, that's a history rewrite \u2014 fine on your own unpushed/unshared branch, but confirm no one else has pulled it.\n- Skim the diff once more (`git diff` / `git status`) to make sure nothing else stray (other debug lines, commented-out code, secrets) snuck in alongside it.\n\nOtherwise, you're good to go.",
+  "ttft_ms": 5178,
+  "ttft_stream_ms": 1233,
+  "time_to_request_ms": 66,
+  "time_to_request_from_spawn_ms": 1752893,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594746800.3328,
+  "type": "result",
+  "duration_ms": 6725,
+  "uuid": "56df50bd-77f3-43db-855d-ffc09c99fa09",
+  "_skill": "tracking-deficiencies",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "0eec2f8cf39ba9704da2ae6ff28badc1d7ab8e1a1ce984a8d3fc63944cde622f"
+}

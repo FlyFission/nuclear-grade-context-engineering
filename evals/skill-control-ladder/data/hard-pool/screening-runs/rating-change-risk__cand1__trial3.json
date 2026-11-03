@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 22340,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.044466000000000006,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2712,
+    "cache_read_input_tokens": 32260,
+    "output_tokens": 1183,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2712,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 896,
+        "cache_read_input_tokens": 8863,
+        "cache_creation_input_tokens": 129,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 129
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 672,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007469999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 1183,
+      "cacheReadInputTokens": 32260,
+      "cacheCreationInputTokens": 2712,
+      "webSearchRequests": 0,
+      "costUSD": 0.04371900000000001,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This working directory is empty \u2014 there's no repo checked out here, so I can't actually see the workflow file to review. Since I can't inspect it directly, here's a sanity check based on what you've described, plus one thing that stands out.\n\n**The one thing I'd stop and check before merging:** the workflow uses the **same `NPM_TOKEN`** that your other internal packages use for publishing. That's the real risk here, independent of how clean the YAML is:\n\n- If that token is tied to a broader npm scope/org (not just this package), then **any** merge to `main` \u2014 including from a compromised dependency in your build, a malicious PR that gets approved, or just a typo'd `package.json` \u2014 can publish under that shared identity. Blast radius isn't \"this package,\" it's every package that token can touch.\n- CI being green and Marcus approving the YAML tells you the workflow *runs*, not that it's *safe*. A workflow-syntax review doesn't usually check things like: does `pull_request_target` leak the secret to fork PRs, is the token scoped narrowly, is there 2FA/provenance enforcement npm-side, etc.\n- \"Two other smaller internal tools have run this way for months with no problems\" is survivorship bias, not evidence of safety \u2014 it means nothing's gone wrong *yet*, not that the setup is sound. Auto-publish incidents (leaked/reused tokens leading to supply-chain compromise) are exactly the kind of thing that looks fine until one bad PR or one compromised action changes that.\n\n**Concrete things worth confirming before merge** (I'd want to see the actual YAML for these):\n1. Is the trigger `push` to `main` only, or does it also fire on `pull_request`/`pull_request_target`? The latter can expose secrets to fork-originated code.\n2. Does the job checkout run any third-party actions or `npm install` scripts *before* publish, with the token already in env? That's a classic injection vector \u2014 a malicious `postinstall` in a transitive dep could exfiltrate `NPM_TOKEN`.\n3. Is `NPM_TOKEN` scoped to just this package (automation token, publish-only, ideally with 2FA/provenance) or is it an org-wide token also used elsewhere? If shared, a leak here compromises everything else using it.\n4. Is there any gate (required review, tag-based trigger, manual approval step) between merge and publish, or is it truly \"merge = publish\" with no checkpoint? Given you just had a *manual* miss cause a delay, an automated step with zero gate also means zero chance to catch a bad version number, an accidental merge, etc.\n\nIf you can point me at the actual workflow file (or paste it), I'll review the specific triggers/permissions/token scope rather than speaking in generalities.",
+  "ttft_ms": 1868,
+  "ttft_stream_ms": 1490,
+  "time_to_request_ms": 25,
+  "time_to_request_from_spawn_ms": 759820,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078534673.4954,
+  "type": "result",
+  "duration_ms": 23083,
+  "uuid": "c58eda73-d10d-4729-a233-01174286557d",
+  "_spec": "35237ac86ff098b1e7a8a505be58a234a19788fb6b2f71d8c6dcdc6027566d07",
+  "_skill": "rating-change-risk",
+  "_cand": 1,
+  "_trial": 3
+}

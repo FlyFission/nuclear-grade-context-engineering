@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 20068,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0398873,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2542,
+    "cache_read_input_tokens": 23341,
+    "output_tokens": 1129,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2542,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 796,
+        "cache_read_input_tokens": 8677,
+        "cache_creation_input_tokens": 145,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 145
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00068,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1129,
+      "cacheReadInputTokens": 23341,
+      "cacheCreationInputTokens": 2542,
+      "webSearchRequests": 0,
+      "costUSD": 0.0392073,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The repo here is empty, so I can't check your actual serializer or find who consumes this field \u2014 worth flagging that upfront.\n\nBut independent of that: no, \"single line diff\" isn't the right way to judge this one. Renaming a field in a **public** API response is a breaking change for every external consumer, regardless of how small the code change is. The size of the diff has nothing to do with blast radius here.\n\nBefore merging, you'd want to know:\n- **Is `total` documented as part of a stable public contract** (OpenAPI spec, published docs, SDKs)? If so, removing it breaks anyone parsing that JSON key, silently (missing field, not an error) \u2014 which is worse than a loud failure.\n- **Is there API versioning?** If yes, this should go in a new version, not a hot-swap on the existing one.\n- **Any internal services or generated client SDKs that also parse this response?** They'd break too, even if external partners are your main concern.\n- **Contract/integration tests** \u2014 do you have any that assert on `total` in the response body? Worth checking if CI would even catch this.\n\nThe common safe pattern: add `order_total` alongside `total`, deprecate `total` with a sunset date/announcement, remove it later \u2014 rather than renaming in place.\n\nIf this API has no external consumers yet (e.g., unreleased) or you control 100% of the clients and can coordinate a synchronized deploy, then yes, a straight rename is fine. Do you know which situation you're in?",
+  "ttft_ms": 2954,
+  "ttft_stream_ms": 1158,
+  "time_to_request_ms": 67,
+  "time_to_request_from_spawn_ms": 696051,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789334363.0972,
+  "type": "result",
+  "duration_ms": 19165,
+  "uuid": "f41ae83c-183e-4b2d-8e40-8aae14d2e33d",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "749436236d0919a227211a0569a973391280decf83571bb58187d3611b4e2b4c"
+}

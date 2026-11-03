@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 38238,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.059503,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2139,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2939,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2139,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2939,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2139,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2139
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 624,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000694,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2939,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2139,
+      "webSearchRequests": 0,
+      "costUSD": 0.058809,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before drafting, one flag: schema changes + data backfill directly against **production**, run unattended overnight with no one to catch a bad outcome, is the kind of hard-to-reverse action worth extra guardrails. I'd build the briefing so the agent's default stopping point is \"migration + backfill script tested and ready\" rather than \"already applied to prod,\" unless you already have solid backups and a tested rollback. I've written it that way below \u2014 adjust the authority section if you actually want it to auto-deploy to prod.\n\n---\n\n## Briefing: `email_verified` column + backfill + signup endpoint update\n\n**Role**\nYou are implementing a schema change and data backfill for the `users` table in production. You are working unsupervised overnight \u2014 no one will review your steps in real time. Prioritize reversibility and evidence over speed.\n\n**Goal (definition of done)**\n1. A migration adds `email_verified` (boolean, `NOT NULL DEFAULT false`, or whatever matches this codebase's migration conventions) to `users`.\n2. Existing rows are backfilled per the signup-source heuristic (defined below \u2014 **do not invent this rule yourself**).\n3. The signup endpoint sets `email_verified` correctly for new signups going forward.\n4. All changes are reversible and tested in staging/CI before touching production.\n\n**Signup-source heuristic \u2014 must be explicit before you start**\n\"A heuristic based on signup source\" is not enough for you to act on unattended. Before writing the backfill:\n- Find the exact rule (e.g., \"OAuth/Google/GitHub signups \u2192 verified=true, email/password signups \u2192 false\") in existing code, docs, or tickets.\n- If you cannot find an explicit rule, **stop and do not guess** \u2014 log what you found, propose the rule you'd use, and halt rather than backfilling production data on an assumption.\n\n**Authority \u2014 what you may do without asking**\n- Write and run migrations against a local/staging database or CI.\n- Write the backfill script and dry-run it against a staging copy or read-only production replica.\n- Update the signup endpoint code and its tests.\n- Open a PR with the migration, backfill script, and endpoint change.\n\n**Requires explicit human approval \u2014 do NOT do unattended**\n- Running the migration or backfill script against the production database.\n- Merging the PR or deploying to production.\n- Deleting or overwriting any column, table, or backup.\n(If you want the agent to actually run it against prod overnight, say so explicitly and add: confirmed recent backup exists, backfill runs in idempotent batches with a dry-run count logged first, and a tested rollback/down-migration.)\n\n**Evidence to produce**\n- The migration file (up + down/rollback).\n- The backfill script, plus a dry-run output showing: total rows, rows per signup-source category, and the resulting `email_verified` value counts \u2014 **before** touching real data.\n- Updated tests for the signup endpoint covering both verified and unverified paths.\n- A short summary of the heuristic actually used and where you found it (or the note that you stopped because it wasn't specified).\n\n**Forbidden actions**\n- No direct `ALTER TABLE` / manual SQL against production outside a migration.\n- No dropping or renaming existing columns.\n- No backfilling without first running and logging a dry-run count.\n- No `--force`, `--no-verify`, or skipping migration safety checks.\n- No merging/pushing to main or deploying without the evidence above committed to the PR.\n\n**Stop conditions \u2014 halt and leave a clear note instead of proceeding**\n- The signup-source heuristic isn't clearly defined anywhere.\n- Dry-run row counts look implausible (e.g., near-100% or near-0% verified) \u2014 could mean bad logic.\n- Migration fails in staging/CI.\n- No confirmed recent backup before any real backfill run.\n- Anything requires broader schema changes than described (e.g., touching other tables).\n- You're unsure whether an action is reversible.\n\n---\n\nWant me to save this as a file in the repo (e.g. `AGENT_BRIEFING.md`) so it's easy to hand off, or tailor the heuristic/authority section once you tell me your actual verification rule and whether you do want it to touch prod directly overnight?",
+  "ttft_ms": 20069,
+  "ttft_stream_ms": 870,
+  "time_to_request_ms": 53,
+  "time_to_request_from_spawn_ms": 194609,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788832804.0908,
+  "type": "result",
+  "duration_ms": 37372,
+  "uuid": "85a86784-ec0c-4aa0-8c68-f510cf0406a0",
+  "_skill": "briefing-an-agent",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "3ecc900b21152e3fe9837564cf8bd7db5791e068635502c120ad82f4a5ad4f98"
+}

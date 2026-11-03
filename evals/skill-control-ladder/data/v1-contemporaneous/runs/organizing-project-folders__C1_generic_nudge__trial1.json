@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 13173,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.037300799999999995,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2748,
+    "cache_read_input_tokens": 32366,
+    "output_tokens": 691,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2748,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 340,
+        "cache_read_input_tokens": 8880,
+        "cache_creation_input_tokens": 148,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 148
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 634,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000714,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 691,
+      "cacheReadInputTokens": 32366,
+      "cacheCreationInputTokens": 2748,
+      "webSearchRequests": 0,
+      "costUSD": 0.036586799999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This working directory is empty \u2014 there's no `misc` or `utils` folder here (or any files at all) that I can inspect. So I can't base a proposal on your actual repo's contents from here.\n\nA couple of ways to proceed:\n\n1. **You point me at the right location** \u2014 if the repo lives elsewhere on disk, give me the path and I'll survey `misc` and `utils` directly.\n2. **You paste a file listing** (e.g. `ls -la misc utils` or `find misc utils -type f`) and I'll work from that.\n3. **I propose a generic structure now**, based purely on your description, that you'd adapt once you see it against real files.\n\nGiven you described real categories (config templates, migration scripts, compliance reports, shared helpers, meeting notes, ~30 ungrouped utils), option 1 or 2 will get you a much more useful, accurate proposal than a guess \u2014 especially since \"shared helper functions used by two different services\" is exactly the kind of thing that's easy to misclassify without seeing the actual code and its dependents. Which would you prefer?",
+  "ttft_ms": 1413,
+  "ttft_stream_ms": 1043,
+  "time_to_request_ms": 25,
+  "time_to_request_from_spawn_ms": 1285165,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789923664.4265,
+  "type": "result",
+  "duration_ms": 12406,
+  "uuid": "c05113d4-3c58-407b-9e50-cf08ddc550ba",
+  "_skill": "organizing-project-folders",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "3c0342844fd85d63a677995ba34ac215eb41302896467edfe33343249a2ab95d"
+}

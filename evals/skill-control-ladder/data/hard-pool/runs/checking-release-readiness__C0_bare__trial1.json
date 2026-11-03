@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 23379,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.050954,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3184,
+    "cache_read_input_tokens": 14630,
+    "output_tokens": 1775,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3184,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 786,
+        "cache_read_input_tokens": 8359,
+        "cache_creation_input_tokens": 1096,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1096
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 694,
+      "outputTokens": 26,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000824,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1775,
+      "cacheReadInputTokens": 14630,
+      "cacheCreationInputTokens": 3184,
+      "webSearchRequests": 0,
+      "costUSD": 0.05013000000000001,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "There's no actual code in this workspace to inspect, so I'll go on what you've described.\n\nI can't sign off on this one \u2014 not because the diff is risky, but because the changelog item you mentioned in passing is the actual thing that needs review, and \"CI is green\" doesn't cover it.\n\n**The real issue:** automatic retries on timeout, enabled by default, for a payment SDK. If a charge/PaymentIntent request times out on your end but actually succeeded on Stripe's side, an automatic retry without a stable idempotency key creates a duplicate charge. That's the classic double-charge failure mode, and it's exactly the kind of thing that's hard to catch in CI \u2014 your integration tests almost certainly hit Stripe's test endpoints under normal latency, not the timeout/retry race condition itself.\n\nBefore merging, I'd want to know:\n\n1. **Does stripe-node-lite auto-generate/reuse idempotency keys on retry**, or does it just re-fire the request as-is? Worth reading the actual changelog/PR for 3.5.0, not just the summary line \u2014 \"automatic retries\" implies they solved this, but \"resilient on flaky networks\" is marketing language, not a guarantee.\n2. **Does your checkout service already pass explicit idempotency keys** on charge/PaymentIntent creation calls? If yes and the SDK respects them on retry, this is likely fine. If either is no, this bump introduces a real risk of duplicate charges during exactly the flash-sale traffic spikes you mentioned \u2014 which is the worst time for it to happen (high volume, timeouts more likely, support load compounding).\n\nThe shipping-rates comparison doesn't transfer here \u2014 that's not a payment-mutating path, so a retry there is low-consequence. Marcus's approval was almost certainly based on diff size, not this specific behavioral change, since it's not visible in a one-line package.json diff.\n\nThis is a 15-minute check, not a blocker on the release: read the actual 3.5.0 changelog/PR for how retries interact with idempotency, and grep your codebase for how charge/PaymentIntent calls are made. If idempotency keys are already enforced end-to-end, ship it tonight with confidence. If not, either add them before merging or pin the retry behavior off until you can.",
+  "ttft_ms": 10269,
+  "ttft_stream_ms": 843,
+  "time_to_request_ms": 26,
+  "time_to_request_from_spawn_ms": 1638641,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079413394.363,
+  "type": "result",
+  "duration_ms": 25243,
+  "uuid": "6c86b729-a1c2-4e16-8f3c-28749f0f2f10",
+  "_skill": "checking-release-readiness",
+  "_arm": "C0_bare",
+  "_trial": 1,
+  "_input_spec_sha256": "d51678557eb302e6f3ce601effd1e73f1d5ad7ee41a3ca55142c4173f9c2c7cc"
+}

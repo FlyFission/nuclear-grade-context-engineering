@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 19201,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.039397,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2558,
+    "cache_read_input_tokens": 14800,
+    "output_tokens": 1254,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2558,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 986,
+        "cache_read_input_tokens": 8520,
+        "cache_creation_input_tokens": 318,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 318
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 702,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000787,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1254,
+      "cacheReadInputTokens": 14800,
+      "cacheCreationInputTokens": 2558,
+      "webSearchRequests": 0,
+      "costUSD": 0.03861,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No, you're not done \u2014 a local override on your bot only stops the leak for you; the other three teams are still running the buggy template and don't know it exists. A comment in your codebase won't reach them since they don't consume your repo.\n\nWhat's still missing:\n\n1. **File the defect against `prompt-common` itself** \u2014 open an issue/ticket describing the truncation edge case and the tool-name leak, not just document your workaround. Right now the fix only lives in your local override, so it'll silently diverge/bit-rot and the root cause never gets fixed upstream.\n2. **Directly notify sales, onboarding, and internal-tools** \u2014 this is a security-relevant leak (internal DB tool identifiers exposed to customers), so a proactive heads-up (Slack/email/ticket) is warranted rather than waiting for them to hit it themselves. Include repro conditions (long conversation \u2192 truncation edge case) and your patched template as a reference fix.\n3. **Land the actual fix in `prompt-common`**, not just your local override, so the other teams can pick it up via a normal dependency bump instead of each writing their own workaround.\n4. **Add a regression test** for the truncation edge case in `prompt-common` so it can't silently reappear.\n5. Given it's already leaking internal tool names in production, consider whether this also needs a security/incident report on your end (e.g., were any real customer conversations affected, does anything need rotating/redacting from logs).\n\nSince your bot is customer-facing and already confirmed to leak, treat step 2 as urgent \u2014 the other three teams likely have live exposure right now.",
+  "ttft_ms": 3495,
+  "ttft_stream_ms": 941,
+  "time_to_request_ms": 86,
+  "time_to_request_from_spawn_ms": 180339,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788817633.6296,
+  "type": "result",
+  "duration_ms": 20043,
+  "uuid": "b60d6470-0114-4468-8e12-6905436fd78d",
+  "_skill": "reporting-shared-defects",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "31499170666ed5715e065795f4fb06bdfe3f4b79c2c199215d21e1bda620c6c9"
+}

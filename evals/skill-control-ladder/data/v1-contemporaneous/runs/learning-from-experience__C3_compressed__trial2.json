@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 47177,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0856987,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3994,
+    "cache_read_input_tokens": 14879,
+    "output_tokens": 3769,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3994,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2226,
+        "cache_read_input_tokens": 8599,
+        "cache_creation_input_tokens": 1675,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1675
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 3769,
+      "cacheReadInputTokens": 14879,
+      "cacheCreationInputTokens": 3994,
+      "webSearchRequests": 0,
+      "costUSD": 0.0849747,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No CI/pre-commit config in this workspace, so I'll write this generically \u2014 happy to tailor the exact hook/branch-protection commands once I know your git host (GitHub/GitLab/Bitbucket) and CI system.\n\nTwo things are tangled together here and worth separating clearly in the writeup: **a weak control** (secrets scanning only existed client-side and was trivially bypassable) and **a policy violation** (an engineer knowingly disabled a security gate and pushed anyway). Both need addressing, but not the same way \u2014 the control gets fixed with engineering changes; the violation gets addressed directly with the person, not papered over as \"bad luck.\"\n\n---\n\n## Incident Report: Hardcoded API Key Merged to Production\n\n**Date of writeup:** 2026-08-03\n**Status:** Resolved (key rotated) \u2014 preventive actions pending\n\n### Summary\nAn engineer's branch failed the pre-commit secrets-scanning hook. Rather than fixing the flagged issue, they ran `git commit --no-verify` and pushed to bypass the check, citing deadline pressure. The commit \u2014 containing a hardcoded API key \u2014 merged to `main` and was live in production for 3 days before a routine security audit detected it. The key was rotated immediately upon discovery.\n\n### Timeline\n| When | Event |\n|---|---|\n| T-3 days | Engineer's pre-commit secrets scan fails |\n| T-3 days | Engineer runs `git commit --no-verify`, pushes, PR merges to `main` |\n| T-3 days \u2192 T0 | Hardcoded key live in production, undetected |\n| T0 | Routine security audit flags the exposed key |\n| T0 | Key rotated |\n\n### Actual vs. Standard\n- **Standard:** No secret reaches `main`/production. The pre-commit hook is a courtesy check for fast local feedback; it is not the only enforcement point \u2014 CI/branch protection should independently block merges containing secrets.\n- **Actual:** The pre-commit hook was the *only* gate. It's client-side and bypassable by design (that's what `--no-verify` is for), and nothing server-side re-checked the commit before merge.\n\n### Root Cause\n1. **Immediate cause:** Engineer bypassed a failing security check under deadline pressure and pushed anyway.\n2. **Underlying cause (the actual weak control):** Secrets scanning was implemented as a single, bypassable, local gate with no independent enforcement in CI or at merge time. A determined or rushed engineer had no barrier between \"hook fails\" and \"code in production.\"\n3. **Detection gap:** No continuous/scheduled secret scanning of the repo existed \u2014 the only reason this was caught at all was an unrelated manual audit, 3 days after the fact. Detection was incidental, not systemic.\n\n### Classification\nThis was **not** an honest slip like a typo or an edge case nobody thought to test. The engineer made a conscious decision to disable a security control and ship anyway. That's a process violation and should be logged and followed up as one \u2014 a direct conversation with the engineer and their manager, separate from the technical remediation below. The goal isn't punitive; it's to make clear that `--no-verify` on a *security* hook (as opposed to, say, a flaky lint rule) is not an individual judgment call, and to understand what pressure led to that decision so it isn't structurally invited again (see deadline-culture note below).\n\n---\n\n## Corrective & Preventive Actions\n\n| # | Action | Fixes | Owner | Status |\n|---|---|---|---|---|\n| 1 | Add secrets scanning as a **required CI check** on PRs (server-side, not bypassable by `--no-verify`) and enable branch protection so `main` cannot merge without it passing | The core weak control \u2014 single bypassable gate | TBD | Pending |\n| 2 | Enable git-host push protection for secrets (e.g., GitHub secret scanning push protection, or GitLab equivalent) to reject the push itself before it even reaches history | Reduces window to zero instead of 3 days | TBD | Pending |\n| 3 | Add scheduled/continuous secret scanning of the full repo (e.g., nightly), with alerting to security channel, independent of commit-time checks | Detection gap \u2014 currently relies on incidental audits | TBD | Pending |\n| 4 | Move API keys/secrets out of source into a secrets manager (Vault, AWS Secrets Manager, etc.) with app-level fetch at runtime | Removes the underlying class of risk, not just detection | TBD | Pending |\n| 5 | Direct follow-up with the engineer + their manager on the `--no-verify` decision; clarify in team norms that security-hook bypasses require explicit sign-off, not unilateral judgment | The policy violation | Manager | Pending |\n| 6 | Revisit whether the deadline that motivated the bypass was itself unreasonable (were there other options besides shipping with a known-failing security check?) | Root-cause the pressure, not just the reaction to it | Eng lead | Pending |\n\n### Verification\nEach action above needs an owner and a completion date before this is closed. I'd suggest tracking it as a ticket with #1 and #2 as blocking (they directly close the control gap) and the rest as follow-on. If any of these get waived (e.g., push protection isn't available on your git host tier), that should be a stated, deliberate decision from whoever owns the security posture \u2014 not a silent drop.\n\n### Notification\nSince this is a credential/security incident that was live in production, confirm whether anyone needs to be notified beyond the rotation \u2014 e.g., if the key had access to customer data or third-party systems, check logs from the exposure window for anomalous usage, and loop in security/compliance if your policies require external disclosure for this class of incident.\n\n---\n\nWant me to tailor #1\u2013#3 to your actual stack (tell me your git host and CI system) and draft the actual config, or help you turn this into a ticket/doc format for your tracker?",
+  "ttft_ms": 18038,
+  "ttft_stream_ms": 1179,
+  "time_to_request_ms": 60,
+  "time_to_request_from_spawn_ms": 963638,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789602188.3782,
+  "type": "result",
+  "duration_ms": 48318,
+  "uuid": "c4a3c6c5-2093-4cb5-a03a-9a067d879499",
+  "_skill": "learning-from-experience",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "e5c1e8ae96210bf0b437d2d17a20ba1d6da05118e7f4af6a16e22cca704c107e"
+}

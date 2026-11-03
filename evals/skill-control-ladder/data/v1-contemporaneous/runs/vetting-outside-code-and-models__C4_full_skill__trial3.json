@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 28638,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.06714490000000001,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 5370,
+    "cache_read_input_tokens": 16713,
+    "output_tokens": 1945,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 5370,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 832,
+        "cache_read_input_tokens": 10433,
+        "cache_creation_input_tokens": 1217,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1217
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1945,
+      "cacheReadInputTokens": 16713,
+      "cacheCreationInputTokens": 5370,
+      "webSearchRequests": 0,
+      "costUSD": 0.0664209,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 don't cut production over this week. Right now the only thing supporting this decision is vendor marketing, and marketing isn't evidence.\n\n**Why this blocks:**\n\n- **\"99.9% accuracy\"** \u2014 measured on whose data, against what definition of harm? You have zero data on how it performs on *your* content distribution. Moderation errors aren't symmetric: false negatives let harmful content through (safety/legal exposure), false positives over-block legitimate users. Neither is verifiable from a headline number.\n- **\"SOC2 compliant\"** \u2014 a badge on a website is a claim, not a report. SOC2 Type II reports are usually only available under NDA from the vendor directly, and you need someone with security/compliance authority to actually read it (scope, exceptions, time period covered).\n- **Case studies** \u2014 vendor-selected, vendor-written. Not evidence of anything except that the vendor can write good case studies.\n- **Data impact** \u2014 you'd be sending production user content to a new third party. That's a data-handling and possibly PII/privacy decision, not just an API swap, and needs its own review (retention, training-on-your-data clauses, deletion, DPA) regardless of moderation accuracy.\n\n**What would actually let you cut over:**\n\n1. Build a small eval set from your own traffic (known-harmful and known-benign examples, edge cases you currently struggle with) and run it against the new API yourself. This is the acceptance method for the accuracy claim \u2014 not their number, yours.\n2. Request the actual SOC2 Type II report and have someone qualified (security/compliance) review it, not just confirm it exists.\n3. Check latency/throughput under your real load, and confirm what happens to submitted content contractually.\n4. Run it in shadow mode alongside your current provider for a period before it's the decision-maker in production.\n5. Set a re-check trigger \u2014 this trust only holds for the version/model you tested; if the vendor updates their model or fine-tune, re-verify.\n\nGiven the switch touches production data and a safety-relevant control (content moderation), I'd escalate the SOC2/data-handling piece to whoever owns security/privacy review rather than deciding it inline. The pricing advantage is real but it's not a reason to skip verification on something that fails in a way that's visible to users and hard to walk back.\n\nIf it'd help, I can draft a `supplier-trust.md` for this vendor laying out the critical characteristics, acceptance methods, and gaps so you have something concrete to run the eval against \u2014 want me to do that?",
+  "ttft_ms": 13474,
+  "ttft_stream_ms": 911,
+  "time_to_request_ms": 43,
+  "time_to_request_from_spawn_ms": 132675,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788771189.7124,
+  "type": "result",
+  "duration_ms": 28867,
+  "uuid": "3e60595c-346d-4b1c-808a-b4ce5af50b25",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C4_full_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "09bebff115fd340254ced75f0db14a5449f851f0afc0e1b3462cc8e2577f5162"
+}

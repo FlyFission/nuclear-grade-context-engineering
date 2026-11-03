@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 9464,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.039023,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 4463,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 645,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4463,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 645,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 4463,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4463
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00068,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 645,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 4463,
+      "webSearchRequests": 0,
+      "costUSD": 0.038343,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Here's a simple TTL-based memoization decorator you can drop into a script:\n\n```python\nimport time\nimport functools\n\ndef ttl_cache(ttl_seconds=60):\n    def decorator(func):\n        cache = {}  # key -> (result, expiry_timestamp)\n\n        @functools.wraps(func)\n        def wrapper(*args, **kwargs):\n            key = (args, tuple(sorted(kwargs.items())))\n            now = time.monotonic()\n\n            if key in cache:\n                result, expiry = cache[key]\n                if now < expiry:\n                    return result\n\n            result = func(*args, **kwargs)\n            cache[key] = (result, now + ttl_seconds)\n            return result\n\n        wrapper.cache_clear = cache.clear\n        return wrapper\n    return decorator\n\n\n# Example usage\n@ttl_cache(ttl_seconds=30)\ndef slow_api_call(user_id):\n    print(f\"Calling API for {user_id}...\")\n    time.sleep(1)  # simulate slow call\n    return {\"user_id\": user_id, \"data\": \"some result\"}\n\n\nif __name__ == \"__main__\":\n    slow_api_call(42)  # hits API\n    slow_api_call(42)  # cached, instant\n    time.sleep(31)\n    slow_api_call(42)  # expired, hits API again\n```\n\nNotes for when you're deciding whether to build it out further:\n- Uses `time.monotonic()` so it's immune to system clock changes.\n- No eviction of stale entries \u2014 for a short-lived script that's fine, but for a long-running process you'd want to periodically purge expired keys or cap cache size.\n- Not thread-safe as written; add a `threading.Lock` around cache reads/writes if this runs concurrently.\n- Args must be hashable (kwargs get sorted into a tuple for a stable key).\n\nLet me know if you want a version with size limits, thread safety, or async support.",
+  "ttft_ms": 1313,
+  "ttft_stream_ms": 893,
+  "time_to_request_ms": 34,
+  "time_to_request_from_spawn_ms": 1341730,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594335656.6248,
+  "type": "result",
+  "duration_ms": 10625,
+  "uuid": "c41e1088-2d09-4f7f-9118-50b0a8deae30",
+  "_skill": "checking-release-readiness",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "ceeb94f59fbcb59966fcf2b5d55ad14e8efe5b1d8bc527eddff1b20cb60fcbd4"
+}

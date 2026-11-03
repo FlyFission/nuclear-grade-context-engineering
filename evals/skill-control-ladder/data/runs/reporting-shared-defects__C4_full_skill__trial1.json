@@ -1,0 +1,81 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 12943,
+  "duration_api_ms": 11340,
+  "ttft_ms": 3581,
+  "ttft_stream_ms": 1723,
+  "time_to_request_ms": 340,
+  "time_to_request_from_spawn_ms": 817135,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121380164.022,
+  "num_turns": 1,
+  "result": "No, you're not done \u2014 the local patch fixes your bot only; the other three teams are still shipping the same leak.\n\nGiven this touches security/data exposure (internal tool identifiers leaking to customers), treat it as escalation-worthy, not just an FYI. Concretely:\n\n1. **Notify the other three consumers now** \u2014 sales, onboarding, and internal-tools owners need: what the bug is (truncation edge case in `prompt-common`'s system-prompt template causing internal tool-name leakage), how to reproduce/trigger it, severity (customer-facing internal-info disclosure), and your fix as a workaround they can apply today while `prompt-common` gets patched upstream.\n2. **Fix it in `prompt-common` itself**, not just your local override \u2014 your override is a workaround, not the actual fix. File a PR/issue against the shared package with your corrected template so it becomes the new default for everyone, not just support.\n3. **Give the notice an owner and a tracking link** \u2014 file a ticket (bug tracker/Jira/whatever you use) for the `prompt-common` fix, and make sure someone is accountable for confirming sales/onboarding/internal-tools have applied the workaround or upgraded.\n4. **Escalate** \u2014 since this is leaking internal database tool identifiers to customers, loop in whoever owns security/incident review for your org, even if no exploit has been observed yet. This is the kind of thing that should get a quick severity assessment, not just live as a code comment.\n5. **Log it** in whatever OPEX/lessons-learned and deficiency-tracking process you use, linked to the ticket, so \"known issue in shared prompt template\" doesn't just live in your PR description.\n\nA code comment in your own repo explaining the override is not a substitute for any of the above \u2014 it's invisible to the other three teams.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0370334,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 4022,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 737,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4022,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 737,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 4022,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4022
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 702,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000782,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 737,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 4022,
+      "webSearchRequests": 0,
+      "costUSD": 0.0362514,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "35c2ddc0-a06c-4625-863f-efb797333458",
+  "_skill": "reporting-shared-defects",
+  "_condition": "with_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "7912033376cc4af1f6ec5fb29b3e2ec73aa9d4ae41ee51ac2c01006fd37cf04d",
+  "_arm": "C4_full_skill",
+  "_reused_from": "evals/skill-benchmark-pilot/data/all-skills-pilot/runs/reporting-shared-defects__with_skill__trial1.json"
+}

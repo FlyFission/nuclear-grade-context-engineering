@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 8183,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.028885,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 3476,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 364,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3476,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 364,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 3476,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3476
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 604,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000679,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 364,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 3476,
+      "webSearchRequests": 0,
+      "costUSD": 0.028206000000000002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A quick rewrite tied to what's actually verified is safer than \"guaranteed\"/\"100%\" absolutes, even internally \u2014 those claims tend to get copy-pasted into public docs later and nobody remembers to hedge them then.\n\nSomething like:\n\n```\n// Thread-safe via <mutex/lock-free CAS/whatever mechanism you use>.\n// Errors are handled by <returning Result/logging and retrying/whatever>; see tests in <file>.\n```\n\nFill in the mechanism and point to the tests/proof so the comment says what's actually true rather than an absolute. If you tell me what locking approach and error handling the function actually uses, I can write the exact line.",
+  "ttft_ms": 3542,
+  "ttft_stream_ms": 1346,
+  "time_to_request_ms": 330,
+  "time_to_request_from_spawn_ms": 1323996,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594316392.5566,
+  "type": "result",
+  "duration_ms": 9878,
+  "uuid": "0a0fe187-6355-489e-830c-3da0dfff2778",
+  "_skill": "checking-legal-and-safety-wording",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "e822d182f1647523c9e3ade5633baa69a8011d743183425d3fe5053d21fb6360"
+}

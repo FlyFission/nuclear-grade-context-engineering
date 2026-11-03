@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 10853,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.04326139999999999,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 4826,
+    "cache_read_input_tokens": 27818,
+    "output_tokens": 353,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4826,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 64,
+        "cache_read_input_tokens": 10881,
+        "cache_creation_input_tokens": 225,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 225
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 577,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000647,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 353,
+      "cacheReadInputTokens": 27818,
+      "cacheCreationInputTokens": 4826,
+      "webSearchRequests": 0,
+      "costUSD": 0.0426144,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't see the script in this repo/directory \u2014 could you point me to its path, or paste the relevant print statements here? Once I can see how you're printing the table name and row count, I can format them into aligned columns.",
+  "ttft_ms": 1943,
+  "ttft_stream_ms": 854,
+  "time_to_request_ms": 85,
+  "time_to_request_from_spawn_ms": 1653692,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594647914.7915,
+  "type": "result",
+  "duration_ms": 11526,
+  "uuid": "7cc0c947-d8be-4741-aa32-ead77faf1a4a",
+  "_skill": "recording-what-an-agent-did",
+  "_arm": "C4_full_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "fb477ea522ac0fe3c7c953a40149503544fe2472605ca39f8be74330a09b4626"
+}

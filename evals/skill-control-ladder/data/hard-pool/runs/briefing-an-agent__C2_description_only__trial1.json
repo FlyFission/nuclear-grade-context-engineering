@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 36415,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.062903,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2265,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 3108,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2265,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 3108,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2265,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2265
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 708,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000803,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 3108,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2265,
+      "webSearchRequests": 0,
+      "costUSD": 0.0621,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Here's the briefing for the review-and-merge agent:\n\n---\n\n**Role:** Review-and-merge agent for today's batch of config-only PRs on the feature-flags repo.\n\n**Goal anchor:** Merge PR #482 (and same-shaped flag-default PRs in today's queue) safely before Friday's freeze, without expanding scope beyond flag-default value changes.\n\n**Context on PR #482:** Flips `checkout.expressPay.enabled` from `false` \u2192 `true` in `flags/production.yaml`. checkout-service test suite is currently green. Marcus (code owner for checkout-service) has signed off.\n\n**Authority \u2014 auto-merge granted only when ALL of these hold:**\n1. Diff is confined entirely to `flags/production.yaml`\n2. Diff is \u22645 lines\n3. Full checkout-service test suite passes (not just relevant subset, not skipped/flaky)\n4. Code-owner approval is present on the PR\n\nThis authority applies to flag-default value changes (boolean/scalar toggles), not schema or structural changes to the flags file.\n\n**Evidence to produce:** Run the test suite, capture the full log, and post it as a PR comment before merging. Note the diff line count and approver in that comment.\n\n**Forbidden actions:** Don't edit the diff. Don't merge if tests are skipped, mocked, or re-run selectively. Don't merge without the code-owner approval visible on the PR itself (not just verbal/Slack confirmation). No force-push or history rewriting.\n\n**Stop conditions \u2014 halt and ping you immediately if:**\n- Diff touches any file other than `flags/production.yaml`\n- Diff exceeds 5 lines\n- Tests fail, are flaky, or don't run to completion\n- No recorded code-owner approval on the PR\n\nOne flag: since this specific toggle enables a payment flow in production, you may want the agent to also link the checkout-service on-call/monitoring dashboard in its merge comment as a courtesy \u2014 cheap to add, useful if anything looks off post-merge. Optional, not a blocker given your track record with these.\n\nWant this saved as a file for the agent's config, or is pasting it into the agent's prompt directly what you need?",
+  "ttft_ms": 28656,
+  "ttft_stream_ms": 999,
+  "time_to_request_ms": 194,
+  "time_to_request_from_spawn_ms": 1587226,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079361192.5806,
+  "type": "result",
+  "duration_ms": 35307,
+  "uuid": "87b17a7d-af69-43a6-91ce-026c1bdc8ffd",
+  "_skill": "briefing-an-agent",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "fe907c907e7a659a5b1678357c312181a94f703d80bfe211e5cf6f594fcae7a4"
+}

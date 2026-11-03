@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 18539,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0453454,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3825,
+    "cache_read_input_tokens": 16008,
+    "output_tokens": 1126,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3825,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 882,
+        "cache_read_input_tokens": 9728,
+        "cache_creation_input_tokens": 377,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 377
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 626,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000691,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1126,
+      "cacheReadInputTokens": 16008,
+      "cacheCreationInputTokens": 3825,
+      "webSearchRequests": 0,
+      "costUSD": 0.0446544,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No, this sentence needs changes before publishing \u2014 it has two separate problems.\n\n**1. NIST SP 800-61 claim: \"fully compliant\"**\n\"Compliant with\" a NIST framework is a formal assurance/certification claim, not an influence claim. NIST SP 800-61 is a real, linkable public source, so citing it is fine \u2014 but \"fully compliant\" implies you've done a compliance assessment against every control in the framework, which is a much stronger claim than \"we based our workflow on it.\" Unless you've actually had this externally (or rigorously internally) assessed against the standard, this is a compliance claim you likely can't back up, and it exposes you to real risk if a customer, auditor, or regulator holds you to it.\n\n**2. The SRE conference talk**\nThis is cited as a source but is unconfirmed/unlinkable (\"we don't have a link or citation handy\"). Per the source-lineage check: any source without a public URL gets downgraded to \"public URL needed\" or reworded as general influence \u2014 it can't be presented as a citable source in public docs. Also, \"conference talk\" as stated is vague enough to invite a hostile reader to ask \"which talk, which conference, by whom?\"\n\nSuggested rewrite:\n\n> \"Our workflow is informed by NIST SP 800-61 and general SRE incident-response practices.\"\n\nOr, if you want to keep the NIST detail more visible without over-claiming:\n\n> \"Our workflow draws on the structure of NIST SP 800-61 (Computer Security Incident Handling Guide) and general SRE incident-response practices. This is not a certified or formally assessed compliance claim.\"\n\nChanges made:\n- \"follows ... and is fully compliant with\" \u2192 \"draws on\" / \"is informed by\" (influence, not compliance)\n- Dropped the specific-but-unlinkable \"conference talk\" attribution \u2192 generalized to \"SRE incident-response practices\" (no unconfirmed source presented as lineage)\n- Optionally add an explicit disclaimer sentence if this doc might reach regulated/customer/investor audiences, since incident-response + NIST claims are exactly the kind of wording that gets scrutinized in vendor security questionnaires\n\nOne thing to flag: if you actually do want to claim NIST 800-61 compliance (e.g., because you've mapped your process to its phases in detail), that's a bigger claim that should go through whoever owns security/compliance messaging for the org before it ships, since \"compliant\" language in public docs can create real customer/contractual expectations.",
+  "ttft_ms": 2309,
+  "ttft_stream_ms": 1547,
+  "time_to_request_ms": 36,
+  "time_to_request_from_spawn_ms": 320067,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788958143.215,
+  "type": "result",
+  "duration_ms": 19058,
+  "uuid": "a560f22f-e972-479b-b774-338b4d84c6e4",
+  "_skill": "checking-source-claims",
+  "_arm": "C4_full_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "9aa5c5133970a254ce9137b4668d3bd29f89d02c44a08957844e02c9d38aa2c5"
+}

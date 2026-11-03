@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 42542,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.08633769999999999,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 4585,
+    "cache_read_input_tokens": 14769,
+    "output_tokens": 3576,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4585,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1250,
+        "cache_read_input_tokens": 8489,
+        "cache_creation_input_tokens": 2376,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2376
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 675,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000745,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 3576,
+      "cacheReadInputTokens": 14769,
+      "cacheCreationInputTokens": 4585,
+      "webSearchRequests": 0,
+      "costUSD": 0.0855927,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No checkout code lives in this repo, so I'll build this from the evidence you described rather than the source.\n\nBefore the table \u2014 the evidence as described doesn't actually support the claim as written, and I'd flag that rather than just formatting it nicely for the packet.\n\n**Why:** axe-core is static/automated analysis \u2014 it catches missing alt text, contrast, ARIA misuse, etc., but industry estimates put automated tools at catching roughly 30\u201340% of WCAG issues. It cannot detect whether a screen reader user can actually complete checkout: focus order between steps, whether price/total updates get announced, whether validation errors are associated with fields, whether a payment step (especially any third-party iframe) is navigable. Dana's sign-off, as described, is a visual/design review (\"looks right\") \u2014 not evidence unless she actually drove the flow with a screen reader (eyes closed/muted, NVDA/JAWS/VoiceOver). And \"account settings shipped with no complaints\" isn't validating evidence: silence isn't confirmation, and screen reader users who hit a blocking failure typically abandon rather than file a bug \u2014 that channel is biased toward false negatives, especially for revenue-critical flows like checkout where abandonment is invisible to you.\n\nHere's the row, written to reflect what's actually verified:\n\n| Field | Content |\n|---|---|\n| **Claim** | New checkout flow is accessible to screen reader users. |\n| **Status** | **Not verified \u2014 evidence supports component-level conformance and design QA, not confirmed screen-reader usability.** Recommend narrowing the claim or blocking on a real AT pass before shipping. |\n| **Gap** | No manual assistive-technology (AT) test performed on the live flow. axe-core is static analysis and misses focus management, ARIA live-region timing, reading order, and dynamic-content announcements. Dana's review was visual/design sign-off, not an AT-based test. Checkout-specific risk surfaces (multi-step focus handoff, dynamic totals, validation error announcements, any embedded payment UI) aren't covered by component-library accessibility or the account-settings precedent, which is a lower-complexity, single-step flow. |\n| **Tests** | Manual full-flow pass with a real screen reader (VoiceOver/Safari or NVDA/Chrome), including error states and the payment step. Keyboard-only navigation test (tab order, no traps, visible focus). If not feasible before Friday: ship with claim scoped down and schedule an AT pass as a fast-follow within the week. |\n| **Non-claims** | Not verified: usability with a screen reader; focus management across steps; announcement of dynamic content (totals, errors, loading states); accessibility of any third-party payment embed. Not established by the account-settings precedent (different flow complexity) or by \"no complaints\" (absence of reports \u2260 absence of failures \u2014 screen reader users who can't complete checkout typically abandon silently). |\n\nGiven the ship date, I'd suggest either (a) rewriting the claim to something you can actually back tonight \u2014 e.g. \"Checkout flow built from WCAG-conformant, previously-shipped components; automated scanning shows zero axe-core violations; manual screen-reader testing scheduled for [date]\" \u2014 or (b) doing a 30\u201360 min manual VoiceOver/NVDA pass before Friday if anyone on the team can run one, which would let you make the real claim instead of a hedged one. Want help drafting the downgraded claim language, or a quick script/checklist for that manual AT pass?",
+  "ttft_ms": 26741,
+  "ttft_stream_ms": 874,
+  "time_to_request_ms": 84,
+  "time_to_request_from_spawn_ms": 684558,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078459381.3606,
+  "type": "result",
+  "duration_ms": 41594,
+  "uuid": "0b6daad5-3379-48d4-8b80-812260286bf1",
+  "_spec": "2dd20e1a1df2574786ec8a2114ce82b00fd841e01acb77b0cc792a69fcf2d2ee",
+  "_skill": "proving-claims",
+  "_cand": 2,
+  "_trial": 2
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 23267,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.046842800000000004,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2485,
+    "cache_read_input_tokens": 23216,
+    "output_tokens": 1618,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2485,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1263,
+        "cache_read_input_tokens": 8626,
+        "cache_creation_input_tokens": 139,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 139
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00068,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1618,
+      "cacheReadInputTokens": 23216,
+      "cacheCreationInputTokens": 2485,
+      "webSearchRequests": 0,
+      "costUSD": 0.046162800000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The repo here is empty, so I can't enumerate concrete references \u2014 but based on what you've described, this isn't actually a \"tiny\" change. The line count is small; the blast radius isn't.\n\n**Why \"single line\" is misleading:** `total` is a public API response field. Renaming it is a breaking contract change, not a refactor. Anything parsing that JSON response \u2014 code you don't own and can't see \u2014 will break silently (missing field) rather than erroring loudly.\n\n**What to check before merging:**\n\n- **API consumers**: any external clients, partner integrations, or internal services that parse this response and read `total`. If you have API logs/analytics, check who's actually hitting this endpoint.\n- **API docs / OpenAPI-Swagger spec**: needs to reflect the new field name, or docs and reality diverge.\n- **SDKs / generated client libraries**: if you publish an SDK, it needs regenerating and re-releasing.\n- **Frontend / mobile apps**: anything in your own stack reading `response.total` on orders.\n- **Tests**: contract tests, integration tests, snapshot tests asserting on the field name.\n- **Webhooks or events**: if order data is echoed into webhook payloads or event streams, they likely carry `total` too.\n- **API versioning policy**: does your API have a deprecation process? A field rename usually should ship as a new API version, or as an additive change (`order_total` added, `total` deprecated but still present) rather than an in-place rename.\n- **Changelog/release notes**: consumers need advance notice, not a surprise in a patch release.\n\n**Recommendation**: don't rename in place. Add `order_total` alongside the existing `total`, mark `total` deprecated in docs, give consumers a migration window, then remove `total` in a later release (or next API version). That turns a breaking change into a safe additive one.\n\nDo you want me to look at the actual serializer and consumers in your codebase, or is this a planning conversation before code exists?",
+  "ttft_ms": 2527,
+  "ttft_stream_ms": 700,
+  "time_to_request_ms": 109,
+  "time_to_request_from_spawn_ms": 521312,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025400241.4412,
+  "type": "result",
+  "duration_ms": 24004,
+  "uuid": "8577f4d7-530a-45f4-b7b8-e0f972bf32fa",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "6e3e254eac13ff94661d637b0eb5b65d3c5b9effa4cf24ea787f2c0bac8cdcf9"
+}

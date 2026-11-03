@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 11859,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.029197099999999997,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2506,
+    "cache_read_input_tokens": 22967,
+    "output_tokens": 439,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2506,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 100,
+        "cache_read_input_tokens": 8492,
+        "cache_creation_input_tokens": 285,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 285
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 588,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000668,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 439,
+      "cacheReadInputTokens": 22967,
+      "cacheCreationInputTokens": 2506,
+      "webSearchRequests": 0,
+      "costUSD": 0.0285291,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "There's no `src/config/dashboard.ts` in this repo, and I found no pagination-related constants anywhere in the codebase \u2014 this repo doesn't seem to contain that admin dashboard code at all.\n\nCan you confirm this is the right directory/repo? It's possible the dashboard lives in a different project.",
+  "ttft_ms": 5474,
+  "ttft_stream_ms": 4591,
+  "time_to_request_ms": 92,
+  "time_to_request_from_spawn_ms": 1580054,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594573939.6096,
+  "type": "result",
+  "duration_ms": 11706,
+  "uuid": "e478d048-b2eb-45f8-8c1e-408c9bb9b974",
+  "_skill": "questioning-attitude",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "e63658efbfa79b08ae1765fe92811810327f532d70d23d69272adf9569c67fa4"
+}

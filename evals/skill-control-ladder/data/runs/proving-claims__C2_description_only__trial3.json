@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 29754,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0538648,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2483,
+    "cache_read_input_tokens": 14626,
+    "output_tokens": 2258,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2483,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1891,
+        "cache_read_input_tokens": 8346,
+        "cache_creation_input_tokens": 417,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 417
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 617,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000697,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2258,
+      "cacheReadInputTokens": 14626,
+      "cacheCreationInputTokens": 2483,
+      "webSearchRequests": 0,
+      "costUSD": 0.0531678,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before drafting this, one thing worth flagging: the claim (\"safe and fully backward compatible\") is stronger than the evidence supports, especially for a payment-processing module. Here's why, and then a draft you can use.\n\n**Why the gap matters:**\n- **Self-run tests** are weaker evidence than they look \u2014 reviewers can't verify you actually ran them, on what commit, in what environment, or whether they were flaky/skipped. If your CI pipeline ran the same suite, that's independently verifiable evidence; \"I ran it locally\" is not.\n- **Self-review of your own diff** is real but weak evidence of correctness \u2014 authors reliably miss their own blind spots. It's evidence you looked, not evidence someone else validated the change.\n- **\"Fully backward compatible\"** is an absolute claim. Passing the existing suite only proves compatibility for whatever that suite actually exercises \u2014 it says nothing about paths the suite doesn't cover (edge cases, error handling, concurrent access, external integrations, config/schema compatibility). For payments specifically, reviewers will care about things like idempotency, rounding/currency edge cases, retry/webhook behavior, and DB/schema migrations \u2014 worth confirming explicitly rather than implying \"fully\" covers them.\n\n**Suggested approach:** narrow the claim to what you can actually back up, and lay out evidence + gaps transparently so reviewers know what to double-check. Draft:\n\n---\n\n### Evidence of Backward Compatibility\n\n| Claim | Evidence | Status | Gap / What's Not Covered |\n|---|---|---|---|\n| No regressions in tested behavior | Full existing test suite run locally, all passing (commit `<sha>`) | \u2705 Self-verified \u2014 **not yet confirmed by CI** | Recommend triggering CI run on this branch so results are independently verifiable |\n| No unintended logic changes | Line-by-line self-review of the diff | \u2705 Done | Self-review only; requesting a second reviewer for the diff, particularly around `<risky areas, e.g. transaction handling, retries>` |\n| API/contract compatibility | Not explicitly tested | \u26a0\ufe0f Open | No dedicated compatibility/contract test run; consumers of this module haven't been checked against the new interface |\n| Schema/config compatibility | Not explicitly tested | \u26a0\ufe0f Open | If this touches DB schema or config shape, needs explicit migration/rollback verification |\n\n**Non-claim:** This PR is not claimed to be \"fully\" backward compatible \u2014 it's verified against the existing test suite and author review only. Full compatibility would require CI confirmation, a second reviewer, and explicit checks on the gaps above.\n\n---\n\nWant me to fill in the specifics (actual commit SHA, which files/behaviors are riskiest) if you paste the diff or describe what changed? That'll let me tighten the gap list instead of leaving it generic.",
+  "ttft_ms": 5820,
+  "ttft_stream_ms": 2185,
+  "time_to_request_ms": 64,
+  "time_to_request_from_spawn_ms": 897010,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025775806.239,
+  "type": "result",
+  "duration_ms": 29696,
+  "uuid": "52aa8cd8-742f-4474-a27d-7c435c9203bc",
+  "_skill": "proving-claims",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "a83bef5b5d66ef487c55ed91b0d6bc52cc72a4f902d2b2a9c1cf2f2bf967da32"
+}

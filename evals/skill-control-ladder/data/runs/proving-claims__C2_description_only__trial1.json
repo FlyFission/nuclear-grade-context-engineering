@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 27208,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0550337,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2940,
+    "cache_read_input_tokens": 23729,
+    "output_tokens": 1971,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2940,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1271,
+        "cache_read_input_tokens": 9103,
+        "cache_creation_input_tokens": 117,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 117
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 617,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000692,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1971,
+      "cacheReadInputTokens": 23729,
+      "cacheCreationInputTokens": 2940,
+      "webSearchRequests": 0,
+      "costUSD": 0.0543417,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A couple of things worth flagging before I draft this:\n\n**The claim is broader than the evidence.** \"Safe and fully backward compatible\" is a strong, absolute claim. What you actually have is:\n- Existing test suite passes (run by you, locally \u2014 not yet confirmed by CI or anyone else)\n- You reviewed your own diff\n\nThat's real evidence, but it doesn't establish \"fully\" backward compatible \u2014 it establishes \"no regressions detected by the existing test suite, and no issues found in self-review.\" Gaps a reviewer would reasonably want to know about:\n- **Self-run, not independently verified** \u2014 has CI run on this branch yet? A green run reviewers can click into is much stronger than \"I ran it locally.\"\n- **Self-review only** \u2014 no second pair of eyes yet. Worth saying so explicitly rather than implying it's been reviewed.\n- **Test coverage vs. refactor risk** \u2014 does the existing suite actually exercise the paths you touched (e.g., edge cases in the payment flow, error handling, external API contracts, serialization formats)? If the refactor changed internals but the old tests were written against the old internals, green tests don't automatically prove behavioral equivalence for cases the suite doesn't cover.\n- **No new tests mentioned** \u2014 did you add any tests specifically to pin the behaviors this refactor could have changed?\n\nI don't have access to the actual diff or repo contents here (nothing checked out in this directory), so I can't verify specifics like which files or code paths were touched \u2014 I can only work from what you've told me.\n\nHere's a version that states what you actually did, without overclaiming:\n\n---\n\n**Evidence**\n- Full existing test suite passes locally on this branch (no failures, no skips added). *[link CI run if/when available]*\n- Diff reviewed line-by-line by author prior to push.\n\n**Not yet covered**\n- No independent code review yet.\n- No CI run confirmed on this branch (if applicable \u2014 replace once you have one).\n- Existing suite may not cover all edge cases relevant to this refactor (e.g., call sites outside this repo, unusual input shapes, rare failure paths) \u2014 no new tests were added to target refactor-specific risk.\n\n**Claim**\nBased on the above, no regressions were detected in the existing test suite, and no issues were found during self-review. This does not yet constitute independent confirmation of full backward compatibility \u2014 that should come from CI + a reviewer, not just self-report.\n\n---\n\nIf you paste in the actual diff or point me at the repo, I can tighten this up with specifics (which functions/call sites were touched, whether the existing tests actually exercise them) instead of the generic version above.",
+  "ttft_ms": 6866,
+  "ttft_stream_ms": 1032,
+  "time_to_request_ms": 68,
+  "time_to_request_from_spawn_ms": 893407,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025772063.0378,
+  "type": "result",
+  "duration_ms": 27885,
+  "uuid": "a5b929f9-c4f9-492c-9ada-13e8ffaeeb85",
+  "_skill": "proving-claims",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "a83bef5b5d66ef487c55ed91b0d6bc52cc72a4f902d2b2a9c1cf2f2bf967da32"
+}

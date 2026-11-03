@@ -1,0 +1,81 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 36253,
+  "duration_api_ms": 35051,
+  "ttft_ms": 20600,
+  "ttft_stream_ms": 3033,
+  "time_to_request_ms": 49,
+  "time_to_request_from_spawn_ms": 596645,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121159925.0017,
+  "num_turns": 1,
+  "result": "The core issue: this PR is small in line count but it crosses a real threshold \u2014 the bot goes from \"advisory\" to \"spends real money autonomously,\" and the three changes interact in ways a smoke test won't surface. Here's what to track before and after merging:\n\n**1. Treat the diff as three separate changes, not one**\nBundling a wording tweak, a new financial capability, and a docs edit into one PR means you can't isolate cause if something goes wrong later, and can't roll back just one piece. At minimum, know you can disable `issue_refund` independently of the prompt change (feature flag, not just a revert).\n\n**2. The interaction risk, not just the individual pieces**\n\"More proactive\" wording + autonomous refund authority + no human check is a combination that could drift toward over-issuing refunds in a way neither change alone would. A smoke test with normal inputs won't catch this \u2014 you need adversarial testing: try to talk the bot into refunding when it shouldn't (wrong order, no defect, repeated small refunds under $50 to the same account, splitting a $120 issue into 3 \"requests\"). Someone will try this once it's live.\n\n**3. Guardrails that 40 lines almost certainly doesn't include**\nAsk explicitly whether the tool validates:\n- order_id actually exists and belongs to the requesting customer\n- amount \u2264 original order value\n- order hasn't already been refunded (no double-refund)\n- per-customer/per-day rate limits (nothing stops 20 separate $50 refunds to one account)\n- currency/locale handling\nIf these aren't in the diff, that's the real risk, not the prompt wording.\n\n**4. Audit trail and monitoring, not a one-time test**\n\"Quick smoke test\" checks that it works once. You need ongoing visibility: every `issue_refund` call logged with the triggering conversation, a dashboard/alert on refund volume and dollar total, and a defined threshold where a human gets paged (e.g., refund rate spikes, or total daily payout exceeds X). Otherwise silent drift is exactly what you won't notice.\n\n**5. The docs edit is the part most likely to bite you legally/reputationally**\nDeleting \"a human always reviews refunds\" doesn't just remove a claim \u2014 it makes the article silent about something customers may reasonably want to know, and it's now inaccurate in the other direction if any other part of the article implies human oversight elsewhere. Replace it with an accurate statement of the new behavior (e.g., \"Refunds under $50 may be issued automatically; larger refunds are reviewed by our team\"). Don't just delete the sentence \u2014 that reads as if you're quietly removing a safeguard without disclosing what replaced it.\n\n**6. Who actually needs to sign off**\nAn engineering PR review isn't the same as approval to let a support bot autonomously disburse money. Check whether finance/compliance/legal has a policy on autonomous refund authority, fraud thresholds, or reconciliation \u2014 this is the kind of change that usually needs sign-off beyond the code reviewer, even if the diff is tiny.\n\n**7. Reversibility asymmetry**\nBad code can be reverted; issued refunds can't be clawed back easily. That asymmetry alone argues for a staged rollout (e.g., ship the tool but log/dry-run without executing for a week, or cap it much lower than $50 initially) rather than merge-and-monitor.\n\nIf you want, I can look at the actual PR diff and check it against these points concretely.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.051699699999999994,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 1923,
+    "cache_read_input_tokens": 3289,
+    "output_tokens": 2555,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1923,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 2555,
+        "cache_read_input_tokens": 3289,
+        "cache_creation_input_tokens": 1923,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1923
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 700,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000775,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 2555,
+      "cacheReadInputTokens": 3289,
+      "cacheCreationInputTokens": 1923,
+      "webSearchRequests": 0,
+      "costUSD": 0.050924699999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "c1493b22-c3e2-4b47-bf96-e48fcc87aeee",
+  "_skill": "choosing-what-to-control",
+  "_condition": "without_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "e02328072cf0d9f2d7c03acedcbed1f868c7139595cf3007615c8e71c29324ec",
+  "_arm": "C0_bare",
+  "_reused_from": "evals/skill-benchmark-pilot/data/all-skills-pilot/runs/choosing-what-to-control__without_skill__trial3.json"
+}

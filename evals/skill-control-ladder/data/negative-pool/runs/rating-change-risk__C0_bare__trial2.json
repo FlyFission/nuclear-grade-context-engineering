@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 10598,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.029332899999999995,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2548,
+    "cache_read_input_tokens": 23103,
+    "output_tokens": 426,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2548,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 81,
+        "cache_read_input_tokens": 8578,
+        "cache_creation_input_tokens": 241,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 241
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000706,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 426,
+      "cacheReadInputTokens": 23103,
+      "cacheCreationInputTokens": 2548,
+      "webSearchRequests": 0,
+      "costUSD": 0.028626899999999997,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "There's no README or CONTRIBUTING file in this repo at all \u2014 this working directory looks empty of docs. Can you double-check you're pointing me at the right repo/path? If there's a specific directory the README should be in, let me know and I'll take a look.",
+  "ttft_ms": 992,
+  "ttft_stream_ms": 681,
+  "time_to_request_ms": 40,
+  "time_to_request_from_spawn_ms": 1597111,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594591475.015,
+  "type": "result",
+  "duration_ms": 10963,
+  "uuid": "8409516b-5d05-48f6-9876-3dece724db04",
+  "_skill": "rating-change-risk",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "e85a159592296413d7bf8e942627b532ea74ae4f36f0a8996df67583bae88ce6"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 33385,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.072907,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 5089,
+    "cache_read_input_tokens": 16170,
+    "output_tokens": 2449,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 5089,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1025,
+        "cache_read_input_tokens": 9890,
+        "cache_creation_input_tokens": 1479,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1479
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 700,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000775,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2449,
+      "cacheReadInputTokens": 16170,
+      "cacheCreationInputTokens": 5089,
+      "webSearchRequests": 0,
+      "costUSD": 0.072132,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This diff is small, but it bundles three separate controlled items \u2014 a wording change, an autonomous financial capability, and a public safety claim \u2014 and the interesting risk is in how they interact, not in any one line. \"Smoke test and merge\" would verify the tool runs, not that these stay in sync later.\n\n| Item | Type | Current state | Intended state | Why controlled | Evidence / gap | Owner | Re-check trigger |\n|---|---|---|---|---|---|---|---|\n| Support-bot system prompt | Prompt | Existing wording | \"More proactive\" wording | Behavior/trust \u2014 proactive wording combined with new refund power could push the bot toward offering refunds unprompted | PR diff (link it) | Prompt owner | Any further prompt edit; observed pattern of bot volunteering refunds |\n| `issue_refund(amount, order_id)` tool | Tool / agent power grant | No autonomous refund capability | Bot can approve refunds up to $50 with no human sign-off | Direct increase in agent power over money, no human in the loop \u2014 highest-stakes item in this PR | Gap: no risk assessment, no abuse/fraud monitoring spec, no audit log of autonomous approvals found in the diff | Eng lead + a finance/risk owner (not just eng) | Any change to the $ threshold; refund-rate anomaly; any incident; removal/weakening of monitoring |\n| Help-center article on refund review | Public doc / claim | States \"A human always reviews refunds before they are issued.\" | Sentence deleted | Public claim about how the system works \u2014 must match actual behavior or you're misrepresenting the process to customers | PR diff | Docs/support content owner | Any further change to refund process; any other doc/ToS/marketing page still claiming human review (contradiction) |\n| Consistency between claim #2 and #3 | Cross-cutting check | Doc will say nothing about auto-approval | Doc should ideally state accurately that refunds under $50 may be auto-approved, not just delete the old sentence | Silent deletion can leave customers with a false impression by omission rather than an accurate one | Gap \u2014 this isn't addressed by the PR as described | Docs owner + eng lead jointly | Any future refund-threshold change (doc must move with it) |\n\nTwo things worth flagging before merge:\n\n- The tool grant and the doc edit are coupled \u2014 if one changes later without the other, you get a public claim that's wrong. That coupling itself needs an owner, not just the two items separately.\n- \"Quick smoke test\" covers the tool works, not that a $50 autonomous refund limit is the right number, that abuse patterns are monitored, or that the new doc wording is accurate rather than just quieter. Those need a sign-off from whoever owns refund/financial risk, not just eng review.\n\nWant me to draft this as an actual `controlled-items.md` you can attach to the PR?",
+  "ttft_ms": 18441,
+  "ttft_stream_ms": 935,
+  "time_to_request_ms": 26,
+  "time_to_request_from_spawn_ms": 1451960,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785790090014.558,
+  "type": "result",
+  "duration_ms": 34124,
+  "uuid": "44e3ad69-9cf8-4577-a942-ae81b5f829a8",
+  "_skill": "choosing-what-to-control",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "9e3d906a4466c368b6c060ab46756868587d281dbc46bfe0497613c248ded3fb"
+}

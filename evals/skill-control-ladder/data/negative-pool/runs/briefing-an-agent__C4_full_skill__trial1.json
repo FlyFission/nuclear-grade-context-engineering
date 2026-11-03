@@ -1,0 +1,169 @@
+{
+  "duration_api_ms": 7662,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0184286,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2051,
+    "cache_read_input_tokens": 33467,
+    "output_tokens": 338,
+    "output_tokens_details": {
+      "thinking_tokens": 84
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2051,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 101,
+        "cache_read_input_tokens": 11866,
+        "cache_creation_input_tokens": 169,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 169
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-haiku-5-5": {
+      "inputTokens": 1257,
+      "outputTokens": 27,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00013920000000000002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 0,
+      "cacheCreationEphemeral5mInputTokens": 0,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 338,
+      "cacheReadInputTokens": 33467,
+      "cacheCreationInputTokens": 2051,
+      "webSearchRequests": 0,
+      "costUSD": 0.0182894,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 84,
+      "cacheCreationEphemeral5mInputTokens": 0,
+      "cacheCreationEphemeral1hInputTokens": 2051,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 3,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I can't find `analytics.py` anywhere in this repo, and there's no `usrCnt` match either. This working directory (`briefing-an-agent_C4_full_skill_1`) seems to be an evals/skill-docs repo, not the project where that file lives \u2014 could you confirm the correct path or working directory?",
+  "ttft_ms": 2346,
+  "type": "result",
+  "duration_ms": 7126,
+  "uuid": "03b07bc4-54b0-4a86-b012-8810e32169a6",
+  "ttft_stream_ms": 1167,
+  "time_to_request_ms": 166,
+  "time_to_request_phases_ms": {
+    "other": 19,
+    "system_prompt": 12,
+    "resume_other": 0,
+    "process_user_input": 3,
+    "input_attachments": 8,
+    "input_hooks": 3,
+    "tool_pool_refresh": 1,
+    "init_message": 14,
+    "engine_pickup": 1,
+    "message_prep": 1,
+    "model_config_wait": 85,
+    "autocompact": 2,
+    "query_setup": 1,
+    "model_gates": 0,
+    "tool_schema_build": 6,
+    "message_normalization": 1,
+    "client_creation": 2,
+    "request_build": 7
+  },
+  "turn_start_resume_kind": "none",
+  "process_turn_index": 0,
+  "time_to_request_loop_lag_ms": 66,
+  "time_to_request_cpu_ms": 163,
+  "time_to_request_major_faults": 0,
+  "process_rss_mib_turn_start": 218,
+  "process_anon_mib_turn_start": 127,
+  "process_rss_mib_result": 215,
+  "process_anon_mib_result": 120,
+  "process_peak_rss_mib": 239,
+  "process_cpu_ms_turn": 818,
+  "process_wall_ms_turn": 7126,
+  "process_cpu_ms_streaming": 163,
+  "process_wall_ms_streaming": 3891,
+  "main_stream_count": 3,
+  "main_stream_event_count": 71,
+  "main_stream_chunk_count": 30,
+  "input_attachments_detail": {
+    "slowest_producer": "queued_commands",
+    "slowest_producer_ms": 4,
+    "cpu_ms": 13,
+    "major_faults": 0
+  },
+  "first_content_frame_ms": 1167,
+  "time_to_request_from_spawn_ms": 138260,
+  "warm_spare_claimed": false,
+  "flag_fetch_kick": "not_asked_warm",
+  "time_origin_ms": 1793122238183.2422,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "process_start_tuning": 0,
+  "_skill": "briefing-an-agent",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "8569a62ed510fa9b041d3ccffd631afe061982be143554a5046506b5032647fd"
+}

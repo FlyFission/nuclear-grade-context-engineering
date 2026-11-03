@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 26850,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0488446,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2676,
+    "cache_read_input_tokens": 14542,
+    "output_tokens": 1847,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2676,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1226,
+        "cache_read_input_tokens": 8271,
+        "cache_creation_input_tokens": 676,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 676
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000709,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1847,
+      "cacheReadInputTokens": 14542,
+      "cacheCreationInputTokens": 2676,
+      "webSearchRequests": 0,
+      "costUSD": 0.0481356,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This isn't really a \"ship it and move on\" situation \u2014 it's a financial-harm bug affecting real customers, and the fact that it's been informally known for 8 months without a ticket or fix plan is itself a gap worth closing today, regardless of what you decide about the release.\n\n**Before shipping:**\n1. **File it formally, now.** If this only exists as tribal knowledge, that's the actual root problem. Open a ticket with severity, the 1-in-5000 rate, root cause (network partition mid-retry \u2192 non-idempotent retry), and business impact. Tag it with an owner and a real deadline, not \"someday.\"\n2. **Get a second stakeholder in the room.** Double-charging customers has compliance/dispute/trust implications that go beyond an engineering call \u2014 loop in whoever owns risk, support, or finance so it's not just payments-team judgment that this is \"low priority.\" They may agree it's fine to ship, but that should be their call too, made with full information.\n\n**To actually ship safely today:**\n- The standard fix for this exact failure mode is **idempotency keys** on the retry path (client generates a key per logical transaction, server dedupes on it) \u2014 it's often a small, contained change, not a rewrite. Worth asking whether a scoped version is doable before the cutoff, even if the full fix waits.\n- If not fixable today, add a **detection/mitigation net**: alert on duplicate charges for the same order/customer within a short window, so support can proactively refund before the customer even notices. Rare-but-known failure modes are much more tolerable when you catch and fix them fast.\n- Make sure support has a runbook for \"customer says they were charged twice\" so it's not a surprise ticket that stalls.\n\nWant help sketching an idempotency-key based fix for the retry logic, or drafting the bug ticket/mitigation plan?",
+  "ttft_ms": 8785,
+  "ttft_stream_ms": 833,
+  "time_to_request_ms": 26,
+  "time_to_request_from_spawn_ms": 1273857,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789912381.835,
+  "type": "result",
+  "duration_ms": 25425,
+  "uuid": "b4cade0d-d9c5-4c85-afc5-ad6501ba232b",
+  "_skill": "tracking-deficiencies",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "8cb02c7b23ee9a1c5958df4214fa08d29823ea95416f357d9e2fdcff1b8c0905"
+}

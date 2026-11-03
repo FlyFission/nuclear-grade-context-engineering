@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 9289,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.030509799999999997,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2857,
+    "cache_read_input_tokens": 14846,
+    "output_tokens": 548,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2857,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 85,
+        "cache_read_input_tokens": 8566,
+        "cache_creation_input_tokens": 571,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 571
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 607,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000682,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 548,
+      "cacheReadInputTokens": 14846,
+      "cacheCreationInputTokens": 2857,
+      "webSearchRequests": 0,
+      "costUSD": 0.029827799999999998,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't see a `package.json` or any system prompt template in this repo (empty search results for both). Can you confirm this is the right working directory, or point me to the paths for the `package.json` and the prompt template file? I don't want to guess and create new files in the wrong place.",
+  "ttft_ms": 2454,
+  "ttft_stream_ms": 978,
+  "time_to_request_ms": 111,
+  "time_to_request_from_spawn_ms": 1211613,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785026088881.5715,
+  "type": "result",
+  "duration_ms": 9320,
+  "uuid": "bd78c0cc-86a5-4176-bacf-3ca6ca9df3fc",
+  "_skill": "using-nuclear-grade",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "315a75bab79c59ab48d8f68dbecde3491af5b46e8e1622b0eb9726a9a4689fa5"
+}

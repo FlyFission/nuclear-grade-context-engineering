@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 16281,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0370288,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2422,
+    "cache_read_input_tokens": 14776,
+    "output_tokens": 1151,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2422,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 999,
+        "cache_read_input_tokens": 8496,
+        "cache_creation_input_tokens": 206,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 206
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 702,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000787,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1151,
+      "cacheReadInputTokens": 14776,
+      "cacheCreationInputTokens": 2422,
+      "webSearchRequests": 0,
+      "costUSD": 0.036241800000000005,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No, a local override on your own bot isn't enough \u2014 the underlying defect still exists in `prompt-common`, and the other three teams are shipping it unpatched with no knowledge of the risk. A code comment in your repo doesn't reach anyone outside it.\n\nWhat's still needed:\n\n1. **Report the defect upstream** \u2014 file an issue against `prompt-common` itself describing the truncation edge case, the leak behavior (internal DB tool identifiers reaching customers), and repro steps. This is the actual source of truth, not your local override.\n2. **Notify the other three teams directly** (sales, onboarding, internal-tools) \u2014 don't rely on them discovering the upstream issue. This is an information-disclosure bug that's actively exposing internal tooling to customers/external users right now, so treat it with some urgency.\n3. **Push a real fix, not just a workaround** \u2014 ideally submit a PR to `prompt-common` with your fixed template (or the underlying fix) so all consumers get it centrally instead of four teams maintaining four divergent local patches.\n4. **Loop in security/appsec if you have that function** \u2014 leaking internal tool/query identifiers to end users is a disclosure issue worth a quick risk assessment, especially for internal-tools' bot which may have a different exposure profile than customer support.\n5. **Check for prior exposure** \u2014 if this has been live, it's worth a quick check of logs/transcripts across the other three bots to see if it's already fired, since that changes whether this is \"prevent future\" vs. \"also assess past\" exposure.\n\nOnce the other teams have acknowledged and either patched or scheduled a fix, you're in good shape. Until then, the bug is still live for 3 of 4 consumers of the shared artifact.",
+  "ttft_ms": 2489,
+  "ttft_stream_ms": 943,
+  "time_to_request_ms": 140,
+  "time_to_request_from_spawn_ms": 1074124,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025953095.6677,
+  "type": "result",
+  "duration_ms": 17153,
+  "uuid": "ad0e442b-0b02-44ca-b53a-8eb464cff0b8",
+  "_skill": "reporting-shared-defects",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "31499170666ed5715e065795f4fb06bdfe3f4b79c2c199215d21e1bda620c6c9"
+}

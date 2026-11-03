@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 19835,
+  "num_turns": 6,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.052820700000000005,
+  "usage": {
+    "input_tokens": 12,
+    "cache_creation_input_tokens": 3329,
+    "cache_read_input_tokens": 50899,
+    "output_tokens": 1124,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3329,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 252,
+        "cache_read_input_tokens": 9377,
+        "cache_creation_input_tokens": 232,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 232
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 581,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006810000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 12,
+      "outputTokens": 1124,
+      "cacheReadInputTokens": 50899,
+      "cacheCreationInputTokens": 3329,
+      "webSearchRequests": 0,
+      "costUSD": 0.052139700000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I'm not finding anything here \u2014 the working directory `./evals/skill-control-ladder/data/negative-pool/work/handing-off-work_C3_compressed_2` appears to be empty (no files, no `.git`, no matches for `tempFlag` anywhere). There's no `feature/search-filters` branch or any code from \"this morning\" present in this environment.\n\nSince I have no record of the branch, the three files you touched, or the `tempFlag` variable itself, I can't verify what you're asking me to change \u2014 I'd just be acting on your say-so with no evidence to check against. Can you point me to the actual repo/directory this work lives in, or paste the relevant file paths? Once I can see the code, the rename itself is trivial.",
+  "ttft_ms": 2362,
+  "ttft_stream_ms": 1206,
+  "time_to_request_ms": 28,
+  "time_to_request_from_spawn_ms": 1492914,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594487232.3604,
+  "type": "result",
+  "duration_ms": 19727,
+  "uuid": "4a758a69-f868-4fdc-8965-12f1da5e010a",
+  "_skill": "handing-off-work",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "19b1b0e3807574426b55b14f3f50bd8bde01283226eec446149e8d0fcdd2a6e3"
+}

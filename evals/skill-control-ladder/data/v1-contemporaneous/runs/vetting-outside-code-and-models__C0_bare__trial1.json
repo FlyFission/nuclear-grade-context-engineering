@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 12739,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0260263,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2015,
+    "cache_read_input_tokens": 6271,
+    "output_tokens": 755,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2015,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 755,
+        "cache_read_input_tokens": 6271,
+        "cache_creation_input_tokens": 2015,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2015
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 755,
+      "cacheReadInputTokens": 6271,
+      "cacheCreationInputTokens": 2015,
+      "webSearchRequests": 0,
+      "costUSD": 0.0253023,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 don't cut over production this week based on marketing claims alone. \"99.9% accuracy\" and \"SOC2 compliant\" are vendor assertions with no context (accuracy on what dataset? SOC2 Type I or II, and can you see the actual report?), and content moderation failures (missed harmful content or false positives silencing legitimate users) carry real safety, legal, and reputational risk that's hard to walk back once live.\n\nThe tradeoff: cost savings vs. an unvalidated dependency on your safety-critical path. Before switching, I'd run the new API in shadow mode against real production traffic for 1-2 weeks (routing decisions still go through your current provider), compare its outputs against your existing pipeline and some hand-labeled ground truth including edge cases/adversarial content specific to your platform, and separately request their actual SOC2 report and talk to the case-study customers directly. If it holds up under that scrutiny, then a phased cutover makes sense.",
+  "ttft_ms": 6997,
+  "ttft_stream_ms": 1479,
+  "time_to_request_ms": 32,
+  "time_to_request_from_spawn_ms": 845511,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789484007.394,
+  "type": "result",
+  "duration_ms": 13941,
+  "uuid": "0470ea77-16a7-4edd-bf8d-1385ae6b0c39",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C0_bare",
+  "_trial": 1,
+  "_input_spec_sha256": "f4a6c2be0ac2917f10e71d220585fc6c0c0f67f6182aa46cab8c5fa7fbe4c3ee"
+}

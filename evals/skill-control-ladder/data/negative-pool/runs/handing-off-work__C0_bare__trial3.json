@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 11475,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0331386,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2489,
+    "cache_read_input_tokens": 31332,
+    "output_tokens": 540,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2489,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 143,
+        "cache_read_input_tokens": 8505,
+        "cache_creation_input_tokens": 255,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 255
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 581,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006810000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 540,
+      "cacheReadInputTokens": 31332,
+      "cacheCreationInputTokens": 2489,
+      "webSearchRequests": 0,
+      "costUSD": 0.0324576,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This working directory is completely empty \u2014 there's no `feature/search-filters` branch, no git history, and no `tempFlag` variable anywhere in this repo. It looks like this isn't actually the repo/checkout where your search filter PR work lives.\n\nCan you confirm you're pointing me at the right directory/repo? If this is a fresh clone, we'd need to fetch and check out `feature/search-filters` first before I can find and rename the variable.",
+  "ttft_ms": 1849,
+  "ttft_stream_ms": 1488,
+  "time_to_request_ms": 82,
+  "time_to_request_from_spawn_ms": 1487915,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594482227.9746,
+  "type": "result",
+  "duration_ms": 12967,
+  "uuid": "b02a27b7-95f4-4a25-99a4-2186d9364c20",
+  "_skill": "handing-off-work",
+  "_arm": "C0_bare",
+  "_trial": 3,
+  "_input_spec_sha256": "ec47519331d8144dfdf1eb8e87223eaf37ab4dc0bd92dc3ca5e82fbbd6b3222e"
+}

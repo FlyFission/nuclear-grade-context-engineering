@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 34068,
+  "num_turns": 6,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.06657769999999999,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 3157,
+    "cache_read_input_tokens": 33219,
+    "output_tokens": 2460,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3157,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1905,
+        "cache_read_input_tokens": 9276,
+        "cache_creation_input_tokens": 161,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 161
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 656,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000746,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 2460,
+      "cacheReadInputTokens": 33219,
+      "cacheCreationInputTokens": 3157,
+      "webSearchRequests": 0,
+      "costUSD": 0.06583169999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A one-line diff is not the same as a one-line risk. The model ID controls the actual decision logic of a system that autonomously approves refunds \u2014 swapping it can silently shift approval thresholds, jailbreak/prompt-injection resistance, and edge-case reasoning even with identical prompts. That's a **Standard**-mode change record, not Quick, because \"swapped model per cost review\" tells a future reviewer *why* but nothing about whether it's *safe*.\n\nRun `python tools/ng.py new <slug> --mode standard`. It'll require six files \u2014 here's what each needs to actually say for this change:\n\n- **risk.md** \u2014 What could go wrong if the new model behaves differently: wrongful auto-approvals (financial loss), wrongful denials (customer harm), new susceptibility to prompt injection/social engineering in refund requests, blast radius (refunds/day, $ volume), and how reversible this is (can you flip the config ID back in minutes?).\n- **basis.md** \u2014 The actual reason and evidence, not just \"cost review.\" Which two models, what the cost delta was, and what evidence justified expecting equivalent behavior (vendor eval claims, your own comparison, or \"none yet \u2014 see verification\").\n- **plan.md** \u2014 Rollout strategy: canary/staged percentage, who reviews outputs during rollout, explicit rollback trigger and owner.\n- **trace.md** \u2014 Links: the actual config diff/PR, any eval script, dashboards, related tickets.\n- **verification.md** \u2014 The evidence a skeptic will actually look for: results of running both models against a shared set of historical refund requests, agreement rate between old and new decisions, any adversarial/prompt-injection probes, and status of each (pass/fail/gap). If you haven't run this yet, this file should say \"gap\" explicitly rather than being silent.\n- **ship.md** \u2014 Rollout status, monitoring in place post-ship, sign-off, and the rollback trigger/criteria in case behavior drifts.\n\nThe one thing I'd push back on regardless of format: don't ship this without at least a before/after comparison on a sample of real refund cases (agreement rate + a look at where they disagree). Without that, \"safe\" is just an assumption, and six months from now there's no way to distinguish \"we verified this\" from \"we hoped for the best.\"\n\nWant me to scaffold the record now?",
+  "ttft_ms": 3487,
+  "ttft_stream_ms": 921,
+  "time_to_request_ms": 25,
+  "time_to_request_from_spawn_ms": 1248575,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789886805.8323,
+  "type": "result",
+  "duration_ms": 34718,
+  "uuid": "5a991edf-ebeb-41ea-ae4a-0e2c05f997ce",
+  "_skill": "creating-change-records",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "ff5de9f7a5ee523cf4a3a91878157a2f11385b1b7f347001aeae3ba3ca88356c"
+}

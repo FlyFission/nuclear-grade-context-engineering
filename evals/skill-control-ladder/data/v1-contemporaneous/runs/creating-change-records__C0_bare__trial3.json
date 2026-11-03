@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 28482,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0468613,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2033,
+    "cache_read_input_tokens": 6271,
+    "output_tokens": 2136,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2033,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2136,
+        "cache_read_input_tokens": 6271,
+        "cache_creation_input_tokens": 2033,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2033
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 656,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000736,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2136,
+      "cacheReadInputTokens": 6271,
+      "cacheCreationInputTokens": 2033,
+      "webSearchRequests": 0,
+      "costUSD": 0.0461253,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "\"Swapped model per cost review\" tells a future reader *what* happened but nothing about *why it was safe* \u2014 and for an agent that autonomously moves money on refund decisions, that's the part that matters. A one-line diff is not a one-line risk profile. Here's what the record actually needs:\n\n**1. What triggered it and what changed**\nCost review is fine as the trigger, but name the actual delta: model family/version, any pricing/latency/context-window differences, and anything else that shipped alongside it (e.g., did the prompt/tool schema need adjustment for the new model?).\n\n**2. Evidence the swap doesn't change decision quality**\nThis is the core of the record. You need before/after comparison on a representative eval set of real (anonymized) refund cases, covering:\n- Approval/denial rate and agreement rate between old and new model on the same inputs\n- Accuracy against ground truth where you have it (e.g., cases later reversed by a human, fraud cases, chargebacks)\n- Behavior on edge cases specifically: large-dollar refunds, ambiguous policy situations, conflicting customer claims, borderline fraud signals\n- Adversarial/jailbreak resistance \u2014 does the new model hold up to prompt injection attempts (e.g., a customer message trying to talk the agent into an unauthorized refund)?\n- Calibration \u2014 does it express confidence/uncertainty similarly, or does it get more \"confidently wrong\"?\n\nA link to a summary number (\"94% agreement\") isn't enough \u2014 link the actual eval run/dataset so someone can re-examine specific disagreements later.\n\n**3. Guardrails re-validated, not assumed**\nIf there are hard limits (max autonomous approval amount, categories requiring human review, rate limits), state explicitly that these were re-checked against the new model's behavior rather than just carried over.\n\n**4. Rollout and rollback**\nWas this shadow-tested or canaried before full cutover, or was it a flip? What's the rollback trigger and procedure if something looks wrong post-launch?\n\n**5. Monitoring plan**\nWhat metrics get watched post-swap (approval rate drift, refund $ volume, dispute/chargeback rate, human override rate) and who's watching them for the first weeks.\n\n**6. Sign-off**\nWho approved this beyond the engineer making the config change \u2014 ideally someone with visibility into financial/customer risk, not just code review approval.\n\nThe tradeoff your manager is implicitly making is speed today vs. being able to answer \"how do we know this was safe\" without guessing, six months from now when something goes wrong and everyone's trying to reconstruct what was actually tested. I'd push back specifically on shipping without item #2 \u2014 everything else can be lightweight, but decision-quality evidence for a model swap in a money-moving autonomous agent shouldn't be skippable regardless of how small the diff looks.",
+  "ttft_ms": 15802,
+  "ttft_stream_ms": 1197,
+  "time_to_request_ms": 75,
+  "time_to_request_from_spawn_ms": 1220054,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789857372.1636,
+  "type": "result",
+  "duration_ms": 29475,
+  "uuid": "5fb6bf5f-f023-48f7-8d89-69b9c8da3fd2",
+  "_skill": "creating-change-records",
+  "_arm": "C0_bare",
+  "_trial": 3,
+  "_input_spec_sha256": "b54e097736e485dc9d873df0ab0013c6ebc994406abbe3e1e01d0a5c614488ab"
+}

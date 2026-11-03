@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 16107,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.036382700000000004,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2605,
+    "cache_read_input_tokens": 23549,
+    "output_tokens": 866,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2605,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 602,
+        "cache_read_input_tokens": 8750,
+        "cache_creation_input_tokens": 135,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 135
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00068,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 866,
+      "cacheReadInputTokens": 23549,
+      "cacheCreationInputTokens": 2605,
+      "webSearchRequests": 0,
+      "costUSD": 0.035702700000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 this isn't a \"quick\" change, even though the diff is one line. Renaming a field in a **public API response** is a backward-compatibility break, not a refactor, and it needs the full change-impact process before merging. Reasons:\n\n1. **It touches outside trust**: any external consumer parsing `total` from the response will break the moment this ships. \"Public\" API means you don't control all callers.\n2. **The codebase here is empty** \u2014 I can't find the actual serializer, tests, docs, or API spec in this working directory, so I can't verify who/what depends on `total` (client SDKs, OpenAPI/Swagger spec, integration tests, changelog, versioned docs, webhooks, downstream services). That itself is a reason not to merge blind \u2014 impact can't be determined from what's available, which per the process means escalate/stop rather than assume it's safe.\n3. Likely stale artifacts from a rename like this: API reference docs, OpenAPI schema, contract/integration tests asserting `total`, client libraries/SDKs generated from the schema, changelog/release notes, and any backward-compat shim decision (do you keep emitting `total` alongside `order_total` for a deprecation window, or is this a hard break requiring a version bump?).\n\n**Recommendation:** treat this as a breaking public API change, not a quick internal rename. Before merging:\n- Point me to the actual repo (this directory has no files), so I can grep for `total` usages, tests, and any OpenAPI/schema definitions.\n- Decide the compatibility strategy \u2014 e.g., emit both `total` and `order_total` for a deprecation period, or bump the API version \u2014 since a silent single-field rename is the kind of change that should require sign-off, not a quick merge.\n\nWant me to draft a `change-impact.md` once I have access to the real repo, or do you want to make the deprecation-strategy call first?",
+  "ttft_ms": 2577,
+  "ttft_stream_ms": 1054,
+  "time_to_request_ms": 40,
+  "time_to_request_from_spawn_ms": 702241,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789340781.0247,
+  "type": "result",
+  "duration_ms": 16363,
+  "uuid": "ede56e24-1e68-4e3b-9f3c-a3bc375b4836",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "ad442de17887c6883c7f7bf079b4e00edb13c3d2c7a0774a07a88dac6a6afd3d"
+}

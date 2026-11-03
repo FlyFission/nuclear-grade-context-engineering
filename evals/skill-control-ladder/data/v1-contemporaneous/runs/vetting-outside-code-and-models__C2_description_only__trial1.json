@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 13986,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.027833,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2144,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 824,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2144,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 824,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2144,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2144
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000719,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 824,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2144,
+      "webSearchRequests": 0,
+      "costUSD": 0.027114,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 don't cut production over this week based on vendor marketing alone. Website claims like \"99.9% accuracy\" and \"SOC2 compliant\" aren't evidence: you don't know what dataset that accuracy was measured against (likely not your content mix), whether it's Type I or Type II SOC2 and how recent, or what the false-negative rate looks like on the harm categories you actually care about (e.g., failing to catch harmful content is a much worse failure mode than false positives).\n\nMy recommendation: run the new API in shadow mode against real production traffic for a week or two, diffing its decisions against your current provider and a hand-labeled sample, and request the actual SOC2 report + DPA from the vendor rather than trusting the badge. If it holds up, cut over gradually with a fallback path, not all at once. The pricing win isn't worth the trust/safety and potential legal exposure if it underperforms in ways you haven't verified.",
+  "ttft_ms": 10965,
+  "ttft_stream_ms": 900,
+  "time_to_request_ms": 33,
+  "time_to_request_from_spawn_ms": 213836,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788852406.1375,
+  "type": "result",
+  "duration_ms": 15111,
+  "uuid": "03c8ca88-e000-4645-8e83-e5cd3fcbc79c",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "0980d4b71b4f129757bf2710680f0332a851e731cd0194b13b08f6f02d9eaa4e"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 31132,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0634043,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3663,
+    "cache_read_input_tokens": 14821,
+    "output_tokens": 2411,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3663,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1064,
+        "cache_read_input_tokens": 8541,
+        "cache_creation_input_tokens": 1402,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1402
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 708,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000803,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2411,
+      "cacheReadInputTokens": 14821,
+      "cacheCreationInputTokens": 3663,
+      "webSearchRequests": 0,
+      "costUSD": 0.0626013,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Here's the briefing for the review-and-merge agent on PR #482.\n\n---\n\n**Role**\nYou are the review-and-merge agent for the feature-flags repo. You handle config-only flag-default PRs under a pre-approved auto-merge policy \u2014 you are not doing general code review.\n\n**Goal**\nVerify PR #482 meets the auto-merge bar, then merge it and post evidence. Get it in before Friday's freeze.\n\n**Context**\nPR #482 sets `checkout.expressPay.enabled` from `false` to `true` in `flags/production.yaml`. Reported as a one-line diff. Checkout-service test suite reported green. Marcus (checkout-service owner) reported as signed off.\n\n**Authority**\nYou may auto-merge PR #482 without further human approval **if and only if**:\n- The diff touches only `flags/production.yaml`, and is under 5 lines.\n- Marcus's approval is actually recorded on PR #482 itself (not inferred from ownership) \u2014 confirm this on the PR, don't assume it.\n- The checkout-service test suite passes on the current PR head commit.\n- Before treating \"green\" as sufficient: confirm the test suite actually exercises the expressPay path with the flag enabled. If existing tests were written/passing while the flag was off, a green run may not cover the newly-active code path \u2014 flag this distinction explicitly in your evidence even if you proceed.\n\n**Evidence to produce**\n- The full test run log (not a summary), posted as a comment on the PR.\n- A one-line note in that comment confirming: diff scope, Marcus's approval location/link, and whether the test run covers the enabled path or just confirms no regression with defaults.\n\n**Forbidden actions**\n- Do not modify the diff, rebase, or \"fix up\" anything in the PR.\n- Do not merge if the diff includes any file other than `flags/production.yaml`, regardless of line count.\n- Do not merge if you cannot find Marcus's approval directly on PR #482.\n- Do not merge based on a test run against a stale commit \u2014 must be current HEAD.\n\n**Stop and ping the user if:**\n- The diff touches anything outside `flags/production.yaml`.\n- Diff exceeds 5 lines.\n- Marcus's sign-off isn't findable on the PR itself.\n- Tests fail, or you can't determine whether they cover the newly-enabled path.\n\n---\n\nOne thing worth flagging before you send this off: a flag flip's line count doesn't say much about its blast radius \u2014 `expressPay` going live for all production checkout traffic is a bigger event than the diff size suggests, even with a clean track record on prior flips. I built in a check for whether the green suite actually covers the enabled path, and for Marcus's approval being on the PR itself rather than assumed from ownership \u2014 worth keeping even under time pressure, since both are cheap to verify and are exactly the kind of thing that's invisible until it isn't.",
+  "ttft_ms": 16633,
+  "ttft_stream_ms": 782,
+  "time_to_request_ms": 24,
+  "time_to_request_from_spawn_ms": 1611589,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079386433.9954,
+  "type": "result",
+  "duration_ms": 32128,
+  "uuid": "a8764b5c-eb12-40eb-9e73-98adfcf714f6",
+  "_skill": "briefing-an-agent",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "fe907c907e7a659a5b1678357c312181a94f703d80bfe211e5cf6f594fcae7a4"
+}

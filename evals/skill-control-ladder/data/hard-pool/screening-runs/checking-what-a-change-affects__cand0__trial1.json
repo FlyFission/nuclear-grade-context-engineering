@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 14206,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.035886499999999995,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2639,
+    "cache_read_input_tokens": 23525,
+    "output_tokens": 814,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2639,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 497,
+        "cache_read_input_tokens": 8753,
+        "cache_creation_input_tokens": 166,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 166
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 672,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000767,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 814,
+      "cacheReadInputTokens": 23525,
+      "cacheCreationInputTokens": 2639,
+      "webSearchRequests": 0,
+      "costUSD": 0.0351195,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory is empty \u2014 there's no repo content here for me to inspect (no command files, no README, no references to `deploy-checklist` anywhere). So I can't actually verify anything about this rename from the code itself.\n\nA few things worth checking yourself before merging, since I can't see the repo:\n\n1. **Anything that references the command by exact string elsewhere** \u2014 CI configs, other slash command files that call `/deploy-checklist` internally, changelogs, onboarding docs, or Slack/bot integrations that trigger on the literal command name. A pure grep for `deploy-checklist` across the whole repo (not just README) would catch this fast.\n2. **Command name as a lookup key** \u2014 if commands are registered by filename/id in some registry or manifest (not just discovered by file path), renaming the file might need a corresponding key update, or you could end up with a stale/duplicate entry.\n3. **External references outside the repo** \u2014 any wiki, runbook, or Slack shortcut that people have bookmarked as `/deploy-checklist`. Not blocking for the merge, but worth a heads-up to the team since muscle memory won't update automatically.\n4. **Sarah's approval scope** \u2014 worth double-checking her review covered the README diff too, or just the command file, since you mentioned updating the README as a separate follow-up.\n\nSince I don't have access to the actual repo contents in this session, I can't confirm any of these are actually issues \u2014 just flagging where a \"simple rename\" commonly hides a missed reference. If you point me at the repo path, I can grep it properly.",
+  "ttft_ms": 2319,
+  "ttft_stream_ms": 1579,
+  "time_to_request_ms": 38,
+  "time_to_request_from_spawn_ms": 548342,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078323177.4087,
+  "type": "result",
+  "duration_ms": 14272,
+  "uuid": "202a2a94-0730-4a37-9fdb-164453b89474",
+  "_spec": "7abe69dc998df92685d2f78a65d5dee0a9d50e21e600d81846032220e6527fbe",
+  "_skill": "checking-what-a-change-affects",
+  "_cand": 0,
+  "_trial": 1
+}

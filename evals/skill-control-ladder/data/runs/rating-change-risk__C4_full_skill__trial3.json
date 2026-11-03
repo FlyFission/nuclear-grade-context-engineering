@@ -1,0 +1,159 @@
+{
+  "duration_api_ms": 14247,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.018687399999999996,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1754,
+    "cache_read_input_tokens": 10806,
+    "output_tokens": 935,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1754,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 935,
+        "cache_read_input_tokens": 10806,
+        "cache_creation_input_tokens": 1754,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1754
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-haiku-5-5": {
+      "inputTokens": 1392,
+      "outputTokens": 34,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0001562,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 935,
+      "cacheReadInputTokens": 10806,
+      "cacheCreationInputTokens": 1754,
+      "webSearchRequests": 0,
+      "costUSD": 0.018531199999999998,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 1,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 this should not be a self-approved, unreviewed merge, even though the diff is one boolean literal.\n\n**Why it's not Quick/administrative:** it touches a shared config file used across *all* backend services, it flips an authentication/authorization control (MFA enforcement for admins), and it creates a window where every admin \u2014 not just the locked-out one \u2014 can log into the ops dashboard without MFA. That's a new trust-boundary exposure, affects users beyond the requester, and is the kind of change a reviewer would want more than a commit message for. Several tripwires fire at once: auth, a shared/multi-service config, and elevated-privilege access.\n\n**Archetype floor:** this is a trust-bearing surface (auth control, shared infra config) \u2014 floor is Standard at minimum, and arguably Nuclear-adjacent (human-reviewed) given it's a security control on a shared file, not a one-off script.\n\n**Dominant three:**\n- **Consequence:** high if missed/forgotten \u2014 \"flip back in an hour\" is exactly the kind of flag that doesn't get flipped back (on-call gets pulled away, PR sits, someone else merges on top of it). Any admin account compromised during that window skips MFA entirely.\n- **Reversibility:** nominally easy (flip back), but *actual* reversal depends on human follow-through with no automated enforcement \u2014 that's a weak reversibility guarantee, not a strong one.\n- **Unknowns/detectability:** who else is watching for this flag to be False? Is there monitoring/alerting if MFA enforcement is off for an extended period? If not, a forgotten flip-back could go undetected for a long time.\n\n**Recommendation \u2014 do this instead:**\n1. **Don't bypass MFA globally.** Fix the individual admin's enrollment instead: reset/re-enroll their MFA factor, or use a break-glass/backup-code mechanism if one exists, rather than disabling enforcement for everyone.\n2. If no scoped fix exists and the global flag truly is the only lever, this still needs: a second reviewer (not self-approval) \u2014 even a 5-minute Slack-based review \u2014 and ideally a scoped flag (e.g., per-user exception) rather than a global one.\n3. If you must flip the global flag, treat it as a tracked, time-boxed change: someone other than the person making the edit owns reverting it, there's a calendar/alert reminder, and it's reverted and verified before end of session \u2014 not \"sometime within the hour, best effort.\"\n4. Standard mode evidence bar: PR with description of why, who approved, who owns the revert, and a follow-up confirming the flag is back to `True` and MFA is enforced again.\n\nIf you want, I can help draft the scoped per-admin fix (if your auth system supports exceptions/backup codes) instead of the global flag flip \u2014 that's a safer path that doesn't need this level of ceremony.",
+  "ttft_ms": 13602,
+  "type": "result",
+  "duration_ms": 16766,
+  "uuid": "455987e1-c75e-48fe-9972-0cb1aec1df60",
+  "ttft_stream_ms": 1390,
+  "time_to_request_ms": 257,
+  "time_to_request_phases_ms": {
+    "other": 45,
+    "system_prompt": 17,
+    "resume_other": 0,
+    "process_user_input": 4,
+    "input_attachments": 10,
+    "input_hooks": 3,
+    "tool_pool_refresh": 2,
+    "init_message": 8,
+    "engine_pickup": 16,
+    "message_prep": 5,
+    "model_config_wait": 118,
+    "autocompact": 3,
+    "query_setup": 0,
+    "model_gates": 1,
+    "tool_schema_build": 8,
+    "message_normalization": 2,
+    "client_creation": 6,
+    "request_build": 9
+  },
+  "turn_start_resume_kind": "none",
+  "process_turn_index": 0,
+  "time_to_request_loop_lag_ms": 105,
+  "time_to_request_cpu_ms": 324,
+  "time_to_request_major_faults": 0,
+  "process_rss_mib_turn_start": 241,
+  "process_anon_mib_turn_start": 125,
+  "process_rss_mib_result": 246,
+  "process_anon_mib_result": 128,
+  "process_peak_rss_mib": 278,
+  "process_cpu_ms_turn": 1087,
+  "process_wall_ms_turn": 16766,
+  "input_attachments_detail": {
+    "slowest_producer": "model",
+    "slowest_producer_ms": 5,
+    "cpu_ms": 12,
+    "major_faults": 0
+  },
+  "first_content_frame_ms": 1391,
+  "time_to_request_from_spawn_ms": 2076198,
+  "warm_spare_claimed": false,
+  "flag_fetch_kick": "not_asked_warm",
+  "time_origin_ms": 1792509835049.801,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "_skill": "rating-change-risk",
+  "_arm": "C4_full_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "1a4653ba0ac415100aff10328f0e26b9fd4146ed5906d92b633e2d42ac842dcc"
+}

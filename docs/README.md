@@ -29,6 +29,7 @@ These docs have two parts. First, learn how to use the workflow. Second, look up
 | Keep an LLM judge honest (guard against judge bias) | [`02-operating-system/evaluation-integrity.md`](02-operating-system/evaluation-integrity.md) |
 | Scale rigor by risk tier | [`02-operating-system/risk-tiers-and-modes.md`](02-operating-system/risk-tiers-and-modes.md) |
 | Make a second check genuinely independent | [`02-operating-system/independence-architecture.md`](02-operating-system/independence-architecture.md) |
+| Say how deep a check went and by what method (check, design review, alternate method, qualification test) | [`02-operating-system/verification-methods-and-depth.md`](02-operating-system/verification-methods-and-depth.md) |
 | Catch failures that have no fault (functional insufficiency) | [`02-operating-system/functional-insufficiency.md`](02-operating-system/functional-insufficiency.md) |
 | See how controls enforce, not just advise | [`02-operating-system/runtime-enforcement.md`](02-operating-system/runtime-enforcement.md) |
 | Budget and order an agent's context window | [`02-operating-system/context-window-discipline.md`](02-operating-system/context-window-discipline.md) |

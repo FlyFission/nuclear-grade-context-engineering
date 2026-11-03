@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 22885,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0313474,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2573,
+    "cache_read_input_tokens": 14818,
+    "output_tokens": 711,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2573,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 500,
+        "cache_read_input_tokens": 8538,
+        "cache_creation_input_tokens": 315,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 315
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 702,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000787,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 711,
+      "cacheReadInputTokens": 14818,
+      "cacheCreationInputTokens": 2573,
+      "webSearchRequests": 0,
+      "costUSD": 0.0305604,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No, you're not good \u2014 you've only fixed 1 of 4 bots affected by a security-relevant bug, and the other three teams don't know it exists. A local override with a code comment only you and your team will ever read doesn't fix or even disclose the underlying issue.\n\nConcretely, you should:\n\n1. **Report the bug against `prompt-common` itself** (issue tracker / wherever that package's bugs are filed), not just a comment in your own repo. Include the truncation trigger condition and the leaked-tool-name symptom so it's reproducible.\n2. **Notify the sales, onboarding, and internal-tools teams directly** \u2014 not just via a ticket they might not see. This is a data-exposure issue (internal tool/DB identifiers leaking to customers), so a quick message or ping is warranted given the severity, not just \"eventually someone reads the tracker.\"\n3. **Push the actual fix upstream into `prompt-common`**, not just your local override. Since you already built and validated a fixed version for your support bot, that's most of the work needed for a proper PR \u2014 consider upstreaming it so all four teams get the real fix rather than four separate patches.\n4. **Flag it to whoever owns security/incident response**, if your org has that function, since this is leakage of internal identifiers to external customers, which may be a reportable class of incident even if it's low severity in practice.\n\nYour fix protects your bot; it does nothing for the other three, which are still leaking internal tool names to customers right now. Want help drafting the upstream fix/PR or a notification message to the other teams?",
+  "ttft_ms": 6574,
+  "ttft_stream_ms": 5474,
+  "time_to_request_ms": 28,
+  "time_to_request_from_spawn_ms": 1166182,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789804716.2563,
+  "type": "result",
+  "duration_ms": 18353,
+  "uuid": "c45ec515-c754-4d3e-8a5d-5d3b3e553e5d",
+  "_skill": "reporting-shared-defects",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "7b751a3ea055f01711c4aeef851f9e1cab80281b5104369665d78a55644ede6b"
+}

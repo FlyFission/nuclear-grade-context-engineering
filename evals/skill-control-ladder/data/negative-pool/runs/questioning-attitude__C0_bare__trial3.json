@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 9811,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0330739,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2632,
+    "cache_read_input_tokens": 31733,
+    "output_tokens": 471,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2632,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 62,
+        "cache_read_input_tokens": 8770,
+        "cache_creation_input_tokens": 133,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 133
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 588,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000673,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 471,
+      "cacheReadInputTokens": 31733,
+      "cacheCreationInputTokens": 2632,
+      "webSearchRequests": 0,
+      "costUSD": 0.0324009,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This repository is empty \u2014 there's no `src/config/dashboard.ts` or any files at all in this working directory. Can you double check I'm pointed at the right repo/path, or push the code here first?",
+  "ttft_ms": 1937,
+  "ttft_stream_ms": 1160,
+  "time_to_request_ms": 42,
+  "time_to_request_from_spawn_ms": 1580889,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594574938.941,
+  "type": "result",
+  "duration_ms": 8905,
+  "uuid": "d6cfcc9a-7b74-48ac-8400-faf083ff5f8b",
+  "_skill": "questioning-attitude",
+  "_arm": "C0_bare",
+  "_trial": 3,
+  "_input_spec_sha256": "e63658efbfa79b08ae1765fe92811810327f532d70d23d69272adf9569c67fa4"
+}

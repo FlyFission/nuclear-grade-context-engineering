@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 28385,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.051418200000000004,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2649,
+    "cache_read_input_tokens": 14894,
+    "output_tokens": 2022,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2649,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1840,
+        "cache_read_input_tokens": 8614,
+        "cache_creation_input_tokens": 315,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 315
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 634,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000714,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2022,
+      "cacheReadInputTokens": 14894,
+      "cacheCreationInputTokens": 2649,
+      "webSearchRequests": 0,
+      "costUSD": 0.050704200000000005,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A quick note first: this repo is empty on disk (or the `misc`/`utils` folders aren't present locally), so I can't inspect actual filenames \u2014 this proposal is a template with disposition rules per category you described. I'd refine the exact mapping once I can see real filenames.\n\n## Proposed structure\n\n```\nconfig/\n  templates/              # config templates (per service if they diverge)\ndocs/\n  compliance/\n    archive/YYYY/          # archived compliance reports, by year\nscripts/\n  migrations/\n    archive/                # completed one-off migration scripts, kept for audit trail\npackages/                  # or libs/, depending on your stack\n  <descriptive-name>/       # shared helpers used by 2+ services, one package per cohesive responsibility\nservices/\n  <service-a>/\n  <service-b>/\n```\n\nMeeting notes: these usually don't belong in a code repo at all \u2014 move them to your wiki/Drive/Notion. If policy requires keeping them in-repo, `docs/meeting-notes/archive/YYYY/` with a README noting they're historical and not actively maintained.\n\n## Disposition rules for the current contents\n\n- **Config templates** \u2192 `config/templates/`, split by service if formats differ; one README explaining when to use each.\n- **Migration scripts** \u2192 `scripts/migrations/archive/`, one file per migration, named `YYYY-MM-DD-description.ext`. Not `misc` \u2014 they're a distinct, auditable category.\n- **Compliance reports** \u2192 `docs/compliance/archive/`, read-only, one folder per year. Add a note on retention/who owns it.\n- **Shared helpers (used by 2 services)** \u2192 don't dump these in a generic `utils`. Split into named packages by what they actually do (e.g. `packages/date-formatting`, `packages/api-client`), each with a single reason to change. If a helper is only used by one service, move it into that service instead of keeping it \"shared.\"\n- **Meeting notes** \u2192 out of the repo, or into `docs/meeting-notes/archive/` if they must stay.\n\n## For the `utils` grab-bag (30 files)\n\nSame principle: no catch-all folder. For each file, ask \"what is this file's one job, and who uses it?\" Then either:\n- it's used by one service \u2192 move into that service's own internal helpers folder,\n- it's used by 2+ services \u2192 becomes its own named `packages/<name>` (or joins an existing one if truly cohesive, not just similar-sounding),\n- it's dead code \u2192 delete it (check for zero references first).\n\n## Conventions\n- lowercase, hyphen-separated names, ISO-8601 dates for anything archival, no `misc`/`utils`/`tmp`/`old`/`final` names anywhere.\n- Every non-trivial folder gets a short README stating its purpose and what belongs there.\n- Cap nesting around 6-8 levels; keep paths well under 255 chars.\n\nWant me to actually go through the real file lists in `misc` and `utils` and map each file to a home? That'd need either the files present in this checkout or a listing of the filenames.",
+  "ttft_ms": 1724,
+  "ttft_stream_ms": 1349,
+  "time_to_request_ms": 61,
+  "time_to_request_from_spawn_ms": 1388904,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785790026950.208,
+  "type": "result",
+  "duration_ms": 29644,
+  "uuid": "530ec64b-3e5e-4336-8374-8c86165ee6c9",
+  "_skill": "organizing-project-folders",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "475e9ddd5fc99b90d48ebac64620a0817620f7aac0af09487fa0f2266cb01a3c"
+}

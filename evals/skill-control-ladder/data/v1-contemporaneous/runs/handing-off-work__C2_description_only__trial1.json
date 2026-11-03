@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 23941,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0461163,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2381,
+    "cache_read_input_tokens": 14741,
+    "output_tokens": 1776,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2381,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1627,
+        "cache_read_input_tokens": 8461,
+        "cache_creation_input_tokens": 200,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 200
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 676,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007559999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1776,
+      "cacheReadInputTokens": 14741,
+      "cacheCreationInputTokens": 2381,
+      "webSearchRequests": 0,
+      "costUSD": 0.0453603,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "There's no existing project content in this directory to reference, so I'll draft the note directly from what you've told me, using placeholders for details I don't have (service names, PR links, contacts) \u2014 flag those for you to fill in before you leave.\n\n## Handoff: OAuth2 Migration \u2014 Billing Service Auth\n\n**Branch:** `oauth-migration`\n**Owner while I'm out:** [teammate name] \u2014 new to this project, no prior context\n**I'm back:** [return date \u2014 one week from 2026-08-04]\n**Escalation if blocked and it can't wait:** [your contact / backup contact]\n\n### Current state\n- Auth middleware and token-refresh logic are rewritten for OAuth2, merged to `oauth-migration`, unit tests passing.\n- Old API-key auth path is still live and **must stay active** \u2014 do not rotate or revoke any old API keys yet.\n- Production config has **not** been touched; nothing has been deployed from this branch.\n\n### Why the old keys can't be rotated yet\nThree downstream services still call the old auth endpoints and use the old API keys directly. If those keys are rotated or the old endpoints are removed before those services are migrated, their requests will start failing with 401s. This is the main landmine \u2014 **rotating keys or disabling the old auth path is off-limits until all three downstream services are confirmed migrated and verified working.**\n\n### Remaining scope (not started)\n1. Migrate the three downstream services off the old API-key auth to OAuth2:\n   - [service 1]\n   - [service 2]\n   - [service 3]\n2. Verify each downstream service against OAuth2 in staging before touching prod.\n3. Update production config for OAuth2 (not started \u2014 no config changes exist yet).\n4. Only after all three services are confirmed migrated and stable: rotate/retire the old API keys.\n\n### What's explicitly out of scope for now\n- Do not rotate or revoke old API keys.\n- Do not deploy `oauth-migration` to production until downstream services are migrated.\n- Do not modify production config yet.\n\n### Suggested order of operations\n1. Read the middleware/token-refresh diffs on `oauth-migration` to understand the new auth flow.\n2. Pick one downstream service, migrate and test it end-to-end in staging.\n3. Repeat for the remaining two.\n4. Only then move to prod config changes and key rotation, ideally with a second pair of eyes given it's a billing system.\n\n### Open questions / evidence to check before proceeding\n- [ ] Confirm unit test coverage is sufficient before adding downstream integration \u2014 are there integration tests, or only unit tests so far?\n- [ ] Confirm rollback plan if a downstream migration breaks in staging/prod.\n- [ ] Link to PR(s) for the merged middleware/token-refresh work: [add link]\n\n---\n\nFill in the bracketed items (downstream service names, links, contacts, return date) and this is ready to send. Want me to save it as `HANDOFF.md` in this directory, or is this being pasted into Slack/Confluence/etc.?",
+  "ttft_ms": 2194,
+  "ttft_stream_ms": 1095,
+  "time_to_request_ms": 40,
+  "time_to_request_from_spawn_ms": 257469,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788895733.762,
+  "type": "result",
+  "duration_ms": 24761,
+  "uuid": "94d1abd9-30ff-40eb-8c6d-d5fbee4c82fa",
+  "_skill": "handing-off-work",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "069a3cad5969cd02cf089969cc5ecebaf6f957303631046dcbc3d623eb2430cc"
+}

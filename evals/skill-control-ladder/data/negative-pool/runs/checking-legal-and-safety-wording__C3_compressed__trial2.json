@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 12715,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.030255200000000003,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2484,
+    "cache_read_input_tokens": 14834,
+    "output_tokens": 681,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2484,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 523,
+        "cache_read_input_tokens": 8554,
+        "cache_creation_input_tokens": 210,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 210
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 604,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000674,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 681,
+      "cacheReadInputTokens": 14834,
+      "cacheCreationInputTokens": 2484,
+      "webSearchRequests": 0,
+      "costUSD": 0.029581200000000002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Didn't find that comment in this repo \u2014 sounds like it's in a different project. That's fine, I can suggest wording without seeing it.\n\nA couple of issues with the original: \"guaranteed to never fail\" and \"100% thread-safe in all cases\" are absolute claims that are almost never literally true (exceptions, OOM, panics, and undiscovered races can always happen), and they tend to get copy-pasted into places where someone later relies on them as a contract. Even for internal-only code, it's worth being precise since someone will eventually trust that comment under pressure.\n\nSuggested replacement:\n\n```\n// Thread-safe: safe for concurrent use from multiple goroutines/threads.\n// Does not return errors under normal inputs; see below for known failure modes.\n```\n\nOr shorter, if you want one line:\n\n```\n// Safe for concurrent use; does not error on valid input.\n```\n\nIf you want to keep it terse but still accurate, tie the safety claim to *why* it's true (e.g. \"immutable inputs, no shared mutable state\") rather than asserting it as a blanket guarantee \u2014 that's more useful to a future reader than a confidence claim.",
+  "ttft_ms": 1609,
+  "ttft_stream_ms": 1269,
+  "time_to_request_ms": 26,
+  "time_to_request_from_spawn_ms": 1866415,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594860061.182,
+  "type": "result",
+  "duration_ms": 13280,
+  "uuid": "62260bf9-f4fc-4596-bf48-1ec0cc41d2e5",
+  "_skill": "checking-legal-and-safety-wording",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "89dcea13660d7be0d001ea5d574c19256d2f339f1d3880d86ec1feae7a8f3209"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 23196,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0318943,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2428,
+    "cache_read_input_tokens": 14641,
+    "output_tokens": 809,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2428,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 532,
+        "cache_read_input_tokens": 8370,
+        "cache_creation_input_tokens": 329,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 329
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 809,
+      "cacheReadInputTokens": 14641,
+      "cacheCreationInputTokens": 2428,
+      "webSearchRequests": 0,
+      "costUSD": 0.031107300000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    },
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 702,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000787,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No, you're not done \u2014 your local override only protects your bot. The other three teams are still shipping the same bug, and it's not a minor cosmetic issue: it's leaking internal database tool identifiers to customers, which is a security-relevant information disclosure. A code comment in your repo won't reach anyone on those teams unless they happen to read your bot's source.\n\nWhat I'd do, in order of priority:\n\n1. **Report it now, not just document it locally.** File a bug against `prompt-common` (issue tracker, not just a comment) describing the truncation edge case, when it triggers, and the leak it causes. Tag/notify the sales, onboarding, and internal-tools teams directly (Slack, email, whatever your org uses) \u2014 don't rely on them stumbling onto the ticket.\n2. **Upstream the real fix.** You already have a working fixed version from your local override \u2014 turn that into a PR against `prompt-common` itself so all four teams get the fix from the source, not four divergent local patches that will drift over time.\n3. **Flag urgency appropriately.** Since this leaks internal tool/database identifiers to end users, treat it like a security disclosure, not just a bug report \u2014 the other teams may want to check logs/conversation history for whether it's already happened in production.\n4. **After the shared fix lands, remove your local override** so you're not left maintaining a fork of the template.\n\nYour comment explaining the override is fine as a stopgap, but it only helps someone debugging *your* repo \u2014 it doesn't stop the other three bots from leaking data to real customers today.",
+  "ttft_ms": 4369,
+  "ttft_stream_ms": 1082,
+  "time_to_request_ms": 52,
+  "time_to_request_from_spawn_ms": 720258,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789358892.615,
+  "type": "result",
+  "duration_ms": 19710,
+  "uuid": "52cdf091-f2d8-4116-8651-60e0922c8bc8",
+  "_skill": "reporting-shared-defects",
+  "_arm": "C0_bare",
+  "_trial": 1,
+  "_input_spec_sha256": "b3a554a796b4e07bd2a3fcae74463c2756324149deb2ffe57ddca4c03c6f34d9"
+}

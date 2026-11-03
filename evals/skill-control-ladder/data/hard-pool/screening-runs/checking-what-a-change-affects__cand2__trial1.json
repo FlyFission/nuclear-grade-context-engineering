@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 39862,
+  "num_turns": 6,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0750536,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 3098,
+    "cache_read_input_tokens": 32402,
+    "output_tokens": 3065,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3098,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2418,
+        "cache_read_input_tokens": 8898,
+        "cache_creation_input_tokens": 480,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 480
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 661,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000746,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 3065,
+      "cacheReadInputTokens": 32402,
+      "cacheCreationInputTokens": 3098,
+      "webSearchRequests": 0,
+      "costUSD": 0.0743076,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I wasn't able to find any files in this working directory (prompts/triage_v3.txt, eval configs, golden outputs, etc. don't seem to exist here), so I can't independently verify diffs or blast radius \u2014 I can only reason from what you've described. A few things worth checking before merging:\n\n**1. Did the full eval suite regenerate/compare, or just the 3 new cases?**\nYou said you \"regenerated the golden outputs for the three new test cases... and they all match now.\" That's a bit circular \u2014 if you regenerate a golden from the corrected prompt and then compare against that same regenerated golden, it will always match. The real regression question is: **what happened to the golden outputs for the pre-existing test cases that you did *not* regenerate?** Did you re-run those against the fixed prompt and confirm they still match their *original* (unregenerated) goldens? A one-word wording change to a system prompt can shift model behavior in ways that aren't limited to the literal typo location \u2014 it's not like a code diff where blast radius is mechanically traceable.\n\n**2. Is \"green\" measuring the right thing?**\nIf the eval harness's \"green\" status is just \"new cases match their freshly-regenerated goldens,\" it's not actually testing for regressions \u2014 it's tautological. Confirm the suite still asserts old goldens (untouched) against new-prompt outputs.\n\n**3. Non-determinism.**\nIf golden generation involves live model calls (not cached/deterministic), a \"match\" after regeneration doesn't rule out drift \u2014 it could mask it if temperature > 0 and you happened to get lucky, or produce false failures unrelated to the typo.\n\n**4. Bundling with Friday's model upgrade.**\nMerging this same-day as writing release notes for a model upgrade going out Friday means if anything regresses post-release, you'll have two changes landing close together (prompt fix + model upgrade) making root-causing harder. Worth explicitly noting in the PR/release notes that these are separate, independent changes, so a future bisect isn't confused.\n\n**5. Other consumers of triage_v3.txt.**\nIs this prompt file referenced anywhere else (other eval suites, a prompt registry/versioning system, production config) that wouldn't be touched by this one file edit but depends on the exact wording?\n\nThe \"same as the summarizer fix two months ago\" comparison is reasonable precedent but not proof \u2014 different prompt, different task, worth confirming on this specific suite rather than pattern-matching.\n\nCan you point me to the actual repo path or paste the eval suite's run output? I can give a more concrete answer once I can see how \"green\" is actually computed.",
+  "ttft_ms": 1947,
+  "ttft_stream_ms": 788,
+  "time_to_request_ms": 25,
+  "time_to_request_from_spawn_ms": 564299,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078339189.8093,
+  "type": "result",
+  "duration_ms": 39179,
+  "uuid": "a3749a28-ac01-41a0-9850-c65df330b343",
+  "_spec": "255ede5672a701d97af18876f60cdfd422ec7cf260d55c147e50742e895efa3a",
+  "_skill": "checking-what-a-change-affects",
+  "_cand": 2,
+  "_trial": 1
+}

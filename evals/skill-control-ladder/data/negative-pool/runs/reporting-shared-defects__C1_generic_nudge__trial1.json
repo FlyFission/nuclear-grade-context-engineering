@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 8493,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0279432,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2522,
+    "cache_read_input_tokens": 23214,
+    "output_tokens": 342,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2522,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 99,
+        "cache_read_input_tokens": 8540,
+        "cache_creation_input_tokens": 262,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 262
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 599,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006990000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 342,
+      "cacheReadInputTokens": 23214,
+      "cacheCreationInputTokens": 2522,
+      "webSearchRequests": 0,
+      "costUSD": 0.027244200000000003,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I can't find a `utils.py` or `format_date` function anywhere in this repo \u2014 I searched by filename and by function name and got no hits. Could you double check you're pointing me at the right directory/repo, or paste the function directly? Once I can see the actual loop, I can spot the off-by-one and fix it.",
+  "ttft_ms": 1071,
+  "ttft_stream_ms": 676,
+  "time_to_request_ms": 29,
+  "time_to_request_from_spawn_ms": 1657715,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594652034.3254,
+  "type": "result",
+  "duration_ms": 9070,
+  "uuid": "b196ce4f-8fe1-42e1-8e00-114bc08bdd20",
+  "_skill": "reporting-shared-defects",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "1efd751f739d1df332945a5b038b613cd2cf8ea2ea4b26703306a36d86bb9040"
+}

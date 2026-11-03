@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 20702,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.039949,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2347,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1552,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2347,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1552,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2347,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2347
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 617,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000697,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1552,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2347,
+      "webSearchRequests": 0,
+      "costUSD": 0.039251999999999995,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Two flags before I write this: both pieces of evidence you have are self-generated and self-executed \u2014 you ran the tests and you reviewed your own diff. That's a legitimate first pass, but for a payment-processing module, \"safe and fully backward compatible\" is a strong, load-bearing claim that reviewers and future incident responders will rely on. Self-checks alone don't support \"fully\" \u2014 they support \"no issues found in my own testing and review,\" which is narrower and more honest.\n\nA few gaps worth naming rather than papering over:\n- No independent reviewer has confirmed the diff yet (that's presumably what this PR is for).\n- \"Existing test suite\" only proves backward compatibility for paths the suite already covers \u2014 worth stating whether it covers the changed code paths specifically, and whether it ran in CI (fresh environment) or just locally.\n- \"Fully backward compatible\" implies edge cases, error paths, and any behavior changes were checked \u2014 self-review typically catches syntax/logic issues, not subtle behavioral drift (e.g., rounding, currency handling, idempotency, retry semantics) unless you specifically tested for those.\n\nHere's an evidence section scoped to what you actually have, with the claim right-sized to the evidence:\n\n---\n\n## Evidence of correctness\n\n**Claim:** No behavioral regressions identified for existing functionality in this refactor's scope. Full backward-compatibility has not yet been independently verified \u2014 see \"Outstanding verification\" below.\n\n**Self-testing:**\n- Ran the full existing test suite locally; all tests passed. [link to CI run if available \u2014 local runs alone are weaker evidence than CI]\n- [If known] Test suite covers: `<list changed modules/functions covered>`. Not covered by existing tests: `<list, if any>`.\n\n**Self-review:**\n- Reviewed the full diff line-by-line prior to pushing.\n\n**Outstanding verification (before merge):**\n- [ ] Independent reviewer sign-off on diff, particularly for: `<call out the riskiest changed paths \u2014 e.g., currency rounding, retries, idempotency keys>`\n- [ ] CI run in clean environment (if not already captured above)\n- [ ] Confirm test coverage over changed code paths (coverage diff, if your tooling supports it)\n- [ ] Manual/staging test of any behavior not exercised by the existing suite\n\n---\n\nWant me to help identify which specific payment-processing behaviors (rounding, retries, idempotency, etc.) are riskiest to call out in the outstanding-verification list, based on what actually changed in your diff?",
+  "ttft_ms": 10461,
+  "ttft_stream_ms": 1722,
+  "time_to_request_ms": 268,
+  "time_to_request_from_spawn_ms": 34998,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785895685384.1895,
+  "type": "result",
+  "duration_ms": 20927,
+  "uuid": "5f177654-18c9-40ca-9720-8c4ee9738090",
+  "_skill": "proving-claims",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "4f271896c4f65ed9da0834e13073c621f6aa4d17ac993ae9b3aec20f086c6211"
+}

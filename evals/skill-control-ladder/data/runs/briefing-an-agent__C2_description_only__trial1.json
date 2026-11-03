@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 35360,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0627899,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2709,
+    "cache_read_input_tokens": 14683,
+    "output_tokens": 2760,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2709,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2278,
+        "cache_read_input_tokens": 8403,
+        "cache_creation_input_tokens": 586,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 586
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 624,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000719,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2760,
+      "cacheReadInputTokens": 14683,
+      "cacheCreationInputTokens": 2709,
+      "webSearchRequests": 0,
+      "costUSD": 0.0620709,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No repo/migration tooling found here \u2014 this looks like a sandbox rather than your actual project, so I'll write a stack-agnostic briefing with placeholders you can fill in (ORM/migration tool, DB client, test command, etc.).\n\nOne thing worth flagging before the briefing itself: for an **unattended overnight run against production**, I'd strongly recommend the agent's authority stop short of actually executing the backfill against prod \u2014 have it prepare everything (migration, backfill script, endpoint change, tests, dry-run report against a staging/prod-replica) and leave the final \"run backfill on prod\" step for you to trigger by hand in the morning. Schema-add is low-risk and reversible; the backfill is a bulk UPDATE based on a heuristic, which is exactly the kind of irreversible, hard-to-audit change that shouldn't happen with nobody watching. I've built that constraint into the briefing below \u2014 adjust if you disagree.\n\n---\n\n## Briefing: Add `email_verified` column + backfill + signup endpoint update\n\n**Role:** You are a backend engineering agent working autonomously overnight on `[repo name]`. No human will be available to answer questions or approve actions until morning (~`[time/date]`). When in doubt, stop and leave a clear note rather than guessing.\n\n**Goal:** By the time I check in, I want:\n1. A migration adding an `email_verified` (boolean, default `false`, not null) column to `users`.\n2. A backfill script (not yet run against production) that sets `email_verified` for existing users based on this heuristic: `[fill in \u2014 e.g. \"true if signup_source = 'oauth_google' or 'oauth_github', false otherwise\"]`.\n3. The signup endpoint (`[path, e.g. POST /api/signup]`) updated to set `email_verified` correctly at creation time for each signup source.\n4. Tests covering the endpoint change and the backfill logic.\n5. A short written report of what you did, what you verified, and what's left for me to run manually.\n\n**Authority \u2014 you may do without asking:**\n- Write/modify code, migration files, and tests in the repo.\n- Run the migration and backfill against `[staging DB / local DB / prod replica \u2014 specify]`.\n- Run the full test suite and linter.\n- Commit to a feature branch (`agent/email-verified-column` or similar). Do NOT merge to `main` or push directly to a protected branch.\n- Query production **read-only** (e.g. `SELECT COUNT(*)... GROUP BY signup_source`) to sanity-check the heuristic's coverage and edge cases, if you have read access.\n\n**Forbidden \u2014 do not do, even if it seems reasonable:**\n- Do not run the backfill UPDATE against the production database. Prepare it, dry-run it against staging/replica, and report the expected number of rows affected per signup-source bucket \u2014 but leave the actual prod execution for me.\n- Do not run the schema migration against production either, unless `[you decide: \"migrations auto-deploy via CI on merge\" \u2014 in which case say so explicitly and skip this restriction]`.\n- Do not drop, rename, or alter any other existing column.\n- Do not merge the PR or push to `main`/deploy branches.\n- Do not modify CI/CD config, infra, or secrets.\n- Do not invent behavior for signup sources not covered by the heuristic I gave you \u2014 if you find a source value in the data that isn't accounted for, stop and flag it rather than guessing a default.\n\n**Evidence to produce:**\n- The migration file and backfill script, both in the PR/branch.\n- Test output (passing) for the new/changed tests.\n- A dry-run report: per-`signup_source` counts of how many rows would be set `true` vs `false`, run against staging or a prod read-replica.\n- Any rows that don't cleanly match the heuristic (nulls, unexpected `signup_source` values) called out explicitly, not silently defaulted.\n- A final summary note (in the PR description or a `AGENT_REPORT.md`) covering: what was done, what was verified, open questions, and the exact command/step needed to run the backfill against prod.\n\n**Stop conditions \u2014 pause and leave a note instead of proceeding if:**\n- The heuristic doesn't cover some observed `signup_source` values, or coverage of \"verified\" vs \"unverified\" looks suspiciously skewed (e.g. >95% one way).\n- Tests fail and the fix isn't obviously safe/small.\n- You can't get a reliable row count or need destructive-looking operations (e.g. `ALTER COLUMN ... SET NOT NULL` on a table with existing null values) to complete the migration \u2014 surface the issue rather than force it through.\n- Anything requires production write access you weren't expecly granted, or credentials/config you don't already have.\n\n**Context you should know:**\n- DB engine / migration tool: `[fill in, e.g. Postgres + Knex / Prisma / TypeORM]`\n- How to run tests: `[fill in, e.g. npm test]`\n- Where staging/replica connection details live: `[fill in]`\n- Branch naming / PR conventions: `[fill in]`\n\n---\n\nFill in the bracketed pieces and hand this to the agent as its opening context. Want me to tailor it further once you tell me the DB/migration tool and where the heuristic's signup-source values actually live in the codebase?",
+  "ttft_ms": 5340,
+  "ttft_stream_ms": 1127,
+  "time_to_request_ms": 169,
+  "time_to_request_from_spawn_ms": 362617,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025238947.6262,
+  "type": "result",
+  "duration_ms": 35907,
+  "uuid": "9181e378-f4ec-40a9-ac9d-15c5254f4424",
+  "_skill": "briefing-an-agent",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "3ecc900b21152e3fe9837564cf8bd7db5791e068635502c120ad82f4a5ad4f98"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 11314,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.026632,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2298,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 682,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2298,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 682,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2298,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2298
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 682,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2298,
+      "webSearchRequests": 0,
+      "costUSD": 0.025908,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 don't cut production over this week. Everything you've cited (accuracy %, SOC2, case studies) is vendor marketing, not verified evidence about *your* content and risk profile, and moderation failures (missed abuse, wrongly blocked legitimate content) are exactly the kind of hard-to-reverse, user-facing harm you want to catch before go-live, not after.\n\nBefore switching, I'd verify a few things yourself rather than take the claims at face value:\n- **Accuracy on your own data**: run it in shadow mode against a sample of your real traffic (including your known edge cases/adversarial content) and compare precision/recall to your current provider \u2014 \"99.9% accuracy\" on their benchmark says little about your specific content mix.\n- **SOC2**: ask for the actual report (Type II, not just a badge) and check the audit scope/date, since \"SOC2 compliant\" claims vary widely in what they actually cover.\n- **Failure behavior**: what happens on API timeouts/errors \u2014 does content fail open or closed? This matters a lot for a moderation pipeline.\n- **Case studies**: treat as marketing, not evidence; they're not a substitute for testing against your own data.\n\nIf the pricing is compelling, a reasonable path is a 1\u20132 week shadow deployment (mirror traffic, compare decisions, no user impact) before any real cutover. Want help setting that up?",
+  "ttft_ms": 4810,
+  "ttft_stream_ms": 2130,
+  "time_to_request_ms": 41,
+  "time_to_request_from_spawn_ms": 1229385,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785026107250.553,
+  "type": "result",
+  "duration_ms": 10461,
+  "uuid": "32a146ac-dc69-48eb-a4a9-e8b9770e4435",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "1004d8043388a980ff198f473bf17ce798d01dc2bbf467baa2c742776c2a2102"
+}

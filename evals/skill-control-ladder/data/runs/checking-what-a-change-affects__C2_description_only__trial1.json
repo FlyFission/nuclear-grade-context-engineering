@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 11607,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0327447,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2412,
+    "cache_read_input_tokens": 23149,
+    "output_tokens": 709,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2412,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 431,
+        "cache_read_input_tokens": 8559,
+        "cache_creation_input_tokens": 133,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 133
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000675,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 709,
+      "cacheReadInputTokens": 23149,
+      "cacheCreationInputTokens": 2412,
+      "webSearchRequests": 0,
+      "costUSD": 0.0320697,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 this isn't just a one-line change, even though the diff is small. Renaming a field in a **public** API response is a breaking change for anyone parsing that JSON. \"Single line in the serializer\" measures diff size, not blast radius.\n\nBefore merging, check for:\n\n- **API consumers/clients** \u2014 anything (internal or external) that reads `total` from the orders response will break silently or error out.\n- **API docs / OpenAPI-Swagger spec** \u2014 will describe the old field name.\n- **Tests** \u2014 any test asserting on `response['total']` will fail (or worse, silently pass if it's not asserted).\n- **SDKs/client libraries** you maintain that wrap this endpoint.\n- **Versioning/deprecation policy** \u2014 if this is a public API, you likely need to support both `total` and `order_total` for a deprecation window, or bump the API version, rather than a hard rename.\n- **Changelog/release notes** for API consumers.\n\n(I couldn't inspect your actual repo \u2014 it appears empty in this workspace \u2014 so I can't point to specific files affected.)\n\nRecommendation: don't merge as a silent rename. Either add `order_total` alongside `total` with a deprecation notice, or treat this as a breaking API change requiring a version bump and consumer communication. Want me to look at the actual repo to find the serializer and its call sites?",
+  "ttft_ms": 2432,
+  "ttft_stream_ms": 970,
+  "time_to_request_ms": 32,
+  "time_to_request_from_spawn_ms": 515402,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025394335.6775,
+  "type": "result",
+  "duration_ms": 12832,
+  "uuid": "c85613de-1b25-467d-abce-4ffe5a048618",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "6e3e254eac13ff94661d637b0eb5b65d3c5b9effa4cf24ea787f2c0bac8cdcf9"
+}

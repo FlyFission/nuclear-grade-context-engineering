@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 22256,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0471211,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2723,
+    "cache_read_input_tokens": 23437,
+    "output_tokens": 1535,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2723,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1033,
+        "cache_read_input_tokens": 8758,
+        "cache_creation_input_tokens": 245,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 245
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000709,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1535,
+      "cacheReadInputTokens": 23437,
+      "cacheCreationInputTokens": 2723,
+      "webSearchRequests": 0,
+      "costUSD": 0.0464121,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Ship today, but don't let this stay tribal knowledge \u2014 formally log it as a known deficiency with an owner, the 1-in-5000/8-month history, and an explicit decision (risk-accept vs. fix-by date), rather than shipping on the same \"everyone knows, nobody owns\" basis that's let it linger this long. Given it's a real customer-money bug (double-charges, chargeback/trust exposure), I'd push for that risk-acceptance to get explicit sign-off from someone with authority over payments risk (not just an engineer's judgment call), plus a hard reassessment date.\n\nWant me to draft that deficiency entry (severity, impact, owner, decision, fix-by date) so you have something concrete to get signed off before the release goes out?",
+  "ttft_ms": 4334,
+  "ttft_stream_ms": 1079,
+  "time_to_request_ms": 38,
+  "time_to_request_from_spawn_ms": 1173769,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785026052622.7205,
+  "type": "result",
+  "duration_ms": 22819,
+  "uuid": "ffad8689-5796-4d40-8ba9-76885b0b60f0",
+  "_skill": "tracking-deficiencies",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "789dbc282deb1b8b44b333c8646964b4d916c4d17d9ec0bf2caa6a98a9fa7fc0"
+}

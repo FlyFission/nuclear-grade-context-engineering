@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 6038,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0225798,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2414,
+    "cache_read_input_tokens": 14786,
+    "output_tokens": 200,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2414,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 63,
+        "cache_read_input_tokens": 8506,
+        "cache_creation_input_tokens": 188,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 188
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 573,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000648,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 200,
+      "cacheReadInputTokens": 14786,
+      "cacheCreationInputTokens": 2414,
+      "webSearchRequests": 0,
+      "costUSD": 0.0219318,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No remaining references to `calcTotal` anywhere in the repo \u2014 your rename to `computeTotal` is fully applied and the two callers you updated were the only ones. Nothing else to fix.",
+  "ttft_ms": 2202,
+  "ttft_stream_ms": 1861,
+  "time_to_request_ms": 179,
+  "time_to_request_from_spawn_ms": 1808717,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594802766.3884,
+  "type": "result",
+  "duration_ms": 7032,
+  "uuid": "0fe8c112-d98d-4907-8088-ab097c29b722",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "6eeb1ceb4dc79dc03c503084553d0cbc9e830164bc5e7f2df586539edcb4a317"
+}

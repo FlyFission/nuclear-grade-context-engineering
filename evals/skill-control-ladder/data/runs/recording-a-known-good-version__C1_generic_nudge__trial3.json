@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 14203,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.033296900000000004,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2503,
+    "cache_read_input_tokens": 23393,
+    "output_tokens": 699,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2503,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 488,
+        "cache_read_input_tokens": 8651,
+        "cache_creation_input_tokens": 132,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 132
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000758,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 699,
+      "cacheReadInputTokens": 23393,
+      "cacheCreationInputTokens": 2503,
+      "webSearchRequests": 0,
+      "costUSD": 0.0325389,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory is completely empty\u2014no repo files, no changelog, no PR data, no eval results.\n\nI can't verify any of the claims in your message from this environment: I have no access to PR #482, the eval suite output, the precision/recall numbers, or the actual dependency diff. Before I draft a \"known-good version\" record, I want to flag why that matters:\n\n- A rollback record is only as trustworthy as its evidence. If I write \"precision and recall improved, QA signed off\" without seeing the actual numbers or sign-off, I'm fabricating provenance for a document whose entire purpose is to be trusted later during an incident.\n- \"Everything looks stable so far\" after one hour is weak evidence for a recommendation service \u2014 embedding model swaps often show quality regressions (drift in relevance, cold-start behavior, downstream ranking shifts) that take longer than an hour to surface, especially if rollout is gradual or traffic patterns vary by time of day.\n\nSo two options:\n\n1. **Point me at the actual artifacts** (PR diff/description, eval suite report, deploy config, git log/tags) \u2014 either paste them in or tell me where in this environment they live \u2014 and I'll draft a record grounded in what they actually say.\n2. **I draft a template now** with placeholders for the specific numbers/links/approvers, clearly marked as unverified, that you fill in and confirm before treating it as authoritative.\n\nWhich would you prefer? If you have the PR description or eval report handy, pasting it in is the fastest path to an accurate record.",
+  "ttft_ms": 3727,
+  "ttft_stream_ms": 3029,
+  "time_to_request_ms": 62,
+  "time_to_request_from_spawn_ms": 1002446,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025881239.7185,
+  "type": "result",
+  "duration_ms": 16462,
+  "uuid": "333f6251-83e4-4c1a-9de8-0e07cafa7867",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "13f564a9c4bcdabb0a423cb502716f2481aaa6be65ac7018f17eaaceb72bba36"
+}

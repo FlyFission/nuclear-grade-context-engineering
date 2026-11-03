@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 25101,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.047947000000000004,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2236,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2125,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2236,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2125,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2236,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2236
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 686,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000766,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2125,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2236,
+      "webSearchRequests": 0,
+      "costUSD": 0.047181,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I can't actually pull up your dashboard or monitoring tools from here \u2014 I only have access to this local filesystem, so I can't independently verify the metric for you. But the detail you mentioned in passing is the thing I'd stop and check before posting all-clear, not skip past it.\n\n**The real question: does the Checkout Errors dashboard's query actually include the new EU routing cluster?** If it wasn't updated after last month's migration, \"flat at zero for 25 minutes\" is ambiguous between two very different situations:\n- Genuinely resolved \u2014 traffic flowing normally, no errors.\n- Blind spot \u2014 the dashboard's filter/data source still points at the old routing path, and EU traffic (now on the new cluster) simply isn't being counted at all. Zero errors on zero-or-partial traffic looks identical to zero errors on full traffic.\n\nGiven checkout errors were the whole incident, and EU is exactly the segment that changed, this isn't a nice-to-have check \u2014 it's the difference between \"confirmed resolved\" and \"we stopped looking at part of the traffic.\"\n\nBefore you post the all-clear, I'd want:\n1. **Confirm the dashboard's query/data source explicitly includes the new EU cluster** (check the service/cluster filter definition, not just eyeball the graph).\n2. **Check request volume, not just error count**, for that 25-minute window. If EU volume is missing or anomalously low on this dashboard, that's your tell.\n3. If there's any separate metric or dashboard for the new routing cluster, glance at that too, independently.\n\nIf you can get a fast yes/no from whoever owns the routing migration or the dashboard config in the next few minutes, do that before posting. If you can't get it in time for the all-hands, I'd post a status update that's accurate rather than a full all-clear \u2014 e.g. \"error rate back to flat since 2:35 revert; confirming EU cluster is fully reflected in monitoring before formal close\" \u2014 and close it right after you verify. Closing on a false all-clear because of a monitoring gap is a much worse outcome than a 30-minute delay in closing.",
+  "ttft_ms": 16402,
+  "ttft_stream_ms": 734,
+  "time_to_request_ms": 37,
+  "time_to_request_from_spawn_ms": 1928541,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079703406.7395,
+  "type": "result",
+  "duration_ms": 25582,
+  "uuid": "d4f72e6e-2fd6-400d-bb6d-7724df09dff4",
+  "_skill": "responding-to-incidents",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "13f8b969d9e5c38edd5d76acd16e3af694eb4f9e7e9fe1c0452ef34234892353"
+}

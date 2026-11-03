@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 44421,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0775197,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3461,
+    "cache_read_input_tokens": 14859,
+    "output_tokens": 3436,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3461,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2378,
+        "cache_read_input_tokens": 8579,
+        "cache_creation_input_tokens": 1162,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1162
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000744,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 3436,
+      "cacheReadInputTokens": 14859,
+      "cacheCreationInputTokens": 3461,
+      "webSearchRequests": 0,
+      "costUSD": 0.0767757,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Worth flagging up front: this wasn't really \"a control that failed\" \u2014 it was a control that worked (the linter caught the key) and then got deliberately bypassed under deadline pressure. That's a meaningful distinction for the write-up, because it changes both the root cause and the fix. Softening it to \"the pre-commit hook missed something\" would misdiagnose the problem; the real gap is that your *only* secret-scanning gate was a local hook that any engineer can skip with one flag, and nothing downstream caught it for 3 days.\n\nHere's a draft postmortem you can adapt:\n\n---\n\n## Incident Report: Hardcoded API Key Exposed in Production\n\n**Date of incident:** [date of push] \u2014 **Date detected:** [audit date, ~3 days later] \u2014 **Date resolved:** [same day, key rotated]\n**Severity:** High (credential exposure in production, 3-day live window)\n**Status:** Resolved (key rotated); preventive actions pending\n\n### What happened\nAn engineer's pre-commit hook (secrets-scanning linter) failed on a local branch. Rather than fixing the flagged issue, the engineer ran `git commit --no-verify`, bypassing the scan, and pushed the branch to ship ahead of a deadline. The commit contained a hardcoded API key. It was reviewed, merged to `main`, and deployed to production, where the key remained live for 3 days until a routine security audit discovered it. The key was rotated immediately upon discovery.\n\n### Actual vs. standard\n- **Standard:** No secret reaches a committed history or production; any commit that trips the secrets linter is blocked until fixed or explicitly waived through a reviewed exception process.\n- **Actual:** The linter correctly flagged the secret, the flag was manually overridden by the author with no second party involved, and no other layer of defense existed to catch it before merge or after deploy.\n\n### Root cause\nThis is a **willful bypass of a working control**, not a tooling miss \u2014 the linter did its job. Two things let it turn into a real incident:\n\n1. **Proximate cause:** Under deadline pressure, the engineer chose to bypass a known-good check rather than fix the finding or ask for help/an exception.\n2. **Systemic cause (the real fix target):** The secrets scan existed *only* as a local pre-commit hook. Pre-commit hooks are opt-in and trivially bypassable by design (`--no-verify`, uninstalled hooks, etc.), and there was no server-side enforcement (CI check, branch protection, push rule) and no post-merge/production scanning to catch a bypass. So a single individual decision, with no second check anywhere in the pipeline, was enough to put a live credential in production for 3 days undetected.\n\n### Classification\nThis should be logged as a **process violation**, not filed as an honest mistake \u2014 the engineer knew the check was failing and deliberately skipped it rather than escalating or fixing it. That said, the fix isn't \"talk to the engineer and move on\" \u2014 the fact that this was *possible* with no other safety net is an organizational gap that needs owners and follow-through.\n\n### Corrective actions\n\n| Action | Owner | Target date | Verification |\n|---|---|---|---|\n| Rotate exposed key | \u2705 Done | \u2014 | Confirmed old key revoked, no usage after rotation |\n| Audit git history / other repos for the same or similar hardcoded secrets | Security | +1 week | Scan report reviewed, findings closed |\n| Add server-side secrets scanning as a **required CI check** (same or equivalent linter), blocking merge on failure \u2014 cannot be bypassed by local flags | Platform/DevEx | +2 weeks | CI check shown as required in branch protection settings; test PR with a fake secret is blocked |\n| Enable branch protection on `main` requiring the check to pass + at least 1 review before merge | Repo admin | +2 weeks | Settings screenshot / policy-as-code config reviewed |\n| Add a documented exception process (e.g., reviewed suppression comment + second approver) for legitimate false positives, so people aren't tempted to bypass instead of escalating | Security | +2 weeks | Doc published, linked from linter failure message |\n| Add continuous secret-scanning on deployed/production config and running services (not just commit-time), to shrink detection time from audit-cadence (days) to near-real-time | Security/SRE | +4 weeks | Alert fires on a test secret within [target] minutes |\n| Direct conversation with the engineer (and team) about the bypass \u2014 not disciplinary, but to confirm understanding that `--no-verify` on a security check requires escalation, not self-override, going forward | Eng manager | This week | 1:1 held, expectation documented in team norms/onboarding |\n\n### Escalation\nBecause this touches credentials and production, it's worth confirming this write-up (or a summary of it) is shared with security leadership / whoever owns your incident register, not just kept within the team \u2014 both so the \"3 days undetected\" gap gets tracked as a metric to improve, and so other teams with the same local-only hook setup know they have the same exposure.\n\n---\n\nA few things worth deciding before you finalize this:\n- Who actually owns \"make the secrets check un-bypassable\" \u2014 is that a platform/DevEx team, or does it fall to whoever owns CI config?\n- Do you want the exception process to require a second approver on every suppression, or just for security-tagged checks?\n- Should the 3-day detection gap prompt a broader review of audit cadence, or is real-time scanning the right fix instead?",
+  "ttft_ms": 11388,
+  "ttft_stream_ms": 780,
+  "time_to_request_ms": 37,
+  "time_to_request_from_spawn_ms": 835248,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025714062.6187,
+  "type": "result",
+  "duration_ms": 43443,
+  "uuid": "6abee4c1-d685-475a-90fe-72cc5c5dbfb7",
+  "_skill": "learning-from-experience",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "e5c1e8ae96210bf0b437d2d17a20ba1d6da05118e7f4af6a16e22cca704c107e"
+}

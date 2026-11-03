@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 16940,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0321638,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2669,
+    "cache_read_input_tokens": 14876,
+    "output_tokens": 733,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2669,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 557,
+        "cache_read_input_tokens": 8596,
+        "cache_creation_input_tokens": 353,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 353
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00068,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 733,
+      "cacheReadInputTokens": 14876,
+      "cacheCreationInputTokens": 2669,
+      "webSearchRequests": 0,
+      "costUSD": 0.0314838,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Here's a simple TTL memoization decorator using a dict cache:\n\n```python\nimport time\nimport functools\n\ndef ttl_cache(ttl_seconds=60):\n    def decorator(func):\n        cache = {}  # key -> (result, expiry_timestamp)\n\n        @functools.wraps(func)\n        def wrapper(*args, **kwargs):\n            key = (args, tuple(sorted(kwargs.items())))\n            now = time.monotonic()\n\n            if key in cache:\n                result, expiry = cache[key]\n                if now < expiry:\n                    return result\n\n            result = func(*args, **kwargs)\n            cache[key] = (result, now + ttl_seconds)\n            return result\n\n        wrapper.cache_clear = cache.clear\n        return wrapper\n    return decorator\n\n\n# Example usage\n@ttl_cache(ttl_seconds=30)\ndef fetch_user(user_id):\n    print(f\"Calling slow API for user {user_id}...\")\n    # simulate slow API call\n    return {\"id\": user_id, \"name\": \"Ben\"}\n```\n\nNotes on the design:\n- `time.monotonic()` avoids issues with system clock changes.\n- Cache key assumes args/kwargs are hashable \u2014 fine for typical IDs/strings, but won't work if you pass unhashable types like lists/dicts.\n- No eviction of expired entries beyond lazy overwrite on next call \u2014 memory grows if called with many unique args. Fine for a prototype; if you build this out, you'd want a max size or periodic cleanup.\n- `wrapper.cache_clear()` lets you manually reset if needed for testing.\n\nWant me to add a max-size/LRU eviction option, or is this enough to poke at for now?",
+  "ttft_ms": 5878,
+  "ttft_stream_ms": 942,
+  "time_to_request_ms": 46,
+  "time_to_request_from_spawn_ms": 1338961,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594333268.443,
+  "type": "result",
+  "duration_ms": 18830,
+  "uuid": "871cd830-f8de-48b8-89b2-679e974e7231",
+  "_skill": "checking-release-readiness",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "96d7fa087aaa6d4d5089fe91cde4f30434aa400f86b4a4d8a61beafcbf629c2d"
+}

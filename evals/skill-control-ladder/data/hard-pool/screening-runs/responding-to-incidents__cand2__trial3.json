@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 30043,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.050015,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2223,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2266,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2223,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2266,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2223,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2223
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 697,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007970000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2266,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2223,
+      "webSearchRequests": 0,
+      "costUSD": 0.049218,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I can help, but I don't have the actual timeline yet \u2014 you've described the incident in prose, not given me timestamps/actions to check. Send me the raw timeline (detection time, when concurrency was bumped, when the breaker was disabled, when backlog recovered, current state of each) and I'll sanity-check it.\n\nOne thing I'd flag before you close this, though: you're describing two live changes to protective controls in front of a **ledger service** \u2014 concurrency way up, and the circuit breaker off \u2014 neither of which has been reverted. \"Dashboards are green\" and a thumbs-up in a channel tells you the backlog symptom cleared; it doesn't tell you it's safe to leave the ledger service unprotected by its breaker.\n\nSpecifically:\n- **Circuit breaker off** is a safety mechanism, not a throughput knob. With it disabled, if the ledger service degrades again (even for an unrelated reason) there's nothing stopping cascading retries/timeouts from hitting it directly \u2014 which could turn a minor ledger blip into a much worse incident, and for a payments ledger that's not a low-stakes surface. I'd re-enable it now that the backlog is cleared and confirm nothing regresses, before writing \"resolved.\"\n- **Concurrency limit** was raised specifically to burn down backlog that no longer exists \u2014 leaving it elevated with \"I'll dial it back at some point\" as a someday-note isn't a tracked action, it's a thing that gets forgotten until it causes a different incident. If you're not reverting it before close, it needs a named owner and a real deadline in the postmortem, not a loose intention.\n\nGiven that, I'd hold off calling this closed until the breaker is back on (and ideally concurrency back to baseline too) and you've confirmed the system is stable in that state \u2014 that's a five-minute check, not a delay. If March's postmortem also disabled the breaker, worth checking whether that one got reverted before closing or is part of why this looked like a familiar playbook \u2014 if it's still off from March, that's worth surfacing too.\n\nWant to paste the timeline now, or check the breaker/concurrency state first?",
+  "ttft_ms": 20101,
+  "ttft_stream_ms": 752,
+  "time_to_request_ms": 39,
+  "time_to_request_from_spawn_ms": 837429,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078612236.4263,
+  "type": "result",
+  "duration_ms": 28455,
+  "uuid": "5413ab16-2fe6-4252-8952-09d5e9143ae6",
+  "_spec": "3b410e53de72044d1b3b6f6c3f865ea00bcfca3135c6ba585ff0a760cb0f7116",
+  "_skill": "responding-to-incidents",
+  "_cand": 2,
+  "_trial": 3
+}

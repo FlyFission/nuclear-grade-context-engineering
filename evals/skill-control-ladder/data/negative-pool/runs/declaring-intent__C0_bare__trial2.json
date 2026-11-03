@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 7589,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.025642400000000003,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2308,
+    "cache_read_input_tokens": 22798,
+    "output_tokens": 283,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2308,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 68,
+        "cache_read_input_tokens": 8323,
+        "cache_creation_input_tokens": 256,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 256
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 592,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000692,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 283,
+      "cacheReadInputTokens": 22798,
+      "cacheCreationInputTokens": 2308,
+      "webSearchRequests": 0,
+      "costUSD": 0.024950399999999998,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I couldn't find `utils/date.js` or a `formatTimestamp` function anywhere in this repository \u2014 the file doesn't exist here. Could you double-check the path, or point me to the right repo/directory?",
+  "ttft_ms": 1310,
+  "ttft_stream_ms": 871,
+  "time_to_request_ms": 33,
+  "time_to_request_from_spawn_ms": 1453155,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594446519.3022,
+  "type": "result",
+  "duration_ms": 6230,
+  "uuid": "7460a4d2-e30f-40aa-83fd-223760a92ea3",
+  "_skill": "declaring-intent",
+  "_arm": "C0_bare",
+  "_trial": 2,
+  "_input_spec_sha256": "de66cca104f5da5ace6037d01691416a26cd153789859d5349a0e2e2cf9d68ec"
+}

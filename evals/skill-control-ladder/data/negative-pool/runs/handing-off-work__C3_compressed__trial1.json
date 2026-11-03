@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 13268,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.037941300000000004,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2879,
+    "cache_read_input_tokens": 32191,
+    "output_tokens": 687,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2879,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 161,
+        "cache_read_input_tokens": 8780,
+        "cache_creation_input_tokens": 379,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 379
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 581,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006810000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 687,
+      "cacheReadInputTokens": 32191,
+      "cacheCreationInputTokens": 2879,
+      "webSearchRequests": 0,
+      "costUSD": 0.0372603,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I'm not able to find any files in this working directory at all \u2014 it appears empty, and there's no `tempFlag` variable or `feature/search-filters` branch content here to work with. I don't have a way to run `git` commands directly with my current tools either.\n\nCan you confirm this is the right directory/checkout, and that you're currently on the `feature/search-filters` branch? If the branch exists elsewhere (e.g., needs to be checked out or the repo path is different), let me know and I'll pick it up from there.",
+  "ttft_ms": 1548,
+  "ttft_stream_ms": 842,
+  "time_to_request_ms": 55,
+  "time_to_request_from_spawn_ms": 1492621,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594486964.6868,
+  "type": "result",
+  "duration_ms": 13360,
+  "uuid": "cbfdd0e9-e306-4f20-83f1-26521da24346",
+  "_skill": "handing-off-work",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "19b1b0e3807574426b55b14f3f50bd8bde01283226eec446149e8d0fcdd2a6e3"
+}

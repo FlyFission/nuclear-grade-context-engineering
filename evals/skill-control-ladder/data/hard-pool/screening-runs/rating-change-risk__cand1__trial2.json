@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 13977,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0343691,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2585,
+    "cache_read_input_tokens": 23397,
+    "output_tokens": 739,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2585,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 521,
+        "cache_read_input_tokens": 8630,
+        "cache_creation_input_tokens": 235,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 235
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 672,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007369999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 739,
+      "cacheReadInputTokens": 23397,
+      "cacheCreationInputTokens": 2585,
+      "webSearchRequests": 0,
+      "costUSD": 0.0336321,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't see any workflow file (or `.yml`/`.yaml` files at all) in this repo \u2014 this directory looks empty of the change you're describing. Can you point me to the actual file/branch, or paste the workflow YAML directly?\n\nA few things I'll want to check once I can see it, since this is a shared `NPM_TOKEN` used across multiple packages:\n\n- **Trigger scoping**: is it `on: push: branches: [main]`, or could it also fire on `pull_request_target`, tags, or forks? A misconfigured trigger on a shared-token workflow is the classic way secrets leak to a fork PR.\n- **Path/package targeting**: does the publish step definitely target *this* package's `package.json`, not accidentally something else in a monorepo context?\n- **Version bump safety**: what stops a merge to main with an unbumped version from failing loudly (rather than silently) vs. accidentally publishing over an existing version or with the wrong tag?\n- **No manual gate at all**: even with green CI, is there any check (e.g. required approval, `workflow_dispatch` confirmation, or `npm publish --dry-run` step) before it goes live to the public/internal registry? \"CI green\" isn't the same as \"safe to publish.\"\n\nGreen CI + Marcus's review + working precedent on two smaller tools is decent signal, but publishing is a one-way door (you can unpublish on npm but it's restricted and messy), and this is a shared token across multiple packages \u2014 so worth actually reading the diff rather than taking the track record as sufficient on its own. Send me the file and I'll go through it concretely.",
+  "ttft_ms": 1681,
+  "ttft_stream_ms": 1300,
+  "time_to_request_ms": 100,
+  "time_to_request_from_spawn_ms": 748240,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078522999.7292,
+  "type": "result",
+  "duration_ms": 14237,
+  "uuid": "bcd76387-a8b4-4dc5-9280-d1c478b7bdd4",
+  "_spec": "35237ac86ff098b1e7a8a505be58a234a19788fb6b2f71d8c6dcdc6027566d07",
+  "_skill": "rating-change-risk",
+  "_cand": 1,
+  "_trial": 2
+}

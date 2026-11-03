@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 17636,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0330308,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2297,
+    "cache_read_input_tokens": 14536,
+    "output_tokens": 945,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2297,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 694,
+        "cache_read_input_tokens": 8265,
+        "cache_creation_input_tokens": 303,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 303
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000701,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 945,
+      "cacheReadInputTokens": 14536,
+      "cacheCreationInputTokens": 2297,
+      "webSearchRequests": 0,
+      "costUSD": 0.032329800000000006,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 I'd hold this off despite green CI. Green tests confirm the migration *works*, not that it's *safe* to run against production. Two gaps here are serious enough to block, not just nice-to-haves:\n\n**No rollback plan** \u2014 For a major-version Postgres upgrade (12\u219215) with index changes, you need a defined path back if something goes wrong mid-migration or post-deploy (e.g., a bad index causing query plan regressions, or replication/data issues). \"We'll figure it out if it breaks\" is not a plan for a primary user database. At minimum you need: a tested down-migration or restore procedure, and a decision on how long you can tolerate being in a partially-migrated state.\n\n**No new monitoring/alerts** \u2014 Index changes are exactly the kind of thing that can look fine in CI (small dataset, no real traffic patterns) and then cause slow query plans, lock contention, or replication lag in production. Without alerts tied to this deploy, you're relying on someone noticing manually, likely after users are already affected.\n\nOther things worth confirming before an afternoon deploy of this scope:\n- Was this tested against a production-like data volume/index cardinality, not just CI fixtures?\n- Migration duration and lock behavior \u2014 will it block writes on large tables?\n- Deploy window \u2014 afternoon means less time to respond before people log off if issues surface overnight.\n\nI'd push back on \"ready to go\" until there's at least a rollback procedure and basic alerting (query latency, error rate, replication lag) scoped to this change. Want help drafting a rollback script or the specific alerts to add?",
+  "ttft_ms": 2697,
+  "ttft_stream_ms": 833,
+  "time_to_request_ms": 91,
+  "time_to_request_from_spawn_ms": 622523,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789261009.541,
+  "type": "result",
+  "duration_ms": 15386,
+  "uuid": "3e68bf80-6f6c-4142-9c60-259cdc815681",
+  "_skill": "checking-release-readiness",
+  "_arm": "C0_bare",
+  "_trial": 3,
+  "_input_spec_sha256": "3dd0dff26d2ac709e6d4793b372695d48761b70923b5e06b99929db2c3917ac6"
+}

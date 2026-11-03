@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 37840,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.059345,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2141,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2927,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2141,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2927,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2141,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2141
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 624,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000704,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2927,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2141,
+      "webSearchRequests": 0,
+      "costUSD": 0.058641,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before I write this, a few things worth flagging as the person who'd have to explain this if it goes wrong:\n\n**The core risk isn't the briefing quality \u2014 it's the architecture.** An unattended agent with direct write access to a production database, running overnight with nobody watching, is a bad setup regardless of how good the instructions are. If the heuristic backfill is wrong, or a migration locks the users table, or the agent misreads \"backfill\" and does something broader, there's no one to catch it until morning \u2014 potentially after hours of bad writes or downtime.\n\n**My recommendation:** don't give the agent direct prod write access at all. Have it work on a branch: write the migration, the backfill script, the endpoint change, and tests, then open a PR with a clear summary. You review and run the migration yourself (or via your normal deploy pipeline) in the morning. This gets you 90% of the \"work done overnight\" benefit with almost none of the blast radius.\n\n**Also \u2014 the heuristic itself is underspecified.** \"Based on signup source\" isn't precise enough to hand to an agent unsupervised. If it has to *decide* the mapping (e.g., \"OAuth signups \u2192 verified, password signups \u2192 not verified\"?) at 2am, you're trusting its judgment on a decision that affects trust/security semantics of a `email_verified` flag for every existing user. Define the exact rule yourself now, or the agent should propose it in the PR for you to confirm before it's applied \u2014 not silently decide and execute.\n\nIf you want, tell me the actual heuristic and whether you're open to the branch/PR approach, and I'll write the full briefing around that. If you specifically need the agent to execute directly against prod tonight regardless, I'd still write it, but the briefing would need to mandate a snapshot/backup beforehand, a staging rehearsal, batched+idempotent+resumable backfill, and hard stop conditions \u2014 happy to include that version too, just want to confirm that's really the path you want.",
+  "ttft_ms": 29583,
+  "ttft_stream_ms": 847,
+  "time_to_request_ms": 44,
+  "time_to_request_from_spawn_ms": 1389210,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785790027407.9248,
+  "type": "result",
+  "duration_ms": 38444,
+  "uuid": "8c28d712-942b-461f-9d5e-1de0314e897c",
+  "_skill": "briefing-an-agent",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "f0e535a4ed029e183c1cb1b3c40e82e87408c2c0628b209e4300f31d6d16877b"
+}

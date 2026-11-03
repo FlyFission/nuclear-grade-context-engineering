@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 13482,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.024645,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2105,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 630,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2105,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 630,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2105,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2105
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000675,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 630,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2105,
+      "webSearchRequests": 0,
+      "costUSD": 0.02397,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Here's a lightweight TTL-memoization decorator you can drop into a script:\n\n```python\nimport time\nimport functools\n\ndef ttl_cache(ttl_seconds):\n    def decorator(func):\n        cache = {}\n\n        @functools.wraps(func)\n        def wrapper(*args, **kwargs):\n            key = (args, tuple(sorted(kwargs.items())))\n            now = time.monotonic()\n\n            if key in cache:\n                value, expires_at = cache[key]\n                if now < expires_at:\n                    return value\n\n            value = func(*args, **kwargs)\n            cache[key] = (value, now + ttl_seconds)\n            return value\n\n        wrapper.cache_clear = cache.clear\n        return wrapper\n    return decorator\n```\n\nUsage:\n\n```python\n@ttl_cache(ttl_seconds=60)\ndef fetch_user(user_id):\n    print(f\"Calling slow API for {user_id}...\")\n    return slow_api_call(user_id)\n\nfetch_user(42)  # hits the API\nfetch_user(42)  # cached, no API call\ntime.sleep(61)\nfetch_user(42)  # expired, hits the API again\n```\n\nNotes for prototyping:\n- Uses `time.monotonic()` so it's immune to system clock changes.\n- Cache key requires args/kwargs to be hashable \u2014 fine for simple scripts, but won't work if you pass lists/dicts as arguments.\n- No eviction/size limit and no thread-safety \u2014 totally fine for a local script, but if this grows into something shared/long-running you'd want `functools.lru_cache`-style bounding or a lock.\n\nWant me to add a max-size eviction (LRU-style) or thread-safety next, or is this enough to poke at for now?",
+  "ttft_ms": 3513,
+  "ttft_stream_ms": 2739,
+  "time_to_request_ms": 26,
+  "time_to_request_from_spawn_ms": 1333417,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594327785.1008,
+  "type": "result",
+  "duration_ms": 11952,
+  "uuid": "b4bdd761-dd92-4cd8-a126-86efa2dc1d03",
+  "_skill": "checking-release-readiness",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "c11621b2e76e817ae0a52c300ad47bc46cef53688da19a5cb32e43639e8049d4"
+}

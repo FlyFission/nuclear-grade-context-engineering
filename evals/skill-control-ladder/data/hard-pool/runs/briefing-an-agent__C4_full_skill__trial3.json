@@ -1,0 +1,169 @@
+{
+  "duration_api_ms": 83989,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.1093585,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 8745,
+    "cache_read_input_tokens": 46731,
+    "output_tokens": 6486,
+    "output_tokens_details": {
+      "thinking_tokens": 4470
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 8745,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 3301,
+        "cache_read_input_tokens": 14457,
+        "cache_creation_input_tokens": 898,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 898
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-haiku-5-5": {
+      "inputTokens": 1428,
+      "outputTokens": 27,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0001563,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 0,
+      "cacheCreationEphemeral5mInputTokens": 0,
+      "cacheCreationEphemeral1hInputTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 6486,
+      "cacheReadInputTokens": 46731,
+      "cacheCreationInputTokens": 8745,
+      "webSearchRequests": 0,
+      "costUSD": 0.1092022,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 4470,
+      "cacheCreationEphemeral5mInputTokens": 0,
+      "cacheCreationEphemeral1hInputTokens": 8745,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 6,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "## Context Pack \u2014 PR #482 Auto-Merge Agent\n\n**Mode:** Standard (production config change, auto-merge authority granted)\n**Decision question:** May the review-and-merge agent merge PR #482 (`checkout.expressPay.enabled: false\u2192true` in `flags/production.yaml`) without a human clicking merge?\n**Goal:** Ship this one flag flip before Friday's freeze, with verifiable evidence, zero scope creep, and no silent trust assumptions.\n**Work phase:** Accept (last gate before merge \u2014 tests reportedly green, reviewer reportedly signed off; agent's job is to verify both are *currently and actually* true, not take them on faith).\n\n**Archetype: Releaser.** Characteristic drift: shipping on borrowed trust \u2014 reusing \"Marcus signed off\" and \"a dozen of these went fine\" as substitutes for checking *this* PR's current state. The brief below forces the agent to re-verify at merge time instead of inheriting the user's assertions.\n\n### Role\nBuilder-adjacent release gate: read-only on the diff, write-only on PR comments, merge-capable only within the bounds below.\n\n### Scope (hard bound, not a standing policy)\nThis authority applies **only to PR #482**, right now. It is *not* a blanket rule for future flag-default PRs \u2014 see Open Gaps below.\n\n### Authority \u2014 what the agent MAY do\n- Read PR #482's diff, CI status, and review state via `gh pr view 482` / `gh pr checks 482`.\n- Post a comment on PR #482 containing the test run log/evidence.\n- Merge PR #482 using the repo's standard merge method, **only if every gate below holds at the moment of merge**.\n\n### Gates \u2014 ALL must hold, verified live, not assumed\n1. Diff touches `flags/production.yaml` only, no other files.\n2. Diff is \u22645 lines changed, and the content is exactly `checkout.expressPay.enabled` flipped `false\u2192true` (confirm via `git diff` / PR diff, not the one-line description in this brief).\n3. CI/test suite shows green **as of now** \u2014 re-check; don't reuse a stale \"already green\" claim.\n4. Marcus's sign-off exists as an actual recorded GitHub approving review on PR #482 (`gh pr view 482 --json reviews`) \u2014 not inferred from \"he owns checkout-service.\"\n5. PR is mergeable: no conflicts, branch protection checks satisfied, not bypassed.\n\n### Forbidden actions\n- Editing the diff or the flag file itself.\n- Merging any other PR, or treating this authority as covering \"similar\" future PRs.\n- Force-merging, bypassing failed checks, or overriding branch protection.\n- Approving the PR itself (agent is not a substitute reviewer for Marcus).\n- Fabricating or paraphrasing a test log instead of posting the actual run output/link.\n- Touching anything under freeze-window exception rules, secrets, or credentials.\n\n### Stop and ping the user if:\n- The diff touches anything outside `flags/production.yaml` (explicit user instruction).\n- Diff exceeds 5 lines.\n- Marcus's review can't be found as a real approval on the PR.\n- Tests are not green at merge time (even if they were earlier).\n- Merge conflicts, failing checks, or anything beyond a simple boolean default flip appears.\n\n### Evidence required\n- Test run log (actual CI output or link), posted as a PR comment before merge.\n- A short note confirming diff-scope and reviewer-approval were checked programmatically, not assumed.\n\n### Basis / risk summary\nOne-line diff, green tests, prior sign-off, 12 similar merges with no incidents \u2014 low technical risk. The actual risk is process: auto-merge to `production.yaml` is release power on production config, and the brief exists specifically so the agent re-verifies \"tests pass\" and \"Marcus approved\" itself rather than inheriting those as settled facts from this conversation.\n\n### Loaded instruction files\nNone found in this working directory (no `CLAUDE.md`/`AGENTS.md`/Copilot rules). No conflicts to resolve.\n\n### Open gaps \u2014 need your call\n1. **Duration of authority:** this pack scopes auto-merge to PR #482 only. You mentioned this is \"our normal bar for flag-default PRs\" generally \u2014 do you want a standing rule the agent applies to *future* PRs unattended, or do you want to re-issue a pack each time? I'd default to per-PR unless you say otherwise, since unattended standing merge authority on production config is a bigger grant than one PR.\n2. Confirm you're fine with the agent merging without a human click, given all five gates hold \u2014 the brief as written gives it that authority, but it's worth a deliberate yes since it's production-facing.\n\n### Next action\nHand this pack to the agent for PR #482. It checks the five gates live, posts the test log, and merges \u2014 or stops and pings you per the conditions above.",
+  "ttft_ms": 24797,
+  "type": "result",
+  "duration_ms": 86452,
+  "uuid": "d34ba26b-cb7b-41db-be08-8961bc883e30",
+  "ttft_stream_ms": 1505,
+  "time_to_request_ms": 426,
+  "time_to_request_phases_ms": {
+    "other": 41,
+    "system_prompt": 75,
+    "resume_other": 1,
+    "process_user_input": 6,
+    "input_attachments": 16,
+    "input_hooks": 9,
+    "tool_pool_refresh": 4,
+    "init_message": 23,
+    "engine_pickup": 41,
+    "message_prep": 1,
+    "model_config_wait": 93,
+    "autocompact": 5,
+    "query_setup": 1,
+    "model_gates": 0,
+    "tool_schema_build": 14,
+    "message_normalization": 7,
+    "client_creation": 67,
+    "request_build": 22
+  },
+  "turn_start_resume_kind": "none",
+  "process_turn_index": 0,
+  "time_to_request_loop_lag_ms": 295,
+  "time_to_request_cpu_ms": 380,
+  "time_to_request_major_faults": 1,
+  "process_rss_mib_turn_start": 186,
+  "process_anon_mib_turn_start": 94,
+  "process_rss_mib_result": 213,
+  "process_anon_mib_result": 116,
+  "process_peak_rss_mib": 221,
+  "process_cpu_ms_turn": 2112,
+  "process_wall_ms_turn": 86451,
+  "process_cpu_ms_streaming": 1366,
+  "process_wall_ms_streaming": 78719,
+  "main_stream_count": 4,
+  "main_stream_event_count": 534,
+  "main_stream_chunk_count": 499,
+  "input_attachments_detail": {
+    "slowest_producer": "queued_commands",
+    "slowest_producer_ms": 9,
+    "cpu_ms": 14,
+    "major_faults": 0
+  },
+  "first_content_frame_ms": 1505,
+  "time_to_request_from_spawn_ms": 31124,
+  "warm_spare_claimed": false,
+  "flag_fetch_kick": "not_asked_warm",
+  "time_origin_ms": 1793122129373.9417,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "process_start_tuning": 0,
+  "_skill": "briefing-an-agent",
+  "_arm": "C4_full_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "4647ccff18a3961183e4b7d54eb7b1483bd74413a7f550ebbe704850e3cb88e1"
+}

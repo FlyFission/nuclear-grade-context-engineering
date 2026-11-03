@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 30467,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.048288000000000005,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2247,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2141,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2247,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2141,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2247,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2247
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 691,
+      "outputTokens": 22,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000801,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2141,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2247,
+      "webSearchRequests": 0,
+      "costUSD": 0.047487,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A few things I'd want nailed down before Friday, roughly in priority order:\n\n**Legal/audit trail \u2014 this is the part that matters most and it's the part that's least verified**\n- \"Legally binding\" is a marketing claim, not a legal fact. Has your legal team actually reviewed SignFast's ESIGN/UETA compliance (or equivalent for your jurisdiction) and their terms of service, or is \"their site says\" the extent of the diligence? If a contract is ever disputed in court, the strength of the audit trail is what gets tested \u2014 not the vendor's homepage copy.\n- What's actually *in* their completion certificate? IP address, timestamp, auth method used to identify the signer, consent-to-electronic-signature language, hash of the signed document? If it's just a PDF they hand you, is it independently verifiable (e.g., a hash you can check), or are you trusting SignFast's word forever, including years after a customer relationship ends and possibly after SignFast itself no longer exists?\n- Sales running the demo twice tells you the happy path works. It tells you nothing about declined signatures, expired links, multi-signer ordering, signer abandonment, or resend/void flows \u2014 all of which you need for a real onboarding flow and none of which \"worked perfectly\" in a demo covers.\n\n**Who should be in the loop**\n- Legal/compliance sign-off on the actual signature mechanism, not just eng. This is the system of record for whether a contract is enforceable \u2014 that's a legal risk decision, not an engineering one.\n- If you're collecting anything sensitive (SSNs, payment info) through their widget, check for a DPA and SOC 2 report, not just uptime stats.\n\n**Reliability**\n- 99.98% is their self-reported number on their own status page \u2014 worth asking what counts as an incident and what their actual SLA/credit terms are, since \"we couldn't onboard customers for 2 hours\" is a business outage even if it doesn't hit their SLA threshold.\n- What's your fallback if their API/widget is down during onboarding \u2014 block the flow, or do you need a degraded path?\n\n**Cutover mechanics**\n- Webhook signature verification for \"document completed\" events, so a spoofed webhook can't fake a signed contract.\n- Idempotency/retry handling if their webhook fires twice or their API times out mid-pull.\n- Consider a short dual-run or gradual rollout rather than a hard cutover, so you're not debugging signature-flow edge cases in production with real customer contracts on day one.\n\nIf Friday is a hard deadline, I'd push specifically on the legal review of the audit trail \u2014 that's the one piece that's hard to retrofit later if a dispute comes up on a contract signed during a rushed launch.",
+  "ttft_ms": 17362,
+  "ttft_stream_ms": 979,
+  "time_to_request_ms": 26,
+  "time_to_request_from_spawn_ms": 902876,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078677764.668,
+  "type": "result",
+  "duration_ms": 31036,
+  "uuid": "63f509b5-5d82-42fe-97be-5aa37a2d71c6",
+  "_spec": "da0ead5502189ccc80a1548fecf9b4607541d0f6965721dfb3525b525eed9207",
+  "_skill": "vetting-outside-code-and-models",
+  "_cand": 2,
+  "_trial": 2
+}

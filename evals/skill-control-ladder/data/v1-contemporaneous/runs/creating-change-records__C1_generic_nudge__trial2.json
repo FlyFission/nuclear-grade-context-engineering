@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 39442,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0730126,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3964,
+    "cache_read_input_tokens": 14752,
+    "output_tokens": 2937,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3964,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1215,
+        "cache_read_input_tokens": 8472,
+        "cache_creation_input_tokens": 1772,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1772
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 656,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000736,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2937,
+      "cacheReadInputTokens": 14752,
+      "cacheCreationInputTokens": 3964,
+      "webSearchRequests": 0,
+      "costUSD": 0.0722766,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No existing ADR/changelog convention in this repo, so you'd likely be establishing this pattern from scratch. Here's the actual answer.\n\n**Why \"swapped model per cost review\" fails the 6-month test:** it records the *motive* (cost) but nothing about *validation*. A skeptical reviewer's real question is \"did anyone check the new model makes the same/better refund decisions before it went live, and how would we know if it didn't?\" A one-line PR note can't answer that, and git blame six months out won't recover context that was never written down. This also isn't really a \"one-line change\" \u2014 the diff is one line, but the behavior surface is an entirely different model making autonomous financial decisions on your customers' money.\n\n**What the record needs to contain:**\n\n1. **The change itself, precisely**\n   - Old model ID and provider (exact snapshot/version, not just family name)\n   - New model ID and provider (same)\n   - Date, author, approver(s)\n\n2. **Why, with evidence, not just a label**\n   - Link to the actual cost analysis, not just \"cost review\" as a phrase\n\n3. **Pre-deployment validation (the part that's missing)**\n   - Was the new model run against a held-out set of historical refund cases (including edge cases, ambiguous cases, known fraud attempts) and compared to actual outcomes or the old model's decisions?\n   - Concrete deltas observed: approval rate, average/total $ approved, false-approve and false-deny rate vs. ground truth, latency, error rate\n   - Did it still respect hard constraints \u2014 refund dollar caps, escalation thresholds, tool-call authorization limits \u2014 the same way?\n   - Was it tested against adversarial/injected input (e.g., a customer message trying to talk the agent into approving an out-of-policy refund)? Models differ meaningfully in instruction-following and injection resistance; this is a very plausible way a swap silently makes the agent less safe.\n\n4. **Rollout method**\n   - Shadow mode / canary first, or straight to 100% of traffic? If straight to 100%, that itself is a risk fact worth recording.\n\n5. **Rollback plan**\n   - Is the old model ID still available and how fast can you revert if something goes wrong?\n\n6. **Monitoring plan**\n   - What's being watched post-launch (refund volume/$ anomalies, approval rate drift, spot-check sampling), for how long, and who owns watching it.\n\n7. **Sign-off**\n   - For an agent that autonomously moves money, \"an engineer decided\" is a thin approval chain. Worth naming who from risk/finance/fraud (if such a function exists at your org) signed off, or explicitly noting that no one outside engineering reviewed it \u2014 which is itself a fact a future auditor needs to know.\n\n**Where it should live:** not just the PR description (PRs get squashed, descriptions get truncated, and PR search is a bad audit tool). Put the substance in a short model-change record (an ADR-style doc or entry in a durable changelog/risk log), and have the PR description link to it. The PR text can stay short \u2014 but it should point at real evidence, not stand in for it.\n\nIf your org genuinely didn't do #3 (pre-deployment validation) before wanting to ship today, that's worth flagging to your manager directly \u2014 shipping an unvalidated model swap on an autonomous refund-approval agent is the kind of thing that's cheap to prevent and expensive to explain after a bad week of refunds. I'd push for at least a quick shadow-mode comparison before going to 100%, even if the write-up stays lightweight.\n\nWant me to draft an actual change-record template (e.g., a markdown file) you could use for this and future model swaps?",
+  "ttft_ms": 20759,
+  "ttft_stream_ms": 939,
+  "time_to_request_ms": 31,
+  "time_to_request_from_spawn_ms": 1098943,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789737489.1628,
+  "type": "result",
+  "duration_ms": 40047,
+  "uuid": "c88ec04d-5a78-4b6f-9e61-ba36711a72c9",
+  "_skill": "creating-change-records",
+  "_arm": "C1_generic_nudge",
+  "_trial": 2,
+  "_input_spec_sha256": "4546ee653a44bd61beba656a58752ac4f42e8dd9893c59e7ee4c436cd0c43067"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 27284,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0538663,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 3145,
+    "cache_read_input_tokens": 24091,
+    "output_tokens": 1801,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3145,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1204,
+        "cache_read_input_tokens": 9197,
+        "cache_creation_input_tokens": 228,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 228
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 656,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000736,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1801,
+      "cacheReadInputTokens": 24091,
+      "cacheCreationInputTokens": 3145,
+      "webSearchRequests": 0,
+      "costUSD": 0.053130300000000005,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A one-line diff doesn't mean one-line risk \u2014 you're changing the reasoning engine behind autonomous financial decisions, so this should get a **Standard** record, not Quick. The diff being trivial is exactly why \"swapped model per cost review\" is dangerous as a paper trail: it gives a future reviewer nothing to check when something goes wrong (e.g., \"did we know Provider B approves fraud-flagged refunds more often before we shipped this?\").\n\nWhat the record needs to actually contain, mapped to the standard files:\n\n- **risk.md** \u2014 What could go wrong specifically because of *this* swap: different refund approval rate, different sensitivity to prompt-injection in customer messages, different behavior on edge cases (partial refunds, high-dollar amounts, repeat-customer patterns), latency/cost tradeoffs that change agent timeout behavior. State the blast radius: this agent moves real money autonomously, no human in the loop.\n- **basis.md** \u2014 Why Provider B, not just \"cost.\" What was actually compared (accuracy, refusal behavior, safety alignment on adversarial inputs), and why the team believes B is not worse than A on the dimensions that matter for refund approval, not just cheaper.\n- **plan.md** \u2014 How the swap was rolled out: shadow mode, canary %, feature flag, rollback plan. If it was flipped straight to 100% in prod, say so plainly \u2014 that's a fact a reviewer needs, not something to bury.\n- **trace.md** \u2014 Link the actual PR/commit (the model ID string change) and link to whatever eval or test suite was run against it.\n- **verification.md** \u2014 The evidence, not just \"looks fine\": before/after comparison on a labeled test set of refund decisions (approval rate, false-approve rate on known-bad cases, adversarial/prompt-injection resistance), plus real production monitoring after rollout (approval rate drift, dollar volume drift, anomaly/alert thresholds). If this evidence doesn't exist yet, verification.md should say `gap` explicitly rather than being silent.\n- **ship.md** \u2014 Who approved shipping, rollback trigger criteria, and who's on the hook to watch metrics post-launch.\n\nThe test for \"done\" is: could someone with zero memory of this PR, six months from now, read these files and answer \"was this safe to ship\" \u2014 without having to go re-run experiments themselves. If `verification.md` currently has real gaps (e.g., no adversarial testing was done), that's fine to say honestly as `gap` \u2014 but say it, don't paper over it with a cost-review sentence.\n\nWant me to scaffold the record now (`ng.py new <slug> --mode standard`) so you can fill it in against whatever eval data you actually have?",
+  "ttft_ms": 4812,
+  "ttft_stream_ms": 733,
+  "time_to_request_ms": 38,
+  "time_to_request_from_spawn_ms": 1052000,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789690444.0725,
+  "type": "result",
+  "duration_ms": 26998,
+  "uuid": "e6cdafd2-a9cc-4750-b902-94de84f8e5e7",
+  "_skill": "creating-change-records",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "ff5de9f7a5ee523cf4a3a91878157a2f11385b1b7f347001aeae3ba3ca88356c"
+}

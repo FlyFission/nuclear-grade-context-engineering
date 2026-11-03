@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 39916,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.06252329999999999,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2113,
+    "cache_read_input_tokens": 6271,
+    "output_tokens": 3143,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2113,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 3143,
+        "cache_read_input_tokens": 6271,
+        "cache_creation_input_tokens": 2113,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2113
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 708,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0008129999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 3143,
+      "cacheReadInputTokens": 6271,
+      "cacheCreationInputTokens": 2113,
+      "webSearchRequests": 0,
+      "costUSD": 0.061710299999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Setting up this kind of narrow, guardrailed auto-merge is reasonable given Marcus's sign-off and green tests \u2014 but a couple of gaps are worth tightening before granting standing authority, since \"diff size + file path\" is a weak proxy for safety on its own:\n\n- **Verify approval via the GitHub API, not just PR metadata/description.** The agent should check that Marcus (or another checkout-service codeowner) has an actual `APPROVED` review state on the PR, not just take \"Marcus signed off\" as given text.\n- **Constrain to value-only changes.** A \u22645-line diff to `flags/production.yaml` could still add a new key, delete a flag, or restructure YAML \u2014 not just flip an existing boolean. Worth requiring the diff be a pure value change on a pre-existing key.\n- **\"Tests pass\" should mean required CI checks are green**, not just that the agent re-ran the suite itself \u2014 otherwise it could merge past a failing required check that it didn't look at.\n\nHere's a briefing incorporating those guardrails alongside what you specified. Let me know if you'd rather I drop any of the extra checks and match your original spec exactly.\n\n---\n\n**Agent briefing: PR #482 (and future flag-default PRs matching this policy)**\n\n**Scope of authority:** You may merge a PR without further confirmation from Ben only if ALL of the following hold. If any fail, stop and ping Ben \u2014 do not merge, do not force a workaround.\n\n1. The diff touches **only** `flags/production.yaml`, and nothing else.\n2. The diff is **\u22645 lines** changed.\n3. The change is a **value flip on a pre-existing flag key** (e.g. `enabled: false \u2192 true`) \u2014 not an added/removed key, not a structural/YAML-shape change.\n4. The PR has an **`APPROVED`** review from a checkout-service codeowner (check via GitHub API review state, not just the PR description).\n5. All **required CI checks** on the PR are green, including the checkout-service test suite.\n\n**On merge:**\n- Run the checkout-service test suite yourself, capture the full log.\n- Post the log as a comment on the PR as evidence, then merge.\n- Note in the merge commit/comment which criteria were checked and passed.\n\n**Escalate instead of merging if:**\n- The diff includes any file other than `flags/production.yaml`.\n- The diff exceeds 5 lines, or changes more than a flag value (new/removed keys, structural edits).\n- Required checks are missing, pending, or failing.\n- No qualifying approval is found on the PR.\n\nFor PR #482 specifically: `checkout.expressPay.enabled` false\u2192true in `flags/production.yaml`, one line \u2014 meets criteria 1\u20133 on its face; agent should still confirm Marcus's approval state and CI status via API before merging rather than assuming from your description.\n\nWant me to turn this into an actual workflow file (e.g. GitHub Actions + a script) or is this feeding into a separate agent runtime you're configuring?",
+  "ttft_ms": 27773,
+  "ttft_stream_ms": 1507,
+  "time_to_request_ms": 43,
+  "time_to_request_from_spawn_ms": 1588240,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079361195.7288,
+  "type": "result",
+  "duration_ms": 38683,
+  "uuid": "d59b0cdc-fa34-413f-9d04-eea63061b518",
+  "_skill": "briefing-an-agent",
+  "_arm": "C0_bare",
+  "_trial": 3,
+  "_input_spec_sha256": "be21a63ad862bf0c7ebb124114b8b49fcd6ba1015aafbab47bc8d878424c455d"
+}

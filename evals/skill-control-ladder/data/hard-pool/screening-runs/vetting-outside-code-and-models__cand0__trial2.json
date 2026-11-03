@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 30687,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0619573,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3880,
+    "cache_read_input_tokens": 14781,
+    "output_tokens": 2230,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3880,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 625,
+        "cache_read_input_tokens": 8501,
+        "cache_creation_input_tokens": 1659,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1659
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 681,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000781,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2230,
+      "cacheReadInputTokens": 14781,
+      "cacheCreationInputTokens": 3880,
+      "webSearchRequests": 0,
+      "costUSD": 0.0611763,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before you flip this switch this afternoon, the \"one-line config change\" framing undersells what's actually changing here \u2014 and the AcmeCo detail you flagged is the reason why.\n\n**This isn't just a billing swap.** OpenAI's Enterprise tier and the standard API operate under different contractual terms: data retention windows, zero-retention options, DPA terms, audit rights, and security commitments (SOC2 scope, etc.) typically differ between an Enterprise agreement and the self-serve API ToS. Moving the bot means every diff it processes \u2014 including AcmeCo's proprietary code from the private fork \u2014 will be governed by whatever data handling terms apply to the new plan, not the ones your org negotiated under Enterprise.\n\n**The AcmeCo angle is the real risk.** If your support contract with AcmeCo includes any language about how their code/data is handled by third-party tooling (security certifications, data residency, retention limits, \"enterprise-grade\" vendor requirements, no-subprocessor clauses, etc.), routing their diffs through a different OpenAI plan could put you in breach even though the model and prompts are identical. This is a legal/contract question, not an engineering one, and it's not something Priya's output-quality comparison would have surfaced \u2014 that test only validated review quality, not data handling terms.\n\n**Recommendation:** before merging, get whoever owns the AcmeCo relationship (legal or account owner) to confirm the standard API's data terms satisfy the support contract's obligations \u2014 or exclude the AcmeCo fork from the bot until that's confirmed. Don't let the finance deadline drive this without that sign-off; a same-day contract breach costs a lot more than a month of Enterprise pricing.",
+  "ttft_ms": 19530,
+  "ttft_stream_ms": 1648,
+  "time_to_request_ms": 105,
+  "time_to_request_from_spawn_ms": 874163,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078648924.857,
+  "type": "result",
+  "duration_ms": 31042,
+  "uuid": "d5d94d59-4782-4ba8-b2b5-15629dc14af4",
+  "_spec": "c05c17509d3798eaa07aeb39958fe0fbb648281494930c7252571cb445b839eb",
+  "_skill": "vetting-outside-code-and-models",
+  "_cand": 0,
+  "_trial": 2
+}

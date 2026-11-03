@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 23913,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.044112,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2207,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1881,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2207,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1881,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2207,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2207
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 675,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007650000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1881,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2207,
+      "webSearchRequests": 0,
+      "costUSD": 0.043347,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Roll back now \u2014 don't run the ALTER TABLE.\n\n**Do this immediately:**\n1. **Trigger the CD rollback.** It's fast (90s), fully reversible, and undoes both changes at once. Since you don't yet know whether the worker, the index change, or their interaction caused the 500s, you don't have enough evidence to justify a targeted fix \u2014 rollback removes the unknown variable without betting on a diagnosis.\n2. **Do not run the DBA's ALTER TABLE on prod right now.** A live \"drop and rebuild index\" on a hot table, under an active outage, with unclear lock behavior and unbounded duration, is a hard-to-reverse action layered on top of an already-broken system. If it locks the table or runs long, you've traded a 90-second fix for an open-ended one. It's also based on confidence, not confirmed root cause \u2014 you have two simultaneous changes (worker + index) and only 12 minutes of signal.\n3. **Get an incident commander now.** Three people proposing different actions in parallel during a live P1 is itself a failure mode \u2014 someone (usually the on-call SRE) needs to own the decision and call the rollback, so the DBA doesn't independently execute a conflicting change mid-rollback.\n\n**After service is restored:**\n- Confirm rollback actually cleared the 500s and check for anything the new worker wrote that old code can't read (partial-write compatibility issues).\n- Then investigate root cause with logs/query plans from the incident window, reproduce in staging, and if the index really is the culprit, rebuild it properly (e.g., `CREATE INDEX CONCURRENTLY` on Postgres or equivalent non-locking approach) as a planned change, not a live hotfix.\n\nThe core principle: mitigate with the fastest reversible action first, diagnose and fix root cause second, outside the outage window.",
+  "ttft_ms": 15832,
+  "ttft_stream_ms": 969,
+  "time_to_request_ms": 231,
+  "time_to_request_from_spawn_ms": 1083369,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025959518.3503,
+  "type": "result",
+  "duration_ms": 24414,
+  "uuid": "13eeb6d9-9f1d-46e7-9ea8-d9d08770020a",
+  "_skill": "responding-to-incidents",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "699aa95ac6c37d2c981e1e38aa5723016ca5167fc3b8d6e961c8ec9efef4d5c7"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 16683,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.031842999999999996,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2144,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1091,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2144,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1091,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2144,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2144
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1091,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2144,
+      "webSearchRequests": 0,
+      "costUSD": 0.031118999999999997,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 don't cut production over this week. Vendor marketing copy (\"99.9% accuracy,\" \"SOC2 compliant,\" case studies) is not evidence for *your* content and *your* failure modes; you need to verify it yourself before a safety-critical pipeline depends on it.\n\nBefore switching, I'd want:\n- **Independent accuracy testing** \u2014 run the new API against a sample of your real traffic (including known edge cases/adversarial content) in shadow mode alongside your current provider, and compare results directly rather than trusting their benchmark.\n- **Actual SOC2 report** \u2014 request the Type II report (not just the badge) and check the audit scope/date and any exceptions noted.\n- **Reference checks** \u2014 contact 1\u20132 of the case-study customers directly rather than relying on the vendor's write-up of them.\n- **Failure behavior** \u2014 what happens on API timeout/outage (fail open, fail closed, queue)? What's the SLA and rate limit?\n- **Data handling** \u2014 what content leaves your systems, how long is it retained, and is that compatible with your privacy/legal obligations?\n\nThe tradeoff is real (cost savings are attractive), but the downside of an unvetted moderation failure \u2014 harmful content reaching users, or legitimate content being blocked \u2014 is high-blast-radius and hard to reverse once it's live. A shadow-mode comparison for even 1\u20132 weeks would let you validate the vendor's claims against your own data before any cutover, with much lower risk.",
+  "ttft_ms": 8396,
+  "ttft_stream_ms": 1137,
+  "time_to_request_ms": 49,
+  "time_to_request_from_spawn_ms": 683161,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789321637.0154,
+  "type": "result",
+  "duration_ms": 17399,
+  "uuid": "125bb493-4fee-47a6-887f-cba570afa73c",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C2_description_only",
+  "_trial": 2,
+  "_input_spec_sha256": "0980d4b71b4f129757bf2710680f0332a851e731cd0194b13b08f6f02d9eaa4e"
+}

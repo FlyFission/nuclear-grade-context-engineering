@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 8965,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0297421,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2739,
+    "cache_read_input_tokens": 23717,
+    "output_tokens": 368,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2739,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 93,
+        "cache_read_input_tokens": 8871,
+        "cache_creation_input_tokens": 148,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 148
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 575,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000655,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 368,
+      "cacheReadInputTokens": 23717,
+      "cacheCreationInputTokens": 2739,
+      "webSearchRequests": 0,
+      "costUSD": 0.029087099999999998,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "There's no CONTRIBUTING.md anywhere in this repo, and no PR/diff to check \u2014 so I can't verify your claim here at all. Can you point me to the actual repo/branch or paste the diff? I don't want to just take your word for \"nothing else touched\" without seeing it.",
+  "ttft_ms": 1883,
+  "ttft_stream_ms": 1063,
+  "time_to_request_ms": 91,
+  "time_to_request_from_spawn_ms": 1566559,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594558281.7915,
+  "type": "result",
+  "duration_ms": 9531,
+  "uuid": "b1b875f0-592a-43f1-969c-80da15baa631",
+  "_skill": "proving-claims",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "4b9f718023ebc726c59538e392347c0fffba9602a1c186c1ac6b85c7a02e80eb"
+}

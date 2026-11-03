@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 9132,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.025530999999999998,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2330,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 597,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2330,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 597,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2330,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2330
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 641,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007059999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 597,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2330,
+      "webSearchRequests": 0,
+      "costUSD": 0.024825,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This only shows the final function \u2014 not an actual diff with the \"before\" version, so I can't confirm no logic was flipped versus the original. Could you paste the old version too (or a real `git diff`)?\n\nThat said, looking at this code standalone, the logic is internally consistent:\n- Falsy/empty `name` \u2192 `\"unknown\"`\n- Otherwise strip whitespace, then truncate to 20 chars + `\"...\"` if too long\n- Otherwise return the stripped name\n\nOne thing worth double-checking against your original: the truncation happens on the *stripped* name, so `len(name) > 20` is measured post-strip. If the original logic checked length before stripping, this could change behavior for names with leading/trailing whitespace right at the boundary (e.g., a 21-char name with trailing spaces that becomes exactly 20 after stripping). Minor edge case, but worth confirming it matches intent.",
+  "ttft_ms": 5354,
+  "ttft_stream_ms": 1281,
+  "time_to_request_ms": 29,
+  "time_to_request_from_spawn_ms": 1788592,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594783027.5688,
+  "type": "result",
+  "duration_ms": 9609,
+  "uuid": "868f4e21-3167-43d3-a8fa-b09f4e4a4e5f",
+  "_skill": "verifying-final-artifacts",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "57b705f8b8ca795d2d42dd27c2faa9b1a45bdef883ebc5a6187a4da41f42dbcf"
+}

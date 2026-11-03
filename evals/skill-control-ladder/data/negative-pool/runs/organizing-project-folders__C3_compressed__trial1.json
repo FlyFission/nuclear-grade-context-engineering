@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 9744,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.029494899999999998,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2625,
+    "cache_read_input_tokens": 23563,
+    "output_tokens": 399,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2625,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 128,
+        "cache_read_input_tokens": 8752,
+        "cache_creation_input_tokens": 153,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 153
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 588,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000673,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 399,
+      "cacheReadInputTokens": 23563,
+      "cacheCreationInputTokens": 2625,
+      "webSearchRequests": 0,
+      "costUSD": 0.028821899999999998,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This sandbox doesn't actually have your project files (empty directory), so I can't verify the current layout \u2014 but based on what you described, yes: move it into `scripts/`. A single loose `.py` file in the root with no other reason to be there is exactly the \"earned folder, single home\" case \u2014 it's a script, `scripts/` is where scripts live, so it belongs there. No need to overthink it or create anything new.",
+  "ttft_ms": 3740,
+  "ttft_stream_ms": 780,
+  "time_to_request_ms": 27,
+  "time_to_request_from_spawn_ms": 1550634,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594544992.4321,
+  "type": "result",
+  "duration_ms": 10688,
+  "uuid": "75734ebb-2668-4085-98bc-168913927643",
+  "_skill": "organizing-project-folders",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "bd59305ebfefd5a0a96fbf247824fd84800945fd2c5a2d3268981b66c1c15554"
+}

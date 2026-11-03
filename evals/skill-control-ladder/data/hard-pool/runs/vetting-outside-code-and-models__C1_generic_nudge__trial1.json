@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 31549,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.051519,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2263,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2350,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2263,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2350,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2263,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2263
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 691,
+      "outputTokens": 22,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000801,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2350,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2263,
+      "webSearchRequests": 0,
+      "costUSD": 0.050718,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A few things I'd want nailed down before Friday, roughly in order of how much they'd hurt if skipped:\n\n**\"Legally binding\" is a marketing claim, not a legal review.** Get someone (in-house counsel or outside) to actually look at what SignFast's audit trail captures \u2014 IP, timestamp, consent-to-do-business-electronically language, identity verification method \u2014 and confirm it's what you'd need to hold up in your jurisdictions if a signature is disputed. Vendor copy claiming ESIGN/UETA compliance isn't the same as your legal team having verified it for your specific contract type.\n\n**Two sales demo runs tell you nothing about failure modes.** Before cutover, test: what happens on a declined signature, an expired signing link, a multi-party contract where one party never finishes, and a webhook that fails to deliver (do you retry, or silently lose the \"document completed\" event)? If your pull-the-completed-doc flow is webhook-triggered, a missed webhook means a signed contract you never store.\n\n**Storage integrity, not just storage.** You're storing the PDF + certificate as your dispute-evidence copy \u2014 do you verify the certificate's hash/signature on ingest, or just trust whatever bytes come back from the API? If SignFast ever has a bug or breach that alters certificates in transit, you want to know your copy is verifiably the original.\n\n**Retention window on SignFast's side.** Some e-sign vendors purge completed documents from their API after N days. If your fetch job has a bug or your API pull fails silently for a week, can you still retrieve the doc later, or is it gone? You want your own store to be authoritative, not a cache you can refill on demand.\n\n**99.98% status-page uptime \u2260 contractual SLA.** Status pages are self-reported and often lag real incidents. Check what SLA is actually in your contract (with credits/remedies), and whether it covers the signing widget and webhook delivery specifically, not just API uptime broadly.\n\n**Data handling for a compliance-adjacent process.** Since these are customer contracts, confirm SignFast's SOC 2 report (or equivalent), sub-processor list, and DPA if you have EU/CA customers \u2014 this is the kind of thing that's much cheaper to check now than after a customer or auditor asks.\n\nNone of this necessarily blocks Friday, but the legal review of the audit trail and the failure-mode testing (declined/expired/partial signing + webhook loss) are the two I wouldn't skip given this replaces your dispute-evidence process.",
+  "ttft_ms": 20630,
+  "ttft_stream_ms": 1329,
+  "time_to_request_ms": 25,
+  "time_to_request_from_spawn_ms": 1963951,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079738801.0361,
+  "type": "result",
+  "duration_ms": 32345,
+  "uuid": "d13d7a83-196a-4fb7-983b-a6717306f8af",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "d3ae8be97a31349ae087d5b2d312bbfd6afca778f7b14bba68733f70a55f8093"
+}

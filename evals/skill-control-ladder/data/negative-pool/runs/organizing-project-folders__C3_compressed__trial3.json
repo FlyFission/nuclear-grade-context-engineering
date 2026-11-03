@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 7383,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.023965300000000002,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2477,
+    "cache_read_input_tokens": 14811,
+    "output_tokens": 265,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2477,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 144,
+        "cache_read_input_tokens": 8531,
+        "cache_creation_input_tokens": 226,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 226
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 588,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000673,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 265,
+      "cacheReadInputTokens": 14811,
+      "cacheCreationInputTokens": 2477,
+      "webSearchRequests": 0,
+      "costUSD": 0.023292300000000002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No files here to inspect, so going off your description: yes, move it into `scripts/`. A single stray file in root with no distinct reason to be separate (not a config file, not an entry point like `manage.py`, not something tooling expects at root) should just join the existing organized folder rather than get its own category. Just move the file \u2014 no need to restructure anything else.",
+  "ttft_ms": 1644,
+  "ttft_stream_ms": 1352,
+  "time_to_request_ms": 48,
+  "time_to_request_from_spawn_ms": 1554352,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594548638.8184,
+  "type": "result",
+  "duration_ms": 7766,
+  "uuid": "c3d9dbb3-cfd5-482f-a576-fc05b3caad66",
+  "_skill": "organizing-project-folders",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "bd59305ebfefd5a0a96fbf247824fd84800945fd2c5a2d3268981b66c1c15554"
+}

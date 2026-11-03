@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 5963,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.029265400000000004,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3633,
+    "cache_read_input_tokens": 16048,
+    "output_tokens": 131,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3633,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 40,
+        "cache_read_input_tokens": 9768,
+        "cache_creation_input_tokens": 145,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 145
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 606,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000676,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 131,
+      "cacheReadInputTokens": 16048,
+      "cacheCreationInputTokens": 3633,
+      "webSearchRequests": 0,
+      "costUSD": 0.028589400000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "What column name do you want to sum, and what's the folder path (and file extension pattern, e.g. `*.csv`)?",
+  "ttft_ms": 2091,
+  "ttft_stream_ms": 1347,
+  "time_to_request_ms": 35,
+  "time_to_request_from_spawn_ms": 1397754,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594392024.7454,
+  "type": "result",
+  "duration_ms": 4934,
+  "uuid": "4ab574f3-6538-4cdf-a591-077878cf0958",
+  "_skill": "choosing-what-to-control",
+  "_arm": "C4_full_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "0da00ce99b316ce7a672efa087f4374159f4737ba7f471308a2bd63174591669"
+}

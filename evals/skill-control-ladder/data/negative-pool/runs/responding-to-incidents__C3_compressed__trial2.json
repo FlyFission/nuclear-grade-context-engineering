@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 14846,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0339966,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2725,
+    "cache_read_input_tokens": 23372,
+    "output_tokens": 663,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2725,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 275,
+        "cache_read_input_tokens": 8634,
+        "cache_creation_input_tokens": 371,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 371
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 597,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000672,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 663,
+      "cacheReadInputTokens": 23372,
+      "cacheCreationInputTokens": 2725,
+      "webSearchRequests": 0,
+      "costUSD": 0.0333246,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't see an `apiTimeout` reference or a `.env.dev` file anywhere in this project directory (`./evals/skill-control-ladder/data/negative-pool/work/responding-to-incidents_C3_compressed_2`).\n\nA couple possibilities:\n1. Your actual project lives elsewhere, and Claude Code is currently pointed at a different working directory.\n2. The startup script reads the env var via `os.environ`/`process.env` with a different casing/prefix than `apiTimeout` (e.g. `API_TIMEOUT`).\n\nCould you tell me the path to the project (or the startup script file) so I can look in the right place? Once I find the reference, the fix itself is simple \u2014 just change `apiTimeout` to `api_timeout` wherever the script reads it.",
+  "ttft_ms": 1851,
+  "ttft_stream_ms": 1182,
+  "time_to_request_ms": 37,
+  "time_to_request_from_spawn_ms": 1683741,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594678117.095,
+  "type": "result",
+  "duration_ms": 16252,
+  "uuid": "cff4e446-738e-4b85-b65a-eb5064ce983e",
+  "_skill": "responding-to-incidents",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "9838deb5cec5711e100f56295b443e16a69908272ef32030f8f892df04c94043"
+}

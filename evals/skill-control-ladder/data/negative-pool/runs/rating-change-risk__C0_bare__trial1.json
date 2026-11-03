@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 9699,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.031749799999999995,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2497,
+    "cache_read_input_tokens": 31676,
+    "output_tokens": 436,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2497,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 87,
+        "cache_read_input_tokens": 8638,
+        "cache_creation_input_tokens": 130,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 130
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 616,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000701,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 436,
+      "cacheReadInputTokens": 31676,
+      "cacheCreationInputTokens": 2497,
+      "webSearchRequests": 0,
+      "costUSD": 0.031048799999999998,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This repo appears to be empty \u2014 there's no README (or any files at all) here, so I can't find the typo or the CONTRIBUTING.md link you mentioned. Could you double check you're pointing me at the right directory/repo, or is the README perhaps not committed yet?",
+  "ttft_ms": 1219,
+  "ttft_stream_ms": 834,
+  "time_to_request_ms": 79,
+  "time_to_request_from_spawn_ms": 1596591,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594591055.6968,
+  "type": "result",
+  "duration_ms": 8895,
+  "uuid": "b2eefead-7484-4d65-b2d6-9c1e084a50ae",
+  "_skill": "rating-change-risk",
+  "_arm": "C0_bare",
+  "_trial": 1,
+  "_input_spec_sha256": "e85a159592296413d7bf8e942627b532ea74ae4f36f0a8996df67583bae88ce6"
+}

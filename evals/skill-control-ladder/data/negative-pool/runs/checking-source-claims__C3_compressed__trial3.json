@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 12483,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0354242,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2783,
+    "cache_read_input_tokens": 32254,
+    "output_tokens": 557,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2783,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 157,
+        "cache_read_input_tokens": 8902,
+        "cache_creation_input_tokens": 161,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 161
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 601,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006709999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 557,
+      "cacheReadInputTokens": 32254,
+      "cacheCreationInputTokens": 2783,
+      "webSearchRequests": 0,
+      "costUSD": 0.0347532,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This repo appears to be empty \u2014 I can't find any config-parsing helper, version files, or any files at all in the working directory.\n\nCould you paste the function itself (or the file path if it's somewhere I'm not finding)? I'll trace it against `\"2.10.3\"` and `\"10.0.0-beta\"` \u2014 the second one is the interesting case since it depends on whether your regex/split accounts for a trailing pre-release suffix, or just grabs the first three numeric groups and ignores the rest.",
+  "ttft_ms": 1550,
+  "ttft_stream_ms": 1091,
+  "time_to_request_ms": 66,
+  "time_to_request_from_spawn_ms": 1359939,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594354182.148,
+  "type": "result",
+  "duration_ms": 10882,
+  "uuid": "4f7679b0-662a-41d3-a678-a91d366ea767",
+  "_skill": "checking-source-claims",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "ca22612df821786806c2a8c326393a67163f15baeb4ac767dd75f07a556200ce"
+}

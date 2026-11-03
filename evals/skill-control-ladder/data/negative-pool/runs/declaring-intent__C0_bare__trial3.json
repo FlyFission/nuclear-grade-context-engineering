@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 9398,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0258155,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2314,
+    "cache_read_input_tokens": 22805,
+    "output_tokens": 292,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2314,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 74,
+        "cache_read_input_tokens": 8330,
+        "cache_creation_input_tokens": 255,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 255
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 592,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000692,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 292,
+      "cacheReadInputTokens": 22805,
+      "cacheCreationInputTokens": 2314,
+      "webSearchRequests": 0,
+      "costUSD": 0.0251235,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I couldn't find `utils/date.js` or a `formatTimestamp` function anywhere in this repo \u2014 a search for both turned up nothing. Could you double-check the path, or is this in a different repo/directory than the current working one?",
+  "ttft_ms": 1484,
+  "ttft_stream_ms": 1103,
+  "time_to_request_ms": 74,
+  "time_to_request_from_spawn_ms": 1456423,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594450838.56,
+  "type": "result",
+  "duration_ms": 7348,
+  "uuid": "85adf2e7-1966-489a-b954-7efd4b2b8b25",
+  "_skill": "declaring-intent",
+  "_arm": "C0_bare",
+  "_trial": 3,
+  "_input_spec_sha256": "de66cca104f5da5ace6037d01691416a26cd153789859d5349a0e2e2cf9d68ec"
+}

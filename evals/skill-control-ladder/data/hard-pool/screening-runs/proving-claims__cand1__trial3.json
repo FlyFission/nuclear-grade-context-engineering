@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 27641,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.049599,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2239,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 2234,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2239,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2234,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2239,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2239
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 700,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000765,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2234,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2239,
+      "webSearchRequests": 0,
+      "costUSD": 0.048833999999999995,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before I write this up \u2014 there's a real gap here, not a wording nitpick.\n\n**The implementation as described has a race condition.** \"Lookup key table, if nothing's found, insert charge\" is a check-then-act sequence. If two requests carrying the same idempotency key arrive concurrently (which is exactly what happens with client-side retries on timeout \u2014 the original request may still be in flight when the retry fires), both can pass the lookup before either insert commits, and both insert. That's two charges, not one cached response. This is the single most common bug in idempotency-key implementations.\n\n**None of your current evidence rules this out:**\n- The test mocks a timeout *then* resends \u2014 that's sequential, not concurrent. It never exercises two requests racing on the same key.\n- Marcus's review confirms the logic reads cleanly, not that it's safe under concurrent execution \u2014 TOCTOU races are exactly the kind of thing code review misses because the code looks correct line-by-line.\n- No tickets on the refunds service is anecdotal (low traffic, low concurrency, or undetected duplicates could all produce \"no tickets\" too) \u2014 it's not verified evidence for this codepath.\n\nSo as it stands, \"guaranteed\" isn't backed by what you have. It'd be backed if:\n1. The idempotency key column has a DB-level unique constraint, and\n2. The insert path handles the constraint violation by fetching and returning the existing charge (rather than crashing or silently double-charging), and\n3. There's a test that actually fires concurrent requests with the same key and asserts exactly one charge exists afterward.\n\n**Ask:** is there a unique constraint on that key column, and does the insert path catch a conflict and return the cached charge? If yes, that's a quick concurrent-request test to add and then the claim is genuinely solid. If no, this needs a fix before it goes in the epic close-out \u2014 right now it's \"prevents duplicates on sequential retries,\" not \"guaranteed prevention,\" and that gap is a live risk for actual double-charges in production.\n\nLet me know which case you're in and I'll write the evidence row to match \u2014 either with the concurrency fix confirmed, or with honestly scoped language if you need to ship today and follow up separately.",
+  "ttft_ms": 20801,
+  "ttft_stream_ms": 1403,
+  "time_to_request_ms": 31,
+  "time_to_request_from_spawn_ms": 673899,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078448749.6453,
+  "type": "result",
+  "duration_ms": 26777,
+  "uuid": "71856242-7a98-4d0f-bec4-b2ada564b4ae",
+  "_spec": "658493cbfcee3615de9e4c911ee8d06825b9112da67789ce04d03785ca2d10ca",
+  "_skill": "proving-claims",
+  "_cand": 1,
+  "_trial": 3
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 11852,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0324889,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2819,
+    "cache_read_input_tokens": 23513,
+    "output_tokens": 522,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2819,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 81,
+        "cache_read_input_tokens": 8861,
+        "cache_creation_input_tokens": 238,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 238
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 588,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000673,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 522,
+      "cacheReadInputTokens": 23513,
+      "cacheCreationInputTokens": 2819,
+      "webSearchRequests": 0,
+      "costUSD": 0.0318159,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This working directory is empty \u2014 there's no `src/config/dashboard.ts` or any files at all here, so I can't find the pagination constant you're referring to. Can you confirm this is the right repo/path, or point me to where the dashboard code actually lives?",
+  "ttft_ms": 5292,
+  "ttft_stream_ms": 1152,
+  "time_to_request_ms": 72,
+  "time_to_request_from_spawn_ms": 1583997,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594578230.2913,
+  "type": "result",
+  "duration_ms": 10762,
+  "uuid": "0c687a5d-3a00-4651-aa03-5dfe80303f39",
+  "_skill": "questioning-attitude",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "f65da3a01f328c28731e251c19a26bbf3b8c909b4958a99d63672ecc9e31e65f"
+}

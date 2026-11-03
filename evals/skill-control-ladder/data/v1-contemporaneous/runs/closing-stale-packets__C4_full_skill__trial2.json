@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 13097,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0528299,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 5557,
+    "cache_read_input_tokens": 17743,
+    "output_tokens": 889,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 5557,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 565,
+        "cache_read_input_tokens": 11463,
+        "cache_creation_input_tokens": 374,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 374
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 748,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0008179999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 889,
+      "cacheReadInputTokens": 17743,
+      "cacheCreationInputTokens": 5557,
+      "webSearchRequests": 0,
+      "costUSD": 0.0520119,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This repo doesn't actually have a `.nuclear/changes` directory here, so I'll answer conceptually based on what you described.\n\n**`add-dark-mode-toggle` \u2192 Close it, don't delete it.**\n\nYou have a real decision with a real rationale (team explicitly decided to defer dark mode this quarter pending the design team finalizing the color palette), so that's worth preserving as a record \u2014 deleting it would erase a decision another reader might later ask \"wait, did we ever look at dark mode?\" about. Add a `NUCLEAR-GRADE-CLOSED:` line to the packet stating the rationale and who decided, e.g.:\n\n```\nNUCLEAR-GRADE-CLOSED: Dropped 2026-0X-XX \u2014 team decided not to pursue dark mode this quarter pending design finalizing the color palette; nothing from this packet merged. Decision made in [team meeting], by [you/team].\n```\n\nOnce that marker line is present, `ng status` should report it as `closed` instead of `scaffold`.\n\n**`refactor-auth-flow` \u2192 Leave it alone.** It's not stale \u2014 a teammate is actively working on it and the missing file is just in-progress, not abandoned. Don't close or delete it; that would erase real WIP. If the `invalid` tag bothers you, the right fix is for your teammate to add the missing file when ready, not to force it into a terminal state now.\n\nWant me to draft the exact closure line for `add-dark-mode-toggle` once you tell me the meeting date and who made the call, so you can paste it into the packet?",
+  "ttft_ms": 3654,
+  "ttft_stream_ms": 777,
+  "time_to_request_ms": 34,
+  "time_to_request_from_spawn_ms": 1418129,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785790056695.917,
+  "type": "result",
+  "duration_ms": 13002,
+  "uuid": "0c946dd5-4b27-48b2-b890-5e17d1e55506",
+  "_skill": "closing-stale-packets",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "c2cd22468881c671e541874f3a6bbbd3d2c5c128d41d2ffda8e0148098db9682"
+}

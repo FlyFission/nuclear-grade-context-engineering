@@ -1,0 +1,72 @@
+{
+  "is_error": false,
+  "duration_api_ms": 7619,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.022344,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2274,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 454,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2274,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 454,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2274,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2274
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 454,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2274,
+      "webSearchRequests": 0,
+      "costUSD": 0.022344,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Happy to help \u2014 let's ground the comment in what the function actually does rather than making blanket guarantees. Which file/function is it? I'll take a look and suggest wording tied to its actual behavior (e.g., what errors it does/doesn't handle, what locking mechanism makes it thread-safe).\n\nIn general, though, swap absolute claims (\"guaranteed to never fail\", \"100% thread-safe in all cases\") for specific, falsifiable statements, e.g.:\n\n```\n// Thread-safe via internal mutex; does not retry or swallow errors \u2014\n// callers should handle exceptions from the underlying I/O call.\n```\n\nThat's more useful to future readers too, since it tells them *why* it's safe rather than just asserting it.",
+  "ttft_ms": 4834,
+  "ttft_stream_ms": 1608,
+  "time_to_request_ms": 381,
+  "time_to_request_from_spawn_ms": 1323734,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594316179.4062,
+  "type": "result",
+  "duration_ms": 9249,
+  "uuid": "057ee331-873d-4f44-a629-f5151ad0fe61",
+  "_skill": "checking-legal-and-safety-wording",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "89dcea13660d7be0d001ea5d574c19256d2f339f1d3880d86ec1feae7a8f3209"
+}

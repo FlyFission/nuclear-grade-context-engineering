@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 31483,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0593723,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 3006,
+    "cache_read_input_tokens": 33031,
+    "output_tokens": 2038,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3006,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1679,
+        "cache_read_input_tokens": 9087,
+        "cache_creation_input_tokens": 199,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 199
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 748,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000833,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 2038,
+      "cacheReadInputTokens": 33031,
+      "cacheCreationInputTokens": 3006,
+      "webSearchRequests": 0,
+      "costUSD": 0.0585393,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Since the workspace here doesn't actually contain the packet files (I can't find `add-dark-mode-toggle` on disk to edit it directly), here's what you should do and how:\n\n**Close it \u2014 don't delete it.**\n\nEven though the packet is just placeholder text with no real content, the *decision* behind it is worth preserving: your team explicitly evaluated dark mode and rejected it for this quarter for a concrete reason (palette not finalized). That's exactly the kind of context a bare deletion would erase and someone might later re-litigate (\"didn't we already decide this?\"). Deleting would also risk looking like you're using \"it's empty\" as an excuse to make the noise disappear rather than recording the actual outcome.\n\nAdd a line like this to the packet (per your tool's convention):\n\n```\nNUCLEAR-GRADE-CLOSED: Not pursuing dark mode this quarter \u2014 team decision in [meeting/date], design hadn't finalized the color palette. No changes merged. Replacement: none (may revisit once palette is finalized). Decided by: [you / meeting attendees].\n```\n\nA few notes:\n- Fill in the actual meeting date/attendees if you want it traceable later.\n- If there's any chance you'll revisit this once the palette lands, say so in the note \u2014 that's useful signal for future-you, not scope creep.\n- Since `refactor-auth-flow` is actively being worked on by a teammate, leave that one alone \u2014 it's not stale, it just hasn't hit `ok` yet. Don't close or delete it.\n\nI don't have write access in this session to edit the packet file myself \u2014 want me to draft the exact wording once you tell me the meeting date/attendees, or can you confirm you'd rather just add it yourself?",
+  "ttft_ms": 1794,
+  "ttft_stream_ms": 1441,
+  "time_to_request_ms": 76,
+  "time_to_request_from_spawn_ms": 518934,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789157476.2864,
+  "type": "result",
+  "duration_ms": 31822,
+  "uuid": "d536f40a-c307-43dc-831e-b4f6dee464c4",
+  "_skill": "closing-stale-packets",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "9158a8eeba31bd6599daae93ed82fc9b643498d2a53280ab59cdac230fb4ad66"
+}

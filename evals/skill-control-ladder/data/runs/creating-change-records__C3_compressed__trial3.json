@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 28411,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.06059679999999999,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 3666,
+    "cache_read_input_tokens": 24606,
+    "output_tokens": 2031,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3666,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 908,
+        "cache_read_input_tokens": 9732,
+        "cache_creation_input_tokens": 214,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 214
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 656,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000736,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2031,
+      "cacheReadInputTokens": 24606,
+      "cacheCreationInputTokens": 3666,
+      "webSearchRequests": 0,
+      "costUSD": 0.0598608,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The one-line diff is misleading you about the actual size of this change. The line count measures the code edit, not the blast radius \u2014 and here the blast radius is \"an autonomous agent that spends customer money now makes those judgment calls using a different model's reasoning.\" That's exactly the kind of change a skeptical reviewer in six months will want reconstructable evidence for, not a vibe-based commit message.\n\n**Use Standard mode, not Quick.** Quick mode (risk.md + proof.md) is for changes where the risk is genuinely small and self-evident. A model swap on a financial-approval agent isn't \u2014 different models disagree on edge cases, prompt-injection resistance, refusal thresholds, and dollar-amount judgment calls even when the interface is identical. Standard mode's six files map well to the actual questions a reviewer will ask:\n\n- **basis.md** \u2014 Why Provider B, per the cost review. Link the actual cost comparison, not just \"cheaper.\"\n- **risk.md** \u2014 What could go wrong specifically because it's a different model: higher/lower approval rate on ambiguous refund requests, different susceptibility to prompt injection in customer messages, different behavior on dollar-amount edge cases or policy exceptions, different refusal/escalation behavior. State blast radius (real money, real customers) and the rollback plan (revert the model ID) explicitly.\n- **plan.md** \u2014 How you're going to find out if it's safe before/while shipping: replay a fixed set of historical refund requests (including adversarial/edge ones) through both models and diff the decisions; canary percentage; what would trigger a rollback.\n- **verification.md** \u2014 The actual evidence: results of that replay/eval \u2014 approval-rate delta, any decisions that flipped from deny\u2192approve on cases that matter, false-approval rate on a known adversarial set. This is the file a skeptical reviewer reads first. \"Ran eval suite, no regressions\" is fine *if* it's true and links to the run; \"swapped model per cost review\" gives them nothing to check.\n- **trace.md** \u2014 Links: the PR/diff, the eval run logs/dashboard, the cost review doc.\n- **ship.md** \u2014 Rollout mechanics: canary %, monitoring dashboard link, who signed off, rollback trigger.\n\nThe key discipline per your workflow: don't write a narrative justifying the swap \u2014 link to evidence (eval diffs, replay results, monitoring) so someone can independently check the claims rather than trust the prose.\n\nWant me to scaffold this with `ng.py new <slug> --mode standard` and stub the files so you can fill in the eval links?",
+  "ttft_ms": 12256,
+  "ttft_stream_ms": 962,
+  "time_to_request_ms": 58,
+  "time_to_request_from_spawn_ms": 644587,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025522550.8777,
+  "type": "result",
+  "duration_ms": 28890,
+  "uuid": "31712f4e-a12b-41a7-b72a-c431d2e8c8be",
+  "_skill": "creating-change-records",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "ff5de9f7a5ee523cf4a3a91878157a2f11385b1b7f347001aeae3ba3ca88356c"
+}

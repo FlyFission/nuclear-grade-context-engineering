@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 27366,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.044347,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2345,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1846,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2345,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1846,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2345,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2345
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 617,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000697,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1846,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2345,
+      "webSearchRequests": 0,
+      "costUSD": 0.043649999999999994,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A quick flag before I draft this: \"safe and fully backward compatible\" is a strong, unscoped claim for a payment-processing module, and your two evidence points \u2014 self-run tests and self-review of your own diff \u2014 are both self-checks by the same person who wrote the code. That's useful signal, but it isn't independent verification, and phrasing it as settled fact could lead reviewers to rubber-stamp rather than actually verify.\n\nA few things worth tightening before I write it up:\n\n1. **\"Existing test suite passed\" \u2260 \"backward compatible.\"** Existing tests validate existing behavior as previously understood \u2014 they may not exercise the specific paths your refactor touches, especially edge cases or contract changes. Did you add/modify any tests targeting the refactored code paths specifically, or just run the pre-existing suite?\n2. **Self-review isn't peer review.** Line-by-line self-review catches typos and obvious logic slips, but authors reliably miss their own blind spots. This should be described as \"self-reviewed\" in the PR, not folded into a general \"reviewed\" claim that implies someone else looked at it.\n3. **Payments = high blast radius.** For a module like this, \"backward compatible\" is the kind of claim reviewers should be able to independently check (diff review, maybe a staging/shadow run, or specific test additions), not just trust because you assert it.\n\nHere's a version that states what you actually did, scoped accurately, and invites the reviewer to do the verification that's still missing:\n\n---\n\n**Evidence**\n\n- Ran the full existing test suite locally; all tests pass. (Self-executed \u2014 not yet run by CI or a second party as of this writing.)\n- Self-reviewed the full diff line-by-line for correctness against prior behavior.\n- **Not yet done:** no new tests were added specifically targeting the refactored code paths / edge cases changed by this refactor. [fill in if untrue]\n- **Not yet done:** no independent/peer review of the diff.\n\n**Ask for reviewers:** Given this touches payment processing, please independently verify backward compatibility rather than taking the above as confirmation \u2014 in particular [call out the specific behaviors/edge cases most at risk from the refactor, e.g. rounding, currency conversion, retry/idempotency logic, whatever applies]. Happy to add targeted tests for any path you're unsure about.\n\n---\n\nIf you tell me what actually changed in the refactor, I can help you identify the specific edge cases worth calling out or draft tests for the paths that are riskiest \u2014 that would give reviewers (and the claim) something concrete to stand on.",
+  "ttft_ms": 14496,
+  "ttft_stream_ms": 1284,
+  "time_to_request_ms": 34,
+  "time_to_request_from_spawn_ms": 198120,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788836365.665,
+  "type": "result",
+  "duration_ms": 28507,
+  "uuid": "5f124fd5-93f6-4a63-bbe5-0f15373cee2a",
+  "_skill": "proving-claims",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "4f271896c4f65ed9da0834e13073c621f6aa4d17ac993ae9b3aec20f086c6211"
+}

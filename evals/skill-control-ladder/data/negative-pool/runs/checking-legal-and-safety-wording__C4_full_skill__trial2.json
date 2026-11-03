@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 10378,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.030865999999999998,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 3472,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 498,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3472,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 498,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 3472,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3472
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 604,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000674,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 498,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 3472,
+      "webSearchRequests": 0,
+      "costUSD": 0.030191999999999997,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Since this is internal-only code, the license/public-claim skill doesn't really apply here \u2014 but your teammate's instinct is still good practice: comments claiming \"guaranteed\" and \"100%\" tend to age badly and mislead future readers/maintainers.\n\nA tighter, more defensible version:\n\n```\n// Designed to be thread-safe; errors are caught internally and logged rather than thrown.\n```\n\nOr if you want to point to evidence:\n\n```\n// Thread-safe (see concurrent unit tests in FooTest); does not throw \u2014 failures are logged and swallowed.\n```\n\nDrop \"guaranteed\" and \"100%\" \u2014 replace with what's actually true (design intent, and where the proof lives, if any). If it hasn't been stress-tested for concurrency, say \"intended to be thread-safe\" instead of asserting it outright.",
+  "ttft_ms": 5099,
+  "ttft_stream_ms": 1270,
+  "time_to_request_ms": 129,
+  "time_to_request_from_spawn_ms": 1325515,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594316796.436,
+  "type": "result",
+  "duration_ms": 11043,
+  "uuid": "c5fa90c8-d635-463b-a215-2ec84a6d48dd",
+  "_skill": "checking-legal-and-safety-wording",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "e822d182f1647523c9e3ade5633baa69a8011d743183425d3fe5053d21fb6360"
+}

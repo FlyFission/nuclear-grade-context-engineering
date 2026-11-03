@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 7394,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.024169299999999998,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2496,
+    "cache_read_input_tokens": 14811,
+    "output_tokens": 271,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2496,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 130,
+        "cache_read_input_tokens": 8531,
+        "cache_creation_input_tokens": 245,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 245
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 588,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000673,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 271,
+      "cacheReadInputTokens": 14811,
+      "cacheCreationInputTokens": 2496,
+      "webSearchRequests": 0,
+      "costUSD": 0.023496299999999998,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Move it into `scripts/` \u2014 a single loose script in the root with a peer folder that already holds scripts like it is exactly the \"no clear home\" case that folder conventions exist to fix. Since it's a straightforward `git mv`, just update any references to its old path (imports, CI configs, docs) afterward.",
+  "ttft_ms": 1630,
+  "ttft_stream_ms": 823,
+  "time_to_request_ms": 39,
+  "time_to_request_from_spawn_ms": 1553727,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594548193.5535,
+  "type": "result",
+  "duration_ms": 7637,
+  "uuid": "5a62c289-55b7-4981-bcfb-168d2cd091d5",
+  "_skill": "organizing-project-folders",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "bd59305ebfefd5a0a96fbf247824fd84800945fd2c5a2d3268981b66c1c15554"
+}

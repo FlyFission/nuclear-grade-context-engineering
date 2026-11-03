@@ -1,0 +1,81 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 47209,
+  "duration_api_ms": 45836,
+  "ttft_ms": 4528,
+  "ttft_stream_ms": 3732,
+  "time_to_request_ms": 94,
+  "time_to_request_from_spawn_ms": 797109,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121360329.9353,
+  "num_turns": 2,
+  "result": "**Tool: Write**\n\nRequest:\n```json\n{\n  \"file_path\": \"baseline.md\",\n  \"content\": \"# Baseline: Recommendation Service v2.3.0\\n\\n## Version identity\\n- **Release:** v2.3.0\\n- **Source:** PR #482 (merged to production ~1 hour ago as of 2026-07-03)\\n- **Commit SHA:** TBD - fill in exact merge commit hash so this baseline can be rebuilt precisely, not just approximated via PR number\\n- **Deployed to:** production\\n\\n## Decision this baseline came from\\nQA sign-off on the new eval suite (precision and recall both improved vs. prior baseline), followed by production deploy. No separate ship.md decision record exists yet for this release - this document is currently the only record of the accept decision. Recommend creating one if this workflow is used for future releases.\\n\\n## What's included (controlled scope)\\n- **Embedding model dependency:** upgraded embed-v1 to embed-v2\\n- **Eval suite:** the new/updated eval suite used for QA sign-off (precision, recall both improved over prior baseline)\\n- Everything else in the recommendation service is assumed unchanged by this release - **not confirmed**, since no change-impact.md exists documenting what else PR #482 touched.\\n\\n## What's explicitly excluded / not covered\\n- No linked eval report, dataset, or metrics artifact - only the verbal claim \\\"precision and recall both improved\\\" is recorded here.\\n- No downstream consumer or ripple-effect review is on file (e.g., serving latency, feature store compatibility, any client assumptions baked around embed-v1 output shape/dimensionality).\\n- No rollback procedure/tested rollback path is documented for reverting embed-v2 to embed-v1 in production.\\n\\n## Evidence links\\n- Eval suite results: missing - add link/path\\n- QA sign-off record: missing - add link/path (ticket, Slack thread, doc)\\n- PR: #482 (add URL)\\n- Commit SHA: missing - add\\n\\n## Accepted gaps (owner needed for each)\\n| Gap | Risk if unaddressed | Owner |\\n|---|---|---|\\n| No linked eval report/metrics artifact | Can't independently re-verify the \\\"improved precision/recall\\\" claim later | unassigned |\\n| No documented rollback path for embed-v2 to embed-v1 | Slower/riskier recovery if this version needs to be reverted | unassigned |\\n| No change-impact review of what else PR #482 touched | Unknown blast radius if problems surface later | unassigned |\\n| Only ~1 hour of production observation at time of recording | Stability claim is provisional, not confirmed | unassigned |\\n\\n## Re-check / new-baseline triggers\\n- Any further change to the embedding model dependency (version bump, provider change, or config change to embed-v2).\\n- Production incident, precision/recall regression, or user-facing quality complaint traced to recommendations.\\n- Completion of a longer soak period (recommend: re-confirm stability at 24h and 7 days post-deploy; update this record or supersede it).\\n- Any change to eval suite methodology or dataset used for future sign-offs (so future comparisons stay apples-to-apples with this baseline).\\n- Discovery of undocumented scope from PR #482 (i.e., if change-impact.md is written later and reveals additional changes not listed above).\\n\\n## Status\\n**Provisional.** This baseline documents the accept decision as understood at recording time, but is missing evidence links and has only ~1 hour of production observation. Treat as accepted-with-open-gaps until the gaps above are closed or explicitly owned/deferred.\\n\"\n}\n```",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0996444,
+  "usage": {
+    "input_tokens": 27,
+    "cache_creation_input_tokens": 6059,
+    "cache_read_input_tokens": 9938,
+    "output_tokens": 3965,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 6059,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1291,
+        "cache_read_input_tokens": 6640,
+        "cache_creation_input_tokens": 2717,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2717
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000753,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 27,
+      "outputTokens": 3965,
+      "cacheReadInputTokens": 9938,
+      "cacheCreationInputTokens": 6059,
+      "webSearchRequests": 0,
+      "costUSD": 0.09889139999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "97ab0f31-0d95-4c77-8f2a-43cdfea76577",
+  "_skill": "recording-a-known-good-version",
+  "_condition": "with_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "d28c9c68b0162373c880502a64ded3327b05d69b5d07552dc4b6ca7244d9047a",
+  "_arm": "C4_full_skill",
+  "_reused_from": "evals/skill-benchmark-pilot/data/all-skills-pilot/runs/recording-a-known-good-version__with_skill__trial1.json"
+}

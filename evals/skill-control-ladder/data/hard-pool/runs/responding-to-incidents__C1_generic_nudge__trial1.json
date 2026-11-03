@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 18602,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.043100799999999995,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2904,
+    "cache_read_input_tokens": 14796,
+    "output_tokens": 1364,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2904,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 746,
+        "cache_read_input_tokens": 8516,
+        "cache_creation_input_tokens": 668,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 668
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 686,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000766,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1364,
+      "cacheReadInputTokens": 14796,
+      "cacheCreationInputTokens": 2904,
+      "webSearchRequests": 0,
+      "costUSD": 0.0423348,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't have access to your dashboards or monitoring systems from this session \u2014 this working directory is an empty repo, so there's nothing here for me to check against. I can't independently confirm the flat-zero reading.\n\nMore importantly, the detail you mentioned in passing is the thing I'd push back on before you post the all-clear: if EU checkout traffic moved to the new routing cluster after last month's migration, and this dashboard is the same one you've used all year, there's a real chance it's not instrumented against the new cluster. A flat-zero reading in that case wouldn't mean \"EU is healthy\" \u2014 it would mean \"EU isn't being measured,\" which looks identical on the graph but is a very different situation.\n\nBefore posting all-clear, I'd verify:\n- Does the Checkout Errors dashboard's data source include the new EU routing cluster, or only the legacy path?\n- If it's ambiguous, check EU checkout error rate directly (logs/metrics scoped to that cluster) rather than trusting the aggregate dashboard.\n\nGiven you're 20 minutes from all-hands, it's faster to post a provisional update now (\"error rate down, config reverted, confirming EU coverage before full close\") than to declare all-clear and have to walk it back if EU turns out to be blind-spotted. Want me to help draft that provisional message, or do you have someone who can quickly confirm the dashboard's EU coverage?",
+  "ttft_ms": 7879,
+  "ttft_stream_ms": 1285,
+  "time_to_request_ms": 124,
+  "time_to_request_from_spawn_ms": 1914413,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079688790.1125,
+  "type": "result",
+  "duration_ms": 18989,
+  "uuid": "c2ea5840-d2fe-4e97-97c2-bbd88b522dba",
+  "_skill": "responding-to-incidents",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "13f8b969d9e5c38edd5d76acd16e3af694eb4f9e7e9fe1c0452ef34234892353"
+}

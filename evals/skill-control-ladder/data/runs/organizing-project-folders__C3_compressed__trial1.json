@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 43905,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.07362099999999999,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2813,
+    "cache_read_input_tokens": 23820,
+    "output_tokens": 3258,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2813,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2944,
+        "cache_read_input_tokens": 8946,
+        "cache_creation_input_tokens": 147,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 147
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 634,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000709,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 3258,
+      "cacheReadInputTokens": 23820,
+      "cacheCreationInputTokens": 2813,
+      "webSearchRequests": 0,
+      "costUSD": 0.072912,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory here is empty, so I can't inspect your actual repo \u2014 I'm working purely from your description. Before finalizing, I have two questions that materially affect the layout:\n\n1. Is this a monorepo with existing `services/` or `apps/` top-level dirs (implied by \"shared helper functions used by two different services\"), or are those services in separate repos?\n2. Do you already have any `docs/`, `scripts/`, or `archive/` convention elsewhere in the repo I should align with, rather than introduce a competing one?\n\nHere's a proposed structure, reverse-engineered from the content categories you described (each folder maps to one disposition rule and has one reason to change):\n\n```\npackages/\n  shared/                          # code used by >1 service \u2014 changes only when the shared contract changes\n    README.md                      # states: promote here only if \u22652 consumers; else keep local to a service\n    <helper-modules>/\n\nconfig/\n  templates/\n    README.md                      # states: canonical config templates, not live config\n\nscripts/\n  migrations/\n    README.md                      # states: one-off, run-once scripts; move to archive/ after execution\n\narchive/\n  compliance-reports/\n    README.md                      # states: read-only, retained for audit; naming = YYYY-MM-DD-<report-name>.pdf\n  migrations/                      # completed migration scripts land here, not deleted\n\ndocs/\n  decisions/                       # only durable, actionable notes (ADR-style)\n```\n\nKey calls I'm making, flag if you disagree:\n\n- **`misc` and `utils` are banned names** \u2014 both are dumping-ground signals. Every file gets a disposition rule instead of a folder to hide in.\n- **Meeting notes**: I'd recommend these don't belong in the repo at all \u2014 move them to your wiki/drive. If some contain real decisions worth keeping, extract those into `docs/decisions/` as short ADRs; discard the rest.\n- **The ~30 files in `utils`**: I can't disposition these without seeing filenames/contents \u2014 they'll split between `packages/shared/utils` (genuinely cross-service, generic) and each consuming service's own local utils folder (single-consumer, no reason to be shared). Files unused by anything current are candidates for deletion, not relocation.\n- **Migration scripts**: one-off scripts that already ran shouldn't sit next to active code \u2014 they move to `archive/migrations/` once executed, so `scripts/migrations/` only ever holds pending work.\n\nIf you can share the actual file listing (or even just filenames) from `misc/` and `utils/`, I can turn this into a concrete per-file move plan instead of a category-level one.",
+  "ttft_ms": 1659,
+  "ttft_stream_ms": 945,
+  "time_to_request_ms": 40,
+  "time_to_request_from_spawn_ms": 866095,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025744904.6436,
+  "type": "result",
+  "duration_ms": 44539,
+  "uuid": "cd57e101-ecd5-401c-8993-85252bc29578",
+  "_skill": "organizing-project-folders",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "475e9ddd5fc99b90d48ebac64620a0817620f7aac0af09487fa0f2266cb01a3c"
+}

@@ -1,0 +1,93 @@
+{
+  "is_error": false,
+  "duration_api_ms": 21811,
+  "num_turns": 7,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.056834899999999994,
+  "usage": {
+    "input_tokens": 12,
+    "cache_creation_input_tokens": 3356,
+    "cache_read_input_tokens": 50853,
+    "output_tokens": 1381,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3356,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 437,
+        "cache_read_input_tokens": 9404,
+        "cache_creation_input_tokens": 232,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 232
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 607,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000692,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 12,
+      "outputTokens": 1381,
+      "cacheReadInputTokens": 50853,
+      "cacheCreationInputTokens": 3356,
+      "webSearchRequests": 0,
+      "costUSD": 0.056142899999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [
+    {
+      "tool_name": "Glob",
+      "tool_use_id": "toolu_01FeQ3exF7mWyQ6Dc1nBgaix",
+      "tool_input": {
+        "pattern": "**/package.json",
+        "path": "/"
+      }
+    }
+  ],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The repo here is completely empty \u2014 no `package.json` or prompt template exists yet.\n\nBefore I do anything: this \"quick\" bundle is actually two different changes glued together \u2014 a dependency version bump and a change to the system prompt sent to the model. The dependency bump is genuinely trivial. The system prompt edit isn't \u2014 even a one-line addition changes model behavior in production and deserves its own small, reviewable commit with a clear rationale, not to be buried inside a version-bump PR. So per the router: this isn't a throwaway/no-review case, and it's not just a mechanical patch-version bump either. I'd put it at **Quick** for the dependency bump, but the prompt instruction change should get its own changeset (still lightweight, but separated so a reviewer can see *what instruction* and *why* without it being lost in a package.json diff).\n\nA couple of things I need before I can actually make the edit:\n\n1. There's no `package.json` in this directory (it's empty) \u2014 can you point me to the right path/repo, or should I create one?\n2. What's the exact new instruction you want added to the system prompt template, and where's that file located?\n\nOnce I have those, I'll do the version bump as one small commit and the prompt-instruction addition as a separate one, each with a short message describing the actual change \u2014 so you can still merge both today, just as two clean, reviewable diffs instead of one mixed one.",
+  "ttft_ms": 3114,
+  "ttft_stream_ms": 1248,
+  "time_to_request_ms": 48,
+  "time_to_request_from_spawn_ms": 1200083,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785026077706.388,
+  "type": "result",
+  "duration_ms": 23281,
+  "uuid": "1ecdfbec-45d1-440a-a5d6-1b6322fabe6a",
+  "_skill": "using-nuclear-grade",
+  "_arm": "C2_description_only",
+  "_trial": 2,
+  "_input_spec_sha256": "49a01bec4e54568d7af751729e41660ee715fb9b2e49d07086725e909769f6bb"
+}

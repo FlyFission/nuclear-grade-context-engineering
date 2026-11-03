@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 6610,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0277648,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2639,
+    "cache_read_input_tokens": 23706,
+    "output_tokens": 272,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2639,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 93,
+        "cache_read_input_tokens": 8790,
+        "cache_creation_input_tokens": 129,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 129
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 611,
+      "outputTokens": 22,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000721,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 272,
+      "cacheReadInputTokens": 23706,
+      "cacheCreationInputTokens": 2639,
+      "webSearchRequests": 0,
+      "costUSD": 0.0270438,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I couldn't find a `formatters.py` file or any reference to `fmt_dt` anywhere in this repository \u2014 the search returned no matches for either. Could you double check the path/branch you're on, or point me to the right location? It's possible this is a different repo/worktree than the one currently open here.",
+  "ttft_ms": 1141,
+  "ttft_stream_ms": 756,
+  "time_to_request_ms": 27,
+  "time_to_request_from_spawn_ms": 1447482,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594441723.2246,
+  "type": "result",
+  "duration_ms": 7291,
+  "uuid": "d38c5499-beeb-4c7b-b650-969a047d29b1",
+  "_skill": "deciding-who-decides",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "c821a18e462213211f2729784701f5029c6fecc3e99588fc00707bb9039971d8"
+}

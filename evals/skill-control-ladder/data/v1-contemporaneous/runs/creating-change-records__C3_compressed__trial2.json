@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 38371,
+  "num_turns": 6,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0757156,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 3357,
+    "cache_read_input_tokens": 33612,
+    "output_tokens": 2982,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3357,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2233,
+        "cache_read_input_tokens": 9476,
+        "cache_creation_input_tokens": 161,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 161
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 656,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000736,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 2982,
+      "cacheReadInputTokens": 33612,
+      "cacheCreationInputTokens": 3357,
+      "webSearchRequests": 0,
+      "costUSD": 0.07497960000000001,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "For this kind of change, \"one line in a config\" is not the same as \"one line of risk.\" Swapping the underlying model swaps the actual judgment logic behind real, autonomous refund decisions \u2014 approval thresholds, susceptibility to social engineering in customer messages, edge-case handling (partial refunds, repeat offenders, high-dollar amounts) can all shift even if no other code changes. \"Swapped model per cost review\" answers *why*, not *whether it's still safe* \u2014 that's the gap a skeptical reviewer will flag in six months when something goes wrong and they're trying to figure out if this change was implicated.\n\nGiven the blast radius (real money, no human in the loop, full swap of the reasoning substrate), I'd treat this as **Standard**, not Quick. A record worth trusting later needs:\n\n- **risk.md** \u2014 what could actually go wrong: higher false-approval rate, different behavior under prompt-injection/manipulation attempts in customer messages, divergence from refund policy on edge cases. Include blast radius (refund $/day, volume) and who's exposed.\n- **basis.md** \u2014 why Provider B, why now, and which equivalence assumptions (capability, instruction-following, safety tuning) are *verified* vs just assumed.\n- **plan.md** \u2014 how it was actually tested before shipping: replaying a fixed set of historical refund requests (including known edge cases and adversarial attempts) through both models, ideally with a shadow-mode or canary period.\n- **trace.md** \u2014 links to the eval dataset/script, the PR diff, and raw results.\n- **verification.md** \u2014 real evidence, not a vibe: approval-rate delta, dollar-amount delta between models, any disagreement cases reviewed by a human, adversarial test outcomes.\n- **ship.md** \u2014 rollout plan (canary %, monitoring/alert thresholds on approval rate and $ volume) and an explicit rollback plan.\n\nThe core test: if refund behavior quietly drifted after this ship, could someone reconstruct from this record whether the swap was tested for that, or whether it just shipped on trust? Right now the answer would be no.\n\nWant me to scaffold this record for the change?",
+  "ttft_ms": 5808,
+  "ttft_stream_ms": 1026,
+  "time_to_request_ms": 255,
+  "time_to_request_from_spawn_ms": 1184981,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789823487.2527,
+  "type": "result",
+  "duration_ms": 38909,
+  "uuid": "82c30d9d-d68b-4e4d-a848-98b6f3ce409f",
+  "_skill": "creating-change-records",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "ff5de9f7a5ee523cf4a3a91878157a2f11385b1b7f347001aeae3ba3ca88356c"
+}

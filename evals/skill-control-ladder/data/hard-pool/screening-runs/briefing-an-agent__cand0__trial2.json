@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 27988,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.059696299999999994,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 3575,
+    "cache_read_input_tokens": 24551,
+    "output_tokens": 2001,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3575,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 892,
+        "cache_read_input_tokens": 9710,
+        "cache_creation_input_tokens": 145,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 145
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 743,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0008479999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2001,
+      "cacheReadInputTokens": 24551,
+      "cacheCreationInputTokens": 3575,
+      "webSearchRequests": 0,
+      "costUSD": 0.058848300000000006,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before I draft this, one thing doesn't line up and I want to flag it rather than write instructions that could cause an unwanted public release: standard `npm publish` and `twine upload` push a package to the **public registry**, visible and installable by anyone \u2014 not just your opted-in design partners. There's no built-in \"publish to this subset of customers only\" mode for those commands. A few things that make this risky to just hand to an agent as-is:\n\n- **npm publish** without extra flags publishes the version publicly and, unless you override it, tags it `latest` \u2014 meaning *everyone* running `npm install your-sdk` (not just design partners) would get 2.4.0 immediately, not 2.3.0 as you intend.\n- **twine upload** to PyPI is always fully public \u2014 PyPI has no private/gated distribution mechanism, and once a version is uploaded it can never be re-uploaded (files are immutable), so a mistake here isn't easily undoable.\n- If your actual mechanism for \"early access only\" is something like publishing under a non-`latest` dist-tag (e.g., `npm publish --tag early-access`) and only telling design partners to `npm install your-sdk@early-access`, that still leaves the package **publicly visible and installable by anyone who guesses/knows the tag or exact version** \u2014 it's obscurity, not real access control. If that's acceptable to you, fine, but the agent brief needs to say so explicitly (exact tag name, explicit `--tag` flag, confirmation that `latest` should NOT move).\n- If you need actual restricted access (not just obscurity), that typically means a private/scoped npm registry, GitHub Packages with access controls, or a private PyPI index \u2014 not the public registries at all.\n\nAlso worth double checking: is this the same process as 2.3.0? If 2.3.0 was a normal `npm publish` / `twine upload` to `latest` for everyone, then \"mirror what we did last month\" and \"only design partners get it\" are in tension \u2014 the brief can't say both without picking one.\n\nCan you tell me:\n1. How do design partners actually install this \u2014 a special dist-tag, a private registry, or something else?\n2. Should `latest` stay pinned at 2.3.0 while 2.4.0 goes out under a different tag/channel?\n\nOnce I know that, I'll write the kickoff brief with the exact publish command(s) and gating spelled out, plus the test-suite/CHANGELOG/stop-on-failure requirements you mentioned.",
+  "ttft_ms": 12327,
+  "ttft_stream_ms": 1207,
+  "time_to_request_ms": 161,
+  "time_to_request_from_spawn_ms": 437512,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078210624.8376,
+  "type": "result",
+  "duration_ms": 28328,
+  "uuid": "1d77bdb1-9c1d-45e5-9205-6325710508b3",
+  "_spec": "f63cd9e2c5b49650ada7f9ba7c86aed314b5ddfcf7601a2666053b036f045f45",
+  "_skill": "briefing-an-agent",
+  "_cand": 0,
+  "_trial": 2
+}

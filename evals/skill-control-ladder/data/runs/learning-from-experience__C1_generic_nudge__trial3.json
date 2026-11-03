@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 38670,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0642259,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2706,
+    "cache_read_input_tokens": 14713,
+    "output_tokens": 2856,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2706,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2439,
+        "cache_read_input_tokens": 8433,
+        "cache_creation_input_tokens": 553,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 553
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 639,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2856,
+      "cacheReadInputTokens": 14713,
+      "cacheCreationInputTokens": 2706,
+      "webSearchRequests": 0,
+      "costUSD": 0.0635019,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "## Incident Write-Up\n\n**Title:** Hardcoded API key merged to main after pre-commit secrets-scan bypass\n**Date of incident:** [branch pushed] \u2192 **Date detected:** [audit date] \u2192 **Date resolved:** key rotated same day as detection\n**Severity:** High (credential exposed in production for 3 days)\n\n### Summary\nAn engineer's local pre-commit hook, which runs a secrets-scanning linter, failed on a branch containing a hardcoded API key. Instead of resolving the finding, the engineer bypassed the hook with `git commit --no-verify` and pushed to unblock a deadline. The commit was merged to `main` and deployed. The exposed key was live in production for approximately three days until a routine security audit identified it. The key was rotated immediately upon discovery.\n\n### Impact\n- Hardcoded API key present in git history and production for ~3 days.\n- [Fill in: was the key exposed in a public repo, internal only, any logs/artifacts that captured it, any evidence of unauthorized use \u2014 check provider's access logs before closing this out.]\n\n### Root Cause\nThe secrets scan that would have caught this only ran as a **local pre-commit hook**, which is opt-in and trivially bypassable (`--no-verify`) with no server-side enforcement. There was no equivalent check in CI or at merge time, and branch protection did not require the scan to pass.\n\n### Contributing Factors\n- No CI-level secrets scanning as a required status check.\n- No branch protection rule blocking merge without passing checks.\n- No escalation path for \"the security hook is blocking me and I don't know why\" \u2014 the fastest resolution available to the engineer under deadline pressure was to bypass it.\n- Reviewer(s) on the PR did not catch the hardcoded key (or review may not have been required for this branch).\n\n### Timeline\n| Time | Event |\n|---|---|\n| T0 | Pre-commit hook fails on secrets scan |\n| T0 | Engineer runs `git commit --no-verify`, pushes |\n| T0+? | PR merged to main |\n| T0+3 days | Routine security audit flags the key |\n| T0+3 days | Key rotated |\n\n*(Fill in actual timestamps \u2014 this matters for your audit trail and for checking provider access logs during the exposure window.)*\n\n---\n\n## Why This Will Happen Again If Only the Process Changes\n\nThe core issue isn't that the engineer made a bad call under pressure \u2014 that will happen again to someone else. The issue is that a **local, bypassable hook was the only line of defense**. Fix the control, not just the behavior.\n\n## Recommended Fixes (in priority order)\n\n**1. Make the check unbypassable at the server side**\n- Add the same (or a stronger, e.g. `gitleaks`/`trufflehog`) secrets scan as a **required CI status check** on PRs.\n- Enable **branch protection** on `main` requiring that check (and code review) to pass before merge \u2014 `--no-verify` only skips the *local* hook, it can't skip a required CI check.\n- This is the single highest-leverage fix: it makes the local pre-commit hook a fast-feedback convenience, not a security boundary.\n\n**2. Scan history, not just diffs**\n- Run a one-time full-history scan (gitleaks/trufflehog) to check for other secrets that may have slipped through before this control existed.\n\n**3. Remove hardcoded secrets as a pattern, not just this instance**\n- Move to a secrets manager (Vault, AWS/GCP Secrets Manager, etc.) or at minimum env-var injection via CI/CD, so there's no valid code path for \"put the key in the file.\"\n\n**4. Add a break-glass process instead of silent bypass**\n- If a hook produces a false positive, the fix shouldn't be \"skip it\" \u2014 it should be a documented override path (e.g., inline `# pragma: allowlist secret` with required justification + a second reviewer sign-off, or a fast Slack escalation to security). Make the safe path faster than the bypass.\n\n**5. Alerting on bypass usage (optional, higher effort)**\n- If you want visibility into how often `--no-verify` is used, a pre-receive/server-side hook or CI job can detect commits that were pushed without the expected hook having run, and flag them for review rather than blocking silently.\n\n**6. Rotation/detection SLAs**\n- Since detection took 3 days via routine audit, consider whether continuous scanning (scheduled or on every push) rather than periodic audits would cut that window \u2014 this is really what #1 gives you for free going forward.\n\n### Action Items\n| Item | Owner | Due |\n|---|---|---|\n| Add secrets scan as required CI check | | |\n| Enable branch protection requiring it + review | | |\n| Full-history secret scan of repo(s) | | |\n| Confirm no misuse of key during exposure window (check provider logs) | | |\n| Define break-glass override process for false positives | | |\n| Migrate remaining hardcoded secrets to secrets manager | | |\n\n---\n\nWant me to turn this into a file (e.g. `POSTMORTEM.md` or your incident tracker's template) in your actual project repo, and/or draft the CI config (GitHub Actions gitleaks job + branch protection settings) so #1 is ready to apply?",
+  "ttft_ms": 3680,
+  "ttft_stream_ms": 1118,
+  "time_to_request_ms": 52,
+  "time_to_request_from_spawn_ms": 806778,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025685561.92,
+  "type": "result",
+  "duration_ms": 35163,
+  "uuid": "1e4007c1-c55d-4974-85b8-64ec42de2dbf",
+  "_skill": "learning-from-experience",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "8115015f04d9fa09099815a984c692c5813de3d958a57bf85de3810fe2dff5da"
+}

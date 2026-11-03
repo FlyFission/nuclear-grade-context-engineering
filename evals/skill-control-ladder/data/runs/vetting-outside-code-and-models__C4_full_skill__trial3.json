@@ -1,0 +1,81 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 17462,
+  "duration_api_ms": 16631,
+  "ttft_ms": 15576,
+  "ttft_stream_ms": 4925,
+  "time_to_request_ms": 61,
+  "time_to_request_from_spawn_ms": 892078,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121454937.935,
+  "num_turns": 1,
+  "result": "No \u2014 don't cut production over this week with zero independent testing. That's a straightforward boundary-overreach case: everything you have right now is vendor marketing, and marketing is input, not evidence.\n\nHere's the trust check on this:\n\n**What your use relies on (critical characteristics):**\n- Moderation accuracy on *your* content categories/edge cases (not their benchmark)\n- False-positive/false-negative rate and behavior on adversarial/borderline content\n- SOC2 report itself (the actual audit letter/scope, not the badge on the website)\n- Latency/uptime under your production load\n- API contract stability (response format, error codes, rate limits)\n- Data handling \u2014 what happens to the content you send them\n\n**Why the claims aren't acceptance evidence:**\n- \"99.9% accuracy\" \u2014 on whose dataset, against what categories? Unverified, unsourced.\n- \"SOC2 compliant\" \u2014 a claim, not the report. You need to request and review the actual SOC2 Type II report (Type I is far weaker), check the scope, and confirm it covers what matters to your data flow.\n- \"Enterprise-grade safety\" \u2014 marketing language, not a testable property.\n- Case studies \u2014 selected by the vendor to look good; not representative of your traffic.\n\n**What blocks acceptance right now:**\nEvery one of those characteristics is currently unverified. Since content moderation directly affects what content reaches your users (a real safety/trust surface) and likely touches user-generated data sent to a third party, this is exactly the kind of decision that shouldn't ship on vendor word alone.\n\n**Recommended path instead of cutover this week:**\n1. Run a **shadow/parallel test**: route a copy of real production traffic through the new API alongside your current pipeline for a period, compare decisions, quantify disagreement rate and specifically where it misses things your current system catches.\n2. Request and actually read the **SOC2 Type II report** (under NDA if needed) \u2014 check scope and exceptions.\n3. Test **adversarial/edge cases** relevant to your platform (the stuff attackers/bad actors actually try).\n4. Confirm **data handling terms** \u2014 retention, subprocessors, whether your content is used for their training.\n5. Only after that, do a **partial/gradual cutover** (e.g., low-risk category first) with a rollback plan, not a full swap.\n\nCost savings is a real factor, but it's a reason to prioritize doing this evaluation fast \u2014 not a reason to skip it. If you want, I can help draft a `supplier-trust.md` for this vendor decision, or write the shadow-test harness to compare the two APIs' outputs on sample data.",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.038513399999999996,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 3985,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 855,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3985,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 855,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 3985,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3985
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000714,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 855,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 3985,
+      "webSearchRequests": 0,
+      "costUSD": 0.0377994,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "2e16305a-6752-478e-a2f1-6102008a735c",
+  "_skill": "vetting-outside-code-and-models",
+  "_condition": "with_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "09bebff115fd340254ced75f0db14a5449f851f0afc0e1b3462cc8e2577f5162",
+  "_arm": "C4_full_skill",
+  "_reused_from": "evals/skill-benchmark-pilot/data/all-skills-pilot/runs/vetting-outside-code-and-models__with_skill__trial3.json"
+}

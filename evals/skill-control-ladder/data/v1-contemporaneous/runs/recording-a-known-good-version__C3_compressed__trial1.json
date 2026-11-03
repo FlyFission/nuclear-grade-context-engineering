@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 35645,
+  "num_turns": 7,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.07748730000000001,
+  "usage": {
+    "input_tokens": 10,
+    "cache_creation_input_tokens": 3890,
+    "cache_read_input_tokens": 42581,
+    "output_tokens": 2706,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3890,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1449,
+        "cache_read_input_tokens": 9806,
+        "cache_creation_input_tokens": 364,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 364
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000753,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 10,
+      "outputTokens": 2706,
+      "cacheReadInputTokens": 42581,
+      "cacheCreationInputTokens": 3890,
+      "webSearchRequests": 0,
+      "costUSD": 0.0767343,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I checked this working directory and it's completely empty \u2014 no git history, no source files, and none of the linked docs this record depends on (`controlled-items.md`, `change-impact.md`, `verification.md`, `ship.md`). I can't draft a trustworthy known-good record from nothing, since a rollback/trust record is only useful if it's actually verifiable against real evidence.\n\nTo write this properly I need the concrete artifacts, not just the summary:\n\n- **Identity**: the exact commit SHA (or tag/release) that PR #482 merged into production \u2014 \"PR #482\" alone isn't enough if the branch has moved since deploy.\n- **Controlled items**: what's actually pinned/changed \u2014 `embed-v1` \u2192 `embed-v2` version numbers, any config/index/schema changes that came with the embedding swap, and confirmation nothing else rode along in the same release.\n- **Eval evidence**: where the eval suite results live (report/link) and the actual precision/recall numbers vs. baseline, not just \"improved.\"\n- **Deliberate exclusions**: anything scoped out of this release that a future reader might assume was included.\n- **Rebuild check**: confirmation this commit can be checked out and rebuilt to reproduce what's running in prod (e.g., locked dependency file, reproducible build/deploy pipeline reference).\n\nA couple of things worth flagging given this touches a production, customer-facing system:\n\n1. If there's no existing `verification.md` describing the eval suite methodology (dataset, thresholds, who signed off), that's a gap \u2014 I'd name it explicitly with an owner rather than imply the QA sign-off was more rigorous than documented.\n2. Model swaps like this can have subtle behavior shifts even with better aggregate precision/recall (e.g., cold-start items, tail queries) \u2014 worth naming as a residual gap with a re-check trigger (e.g., \"revisit if tail-query complaint rate rises\") rather than treating \"stable for an hour\" as full validation.\n\nCan you point me to: the actual commit SHA/tag deployed, the eval report (link or numbers), and any existing docs in this repo family (even if in another repo) I should link to? Once I have those I can draft the full record \u2014 I'd rather not fill in placeholder specifics that look authoritative but aren't backed by anything.",
+  "ttft_ms": 1734,
+  "ttft_stream_ms": 1043,
+  "time_to_request_ms": 64,
+  "time_to_request_from_spawn_ms": 932615,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789571109.5266,
+  "type": "result",
+  "duration_ms": 38406,
+  "uuid": "e9461218-94ac-4421-a52c-70b2c75405f4",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "15a6ce4cf7708cdad5ccf21f02b242e4ec8887a93ead0c6966ee50af92dc3bd6"
+}

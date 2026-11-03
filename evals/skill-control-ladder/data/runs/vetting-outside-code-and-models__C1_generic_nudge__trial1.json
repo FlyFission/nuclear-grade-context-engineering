@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 10566,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.025063000000000002,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2154,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 635,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2154,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 635,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2154,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2154
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 635,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2154,
+      "webSearchRequests": 0,
+      "costUSD": 0.024339000000000003,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 don't cut production over this week based on marketing claims alone. A few concrete reasons and what I'd do instead:\n\n**Why not yet:**\n- \"99.9% accuracy\" is meaningless without knowing the metric (precision? recall? on what dataset, what categories?). Vendors cherry-pick favorable numbers.\n- \"SOC2 compliant\" \u2014 ask for the actual report (Type II, not Type I) and check the audit period and exceptions noted. A claim on a website isn't evidence.\n- Case studies are marketing, not validation for *your* content distribution, which may differ wildly from their reference customers (different languages, adversarial patterns, edge cases like self-harm/CSAM/hate speech nuances, etc.).\n- Content moderation failures have real harm potential (user safety, legal/regulatory exposure, brand risk) \u2014 this is a case where \"move fast\" is the wrong instinct.\n\n**What I'd do before switching:**\n1. **Shadow test first.** Run the new API in parallel against production traffic (read-only, not gating decisions) for 1-2 weeks. Log both providers' outputs on the same inputs.\n2. **Build/use a labeled eval set** \u2014 ideally including your known hard cases and past incidents \u2014 and compare precision/recall against your current provider on it.\n3. **Check false negative rate specifically** on your worst-case categories; false positives annoy users, false negatives create liability.\n4. **Verify SOC2 report directly** and check data handling/retention terms (are they training on your data? where is data processed/stored?).\n5. **Confirm latency and uptime SLAs** under your real load, not their marketing numbers.\n6. **Plan a gradual rollout** (5% \u2192 25% \u2192 100%) with rollback capability, not a hard cutover.\n\nThe pricing difference is real, but it's not worth risking moderation quality on an unvalidated vendor. Want help designing the shadow-test harness or the eval set structure?",
+  "ttft_ms": 9275,
+  "ttft_stream_ms": 952,
+  "time_to_request_ms": 45,
+  "time_to_request_from_spawn_ms": 1213741,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785026092301.8296,
+  "type": "result",
+  "duration_ms": 9313,
+  "uuid": "1ad76a5f-3ed4-4832-87ca-c17cd09f6ab6",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "18d2ee05b64b0e7761a276b206d50734d1bba70b467234fb7cb019d0e50fc967"
+}

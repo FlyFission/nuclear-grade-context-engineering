@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 47441,
+  "num_turns": 6,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.08156329999999999,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 3232,
+    "cache_read_input_tokens": 32571,
+    "output_tokens": 3442,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3232,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2667,
+        "cache_read_input_tokens": 8971,
+        "cache_creation_input_tokens": 541,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 541
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 661,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000746,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 3442,
+      "cacheReadInputTokens": 32571,
+      "cacheCreationInputTokens": 3232,
+      "webSearchRequests": 0,
+      "costUSD": 0.0808173,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't have access to any files in this working directory (Glob/Grep return nothing), so I can't independently verify the diff or check where `recieve`/`receive` appears elsewhere in the codebase \u2014 everything below is based on your description, not a code review.\n\nA few things I'd want resolved before merging, beyond \"the eval suite is green\":\n\n1. **Golden regeneration only covers the 3 new cases.** Did the pre-existing test cases in the suite get *re-diffed* against their old goldens, or just re-run and reported \"still passing\" (which could mean a fuzzy/semantic match tolerating drift rather than an exact match)? If matching is exact-string, unchanged goldens on old cases is strong evidence of no behavioral change. If it's fuzzy/LLM-graded, \"green\" can hide subtle output drift \u2014 worth confirming which kind of comparison this suite uses.\n\n2. **Where does `recieve` actually sit in the prompt?** A typo in narrative text (\"the customer will recieve a reply...\") is low-risk. A typo inside an instruction, category label, or anything that other code might pattern-match/parse against is not \u2014 worth a quick check for any code (parsers, regexes, other prompt version files like `triage_v1.txt`/`v2.txt`) that might reference the old spelling.\n\n3. **The \"same as the summarizer fix\" comparison is weak evidence.** Triage is a classification task where exact wording can shift decision boundaries near category edges in ways summarization (free-text generation) doesn't show. Low risk isn't zero risk, and the analogy doesn't transfer cleanly.\n\n4. **The real gap: this was validated against the current model, not Friday's upgraded one.** If Friday's release swaps the underlying model, today's green suite only tells you \"old model + new prompt\" works \u2014 not \"new model + new prompt.\" If the release notes are going to claim this prompt is validated for the upgrade, you'd want the eval re-run once the new model is available (or explicitly caveat that it hasn't been).\n\nIf you can confirm (1) exact-match golden comparison and (2) the typo is in narrative (not structural/parsed) text, I'd say this is safe to merge today. Item 4 is the one I'd flag most strongly for the release notes \u2014 don't imply this prompt was validated against the Friday model unless it actually was.",
+  "ttft_ms": 3162,
+  "ttft_stream_ms": 1300,
+  "time_to_request_ms": 34,
+  "time_to_request_from_spawn_ms": 571617,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078346336.4148,
+  "type": "result",
+  "duration_ms": 48484,
+  "uuid": "16f242f3-0543-4780-b3fa-4602b2d412d6",
+  "_spec": "255ede5672a701d97af18876f60cdfd422ec7cf260d55c147e50742e895efa3a",
+  "_skill": "checking-what-a-change-affects",
+  "_cand": 2,
+  "_trial": 3
+}

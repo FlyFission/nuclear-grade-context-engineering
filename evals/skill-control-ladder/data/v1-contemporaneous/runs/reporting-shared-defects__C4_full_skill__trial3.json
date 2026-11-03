@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 21245,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.05426800000000001,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 4644,
+    "cache_read_input_tokens": 16750,
+    "output_tokens": 1372,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4644,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1058,
+        "cache_read_input_tokens": 10470,
+        "cache_creation_input_tokens": 454,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 454
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 702,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000787,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1372,
+      "cacheReadInputTokens": 16750,
+      "cacheCreationInputTokens": 4644,
+      "webSearchRequests": 0,
+      "costUSD": 0.053481,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No, you're not done \u2014 this is exactly the \"silent local fix\" trap. Your support bot is fixed, but sales, onboarding, and internal-tools are still shipping the same leak with no knowledge of it. Fixing your own copy solves your problem, not the shared one.\n\n**Why this doesn't qualify as \"good enough\":**\n- The defect lives in `prompt-common`, a shared package \u2014 not your fork. A code comment in *your* repo is invisible to the other three teams; nobody reads your bot's source to learn about a bug in a package they consume separately.\n- Severity here is meaningful: leaking internal tool/DB identifiers to customers is a data-exposure issue, and depending on what those identifiers reveal (schema names, internal endpoints, auth-adjacent tooling), it could brush up against security exposure too. That pushes this past \"log it and move on\" into escalate-now territory.\n- \"They'll pick it up eventually\" isn't notification. Each of those bots is exposed right now, in production, to real customer conversations.\n\n**What to do next:**\n1. **File the defect against `prompt-common` itself** (not your local override) \u2014 description, repro steps (the truncation edge case + conversation length that triggers it), severity, and your fix as a proposed patch/PR upstream so the real source gets corrected, not just your copy.\n2. **Notify the three other teams directly** \u2014 sales, onboarding, internal-tools. Name actual owners, not just \"the team.\" Tell them: what leaks, under what condition, how to reproduce it, and that a fix is available (your patched template) so they can apply the same workaround immediately while the upstream fix lands.\n3. **Give the notice a tracking link** \u2014 the `prompt-common` issue/PR \u2014 so it's not just a Slack message that evaporates.\n4. **Log it in your deficiency register / OPEX record** if your org has one, tied to this incident, so \"we found a shared-template bug and it took N days to reach other consumers\" is captured for the retro.\n5. **Escalate** given the customer-facing data exposure angle \u2014 this likely warrants a security/privacy reviewer sign-off before you consider it closed, especially since the leaked identifiers went out over an unknown number of real customer conversations already (you may also want to check whether past leaked responses need any cleanup/notification).\n\nYour local fix and the outward notice are two separate obligations \u2014 only the first is done.",
+  "ttft_ms": 2864,
+  "ttft_stream_ms": 1025,
+  "time_to_request_ms": 51,
+  "time_to_request_from_spawn_ms": 167955,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788806497.3743,
+  "type": "result",
+  "duration_ms": 21714,
+  "uuid": "7a673966-9c98-4505-97af-b6fb511ff69b",
+  "_skill": "reporting-shared-defects",
+  "_arm": "C4_full_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "7912033376cc4af1f6ec5fb29b3e2ec73aa9d4ae41ee51ac2c01006fd37cf04d"
+}

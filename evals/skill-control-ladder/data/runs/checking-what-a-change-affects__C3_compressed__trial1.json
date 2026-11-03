@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 13518,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0374886,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2723,
+    "cache_read_input_tokens": 23642,
+    "output_tokens": 892,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2723,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 497,
+        "cache_read_input_tokens": 8863,
+        "cache_creation_input_tokens": 140,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 140
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00066,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 892,
+      "cacheReadInputTokens": 23642,
+      "cacheCreationInputTokens": 2723,
+      "webSearchRequests": 0,
+      "costUSD": 0.036828599999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory appears to be empty \u2014 there's no actual codebase here for me to inspect the serializer, tests, docs, or consumers.\n\nThat said, I can tell you directly: **no, this isn't safe to just merge**, regardless of diff size. Renaming a field in a *public* API response is a breaking change for every external consumer parsing that JSON, even though the code change is one line. Diff size doesn't measure blast radius here \u2014 trust/contract surface does.\n\nBefore merging, you'd want to at least check:\n- **API consumers/clients**: any SDKs, mobile apps, partner integrations, or internal services that read `total` from this response \u2014 they'll silently break (missing field) rather than error, which is the dangerous kind of breakage.\n- **API docs / OpenAPI spec**: needs to reflect `order_total`.\n- **Tests**: any tests asserting on `total` in the response body.\n- **Versioning strategy**: does your API have a deprecation/versioning policy for breaking changes (e.g., ship `order_total` alongside `total` for a transition period, bump API version, announce deprecation)?\n- **Changelog / release notes**: public-facing note since it's a breaking change for anyone integrating.\n\nIf this API has no external consumers yet (e.g., unreleased, internal-only, or you control 100% of clients), the risk profile is much lower and a straight rename could be fine. Can you point me to the actual repo/directory so I can check the serializer and search for other references to `total`, or confirm whether this API has external/third-party consumers?",
+  "ttft_ms": 2612,
+  "ttft_stream_ms": 766,
+  "time_to_request_ms": 59,
+  "time_to_request_from_spawn_ms": 521860,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025400540.5513,
+  "type": "result",
+  "duration_ms": 12769,
+  "uuid": "8e46a83b-2b3e-41af-b017-c13845b97941",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "ad442de17887c6883c7f7bf079b4e00edb13c3d2c7a0774a07a88dac6a6afd3d"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 13122,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.028104000000000004,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2125,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 851,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2125,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 851,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2125,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2125
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 624,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000699,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 851,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2125,
+      "webSearchRequests": 0,
+      "costUSD": 0.027405000000000002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The two biggest risks here: customer tickets are untrusted free-text feeding directly into an agent that can both read every customer's order history and autonomously send email from your real support mailbox \u2014 that's a prompt-injection vector where a malicious ticket could get the bot to exfiltrate another customer's data or send unauthorized emails, with no human in the loop before send. My recommendation: scope the customer-table read to the ticket's own account (not full-table access), and add either a human-approval step or strict output/recipient validation before send_email actually fires.\n\nWant me to run a structured stress test against this agent design \u2014 trying injection payloads in mock tickets, checking whether it can be tricked into cross-customer data leaks or unauthorized sends \u2014 and write up what happens and the residual risk?",
+  "ttft_ms": 9551,
+  "ttft_stream_ms": 2271,
+  "time_to_request_ms": 55,
+  "time_to_request_from_spawn_ms": 1136089,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785026014298.2446,
+  "type": "result",
+  "duration_ms": 13410,
+  "uuid": "8b271760-57cf-4522-8b0e-ea03ce40b412",
+  "_skill": "stress-testing-agent-changes",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "02d7ea1ac6d39c6d5ff78673d144c9502cbcaaac0842e43b57952886b8420c5b"
+}

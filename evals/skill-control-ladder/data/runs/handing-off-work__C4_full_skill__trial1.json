@@ -1,0 +1,81 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 30878,
+  "duration_api_ms": 30369,
+  "ttft_ms": 16359,
+  "ttft_stream_ms": 8075,
+  "time_to_request_ms": 42,
+  "time_to_request_from_spawn_ms": 686141,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783121249343.5017,
+  "num_turns": 1,
+  "result": "Here's a turnover note following the handoff structure. I've filled in what you told me and left bracketed placeholders for details only you have (service names, contacts, PR links) \u2014 fill those in before sending.\n\n```markdown\n# Turnover: OAuth2 Migration \u2014 Billing Service Auth\n\n**Outgoing owner:** [Your name] \u2014 pausing for vacation, back [return date]\n**Incoming owner:** [Teammate name] \u2014 new to this project\n**Date handed off:** 2026-07-03\n**Branch:** `oauth-migration`\n\n## 1. Last completed action\nAuth middleware and token-refresh logic rewritten for OAuth2, merged to\n`oauth-migration`, unit tests passing.\n\n## 2. Completed artifacts\n- Auth middleware (OAuth2) \u2014 merged, unit-tested \u2014 [PR link]\n- Token-refresh logic (OAuth2) \u2014 merged, unit-tested \u2014 [PR link]\n\n## 3. What changed / conditions to know\n- Nothing in production has changed. Old API-key auth is still live and\n  must stay live \u2014 see stop condition below.\n- No config changes have been made in any environment.\n\n## 4. Remaining work\n- Migrate 3 downstream services still calling the old auth endpoints:\n  1. [Service name] \u2014 [status/notes]\n  2. [Service name] \u2014 [status/notes]\n  3. [Service name] \u2014 [status/notes]\n- After all 3 are migrated and verified: update production config to point\n  at OAuth2 flow.\n- Only after prod config cutover is confirmed working: rotate/retire the\n  old API keys.\n\n## 5. Authority limits \u2014 what the incoming owner MAY and MAY NOT do\n**May do:**\n- Continue migrating the 3 downstream services on `oauth-migration`.\n- Run/extend unit tests, open PRs against `oauth-migration`.\n\n**MUST NOT do under any circumstances:**\n- **Do not rotate, disable, or expire the old API keys.** Any downstream\n  service not yet migrated will start failing with 401s immediately.\n- Do not touch production config until all 3 downstream services are\n  confirmed migrated and passing.\n- Do not merge `oauth-migration` to main / deploy to prod without\n  [approval from X / a full review] \u2014 [fill in if applicable].\n\n## 6. Proof/evidence still owed\n- Confirmation each downstream service works end-to-end against the new\n  OAuth2 auth path (not just unit tests \u2014 needs integration/staging check).\n- Explicit sign-off that all 3 services are migrated *before* touching\n  prod config or keys.\n\n## 7. Stop / hold conditions\n- **Hold on key rotation** until all 3 downstream services are migrated\n  and verified \u2014 this is the single most important constraint in this\n  handoff.\n- If anything is ambiguous about which services still call the old\n  endpoints, stop and confirm rather than guessing \u2014 an incomplete\n  migration list + early key rotation is the likely failure mode here.\n- Escalate to [your name / backup contact] if a production incident\n  occurs while you're out, rather than improvising a fix to auth.\n\n## 8. Incoming owner confirmation\nBefore starting, please confirm in writing (reply to this note or a\ncomment on the tracking ticket) that you understand:\n- [ ] The old API keys must not be rotated until all 3 downstream\n      services are migrated.\n- [ ] Scope is limited to downstream migration on `oauth-migration`;\n      prod config and key rotation are out of scope until that's done.\n- [ ] Who to escalate to if you hit a blocker or prod incident.\n```\n\nFill in the bracketed items (service names, PR links, return date, escalation contact) and it's ready to send. Want me to save this to a file in your project, or is pasting it into Slack/your ticket tracker enough?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0511254,
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 3490,
+    "cache_read_input_tokens": 3298,
+    "output_tokens": 1891,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3490,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 25,
+        "output_tokens": 1891,
+        "cache_read_input_tokens": 3298,
+        "cache_creation_input_tokens": 3490,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3490
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 676,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007559999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 25,
+      "outputTokens": 1891,
+      "cacheReadInputTokens": 3298,
+      "cacheCreationInputTokens": 3490,
+      "webSearchRequests": 0,
+      "costUSD": 0.0503694,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "f74fa6e6-9bf2-4c42-a325-08a1237797b3",
+  "_skill": "handing-off-work",
+  "_condition": "with_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "41c0bd5846e714cdc33d9298a4f08037d1e9efa6040d894007a9242d29060feb",
+  "_arm": "C4_full_skill",
+  "_reused_from": "evals/skill-benchmark-pilot/data/all-skills-pilot/runs/handing-off-work__with_skill__trial1.json"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 8643,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.040976900000000004,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 4425,
+    "cache_read_input_tokens": 26873,
+    "output_tokens": 377,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4425,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 73,
+        "cache_read_input_tokens": 10448,
+        "cache_creation_input_tokens": 257,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 257
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 592,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000692,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 377,
+      "cacheReadInputTokens": 26873,
+      "cacheCreationInputTokens": 4425,
+      "webSearchRequests": 0,
+      "costUSD": 0.0402849,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I couldn't find `utils/date.js` or a `formatTimestamp` function anywhere in this repo \u2014 this looks like an empty/different project directory. Can you confirm the correct path, or is this repo not where that file lives?",
+  "ttft_ms": 1693,
+  "ttft_stream_ms": 890,
+  "time_to_request_ms": 46,
+  "time_to_request_from_spawn_ms": 1465281,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594459730.8137,
+  "type": "result",
+  "duration_ms": 7852,
+  "uuid": "fd5eba66-6d6a-493d-baf7-880125a5aa6a",
+  "_skill": "declaring-intent",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "016eefdd63458a66b577f305d738b819c87d05bbfb6be357c8b1d7b23404c416"
+}

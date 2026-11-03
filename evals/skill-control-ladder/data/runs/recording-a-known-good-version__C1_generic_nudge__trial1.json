@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 18723,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0361701,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2631,
+    "cache_read_input_tokens": 23427,
+    "output_tokens": 839,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2631,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 500,
+        "cache_read_input_tokens": 8685,
+        "cache_creation_input_tokens": 226,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 226
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000753,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 839,
+      "cacheReadInputTokens": 23427,
+      "cacheCreationInputTokens": 2631,
+      "webSearchRequests": 0,
+      "costUSD": 0.03541709999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The repository is empty \u2014 there's no code, changelog, PR data, eval results, or any other artifact here I can inspect to verify the claims in your message.\n\nThat's actually the core problem with what you're asking for. A \"known-good version\" record is supposed to be the thing someone trusts *without* re-checking \u2014 so its credibility depends entirely on whether the claims in it are verified against a source, not just restated from a description. Right now I only have your summary:\n\n- \"precision and recall improved\" \u2014 no eval numbers, dataset, or report to point to\n- \"PR #482\" \u2014 no diff, no reviewer, no merge commit\n- \"everything looks stable so far\" \u2014 one hour of production traffic, no monitoring data\n\nIf I draft this now, I'd be writing a document that *looks* like an audited record but is actually just a paraphrase of your claims with no independent verification behind it. That defeats the purpose \u2014 anyone rolling back later would trust it as fact-checked when it isn't.\n\nA few options, depending on what you actually have access to:\n\n1. **Point me at the artifacts** \u2014 the PR diff, the eval suite output/report, the deploy log or monitoring dashboard link \u2014 and I'll pull the real numbers into the record.\n2. **If this repo is just the wrong directory**, tell me where the actual project lives and I'll look there.\n3. **If you want to draft it from memory now and backfill evidence later**, I can do that, but I'll mark it explicitly as unverified/self-reported pending the eval report and PR link, so nobody mistakes it for an audited baseline.\n\nWhich of these fits?",
+  "ttft_ms": 7226,
+  "ttft_stream_ms": 6302,
+  "time_to_request_ms": 72,
+  "time_to_request_from_spawn_ms": 984239,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025862126.993,
+  "type": "result",
+  "duration_ms": 17849,
+  "uuid": "d5867660-cc23-43c2-80b8-e645f59d3215",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "13f564a9c4bcdabb0a423cb502716f2481aaa6be65ac7018f17eaaceb72bba36"
+}

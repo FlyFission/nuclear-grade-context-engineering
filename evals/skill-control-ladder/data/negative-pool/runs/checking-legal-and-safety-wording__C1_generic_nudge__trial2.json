@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 17421,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0364783,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2617,
+    "cache_read_input_tokens": 23381,
+    "output_tokens": 871,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2617,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 495,
+        "cache_read_input_tokens": 8688,
+        "cache_creation_input_tokens": 209,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 209
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 604,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000679,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 871,
+      "cacheReadInputTokens": 23381,
+      "cacheCreationInputTokens": 2617,
+      "webSearchRequests": 0,
+      "costUSD": 0.0357993,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I couldn't find that comment or function in this repo \u2014 could you point me to the file/function? I'd rather look at what it actually does (does it catch/retry all errors? does it use locks or is it just stateless/reentrant?) before suggesting wording, since \"never fails\" and \"100% thread-safe\" are exactly the kind of claims that are easy to overstate even in internal code \u2014 and if it's wrong, someone will trust it under load and get burned regardless of whether it's \"just internal.\"\n\nIf you'd rather I just give general guidance without the code: swap absolute claims for precise, falsifiable ones, e.g.\n\n```\n// Does not throw; returns Result::Err on failure instead.\n// Safe for concurrent reads; callers must synchronize writes.\n```\n\nor whatever the true contract actually is (e.g. \"stateless, no shared mutable state, safe to call from multiple threads\" if that's literally true). Point me at the code and I'll match the comment to the real behavior.",
+  "ttft_ms": 2295,
+  "ttft_stream_ms": 1557,
+  "time_to_request_ms": 151,
+  "time_to_request_from_spawn_ms": 1863669,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594857359.9534,
+  "type": "result",
+  "duration_ms": 18067,
+  "uuid": "184665f0-54ae-4ba0-9513-b66686b1edeb",
+  "_skill": "checking-legal-and-safety-wording",
+  "_arm": "C1_generic_nudge",
+  "_trial": 2,
+  "_input_spec_sha256": "c44caf82bc6075102d28d0f40de2644a5f78623556d8ce905af85f083e5ab3c0"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 20193,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.057189899999999995,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 4990,
+    "cache_read_input_tokens": 16523,
+    "output_tokens": 1434,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4990,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 457,
+        "cache_read_input_tokens": 10243,
+        "cache_creation_input_tokens": 1027,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1027
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 686,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000771,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1434,
+      "cacheReadInputTokens": 16523,
+      "cacheCreationInputTokens": 4990,
+      "webSearchRequests": 0,
+      "costUSD": 0.056418899999999994,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Hold off on the all-clear \u2014 the EU migration is exactly the kind of gap that bites here.\n\nThe dashboard being flat at zero doesn't confirm \"no errors,\" it confirms \"no errors *that this dashboard sees*.\" If EU checkout traffic moved to the new routing cluster last month and that dashboard hasn't been updated to include it, you could have a live error spike on EU traffic right now that this view simply can't show you. \"Reverting the config fixed it\" is still a hypothesis, not a fact \u2014 the only fact you have is that the dashboard you're watching went flat.\n\nBefore you post all-clear:\n- Pull error rate specifically for the new EU routing cluster (separate query/dashboard if it exists) for the same 25-minute window.\n- If that view doesn't exist or you can't get it in time, don't close \u2014 post a status update instead: \"pricing-service config reverted at 2:35, primary dashboard flat for 25 min, verifying EU cluster coverage before declaring all-clear.\" That's honest, keeps the incident open, and doesn't block you from going to the all-hands.\n\nIf EU numbers check out flat too, close it and write the summary. If you can't check in time, better to walk into the all-hands with \"mitigated, verifying\" than to have closed on a blind spot you already knew about.",
+  "ttft_ms": 11819,
+  "ttft_stream_ms": 884,
+  "time_to_request_ms": 26,
+  "time_to_request_from_spawn_ms": 1941747,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079716627.7122,
+  "type": "result",
+  "duration_ms": 20880,
+  "uuid": "38624669-8052-4f69-b291-94122e8091c1",
+  "_skill": "responding-to-incidents",
+  "_arm": "C4_full_skill",
+  "_trial": 1,
+  "_input_spec_sha256": "f3ec0179a6bfde3e9e692c98808b1c88426698d71062cd040363a7c62f7c8bf8"
+}

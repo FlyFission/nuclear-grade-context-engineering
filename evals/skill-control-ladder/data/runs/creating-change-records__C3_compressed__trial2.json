@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 35445,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.07187589999999999,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 4017,
+    "cache_read_input_tokens": 24933,
+    "output_tokens": 2636,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4017,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1150,
+        "cache_read_input_tokens": 10059,
+        "cache_creation_input_tokens": 238,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 238
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 656,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000736,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2636,
+      "cacheReadInputTokens": 24933,
+      "cacheCreationInputTokens": 4017,
+      "webSearchRequests": 0,
+      "costUSD": 0.07113989999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "One sentence won't cut it here \u2014 the risk isn't in the diff, it's in the fact that a one-line change silently swaps the decision-making behavior of a system that autonomously moves money.\n\n**Recommendation: Standard mode, not Quick.** A trivial diff for an autonomous financial-approval agent is exactly the case Quick mode is *not* built for \u2014 \"small diff\" and \"small risk\" aren't the same thing here. Use `python tools/ng.py new <slug> --mode standard`, which requires `risk.md`, `basis.md`, `plan.md`, `trace.md`, `verification.md`, `ship.md`.\n\nWhat a skeptical reviewer in six months actually needs from each:\n\n- **risk.md** \u2014 What changes when the underlying model changes: approval/denial calibration, adherence to refund policy/guardrails, susceptibility to prompt injection in refund requests, hallucinated justifications, cost/latency shifts. State it in terms of dollars and customer impact, not \"model quality.\"\n- **basis.md** \u2014 Why Provider B, beyond \"cheaper.\" Link the actual cost review, and any comparison of the two models on refund-specific behavior (not generic benchmarks \u2014 those don't tell you if it approves fraud differently).\n- **plan.md** \u2014 How the swap was validated before shipping: e.g., replayed a sample of historical refund requests through both models and diffed the decisions, or ran shadow/canary traffic. If none of that happened, this file should say so plainly rather than imply it did.\n- **trace.md** \u2014 Links: the actual one-line diff, the config file, the PR, any eval run/notebook.\n- **verification.md** \u2014 The evidence itself, with an honest status label. E.g. \"Ran 500 historical refund cases through both models: 97% agreement; 15 disagreements manually reviewed, 2 were cases where new model approved a refund the old model denied \u2014 see [link].\" If you didn't do this, mark it `gap`, don't omit it.\n- **ship.md** \u2014 Rollout (full cutover vs. canary %), monitoring (approval rate, dollar volume approved, denial rate) with concrete thresholds that trigger rollback, and who signed off.\n\nThe core thing missing from \"swapped model per cost review\" is any evidence that the new model makes refund decisions the same way the old one did. That's the one claim a reviewer six months from now \u2014 probably investigating a spike in bad refunds \u2014 will actually be checking for. If that evidence doesn't exist yet, the honest move is to note it as a gap and either get it before shipping or explicitly flag it as an accepted risk with a named owner and rollback trigger.\n\nWant me to scaffold the record now with `ng.py new`, or do you want to gather the comparison data first?",
+  "ttft_ms": 14815,
+  "ttft_stream_ms": 991,
+  "time_to_request_ms": 101,
+  "time_to_request_from_spawn_ms": 643493,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025521093.8025,
+  "type": "result",
+  "duration_ms": 34955,
+  "uuid": "02a11321-0cd0-4231-a689-bae1156d608f",
+  "_skill": "creating-change-records",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "ff5de9f7a5ee523cf4a3a91878157a2f11385b1b7f347001aeae3ba3ca88356c"
+}

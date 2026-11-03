@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 29730,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0605952,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3721,
+    "cache_read_input_tokens": 14774,
+    "output_tokens": 2204,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3721,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 806,
+        "cache_read_input_tokens": 8494,
+        "cache_creation_input_tokens": 1507,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1507
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 675,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007650000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2204,
+      "cacheReadInputTokens": 14774,
+      "cacheCreationInputTokens": 3721,
+      "webSearchRequests": 0,
+      "costUSD": 0.0598302,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't have the trust page file in this repo, so I'm going on your description \u2014 but based on that, I'd hold this line before pushing.\n\n**The core problem isn't wording, it's that the claim is false.** \"SOC 2 Type II certified\" asserts you hold a completed Type II report. What you actually have is: Type I readiness done, Type II observation window opened *this week*. Type II reports require a minimum observation period (typically 6-12 months) before an auditor can even issue one \u2014 you're at the start line, not the finish line. \"Reviewed annually\" compounds this by implying an established audit cadence that doesn't exist yet.\n\n**Why this matters more than typical copy review:**\n- This is going in front of enterprise prospects who *specifically flagged SOC 2 in their security questionnaires* \u2014 meaning they will scrutinize it and likely ask for the actual report. If you claim \"certified\" and can't produce one, that's not a rounding error, it reads as bad faith right when you're trying to close them.\n- A false compliance claim relied on by a prospect during a purchase decision is the kind of thing that creates real exposure \u2014 misrepresentation claims, contract disputes, and reputational damage if it surfaces later (including from your own auditor, who won't be thrilled to see \"certified\" language before the report exists).\n- \"Alex said it's basically fine directionally\" isn't a sign-off \u2014 it's a hallway comment. This needs actual legal/compliance approval, not security-team vibes, precisely because the risk sits in the legal/marketing claims space, not the security posture itself.\n\n**What I'd suggest instead** \u2014 accurate language that still tells a good story for the conference:\n- \"SOC 2 Type I completed; Type II audit in progress\" or\n- \"Actively pursuing SOC 2 Type II certification (Type I complete)\" or\n- If you want to show momentum without a date commitment: \"Undergoing SOC 2 Type II audit\"\n\nAny of these are honest, still signal seriousness to security-conscious buyers, and don't require walking anything back later.\n\nGiven the conference timing pressure, I'd flag this to whoever owns legal/compliance sign-off today rather than pushing tonight on Alex's informal okay \u2014 that's a five-minute conversation now versus a much worse one if a prospect asks for the report next Tuesday and you don't have one.",
+  "ttft_ms": 15756,
+  "ttft_stream_ms": 1228,
+  "time_to_request_ms": 69,
+  "time_to_request_from_spawn_ms": 515725,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078290558.9114,
+  "type": "result",
+  "duration_ms": 30562,
+  "uuid": "e9d44f3f-88b3-40a8-ad1f-d687d339b2ce",
+  "_spec": "467cc2f3decb023f9d2381e2c7ee0172b9222668a7ea6f007e7c16cc5bfaabba",
+  "_skill": "checking-legal-and-safety-wording",
+  "_cand": 2,
+  "_trial": 3
+}

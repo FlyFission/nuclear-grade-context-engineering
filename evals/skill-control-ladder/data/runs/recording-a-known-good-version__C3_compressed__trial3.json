@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 56478,
+  "num_turns": 5,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.1187718,
+  "usage": {
+    "input_tokens": 10,
+    "cache_creation_input_tokens": 6162,
+    "cache_read_input_tokens": 42206,
+    "output_tokens": 4557,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 6162,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1025,
+        "cache_read_input_tokens": 9653,
+        "cache_creation_input_tokens": 2789,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2789
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000753,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 10,
+      "outputTokens": 4557,
+      "cacheReadInputTokens": 42206,
+      "cacheCreationInputTokens": 6162,
+      "webSearchRequests": 0,
+      "costUSD": 0.1180188,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I don't have a file-write tool available in this session, so here's the draft as text \u2014 you can save it as `known-good-version-v2.3.0.md` in your docs.\n\n---\n\n# Accepted Baseline: v2.3.0 \u2014 Recommendation Service\n**Status: DRAFT \u2014 not yet verified, see Open Items**\n\n## Identity\n- Version: v2.3.0\n- PR: #482\n- Change: embedding model dependency upgraded `embed-v1` \u2192 `embed-v2`\n- Deployed to production: 2026-07-26, ~1 hour of soak time so far, no incidents reported\n\n## Scope (as reported)\n- Included: `embed-v2` dependency bump and associated code in PR #482\n- Excluded: *unconfirmed \u2014 need PR diff to state what's deliberately out of scope*\n\n## Acceptance basis (as reported)\n- New eval suite run against the release; precision and recall both improved vs. prior baseline\n- QA signed off\n- Stable in production for ~1 hour post-deploy\n\n## Open items before this can be treated as a trustworthy rollback target\n1. **Exact commit/tag** \u2014 confirm the SHA merged by #482 and that it matches whatever gets tagged `v2.3.0`, so \"roll back to this version\" is unambiguous.\n2. **Diff scope** \u2014 confirm #482 contains only the embedding bump, not other bundled changes (config, infra, other services) that would need separate accounting.\n3. **Eval report specifics** \u2014 what precision/recall numbers, what dataset, what \"prior baseline\" means, and whether it reflects the live traffic distribution or a sample.\n4. **Rollback feasibility (the important one)** \u2014 `embed-v1` and `embed-v2` likely produce vectors in different spaces/dimensions. Reverting the code alone may not restore correct behavior unless:\n   - old (`embed-v1`) embeddings are still retained/available, or\n   - the vector index/store has its own rollback path in sync with the code revert.\n   Please confirm which of these is true \u2014 otherwise \"rollback to v2.3.0-prior\" isn't actually a clean revert.\n5. **Soak time** \u2014 1 hour is thin for a rec-quality change; effects on click-through/engagement often show up over longer windows. Worth noting as a residual gap with an owner and a re-check trigger (e.g., \"re-verify after 48h of traffic\").\n\n## Recommendation\nTreat this as **unrebuildable-baseline** until items 1\u20134 are closed \u2014 particularly the embedding rollback story, since that's the one that could silently break a \"rollback\" even though the code revert succeeds. Once you confirm those (and share the PR diff / eval report), I can finalize this into the accepted-baseline record with named owners and re-check triggers for item 5.\n\n---\n\nWant me to also draft the specific question to send to whoever owns the vector store/index, to nail down the rollback mechanics in point 4?",
+  "ttft_ms": 2460,
+  "ttft_stream_ms": 1001,
+  "time_to_request_ms": 151,
+  "time_to_request_from_spawn_ms": 1020868,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025899658.2341,
+  "type": "result",
+  "duration_ms": 57604,
+  "uuid": "04a61f63-f859-4918-a163-d5858f02ddac",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "15a6ce4cf7708cdad5ccf21f02b242e4ec8887a93ead0c6966ee50af92dc3bd6"
+}

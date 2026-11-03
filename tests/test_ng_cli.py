@@ -267,7 +267,7 @@ def test_decisions_rolls_up_every_skill_contract():
     assert result.returncode == 0, result.stdout + result.stderr
     # The operator receipt promotes block/warn; the summary accounts for every skill.
     assert "Operator receipt" in result.stdout
-    assert "30 skills:" in result.stdout
+    assert "31 skills:" in result.stdout
     assert "block" in result.stdout and "warn" in result.stdout
     assert "checking-release-readiness" in result.stdout
     assert "ship.md" in result.stdout
@@ -669,3 +669,19 @@ def test_mcp_config_rejects_unknown_tool(tmp_path):
 
     assert result.returncode != 0
     assert "invalid choice" in result.stderr
+
+
+def test_validate_two_party_json_reports_flag_and_exit_status():
+    # Copilot on #124: the CLI path for --two-party --json had no regression.
+    import json as _json
+
+    from tests.test_two_party import WORKED as worked
+
+    plain = run_ng("validate", str(worked), "--strict-custody", "--json")
+    strict = run_ng("validate", str(worked), "--strict-custody", "--two-party", "--json")
+    assert plain.returncode == 0, plain.stdout + plain.stderr
+    assert strict.returncode != 0
+    receipt = _json.loads(strict.stdout)
+    assert receipt["strict"]["two_party"] is True
+    assert receipt["ok"] is False
+    assert any("C-001" in m for m in receipt["messages"])

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 11334,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.032992400000000005,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2566,
+    "cache_read_input_tokens": 23458,
+    "output_tokens": 656,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2566,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 437,
+        "cache_read_input_tokens": 8711,
+        "cache_creation_input_tokens": 135,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 135
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 626,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000701,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 656,
+      "cacheReadInputTokens": 23458,
+      "cacheCreationInputTokens": 2566,
+      "webSearchRequests": 0,
+      "costUSD": 0.032291400000000005,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The directory is empty, so I'm working from the sourcing rules you've given rather than existing files. That sentence needs changes before it can go out \u2014 a few problems:\n\n1. **\"Fully compliant with the framework\"** \u2014 NIST SP 800-61 is guidance, not a certifiable standard, and there's no compliance audit backing this claim. This is exactly the kind of \"compliant/certified\" wording that should be removed. Reword as influence/lineage instead, e.g. \"informed by\" or \"follows the general structure of.\"\n\n2. **The uncited conference talk** \u2014 You don't have a link or citation, and it's not verifiable as a public source. Per the sourcing rule, don't cite it as direct lineage. Either drop it, or soften it heavily and label it as informal/unverified inspiration (not a methodological input you're claiming credit or rigor from).\n\nSuggested rewrite:\n\n> \"Our workflow is informed by the incident-handling structure described in NIST SP 800-61 (publicly available at NIST's website), adapted for the needs of automated incident-response tooling. We were also influenced by general SRE practices, though we don't have a specific public source to cite for that inspiration.\"\n\nIf you want, I can help you track down a real, linkable source for the SRE influence, or tighten the NIST phrasing further once I know how closely your actual implementation follows the framework's phases.",
+  "ttft_ms": 1978,
+  "ttft_stream_ms": 1634,
+  "time_to_request_ms": 90,
+  "time_to_request_from_spawn_ms": 502738,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025380079.892,
+  "type": "result",
+  "duration_ms": 11887,
+  "uuid": "f7d8c60d-865d-441f-aae2-fb185f0c0cc6",
+  "_skill": "checking-source-claims",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "816d8328c3274e31acdf44845fd8edbea3111d76b8c8281ab0f5c639fa38bbd7"
+}

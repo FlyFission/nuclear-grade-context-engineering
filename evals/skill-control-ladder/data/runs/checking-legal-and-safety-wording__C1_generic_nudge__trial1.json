@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 21306,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.041572,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2137,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1745,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2137,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1745,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2137,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2137
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 615,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000685,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1745,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2137,
+      "webSearchRequests": 0,
+      "costUSD": 0.040887,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No, this shouldn't go out as-is \u2014 there are two claims here that could create real legal exposure.\n\n**1. \"MIT license... so it's safe for anyone to use in production payment systems\"**\nThis is a non sequitur that actually contradicts the license itself. MIT is a permissive *copyright* license \u2014 it grants broad reuse rights but explicitly disclaims warranties and fitness for purpose (\"THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND...\"). Telling users the license makes it \"safe for production\" directly conflicts with that disclaimer boilerplate that ships in the same repo. If something goes wrong downstream, a user could point to this sentence as an affirmative safety representation that overrides the disclaimer.\n\n**2. \"Fully compliant with PCI security standards\"**\nThis is the bigger risk. PCI DSS compliance isn't a property a library can just assert based on internal testing \u2014 it's a formal status established by a Qualified Security Assessor (QSA) or via a validated Self-Assessment Questionnaire, resulting in a ROC/AOC, and it applies to a *system/environment*, not a standalone code library. Unless PayCheck has actually gone through that assessment and holds current documentation, this line is a false compliance claim. That exposes the company to:\n- False advertising / misrepresentation claims\n- Breach-of-reliance claims from a customer who suffers a payment breach and points to this README\n- Reputational and regulatory fallout if surfaced during an incident or audit\n\n\"Passed all our internal tests\" is fine as a factual statement on its own, but pairing it with \"fully compliant with PCI\" implies internal testing = PCI validation, which it isn't.\n\n**Recommendation:** don't publish this wording. Two fixes needed before it goes out:\n- Confirm with your security/compliance team whether PayCheck (or any library) can even truthfully carry a PCI compliance claim \u2014 if not, remove it entirely, or rephrase to something accurate like \"designed to help support PCI DSS-compliant implementations\" (which shifts the burden correctly to the integrator's environment).\n- Replace the license/safety sentence with a neutral, accurate description, e.g. \"PayCheck is released under the MIT license\" \u2014 full stop \u2014 and let the standard license disclaimer speak for itself rather than layering a safety claim on top of it.\n\nWorth having whoever wrote this loop in security/compliance directly, since \"fully compliant\" is the kind of sentence that should only be signed off by someone who's seen the actual assessment paperwork.",
+  "ttft_ms": 11033,
+  "ttft_stream_ms": 780,
+  "time_to_request_ms": 69,
+  "time_to_request_from_spawn_ms": 407738,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025286491.3904,
+  "type": "result",
+  "duration_ms": 23774,
+  "uuid": "13c94dc9-95d9-4dd2-8ab6-6d80f60533a1",
+  "_skill": "checking-legal-and-safety-wording",
+  "_arm": "C1_generic_nudge",
+  "_trial": 1,
+  "_input_spec_sha256": "68e89d7f045be6efc794a67d6bc85deeaae922e3af683bca3bdb5713b34b28a3"
+}

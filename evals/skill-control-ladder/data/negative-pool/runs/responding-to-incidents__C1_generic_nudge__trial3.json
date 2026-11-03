@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 12341,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.031150000000000004,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2647,
+    "cache_read_input_tokens": 23260,
+    "output_tokens": 507,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2647,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 126,
+        "cache_read_input_tokens": 8592,
+        "cache_creation_input_tokens": 335,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 335
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 597,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000667,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 507,
+      "cacheReadInputTokens": 23260,
+      "cacheCreationInputTokens": 2647,
+      "webSearchRequests": 0,
+      "costUSD": 0.030483000000000003,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No matches found for `apiTimeout` anywhere in this repo, and there's no `.env.dev` file here either \u2014 this working directory doesn't seem to contain your project.\n\nCould you double check you're pointing me at the right repo/directory, or paste the relevant snippet from your startup script that reads `apiTimeout`? Once I can see it, I'll update the reference to `api_timeout`.",
+  "ttft_ms": 1268,
+  "ttft_stream_ms": 838,
+  "time_to_request_ms": 36,
+  "time_to_request_from_spawn_ms": 1680592,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594674721.128,
+  "type": "result",
+  "duration_ms": 13829,
+  "uuid": "7f25a5a2-8776-42ab-a48d-78fd81094543",
+  "_skill": "responding-to-incidents",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "40deb23691bbf1f31719af738d457711ee34770abef4b6dd1cf770a2a823d379"
+}

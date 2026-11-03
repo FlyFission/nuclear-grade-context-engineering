@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 18578,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0418437,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2640,
+    "cache_read_input_tokens": 14619,
+    "output_tokens": 1389,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2640,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 878,
+        "cache_read_input_tokens": 8348,
+        "cache_creation_input_tokens": 563,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 563
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 686,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000771,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1389,
+      "cacheReadInputTokens": 14619,
+      "cacheCreationInputTokens": 2640,
+      "webSearchRequests": 0,
+      "costUSD": 0.041072700000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "This repo is empty, so I can't inspect anything here \u2014 but there's a real gap in what you described that's worth pausing on before you post the all-clear.\n\nYou said this is \"the same dashboard we've used for every checkout incident this year,\" but EU checkout traffic moved to the new routing cluster after last month's migration. If that dashboard's data source wasn't updated to include the new cluster, a flat line at zero could mean \"no errors\" or it could mean \"this dashboard isn't seeing EU traffic at all.\" Those look identical on the graph but are very different conclusions.\n\nBefore closing, I'd confirm one thing: does the Checkout Errors dashboard's data source (query/service list) explicitly include the new EU routing cluster, or was it scoped to the pre-migration setup? If you're not certain, a quick sanity check \u2014 pull raw error counts/logs for the EU cluster specifically for the last 25 minutes \u2014 would tell you definitively rather than trusting a dashboard that may predate the migration.\n\nIf EU is confirmed covered, you're good to post the all-clear. If you can't verify in time for the all-hands, I'd post a partial update instead (\"error rate back to zero on primary dashboard since revert; confirming EU cluster coverage before fully closing\") rather than a full close \u2014 cheap to walk back a \"still verifying\" note, expensive to reopen an incident you already declared resolved.",
+  "ttft_ms": 5840,
+  "ttft_stream_ms": 1790,
+  "time_to_request_ms": 103,
+  "time_to_request_from_spawn_ms": 1914314,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785079688703.5823,
+  "type": "result",
+  "duration_ms": 18866,
+  "uuid": "d2ccf6d6-f1a1-452c-8e76-2598765f8277",
+  "_skill": "responding-to-incidents",
+  "_arm": "C0_bare",
+  "_trial": 3,
+  "_input_spec_sha256": "d645d044885af9789439b8b87c212db8c012b173ef2f8687cf14720b021211fd"
+}

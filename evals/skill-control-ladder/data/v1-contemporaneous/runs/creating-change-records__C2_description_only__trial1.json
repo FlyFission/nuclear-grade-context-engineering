@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 25828,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.045241,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2135,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1987,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2135,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1987,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2135,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2135
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 656,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000736,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1987,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2135,
+      "webSearchRequests": 0,
+      "costUSD": 0.044505,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "For an agent with autonomous authority over customer money, \"swapped model per cost review\" is not an adequate record \u2014 a one-line diff can produce a materially different agent even though the code change is trivial. This warrants a **Standard change record**, not a Quick one, because the blast radius (unattended financial decisions) is high even though the code diff is small.\n\nWhat it needs to contain, so a skeptical reviewer in six months can actually judge safety:\n\n1. **What changed, precisely** \u2014 old model ID/version \u2192 new model ID/version, and the specific config line.\n2. **The actual cost data** behind \"cost review\" \u2014 numbers, not the phrase.\n3. **Behavioral risk assessment** \u2014 how could a different model change refund decisions: different approval/denial thresholds, different handling of edge-case or ambiguous refund requests, different susceptibility to prompt injection in customer-submitted refund justifications, different rate of policy-citation hallucination, different tool-call reliability.\n4. **Evidence of parity, not assumption of it** \u2014 a side-by-side eval: run both models against a held-out set of real historical refund cases (including edge cases, disputed cases, and adversarial/injection attempts) and compare decisions. Link the actual eval artifact/results, not a summary claim.\n5. **Unchanged guardrails confirmed** \u2014 dollar caps, escalation-to-human thresholds, rate limits \u2014 verify these are enforced outside the model and unaffected by the swap.\n6. **Rollback plan** \u2014 how fast you can revert the config if the new model misbehaves in production.\n7. **Post-launch monitoring plan** \u2014 what metrics get watched (approval rate, $ volume approved, escalation rate, disputes/chargebacks), for how long, and what triggers a rollback.\n8. **Sign-off** \u2014 who reviewed the eval results (not just who approved the PR).\n\nThe core problem with the one-sentence version: it gives a future reviewer no way to distinguish \"we verified this is safe\" from \"we assumed it was fine.\" The record should make that distinction obvious via linked evidence.\n\nWant me to draft the change record now using this structure?",
+  "ttft_ms": 17304,
+  "ttft_stream_ms": 884,
+  "time_to_request_ms": 42,
+  "time_to_request_from_spawn_ms": 1140468,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789779075.0696,
+  "type": "result",
+  "duration_ms": 26916,
+  "uuid": "55399baa-fb78-4773-a811-6c6cf7a6106f",
+  "_skill": "creating-change-records",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "a5e3eca321fe02f530a96247bd792b8f13259e823fa3d5c6cea880f7be8bc00e"
+}

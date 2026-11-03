@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 10387,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0450783,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 4451,
+    "cache_read_input_tokens": 37681,
+    "output_tokens": 423,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4451,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 175,
+        "cache_read_input_tokens": 10598,
+        "cache_creation_input_tokens": 133,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 133
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 599,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006990000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 423,
+      "cacheReadInputTokens": 37681,
+      "cacheCreationInputTokens": 4451,
+      "webSearchRequests": 0,
+      "costUSD": 0.044379299999999997,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I can't find a `utils.py` or a `format_date` function anywhere in this repo \u2014 the working directory appears to be empty. A couple things to check on your end:\n\n- Are you in the right repo/branch? This directory has no tracked files at all.\n- If the file exists elsewhere on disk, let me know the path and I'll take a look.\n\nOnce I can see the actual function, I'm happy to help fix the loop logic \u2014 this is a straightforward local fix on your own unmerged branch, so no wider notification is needed here (nobody else has consumed it yet).",
+  "ttft_ms": 1582,
+  "ttft_stream_ms": 1118,
+  "time_to_request_ms": 185,
+  "time_to_request_from_spawn_ms": 1669339,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594663001.2432,
+  "type": "result",
+  "duration_ms": 10713,
+  "uuid": "b1a9ceb5-87b9-4bd3-adef-7775eb483c73",
+  "_skill": "reporting-shared-defects",
+  "_arm": "C4_full_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "29ecacb7d83821f7620eed0f5eb410c7cf20d3fa12432e64c21c470aaabc8e32"
+}

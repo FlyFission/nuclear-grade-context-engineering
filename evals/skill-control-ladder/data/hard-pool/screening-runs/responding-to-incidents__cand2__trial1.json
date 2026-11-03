@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 34991,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0511269,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2468,
+    "cache_read_input_tokens": 14783,
+    "output_tokens": 2073,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2468,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1879,
+        "cache_read_input_tokens": 8503,
+        "cache_creation_input_tokens": 245,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 245
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 697,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000777,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2073,
+      "cacheReadInputTokens": 14783,
+      "cacheCreationInputTokens": 2468,
+      "webSearchRequests": 0,
+      "costUSD": 0.0503499,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "A few things in this timeline are worth pushing back on before you close it out \u2014 this isn't just a backlog-throughput incident, it involves disabling a safety control in front of a payments ledger.\n\n**The real risk isn't the backlog \u2014 it's what's still off.**\n- The circuit breaker in front of the ledger service is still disabled. Breakers usually exist to protect downstream systems and to *contain* failures (stop cascading retries, surface errors as trips rather than silent absorption). With it off, if the ledger service degrades right now, you likely won't get the usual signal \u2014 you'll just see errors/retries pile up quietly instead of a breaker trip.\n- Concurrency is still \"bumped way up\" too. Combined with no breaker, there's nothing throttling load into the ledger service at all. That's a materially different risk posture than normal operation, not a cosmetic leftover setting.\n- \"Dashboards are green\" tells you the *consumer/backlog* is healthy \u2014 it doesn't tell you the ledger service itself isn't quietly degraded, since the breaker that would normally reveal that is off.\n\n**On Dana's sign-off:** worth confirming what she actually thumbs-upped \u2014 \"backlog cleared\" vs. \"safe to leave the breaker disabled and concurrency elevated.\" Those are different approvals, and the second one is the one that matters for a payments-critical dependency.\n\n**On \"same playbook as March\":** worth verifying two things before you write that in the postmortem \u2014 (1) did March also involve disabling the ledger breaker, or just raising concurrency, and (2) was the breaker restored *before* that incident was closed. If March reverted safety controls before closing and this one hasn't, they're not actually the same playbook, and citing it as precedent would be misleading in the writeup.\n\n**Recommendation:** don't treat \"revert concurrency/breaker\" as a non-blocking follow-up note. At minimum:\n1. Check the ledger service's own error/latency metrics directly, not just consumer lag, before declaring it healthy.\n2. Re-enable the circuit breaker and dial concurrency back to baseline (or get explicit, informed sign-off to leave them changed, with a named owner and a hard deadline \u2014 not \"at some point\").\n3. Only then close the incident.\n\nHappy to help draft the postmortem timeline once those are settled \u2014 want me to draft it now with an explicit \"open follow-up: breaker/concurrency not yet reverted\" item, or hold until you've reverted them?",
+  "ttft_ms": 5091,
+  "ttft_stream_ms": 1187,
+  "time_to_request_ms": 29,
+  "time_to_request_from_spawn_ms": 835120,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078609979.4385,
+  "type": "result",
+  "duration_ms": 31609,
+  "uuid": "8a077add-eef7-409d-b44e-d08a4c16bd86",
+  "_spec": "3b410e53de72044d1b3b6f6c3f865ea00bcfca3135c6ba585ff0a760cb0f7116",
+  "_skill": "responding-to-incidents",
+  "_cand": 2,
+  "_trial": 1
+}

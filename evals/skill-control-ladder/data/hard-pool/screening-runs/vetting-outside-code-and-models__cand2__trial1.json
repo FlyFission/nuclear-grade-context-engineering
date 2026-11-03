@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 22313,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0485121,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3202,
+    "cache_read_input_tokens": 14807,
+    "output_tokens": 1603,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3202,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 698,
+        "cache_read_input_tokens": 8527,
+        "cache_creation_input_tokens": 955,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 955
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 691,
+      "outputTokens": 22,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000801,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 1603,
+      "cacheReadInputTokens": 14807,
+      "cacheCreationInputTokens": 3202,
+      "webSearchRequests": 0,
+      "costUSD": 0.0477111,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before cutting over Friday, a few things I'd want nailed down \u2014 the demo working twice and 99.98% uptime don't actually address the risks that matter here:\n\n- **\"Legally binding\" is a marketing claim, not a compliance answer.** ESIGN Act/UETA validity depends on specific mechanics (consent capture, intent-to-sign, tamper-evident hash, timestamp source, IP/device logging) \u2014 you need SignFast's actual compliance documentation (often a whitepaper or DPA addendum), not the homepage line. If this is only for the US, also check whether any customers need eIDAS or other jurisdiction-specific standards.\n- **The completion certificate needs a legal read, not just a technical one.** Have someone in legal/compliance actually look at a sample certificate and confirm it's sufficient evidence *before* you're relying on it in a real dispute \u2014 that's the whole point of the plan, so it shouldn't be assumed.\n- **Sales ran the happy path only.** Test declined/expired signatures, multi-signer flows, API failures mid-signing, and what happens to a document if a signer never completes it \u2014 those are the cases that actually break onboarding.\n- **Uptime \u2260 SLA.** A status page number isn't a contractual commitment. Check what SignFast's actual SLA and remedies are, and what your fallback is if their API is down during onboarding.\n- **Data handling**: is there a signed DPA, where's data hosted/retained, and can you export/delete on request (relevant if you're handling EU or CA customers)?\n- **Vendor lock-in / exit plan**: can you bulk-export all historical signed docs + certificates if you ever need to leave, and does their retention policy match how long you're legally required to keep contracts?\n\nNone of this necessarily blocks a Friday ship, but I'd get the certificate legally reviewed and the SLA/DPA read before customer contracts start depending on it.",
+  "ttft_ms": 10757,
+  "ttft_stream_ms": 610,
+  "time_to_request_ms": 25,
+  "time_to_request_from_spawn_ms": 901232,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078676088.5908,
+  "type": "result",
+  "duration_ms": 23124,
+  "uuid": "3a0af535-3094-49ee-9d1d-a1fb5d7603b7",
+  "_spec": "da0ead5502189ccc80a1548fecf9b4607541d0f6965721dfb3525b525eed9207",
+  "_skill": "vetting-outside-code-and-models",
+  "_cand": 2,
+  "_trial": 1
+}

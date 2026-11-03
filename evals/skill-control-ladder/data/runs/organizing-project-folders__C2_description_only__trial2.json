@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 31143,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.057988899999999996,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2457,
+    "cache_read_input_tokens": 14703,
+    "output_tokens": 2541,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2457,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2277,
+        "cache_read_input_tokens": 8423,
+        "cache_creation_input_tokens": 314,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 314
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 634,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000709,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 2541,
+      "cacheReadInputTokens": 14703,
+      "cacheCreationInputTokens": 2457,
+      "webSearchRequests": 0,
+      "costUSD": 0.057279899999999995,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Here's a proposed structure based on what you described, organized by what changes together and what happens to each type of file over time:\n\n```\n/config/\n  templates/          # config templates (env, deploy, ci) \u2014 copied/filled per environment, versioned with code\n    README.md         # one line: what each template is for, when to update it\n\n/scripts/\n  migrations/          # one-off scripts, kept for history/audit, not meant to be rerun\n    2024-03-01-rename-user-table.sql\n    README.md          # note: \"run once, historical record \u2014 do not reuse as templates\"\n\n/libs/shared/           # or packages/shared \u2014 promoted, not dumped\n  string/\n  http/\n  date/\n  ...                  # one subfolder per functional domain, each with its own tests\n  README.md            # what belongs here: code used by 2+ services, with owners noted\n\n/docs/\n  compliance/\n    archive/           # old compliance reports \u2014 read-only, dated filenames\n      2023-audit-soc2.pdf\n  meeting-notes/        # consider moving these out of the repo entirely (wiki/Drive) \u2014\n                         # they're not code artifacts and don't need version control review\n```\n\nKey moves and why:\n\n1. **Shared helpers \u2192 `libs/shared/`, split by domain** (string, http, date, etc.), not one flat folder. This is the fix for both `misc`'s helpers and most of `utils`: promote them to a real internal library with its own README and tests instead of a dumping ground. Anything used by only *one* service should move into that service's own folder, not stay centralized.\n2. **Migration scripts \u2192 `scripts/migrations/`**, date-prefixed (`YYYY-MM-DD-description`) for sortability and to make \"already run\" status obvious at a glance.\n3. **Config templates \u2192 `config/templates/`** since they change on a different cadence (per-environment) than code.\n4. **Compliance reports \u2192 `docs/compliance/archive/`** \u2014 these are read-only historical records, so they shouldn't live next to active code at all.\n5. **Meeting notes** \u2014 recommend moving these out of the repo (wiki/Drive) rather than giving them a folder, since they're not artifacts anyone needs to review in code diffs.\n\nA few things I'd want to confirm before finalizing: is this a monorepo with distinct `services/` folders already (so service-specific utils have an obvious home), and are any of the 47 `misc` files actively imported by build/deploy tooling (those need care when moved so paths don't break)? Let me know and I can refine the split further or help draft the actual move/rename list.",
+  "ttft_ms": 3541,
+  "ttft_stream_ms": 938,
+  "time_to_request_ms": 46,
+  "time_to_request_from_spawn_ms": 859186,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025738087.8462,
+  "type": "result",
+  "duration_ms": 32202,
+  "uuid": "836186a5-c191-4b86-bd8a-78fe9a97aed7",
+  "_skill": "organizing-project-folders",
+  "_arm": "C2_description_only",
+  "_trial": 2,
+  "_input_spec_sha256": "211db5615828214564220e6f8ce44b5397bbe645e0066b145fbe80cd1cc22859"
+}

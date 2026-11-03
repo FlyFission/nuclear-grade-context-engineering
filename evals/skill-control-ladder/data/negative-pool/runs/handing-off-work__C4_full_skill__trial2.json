@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 12239,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0421275,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 4020,
+    "cache_read_input_tokens": 36325,
+    "output_tokens": 428,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4020,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 134,
+        "cache_read_input_tokens": 10179,
+        "cache_creation_input_tokens": 121,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 121
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 581,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000666,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 428,
+      "cacheReadInputTokens": 36325,
+      "cacheCreationInputTokens": 4020,
+      "webSearchRequests": 0,
+      "costUSD": 0.041461500000000005,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "I couldn't find any `tempFlag` reference, and this working directory actually appears empty \u2014 no files at all, and there's no `feature/search-filters` branch content here. This doesn't look like the repo with your search filter work in progress.\n\nCan you confirm the correct path/repo, or point me to which directory has the checked-out `feature/search-filters` branch? I don't want to guess at file locations or recreate work from memory.",
+  "ttft_ms": 1320,
+  "ttft_stream_ms": 822,
+  "time_to_request_ms": 37,
+  "time_to_request_from_spawn_ms": 1505021,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594499537.2222,
+  "type": "result",
+  "duration_ms": 11952,
+  "uuid": "de5efbb2-b119-49d6-9ac7-30f1cbef9f21",
+  "_skill": "handing-off-work",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "14bed89cd3eb673c0d4dbeecb06255e0369675074fd53528842eaae5c554dd22"
+}

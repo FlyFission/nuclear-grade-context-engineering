@@ -1,0 +1,81 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 33453,
+  "duration_api_ms": 31954,
+  "ttft_ms": 1893,
+  "ttft_stream_ms": 1169,
+  "time_to_request_ms": 39,
+  "time_to_request_from_spawn_ms": 1717639,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1783122280897.447,
+  "num_turns": 2,
+  "result": "I'll draft this directly since there's no existing repo scaffold here \u2014 I'll flag where I'm filling in placeholders vs. real facts you gave me.\n\nA few things I don't have and shouldn't guess: the exact commit SHA merged for PR #482, the rollback target version, and who owns the accepted risk items. I've marked those as `<FILL IN>` \u2014 send them over and I'll finalize, or I can leave them as open gaps if you want to publish now.\n\n---\n\n```markdown\n# baseline.md \u2014 recommendation-service v2.3.0\n\n## Version identity\n- **Name:** v2.3.0 (recommendation service)\n- **Source of truth:** PR #482 (merged, embed-v1 \u2192 embed-v2 upgrade)\n- **Commit SHA:** <FILL IN \u2014 exact merge commit hash>\n- **Deployed:** 2026-07-03, ~1 hour prior to this record, to production\n- **Rollback target:** <FILL IN \u2014 last known-good version before this, e.g. v2.2.x commit/tag>\n\n## Decision this record comes from\nAccepted as the new known-good version following QA sign-off on the new eval\nsuite, which showed precision and recall improvements over the prior\n(embed-v1) baseline. No `controlled-items.md`, `change-impact.md`,\n`verification.md`, or `ship.md` artifacts were produced for this change \u2014\nthis record is being reconstructed from the shipping conversation rather\nthan linked to prior written evidence. **Gap:** treat this as a lighter-weight\nbaseline until those documents (or equivalents) exist.\n\n## Included in this version\n- Embedding model dependency upgraded: `embed-v1` \u2192 `embed-v2`\n- New eval suite used for QA sign-off (precision + recall, both improved vs.\n  prior baseline)\n- Whatever recommendation-service code shipped in PR #482 (no separate\n  change list was recorded \u2014 PR diff is the scope of record)\n\n## Explicitly excluded / out of scope\n- <FILL IN \u2014 anything intentionally deferred out of #482, e.g. downstream\n  services that also embed with embed-v1 and haven't been migrated yet>\n- No changes to serving infra, ranking logic, or other dependencies are\n  claimed as part of this baseline unless they were also in #482.\n\n## Evidence links\n- PR: #482\n- Eval suite results: <FILL IN \u2014 link/location of the eval run that QA signed off on>\n- QA sign-off: <FILL IN \u2014 where recorded, e.g. Slack thread, ticket, PR review>\n- Post-deploy monitoring: \"stable so far\" (~1 hr) \u2014 **not yet strong evidence**;\n  see accepted gaps below.\n\n## Accepted gaps / residual risks\n| Gap | Risk | Owner | Status |\n|---|---|---|---|\n| Only ~1 hour of production observation post-deploy | New model behavior under real traffic/edge cases not yet proven | <FILL IN> | Open \u2014 needs 24\u201372h soak before this baseline is considered fully validated |\n| Offline eval suite may not capture all production distribution shifts (e.g. cold-start users, rare categories) | Embed-v2 could regress on segments not covered by eval set | <FILL IN> | Open |\n| No `verification.md`/`change-impact.md` on file for this change | Harder to audit what else embed-v2 touches (latency, cost, memory footprint) | <FILL IN> | Open |\n| Rollback path not yet explicitly tested | If rollback is needed, unverified whether embed-v1 artifacts/infra are still warm | <FILL IN> | Open |\n\n## Re-check / re-record triggers\nRe-record a new baseline (or roll back to this one) if any of the following occur:\n- Production precision/recall or downstream business metrics (CTR, conversion, etc.) regress relative to this version's eval numbers.\n- `embed-v2` is upgraded, patched, or its serving config changes.\n- Any incident or anomaly is traced to the embed-v1\u2192v2 switch during the soak period.\n- 72 hours pass with no anomalies \u2014 promote this from \"provisionally accepted\" to \"fully accepted\" baseline (update this file to reflect that).\n- Any downstream service consuming these embeddings is found to still depend on embed-v1 assumptions (dimensionality, distribution, etc.).\n```\n\nWant me to write this to a file (and where), and can you fill in the commit SHA, rollback target version, and gap owners so I can finalize it?",
+  "stop_reason": "end_turn",
+  "session_id": "26f04376-58c1-5c34-b393-c76c15bb6e8e",
+  "total_cost_usd": 0.0642482,
+  "usage": {
+    "input_tokens": 59,
+    "cache_creation_input_tokens": 3559,
+    "cache_read_input_tokens": 15964,
+    "output_tokens": 2478,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3559,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 34,
+        "output_tokens": 2370,
+        "cache_read_input_tokens": 9692,
+        "cache_creation_input_tokens": 139,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 139
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000758,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 59,
+      "outputTokens": 2478,
+      "cacheReadInputTokens": 15964,
+      "cacheCreationInputTokens": 3559,
+      "webSearchRequests": 0,
+      "costUSD": 0.0634902,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "757d9574-58fb-4c07-ae9d-e7bf9cbb5da0",
+  "_skill": "recording-a-known-good-version",
+  "_condition": "with_skill",
+  "_trial": 3,
+  "_input_spec_sha256": "d28c9c68b0162373c880502a64ded3327b05d69b5d07552dc4b6ca7244d9047a",
+  "_arm": "C4_full_skill",
+  "_reused_from": "evals/skill-benchmark-pilot/data/all-skills-pilot/runs/recording-a-known-good-version__with_skill__trial3.json"
+}

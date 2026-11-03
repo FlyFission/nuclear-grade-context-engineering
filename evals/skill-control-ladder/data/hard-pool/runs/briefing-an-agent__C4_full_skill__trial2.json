@@ -1,0 +1,159 @@
+{
+  "duration_api_ms": 41993,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0492107,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3203,
+    "cache_read_input_tokens": 21772,
+    "output_tokens": 3188,
+    "output_tokens_details": {
+      "thinking_tokens": 1724
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3203,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1935,
+        "cache_read_input_tokens": 11788,
+        "cache_creation_input_tokens": 1399,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1399
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-haiku-5-5": {
+      "inputTokens": 1428,
+      "outputTokens": 27,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0001563,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 3188,
+      "cacheReadInputTokens": 21772,
+      "cacheCreationInputTokens": 3203,
+      "webSearchRequests": 0,
+      "costUSD": 0.0490544,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 1724,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 3,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "One scope issue before the pack: you're describing both a one-off (#482) and a standing policy (\"set up the agent for today's batch\", \"that's our normal bar for flag-default PRs\"). Auto-merging to `flags/production.yaml` is a release action with real production blast radius \u2014 flipping a default ships behavior to prod. I'll scope the authority below to PR #482 only. If you want this to run unattended on future PRs too, that's a separate standing-authorization decision worth confirming explicitly rather than inheriting from \"it's worked a dozen times before.\"\n\nNo `.nuclear/changes/` folder or `context-packs.md` exists in this repo, so this is a standalone brief rather than a packet update.\n\n---\n\n## Context Pack \u2014 PR #482 auto-merge agent\n\n**Mode:** Standard (production config change, auto-merge, no human review gate at merge time)\n**Role:** Releaser (the merge action is a release, not just a review)\n**Decision question:** Should PR #482 (flip `checkout.expressPay.enabled` false\u2192true in `flags/production.yaml`) be auto-merged without a human re-reviewing the diff at merge time?\n**Goal:** Ship the approved flag-default flip before Friday's freeze, with evidence that tests passed and that the diff didn't expand beyond what was reviewed.\n**Non-goal:** Establishing a standing policy for all future flag-default PRs \u2014 scope this run to #482 only unless you confirm otherwise.\n**Work phase:** Accept (change is already reviewed/approved; this is the merge step)\n**Archetype:** Releaser \u2014 characteristic drift is shipping on a proxy signal (diff size + green tests) instead of on actual risk review. Guard: treat \"under 5 lines\" and \"tests pass\" as necessary, not sufficient.\n\n### Authority (bounded to PR #482 only)\n- **May:** read PR #482's diff, run the checkout-service test suite, read test output, post a comment to PR #482 containing the test run log, merge PR #482 if and only if all conditions below hold.\n- **Conditions to merge (all required):**\n  1. Diff touches only `flags/production.yaml`, nothing else.\n  2. Diff is \u22645 lines.\n  3. checkout-service test suite is green.\n  4. Marcus's existing sign-off is still the latest review (no new commits pushed after his approval).\n- **May not:** merge any other PR, edit the diff, modify flag values beyond what's in the PR, touch CI config, bypass branch protection, or treat this run as authorization for future PRs.\n\n### Stop / escalate conditions\n- Diff touches any file other than `flags/production.yaml` \u2192 stop, ping you, do not merge.\n- Diff exceeds 5 lines \u2192 stop, ping you.\n- Tests fail or are flaky/skipped \u2192 stop, ping you, do not merge.\n- New commits appear after Marcus's approval \u2192 stop, ping you (approval may no longer cover the current diff).\n\n### Evidence required\n- Full test run log (command + output) for checkout-service suite, posted as a PR comment on #482.\n- Confirmation line stating diff file list and line count, so the stop condition is auditable after the fact.\n\n### Open gap to flag to the user\n- \"Diff \u22645 lines + tests green\" is a mechanical proxy, not a risk assessment of the flag itself. It doesn't check whether `expressPay` going live has dependencies (payment processor readiness, feature-flag kill-switch tested) \u2014 that's presumably covered by Marcus's sign-off as code owner, but the agent has no way to verify that scope was actually what Marcus reviewed. Worth a quick gut-check before Friday, not something the agent should be relied on to catch.\n\n---\n\nWant me to also scope this as a standing rule for the rest of today's batch (i.e., any PR under 5 lines touching only `flags/production.yaml` with green tests), or keep it to #482 and have you confirm each one as they come in?",
+  "ttft_ms": 14686,
+  "type": "result",
+  "duration_ms": 41819,
+  "uuid": "803ad72b-b612-4e32-b95c-a57926f68dce",
+  "ttft_stream_ms": 1936,
+  "time_to_request_ms": 535,
+  "time_to_request_phases_ms": {
+    "other": 87,
+    "system_prompt": 101,
+    "resume_other": 0,
+    "process_user_input": 28,
+    "input_attachments": 20,
+    "input_hooks": 3,
+    "tool_pool_refresh": 7,
+    "init_message": 28,
+    "engine_pickup": 47,
+    "message_prep": 10,
+    "model_config_wait": 51,
+    "autocompact": 5,
+    "query_setup": 0,
+    "model_gates": 1,
+    "tool_schema_build": 21,
+    "message_normalization": 1,
+    "client_creation": 87,
+    "request_build": 38
+  },
+  "turn_start_resume_kind": "none",
+  "process_turn_index": 0,
+  "time_to_request_loop_lag_ms": 488,
+  "time_to_request_cpu_ms": 281,
+  "time_to_request_major_faults": 0,
+  "process_rss_mib_turn_start": 241,
+  "process_anon_mib_turn_start": 125,
+  "process_rss_mib_result": 246,
+  "process_anon_mib_result": 127,
+  "process_peak_rss_mib": 257,
+  "process_cpu_ms_turn": 1537,
+  "process_wall_ms_turn": 41819,
+  "input_attachments_detail": {
+    "slowest_producer": "queued_commands",
+    "slowest_producer_ms": 16,
+    "cpu_ms": 11,
+    "major_faults": 0
+  },
+  "first_content_frame_ms": 1936,
+  "time_to_request_from_spawn_ms": 2186992,
+  "warm_spare_claimed": false,
+  "flag_fetch_kick": "not_asked_warm",
+  "time_origin_ms": 1792509945152.268,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "_skill": "briefing-an-agent",
+  "_arm": "C4_full_skill",
+  "_trial": 2,
+  "_input_spec_sha256": "4647ccff18a3961183e4b7d54eb7b1483bd74413a7f550ebbe704850e3cb88e1"
+}

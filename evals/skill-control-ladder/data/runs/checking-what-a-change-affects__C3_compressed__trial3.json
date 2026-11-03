@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 15222,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0394781,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2599,
+    "cache_read_input_tokens": 23537,
+    "output_tokens": 1075,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2599,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 797,
+        "cache_read_input_tokens": 8758,
+        "cache_creation_input_tokens": 121,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 121
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00068,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1075,
+      "cacheReadInputTokens": 23537,
+      "cacheCreationInputTokens": 2599,
+      "webSearchRequests": 0,
+      "costUSD": 0.0387981,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 this isn't a quick, single-item change, even though the diff is one line. The repo here is empty, so I can't inspect the actual serializer/consumers, but conceptually here's why you shouldn't just merge it:\n\n- **It's a breaking change for a public API.** Any external client (or internal service, mobile app, third-party integration) parsing `total` from the response will break the moment you rename it to `order_total`. Diff size has nothing to do with blast radius \u2014 this touches every consumer outside your codebase.\n- **What needs checking before merge:**\n  - **API docs / OpenAPI spec** \u2014 must be updated, and likely versioned rather than edited in place.\n  - **SDKs / client libraries** you maintain that reference `total`.\n  - **Internal consumers** (other services, frontend, BI/analytics pipelines) that read this field.\n  - **Tests** (contract tests, integration tests) asserting on `total`.\n  - **Changelog / release notes** \u2014 this needs to be called out explicitly, not buried in a routine release.\n  - **Backward compatibility strategy** \u2014 typically you'd emit both `total` and `order_total` for a deprecation window, or bump an API version, rather than a hard cutover.\n\n**Recommendation:** Don't merge as a \"quick fix.\" Treat it as a breaking public API change: add `order_total` alongside `total` (deprecate `total` with a sunset date), update docs, and notify/notify-track known consumers before removing the old field.\n\nIf you can point me to the actual serializer file and any API docs/tests in your repo, I can do a concrete impact scan and draft the deprecation path.",
+  "ttft_ms": 1952,
+  "ttft_stream_ms": 859,
+  "time_to_request_ms": 120,
+  "time_to_request_from_spawn_ms": 529864,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025408747.6638,
+  "type": "result",
+  "duration_ms": 15546,
+  "uuid": "e40e1224-2213-4bbb-b9c1-4910c0cc27bf",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C3_compressed",
+  "_trial": 3,
+  "_input_spec_sha256": "ad442de17887c6883c7f7bf079b4e00edb13c3d2c7a0774a07a88dac6a6afd3d"
+}

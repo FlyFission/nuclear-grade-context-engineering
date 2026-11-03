@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 21178,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0457893,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 2783,
+    "cache_read_input_tokens": 32191,
+    "output_tokens": 1249,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2783,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 733,
+        "cache_read_input_tokens": 8830,
+        "cache_creation_input_tokens": 233,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 233
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000675,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 1249,
+      "cacheReadInputTokens": 32191,
+      "cacheCreationInputTokens": 2783,
+      "webSearchRequests": 0,
+      "costUSD": 0.045114299999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory here is empty, so I can't inspect an actual codebase to enumerate real consumers of this field. But I can tell you: no, \"it's a one-line diff\" is not a good proxy for safety here, and you shouldn't merge it as a quick change.\n\nThe size of the diff has nothing to do with the blast radius. Renaming a field in a **public** API response is a breaking change for every external client parsing that JSON \u2014 the line count is irrelevant. Concretely, before merging you'd want to check:\n\n1. **Who's known to consume this endpoint** \u2014 internal frontend/mobile clients, third-party integrations, SDKs, webhooks, anything with a service contract or OpenAPI spec referencing `total`.\n2. **Any internal callers** \u2014 your own services, background jobs, or admin tools that parse this response and read `total`.\n3. **Contract/API tests, snapshot tests, or fixtures** that assert on the field name \u2014 these might pass even though real clients break, or might catch it (worth running either way).\n4. **API versioning policy** \u2014 does your API have a version bump / deprecation process for breaking changes, or is `total`\u2192`order_total` expected to be additive-only (e.g., add `order_total`, keep `total` for a deprecation window, then remove later)?\n\nIf this is a truly internal-only endpoint with no external consumers and you control every caller, then yes, it's low risk and you can verify by grepping all consumers in your monorepo/related repos. But \"public\" in your description suggests external consumers you may not have full visibility into \u2014 that's the part that needs the check, not the diff size.\n\nDo you want me to point you at the actual serializer file so I can search this repo for consumers, or is the real codebase somewhere else?",
+  "ttft_ms": 2444,
+  "ttft_stream_ms": 1338,
+  "time_to_request_ms": 40,
+  "time_to_request_from_spawn_ms": 784143,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789422172.4324,
+  "type": "result",
+  "duration_ms": 22180,
+  "uuid": "f8ad986c-fa6a-4ba9-9ae8-84d9da8b7eba",
+  "_skill": "checking-what-a-change-affects",
+  "_arm": "C1_generic_nudge",
+  "_trial": 2,
+  "_input_spec_sha256": "749436236d0919a227211a0569a973391280decf83571bb58187d3611b4e2b4c"
+}

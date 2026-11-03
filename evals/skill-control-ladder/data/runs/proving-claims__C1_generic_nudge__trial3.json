@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 23891,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.045008,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2121,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1980,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2121,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1980,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2121,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2121
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 617,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000692,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1980,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2121,
+      "webSearchRequests": 0,
+      "costUSD": 0.044316,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Before I draft this, a flag: \"safe and fully backward compatible\" is a strong, absolute claim, and the two things backing it \u2014 you ran the existing suite yourself and self-reviewed the diff \u2014 don't actually support it for something as high-stakes as payment processing. A reviewer accountable for this claim would push back on a few things:\n\n**Gaps in the evidence as stated:**\n- **Self-review isn't independent verification.** Authors reliably miss their own bugs because they read code through the lens of what they intended it to do, not what it does. No indication another engineer reviewed the diff.\n- **\"Existing tests pass\" \u2260 \"backward compatible.\"** Existing tests were written against the old implementation's known behaviors. A refactor can silently change untested edge cases \u2014 rounding/precision on amounts, idempotency key handling, retry/timeout behavior, error codes/messages, webhook payload shape, ordering of side effects \u2014 none of which \"all green\" tells you about unless those paths are explicitly covered.\n- **No mention of new tests.** If the refactor didn't add tests targeting the specific risk areas it touched, that's a real gap for a payment module.\n- **\"Fully\" and \"safe\" are unqualified.** What was actually verified \u2014 unit tests only? Integration tests against a sandbox gateway? Concurrent/retry scenarios? Reviewers can't trust a blanket assurance without knowing its scope.\n\n**What I'd recommend instead of what you asked for:** don't write a confident claim the evidence doesn't back. Either narrow the claim to what you can actually show, or get the additional verification first (a second reviewer, a coverage diff on changed files, or a staging run against real payment flows) before asserting \"safe and fully backward compatible.\"\n\nHere's a version that's honest about scope, which is more useful to reviewers than reassurance they can't verify:\n\n```markdown\n## Evidence of backward compatibility\n\n- Ran the full existing test suite locally: all tests pass (no changes to test files).\n- Reviewed the diff line-by-line myself before pushing.\n\n**Not yet verified \u2014 flagging for reviewer attention:**\n- No independent code review has been done yet.\n- No new tests were added targeting refactor-specific risk areas (e.g. [list: rounding, idempotency, retries, webhook payloads \u2014 fill in what actually changed]).\n- Not yet validated against [staging / sandbox gateway / whatever your integration test setup is].\n\nGiven the payment-processing scope, I'd like a reviewer to specifically check [the areas you're least sure about] before merge.\n```\n\nWant me to fill in the bracketed parts based on what the refactor actually touched, or would you rather add a couple of targeted tests / get a second reviewer first and then write the evidence section once you have something stronger to point to?",
+  "ttft_ms": 12496,
+  "ttft_stream_ms": 835,
+  "time_to_request_ms": 46,
+  "time_to_request_from_spawn_ms": 887842,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025766599.6467,
+  "type": "result",
+  "duration_ms": 24557,
+  "uuid": "152d4a4f-cfd2-44aa-af3e-d96c65d5879e",
+  "_skill": "proving-claims",
+  "_arm": "C1_generic_nudge",
+  "_trial": 3,
+  "_input_spec_sha256": "c8416435ac4280bf0177c6d7e11d9de4b4adb0a449eed854ee486e4c2e9d8d5b"
+}

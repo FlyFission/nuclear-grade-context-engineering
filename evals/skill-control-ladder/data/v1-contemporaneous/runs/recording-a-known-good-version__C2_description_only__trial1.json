@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 14058,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.03568280000000001,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2674,
+    "cache_read_input_tokens": 23376,
+    "output_tokens": 790,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2674,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 449,
+        "cache_read_input_tokens": 8647,
+        "cache_creation_input_tokens": 307,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 307
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 658,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000758,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 790,
+      "cacheReadInputTokens": 23376,
+      "cacheCreationInputTokens": 2674,
+      "webSearchRequests": 0,
+      "costUSD": 0.034924800000000006,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The working directory appears completely empty \u2014 no repo files, changelog, PR records, or eval suite artifacts to pull from.\n\nSince there's nothing here I can verify against (no PR #482 diff, no eval suite output, no changelog), I don't want to fabricate specifics like exact precision/recall numbers or file lists. Before drafting, I need you to either:\n\n1. Paste in the actual eval suite results (precision/recall numbers, baseline comparison) and PR #482 details (files changed, dependency version pins), or\n2. Point me to where these live (a repo path I should be searching, a changelog file, a PR description) so I can pull them directly.\n\nAlso worth flagging: this is a case where recording the known-good version **now** may be premature \u2014 you said the deploy went out \"an hour ago\" and things \"look stable so far.\" A known-good/rollback record is usually most trustworthy after it's had a soak period (e.g., a day or a full traffic cycle) rather than at the one-hour mark, since regressions in a recommendation service (drift in embedding quality, latency, downstream metric shifts) often don't show up immediately. Two options:\n\n- I draft it now with a clear \"monitoring window in progress, to be finalized after 24h soak\" caveat, or\n- We wait and record it once you've confirmed stability over a longer window.\n\nWhich would you prefer, and can you get me the eval numbers / PR details?",
+  "ttft_ms": 1566,
+  "ttft_stream_ms": 850,
+  "time_to_request_ms": 28,
+  "time_to_request_from_spawn_ms": 1215934,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785789854428.2246,
+  "type": "result",
+  "duration_ms": 13036,
+  "uuid": "1ba5c69f-6030-49d9-933d-37037fb42eee",
+  "_skill": "recording-a-known-good-version",
+  "_arm": "C2_description_only",
+  "_trial": 1,
+  "_input_spec_sha256": "e4b397fecb333c773679ae125a0df3e537437af52fae1a737ef0b4cd0d8c29c8"
+}

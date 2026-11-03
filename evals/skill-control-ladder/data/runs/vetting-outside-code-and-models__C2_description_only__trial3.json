@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 25470,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.037978000000000005,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2124,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 1508,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2124,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1508,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2124,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2124
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 629,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000724,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1508,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2124,
+      "webSearchRequests": 0,
+      "costUSD": 0.037254,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "No \u2014 don't cut over production this week. The core problem: you have marketing claims and zero independent verification, and content moderation failures (harmful content slipping through, or legitimate content getting blocked) are hard to reverse and carry real user-trust/legal exposure.\n\nBefore switching, I'd want:\n\n**Test their claims, don't trust them**\n- \"99.9% accuracy\" is close to meaningless without knowing the dataset, class balance, and whether it's accuracy vs. precision/recall on the categories you actually care about. Moderation datasets are heavily imbalanced, so accuracy alone hides false-negative rate on the harmful content you're trying to catch.\n- Run the new API against your own labeled test set (including your known edge cases and adversarial examples) and compare precision/recall/latency directly against your current provider. This is a few hours of work and is the single highest-value thing you can do before deciding anything.\n\n**Verify, don't take badges at face value**\n- \"SOC2 compliant\" \u2014 ask for the actual report (Type 1 vs Type 2, and the exceptions/qualifications section), not just the marketing badge.\n- Case studies \u2014 check whether the customers are in a comparable domain (content type, scale, languages) to yours; vendor-picked case studies are survivorship-biased by design.\n\n**Check what isn't mentioned**\n- Data handling: retention, whether they train on your traffic, subprocessors, jurisdiction \u2014 relevant since you'd be sending user content to a new third party.\n- SLA/uptime and rate limits for your production volume.\n- Rollback plan if it underperforms after cutover.\n\n**Suggested path**: run it in shadow mode (mirror production traffic, don't act on its decisions) for a week or two against your labeled set and current provider's output, then decide with real numbers instead of their marketing page. The pricing advantage isn't going anywhere in two weeks; a moderation regression in production is much costlier to unwind.",
+  "ttft_ms": 17047,
+  "ttft_stream_ms": 5844,
+  "time_to_request_ms": 167,
+  "time_to_request_from_spawn_ms": 1225655,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785026103979.9014,
+  "type": "result",
+  "duration_ms": 25934,
+  "uuid": "fc76260f-39fe-4046-b259-f4fc07f23428",
+  "_skill": "vetting-outside-code-and-models",
+  "_arm": "C2_description_only",
+  "_trial": 3,
+  "_input_spec_sha256": "0980d4b71b4f129757bf2710680f0332a851e731cd0194b13b08f6f02d9eaa4e"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 32473,
+  "num_turns": 4,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0670809,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 3921,
+    "cache_read_input_tokens": 24683,
+    "output_tokens": 2355,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3921,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 854,
+        "cache_read_input_tokens": 9859,
+        "cache_creation_input_tokens": 342,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 342
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 717,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000807,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 2355,
+      "cacheReadInputTokens": 24683,
+      "cacheCreationInputTokens": 3921,
+      "webSearchRequests": 0,
+      "costUSD": 0.0662739,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The repo here doesn't contain this trace logger, so I can't review the actual diff \u2014 but based on your description, I'd flag this as a problem, not a clean win, for the exact use case you said you need it for.\n\n**Key issue: dedup key is request-only, not response-aware.** You said entries collapse when \"the same tool name + arguments appear in consecutive entries\" \u2014 that's matching on the request, then keeping the *first* response. For a flaky API, retries by definition often get *different* responses (errors, timeouts, partial data, eventual success). If call 1 fails and call 15 succeeds, you now have a trace showing \"tool called 15 times, count=15\" with only the failed response preserved. That's actively misleading for someone debugging why a run's outcome differed \u2014 they'll see a success outcome but a failure payload, or vice versa, with no indication anything varied.\n\n**Cost debugging is broken too.** If retries have different response sizes (error body vs. full result), collapsing to one payload but reporting a count doesn't let you reconstruct actual token/cost usage per call \u2014 you can no longer verify the count is \"consistent\" with cost, only with call count.\n\n**Your validation didn't test the failure mode.** \"Ran it against last week's incident traces and the counts line up\" confirms call counts survived collapsing \u2014 it doesn't confirm response payloads were actually identical across the collapsed run. If none of last week's incidents happened to involve a call where the response *changed* mid-retry-storm, this would look fine while still being wrong.\n\n**Timestamps are gone.** Collapsing 40-50 entries into one loses individual call timing, which matters if you're diagnosing latency/cost issues tied to retry storms.\n\n**This week's data may already be unrecoverable in this form** \u2014 worth confirming raw traces still exist somewhere (before dedup) as a fallback, since you can't un-collapse a file that's already been overwritten.\n\nRecommendation: at minimum, key the dedup on request **and** response hash (not just request), so consecutive calls only collapse when they're truly identical \u2014 genuinely flaky retries with varying responses would then correctly stay expanded, which is the case you actually care about for debugging. Also worth keeping per-call timestamps (or a timestamp range) even when collapsed.\n\nWant me to draft that revised dedup logic if you point me to the file?",
+  "ttft_ms": 14439,
+  "ttft_stream_ms": 859,
+  "time_to_request_ms": 30,
+  "time_to_request_from_spawn_ms": 809272,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078584123.4663,
+  "type": "result",
+  "duration_ms": 37153,
+  "uuid": "c6951e26-a5d1-4abf-9eb6-96af9a079dda",
+  "_spec": "75b674341ca9b81db1127f542bbb96ed7fc342bded7038ee3101a5f4d4e7ead3",
+  "_skill": "recording-what-an-agent-did",
+  "_cand": 2,
+  "_trial": 3
+}

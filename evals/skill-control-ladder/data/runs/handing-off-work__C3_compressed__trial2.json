@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 25412,
+  "num_turns": 3,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.053591299999999994,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 2853,
+    "cache_read_input_tokens": 23781,
+    "output_tokens": 1905,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2853,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1468,
+        "cache_read_input_tokens": 8907,
+        "cache_creation_input_tokens": 226,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 226
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 676,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007459999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 6,
+      "outputTokens": 1905,
+      "cacheReadInputTokens": 23781,
+      "cacheCreationInputTokens": 2853,
+      "webSearchRequests": 0,
+      "costUSD": 0.0528453,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "The repo here is empty (this looks like a fresh sandbox), so I'll write the handoff note directly from what you've told me.\n\n---\n\n## Handoff: OAuth2 Migration \u2014 Billing Service Auth\n\n**Owner:** Benjamin Huffer (out starting tomorrow morning, back in ~1 week)\n**Branch:** `oauth-migration`\n**Date:** 2026-07-26\n\n### Last completed action\n- Auth middleware rewritten for OAuth2 and merged to `oauth-migration`.\n- Token-refresh logic rewritten and merged to `oauth-migration`.\n- Both changes have passing unit tests. Nothing beyond this has been done.\n\n### Changed conditions (state as of handoff)\n- The billing service's own auth layer now speaks OAuth2 internally.\n- **Old API keys are still live and must stay active.** Do not rotate or revoke them \u2014 three downstream services still call the old auth endpoints, and their requests will 401 the moment those keys go away.\n- Production config has **not** been touched \u2014 still pointing at the old auth path in prod.\n\n### Remaining scope\n1. Migrate the three downstream services off the old API-key auth endpoints onto OAuth2. (List the three services here before you leave, if you haven't already \u2014 the incoming owner won't know which ones.)\n2. Only after all three are confirmed migrated and verified in their own right: update production config to cut over.\n3. Only after prod cutover is confirmed stable: rotate/revoke the old API keys.\n\n### Authority limits\n- **Do not rotate or deactivate the old API keys** until all three downstream services are migrated and verified \u2014 this is a hard blocker, not a judgment call.\n- **Do not touch production config** as part of exploratory or partial migration work \u2014 only as the final, deliberate cutover step after downstream migration is done.\n- If deadlines create pressure to cut over early, escalate rather than proceeding \u2014 don't cut over with unmigrated downstream services.\n\n### Open evidence / unresolved\n- No verification yet that the merged middleware/token-refresh code works against the downstream services' real call patterns \u2014 only unit-tested in isolation so far.\n- Names/repos of the three downstream services and their current auth call sites are not yet documented here \u2014 fill this in before departure if possible, otherwise the incoming owner needs to find them independently before starting.\n\n### Stop conditions\n- Stop and escalate (don't guess) if: any downstream service's auth pattern doesn't fit the new OAuth2 middleware cleanly, if there's pressure to rotate the old keys before all three services are confirmed migrated, or if prod config needs to change before downstream migration is complete.\n\n### Before starting, the incoming owner should confirm\n- Scope: only the three downstream services' migration \u2014 not touching prod config or keys.\n- Authority: explicitly NOT authorized to rotate/revoke old API keys or touch prod config until downstream migration is fully verified.\n- Proof owed: evidence each downstream service works end-to-end against the new OAuth2 flow before considering migration \"done.\"\n- Stop conditions: as above \u2014 escalate rather than act if blocked or pressured to skip steps.\n\n---\n\nWant me to fill in the three downstream service names/repos if you can tell me now, or leave that as a placeholder for your teammate to complete?",
+  "ttft_ms": 3622,
+  "ttft_stream_ms": 1320,
+  "time_to_request_ms": 39,
+  "time_to_request_from_spawn_ms": 794920,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785025673791.0278,
+  "type": "result",
+  "duration_ms": 25259,
+  "uuid": "3505cfbd-dae0-4c77-a294-c9039ffcab59",
+  "_skill": "handing-off-work",
+  "_arm": "C3_compressed",
+  "_trial": 2,
+  "_input_spec_sha256": "8947c73732a3df9076794b1651b97531ce37ae07f029b1a9db1944aafad6774f"
+}

@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 39777,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.06362799999999999,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2383,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 3111,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2383,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 3111,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2383,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2383
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 700,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000775,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 3111,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2383,
+      "webSearchRequests": 0,
+      "costUSD": 0.06285299999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "Line count is the wrong proxy here \u2014 this PR bundles three different kinds of risk (a behavioral nudge, a new autonomous financial capability, and a public trust claim), and \"smoke test\" only validates that the code runs, not that any of those are safe. Here's what actually needs tracking, separate from whether the diff merges cleanly:\n\n**1. System prompt wording (\"more proactive\")**\n- Type: agent instruction / prompt\n- Risk: vague behavioral steering. \"Proactive\" is exactly the kind of word that, combined with a new refund tool, could nudge the agent toward offering refunds unprompted or over-interpreting ambiguous complaints as refund-worthy.\n- Evidence a smoke test won't give you: transcripts/eval showing how the agent behaves on edge cases (angry customer, ambiguous complaint, repeated requests) \u2014 not just \"does it respond.\"\n- Re-check trigger: any complaint pattern, or the next time this prompt is touched again.\n\n**2. `issue_refund(amount, order_id)` tool \u2014 this is the real controlled item**\n- Type: agent capability / autonomy increase, with direct financial and fraud exposure.\n- Current state: no autonomous refunds. Intended state: agent can move money up to $50 with zero human sign-off.\n- What a smoke test doesn't cover: abuse/velocity limits (can one customer or one compromised account get $50 refunds repeatedly?), audit logging (is every autonomous refund logged somewhere a human can review after the fact?), a kill switch independent of this deploy (can you disable just this tool without reverting the prompt/doc changes too?), and adversarial testing against the new \"proactive\" prompt (can prompt injection in a support ticket talk the agent into approving a refund it shouldn't?).\n- Owner: whoever owns risk/fraud sign-off for this, not just the engineer who wrote the tool \u2014 this is a policy decision wearing code clothing.\n- Re-check trigger: refund volume/dollar anomalies, any chargeback spike, threshold ever changing from $50.\n\n**3. Public help-center article edit**\n- Type: public-facing claim, separate ownership track from the code (support/docs, not engineering).\n- Risk: deleting \"A human always reviews refunds before they are issued\" doesn't just correct the doc \u2014 it removes a customer-facing promise. And it may now be *inaccurate in the other direction*: does a human still review refunds over $50? If so, the sentence should be edited to say that, not deleted outright, otherwise the doc understates human oversight that still exists.\n- This is the item most likely to drift silently: nobody re-reads help-center copy after merge, so if the $50 threshold or the \"always autonomous under $50\" logic changes later, this sentence won't be updated to match.\n- Re-check trigger: any change to the refund tool's threshold or logic \u2014 the doc and the code need to be tied together, not just merged together once.\n\n**The bundling problem itself**\nThese three are one PR, which means if the refund tool turns out to have a bug or gets abused, rolling it back also touches the prompt and the public doc unless you're careful. Worth confirming you can disable `issue_refund` alone (feature flag or tool-removal) without reverting the other two.\n\nGiven this touches agent capability, prompt, and public docs as three separate artifact kinds with three different owners and staleness risks, I'd treat this as more than a code review \u2014 want me to draft a `change-impact.md` capturing these four items with owners and re-check triggers before you merge?",
+  "ttft_ms": 24578,
+  "ttft_stream_ms": 815,
+  "time_to_request_ms": 34,
+  "time_to_request_from_spawn_ms": 251983,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785788890432.007,
+  "type": "result",
+  "duration_ms": 41375,
+  "uuid": "5b416e2b-938b-4e8e-af92-e79b0a54fc33",
+  "_skill": "choosing-what-to-control",
+  "_arm": "C3_compressed",
+  "_trial": 1,
+  "_input_spec_sha256": "16e259e61a9eae86cad0d81b949de6b57648450bba2b720162f649a77de49b71"
+}

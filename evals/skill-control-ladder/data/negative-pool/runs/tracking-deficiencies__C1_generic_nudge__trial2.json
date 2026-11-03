@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 6579,
+  "num_turns": 1,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.017874,
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2099,
+    "cache_read_input_tokens": 6280,
+    "output_tokens": 182,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2099,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 182,
+        "cache_read_input_tokens": 6280,
+        "cache_creation_input_tokens": 2099,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2099
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 590,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00066,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 182,
+      "cacheReadInputTokens": 6280,
+      "cacheCreationInputTokens": 2099,
+      "webSearchRequests": 0,
+      "costUSD": 0.017214,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "That's fine \u2014 deleting a stray debug `print()` and confirming tests pass locally is a routine cleanup, not something that needs special handling. Just include it in your normal commit (either folded into the relevant commit if you haven't pushed yet, or as a small separate commit if you have) and push normally.\n\nOne small thing worth a quick double-check: skim the diff before pushing to make sure that was the only leftover debug artifact (no commented-out code, `console.log`, `pdb.set_trace()`, etc.) so you're not doing this same cleanup pass twice.",
+  "ttft_ms": 5193,
+  "ttft_stream_ms": 1017,
+  "time_to_request_ms": 32,
+  "time_to_request_from_spawn_ms": 1758865,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785594753353.881,
+  "type": "result",
+  "duration_ms": 7000,
+  "uuid": "97c230db-dcd0-44d1-abf1-05d36e6a925b",
+  "_skill": "tracking-deficiencies",
+  "_arm": "C1_generic_nudge",
+  "_trial": 2,
+  "_input_spec_sha256": "cd02418db445927c990a12dce0d59d28142d44731dc37490a69f02c3f2bbd575"
+}

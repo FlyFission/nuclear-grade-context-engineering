@@ -1,0 +1,84 @@
+{
+  "is_error": false,
+  "duration_api_ms": 46271,
+  "num_turns": 2,
+  "stop_reason": "end_turn",
+  "session_id": "e5633595-8285-511b-a0bf-de3f3a14a6a8",
+  "total_cost_usd": 0.0822333,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 3805,
+    "cache_read_input_tokens": 14791,
+    "output_tokens": 3612,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3805,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2093,
+        "cache_read_input_tokens": 8511,
+        "cache_creation_input_tokens": 1574,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1574
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 689,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0007740000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 4,
+      "outputTokens": 3612,
+      "cacheReadInputTokens": 14791,
+      "cacheCreationInputTokens": 3805,
+      "webSearchRequests": 0,
+      "costUSD": 0.0814593,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "There's no repo content here to review directly (no httpx usage found), so this is feedback on the plan itself.\n\nThe \"two-line bump, green tests, worked for billing\" framing understates one real risk specific to *this* service: the 307-to-maintenance-host behavior you mentioned in passing.\n\n**The actual risk:** httpx tightened its cross-origin redirect handling between 0.23 and 0.27 \u2014 sensitive headers (`Authorization`, `Cookie`, `Proxy-Authorization`) get stripped when a redirect changes host/port/scheme. If your LB's maintenance host is a different origin than the partner API (near-certain, since it's a separate host behind the same LB), this wrapper's behavior on that 307 path may change: auth headers that used to ride along to the maintenance host either stop being sent (likely causing new 401s from whatever handles maintenance-mode there) or \u2014 if the old behavior was leaking your partner-API credentials to an internal maintenance host \u2014 the new version closes that, which is good but still a behavior change under load during deploys, which is exactly when this leak has been paging you.\n\nThis is not a hypothetical edge case for you \u2014 it's a documented path this wrapper's callers hit routinely, and it's specifically *not* the path the billing service precedent tells you anything about unless billing also gets redirected to that maintenance host under similar conditions.\n\n**Why the green test suite doesn't clear this:** unit/integration tests almost certainly mock the partner API directly rather than simulating a real 307 to a different-origin maintenance host with header inspection. \"Full suite green\" is evidence the happy path and probably retry/pool logic are fine \u2014 it's not evidence about what headers arrive at the maintenance host post-upgrade.\n\n**Before merging, I'd want:**\n1. A quick check (or ask Devon, who's already in the changelog) of exactly which httpx version introduced/changed the cross-origin header-stripping rule, and confirm whether 0.23 already had it or not \u2014 that tells you if this is actually a behavior *change* or already the status quo.\n2. One manual/staging test that forces the 307-to-maintenance-host path and inspects what headers the maintenance host actually receives, before and after the bump.\n3. A quick diff of the regenerated lockfile to confirm only httpx + its direct transitives moved, not something incidental.\n\nIf (1) shows the header-stripping behavior predates 0.23, this is genuinely low-risk and fine to merge today. If it's new in this range, I'd still merge to fix the pool leak, but flag to whoever owns the maintenance-mode handling that auth-header behavior on that path may have changed, so it's not a surprise during the next deploy.",
+  "ttft_ms": 17056,
+  "ttft_stream_ms": 669,
+  "time_to_request_ms": 26,
+  "time_to_request_from_spawn_ms": 720853,
+  "warm_spare_claimed": false,
+  "time_origin_ms": 1785078495703.641,
+  "type": "result",
+  "duration_ms": 46648,
+  "uuid": "2a374df3-ad3d-4929-833f-9c2b8b5e5cf6",
+  "_spec": "6717b948006fd8b693375893dbb923d05ae78745637a655dd7de92193055d689",
+  "_skill": "questioning-attitude",
+  "_cand": 2,
+  "_trial": 1
+}

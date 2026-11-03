@@ -401,7 +401,14 @@ def declarations_text(text: str) -> str:
     declarations are read strictly (anything shown as code or raw HTML counts
     for nothing).
     """
-    return strip_html_blocks(strip_indented_code(_visible(text)))
+    # Each filter reads the original text, and a character survives only if
+    # every filter keeps it. Chaining them would let one filter's blanking
+    # (a comment inside a <div>) end another's block early.
+    masks = (_visible(text), strip_indented_code(text), strip_html_blocks(text))
+    return "".join(
+        ch if all(m[i] == ch for m in masks) else (ch if ch in "\r\n" else " ")
+        for i, ch in enumerate(text)
+    )
 
 
 def _cells(line: str) -> list[str]:

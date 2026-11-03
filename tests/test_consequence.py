@@ -636,6 +636,25 @@ def test_dependency_lane_masks_only_pin_values(repo):
     assert run(repo, pr_author="dependabot[bot]", approvals=approvals)["approvals"]["dependency_lane"] is True
 
 
+def test_changed_lines_whose_text_starts_with_dashes_are_inspected(repo):
+    write(repo / "src" / "run.sh", "tool \\\n--model claude-old \\\n--verbose\n")
+    git(repo, "add", "-A")
+    git(repo, "commit", "-qm", "run script")
+    write(repo / "src" / "run.sh", "tool \\\n--model generic \\\n--verbose\n")
+    assert path_entry(run(repo), "src/run.sh")["rules"] == ["model-id"]
+    diff = consequence.diff_lines(repo, "HEAD", None, "src/run.sh", "M")
+    assert diff.removed == ["--model claude-old \\"] and diff.added == ["--model generic \\"]
+
+
+def test_dependency_lane_inspects_lines_whose_text_starts_with_dashes(repo):
+    workflow = repo / ".github" / "workflows" / "ci.yml"
+    workflow.write_text(workflow.read_text() + "--x\n")
+    git(repo, "commit", "-qam", "odd line")
+    workflow.write_text(workflow.read_text().replace("a" * 40, "b" * 40).replace("--x", "++x"))
+    approvals = [{"user": {"login": "reviewer"}, "state": "APPROVED"}]
+    assert run(repo, pr_author="dependabot[bot]", approvals=approvals)["approvals"]["dependency_lane"] is False
+
+
 @pytest.mark.parametrize("before, after, same", [
     ("  - uses: actions/checkout@" + "a" * 40, "  - uses: actions/checkout@" + "b" * 40, True),
     ("  - uses: actions/setup-python@v5", "  - uses: actions/setup-python@v6", True),

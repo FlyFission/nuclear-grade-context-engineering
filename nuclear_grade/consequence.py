@@ -349,8 +349,8 @@ def diff_lines(repo: Path, base: str, head: str | None, path: str, status: str) 
                          capture_output=True, text=True, errors="replace")
     diff = Diff()
     for line in out.stdout.splitlines():
-        if line.startswith(("+++", "---", "diff ", "index ", "new file", "deleted file", "Binary files")):
-            continue
+        # The one-path diff has a single file header, before the first hunk. Inside a hunk
+        # every +/-/space line is content, even one whose text begins with `--` or `++`.
         if line.startswith("@@"):
             diff.after.append([])
             diff.before.append([])
@@ -572,9 +572,11 @@ def _pin_substitutions_only(repo: Path, base: str, head: str | None, path: str) 
         if match:
             old_start, old_len, new_start, new_len = (int(g) if g is not None else 1 for g in match.groups())
             hunks.append(((old_start, old_len, new_start, new_len), [], []))
-        elif hunks and line.startswith("-") and not line.startswith("---"):
+        # File headers (`---`/`+++`) come before the first hunk; inside a hunk a line
+        # starting with `---` is content whose own text begins with `--`.
+        elif hunks and line.startswith("-"):
             hunks[-1][1].append(line[1:])
-        elif hunks and line.startswith("+") and not line.startswith("+++"):
+        elif hunks and line.startswith("+"):
             hunks[-1][2].append(line[1:])
     if not hunks:
         return False

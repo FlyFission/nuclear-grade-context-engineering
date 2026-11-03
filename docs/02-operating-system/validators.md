@@ -79,7 +79,7 @@ This repository does not yet claim mandatory protected enforcement for strict cu
 validator or packet mode can weaken an in-repository check. Mandatory policy therefore requires a
 pinned validator and an expected packet mode supplied outside the candidate's writable tree.
 
-**Built opt-in check: two-party verification.** `ng validate <packet> --two-party` fails any `pass`
+**Built opt-in check: declared two-party integrity.** Recommended for any Standard packet that contains a `pass` claim. `ng validate <packet> --two-party` fails any `pass`
 claim in a Standard packet's claim-to-evidence table that has no declared second party. A second
 party comes from the custody record (a row whose verifier is none of its change actors and whose
 profile is not classified `self-check`). For a claim the custody record does not cover, it can come
@@ -91,8 +91,15 @@ Placeholder verifiers such as `none`, `TBD.`, `<reviewer>`, `self`, or `no separ
 empty. A strict run fails on a claim row whose status cannot be read, on a claim the custody record
 cites but no claim table lists, and when it finds no claim rows at all. Without the flag, existing packets are unaffected, except one that declares a
 `## Claim authorship` table, which is held to it. The check compares declared identity strings. It
-cannot detect two names for one actor or two agent instances of one model family; that coupling
-belongs in the five-axis profile. Depth and method vocabulary for the `Verification type` column is
+uses each identity's root to catch common aliases (`Claude`, `claude-opus-5.5`, and
+`agent:claude` count as one) and treats generic names (`assistant`, `the agent`, `me`) as no verifier.
+That fails closed: two different people sharing a first name read as one, so record verifiers as full,
+stable identities such as a handle. When the only second party both generated and verified the
+evidence, which is legitimate for an independent reproducer, the coupling-profile disposition must link
+`ship.md` so the release decision sees it. What this checks is *declared actor separation*. It does not
+check evidence independence (a different generation or selection path) or method independence (a check
+that can catch a different failure class); those stay in the five-axis profile and the reviewer's
+judgment. Depth and method vocabulary for the `Verification type` column is
 in [`verification-methods-and-depth.md`](verification-methods-and-depth.md). Source:
 [`../../nuclear_grade/two_party.py`](../../nuclear_grade/two_party.py).
 

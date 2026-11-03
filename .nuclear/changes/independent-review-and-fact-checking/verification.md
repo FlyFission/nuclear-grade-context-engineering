@@ -66,7 +66,7 @@ Its design judgments and skill review were re-reading, so they count as a check,
 | R-6 | nit | The third App B method is "a suitable testing program"; qualification testing applies only in lieu of the others. Peer-check is "before and during", in parallel. | yes | fixed in the doc, source map, and crosswalk |
 | R-7 | should-fix | `checking-facts`: the contract required a second means in every mode but Quick skipped it; exact-string match against the same copy is not a second means; Standard was weaker than the doctrine | yes | fixed. Every mode requires the second means, and the mode sets who performs it. The match must be against a second, independently published copy. Standard requires someone other than the author. |
 | R-8 | nit | The receipt showed `strict.custody: false` while `--two-party` forced the custody section | yes | fixed. `--two-party` no longer forces custody, so an authorship-only packet can pass strict (case 62) and the receipt is accurate. |
-| R-9 | design question | A custody row whose generator and verifier are the same agent, with a human named as change actor, counts as a second party | yes, case 41 | kept by design. An independent reproducer legitimately generates and witnesses their own re-run. Recorded in the module docstring; the owner may decide otherwise. |
+| R-9 | design question | A custody row whose generator and verifier are the same agent, with a human named as change actor, counts as a second party | yes, case 41 | resolved after the external reviews below: still allowed, because an independent reproducer legitimately generates and witnesses their own re-run, but no longer silent. When that is the only second party, the coupling-profile disposition must link `ship.md`, or the check fails. |
 | R-10 | not raised | A falsely declared classification (case 42) cannot be detected from the record | n/a | documented limit |
 
 After the fixes, the reviewer's probe script gives: 10–16, 20–21, 30–40 and 60 fail strict; 50, 51 and 62 pass; 52 and 61 fail for the right reason, the honest self-check. Default and `--strict-custody` output for all 57 pre-existing packets is still byte-identical to `main`. Under `--two-party`, 56 fail and 1 passes. The pass is `trust-propagation-two-party`, which declares a `## Claim authorship` table with `maintainer-at-merge` as verifier.
@@ -82,7 +82,21 @@ A second automated reviewer from a different vendor's model reviewed head `63d84
 
 These are the same class of bypass as R-1 and R-4: strict parsing that let ordinary Markdown move a claim out of the gate. A reviewer on a different model family found two the same-family reviewer missed, which is the diversity argument in `docs/02-operating-system/independence-architecture.md` working as written.
 
-## Near miss during build (OPEX)
+## External reviews forwarded by the owner (Grok, ChatGPT)
+
+Each claim was checked against the code before acting.
+
+| # | Source | Point | Checked? | Disposition |
+|---|---|---|---|---|
+| GX-1 | both | R-9: same agent as generator and verifier can pass as a second party | yes | fixed: allowed only with a `ship.md` disclosure (R-9 above); tests added |
+| GX-2 | Grok | Aliases (`Claude`, `claude-opus-5.5`, `assistant`, `me`) fail open | yes, reproduced | fixed: generic names count as no verifier; aliases match by identity root; fails closed and is documented; tests added |
+| GX-3 | Grok | Docs should recommend `--two-party` for Standard packets with a pass claim | n/a | done in CLI help, `validators.md`, `cli-reference.md` |
+| GX-4 | ChatGPT | Name it a *declared two-party integrity check*; separate actor, evidence, and method independence | n/a | done in CLI help, the module, `validators.md`, and the doctrine page |
+| GX-5 | ChatGPT | State the 3/n assumptions; make depth and independence two axes; give alternate-method records a contract | n/a | done in `verification-methods-and-depth.md` |
+| GX-6 | ChatGPT | `checking-facts` needs an adversarial efficacy set scored on false acceptance | n/a | deferred: recorded in `ship.md` as a follow-up; no efficacy claim is made |
+| GX-7 | ChatGPT | 124-A and 124-B (multi-verifier, single emphasis) | yes | already fixed as CX-1 and CX-2 |
+
+
 
 While adding the source-map row for the adjudication study, the author wrote author names from memory
 ("Mathes, Klassen, and Pieper (or as listed)") before reading the record. The check on the next step

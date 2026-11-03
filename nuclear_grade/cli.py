@@ -370,8 +370,9 @@ def build_parser() -> argparse.ArgumentParser:
     validate_parser.add_argument(
         "--two-party",
         action="store_true",
-        help="Require every `pass` claim in a Standard packet to name a verifier distinct "
-        "from its evidence author and change actor (declared identities, not proof of independence).",
+        help="Declared two-party integrity check: every `pass` claim in a Standard packet must name a "
+        "verifier distinct from its change actor (declared identities, not proof of independence). "
+        "Recommended for any Standard packet that contains a pass claim.",
     )
     validate_parser.set_defaults(handler=handle_validate)
 

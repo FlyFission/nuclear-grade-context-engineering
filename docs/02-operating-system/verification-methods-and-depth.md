@@ -36,6 +36,10 @@ originator-separation rule. It does not take a check/verify distinction from it.
 
 ## The ladder
 
+Depth (how hard the check looked) and independence (who looked, and how separate they were) are two
+different axes, not one ladder. A fully independent reviewer can do a shallow check, and a deep
+qualification test can still be designed and read by the original author. Record both.
+
 Each rung names what is examined and what it can catch. Higher rungs do not replace lower ones;
 they catch different failures.
 
@@ -128,7 +132,8 @@ on the same wrong answer.
 - **Report a clean sample as a bound, not as "all correct".** If n randomly chosen items all pass,
   the one-sided 95% upper bound on the error rate is 1 − 0.05^(1/n), about 3/n. That is 5% for 59
   clean items, 1% for 299, and about 53% for 4. Four clean spot-checks show the method ran, not that
-  the work is accurate.
+  the work is accurate. The bound assumes items were drawn at random from the population and fail
+  independently. It does not hold as written for a hand-picked sample or for defects that cluster.
 - **Split the results by kind.** A good overall rate can hide a category that is failing. Report
   critical items, each source type, and each field separately when they differ.
 - **Measure the checker before relying on it.** Mix known-bad and known-good items into its work,
@@ -152,12 +157,16 @@ behind a `pass`.
 
 - `verification.md` → **Verification type** column: name the rung (`check`, `design review`,
   `alternate method`, `qualification test`) rather than just "review."
+- An **alternate method** record names the original method, the alternate method, why the two can fail
+  differently (different data, assumptions, or implementation), the comparison tolerance, and what was
+  done with any disagreement. Two runs that share the same data, assumptions, or code are one method.
 - Custody classification ([`actor-evidence-independence.md`](actor-evidence-independence.md)):
   a second party re-running the author's path is `independent reproduction`; an alternate method or
   qualification test by a separated party is `diverse verification`; a second party watching the
   action as it happens is `direct witnessing`.
-- `ng validate --two-party` fails a `pass` claim with no declared verifier distinct from the change
-  actor. It compares declared identities; it cannot tell whether the rung was really climbed.
+- `ng validate --two-party` is a declared two-party integrity check: it fails a `pass` claim with no
+  declared verifier distinct from the change actor. It checks declared actor separation only, not
+  evidence or method independence, and cannot tell whether the rung was really climbed.
   That judgment stays with the reviewer.
 
 ## Red flags

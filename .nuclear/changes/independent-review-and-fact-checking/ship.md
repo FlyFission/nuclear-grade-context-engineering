@@ -33,7 +33,7 @@
 | Risk / gap | Impact | Disposition | Owner | Recheck trigger |
 |---|---|---|---|---|
 | No human has verified the two-party rule; the only review was an agent of the same model family briefed by the author | A rule that passes a packet it should fail would give adopters false confidence | defer to owner review before merge | FlyFission | owner review of `two_party.py` and `tests/test_two_party.py` |
-| `checking-facts` has no efficacy measurement | The skill may add nothing over a generic prompt, as the audit found for several others | accept; add to the next control-ladder run | FlyFission | next ladder run |
+| `checking-facts` has no efficacy measurement | The skill may add nothing over a generic prompt, as the audit found for several others | accept; follow-up: an adversarial set (wrong units, stale revision, fabricated citation, two sites repeating one error, docs vs actual API behavior, misleading context, unreachable source) scored on false acceptance | FlyFission | next ladder run |
 | The audit's per-skill verdicts rest on n=3, one model family, and repo-authored rubrics | A merge chosen on them could remove a skill that helps | defer; each merge needs its own packet and owner decision | FlyFission | any merge packet |
 | Skill count went from 30 to 31 while the audit recommends 22 | Adds catalog surface the audit says to shrink | accept on the owner's explicit request for a fact-check skill; revisit in the consolidation decision | FlyFission | consolidation decision |
 | `--two-party` compares declared strings only | Two names for one actor pass | accept; documented in the module, `validators.md`, and the doctrine page | FlyFission | an aliasing incident |
@@ -66,7 +66,8 @@ Open decisions for the owner:
 
 1. Whether to merge this PR.
 2. Whether to add `--two-party` to this repo's own CI, and from which packet forward.
-3. Which of the audit's merges to open packets for, if any.
+3. Which of the audit's merges to open packets for, if any (answered by the stacked consolidation PR).
+4. When to make `--two-party` mandatory: the reviews advise new Standard packets first, with historical records handled by an explicit migration or legacy exception.
 
 ## Release decision
 

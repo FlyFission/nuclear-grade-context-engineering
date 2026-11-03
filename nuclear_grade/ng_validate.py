@@ -12,7 +12,24 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 
-from nuclear_grade.two_party import ClaimParty, check_two_party
+if __package__:
+    from .two_party import ClaimParty, check_two_party
+else:
+    # Loaded by file path outside the package (challenge/score.py does this to
+    # pin the validator it scores with). Load the sibling module from the same
+    # checkout rather than whatever `nuclear_grade` happens to be importable, so
+    # the validator and its two-party check can never come from different copies.
+    import importlib.util as _importlib_util
+    import sys as _sys
+
+    _two_party_spec = _importlib_util.spec_from_file_location(
+        f"{__name__}_two_party", Path(__file__).with_name("two_party.py")
+    )
+    _two_party = _importlib_util.module_from_spec(_two_party_spec)
+    _sys.modules[_two_party_spec.name] = _two_party
+    _two_party_spec.loader.exec_module(_two_party)
+    ClaimParty = _two_party.ClaimParty
+    check_two_party = _two_party.check_two_party
 
 PLACEHOLDER_MARKER = "NUCLEAR-GRADE-PLACEHOLDER"
 # A packet deliberately abandoned with a recorded rationale carries this marker.

@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 582" width="1180" height="582" role="img" aria-labelledby="t d">
+<title id="t">The skill catalog</title>
+<desc id="d">30 skills in seven families, each with the situation that calls for it. Start here: the using-nuclear-grade router, questioning-attitude, rating-change-risk. Before you act: double-checking, declaring intent, deciding who decides, staying on mission. Records and versions: change records, stale records, approved versions, change impact, agent run records. Evidence and verdicts: proving claims, checking facts, code review, final artifacts, stress tests, review panels, release readiness. Trust and public claims: outside code and models, legal and safety wording, source claims. Delegation and structure: briefing, handoffs, work breakdown, folders. When it goes wrong: incidents, lessons, deficiencies, shared defects. A gold dot marks the Core 7, which apply to every change.</desc>
+<style>
+.bg{fill:#F7F6F2} .ink{fill:#0E1A30} .muted{fill:#46536B} .soft{fill:#5A6680}
+.acc{fill:#8A5A00} .lnk{fill:#2F4F94}
+.n-step{fill:#FFFFFF;stroke:#0E1A30} .n-store{fill:rgba(14,26,48,0.05);stroke:#46536B}
+.n-focal{fill:rgba(255,210,77,0.22);stroke:#8A5A00} .n-ext{fill:rgba(14,26,48,0.03);stroke:rgba(14,26,48,0.32)}
+.n-opt{fill:rgba(14,26,48,0.02);stroke:rgba(14,26,48,0.36);stroke-dasharray:4 3}
+.n-indep{fill:rgba(47,79,148,0.07);stroke:#2F4F94}
+.grp{fill:none;stroke:rgba(14,26,48,0.22);stroke-dasharray:4 4}
+.band{fill:rgba(14,26,48,0.035);stroke:rgba(14,26,48,0.10)}
+.ln{fill:none;stroke:#46536B} .ln-acc{fill:none;stroke:#8A5A00} .ln-lnk{fill:none;stroke:#2F4F94}
+.life{stroke:rgba(14,26,48,0.25);stroke-dasharray:3 4}
+.mask{fill:#F7F6F2} .rule{stroke:rgba(14,26,48,0.14)}
+.name{font-family:system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;font-size:13px;font-weight:600}
+.nm{font-family:system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;font-size:12px;font-weight:600}
+.sub{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:10px}
+.eye{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:9.5px;font-weight:600;letter-spacing:0.16em}
+.lbl{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:9.5px;letter-spacing:0.04em}
+.ttl{font-family:'Iowan Old Style', Georgia, 'Times New Roman', serif;font-size:22px}
+.call{font-family:'Iowan Old Style', Georgia, 'Times New Roman', serif;font-style:italic;font-size:14px}
+@media (prefers-color-scheme: dark){
+.bg{fill:#0E1A30} .ink{fill:#F4F7FC} .muted{fill:#B3C2DA} .soft{fill:#9DB0CE}
+.acc{fill:#FFD24D} .lnk{fill:#8FB0E6}
+.n-step{fill:#16263F;stroke:#D7E0EE} .n-store{fill:rgba(244,247,252,0.05);stroke:#9DB0CE}
+.n-focal{fill:rgba(255,210,77,0.14);stroke:#FFD24D} .n-ext{fill:rgba(244,247,252,0.03);stroke:rgba(244,247,252,0.34)}
+.n-opt{fill:rgba(244,247,252,0.02);stroke:rgba(244,247,252,0.40)}
+.n-indep{fill:rgba(143,176,230,0.10);stroke:#8FB0E6}
+.grp{stroke:rgba(244,247,252,0.26)} .band{fill:rgba(244,247,252,0.035);stroke:rgba(244,247,252,0.10)}
+.ln{stroke:#9DB0CE} .ln-acc{stroke:#FFD24D} .ln-lnk{stroke:#8FB0E6}
+.life{stroke:rgba(244,247,252,0.28)} .mask{fill:#0E1A30} .rule{stroke:rgba(244,247,252,0.16)}
+}
+</style>
+<defs>
+<marker id="m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="muted" points="0 0, 8 3, 0 6"/></marker>
+<marker id="m-acc" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="acc" points="0 0, 8 3, 0 6"/></marker>
+<marker id="m-lnk" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="lnk" points="0 0, 8 3, 0 6"/></marker>
+</defs>
+<rect class="bg" width="1180" height="582" rx="10"/>
+<text x="28" y="34" class="eye soft">SKILLS · 30 JOBS IN SEVEN FAMILIES</text>
+<line class="rule" x1="28" y1="44" x2="1152" y2="44"/>
+<rect class="band" x="30" y="64" width="270" height="150" rx="8"/>
+<text x="44" y="82" class="eye soft" text-anchor="start">START HERE</text>
+<rect class="band" x="316" y="64" width="270" height="184" rx="8"/>
+<text x="330" y="82" class="eye soft" text-anchor="start">BEFORE YOU ACT</text>
+<rect class="band" x="602" y="64" width="270" height="218" rx="8"/>
+<text x="616" y="82" class="eye soft" text-anchor="start">RECORDS AND VERSIONS</text>
+<rect class="band" x="888" y="64" width="270" height="286" rx="8"/>
+<text x="902" y="82" class="eye soft" text-anchor="start">EVIDENCE AND VERDICTS</text>
+<rect class="band" x="30" y="370" width="270" height="150" rx="8"/>
+<text x="44" y="388" class="eye soft" text-anchor="start">TRUST AND PUBLIC CLAIMS</text>
+<rect class="band" x="316" y="370" width="270" height="184" rx="8"/>
+<text x="330" y="388" class="eye soft" text-anchor="start">DELEGATION AND STRUCTURE</text>
+<rect class="band" x="602" y="370" width="270" height="184" rx="8"/>
+<text x="616" y="388" class="eye soft" text-anchor="start">WHEN IT GOES WRONG</text>
+<text x="56" y="118" class="nm ink" text-anchor="start">using-nuclear-grade</text>
+<text x="56" y="131" class="sub soft" text-anchor="start">router: the start of any change</text>
+<circle class="acc" cx="46" cy="148" r="3.5"/>
+<text x="56" y="152" class="nm ink" text-anchor="start">questioning-attitude</text>
+<text x="56" y="165" class="sub soft" text-anchor="start">the fact that would change the call</text>
+<circle class="acc" cx="46" cy="182" r="3.5"/>
+<text x="56" y="186" class="nm ink" text-anchor="start">rating-change-risk</text>
+<text x="56" y="199" class="sub soft" text-anchor="start">floor, Quick, Standard, or stronger</text>
+<circle class="acc" cx="332" cy="114" r="3.5"/>
+<text x="342" y="118" class="nm ink" text-anchor="start">double-checking-before-acting</text>
+<text x="342" y="131" class="sub soft" text-anchor="start">a risky step is next</text>
+<text x="342" y="152" class="nm ink" text-anchor="start">declaring-intent</text>
+<text x="342" y="165" class="sub soft" text-anchor="start">a reviewer must see the why first</text>
+<text x="342" y="186" class="nm ink" text-anchor="start">deciding-who-decides</text>
+<text x="342" y="199" class="sub soft" text-anchor="start">may the agent act alone?</text>
+<circle class="acc" cx="332" cy="216" r="3.5"/>
+<text x="342" y="220" class="nm ink" text-anchor="start">staying-on-mission</text>
+<text x="342" y="233" class="sub soft" text-anchor="start">work drifts, loops, or slips</text>
+<text x="628" y="118" class="nm ink" text-anchor="start">creating-change-records</text>
+<text x="628" y="131" class="sub soft" text-anchor="start">open or update a change record</text>
+<text x="628" y="152" class="nm ink" text-anchor="start">closing-stale-packets</text>
+<text x="628" y="165" class="sub soft" text-anchor="start">finish, close, or delete a draft</text>
+<text x="628" y="186" class="nm ink" text-anchor="start">controlling-approved-versions</text>
+<text x="628" y="199" class="sub soft" text-anchor="start">what is controlled; the baseline</text>
+<text x="628" y="220" class="nm ink" text-anchor="start">checking-what-a-change-affects</text>
+<text x="628" y="233" class="sub soft" text-anchor="start">what else goes stale?</text>
+<text x="628" y="254" class="nm ink" text-anchor="start">recording-what-an-agent-did</text>
+<text x="628" y="267" class="sub soft" text-anchor="start">reconstruct the agent&#x27;s run</text>
+<circle class="acc" cx="904" cy="114" r="3.5"/>
+<text x="914" y="118" class="nm ink" text-anchor="start">proving-claims</text>
+<text x="914" y="131" class="sub soft" text-anchor="start">each claim to its evidence</text>
+<text x="914" y="152" class="nm ink" text-anchor="start">checking-facts</text>
+<text x="914" y="165" class="sub soft" text-anchor="start">is the outside fact true?</text>
+<text x="914" y="186" class="nm ink" text-anchor="start">reviewing-code-quality</text>
+<text x="914" y="199" class="sub soft" text-anchor="start">a diff&#x27;s maintainability</text>
+<text x="914" y="220" class="nm ink" text-anchor="start">verifying-final-artifacts</text>
+<text x="914" y="233" class="sub soft" text-anchor="start">look at the rendered output</text>
+<text x="914" y="254" class="nm ink" text-anchor="start">stress-testing-agent-changes</text>
+<text x="914" y="267" class="sub soft" text-anchor="start">attack a widened agent</text>
+<text x="914" y="288" class="nm ink" text-anchor="start">running-a-review-panel</text>
+<text x="914" y="301" class="sub soft" text-anchor="start">one reviewer is not enough</text>
+<circle class="acc" cx="904" cy="318" r="3.5"/>
+<text x="914" y="322" class="nm ink" text-anchor="start">checking-release-readiness</text>
+<text x="914" y="335" class="sub soft" text-anchor="start">ship, block, or defer</text>
+<text x="56" y="424" class="nm ink" text-anchor="start">vetting-outside-code-and-models</text>
+<text x="56" y="437" class="sub soft" text-anchor="start">relying on code you did not write</text>
+<text x="56" y="458" class="nm ink" text-anchor="start">checking-legal-and-safety-wording</text>
+<text x="56" y="471" class="sub soft" text-anchor="start">assurance words in public text</text>
+<text x="56" y="492" class="nm ink" text-anchor="start">checking-source-claims</text>
+<text x="56" y="505" class="sub soft" text-anchor="start">how a source is cited</text>
+<text x="342" y="424" class="nm ink" text-anchor="start">briefing-an-agent</text>
+<text x="342" y="437" class="sub soft" text-anchor="start">before an agent starts</text>
+<text x="342" y="458" class="nm ink" text-anchor="start">handing-off-work</text>
+<text x="342" y="471" class="sub soft" text-anchor="start">open work changes hands</text>
+<text x="342" y="492" class="nm ink" text-anchor="start">breaking-down-the-work</text>
+<text x="342" y="505" class="sub soft" text-anchor="start">split scope into deliverables</text>
+<text x="342" y="526" class="nm ink" text-anchor="start">organizing-project-folders</text>
+<text x="342" y="539" class="sub soft" text-anchor="start">lay the work out on disk</text>
+<text x="628" y="424" class="nm ink" text-anchor="start">responding-to-incidents</text>
+<text x="628" y="437" class="sub soft" text-anchor="start">live harm: stabilize first</text>
+<circle class="acc" cx="618" cy="454" r="3.5"/>
+<text x="628" y="458" class="nm ink" text-anchor="start">learning-from-experience</text>
+<text x="628" y="471" class="sub soft" text-anchor="start">change a control afterward</text>
+<text x="628" y="492" class="nm ink" text-anchor="start">tracking-deficiencies</text>
+<text x="628" y="505" class="sub soft" text-anchor="start">a problem you live with for now</text>
+<text x="628" y="526" class="nm ink" text-anchor="start">reporting-shared-defects</text>
+<text x="628" y="539" class="sub soft" text-anchor="start">others carry the same defect</text>
+<circle class="acc" cx="904" cy="396" r="3.5"/>
+<text x="914" y="400" class="name ink" text-anchor="start">Core 7: every change</text>
+<text x="914" y="422" class="sub soft" text-anchor="start">everything else loads</text>
+<text x="914" y="435" class="sub soft" text-anchor="start">by trigger (CORE.md)</text>
+<text x="914" y="457" class="sub soft" text-anchor="start">catalog: name + one line</text>
+<text x="914" y="470" class="sub soft" text-anchor="start">~100 tokens each; the body</text>
+<text x="914" y="483" class="sub soft" text-anchor="start">loads only when picked</text>
+</svg>

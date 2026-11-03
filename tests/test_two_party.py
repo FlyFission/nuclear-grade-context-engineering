@@ -570,3 +570,38 @@ def test_fence_stripping_matches_the_validator(text):
     from nuclear_grade.two_party import strip_code_blocks
 
     assert strip_code_blocks(text) == _strip_code_blocks(text)
+
+
+# --- Codex on a6867fa: read claims generously, declarations strictly ---------
+
+
+def _indent(block: str) -> str:
+    return "".join("    " + line + "\n" for line in block.splitlines())
+
+
+def test_indented_authorship_example_does_not_count(tmp_path):
+    example = "Example:\n\n" + _indent(AUTH_HEADER + "| C-001 | ben | carol |")
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n", example)
+    messages: list[str] = []
+    check_two_party(pkt, messages)
+    assert any("C-001" in m and "no authorship or custody row" in m for m in messages)
+
+
+def test_indented_custody_section_supplies_no_second_party(tmp_path):
+    pkt = _copy_worked(tmp_path)
+    vfile = pkt / "verification.md"
+    text = vfile.read_text(encoding="utf-8")
+    start = text.index("## Evidence custody and coupling")
+    end = text.index("## Security / dependency")
+    vfile.write_text(text[:start] + _indent(text[start:end]) + "\n" + text[end:], encoding="utf-8")
+    result = validate_packet(pkt, require_custody=True)
+    assert not result.ok
+    assert any("missing required section: Evidence custody and coupling" in m for m in result.messages)
+
+
+def test_claim_row_missing_its_status_cell_fails_strict(tmp_path):
+    body = "# V\n## Claims\n| Claim ID | Result status |\n|---|---|\n| C-001 |\n| C-004a | deferred |\n"
+    (tmp_path / "verification.md").write_text(body, encoding="utf-8")
+    messages: list[str] = []
+    check_two_party(tmp_path, messages)
+    assert any("C-001" in m and "cannot read it" in m for m in messages)

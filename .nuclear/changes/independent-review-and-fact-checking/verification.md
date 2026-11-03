@@ -97,9 +97,13 @@ A second round (Codex on `1e956bc` and `3adf16c`; Copilot on `1e956bc`) raised m
 | CX-12 | A custody section inside an HTML comment or a fence still exported second parties (Codex on `931448b`) | yes | fixed: `_check_evidence_custody` removes comments and fences before locating the section, as CX-5 does for authorship; test added |
 | CX-13 | A four-backtick outer fence was closed by an inner triple-backtick line, exposing example authorship rows (Codex on `c164d8b`) | yes | fixed: the two-party parser now uses the validator's CommonMark fence rule (same character, at least the opening length); a test keeps both implementations in agreement |
 | CX-14 | `ben AND agent:claude` was not split, so `agent:claude` passed as verifier (Codex on `c164d8b`) | yes | fixed: the name split is case-insensitive; test added |
+| CX-15 | An authorship example indented four spaces still supplied verifiers (Codex on `a6867fa`) | yes | fixed by a general rule rather than another special case: declarations are read strictly, so any line indented four or more spaces is code and counts for nothing, in both the authorship and the custody parser; tests added for both |
+| CX-16 | A claim row cut short before its status cell was skipped (Codex on `a6867fa`) | yes | fixed by the matching rule: claims are read generously, so the row is kept with an unreadable status and strict mode fails it; test added |
 | CX-11 | `ben + reviewer` passes against actor `ben` | yes | kept by design: a cell counts when at least one name in it is outside the excluded set, the same rule CX-9 asks for |
 
 Default-mode and `--strict-custody` output stays identical to `main` across all 56 packets (112 runs).
+
+CX-3 to CX-16 are one failure class: a lenient Markdown parser letting text drop out of, or slip into, the gate. After CX-15 the parser follows one stated rule instead of a growing list of cases. Claims are read generously, so an odd row fails rather than vanishing. Declarations are read strictly, so anything a reader would see as a comment, a fence, or indented code is ignored.
 
 ## External reviews forwarded by the owner (Grok, ChatGPT)
 

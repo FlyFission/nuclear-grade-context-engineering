@@ -25,7 +25,10 @@ The check reads two declarations, whichever the packet carries:
 
 Only what a reader sees is read: HTML comments and fenced code blocks are
 removed first, so a commented-out or illustrative declaration counts for
-nothing. Claims are read from every table (outer pipes optional) whose header
+nothing. Declarations (authorship and custody) are read strictly: a line
+indented four or more spaces is code, not a declaration. Claims are read
+generously: a claim row cut short before its status cell is kept with an
+unreadable status, so strict mode fails it. Claims are read from every table (outer pipes optional) whose header
 has a claim (or requirement) column and a status column, found by header rather
 than by position, with Markdown emphasis, code spans, and links stripped from
 cells. A status cell is
@@ -265,6 +268,32 @@ def _visible(text: str) -> str:
     return _HTML_COMMENT.sub("", strip_code_blocks(text))
 
 
+_INDENTED = re.compile(r"^(?: {4}|\t)")
+
+
+def strip_indented_code(text: str) -> str:
+    """Blank every line indented four or more spaces (or a tab).
+
+    Markdown renders such lines as code, or as content nested under a list item.
+    Either way they are not a top-level declaration, so they are dropped for
+    declarations. This fails closed: a real table nested under a list stops
+    counting as a verifier, and the claim it covered is then reported.
+    """
+    return "".join(
+        re.sub(r"\S", " ", line) if _INDENTED.match(line) else line
+        for line in text.splitlines(keepends=True)
+    )
+
+
+def declarations_text(text: str) -> str:
+    """The text verifier declarations are read from: visible, and not code.
+
+    Claims are read generously (an odd row fails rather than vanishing);
+    declarations are read strictly (anything shown as code counts for nothing).
+    """
+    return strip_indented_code(_visible(text))
+
+
 def strip_code_blocks(text: str) -> str:
     """Blank fenced code blocks, keeping line structure (CommonMark fence rules).
 
@@ -360,12 +389,16 @@ def parse_claim_rows(verification_text: str) -> list[ClaimRow]:
             continue
         claim_col, status_col = columns
         for row in body:
-            if max(claim_col, status_col) >= len(row):
+            if claim_col >= len(row):
                 continue
             ids = _claim_ids(row[claim_col])
             raw_claim = _clean_cell(row[claim_col])
+            # A row cut short before its status cell is kept with an unreadable
+            # status, so strict mode fails it instead of silently skipping it.
+            raw_status = row[status_col] if status_col < len(row) else ""
+            status = _status(raw_status) if raw_status else None
             if ids or raw_claim:
-                rows.append(ClaimRow(ids, _status(row[status_col]), row[status_col], raw_claim))
+                rows.append(ClaimRow(ids, status, raw_status, raw_claim))
     return rows
 
 
@@ -391,7 +424,7 @@ def parse_authorship_rows(verification_text: str) -> dict[str, list[tuple[str, s
 
     Only tables under a visible ``## Claim authorship`` heading are read.
     """
-    section = _h2_section(_visible(verification_text), "claim authorship")
+    section = _h2_section(declarations_text(verification_text), "claim authorship")
     out: dict[str, list[tuple[str, str]]] = {}
     for _headers, body in _tables(section):
         for row in body:
@@ -415,7 +448,7 @@ def has_authorship_section(verification_text: str) -> bool:
     return any(
         line.strip().startswith("## ")
         and line.strip()[3:].strip().casefold().startswith("claim authorship")
-        for line in _visible(verification_text).splitlines()
+        for line in declarations_text(verification_text).splitlines()
     )
 
 

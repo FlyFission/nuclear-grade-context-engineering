@@ -758,3 +758,23 @@ def test_block_start_with_a_pipe_ends_the_previous_table(tmp_path, between):
     messages: list[str] = []
     check_two_party(tmp_path, messages)
     assert any("C-001" in m for m in messages), (between, messages)
+
+
+@pytest.mark.parametrize(
+    "opening, closing",
+    [("<pre>\n", "</pre>\n"), ("<PRE class='x'>\n", "</PRE>\n"), ("<details>\n", "</details>\n"), ("<div>\n", "</div>\n")],
+)
+def test_authorship_inside_raw_html_does_not_count(tmp_path, opening, closing):
+    # Codex on 684fd21: an authorship example inside <pre> still supplied verifiers.
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n", opening + AUTH_HEADER + "| C-001 | ben | carol |\n" + closing)
+    messages: list[str] = []
+    check_two_party(pkt, messages)
+    assert any("C-001" in m and "no authorship or custody row" in m for m in messages), opening
+
+
+def test_authorship_after_a_closed_html_block_still_counts(tmp_path):
+    prefix = "<pre>example</pre>\n\n<details><summary>x</summary>hidden</details>\n\n"
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n", prefix + AUTH_HEADER + "| C-001 | ben | carol |\n")
+    messages: list[str] = []
+    check_two_party(pkt, messages)
+    assert messages == []

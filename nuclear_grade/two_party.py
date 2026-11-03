@@ -21,7 +21,8 @@ The check reads two declarations, whichever the packet carries:
        | REQ-001  | agent:claude    | ben         |
 
    Its verifier must be neither the evidence author nor any change actor the
-   packet declares.
+   packet declares. Columns are found by header (claim, author, verifier), in
+   any order; a table whose headers do not name all three declares nothing.
 
 The parser is asymmetric on purpose, so every parsing mistake fails closed:
 
@@ -454,15 +455,39 @@ def parse_authorship_rows(verification_text: str) -> dict[str, list[tuple[str, s
     """
     section = _h2_section(declarations_text(verification_text), "claim authorship")
     out: dict[str, list[tuple[str, str]]] = {}
-    for _headers, body in _tables(section):
+    for headers, body in _tables(section):
+        columns = _authorship_columns(headers)
+        if columns is None:
+            continue  # unrecognized headers declare nothing (fails closed)
+        claim_col, author_col, verifier_col = columns
         for row in body:
-            if len(row) < 3:
+            if max(columns) >= len(row):
                 continue
-            for cid in _claim_ids(row[0]):
-                pair = (row[1], row[2])
+            for cid in _claim_ids(row[claim_col]):
+                pair = (row[author_col], row[verifier_col])
                 if pair not in out.setdefault(cid, []):
                     out[cid].append(pair)
     return out
+
+
+def _authorship_columns(headers: list[str]) -> tuple[int, int, int] | None:
+    """(claim, evidence author, verifier) columns, found by header, or None.
+
+    Roles come from the header text, never from position, so reordering the
+    columns cannot turn the evidence author into the verifier.
+    """
+    labels = [_norm(h) for h in headers]
+
+    def find(*words: str) -> int | None:
+        hits = [i for i, h in enumerate(labels) if any(w in h for w in words)]
+        return hits[0] if len(hits) == 1 else None
+
+    claim = find("claim", "requirement")
+    verifier = find("verif", "witness", "checked by", "reviewed by")
+    author = find("author", "generated", "produced")
+    if None in (claim, author, verifier) or len({claim, author, verifier}) < 3:
+        return None
+    return claim, author, verifier
 
 
 def parse_authorship(verification_text: str) -> dict[str, tuple[str, str]]:

@@ -644,6 +644,49 @@ def planes():
     f.save()
 
 
+# =========================================================================
+# 10. Verification depth and method
+# =========================================================================
+def verification_ladder():
+    f = Fig("verification-ladder", 1100, 560, "Verification depth and method",
+            "Five rungs rise left to right. Self-check examines your own action and catches slips. A check follows "
+            "the originator's path and catches execution errors. Design review judges the basis itself and catches "
+            "a wrong method or input. An alternate method reaches the result a second way and catches the first "
+            "method's blind spot. A qualification test runs the real artifact under worst-case conditions. The first "
+            "two confirm work was executed as planned; the last three confirm it is right for its purpose. Mode "
+            "minimums: Quick needs a self-check; Standard needs a check plus a design review or alternate method by "
+            "someone other than the originator; Nuclear needs a design review plus an alternate method or "
+            "qualification test, a verifier with freedom of thought from the performer, and a human.",
+            "Verification · depth and method")
+    f.text(28, 74, "Independent review: one result reached by two or more methods that can fail differently, "
+           "at least one of them by someone other than the originator.", "call", "acc", anchor="start")
+    rungs = [
+        ("Self-check", "your own action\ncatches slips", "ext"),
+        ("Check", "the originator's path\ncatches execution errors", "step"),
+        ("Design review", "the basis itself\ncatches wrong method, input", "indep"),
+        ("Alternate method", "a second route, compared\ncatches method-level errors", "indep"),
+        ("Qualification test", "the real artifact, worst case\ncatches wrong predictions", "indep"),
+    ]
+    W, H, STEP, X0, Y0, PITCH = 184, 68, 52, 40, 330, 208
+    f.group(28, 240, 414, 176, "Checking · executed as planned")
+    f.group(446, 96, 626, 320, "Verifying · right for its purpose", label_fill="lnk")
+    boxes = []
+    for i, (name, sub, kind) in enumerate(rungs):
+        x, y = X0 + i * PITCH, Y0 - i * STEP
+        boxes.append(f.box(x, y, W, H, name, sub, kind=kind, eyebrow=f"rung {i}"))
+    for a, b in zip(boxes, boxes[1:], strict=False):
+        f.arrow([(a["x"] + a["w"] - 28, a["y"]), (a["x"] + a["w"] - 28, b["cy"]), b["l"]], r=6)
+    f.group(28, 436, 1044, 104, "Minimum for a load-bearing claim, by mode", cls="band")
+    modes = [
+        ("Quick", "rung 0, recorded"),
+        ("Standard", "rung 1 + rung 2 or 3\nnot by the originator"),
+        ("Nuclear / Tier 0", "rung 2 + rung 3 or 4 · a human\nverifier with freedom of thought"),
+    ]
+    for i, (name, sub) in enumerate(modes):
+        f.box(52 + i * 344, 466, 316, 56, name, sub, kind="store")
+    f.save()
+
+
 def main():
     lifecycle(False)
     lifecycle(True)
@@ -658,6 +701,7 @@ def main():
     evidence_chain()
     independence()
     planes()
+    verification_ladder()
     print(f"wrote {len(list(OUT.glob('*.svg')))} SVGs to {OUT}")
 
 

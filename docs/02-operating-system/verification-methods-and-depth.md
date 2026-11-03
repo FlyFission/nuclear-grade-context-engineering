@@ -39,6 +39,27 @@ originator-separation rule. It does not take a check/verify distinction from it.
 Each rung names what is examined and what it can catch. Higher rungs do not replace lower ones;
 they catch different failures.
 
+<p align="center"><img src="../assets/diagrams/verification-ladder.svg" alt="Verification depth and method: five rungs from self-check to qualification test, with the minimum per mode" width="100%"></p>
+
+<details>
+<summary>Mermaid source (text version)</summary>
+
+```mermaid
+flowchart LR
+    subgraph CHECK["Checking: executed as planned"]
+      R0[Rung 0 · Self-check<br/>your own action] --> R1[Rung 1 · Check<br/>the originator's path]
+    end
+    subgraph VERIFY["Verifying: right for its purpose"]
+      R2[Rung 2 · Design review<br/>the basis itself] --> R3[Rung 3 · Alternate method<br/>a second route, compared] --> R4[Rung 4 · Qualification test<br/>the real artifact, worst case]
+    end
+    R1 --> R2
+    Q[Quick: rung 0, recorded]
+    S[Standard: rung 1 + rung 2 or 3, not by the originator]
+    N[Nuclear / Tier 0: rung 2 + rung 3 or 4, a human verifier with freedom of thought]
+```
+
+</details>
+
 | Rung | Method | What is examined | Catches | Cannot catch | Software / agent form |
 |---|---|---|---|---|---|
 | 0 | **Self-check** | your own action or output, by you | slips and lapses at the point of action | anything your framing hides | STAR before a risky command; re-reading your own diff |

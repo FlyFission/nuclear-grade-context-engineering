@@ -44,7 +44,7 @@ they catch different failures.
 | 0 | **Self-check** | your own action or output, by you | slips and lapses at the point of action | anything your framing hides | STAR before a risky command; re-reading your own diff |
 | 1 | **Check** | the originator's work, along the originator's path | execution errors: wrong input copied, off-by-one, step skipped | a wrong method, a wrong assumption, a wrong requirement | a second party re-runs the author's tests and reads the diff against the plan |
 | 2 | **Design review** (deep review) | the basis: requirements, inputs, assumptions, method choice, and whether the conclusion follows | a correct calculation of the wrong thing; unstated assumptions; a method that does not fit the purpose | defects that only appear when the thing runs | a reviewer given the basis and the candidate, *not* the author's conclusion, who must state whether the approach is right |
-| 3 | **Alternate method** | the same result, reached by a different route, then compared | errors common to the original method, including ones a reviewer would also read past | errors common to *both* methods (name the common cause) | an independent oracle or second implementation; a property test beside example tests; a hand derivation against the code's output; a second primary source for a fact; a different model family for a judgment |
+| 3 | **Alternate method** | the same result, reached by a different route, then compared | errors common to the original method, including ones a reviewer would also read past | errors common to *both* methods (name the common cause) | an independent oracle or second implementation; a property test beside example tests; a hand derivation against the code's output; a second primary source for a fact; a different model family for a judgment, counted as partial diversity only, since LLM errors are strongly correlated across families |
 | 4 | **Qualification test** | the real artifact under the most adverse credible conditions | behavior the source and the review both predicted wrongly | conditions nobody thought to include | run the produced artifact on worst-case, boundary, and fault-injected inputs ([`verifying-final-artifacts`](../../skills/verifying-final-artifacts/SKILL.md), [`stress-testing-agent-changes`](../../skills/stress-testing-agent-changes/SKILL.md)) |
 
 Appendix B's third example is "a suitable testing program." It adds that when a test program is used
@@ -87,6 +87,34 @@ Worked contrast, for the claim "the retry budget caps total wait at 30 s":
   caller times out at 20 s. The check could not have found this.
 - *Alternate method:* a property test sums the actual sleeps over random seeds and jitter. Finds
   jitter can push the total to 34 s. Neither reader found this.
+
+## Two checkers: compare, then adjudicate
+
+When two parties check the same work, have each reach a result on their own, then compare the
+results and resolve every disagreement against the source. Do not have one read the other's answer
+and agree with it. Independence is what makes a disagreement visible. In a randomized study of data
+abstraction for systematic reviews, abstractor experience mattered little and adjudication is what
+reduced errors (E et al., *Research Synthesis Methods*, 2020). Agreement between two checkers is
+evidence they apply the same rule, not that the rule gives the right answer. Two checkers can agree
+on the same wrong answer.
+
+## When you cannot check everything
+
+- **Define the error first.** Write down what counts as wrong before looking, so the definition
+  cannot drift to fit what you find.
+- **Check every critical item.** A wrong legal citation, money amount, or security setting is one
+  failure too many, whatever the sample says. Sample only the rest, at random.
+- **Report a clean sample as a bound, not as "all correct".** If n randomly chosen items all pass,
+  the one-sided 95% upper bound on the error rate is 1 − 0.05^(1/n), about 3/n. That is 5% for 59
+  clean items, 1% for 299, and about 53% for 4. Four clean spot-checks show the method ran, not that
+  the work is accurate.
+- **Split the results by kind.** A good overall rate can hide a category that is failing. Report
+  critical items, each source type, and each field separately when they differ.
+- **Measure the checker before relying on it.** Mix known-bad and known-good items into its work,
+  unlabeled, and record how many bad items it flags and how many good items it wrongly flags. A
+  checker tested only on bad items tells you nothing about false alarms, and false alarms dominate
+  when real errors are rare. The repo does not yet tool this; it is the method for qualifying an agent
+  checker ([`independence-architecture.md`](independence-architecture.md), "Qualify what you rely on").
 
 ## Graded by mode
 
@@ -139,7 +167,9 @@ alternate or simplified calculational methods, a suitable testing program, with 
 testing under the most adverse design conditions when testing stands in for the others) and the
 originator-separation rule from 10 CFR 50 Appendix B, Criterion III; the peer-check, concurrent
 verification, independent verification ("freedom of thought from the performer"), and peer review
-definitions from DOE-HDBK-1028-2009 Volume 2. Both are mapped in
+definitions from DOE-HDBK-1028-2009 Volume 2; correlated errors across LLMs from Kim et al. (ICML
+2025); and adjudication of independent checks from E et al. (*Research Synthesis Methods*, 2020).
+The zero-failure bound is elementary binomial arithmetic. All are mapped in
 [`../00-standards-foundation/source-map.md`](../00-standards-foundation/source-map.md); quotations were
 checked against the eCFR text and the DOE handbook PDF on 2026-11-03. This page borrows vocabulary;
 it does not claim to meet either source.

@@ -20,8 +20,8 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 | REQ-002 | local proof | alternate method | Validator output for every packet compared byte for byte against a `main` worktree, default and `--strict-custody` | 57 of 57 identical in both modes | pass | V-4 | none |
 | REQ-003 | source claim | alternate method | Quotes compared across two independent copies of App B; the HDBK quote taken from the DOE PDF; re-fetched by the reviewer | Exact match | pass | V-5, V-8 | The HDBK was checked against one copy (DOE's own PDF) only |
 | REQ-004 | local proof | deterministic test | Contract, parity, CLI, and public-doc tests; `doctor`; `tokens`; count grep; rendered diagram viewed | All green; every stated count is 31 | pass | V-1, V-6 | No efficacy measurement for the new skill |
-| REQ-005 | local proof | check | Orchestrator spot-checked 4 load-bearing audit claims against source files | Each spot-check matches | pass | V-7 | The remaining audit rows are unchecked by a second party (`gap` below) |
-| REQ-005a | local proof | check | Remaining audit rows | Second-party check | gap | `../../../evals/skill-catalog-audit/2026-11-03.md` | Owner to review before any merge packet is opened |
+| REQ-005 | local proof | check | Orchestrator spot-checked 4 load-bearing audit claims against source files | Each spot-check matches | pass | V-7 | Covers only that the audit exists, cites evidence, and changes nothing. Four clean spot-checks bound the audit's error rate only below about 53% (95%), so its accuracy is carried as REQ-005a |
+| REQ-005a | local proof | check | Remaining audit rows, which drive the merge decisions | Each merge re-tested by its own scenario evaluation before any skill is removed | gap | `../../../evals/skill-catalog-audit/2026-11-03.md` | Owner to review before any merge packet is opened |
 
 ## Verification type guide
 
@@ -70,6 +70,16 @@ Its design judgments and skill review were re-reading, so they count as a check,
 | R-10 | not raised | A falsely declared classification (case 42) cannot be detected from the record | n/a | documented limit |
 
 After the fixes, the reviewer's probe script gives: 10–16, 20–21, 30–40 and 60 fail strict; 50, 51 and 62 pass; 52 and 61 fail for the right reason, the honest self-check. Default and `--strict-custody` output for all 57 pre-existing packets is still byte-identical to `main`. Under `--two-party`, 56 fail and 1 passes. The pass is `trust-propagation-two-party`, which declares a `## Claim authorship` table with `maintainer-at-merge` as verifier.
+
+## Near miss during build (OPEX)
+
+While adding the source-map row for the adjudication study, the author wrote author names from memory
+("Mathes, Klassen, and Pieper (or as listed)") before reading the record. The check on the next step
+found that PubMed's page carried no author meta tags. The author list was then taken from NCBI's
+E-utilities record (E, Saldanha, Canner, Schmid, Le, Li) and corrected before commit. This is exactly
+the failure `checking-facts` names ("I know this"), and it was caught only because the second lookup was
+done. Lesson carried into the skill: a citation's metadata is a fact, and it gets the same primary-source
+read as its content.
 
 ## Evidence custody and coupling
 

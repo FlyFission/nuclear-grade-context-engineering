@@ -41,7 +41,7 @@ Boundary: `checking-source-claims` asks whether a citation is *worded* honestly 
 ## Process
 
 1. Extract each assertion. Type it: quantity, quote, date or version, behavior, attribution, or current state.
-2. Mark the load-bearing ones: a decision, claim, or public statement fails if they are wrong.
+2. Mark the load-bearing ones: a decision, claim, or public statement fails if they are wrong. If there are more facts than you can check, define what counts as an error first, check every load-bearing fact, and sample the rest at random. Report a clean sample of n as an upper error bound of about 3/n, not as "all correct".
 3. Find the primary source, the origin rather than a page about it. Record a locator: URL or path, section or line, version, and date accessed.
 4. Read it this pass. Memory, training data, a snippet, an LLM summary (including your own earlier turn), and the citing doc's paraphrase are leads.
 5. Confirm by a second means that cannot share the first's common cause: an independent authoritative copy; running the code or calling the API against the docs; recomputing a number from raw data another way; an exact-string match for a quote against a second, independently published copy; a minimal reproduction at the pinned version. Re-reading the same copy is a check, not a second means. Two pages repeating one upstream are one source. Two model answers are one source.
@@ -71,9 +71,12 @@ Boundary: `checking-source-claims` asks whether a citation is *worded* honestly 
 
 - "I know this." Memory is a lead; read the source.
 - "Two sources agree." Check they do not share one upstream.
+- "A second model confirmed it." LLM errors are strongly correlated across families; that is partial diversity at best.
+- "Every fact I checked was right." Four clean checks bound the error rate only below about 53%.
 - "It is in our own docs." Your docs can carry a propagated error.
 - "The docs say so." Docs drift from behavior; for behavior, run it.
 - "It is a minor number." Then label it; do not assert it.
+- "It is just the citation." Authors, dates, and titles are facts too; read them from the record.
 
 ## Red Flags
 

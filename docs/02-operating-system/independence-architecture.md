@@ -40,6 +40,13 @@ family, a different mechanism (a test, a type check, static analysis), or a huma
 cannot name the axis you varied, treat the two checks as one. This is the failure-mode-level
 reading of the control stack in [`configuration-management.md`](configuration-management.md).
 
+A different model family is the weakest of those axes. In a study of more than 350 LLMs, when two
+models both erred on one leaderboard dataset they gave the same wrong answer 60% of the time.
+Larger, more accurate models were *more* correlated, even across architectures and providers (Kim
+et al., ICML 2025). "Model A extracts, model B checks" can confidently accept the same error. Prefer
+a different mechanism or a human for a load-bearing check, and count a second model as partial
+diversity at best.
+
 ## Decomposing checks: when two cheap checks replace one expensive check
 
 It is legitimate to satisfy a high-rigor requirement with two lower-rigor checks — but only
@@ -95,7 +102,8 @@ it runs, or whether its verdict is accepted.*
 Original Nuclear-grade operating doc. Concept lineage: the three independence axes
 (technical, managerial, financial) from NASA SWE-141; tool/agent qualification proportional
 to reliance from NASA SWE-136; the diversity taxonomy from NUREG/CR-6303; independent,
-diverse protection from NIST SP 800-160 Vol. 1/2; and independent verification from
-DOE-HDBK-1028-2009 — all mapped in
+diverse protection from NIST SP 800-160 Vol. 1/2; independent verification from
+DOE-HDBK-1028-2009; and correlated errors across LLMs from Kim et al., "Correlated Errors in Large
+Language Models" (ICML 2025) — all mapped in
 [`../00-standards-foundation/source-map.md`](../00-standards-foundation/source-map.md). No
 compliance claim is made.

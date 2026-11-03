@@ -20,7 +20,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 | REQ-002 | local proof | deterministic test / eval | same test: a prose edit, ordinary code, an ordinary test, ordinary CLI text, a generated command card | each stays at `none` | pass | E-001 | none |
 | REQ-003 | local proof | deterministic test / eval | same test: an assurance claim in README, an `AGENTS.md` edit, an edit to an existing record | Standard, Quick, Quick | pass | E-001 | claim detection is heuristic (engine record) |
 | REQ-004 | local proof | deterministic test / eval | `test_ci_and_gate_rules_cannot_be_overridden` | only `ci` and `gate` are top-mode; neither is overridable | pass | E-001 | none |
-| REQ-005 | local proof | inspection | the `dependency_lane` block names `dependabot[bot]`, `.github/workflows/**` and `pyproject.toml`; both patterns match tracked files; lane behavior is tested in the engine record | lane configured | pass | E-002 | no Dependabot config exists yet |
+| REQ-005 | local proof | inspection | the `dependency_lane` block names `dependabot[bot]`, `.github/workflows/**` and `pyproject.toml`; both patterns match tracked files; lane behavior is tested in the engine record | lane configured | pass | E-002 | `.github/dependabot.yml` opens GitHub Actions bumps monthly and pip security updates only; the lane has not yet been observed on a real Dependabot PR |
 | BT-001 | local proof | deterministic test / eval | backtest of this exact file over the 49 first-parent commits ending at `31e0a9e` | counts recorded; shortfalls listed | pass | E-003 | owner labels needed |
 
 ## Evidence custody and coupling

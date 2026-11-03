@@ -18,7 +18,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 |---|---|---|---|---|---|---|---|
 | REQ-001 | local proof | deterministic test / eval | `tests/test_repo_policy.py` representative-path cases for hooks, CI, validators, trust tests, a mode-owning skill, `pyproject.toml`, a model ID in code, gate wiring in the CLI, and the two-party validator `ng_validate.py` delegates to | each gets its decided mode | pass | E-001 | none |
 | REQ-002 | local proof | deterministic test / eval | same test: a prose edit, ordinary code, an ordinary test, ordinary CLI text, a generated command card | each stays at `none` | pass | E-001 | none |
-| REQ-003 | local proof | deterministic test / eval | same test: an assurance claim in README, an `AGENTS.md` edit, an edit to the root `CLAUDE.md`, an edit to an existing record | Standard, Quick, Quick, Quick | pass | E-001 | claim detection is heuristic (engine record) |
+| REQ-003 | local proof | deterministic test / eval | same test: an assurance claim in README, an `AGENTS.md` edit, an edit to the root `CLAUDE.md`, an edit to an existing record, an assurance claim in a nested README, an efficacy number in an eval report, a claim in a generated command card | Standard, Quick, Quick, Quick, Standard, Standard, none | pass | E-001 | claim detection is heuristic (engine record) |
 | REQ-004 | local proof | deterministic test / eval | `test_ci_and_gate_rules_cannot_be_overridden` | only `ci` and `gate` are top-mode; neither is overridable | pass | E-001 | none |
 | REQ-005 | local proof | inspection | the `dependency_lane` block names `dependabot[bot]`, `.github/workflows/**` and `pyproject.toml`; both patterns match tracked files; lane behavior is tested in the engine record | lane configured | pass | E-002 | `.github/dependabot.yml` opens GitHub Actions bumps monthly and pip security updates only; the lane has not yet been observed on a real Dependabot PR |
 | BT-001 | local proof | deterministic test / eval | backtest of this exact file over the 49 first-parent commits ending at `31e0a9e` | counts recorded; shortfalls listed | pass | E-003 | owner labels needed |
@@ -51,16 +51,16 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 
 | Method | Command / review / eval | Environment | Result | Evidence link |
 |---|---|---|---|---|
-| Policy tests | `python -m pytest -q tests/test_repo_policy.py` | Linux container, Python 3.11 | pass (23 tests) | E-001 |
+| Policy tests | `python -m pytest -q tests/test_repo_policy.py` | Linux container, Python 3.11 | pass (26 tests) | E-001 |
 | Full suite | `python -m pytest -q` | same | pass (exit 0) | CI run on the PR |
 | Lint and repo checks | `python -m ruff check .`; `python tools/ng.py doctor .`; `python tools/ng.py tokens .` | same | pass | CI run on the PR |
 | Rule table | `python tools/ng.py required-mode --policy-ref WORKTREE --print-table` | same | 12 rules rendered | E-001 |
 | Path-match check | each pattern in the policy against `git ls-files` | same | all match except `**requirements*.txt`, `.claude/**`, `.nuclear/gate-policy.json`, kept so that creating those files is caught | E-002 |
-| Backtest | `python tools/ng_policy_backtest.py --repo <checkout of 31e0a9e> --policy .nuclear/consequence-policy.json --last 49` | same | 22 none, 11 quick, 13 standard, 3 standard+authority | E-003 |
+| Backtest | `python tools/ng_policy_backtest.py --repo <checkout of 31e0a9e> --policy .nuclear/consequence-policy.json --last 49` | same | 21 none, 10 quick, 15 standard, 3 standard+authority | E-003 |
 
 ### Backtest shortfalls
 
-27 of the 49 commits need a record. For 13 of them, the commit's own record was missing or declared a lower mode, so an enforcing gate would have failed them:
+28 of the 49 commits need a record. For 13 of them, the commit's own record was missing or declared a lower mode, so an enforcing gate would have failed them:
 
 | Commit | Required | Declared | Rules |
 |---|---|---|---|
@@ -95,6 +95,7 @@ The `ws1-consequence-engine` verification recorded a backtest of 22 none, 12 qui
 | The root `CLAUDE.md` is missed because `**/CLAUDE.md` matches only nested files (review finding) | `CLAUDE.md` case | Quick | E-001 |
 | A validator's delegated module is unprotected: `ng_validate.py` calls `two_party.check_two_party` (review finding) | `nuclear_grade/two_party.py` and `tests/test_two_party.py` cases | Standard | E-001 |
 | A validator's own test suite is left at the floor: receipt, release, badge, MCP server (review finding) | `tests/test_receipt.py` case; `test_every_validator_with_a_test_suite_has_that_suite_in_trust_tests` | Standard; future validators checked | E-001 |
+| A claim in public markdown outside the listed doc trees, such as `challenge/README.md` or an eval report (review finding) | claim rules now cover `**.md` except records, `CHANGELOG.md` and generated cards; nested README and eval-report cases | Standard; backtest adds 2 Standard commits, both already declared Standard, so no new shortfall | E-001, E-003 |
 
 ## AI-assisted work checks
 

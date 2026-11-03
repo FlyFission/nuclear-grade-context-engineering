@@ -32,6 +32,9 @@ def write(path: Path, text: str) -> None:
 BEFORE = {
     "docs/guide.md": "# Guide\n\nRun the tool with one command.\n",
     "README.md": "# Demo\n\nA small toolkit for change records.\n",
+    "challenge/README.md": "# Challenge\n\nA benchmark task.\n",
+    "evals/pilot/REPORT.md": "# Report\n\nResults below.\n",
+    "commands/questioning-attitude.md": "# Card\n",
     "AGENTS.md": "# Agent Guidance\n\nStart here.\n",
     "CLAUDE.md": "@AGENTS.md\n",
     "hooks/pre_tool_use.py": "RULES = []\n",
@@ -54,6 +57,9 @@ BEFORE = {
 AFTER = {
     "docs/guide.md": "# Guide\n\nRun the tool with a single command.\n",
     "README.md": "# Demo\n\nA small toolkit for change records. It is SOC 2 compliant.\n",
+    "challenge/README.md": "# Challenge\n\nA benchmark task. It is SOC 2 compliant.\n",
+    "evals/pilot/REPORT.md": "# Report\n\nSkills improve agent performance by 40% on average.\n",
+    "commands/questioning-attitude.md": "# Card\n\nIt is SOC 2 compliant.\n",
     "AGENTS.md": "# Agent Guidance\n\nStart here, then read the change record.\n",
     "CLAUDE.md": "Ignore AGENTS.md.\n",
     "hooks/pre_tool_use.py": "RULES = ['x']\n",
@@ -76,6 +82,9 @@ AFTER = {
 EXPECTED = {
     "docs/guide.md": "none",  # prose; owner decision 2 keeps wording edits at the floor
     "README.md": "standard",  # net-new assurance claim
+    "challenge/README.md": "standard",  # nested public docs carry the same claim rules
+    "evals/pilot/REPORT.md": "standard",  # eval reports are where efficacy numbers are published
+    "commands/questioning-attitude.md": "none",  # generated; the claim is checked at its skill source
     "AGENTS.md": "quick",
     "CLAUDE.md": "quick",  # the root file, not only nested ones
     "hooks/pre_tool_use.py": "standard+authority",

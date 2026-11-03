@@ -13,7 +13,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 if __package__:
-    from .two_party import ClaimParty, check_two_party
+    from .two_party import ClaimParty, check_two_party, strip_indented_code
 else:
     # Loaded by file path outside the package (challenge/score.py does this to
     # pin the validator it scores with). Load the sibling module from the same
@@ -30,6 +30,7 @@ else:
     _two_party_spec.loader.exec_module(_two_party)
     ClaimParty = _two_party.ClaimParty
     check_two_party = _two_party.check_two_party
+    strip_indented_code = _two_party.strip_indented_code
 
 PLACEHOLDER_MARKER = "NUCLEAR-GRADE-PLACEHOLDER"
 # A packet deliberately abandoned with a recorded rationale carries this marker.
@@ -421,9 +422,9 @@ def _check_evidence_custody(
     `pass` claim has a declared second party without re-parsing the tables.
     """
 
-    # Read only what a reader sees: a commented-out or fenced custody section is
-    # an illustration, not a record, and must not supply second parties.
-    text = _strip_html_comments(_strip_code_blocks(text))
+    # Read only what a reader sees: a commented-out, fenced, or indented custody
+    # section is an illustration, not a record, and must not supply second parties.
+    text = strip_indented_code(_strip_html_comments(_strip_code_blocks(text)))
     heading = "## evidence custody and coupling"
     if heading not in text.lower():
         if required:

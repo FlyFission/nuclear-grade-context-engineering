@@ -178,6 +178,7 @@ def build_receipt(
     *,
     strict_custody: bool,
     strict_authority: bool,
+    strict_two_party: bool = False,
     validator_version: str,
     now: datetime | None = None,
 ) -> dict[str, Any]:
@@ -192,7 +193,11 @@ def build_receipt(
         "mode": mode if mode in (QUICK_MODE, STANDARD_MODE) else None,
         "ok": result.ok,
         "messages": list(result.messages),
-        "strict": {"custody": strict_custody, "authority": strict_authority},
+        "strict": {
+            "custody": strict_custody,
+            "authority": strict_authority,
+            "two_party": strict_two_party,
+        },
         "evidence_statuses": statuses,
         "open_evidence_items": sum(statuses[status] for status in OPEN_STATUSES),
         "inputs": {"algorithm": "sha256", "files": files, "digest": _set_digest(files)},

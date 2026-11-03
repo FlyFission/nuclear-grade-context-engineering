@@ -1,0 +1,66 @@
+{
+ "31a": {
+  "precision": 75.3,
+  "recall": 80.4,
+  "m4_recall": "7/8",
+  "m4_fp": "2/172",
+  "per_original": {
+   "recording-a-known-good-version": [
+    4,
+    4
+   ],
+   "choosing-what-to-control": [
+    4,
+    5
+   ]
+  }
+ },
+ "31b": {
+  "precision": 76.6,
+  "recall": 76.6,
+  "m4_recall": "7/8",
+  "m4_fp": "1/172",
+  "per_original": {
+   "recording-a-known-good-version": [
+    4,
+    4
+   ],
+   "choosing-what-to-control": [
+    4,
+    5
+   ]
+  }
+ },
+ "30a": {
+  "precision": 74.6,
+  "recall": 78.0,
+  "m4_recall": "6/8",
+  "m4_fp": "3/172",
+  "per_original": {
+   "recording-a-known-good-version": [
+    4,
+    4
+   ],
+   "choosing-what-to-control": [
+    3,
+    5
+   ]
+  }
+ },
+ "30b": {
+  "precision": 73.7,
+  "recall": 74.2,
+  "m4_recall": "6/8",
+  "m4_fp": "5/172",
+  "per_original": {
+   "recording-a-known-good-version": [
+    4,
+    4
+   ],
+   "choosing-what-to-control": [
+    3,
+    5
+   ]
+  }
+ }
+}

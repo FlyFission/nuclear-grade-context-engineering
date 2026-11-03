@@ -367,6 +367,13 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Require and validate an evidence-conditioned decision-authority record for Standard packets.",
     )
+    validate_parser.add_argument(
+        "--two-party",
+        action="store_true",
+        help="Declared two-party integrity check: every `pass` claim in a Standard packet must name a "
+        "verifier distinct from its change actor (declared identities, not proof of independence). "
+        "Recommended for any Standard packet that contains a pass claim.",
+    )
     validate_parser.set_defaults(handler=handle_validate)
 
     doctor_parser = subcommands.add_parser("doctor", help="Check repo installation health.")
@@ -803,6 +810,7 @@ def handle_validate(args: argparse.Namespace) -> int:
         args.packet,
         require_custody=args.strict_custody,
         require_authority=args.strict_authority,
+        require_two_party=args.two_party,
     )
     if args.json:
         receipt = build_receipt(
@@ -810,6 +818,7 @@ def handle_validate(args: argparse.Namespace) -> int:
             result,
             strict_custody=args.strict_custody,
             strict_authority=args.strict_authority,
+            strict_two_party=args.two_party,
             validator_version=_validator_version(),
         )
         print(json.dumps(receipt, indent=2, ensure_ascii=False))

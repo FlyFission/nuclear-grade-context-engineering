@@ -1,0 +1,180 @@
+{"id": "S-001", "skills": [], "source": "agreed"}
+{"id": "S-002", "skills": ["rating-change-risk", "checking-what-a-change-affects"], "source": "agreed"}
+{"id": "S-003", "skills": ["organizing-project-folders"], "source": "agreed"}
+{"id": "S-004", "skills": ["double-checking-before-acting", "declaring-intent", "checking-what-a-change-affects"], "source": "agreed"}
+{"id": "S-005", "skills": ["recording-a-known-good-version", "staying-on-mission"], "source": "adjudicated"}
+{"id": "S-006", "skills": ["questioning-attitude"], "source": "adjudicated"}
+{"id": "S-007", "skills": ["checking-facts"], "source": "agreed"}
+{"id": "S-008", "skills": [], "source": "agreed"}
+{"id": "S-009", "skills": ["responding-to-incidents", "reporting-shared-defects"], "source": "adjudicated"}
+{"id": "S-010", "skills": ["learning-from-experience", "deciding-who-decides", "stress-testing-agent-changes"], "source": "agreed"}
+{"id": "S-011", "skills": ["handing-off-work", "questioning-attitude"], "source": "agreed"}
+{"id": "S-012", "skills": ["responding-to-incidents"], "source": "agreed"}
+{"id": "S-013", "skills": ["breaking-down-the-work"], "source": "agreed"}
+{"id": "S-014", "skills": ["double-checking-before-acting", "deciding-who-decides", "declaring-intent"], "source": "agreed"}
+{"id": "S-015", "skills": [], "source": "agreed"}
+{"id": "S-016", "skills": ["vetting-outside-code-and-models", "proving-claims"], "source": "agreed"}
+{"id": "S-017", "skills": ["checking-facts", "vetting-outside-code-and-models"], "source": "agreed"}
+{"id": "S-018", "skills": ["double-checking-before-acting", "rating-change-risk"], "source": "adjudicated"}
+{"id": "S-019", "skills": ["responding-to-incidents", "checking-what-a-change-affects"], "source": "adjudicated"}
+{"id": "S-020", "skills": [], "source": "agreed"}
+{"id": "S-021", "skills": ["responding-to-incidents"], "source": "agreed"}
+{"id": "S-022", "skills": ["deciding-who-decides", "rating-change-risk", "stress-testing-agent-changes"], "source": "agreed"}
+{"id": "S-023", "skills": ["breaking-down-the-work", "briefing-an-agent", "choosing-what-to-control"], "source": "adjudicated"}
+{"id": "S-024", "skills": ["responding-to-incidents", "double-checking-before-acting"], "source": "agreed"}
+{"id": "S-025", "skills": [], "source": "agreed"}
+{"id": "S-026", "skills": ["proving-claims"], "source": "agreed"}
+{"id": "S-027", "skills": ["checking-facts"], "source": "agreed"}
+{"id": "S-028", "skills": ["checking-release-readiness", "proving-claims"], "source": "agreed"}
+{"id": "S-029", "skills": ["responding-to-incidents", "learning-from-experience"], "source": "agreed"}
+{"id": "S-030", "skills": ["questioning-attitude", "checking-what-a-change-affects"], "source": "adjudicated"}
+{"id": "S-031", "skills": [], "source": "agreed"}
+{"id": "S-032", "skills": ["checking-legal-and-safety-wording", "rating-change-risk", "checking-facts"], "source": "adjudicated"}
+{"id": "S-033", "skills": ["checking-what-a-change-affects", "declaring-intent"], "source": "adjudicated"}
+{"id": "S-034", "skills": ["stress-testing-agent-changes", "deciding-who-decides", "double-checking-before-acting"], "source": "agreed"}
+{"id": "S-035", "skills": ["handing-off-work", "double-checking-before-acting"], "source": "agreed"}
+{"id": "S-036", "skills": ["proving-claims", "responding-to-incidents"], "source": "adjudicated"}
+{"id": "S-037", "skills": ["checking-facts"], "source": "agreed"}
+{"id": "S-038", "skills": ["checking-release-readiness"], "source": "agreed"}
+{"id": "S-039", "skills": ["reporting-shared-defects", "learning-from-experience"], "source": "agreed"}
+{"id": "S-040", "skills": [], "source": "agreed"}
+{"id": "S-041", "skills": ["questioning-attitude", "rating-change-risk"], "source": "agreed"}
+{"id": "S-042", "skills": [], "source": "agreed"}
+{"id": "S-043", "skills": ["proving-claims", "declaring-intent", "checking-what-a-change-affects"], "source": "agreed"}
+{"id": "S-044", "skills": ["checking-legal-and-safety-wording", "deciding-who-decides"], "source": "adjudicated"}
+{"id": "S-045", "skills": [], "source": "agreed"}
+{"id": "S-046", "skills": ["recording-what-an-agent-did", "stress-testing-agent-changes"], "source": "agreed"}
+{"id": "S-047", "skills": ["checking-facts"], "source": "agreed"}
+{"id": "S-048", "skills": ["responding-to-incidents", "checking-release-readiness", "learning-from-experience"], "source": "adjudicated"}
+{"id": "S-049", "skills": ["questioning-attitude"], "source": "adjudicated"}
+{"id": "S-050", "skills": ["tracking-deficiencies"], "source": "agreed"}
+{"id": "S-051", "skills": [], "source": "agreed"}
+{"id": "S-052", "skills": ["vetting-outside-code-and-models", "rating-change-risk"], "source": "agreed"}
+{"id": "S-053", "skills": ["vetting-outside-code-and-models", "checking-what-a-change-affects"], "source": "adjudicated"}
+{"id": "S-054", "skills": ["checking-what-a-change-affects", "declaring-intent", "double-checking-before-acting"], "source": "agreed"}
+{"id": "S-055", "skills": ["double-checking-before-acting"], "source": "adjudicated"}
+{"id": "S-056", "skills": ["verifying-final-artifacts"], "source": "agreed"}
+{"id": "S-057", "skills": ["checking-facts", "vetting-outside-code-and-models"], "source": "agreed"}
+{"id": "S-058", "skills": ["deciding-who-decides", "checking-release-readiness", "stress-testing-agent-changes"], "source": "agreed"}
+{"id": "S-059", "skills": ["responding-to-incidents", "learning-from-experience", "handing-off-work"], "source": "agreed"}
+{"id": "S-060", "skills": ["tracking-deficiencies", "learning-from-experience"], "source": "agreed"}
+{"id": "S-061", "skills": ["checking-release-readiness", "declaring-intent", "deciding-who-decides"], "source": "agreed"}
+{"id": "S-062", "skills": ["staying-on-mission"], "source": "agreed"}
+{"id": "S-063", "skills": ["proving-claims", "reviewing-code-quality", "checking-what-a-change-affects"], "source": "agreed"}
+{"id": "S-064", "skills": ["checking-facts"], "source": "agreed"}
+{"id": "S-065", "skills": ["proving-claims", "checking-release-readiness"], "source": "adjudicated"}
+{"id": "S-066", "skills": ["reporting-shared-defects", "learning-from-experience"], "source": "agreed"}
+{"id": "S-067", "skills": ["tracking-deficiencies", "choosing-what-to-control"], "source": "agreed"}
+{"id": "S-068", "skills": [], "source": "agreed"}
+{"id": "S-069", "skills": ["rating-change-risk", "questioning-attitude"], "source": "agreed"}
+{"id": "S-070", "skills": ["deciding-who-decides", "stress-testing-agent-changes"], "source": "adjudicated"}
+{"id": "S-071", "skills": ["responding-to-incidents", "double-checking-before-acting", "declaring-intent"], "source": "agreed"}
+{"id": "S-072", "skills": ["responding-to-incidents"], "source": "agreed"}
+{"id": "S-073", "skills": ["verifying-final-artifacts"], "source": "agreed"}
+{"id": "S-074", "skills": ["checking-facts"], "source": "agreed"}
+{"id": "S-075", "skills": [], "source": "agreed"}
+{"id": "S-076", "skills": ["reporting-shared-defects", "responding-to-incidents"], "source": "adjudicated"}
+{"id": "S-077", "skills": ["choosing-what-to-control", "organizing-project-folders"], "source": "agreed"}
+{"id": "S-078", "skills": [], "source": "agreed"}
+{"id": "S-079", "skills": ["rating-change-risk", "checking-what-a-change-affects", "declaring-intent"], "source": "agreed"}
+{"id": "S-080", "skills": ["deciding-who-decides", "checking-legal-and-safety-wording", "breaking-down-the-work"], "source": "agreed"}
+{"id": "S-081", "skills": ["declaring-intent", "deciding-who-decides", "double-checking-before-acting"], "source": "adjudicated"}
+{"id": "S-082", "skills": ["staying-on-mission"], "source": "agreed"}
+{"id": "S-083", "skills": ["proving-claims", "questioning-attitude"], "source": "agreed"}
+{"id": "S-084", "skills": ["checking-facts"], "source": "agreed"}
+{"id": "S-085", "skills": ["tracking-deficiencies", "checking-release-readiness"], "source": "agreed"}
+{"id": "S-086", "skills": [], "source": "agreed"}
+{"id": "S-087", "skills": [], "source": "agreed"}
+{"id": "S-088", "skills": [], "source": "agreed"}
+{"id": "S-089", "skills": ["rating-change-risk"], "source": "adjudicated"}
+{"id": "S-090", "skills": ["breaking-down-the-work", "checking-what-a-change-affects"], "source": "agreed"}
+{"id": "S-091", "skills": ["double-checking-before-acting", "declaring-intent"], "source": "agreed"}
+{"id": "S-092", "skills": [], "source": "agreed"}
+{"id": "S-093", "skills": ["proving-claims"], "source": "adjudicated"}
+{"id": "S-094", "skills": ["vetting-outside-code-and-models", "checking-facts"], "source": "adjudicated"}
+{"id": "S-095", "skills": ["checking-release-readiness"], "source": "agreed"}
+{"id": "S-096", "skills": ["tracking-deficiencies"], "source": "agreed"}
+{"id": "S-097", "skills": ["closing-stale-packets"], "source": "agreed"}
+{"id": "S-098", "skills": [], "source": "agreed"}
+{"id": "S-099", "skills": ["rating-change-risk"], "source": "agreed"}
+{"id": "S-100", "skills": ["breaking-down-the-work", "questioning-attitude", "vetting-outside-code-and-models"], "source": "adjudicated"}
+{"id": "S-101", "skills": ["vetting-outside-code-and-models", "checking-release-readiness", "declaring-intent"], "source": "adjudicated"}
+{"id": "S-102", "skills": ["staying-on-mission", "recording-a-known-good-version"], "source": "agreed"}
+{"id": "S-103", "skills": ["proving-claims"], "source": "agreed"}
+{"id": "S-104", "skills": ["checking-facts"], "source": "agreed"}
+{"id": "S-105", "skills": ["checking-release-readiness", "checking-what-a-change-affects"], "source": "agreed"}
+{"id": "S-106", "skills": ["learning-from-experience", "recording-what-an-agent-did"], "source": "agreed"}
+{"id": "S-107", "skills": ["learning-from-experience"], "source": "adjudicated"}
+{"id": "S-108", "skills": ["responding-to-incidents"], "source": "agreed"}
+{"id": "S-109", "skills": ["rating-change-risk", "questioning-attitude"], "source": "agreed"}
+{"id": "S-110", "skills": [], "source": "agreed"}
+{"id": "S-111", "skills": ["double-checking-before-acting", "checking-what-a-change-affects"], "source": "agreed"}
+{"id": "S-112", "skills": [], "source": "agreed"}
+{"id": "S-113", "skills": ["proving-claims"], "source": "agreed"}
+{"id": "S-114", "skills": ["checking-facts"], "source": "agreed"}
+{"id": "S-115", "skills": ["declaring-intent", "checking-release-readiness"], "source": "agreed"}
+{"id": "S-116", "skills": ["checking-facts", "learning-from-experience", "checking-legal-and-safety-wording"], "source": "agreed"}
+{"id": "S-117", "skills": ["learning-from-experience"], "source": "agreed"}
+{"id": "S-118", "skills": ["deciding-who-decides"], "source": "agreed"}
+{"id": "S-119", "skills": ["handing-off-work"], "source": "agreed"}
+{"id": "S-120", "skills": ["declaring-intent", "double-checking-before-acting"], "source": "agreed"}
+{"id": "S-121", "skills": ["checking-facts"], "source": "agreed"}
+{"id": "S-122", "skills": [], "source": "agreed"}
+{"id": "S-123", "skills": ["reporting-shared-defects", "learning-from-experience"], "source": "agreed"}
+{"id": "S-124", "skills": [], "source": "agreed"}
+{"id": "S-125", "skills": ["proving-claims"], "source": "agreed"}
+{"id": "S-126", "skills": [], "source": "agreed"}
+{"id": "S-127", "skills": ["deciding-who-decides", "declaring-intent", "checking-what-a-change-affects"], "source": "adjudicated"}
+{"id": "S-128", "skills": ["double-checking-before-acting", "deciding-who-decides"], "source": "agreed"}
+{"id": "S-129", "skills": ["handing-off-work"], "source": "agreed"}
+{"id": "S-130", "skills": ["stress-testing-agent-changes", "proving-claims"], "source": "agreed"}
+{"id": "S-131", "skills": ["checking-facts"], "source": "agreed"}
+{"id": "S-132", "skills": ["deciding-who-decides", "checking-release-readiness"], "source": "agreed"}
+{"id": "S-133", "skills": [], "source": "agreed"}
+{"id": "S-134", "skills": ["learning-from-experience"], "source": "agreed"}
+{"id": "S-135", "skills": [], "source": "agreed"}
+{"id": "S-136", "skills": ["rating-change-risk", "vetting-outside-code-and-models"], "source": "agreed"}
+{"id": "S-137", "skills": ["choosing-what-to-control", "recording-a-known-good-version"], "source": "agreed"}
+{"id": "S-138", "skills": ["deciding-who-decides", "staying-on-mission"], "source": "adjudicated"}
+{"id": "S-139", "skills": [], "source": "agreed"}
+{"id": "S-140", "skills": ["verifying-final-artifacts"], "source": "agreed"}
+{"id": "S-141", "skills": ["vetting-outside-code-and-models"], "source": "agreed"}
+{"id": "S-142", "skills": ["deciding-who-decides", "stress-testing-agent-changes", "checking-release-readiness"], "source": "agreed"}
+{"id": "S-143", "skills": ["reporting-shared-defects"], "source": "agreed"}
+{"id": "S-144", "skills": ["organizing-project-folders"], "source": "agreed"}
+{"id": "S-145", "skills": [], "source": "agreed"}
+{"id": "S-146", "skills": ["rating-change-risk", "checking-what-a-change-affects"], "source": "agreed"}
+{"id": "S-147", "skills": ["breaking-down-the-work", "organizing-project-folders"], "source": "agreed"}
+{"id": "S-148", "skills": ["checking-release-readiness", "double-checking-before-acting"], "source": "agreed"}
+{"id": "S-149", "skills": ["recording-a-known-good-version"], "source": "adjudicated"}
+{"id": "S-150", "skills": ["verifying-final-artifacts"], "source": "adjudicated"}
+{"id": "S-151", "skills": ["checking-facts"], "source": "agreed"}
+{"id": "S-152", "skills": ["proving-claims"], "source": "adjudicated"}
+{"id": "S-153", "skills": ["checking-what-a-change-affects", "learning-from-experience"], "source": "agreed"}
+{"id": "S-154", "skills": ["choosing-what-to-control", "deciding-who-decides"], "source": "agreed"}
+{"id": "S-155", "skills": ["handing-off-work", "questioning-attitude"], "source": "agreed"}
+{"id": "S-156", "skills": ["questioning-attitude"], "source": "adjudicated"}
+{"id": "S-157", "skills": ["breaking-down-the-work", "organizing-project-folders"], "source": "agreed"}
+{"id": "S-158", "skills": ["double-checking-before-acting", "declaring-intent"], "source": "agreed"}
+{"id": "S-159", "skills": [], "source": "agreed"}
+{"id": "S-160", "skills": ["verifying-final-artifacts"], "source": "agreed"}
+{"id": "S-161", "skills": ["checking-facts"], "source": "agreed"}
+{"id": "S-162", "skills": ["checking-release-readiness", "declaring-intent"], "source": "agreed"}
+{"id": "S-163", "skills": ["questioning-attitude", "proving-claims"], "source": "adjudicated"}
+{"id": "S-164", "skills": [], "source": "agreed"}
+{"id": "S-165", "skills": ["questioning-attitude"], "source": "adjudicated"}
+{"id": "S-166", "skills": ["stress-testing-agent-changes", "rating-change-risk"], "source": "agreed"}
+{"id": "S-167", "skills": ["breaking-down-the-work", "briefing-an-agent"], "source": "agreed"}
+{"id": "S-168", "skills": ["responding-to-incidents", "deciding-who-decides", "double-checking-before-acting"], "source": "agreed"}
+{"id": "S-169", "skills": ["staying-on-mission"], "source": "agreed"}
+{"id": "S-170", "skills": ["verifying-final-artifacts"], "source": "agreed"}
+{"id": "S-171", "skills": ["checking-facts"], "source": "agreed"}
+{"id": "S-172", "skills": ["checking-release-readiness", "tracking-deficiencies"], "source": "agreed"}
+{"id": "S-173", "skills": ["questioning-attitude", "vetting-outside-code-and-models"], "source": "agreed"}
+{"id": "S-174", "skills": ["questioning-attitude", "checking-what-a-change-affects"], "source": "adjudicated"}
+{"id": "S-175", "skills": [], "source": "agreed"}
+{"id": "S-176", "skills": ["checking-facts", "rating-change-risk"], "source": "adjudicated"}
+{"id": "S-177", "skills": ["questioning-attitude", "checking-what-a-change-affects", "declaring-intent"], "source": "agreed"}
+{"id": "S-178", "skills": ["staying-on-mission", "learning-from-experience"], "source": "adjudicated"}
+{"id": "S-179", "skills": [], "source": "agreed"}
+{"id": "S-180", "skills": ["checking-facts"], "source": "adjudicated"}

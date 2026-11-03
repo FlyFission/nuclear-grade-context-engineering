@@ -349,6 +349,95 @@ flowchart TB
 
 ---
 
+## 9. Verification depth and method
+
+How deep a check went and by what means. The first two rungs confirm the work was executed as planned; the last three confirm it is right for its purpose. An independent review reaches one result by two or more methods that can fail differently. Defined in [`02-operating-system/verification-methods-and-depth.md`](02-operating-system/verification-methods-and-depth.md).
+
+<p align="center"><img src="assets/diagrams/verification-ladder.svg" alt="Verification depth and method" width="100%"></p>
+
+<details>
+<summary>Mermaid source (text version)</summary>
+
+```mermaid
+flowchart LR
+    subgraph CHECK["Checking: executed as planned"]
+      R0[Rung 0 · Self-check<br/>your own action] --> R1[Rung 1 · Check<br/>the originator's path]
+    end
+    subgraph VERIFY["Verifying: right for its purpose"]
+      R2[Rung 2 · Design review<br/>the basis itself] --> R3[Rung 3 · Alternate method<br/>a second route, compared] --> R4[Rung 4 · Qualification test<br/>the real artifact, worst case]
+    end
+    R1 --> R2
+    Q[Quick: rung 0, recorded]
+    S[Standard: rung 1 + rung 2 or 3, not by the originator]
+    N[Nuclear / Tier 0: rung 2 + rung 3 or 4, a human verifier with freedom of thought]
+```
+
+</details>
+
+---
+
+## 10. How a skill is invoked
+
+Three ways in: the host matches the situation to a skill's name and one-line description (about 100 tokens each, always visible), the `using-nuclear-grade` router sends the change there, or a person runs the skill's `/ng-*` card. Only then does the full body load. What it leaves behind is a record the validator and CI can check, and a tier that decides whether work proceeds, stops, or goes to a human.
+
+<p align="center"><img src="assets/diagrams/skill-invocation.svg" alt="How a skill is invoked" width="100%"></p>
+
+<details>
+<summary>Mermaid source (text version)</summary>
+
+```mermaid
+flowchart LR
+    A[Auto-match on name + description] --> S
+    R[Router: using-nuclear-grade] --> S
+    C["Explicit /ng- command"] --> S
+    S[Skill body loads] --> D[Decision contract] --> Rec[Record in .nuclear/changes/] --> G[ng validate + CI gate] --> T{Tier: block / warn / observe}
+    T --> O[Proceed / stop / escalate to a human]
+```
+
+</details>
+
+---
+
+## 11. The skill catalog
+
+Every skill, grouped by the job it does, with the situation that calls for it. The figure is generated from the same list `tests/test_diagram_coverage.py` checks against `nuclear-grade.yaml`, so it cannot fall behind the catalog.
+
+<p align="center"><img src="assets/diagrams/skill-catalog.svg" alt="The skill catalog" width="100%"></p>
+
+<details>
+<summary>Mermaid source (text version)</summary>
+
+```mermaid
+flowchart LR
+    subgraph A["Start here"]
+      a1[using-nuclear-grade] --- a2[questioning-attitude *] --- a3[rating-change-risk *]
+    end
+    subgraph B["Before you act"]
+      b1[double-checking-before-acting *] --- b2[declaring-intent] --- b3[deciding-who-decides] --- b4[staying-on-mission *]
+    end
+    subgraph C["Records and versions"]
+      c1[creating-change-records] --- c2[closing-stale-packets] --- c3[choosing-what-to-control] --- c4[checking-what-a-change-affects] --- c5[recording-a-known-good-version] --- c6[recording-what-an-agent-did]
+    end
+    subgraph D["Evidence and verdicts"]
+      d1[proving-claims *] --- d2[checking-facts] --- d3[reviewing-code-quality] --- d4[verifying-final-artifacts] --- d5[stress-testing-agent-changes] --- d6[running-a-review-panel] --- d7[checking-release-readiness *]
+    end
+    subgraph E["Trust and public claims"]
+      e1[vetting-outside-code-and-models] --- e2[checking-legal-and-safety-wording] --- e3[checking-source-claims]
+    end
+    subgraph F["Delegation and structure"]
+      f1[briefing-an-agent] --- f2[handing-off-work] --- f3[breaking-down-the-work] --- f4[organizing-project-folders]
+    end
+    subgraph G["When it goes wrong"]
+      g1[responding-to-incidents] --- g2[learning-from-experience *] --- g3[tracking-deficiencies] --- g4[reporting-shared-defects]
+    end
+```
+
+`*` marks the Core 7.
+
+</details>
+
+---
+
 ## Source-lineage note
 
 These diagrams are an original visual restatement of the Nuclear-grade workflow, influenced by public lifecycle, configuration-management, and software-assurance sources mapped in [`00-standards-foundation/source-map.md`](00-standards-foundation/source-map.md). They do not create formal V&V, compliance, certification, safety, security, or regulatory adequacy.

@@ -57,6 +57,17 @@ STYLE = f"""
 }}
 """
 
+# Skill-family colors, one per family in SKILL_FAMILIES order. Emitted only into
+# figures that use them, so other figures' files do not change.
+FAMILY_STYLE = """
+.fam0{fill:#0E1A30} .fam1{fill:#B4531A} .fam2{fill:#2F5FB3} .fam3{fill:#2E7D45}
+.fam4{fill:#6B4BA8} .fam5{fill:#1F7A7A} .fam6{fill:#B23A48}
+@media (prefers-color-scheme: dark){
+.fam0{fill:#F4F7FC} .fam1{fill:#F2A066} .fam2{fill:#8FB0E6} .fam3{fill:#7BCB8E}
+.fam4{fill:#B9A2E8} .fam5{fill:#6FCFCF} .fam6{fill:#F08A96}
+}
+"""
+
 CHAR_SANS = 7.4  # avg advance at 13px, 600 weight
 CHAR_MONO = 6.0  # advance at 9.5-10px mono
 
@@ -140,11 +151,12 @@ class Fig:
 
     # ---- output ---------------------------------------------------------
     def render(self) -> str:
+        family_css = FAMILY_STYLE if any('class="fam' in n for n in self.nodes) else ""
         head = (
             f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {self.w} {self.h}" width="{self.w}" '
             f'height="{self.h}" role="img" aria-labelledby="t d">\n'
             f"<title id=\"t\">{escape(self.title)}</title>\n<desc id=\"d\">{escape(self.desc)}</desc>\n"
-            f"<style>{STYLE}</style>\n<defs>\n"
+            f"<style>{STYLE}{family_css}</style>\n<defs>\n"
             + "".join(
                 f'<marker id="{i}" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">'
                 f'<polygon class="{c}" points="0 0, 8 3, 0 6"/></marker>\n'
@@ -480,34 +492,55 @@ def skill_map(name, overlays_on):
         ("lfo", "learning-from-experience", None),
     ]
     ROW = 52
+    TOP = 34  # room for the family legend under the title
     rows_for = {sid: max(1, len(overlays_on.get(sid, []))) for sid, *_ in spine}
     total_rows = sum(rows_for.values())
-    h = 96 + total_rows * ROW + 40
-    WIDTH = 1280
+    h = 96 + TOP + total_rows * ROW + 40
+    WIDTH = 1304
     f = Fig(name, WIDTH, h, "Skill map",
             "The core path runs from using-nuclear-grade through questioning-attitude, rating-change-risk, "
             "creating-change-records, proving-claims, checking-release-readiness, recording-a-known-good-version and "
             "learning-from-experience, which feeds back to questioning-attitude. Rating-change-risk branches to "
             "choosing-what-to-control and checking-what-a-change-affects. "
-            "Heavier overlays switch on by consequence, each labeled with its trigger.",
+            "Heavier overlays switch on by consequence, each labeled with its trigger. "
+            "A colored stripe gives each skill's family (start here, before you act, records and versions, "
+            "evidence and verdicts, trust and public claims, delegation and structure, when it goes wrong); "
+            "a gold dot marks the Core 7, which apply to every change.",
             "Skill map · core path and consequence overlays")
+    family_of = {nm: i for i, (_, skills) in enumerate(SKILL_FAMILIES) for nm, _ in skills}
+
+    def skill(x, y, w, hh, nm, sub=None, kind="step"):
+        b = f.box(x, y, w, hh, nm, sub, kind=kind)
+        f.nodes.append(f'<rect class="fam{family_of[nm]}" x="{x + 1.5}" y="{y + 6}" width="4" height="{hh - 12}" rx="2"/>')
+        if nm in CORE7:
+            f.nodes.append(f'<circle class="acc" cx="{x + w - 12}" cy="{y + hh / 2}" r="3.5"/>')
+        return b
+
+    lx = 28
+    for i, (fam, _) in enumerate(SKILL_FAMILIES):
+        f.nodes.append(f'<rect class="fam{i}" x="{lx}" y="58" width="4" height="12" rx="2"/>')
+        f.text(lx + 10, 68, fam.lower(), "lbl", "muted", anchor="start")
+        lx += 10 + int(len(fam) * CHAR_MONO * 1.04) + 22
+    f.nodes.append(f'<circle class="acc" cx="{lx + 2}" cy="64" r="3.5"/>')
+    f.text(lx + 10, 68, "core 7: every change", "lbl", "muted", anchor="start")
+
     SX, SW = 340, 248
     OX = SX + SW + 200
-    y = 80
+    y = 80 + TOP
     pos = {}
-    f.group(OX - 24, 60, WIDTH - OX - 4, total_rows * ROW + 36, "Heavier overlays — switch on by consequence")
-    f.group(SX - 24, 60, SW + 48, total_rows * ROW + 36, "Core path", cls="band")
+    f.group(OX - 24, 60 + TOP, WIDTH - OX - 4, total_rows * ROW + 36, "Heavier overlays — switch on by consequence")
+    f.group(SX - 24, 60 + TOP, SW + 48, total_rows * ROW + 36, "Core path", cls="band")
     for sid, nm, sub in spine:
         kind = "focal" if sid == "ung" else "step"
-        pos[sid] = f.box(SX, y + 4, SW, 40 if not sub else 44, nm, sub, kind=kind)
+        pos[sid] = skill(SX, y + 4, SW, 40 if not sub else 44, nm, sub, kind=kind)
         chains = overlays_on.get(sid, [])
         oy = y + 4
         for chain in chains:
             prev = None
             ox = OX
             for lab, edge in chain:
-                w = max(150, int(len(lab) * CHAR_SANS + 28) // 4 * 4)
-                b = f.box(ox, oy, w, 40, lab, kind="opt" if prev is None else "opt")
+                w = max(150, int(len(lab) * CHAR_SANS + 40) // 4 * 4)
+                b = skill(ox, oy, w, 40, lab, kind="opt")
                 if prev is None:
                     src = pos[sid]
                     sy = oy + 20
@@ -527,8 +560,8 @@ def skill_map(name, overlays_on):
         f.arrow([pos[a]["b"], pos[b]["t"]])
     # side branch: controlled config touched
     ccr, _ccp = pos["ccr"], pos["ccp"]
-    ici = f.box(28, ccr["y"] + 52, 248, 40, "choosing-what-to-control")
-    sci = f.box(28, ici["y"] + 72, 248, 40, "checking-what-a-change-affects")
+    ici = skill(28, ccr["y"] + 52, 248, 40, "choosing-what-to-control")
+    sci = skill(28, ici["y"] + 72, 248, 40, "checking-what-a-change-affects")
     f.arrow([ccr["l"], (ici["cx"], ccr["cy"]), ici["t"]], label="controlled config touched",
             at=(ici["cx"] + 24, ccr["cy"]))
     f.arrow([ici["b"], sci["t"]])

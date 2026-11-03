@@ -149,7 +149,6 @@ _EMPTY_PARTY_PREFIXES = (
 )
 # Placeholders that contain a split character; kept whole before a cell is split.
 _SLASH_PLACEHOLDER = re.compile(r"\bn\s*/\s*a\b", re.IGNORECASE)
-_HTML_COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
 _TABLE_DELIM = re.compile(r"^\s*\|?\s*:?-+:?\s*(\|\s*:?-+:?\s*)*\|?\s*$")
 _CELL_SPLIT = re.compile(r"(?<!\\)\|")
 
@@ -264,8 +263,51 @@ def _visible(text: str) -> str:
 
     Declarations inside a comment or a fenced example are illustrations, not
     records, so they must not satisfy (or trip) the gate.
+
+    One pass tracks both contexts, so a fence marker inside a comment, or a
+    comment marker inside a fence, is just hidden text. Stripping one kind and
+    then the other lets a marker of the first kind hide visible content.
+    Hidden characters become spaces; line structure is kept.
     """
-    return _HTML_COMMENT.sub("", strip_code_blocks(text))
+    out: list[str] = []
+    in_comment = False
+    fence_character: str | None = None
+    fence_length = 0
+    for line in text.splitlines(keepends=True):
+        body = line.rstrip("\r\n")
+        ending = line[len(body):]
+        if fence_character is not None:
+            closing = rf"^ {{0,3}}{re.escape(fence_character)}{{{fence_length},}}[ \t]*$"
+            if re.fullmatch(closing, body):
+                fence_character = None
+            out.append(re.sub(r"\S", " ", body) + ending)
+            continue
+        if not in_comment:
+            opening = re.match(r"^ {0,3}(`{3,}|~{3,})(.*)$", body)
+            if opening and not (opening.group(1).startswith("`") and "`" in opening.group(2)):
+                fence_character = opening.group(1)[0]
+                fence_length = len(opening.group(1))
+                out.append(re.sub(r"\S", " ", body) + ending)
+                continue
+        kept: list[str] = []
+        i = 0
+        while i < len(body):
+            if in_comment:
+                end = body.find("-->", i)
+                stop = len(body) if end == -1 else end + 3
+                kept.append(re.sub(r"\S", " ", body[i:stop]))
+                if end != -1:
+                    in_comment = False
+                i = stop
+            else:
+                start = body.find("<!--", i)
+                stop = len(body) if start == -1 else start
+                kept.append(body[i:stop])
+                if start != -1:
+                    in_comment = True
+                i = stop
+        out.append("".join(kept) + ending)
+    return "".join(out)
 
 
 _INDENTED = re.compile(r"^(?: {4}|\t)")
@@ -292,39 +334,6 @@ def declarations_text(text: str) -> str:
     declarations are read strictly (anything shown as code counts for nothing).
     """
     return strip_indented_code(_visible(text))
-
-
-def strip_code_blocks(text: str) -> str:
-    """Blank fenced code blocks, keeping line structure (CommonMark fence rules).
-
-    A fence closes only on the same character repeated at least as many times as
-    it opened, so a ```` block may contain a ``` example. This mirrors
-    ``ng_validate._strip_code_blocks``; a test keeps the two in step.
-    """
-    output: list[str] = []
-    fence_character: str | None = None
-    fence_length = 0
-    for line in text.splitlines(keepends=True):
-        content = line.rstrip("\r\n")
-        if fence_character is None:
-            opening = re.match(r"^ {0,3}(`{3,}|~{3,})(.*)$", content)
-            if opening is None:
-                output.append(line)
-                continue
-            marker, info = opening.groups()
-            if marker.startswith("`") and "`" in info:
-                output.append(line)
-                continue
-            fence_character = marker[0]
-            fence_length = len(marker)
-            output.append(re.sub(r"\S", " ", line))
-            continue
-        output.append(re.sub(r"\S", " ", line))
-        closing = rf"^ {{0,3}}{re.escape(fence_character)}{{{fence_length},}}[ \t]*$"
-        if re.fullmatch(closing, content):
-            fence_character = None
-            fence_length = 0
-    return "".join(output)
 
 
 def _cells(line: str) -> list[str]:

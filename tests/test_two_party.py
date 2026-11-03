@@ -682,3 +682,12 @@ def test_this_change_record_passes_strict_custody():
     packet = Path(__file__).resolve().parents[1] / ".nuclear" / "changes" / "independent-review-and-fact-checking"
     result = validate_packet(packet, require_custody=True)
     assert result.ok, result.messages
+
+
+def test_pass_row_cut_short_before_its_claim_cell_fails_strict(tmp_path):
+    # Codex on 9b920ee: status column first, then a row that ends before its claim cell.
+    body = "# V\n## Claims\n| Result status | Claim ID |\n|---|---|\n| pass |\n| deferred | C-004a |\n"
+    (tmp_path / "verification.md").write_text(body, encoding="utf-8")
+    messages: list[str] = []
+    check_two_party(tmp_path, messages)
+    assert any("no readable Claim ID" in m for m in messages)

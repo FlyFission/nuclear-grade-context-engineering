@@ -42,6 +42,7 @@
     {"id": "tracking-deficiencies", "path": "skills/tracking-deficiencies/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-deficiency"},
     {"id": "reporting-shared-defects", "path": "skills/reporting-shared-defects/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-report-defect"},
     {"id": "verifying-final-artifacts", "path": "skills/verifying-final-artifacts/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-verify-artifact"},
-    {"id": "running-a-review-panel", "path": "skills/running-a-review-panel/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-panel"}
+    {"id": "running-a-review-panel", "path": "skills/running-a-review-panel/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-panel"},
+    {"id": "checking-facts", "path": "skills/checking-facts/SKILL.md", "status": "promoted", "invocation": "both", "role": "discipline", "command": "ng-fact-check"}
   ]
 }

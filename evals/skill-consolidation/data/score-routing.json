@@ -1,0 +1,66 @@
+{
+  "labeler_agreement": {
+    "n": 180,
+    "exact_set_match": 143,
+    "jaccard_micro": 0.826
+  },
+  "routing": {
+    "M2": {
+      "merged": "learning-from-experience",
+      "relevant_n": 23,
+      "recall_31": 82.6,
+      "recall_new": 82.6,
+      "fp_rate_31": 0.0,
+      "fp_rate_new": 0.0,
+      "B_pass": true
+    },
+    "M3": {
+      "merged": "checking-public-claims",
+      "relevant_n": 4,
+      "recall_31": 75.0,
+      "recall_new": 100.0,
+      "fp_rate_31": 1.1,
+      "fp_rate_new": 4.0,
+      "B_pass": true
+    },
+    "M4": {
+      "merged": "controlling-approved-versions",
+      "relevant_n": 8,
+      "recall_31": 87.5,
+      "recall_new": 87.5,
+      "fp_rate_31": 1.7,
+      "fp_rate_new": 1.7,
+      "B_pass": true
+    },
+    "M5": {
+      "merged": "managing-change-records",
+      "relevant_n": 1,
+      "recall_31": 100.0,
+      "recall_new": 0.0,
+      "fp_rate_31": 0.0,
+      "fp_rate_new": 0.6,
+      "B_pass": false
+    },
+    "M7": {
+      "merged": "structuring-the-work",
+      "relevant_n": 11,
+      "recall_31": 90.9,
+      "recall_new": 90.9,
+      "fp_rate_31": 0.6,
+      "fp_rate_new": 1.2,
+      "B_pass": true
+    },
+    "catalog_31": {
+      "precision": 70.7,
+      "recall": 81.9,
+      "none_correct": 24,
+      "none_truth": 31
+    },
+    "catalog_new": {
+      "precision": 72.8,
+      "recall": 78.7,
+      "none_correct": 26,
+      "none_truth": 31
+    }
+  }
+}

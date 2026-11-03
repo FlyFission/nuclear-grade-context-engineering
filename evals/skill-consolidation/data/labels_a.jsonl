@@ -1,0 +1,180 @@
+{"id": "S-001", "skills": [], "why": "Mundane codebase lookup; no skill changes the action."}
+{"id": "S-002", "skills": ["rating-change-risk", "checking-what-a-change-affects"], "why": "Grade one-line fix by stakes; shared helper has three downstream consumers."}
+{"id": "S-003", "skills": ["organizing-project-folders"], "why": "Explicit request for a module/folder layout before moving code."}
+{"id": "S-004", "skills": ["double-checking-before-acting", "declaring-intent", "checking-what-a-change-affects"], "why": "Irreversible migration on shared DB; name target, abort, rollback, blast radius."}
+{"id": "S-005", "skills": ["recording-a-known-good-version", "staying-on-mission"], "why": "Lost track of good prompt version; looping without anchor."}
+{"id": "S-006", "skills": ["questioning-attitude"], "why": "CI diff needs skeptical look at cache-key assumption."}
+{"id": "S-007", "skills": ["checking-facts"], "why": "Unsourced numbers about to go into customer notice."}
+{"id": "S-008", "skills": [], "why": "Doc fix and dead link; administrative floor, no trust boundary."}
+{"id": "S-009", "skills": ["responding-to-incidents", "reporting-shared-defects", "learning-from-experience"], "why": "Live auth exposure; shared library defect affects three other tools."}
+{"id": "S-010", "skills": ["learning-from-experience", "deciding-who-decides", "stress-testing-agent-changes"], "why": "Agent harm retro; decide authority and attack-test before re-granting."}
+{"id": "S-011", "skills": ["handing-off-work", "questioning-attitude"], "why": "Taking over open work without turnover; reconstruct state and assumptions."}
+{"id": "S-012", "skills": ["responding-to-incidents"], "why": "Live production degradation; decide whether to declare and stabilize."}
+{"id": "S-013", "skills": ["breaking-down-the-work"], "why": "Feature needs MECE split into ownable PR-sized pieces."}
+{"id": "S-014", "skills": ["double-checking-before-acting", "deciding-who-decides", "declaring-intent"], "why": "Replaying payment events in production is irreversible, money-bearing."}
+{"id": "S-015", "skills": [], "why": "Trivial local rename; administrative floor."}
+{"id": "S-016", "skills": ["vetting-outside-code-and-models", "proving-claims"], "why": "Major dependency bump; name critical interceptor behavior and test gaps."}
+{"id": "S-017", "skills": ["checking-facts", "vetting-outside-code-and-models"], "why": "Vendor marketing number used as evidence for provider switch."}
+{"id": "S-018", "skills": ["double-checking-before-acting", "checking-release-readiness"], "why": "Infra apply; confirm approval recorded, target, rollback before applying."}
+{"id": "S-019", "skills": ["responding-to-incidents", "learning-from-experience", "checking-what-a-change-affects"], "why": "Ongoing data harm from missed downstream consumer; stabilize then learn."}
+{"id": "S-020", "skills": [], "why": "Deleting stale drafts is git-reversible housekeeping, not packets."}
+{"id": "S-021", "skills": ["responding-to-incidents"], "why": "Credential exposure is a live security incident."}
+{"id": "S-022", "skills": ["deciding-who-decides", "rating-change-risk", "stress-testing-agent-changes"], "why": "Granting agent autonomous infra apply; decision rights and attack testing."}
+{"id": "S-023", "skills": ["breaking-down-the-work", "briefing-an-agent", "organizing-project-folders"], "why": "Parallel agents need non-overlapping split, owned contract, bounded briefs."}
+{"id": "S-024", "skills": ["responding-to-incidents", "double-checking-before-acting"], "why": "Disk emergency; VACUUM FULL locks and needs space, prefer reversible."}
+{"id": "S-025", "skills": [], "why": "Same owner resuming small low-risk edit; check git diff."}
+{"id": "S-026", "skills": ["proving-claims"], "why": "Does the regression test actually back the fix claim."}
+{"id": "S-027", "skills": ["checking-facts"], "why": "Browser support claim needs primary-source check."}
+{"id": "S-028", "skills": ["checking-release-readiness", "proving-claims"], "why": "Release note claim contradicts dropped Python support; ship decision."}
+{"id": "S-029", "skills": ["responding-to-incidents", "learning-from-experience"], "why": "Production misrouting; prefer reversible rollback, then learn."}
+{"id": "S-030", "skills": ["questioning-attitude", "checking-what-a-change-affects"], "why": "Verify workflows truly dead; CI deletion may break callers."}
+{"id": "S-031", "skills": [], "why": "How-to question about Prisma migrations; answer from repo and docs."}
+{"id": "S-032", "skills": ["checking-legal-and-safety-wording", "rating-change-risk", "checking-facts"], "why": "Compliance claim overreaches audit status; not a mere copy change."}
+{"id": "S-033", "skills": ["checking-what-a-change-affects", "declaring-intent", "double-checking-before-acting"], "why": "Credential rotation across consumers; sequence, abort and rollback per step."}
+{"id": "S-034", "skills": ["stress-testing-agent-changes", "deciding-who-decides", "double-checking-before-acting"], "why": "Broad token grants unattended agent power; test abuse, bound authority."}
+{"id": "S-035", "skills": ["handing-off-work", "double-checking-before-acting"], "why": "Open-loop handoff with unknown hold point; hold before acting."}
+{"id": "S-036", "skills": ["proving-claims", "questioning-attitude"], "why": "Fixed claim confounded by traffic drop; evidence must answer it."}
+{"id": "S-037", "skills": ["checking-facts"], "why": "API behavior question; confirm against spec and a run."}
+{"id": "S-038", "skills": ["checking-release-readiness"], "why": "Ship timing decision; rollback and monitoring over weekend."}
+{"id": "S-039", "skills": ["reporting-shared-defects", "learning-from-experience"], "why": "Behavior change in shared package affects downstream consumers."}
+{"id": "S-040", "skills": [], "why": "Closing stale bot PRs is reversible housekeeping."}
+{"id": "S-041", "skills": ["questioning-attitude", "rating-change-risk"], "why": "Vague prompt-change ticket; define the question and success; prompt is a trap."}
+{"id": "S-042", "skills": [], "why": "Local-dev log level; administrative and reversible."}
+{"id": "S-043", "skills": ["proving-claims", "declaring-intent", "checking-what-a-change-affects"], "why": "Prove no loss before irreversible drop; screen readers of the table."}
+{"id": "S-044", "skills": ["checking-legal-and-safety-wording", "deciding-who-decides", "double-checking-before-acting"], "why": "License change with outside contributors needs legal and human gate."}
+{"id": "S-045", "skills": [], "why": "Search for a test hack; plain grep and remove."}
+{"id": "S-046", "skills": ["recording-what-an-agent-did", "stress-testing-agent-changes"], "why": "Review agent run trace against intended tool use; rate behavior."}
+{"id": "S-047", "skills": ["checking-facts"], "why": "Handed-over number must be traced to vendor docs."}
+{"id": "S-048", "skills": ["responding-to-incidents", "checking-release-readiness", "learning-from-experience"], "why": "Incident close criteria and all-region rollout readiness."}
+{"id": "S-049", "skills": ["questioning-attitude", "learning-from-experience"], "why": "Escaped defect; reproduce and scope before assuming small fix."}
+{"id": "S-050", "skills": ["tracking-deficiencies"], "why": "Long-standing known problem needs an explicit disposition, not silent close."}
+{"id": "S-051", "skills": [], "why": "Pure explainer question."}
+{"id": "S-052", "skills": ["vetting-outside-code-and-models", "rating-change-risk"], "why": "New dependency plus host binary; trust and mode sizing."}
+{"id": "S-053", "skills": ["vetting-outside-code-and-models", "breaking-down-the-work"], "why": "Accept new embedding model on evidence; plan staged migration."}
+{"id": "S-054", "skills": ["checking-what-a-change-affects", "declaring-intent", "double-checking-before-acting"], "why": "DNS cutover breaks customer allowlists; abort and rollback first."}
+{"id": "S-055", "skills": ["double-checking-before-acting", "questioning-attitude"], "why": "Rerun safety depends on idempotency assumption; check before restart."}
+{"id": "S-056", "skills": ["verifying-final-artifacts"], "why": "Rendered PDF must be observed directly."}
+{"id": "S-057", "skills": ["checking-facts", "vetting-outside-code-and-models"], "why": "Verify CVE scope against our usage before reacting."}
+{"id": "S-058", "skills": ["deciding-who-decides", "checking-release-readiness", "stress-testing-agent-changes"], "why": "Shadow to live agent authority; decision rights and release record."}
+{"id": "S-059", "skills": ["responding-to-incidents", "learning-from-experience", "handing-off-work"], "why": "Ongoing money harm from bad handoff; stabilize, learn, complete turnover."}
+{"id": "S-060", "skills": ["tracking-deficiencies", "learning-from-experience"], "why": "Orphaned corrective actions need owners and dispositions."}
+{"id": "S-061", "skills": ["checking-release-readiness", "declaring-intent", "deciding-who-decides"], "why": "Irreversible customer deletion at 100%; ramp, abort criteria, human gate."}
+{"id": "S-062", "skills": ["staying-on-mission"], "why": "Looping on flaky test; restate anchor and attempts so far."}
+{"id": "S-063", "skills": ["proving-claims", "reviewing-code-quality", "checking-what-a-change-affects"], "why": "Behavior-unchanged claim already false for caps; large shared-code diff."}
+{"id": "S-064", "skills": ["checking-facts"], "why": "Version fact must be read from the registry."}
+{"id": "S-065", "skills": ["proving-claims", "checking-release-readiness", "checking-facts"], "why": "Public metric claim misstates F1 delta; ship decision on eval."}
+{"id": "S-066", "skills": ["reporting-shared-defects", "learning-from-experience"], "why": "Shared config change broke downstream consumers; notify and fix control."}
+{"id": "S-067", "skills": ["tracking-deficiencies", "choosing-what-to-control"], "why": "Unknown applied state of prod SQL is a standing deficiency."}
+{"id": "S-068", "skills": [], "why": "Typo fix; administrative floor."}
+{"id": "S-069", "skills": ["rating-change-risk", "questioning-attitude"], "why": "Impersonation touches auth; Standard-plus, question audit and abuse."}
+{"id": "S-070", "skills": ["deciding-who-decides", "stress-testing-agent-changes", "recording-what-an-agent-did"], "why": "Autonomous money-moving agent on untrusted email input; stage authority."}
+{"id": "S-071", "skills": ["responding-to-incidents", "double-checking-before-acting", "declaring-intent"], "why": "Leaked secrets need rotation first; force-push is irreversible for others."}
+{"id": "S-072", "skills": ["responding-to-incidents"], "why": "Live incident lacks commander and fact-vs-hypothesis timeline."}
+{"id": "S-073", "skills": ["verifying-final-artifacts"], "why": "Rendered screenshot is the artifact to judge."}
+{"id": "S-074", "skills": ["checking-facts"], "why": "Percentage extrapolated from three tickets; verify before relying."}
+{"id": "S-075", "skills": [], "why": "Evidenced, approved, reversible cleanup; just merge."}
+{"id": "S-076", "skills": ["reporting-shared-defects", "responding-to-incidents", "learning-from-experience"], "why": "Shared library silently losing data across twelve consumers."}
+{"id": "S-077", "skills": ["choosing-what-to-control", "organizing-project-folders"], "why": "Identify ship-gating evals as controlled items; archive disposition for rest."}
+{"id": "S-078", "skills": [], "why": "Pure explainer question."}
+{"id": "S-079", "skills": ["rating-change-risk", "checking-what-a-change-affects", "declaring-intent"], "why": "Large irreversible schema migration; grade and screen blast radius."}
+{"id": "S-080", "skills": ["deciding-who-decides", "checking-legal-and-safety-wording", "breaking-down-the-work"], "why": "Public AI claims page; assign final authority and wording bounds."}
+{"id": "S-081", "skills": ["double-checking-before-acting", "declaring-intent", "deciding-who-decides"], "why": "Mass customer token revocation is irreversible and customer-facing."}
+{"id": "S-082", "skills": ["staying-on-mission"], "why": "Agent repeating same action; loop and drift check."}
+{"id": "S-083", "skills": ["proving-claims", "questioning-attitude"], "why": "Actor-authored summary is not evidence; review independently."}
+{"id": "S-084", "skills": ["checking-facts"], "why": "Conflicting impact numbers need primary-source reconciliation."}
+{"id": "S-085", "skills": ["tracking-deficiencies", "checking-release-readiness"], "why": "Ship with named known issues owned and tracked."}
+{"id": "S-086", "skills": [], "why": "Simple triage of spec vs request."}
+{"id": "S-087", "skills": [], "why": "Stale branch deletion; low-stakes housekeeping."}
+{"id": "S-088", "skills": [], "why": "Rough sizing question, no decision or action yet."}
+{"id": "S-089", "skills": ["rating-change-risk"], "why": "One-number model config change is still a model trap; set evidence bar."}
+{"id": "S-090", "skills": ["breaking-down-the-work", "checking-what-a-change-affects"], "why": "Multi-job CI migration with shared consumers needs split and impact screen."}
+{"id": "S-091", "skills": ["double-checking-before-acting", "declaring-intent"], "why": "Irreversible bulk prod delete; target, batching, backup and abort first."}
+{"id": "S-092", "skills": [], "why": "Low-stakes editorial choice; just decide."}
+{"id": "S-093", "skills": ["proving-claims", "running-a-review-panel"], "why": "Isolation claim needs runnable evidence; security verdict on one reviewer."}
+{"id": "S-094", "skills": ["vetting-outside-code-and-models", "checking-facts"], "why": "Framework label is a vendor claim; verify enforcement before trusting it."}
+{"id": "S-095", "skills": ["checking-release-readiness"], "why": "Ship, defer, or ship-with-named-risk with unconfirmed component."}
+{"id": "S-096", "skills": ["tracking-deficiencies"], "why": "Known issue must be owned and dated so it is not normalized."}
+{"id": "S-097", "skills": ["closing-stale-packets"], "why": "Abandoned work needs honest terminal state with recorded rationale."}
+{"id": "S-098", "skills": [], "why": "Routine null-guard bug fix."}
+{"id": "S-099", "skills": ["rating-change-risk"], "why": "Asks how much care; local, reversible, likely Quick."}
+{"id": "S-100", "skills": ["breaking-down-the-work", "vetting-outside-code-and-models", "questioning-attitude"], "why": "Multi-service upgrade plan; unexplained pins are unchecked assumptions."}
+{"id": "S-101", "skills": ["vetting-outside-code-and-models", "checking-release-readiness", "double-checking-before-acting"], "why": "Production model swap on vague evals; accept for use, then ship."}
+{"id": "S-102", "skills": ["staying-on-mission", "recording-a-known-good-version"], "why": "Long loop of edits; return to and record a known-good config."}
+{"id": "S-103", "skills": ["proving-claims"], "why": "Row counts alone do not prove migration correctness."}
+{"id": "S-104", "skills": ["checking-facts"], "why": "Unsourced public number must be traced before reuse."}
+{"id": "S-105", "skills": ["checking-release-readiness", "checking-what-a-change-affects"], "why": "Partner-breaking release lacks comms; consumer impact unhandled."}
+{"id": "S-106", "skills": ["learning-from-experience", "recording-what-an-agent-did"], "why": "Agent exceeded scope unnoticed; review trace and fix the control."}
+{"id": "S-107", "skills": ["learning-from-experience", "breaking-down-the-work"], "why": "Retro on parallel overlap; lesson should change how work is split."}
+{"id": "S-108", "skills": ["responding-to-incidents"], "why": "Live page on unfamiliar service; stabilize-first procedure."}
+{"id": "S-109", "skills": ["rating-change-risk", "questioning-attitude"], "why": "Irreversible user data deletion hides behind simple button."}
+{"id": "S-110", "skills": [], "why": "Ordinary debugging plan; no trust or irreversibility."}
+{"id": "S-111", "skills": ["double-checking-before-acting", "checking-what-a-change-affects"], "why": "Wide mechanical change; name targets and check dynamic or external callers."}
+{"id": "S-112", "skills": [], "why": "Routine upgrade tactics on a dev branch."}
+{"id": "S-113", "skills": ["proving-claims"], "why": "Ten unlabeled samples cannot back a better claim; name the gap."}
+{"id": "S-114", "skills": ["checking-facts"], "why": "Versioned platform fact; read current source."}
+{"id": "S-115", "skills": ["declaring-intent", "checking-release-readiness"], "why": "Record decision, expected result, abort and apply clearance."}
+{"id": "S-116", "skills": ["checking-facts", "learning-from-experience", "checking-legal-and-safety-wording"], "why": "Overstated public reliability claim relied on in procurement."}
+{"id": "S-117", "skills": ["learning-from-experience"], "why": "Near miss should strengthen a durable control."}
+{"id": "S-118", "skills": ["deciding-who-decides"], "why": "Setting standing agent command authority, even locally."}
+{"id": "S-119", "skills": ["handing-off-work"], "why": "Open work transferring to a new owner."}
+{"id": "S-120", "skills": ["declaring-intent", "double-checking-before-acting"], "why": "Planned failover needs abort points and verified rollback."}
+{"id": "S-121", "skills": ["checking-facts"], "why": "Vendor limit going into spec must match primary source."}
+{"id": "S-122", "skills": [], "why": "Tiny reversible display fix with green tests."}
+{"id": "S-123", "skills": ["reporting-shared-defects", "learning-from-experience"], "why": "Shared module change threatens consumers' infra; notify before applies."}
+{"id": "S-124", "skills": [], "why": "Removing leftover config from abandoned trial; routine cleanup."}
+{"id": "S-125", "skills": ["proving-claims"], "why": "Turn policy-correctness claim into evals with evidence status."}
+{"id": "S-126", "skills": [], "why": "Example env file entry; administrative."}
+{"id": "S-127", "skills": ["deciding-who-decides", "breaking-down-the-work"], "why": "Irreversible merge needs human conflict review gate and staged plan."}
+{"id": "S-128", "skills": ["double-checking-before-acting", "deciding-who-decides"], "why": "Public security disclosure before coordination; halt and escalate."}
+{"id": "S-129", "skills": ["handing-off-work"], "why": "Half-done secrets migration paused; leave closed-loop turnover state."}
+{"id": "S-130", "skills": ["stress-testing-agent-changes", "proving-claims"], "why": "Attack the read-only claim before granting agent data tool."}
+{"id": "S-131", "skills": ["checking-facts"], "why": "Handoff assertion must be checked against run history."}
+{"id": "S-132", "skills": ["deciding-who-decides", "checking-release-readiness"], "why": "Who holds unfreeze authority and recording the decision."}
+{"id": "S-133", "skills": [], "why": "Simple code lookup."}
+{"id": "S-134", "skills": ["learning-from-experience"], "why": "Recurring defect signals a weak control to fix durably."}
+{"id": "S-135", "skills": [], "why": "Small style judgment; no trust stakes."}
+{"id": "S-136", "skills": ["rating-change-risk", "vetting-outside-code-and-models"], "why": "Customer-installed CLI dependency swap; size care and vet replacement."}
+{"id": "S-137", "skills": ["choosing-what-to-control", "recording-a-known-good-version"], "why": "Eval set must be a controlled, versioned baseline to stay trustworthy."}
+{"id": "S-138", "skills": ["staying-on-mission", "deciding-who-decides", "double-checking-before-acting"], "why": "Loosening review gate just this once is normalization of deviance."}
+{"id": "S-139", "skills": [], "why": "Just read the code to check."}
+{"id": "S-140", "skills": ["verifying-final-artifacts"], "why": "Rendered dark-mode page must be observed directly."}
+{"id": "S-141", "skills": ["vetting-outside-code-and-models"], "why": "Vendor privacy claim is not proof; verify critical characteristic."}
+{"id": "S-142", "skills": ["deciding-who-decides", "stress-testing-agent-changes", "checking-release-readiness"], "why": "Agent gets prod action authority; rights, abuse testing, release record."}
+{"id": "S-143", "skills": ["reporting-shared-defects"], "why": "Defect in shared component affects downstream consumers."}
+{"id": "S-144", "skills": ["organizing-project-folders"], "why": "Runbook folder tidy with archive disposition."}
+{"id": "S-145", "skills": [], "why": "Hobby project how-to."}
+{"id": "S-146", "skills": ["rating-change-risk", "checking-what-a-change-affects"], "why": "Money calc change alters historical invoices; stakes and ripple."}
+{"id": "S-147", "skills": ["breaking-down-the-work", "organizing-project-folders"], "why": "Extraction roadmap and folder structure request."}
+{"id": "S-148", "skills": ["checking-release-readiness", "double-checking-before-acting"], "why": "Irreversible public publish of breaking major version."}
+{"id": "S-149", "skills": ["recording-a-known-good-version"], "why": "Regression with no recorded good prompt version; bisect to baseline."}
+{"id": "S-150", "skills": ["verifying-final-artifacts"], "why": "Observe real deployed responses, not just health check."}
+{"id": "S-151", "skills": ["checking-facts"], "why": "Version-dependent DB behavior claim matters for planned migration."}
+{"id": "S-152", "skills": ["proving-claims", "checking-release-readiness"], "why": "Single-laptop benchmark cannot back public performance claim."}
+{"id": "S-153", "skills": ["checking-what-a-change-affects", "learning-from-experience"], "why": "Missed code path after security change; find stale paths, fix control."}
+{"id": "S-154", "skills": ["choosing-what-to-control", "deciding-who-decides"], "why": "Inventory agent permission states and set standing authority."}
+{"id": "S-155", "skills": ["handing-off-work", "questioning-attitude"], "why": "Incoming owner must confirm scope, state and limits before acting."}
+{"id": "S-156", "skills": ["questioning-attitude", "responding-to-incidents"], "why": "Decide whether single report signals a live degradation."}
+{"id": "S-157", "skills": ["breaking-down-the-work", "organizing-project-folders"], "why": "New subsystem needs product breakdown, v1 non-goals, layout."}
+{"id": "S-158", "skills": ["double-checking-before-acting", "declaring-intent"], "why": "Bulk user data rewrite; stale backup, abort and rollback."}
+{"id": "S-159", "skills": [], "why": "Run compiler and tests; routine."}
+{"id": "S-160", "skills": ["verifying-final-artifacts"], "why": "Built app must be exercised, not inferred from builds."}
+{"id": "S-161", "skills": ["checking-facts"], "why": "Conflicting limit facts before customer promise."}
+{"id": "S-162", "skills": ["checking-release-readiness", "declaring-intent"], "why": "All-region config push; rollback, monitoring, abort criteria."}
+{"id": "S-163", "skills": ["questioning-attitude", "checking-facts"], "why": "Separate churn from migration loss by reconciling raw data."}
+{"id": "S-164", "skills": [], "why": "Stale wiki page; ordinary doc upkeep."}
+{"id": "S-165", "skills": ["questioning-attitude"], "why": "Prod log access may expose sensitive data; question scope."}
+{"id": "S-166", "skills": ["stress-testing-agent-changes", "rating-change-risk"], "why": "New data reach for agent; injection and leakage risk."}
+{"id": "S-167", "skills": ["breaking-down-the-work", "briefing-an-agent"], "why": "Shared non-overlapping work map with owners; bounded agent briefs."}
+{"id": "S-168", "skills": ["responding-to-incidents", "deciding-who-decides", "double-checking-before-acting"], "why": "Irreversible restore loses customer data; prefer reversible, escalate."}
+{"id": "S-169", "skills": ["staying-on-mission"], "why": "Goal changed mid-work; re-anchor before continuing."}
+{"id": "S-170", "skills": ["verifying-final-artifacts"], "why": "Judge the rendered chart itself."}
+{"id": "S-171", "skills": ["checking-facts"], "why": "Language guarantee fact needs primary source."}
+{"id": "S-172", "skills": ["checking-release-readiness", "tracking-deficiencies"], "why": "Ship with named residual risk, owned and revisitable."}
+{"id": "S-173", "skills": ["questioning-attitude", "vetting-outside-code-and-models"], "why": "Set decision evidence for model quality drift signal."}
+{"id": "S-174", "skills": ["questioning-attitude"], "why": "Reference search may miss secret consumers; question before deleting."}
+{"id": "S-175", "skills": [], "why": "Pure explainer question."}
+{"id": "S-176", "skills": ["checking-facts", "checking-legal-and-safety-wording"], "why": "Public competitor claims need sourced, dated facts and bounded wording."}
+{"id": "S-177", "skills": ["questioning-attitude", "checking-what-a-change-affects", "declaring-intent"], "why": "Auth rollout with shared logins risks lockout; staged with rollback."}
+{"id": "S-178", "skills": ["staying-on-mission", "deciding-who-decides", "learning-from-experience"], "why": "Unrequested destructive agent action is out of scope; deny, learn."}
+{"id": "S-179", "skills": [], "why": "Routine review mechanics; use range-diff."}
+{"id": "S-180", "skills": ["proving-claims"], "why": "Back-to-primary claim needs observed traffic evidence."}

@@ -778,3 +778,21 @@ def test_authorship_after_a_closed_html_block_still_counts(tmp_path):
     messages: list[str] = []
     check_two_party(pkt, messages)
     assert messages == []
+
+
+@pytest.mark.parametrize("inner", ["<!-- example -->\n", "```\nx\n```\n"])
+def test_hidden_markup_inside_an_html_block_does_not_end_it_early(tmp_path, inner):
+    # Codex on 9491c14: chained filters turned a comment inside <div> into a blank line.
+    body = "<div>\n" + inner + AUTH_HEADER + "| C-001 | ben | carol |\n</div>\n"
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n", body)
+    messages: list[str] = []
+    check_two_party(pkt, messages)
+    assert any("C-001" in m and "no authorship or custody row" in m for m in messages), inner
+
+
+def test_every_declaration_filter_preserves_length():
+    from nuclear_grade.two_party import _visible, strip_html_blocks, strip_indented_code
+
+    sample = "a <!-- b --> c\n```\nd\n```\n    e\n<pre>\nf\n</pre>\n<div>\ng\n\nh `<!--` i\n"
+    for f in (_visible, strip_indented_code, strip_html_blocks):
+        assert len(f(sample)) == len(sample), f.__name__

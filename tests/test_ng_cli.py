@@ -669,3 +669,19 @@ def test_mcp_config_rejects_unknown_tool(tmp_path):
 
     assert result.returncode != 0
     assert "invalid choice" in result.stderr
+
+
+def test_validate_two_party_json_reports_flag_and_exit_status():
+    # Copilot on #124: the CLI path for --two-party --json had no regression.
+    import json as _json
+
+    from tests.test_two_party import WORKED as worked
+
+    plain = run_ng("validate", str(worked), "--strict-custody", "--json")
+    strict = run_ng("validate", str(worked), "--strict-custody", "--two-party", "--json")
+    assert plain.returncode == 0, plain.stdout + plain.stderr
+    assert strict.returncode != 0
+    receipt = _json.loads(strict.stdout)
+    assert receipt["strict"]["two_party"] is True
+    assert receipt["ok"] is False
+    assert any("C-001" in m for m in receipt["messages"])

@@ -418,15 +418,14 @@ def parse_claim_rows(verification_text: str) -> list[ClaimRow]:
             continue
         claim_col, status_col = columns
         for row in body:
-            if claim_col >= len(row):
-                continue
-            ids = _claim_ids(row[claim_col])
-            raw_claim = _clean_cell(row[claim_col])
-            # A row cut short before its status cell is kept with an unreadable
-            # status, so strict mode fails it instead of silently skipping it.
+            # A row cut short is kept, whichever cell it lost: a missing status
+            # reads as unreadable, and a `pass` with a missing claim cell reads
+            # as a pass row with no readable id. Strict mode fails both.
+            raw_claim = _clean_cell(row[claim_col]) if claim_col < len(row) else ""
+            ids = _claim_ids(row[claim_col]) if claim_col < len(row) else ()
             raw_status = row[status_col] if status_col < len(row) else ""
             status = _status(raw_status) if raw_status else None
-            if ids or raw_claim:
+            if ids or raw_claim or status == "pass":
                 rows.append(ClaimRow(ids, status, raw_status, raw_claim))
     return rows
 

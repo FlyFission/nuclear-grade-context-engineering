@@ -413,3 +413,61 @@ def test_aliases_of_the_actor_or_generic_agents_are_not_second_parties(tmp_path,
     messages: list[str] = []
     check_two_party(pkt, messages, custody_parties=parties)
     assert any("C-001" in m for m in messages), alias
+
+
+# --- second Codex and Copilot review round on PR #124 -----------------------
+
+
+@pytest.mark.parametrize("verifier", ["no verifier", "No reviewer yet", "not reviewed", "unverified", "ben + N/A", "ben + n / a"])
+def test_negative_phrases_and_split_placeholders_name_no_second_party(tmp_path, verifier):
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n", AUTH_HEADER + f"| C-001 | ben | {verifier} |\n")
+    messages: list[str] = []
+    check_two_party(pkt, messages)
+    assert any("C-001" in m for m in messages), verifier
+
+
+@pytest.mark.parametrize("wrap", [("<!--\n", "-->\n"), ("```markdown\n", "```\n"), ("~~~\n", "~~~\n")])
+def test_commented_or_fenced_authorship_does_not_count(tmp_path, wrap):
+    opening, closing = wrap
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n", opening + AUTH_HEADER + "| C-001 | ben | carol |\n" + closing)
+    messages: list[str] = []
+    check_two_party(pkt, messages)
+    assert any("C-001" in m and "no authorship or custody row" in m for m in messages)
+
+
+def test_claim_table_without_outer_pipes_is_read(tmp_path):
+    body = (
+        "# Verification\n\nClaim ID | Result status\n--- | ---\nC-001 | pass\n\n"
+        + CLAIM_TABLE
+        + "| C-004a | m | c | deferred | e | - |\n"
+    )
+    (tmp_path / "verification.md").write_text(body, encoding="utf-8")
+    messages: list[str] = []
+    check_two_party(tmp_path, messages)
+    assert any("C-001" in m for m in messages)
+
+
+def test_conflicting_authorship_rows_fail_closed(tmp_path):
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n", AUTH_HEADER + "| C-001 | ben | ben |\n| C-001 | ben | carol |\n")
+    messages: list[str] = []
+    check_two_party(pkt, messages)
+    assert any("conflicting Claim authorship rows" in m for m in messages)
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n", AUTH_HEADER + "| C-001 | ben | carol |\n| C-001 | ben | carol |\n")
+    messages = []
+    check_two_party(pkt, messages)
+    assert messages == []
+
+
+def test_empty_authorship_heading_opts_in_by_default(tmp_path):
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n", "## Claim authorship\n\nTBD\n")
+    messages: list[str] = []
+    check_two_party(pkt, messages, required=False)
+    assert any("C-001" in m for m in messages)
+
+
+def test_mixed_verifier_cell_keeps_the_independent_witness(tmp_path):
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n")
+    parties = {"C-001": [ClaimParty("custody E-002", "alice", "alice + carol", "ben", "independent reproduction", "admitted")]}
+    messages: list[str] = []
+    check_two_party(pkt, messages, custody_parties=parties)
+    assert messages == []

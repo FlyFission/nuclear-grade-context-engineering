@@ -23,9 +23,12 @@ The check reads two declarations, whichever the packet carries:
    Its verifier must be neither the evidence author nor any change actor the
    packet declares.
 
-Claims are read from every table whose header has a claim (or requirement)
-column and a status column, found by header rather than by position, with
-Markdown emphasis, code spans, and links stripped from cells. A status cell is
+Only what a reader sees is read: HTML comments and fenced code blocks are
+removed first, so a commented-out or illustrative declaration counts for
+nothing. Claims are read from every table (outer pipes optional) whose header
+has a claim (or requirement) column and a status column, found by header rather
+than by position, with Markdown emphasis, code spans, and links stripped from
+cells. A status cell is
 read by its leading word, so ``**pass**``, ``pass (local)`` and ``pass -- 4
 passed`` all read as ``pass``.
 
@@ -36,11 +39,17 @@ Enforcement is graded:
   custody record cites must appear in a claim table, and a packet with no
   readable claim rows fails closed.
 - ``required=False`` (default): legacy packets stay valid, but a packet that
-  *opts in* by declaring a ``## Claim authorship`` table is held to it.
+  *opts in* with a ``## Claim authorship`` heading is held to it, even if the
+  table under it is empty or malformed.
 
-Identity comparison splits multi-name cells, treats generic names (``assistant``,
-``the agent``, ``me``) as no verifier, and matches aliases by root (``Claude``,
-``claude-opus-5.5``, and ``agent:claude`` are one identity). That fails closed, so
+Two authorship rows for one claim that name different parties fail closed.
+
+Identity comparison splits multi-name cells (keeping ``N/A`` whole), treats
+generic names (``assistant``, ``the agent``, ``me``) and negative phrases (``no
+verifier``, ``not yet``) as no verifier, counts a multi-name cell as a second
+party when at least one name in it is outside the excluded set, and matches
+aliases by root (``Claude``, ``claude-opus-5.5``, and ``agent:claude`` are one
+identity). That fails closed, so
 verifiers should be recorded as full, stable identities. When the only second
 party generated and verified its own evidence (legitimate for an independent
 reproducer, indistinguishable in text from an actor's agent grading its own work),
@@ -121,16 +130,22 @@ _EMPTY_PARTY = {
     "bot",
     "the bot",
 }
+# "no verifier", "no separate check", "not yet", "not reviewed", and the like.
 _EMPTY_PARTY_PREFIXES = (
-    "no separate",
-    "no independent",
-    "no second",
+    "no ",
+    "not ",
     "none ",
+    "nobody ",
+    "unverified",
     "pending",
-    "not yet",
     "to be ",
     "tbd ",
 )
+# Placeholders that contain a split character; kept whole before a cell is split.
+_SLASH_PLACEHOLDER = re.compile(r"\bn\s*/\s*a\b", re.IGNORECASE)
+_HTML_COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
+_TABLE_DELIM = re.compile(r"^\s*\|?\s*:?-+:?\s*(\|\s*:?-+:?\s*)*\|?\s*$")
+_CELL_SPLIT = re.compile(r"(?<!\\)\|")
 
 
 class ClaimParty(NamedTuple):
@@ -173,11 +188,15 @@ def _is_empty_party(value: str) -> bool:
     return norm in _EMPTY_PARTY or norm.startswith(_EMPTY_PARTY_PREFIXES)
 
 
+def _split_names(value: str) -> set[str]:
+    """Split a multi-name cell on ``+ , ; / & and``, keeping ``N/A`` whole."""
+    cell = _SLASH_PLACEHOLDER.sub("n.a", _clean_cell(value))
+    return {_norm(part) for part in _ACTOR_SPLIT.split(cell)} - {""}
+
+
 def _identities(value: str) -> set[str]:
     """Split a multi-actor cell (``ben + agent:claude``) into normalized names."""
-    whole = _norm(value)
-    parts = {_norm(part) for part in _ACTOR_SPLIT.split(_clean_cell(value))}
-    return ({whole} | parts) - {""}
+    return ({_norm(value)} | _split_names(value)) - {""}
 
 
 _ALIAS_PREFIX = re.compile(r"^[a-z]+:")
@@ -203,8 +222,12 @@ def _named_verifiers(value: str) -> set[str]:
     """The individual, non-placeholder identities a verifier cell names."""
     if _is_empty_party(value):
         return set()
-    parts = {_norm(part) for part in _ACTOR_SPLIT.split(_clean_cell(value))}
-    return {part for part in parts if part and not _is_empty_party(part)}
+    # A one-character fragment is not a stable identity; it never counts.
+    return {
+        part
+        for part in _split_names(value)
+        if len(part) > 1 and not _is_empty_party(part) and part != "n.a"
+    }
 
 
 def _claim_ids(cell: str) -> tuple[str, ...]:
@@ -225,29 +248,63 @@ def _status(cell: str) -> str | None:
     return None
 
 
-def _tables(text: str) -> list[tuple[list[str], list[list[str]]]]:
-    """Return ``(headers, rows)`` for every pipe table outside code fences."""
-    tables: list[tuple[list[str], list[list[str]]]] = []
-    block: list[str] = []
-    in_fence = False
+def _visible(text: str) -> str:
+    """The Markdown a reader sees: HTML comments and fenced code blocks removed.
 
-    def flush() -> None:
+    Declarations inside a comment or a fenced example are illustrations, not
+    records, so they must not satisfy (or trip) the gate.
+    """
+    text = _HTML_COMMENT.sub("", text)
+    lines: list[str] = []
+    fence = ""
+    for line in text.splitlines():
+        match = _CODE_FENCE.match(line)
+        if match and (not fence or match.group(1) == fence):
+            fence = "" if fence else match.group(1)
+            lines.append("")
+            continue
+        lines.append("" if fence else line)
+    return "\n".join(lines)
+
+
+def _cells(line: str) -> list[str]:
+    line = line.strip()
+    if line.startswith("|"):
+        line = line[1:]
+    if line.endswith("|") and not line.endswith("\\|"):
+        line = line[:-1]
+    return [c.strip() for c in _CELL_SPLIT.split(line)]
+
+
+def _tables(text: str) -> list[tuple[list[str], list[list[str]]]]:
+    """Return ``(headers, rows)`` for every table in already-visible text.
+
+    A table is a header line followed by a delimiter row (outer pipes optional,
+    as in GitHub Markdown), or a block of pipe-led lines.
+    """
+    tables: list[tuple[list[str], list[list[str]]]] = []
+    lines = text.splitlines()
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        delimited = (
+            "|" in line
+            and i + 1 < len(lines)
+            and "|" in lines[i + 1]
+            and _TABLE_DELIM.match(lines[i + 1]) is not None
+        )
+        if not (delimited or line.strip().startswith("|")):
+            i += 1
+            continue
+        block = [line]
+        i += 1
+        while i < len(lines) and lines[i].strip() and "|" in lines[i]:
+            block.append(lines[i])
+            i += 1
         if len(block) >= 2:
-            split = [[c.strip() for c in line.strip().strip("|").split("|")] for line in block]
+            split = [_cells(row) for row in block]
             body = [row for row in split[1:] if not all(set(c) <= set(":- ") for c in row)]
             tables.append((split[0], body))
-        block.clear()
-
-    for line in text.splitlines():
-        if _CODE_FENCE.match(line):
-            in_fence = not in_fence
-            flush()
-            continue
-        if not in_fence and line.strip().startswith("|"):
-            block.append(line)
-        else:
-            flush()
-    flush()
     return tables
 
 
@@ -266,7 +323,7 @@ def _claim_columns(headers: list[str]) -> tuple[int, int] | None:
 def parse_claim_rows(verification_text: str) -> list[ClaimRow]:
     """Return every claim row from tables that carry a claim and a status column."""
     rows: list[ClaimRow] = []
-    for headers, body in _tables(verification_text):
+    for headers, body in _tables(_visible(verification_text)):
         columns = _claim_columns(headers)
         if columns is None:
             continue
@@ -298,20 +355,37 @@ def parse_claim_status(verification_text: str) -> dict[str, str]:
     return out
 
 
-def parse_authorship(verification_text: str) -> dict[str, tuple[str, str]]:
-    """Return ``{claim_id: (evidence_author, verified_by)}`` from the authorship table.
+def parse_authorship_rows(verification_text: str) -> dict[str, list[tuple[str, str]]]:
+    """Return ``{claim_id: [(evidence_author, verified_by), ...]}``, every row kept.
 
-    Only tables under a ``## Claim authorship`` heading are read.
+    Only tables under a visible ``## Claim authorship`` heading are read.
     """
-    section = _h2_section(verification_text, "claim authorship")
-    out: dict[str, tuple[str, str]] = {}
+    section = _h2_section(_visible(verification_text), "claim authorship")
+    out: dict[str, list[tuple[str, str]]] = {}
     for _headers, body in _tables(section):
         for row in body:
             if len(row) < 3:
                 continue
             for cid in _claim_ids(row[0]):
-                out[cid] = (row[1], row[2])
+                pair = (row[1], row[2])
+                if pair not in out.setdefault(cid, []):
+                    out[cid].append(pair)
     return out
+
+
+def parse_authorship(verification_text: str) -> dict[str, tuple[str, str]]:
+    """Return ``{claim_id: (evidence_author, verified_by)}`` for unambiguous rows."""
+    rows = parse_authorship_rows(verification_text)
+    return {cid: pairs[0] for cid, pairs in rows.items() if len(pairs) == 1}
+
+
+def has_authorship_section(verification_text: str) -> bool:
+    """True when a visible ``## Claim authorship`` heading exists, rows or not."""
+    return any(
+        line.strip().startswith("## ")
+        and line.strip()[3:].strip().casefold().startswith("claim authorship")
+        for line in _visible(verification_text).splitlines()
+    )
 
 
 def _h2_section(text: str, title_prefix: str) -> str:
@@ -354,7 +428,11 @@ def _self_generated(party: ClaimParty) -> bool:
     if not party.source.startswith("custody") or _is_empty_party(party.author):
         return False
     generators = _identities(party.author)
-    return any(_is_excluded(name, generators) for name in _named_verifiers(party.verifier))
+    actors = _identities(party.change_actor)
+    # Only verifiers outside the change actors are candidates; the row is
+    # self-generated when every such candidate also generated the evidence.
+    eligible = [n for n in _named_verifiers(party.verifier) if not _is_excluded(n, actors)]
+    return bool(eligible) and all(_is_excluded(n, generators) for n in eligible)
 
 
 def _why_not(cid: str, parties: list[ClaimParty], packet_actors: set[str]) -> str:
@@ -402,8 +480,9 @@ def check_two_party(
         return
     text = vfile.read_text(encoding="utf-8")
 
+    authorship_rows = parse_authorship_rows(text)
     authorship = parse_authorship(text)
-    if not (required or authorship):
+    if not (required or has_authorship_section(text)):
         return
     custody = custody_parties or {}
     all_rows = parse_claim_rows(text)
@@ -452,6 +531,12 @@ def check_two_party(
     for cid in sorted(c for c, st in statuses.items() if st == "pass"):
         # Custody governs a claim it covers; the authorship table fills gaps only.
         parties = list(custody.get(cid, []))
+        if not parties and len(authorship_rows.get(cid, [])) > 1:
+            messages.append(
+                f"verification.md: claim {cid} has conflicting Claim authorship rows; "
+                "keep one row per claim so the declared verifier is unambiguous."
+            )
+            continue
         if not parties and cid in authorship:
             author, verifier = authorship[cid]
             parties = [ClaimParty("claim authorship", author, verifier)]

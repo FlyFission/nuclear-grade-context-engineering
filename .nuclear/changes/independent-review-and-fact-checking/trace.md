@@ -2,7 +2,7 @@
 
 | Requirement | Design feature | Implementation | Evidence |
 |---|---|---|---|
-| REQ-001 | Parties from the custody record or the authorship table; self-check rows excluded; placeholder verifiers empty; fail closed | `nuclear_grade/two_party.py` (`check_two_party`, `_is_second_party`, `_excluded_identities`); `nuclear_grade/ng_validate.py` (`parties_out`, `require_two_party`) | `tests/test_two_party.py`; `verification.md` V-2, V-3 |
+| REQ-001 | Parties from the custody record or the authorship table; self-check rows excluded; placeholder verifiers empty; fail closed | `nuclear_grade/two_party.py` (`check_two_party`, `_is_second_party`, `_identities`, `_named_verifiers`, `_visible`); `nuclear_grade/ng_validate.py` (`parties_out`, `require_two_party`) | `tests/test_two_party.py`; `verification.md` V-2, V-3 |
 | REQ-001 | Flag exposed on every entry point | `nuclear_grade/cli.py` `--two-party`; `ng_validate.main`; `mcp_server.validate_change_record(two_party=)`; `receipt.strict.two_party` | `tests/test_receipt.py`; `verification.md` V-1 |
 | REQ-002 | Opt-in only; the authorship table is the sole default-mode trigger | `check_two_party(required=False)` returns early unless a `## Claim authorship` table exists | `verification.md` V-4 |
 | REQ-003 | Quotes copied from fetched primary text | `docs/02-operating-system/verification-methods-and-depth.md`; source-map and crosswalk rows | `verification.md` V-5 |

@@ -575,3 +575,33 @@ def test_a_negated_lead_in_far_above_a_changed_item_still_applies(repo):
     git(repo, "commit", "-qm", "claims page")
     write(repo / "docs" / "claims.md", f"Do not state or imply that the tool:\n\n{items}- is endorsed by any regulator.\n")
     assert run(repo)["verdict"] == "pass-floor"
+
+
+def test_dependency_lane_rejects_indentation_only_changes(repo):
+    workflow = repo / ".github" / "workflows" / "ci.yml"  # base: "  - uses: actions/checkout@aaa..."
+    workflow.write_text("steps:\n- uses: actions/checkout@" + "b" * 40 + "\n")  # re-indented and bumped
+    receipt = run(repo, pr_author="dependabot[bot]", approvals=[{"user": {"login": "reviewer"}, "state": "APPROVED"}])
+    assert receipt["approvals"]["dependency_lane"] is False
+
+
+def test_removing_a_negation_from_an_earlier_line_makes_a_claim(repo):
+    write(repo / "docs" / "about.md", "The product is not\nSOC 2 compliant.\n")
+    git(repo, "add", "-A")
+    git(repo, "commit", "-qm", "about")
+    write(repo / "docs" / "about.md", "The product is\nSOC 2 compliant.\n")
+    assert path_entry(run(repo), "docs/about.md")["required"] == "standard"
+
+
+def test_the_default_applies_only_when_no_rule_matches(tmp_path):
+    root = tmp_path / "strict"
+    policy = {"default": "standard", "rules": [{"id": "docs", "mode": "none", "paths": ["docs/**"]}]}
+    write(root / consequence.POLICY_PATH, json.dumps(policy))
+    write(root / "src" / "a.py", "x = 1\n")
+    git(root, "init", "-q", "-b", "main")
+    git(root, "add", "-A")
+    git(root, "commit", "-qm", "base")
+    write(root / "docs" / "guide.md", "How to run it.\n")
+    write(root / "src" / "a.py", "x = 2\n")
+    receipt = consequence.evaluate(root, "main", None, consequence.load_policy(root, "main"))
+    assert path_entry(receipt, "docs/guide.md")["required"] == "none"  # explicit lower rule wins
+    assert path_entry(receipt, "src/a.py")["required"] == "standard"  # default for unmatched paths

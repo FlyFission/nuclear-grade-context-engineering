@@ -57,7 +57,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 
 | Method | Command / review / eval | Environment | Result | Evidence link |
 |---|---|---|---|---|
-| Unit tests | `python -m pytest -q tests/test_consequence.py tests/test_globmatch.py` | Linux container, Python 3.11 | pass (82 tests: 65 engine, 17 glob parity) | E-001..E-004, E-006 |
+| Unit tests | `python -m pytest -q tests/test_consequence.py tests/test_globmatch.py` | Linux container, Python 3.11 | pass (85 tests: 68 engine, 17 glob parity) | E-001..E-004, E-006 |
 | Full suite | `python -m pytest -q` | same | pass (exit 0) | CI run on the PR |
 | Lint | `python -m ruff check .` | same | pass | CI run on the PR |
 | Repo checks | `python tools/ng.py doctor .`; `python tools/ng.py tokens .` | same | pass | CI run on the PR |
@@ -81,6 +81,9 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 | Self-approval counts when the PR author is unknown (review finding) | `test_approval_checks_fail_closed_without_the_pr_author` | fails closed | E-003 |
 | Non-pin number change passes the dependency lane (review finding) | `test_dependency_lane_rejects_non_pin_number_changes` | lane refused | E-003 |
 | Malformed or wrongly typed policy (review finding) | `test_a_malformed_head_policy_fails_closed`, `test_wrongly_typed_policy_fields_fail_closed` | fails closed | E-004 |
+| Indentation-only change passes the dependency lane (review finding) | `test_dependency_lane_rejects_indentation_only_changes` | lane refused | E-003 |
+| Removing an earlier negation makes an unchanged claim word affirmative (review finding) | `test_removing_a_negation_from_an_earlier_line_makes_a_claim` | classified Standard | E-005 |
+| Policy default overrides an explicit lower rule (review finding) | `test_the_default_applies_only_when_no_rule_matches` | default only when unmatched | E-001 |
 | Claim split across lines, or lead-in far above (review finding) | `test_a_claim_completed_by_an_added_line_counts`, `test_a_negated_lead_in_far_above_a_changed_item_still_applies` | classified correctly | E-005 |
 
 ## AI-assisted work checks

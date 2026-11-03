@@ -425,11 +425,14 @@ def _claims_in(kind: str, hunks: list[list[tuple[str, bool]]]) -> list[str]:
                     text += line + " "
                     offset = len(text)
                 for start, end in _claim_spans(kind, text):
-                    if not any(start < b and end > a for a, b in spans):
-                        continue
                     before = text[:start]
                     ends = list(_SENTENCE_END.finditer(before))
-                    sentence = before[ends[-1].end():] if ends else before
+                    sentence_start = ends[-1].end() if ends else 0
+                    sentence = before[sentence_start:]
+                    # The change must touch the claim's sentence up to the claim itself: removing
+                    # a "not" earlier in the sentence makes an unchanged claim word affirmative.
+                    if not any(sentence_start < b and end > a for a, b in spans):
+                        continue
                     if _negated(sentence) or _quoted(sentence):
                         continue
                     found.append(text[start:end].strip())
@@ -576,7 +579,8 @@ def _pin_substitutions_only(repo: Path, base: str, head: str | None, path: str) 
 
 
 def _mask_pins(line: str) -> str:
-    return _VERSION_SPEC.sub("<v>", _SHA.sub("<sha>", line)).strip()
+    # Leading whitespace is kept: in YAML and shell heredocs indentation is behavior.
+    return _VERSION_SPEC.sub("<v>", _SHA.sub("<sha>", line)).rstrip()
 
 
 def evaluate(
@@ -641,18 +645,20 @@ def classify(repo: Path, base: str, head: str | None, policy: Policy):
 
     for path, status in sorted(changes.items()):
         fired: list[str] = []
-        required = policy.default
+        modes: list[str] = []
         slug = _record_slug(path, root)
         if slug and slug in new_slugs:
-            required = "none"
+            modes.append("none")
         elif slug:
-            required = policy.record_delete_mode if status == "D" else policy.record_edit_mode
+            modes.append(policy.record_delete_mode if status == "D" else policy.record_edit_mode)
             fired.append("record-delete" if status == "D" else "record-edit")
         for rule in policy.rules:
             if _rule_fires(rule, path, lines.get(path)):
                 fired.append(rule.id)
-                required = _max_mode(required, rule.mode)
+                modes.append(rule.mode)
                 skills.update(rule.skills)
+        # The highest matching rule wins; the default applies only when nothing matched.
+        required = _max_mode(*modes) if modes else policy.default
         results[path] = PathResult(path, status, required, fired)
     return changes, lines, results, new_slugs, skills
 

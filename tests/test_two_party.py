@@ -504,3 +504,29 @@ def test_hidden_custody_section_supplies_no_second_party(tmp_path, wrap):
 def validate_packet_text(pkt, vfile, text):
     vfile.write_text(text, encoding="utf-8")
     return validate_packet(pkt, require_custody=True, require_two_party=True)
+
+
+# --- forwarded Gemini review: vendor paths in model identities ---------------
+
+
+@pytest.mark.parametrize(
+    "author, verifier",
+    [
+        ("agent: anthropic/claude-3.5-sonnet", "anthropic/claude-3.5-sonnet"),
+        ("claude-3.5-sonnet", "anthropic/claude-3.5-sonnet"),
+        ("agent:claude", "openrouter/claude-opus"),
+    ],
+)
+def test_vendor_path_prefix_is_not_a_second_party(tmp_path, author, verifier):
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n", AUTH_HEADER + f"| C-001 | {author} | {verifier} |\n")
+    messages: list[str] = []
+    check_two_party(pkt, messages)
+    assert any("C-001" in m for m in messages), (author, verifier)
+
+
+@pytest.mark.parametrize("verifier", ["carol", "ben / carol", "ben + carol", "openai/gpt-reviewer"])
+def test_distinct_verifiers_still_pass_with_slashes(tmp_path, verifier):
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n", AUTH_HEADER + f"| C-001 | ben | {verifier} |\n")
+    messages: list[str] = []
+    check_two_party(pkt, messages)
+    assert messages == [], verifier

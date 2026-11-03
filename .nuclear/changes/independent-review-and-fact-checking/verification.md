@@ -112,6 +112,10 @@ Each claim was checked against the code before acting.
 | GX-5 | ChatGPT | State the 3/n assumptions; make depth and independence two axes; give alternate-method records a contract | n/a | done in `verification-methods-and-depth.md` |
 | GX-6 | ChatGPT | `checking-facts` needs an adversarial efficacy set scored on false acceptance | n/a | deferred: recorded in `ship.md` as a follow-up; no efficacy claim is made |
 | GX-7 | ChatGPT | 124-A and 124-B (multi-verifier, single emphasis) | yes | already fixed as CX-1 and CX-2 |
+| GX-8 | Gemini | `ben + N/A` split into `n` and `a`; tables without outer pipes; authorship in HTML comments; conflicting duplicate rows; CLI/MCP contract wording | yes | already fixed as CX-4, CX-6, CX-5, CX-7, and CX-10 (the review read an earlier head) |
+| GX-9 | Gemini | A vendor or router path (`anthropic/claude-3.5-sonnet`, `openrouter/claude-opus`) split on `/`, so the vendor counted as a second party | yes, reproduced in three forms | fixed: only a spaced ` / ` separates names; an unspaced slash is part of one identifier whose root is its last segment; `agent: x` with a space is also an alias prefix; tests added, including distinct verifiers that must still pass |
+| GX-10 | Gemini | Do not require `--two-party` repo-wide yet; scope it to new or modified packets | n/a | agrees with the open owner decision in `ship.md` |
+| GX-11 | Gemini | R-9: same-agent generator and verifier should count only as an isolated independent reproduction | n/a | matches the rule as built: a `self-check` classification never counts, an agent named as change actor is excluded, and the remaining case needs the `ship.md` disclosure |
 
 
 

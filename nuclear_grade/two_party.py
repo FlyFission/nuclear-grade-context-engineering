@@ -44,7 +44,9 @@ Enforcement is graded:
 
 Two authorship rows for one claim that name different parties fail closed.
 
-Identity comparison splits multi-name cells (keeping ``N/A`` whole), treats
+Identity comparison splits multi-name cells on ``+``, ``,``, ``;``, ``&``, ``and``,
+or a spaced `` / `` (an unspaced slash is part of one identifier, such as
+``anthropic/claude-3.5-sonnet`` or ``N/A``, whose root is its last segment), treats
 generic names (``assistant``, ``the agent``, ``me``) and negative phrases (``no
 verifier``, ``not yet``) as no verifier, counts a multi-name cell as a second
 party when at least one name in it is outside the excluded set, and matches
@@ -79,7 +81,9 @@ _STATUSES = ("not applicable", "pass", "fail", "gap", "deferred", "planned")
 _LINK = re.compile(r"\[([^\]]*)\]\([^)]*\)")
 _CODE_FENCE = re.compile(r"^\s*(```|~~~)")
 _ID_SPLIT = re.compile(r"\s*[,;/]\s*")
-_ACTOR_SPLIT = re.compile(r"\s*(?:\+|,|;|/|&|\band\b)\s*")
+# A slash separates names only when spaced (`ben / carol`); unspaced it is part of
+# one identifier (`anthropic/claude-3.5-sonnet`, `N/A`).
+_ACTOR_SPLIT = re.compile(r"\s*(?:\+|,|;|&|\band\b)\s*|\s+/\s+")
 _PUNCT = " \t.,;:!?()[]{}\"'"
 # Cells that declare the absence of a verifier, or name the actor indirectly,
 # rather than naming a second party. Compared after normalization.
@@ -189,7 +193,7 @@ def _is_empty_party(value: str) -> bool:
 
 
 def _split_names(value: str) -> set[str]:
-    """Split a multi-name cell on ``+ , ; / & and``, keeping ``N/A`` whole."""
+    """Split a multi-name cell on ``+ , ; & and`` and a spaced `` / ``, keeping ``N/A`` whole."""
     cell = _SLASH_PLACEHOLDER.sub("n.a", _clean_cell(value))
     return {_norm(part) for part in _ACTOR_SPLIT.split(cell)} - {""}
 
@@ -199,13 +203,18 @@ def _identities(value: str) -> set[str]:
     return ({_norm(value)} | _split_names(value)) - {""}
 
 
-_ALIAS_PREFIX = re.compile(r"^[a-z]+:")
+_ALIAS_PREFIX = re.compile(r"^[a-z]+:\s*")
 _CORE = re.compile(r"[a-z]+")
 
 
 def _core(name: str) -> str:
-    """The stable root of an identity: `agent:claude-opus-5.5` and `Claude` share `claude`."""
-    match = _CORE.match(_ALIAS_PREFIX.sub("", name))
+    """The stable root of an identity: `agent:claude-opus-5.5` and `Claude` share `claude`.
+
+    A vendor or router path keeps only its last segment, so
+    `anthropic/claude-3.5-sonnet` and `openrouter/claude-opus` root at `claude`.
+    """
+    base = _ALIAS_PREFIX.sub("", name).strip().rsplit("/", 1)[-1]
+    match = _CORE.match(base)
     return match.group(0) if match and len(match.group(0)) >= 3 else name
 
 

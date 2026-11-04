@@ -20,10 +20,10 @@ flowchart LR
     Q[Question] --> D[Discover] --> S[Specify] --> P[Plan]
     P --> E[Execute] --> V[Verify] --> R[Review]
     R --> Dec{Decide}
-    Dec -->|ship / defer| Clr{Cleared to apply now?}
+    Dec -->|ship| Clr{Cleared to apply now?}
     Clr -->|yes| B[Baseline] --> O[Operate] --> L[Learn]
     Clr -.->|hold / lapsed| Clr
-    Dec -->|block| P
+    Dec -->|block / defer| P
     L -.feeds future basis.-> Q
 ```
 
@@ -64,8 +64,8 @@ flowchart TB
     C1(["Baseline"]) --> C2(["Operate"]) --> C3(["Learn"])
   end
   A4 --> B1
-  B4 -->|"ship / defer"| C1
-  B4 -.->|"block"| A4
+  B4 -->|"ship"| C1
+  B4 -.->|"block / defer"| A4
   C3 -.->|"lessons feed the next basis"| A1
   class A1,A2,A3,A4 plan
   class B1,B2,B3 run
@@ -110,10 +110,10 @@ flowchart TB
   end
   PL --> E --> V
   RV --> DEC
-  DEC -->|"ship / defer"| CLR{"Cleared to apply now?"}
+  DEC -->|"ship"| CLR{"Cleared to apply now?"}
   CLR -->|"yes"| B
   CLR -.->|"hold / lapsed"| CLR
-  DEC -.->|"block"| PL
+  DEC -.->|"block / defer"| PL
   L -.->|"lessons feed the next basis"| Q
   class Q,D,S,PL plan
   class E run
@@ -288,10 +288,10 @@ flowchart LR
     CI["Controlled items<br/>code, prompts, models,<br/>deps, docs, releases"]:::item --> CH["A change"]
     CH --> EV["Evidence<br/>pass or gap, named"]
     EV --> DEC{"Decide<br/>on purpose"}:::gate
-    DEC -->|"ship / defer"| CLR{"Cleared to<br/>apply now?"}:::gate
+    DEC -->|"ship"| CLR{"Cleared to<br/>apply now?"}:::gate
     CLR -->|"yes"| BL["Saved baseline<br/>the approved version"]:::base
     CLR -.->|"hold / lapsed"| CLR
-    DEC -.->|"block"| CH
+    DEC -.->|"block / defer"| CH
     BL --> OP["Operate"]
     OP --> LE["Lessons learned"]
     LE -.->|"feed the next change"| CI

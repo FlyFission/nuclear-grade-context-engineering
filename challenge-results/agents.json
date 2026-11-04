@@ -1,0 +1,54 @@
+{
+  "_comment": "Each entry runs one coding agent headless on a fresh copy of challenge/. {prompt} is replaced by the fixed prompt in run.py; {model} by the entry's model (omit the flag when model is empty). Flags change between CLI releases: check each with --help before a scored run and record the version. Run every agent inside a throwaway container or VM; these flags let the agent act without asking.",
+  "agents": [
+    {
+      "id": "claude-code",
+      "label": "Claude Code",
+      "command": ["claude", "-p", "{prompt}", "--dangerously-skip-permissions"],
+      "model_args": ["--model", "{model}"],
+      "version_command": ["claude", "--version"]
+    },
+    {
+      "id": "codex",
+      "label": "Codex CLI",
+      "command": ["codex", "exec", "--dangerously-bypass-approvals-and-sandbox", "{prompt}"],
+      "model_args": ["--model", "{model}"],
+      "version_command": ["codex", "--version"]
+    },
+    {
+      "id": "gemini-cli",
+      "label": "Gemini CLI",
+      "command": ["gemini", "--yolo", "-p", "{prompt}"],
+      "model_args": ["--model", "{model}"],
+      "version_command": ["gemini", "--version"]
+    },
+    {
+      "id": "cursor-agent",
+      "label": "Cursor CLI",
+      "command": ["cursor-agent", "-p", "{prompt}", "--force"],
+      "model_args": ["--model", "{model}"],
+      "version_command": ["cursor-agent", "--version"]
+    },
+    {
+      "id": "copilot-cli",
+      "label": "GitHub Copilot CLI",
+      "command": ["copilot", "-p", "{prompt}", "--allow-all-tools"],
+      "model_args": ["--model", "{model}"],
+      "version_command": ["copilot", "--version"]
+    },
+    {
+      "id": "opencode",
+      "label": "OpenCode",
+      "command": ["opencode", "run", "{prompt}"],
+      "model_args": ["--model", "{model}"],
+      "version_command": ["opencode", "--version"]
+    },
+    {
+      "id": "aider",
+      "label": "Aider",
+      "command": ["aider", "--yes-always", "--no-auto-commits", "--message", "{prompt}"],
+      "model_args": ["--model", "{model}"],
+      "version_command": ["aider", "--version"]
+    }
+  ]
+}

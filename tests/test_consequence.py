@@ -431,6 +431,30 @@ def test_cli_malformed_approvals_exit_2(repo, bad):
     assert "Traceback" not in result.stderr
 
 
+def test_cli_fix_hint_matches_the_failure(repo):
+    write(repo / "hooks" / "gate.py", "print('narrowed')\n")
+    uncovered = _cli(repo, "--base", "main", "--pr-author", "owner").stdout
+    assert "fix: python tools/ng.py new" in uncovered
+    standard_record(repo, "narrow-gate", "`hooks/gate.py`", authority=True)
+    approval_only = _cli(repo, "--base", "main", "--pr-author", "owner")
+    assert approval_only.returncode == 1
+    assert "ask a human reviewer other than the PR author" in approval_only.stdout
+    assert "tools/ng.py new" not in approval_only.stdout  # every path is already covered
+    no_author = _cli(repo, "--base", "main").stdout
+    assert "pass --pr-author" in no_author
+
+
+def test_the_cli_handler_only_delegates_to_the_engine():
+    # The policy protects nuclear_grade/consequence.py by path; keep the gate's logic there.
+    import inspect
+
+    from nuclear_grade import cli
+
+    body = [line for line in inspect.getsource(cli.handle_required_mode).splitlines()[1:]
+            if line.strip() and not line.strip().startswith("#")]
+    assert body == ["    return consequence.run_cli(args)"]
+
+
 def test_cli_print_table_lists_every_rule(repo):
     out = _cli(repo, "--base", "main", "--print-table").stdout
     for rule in POLICY["rules"]:

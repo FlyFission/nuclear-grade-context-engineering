@@ -29,6 +29,7 @@ import hashlib
 import json
 import re
 import subprocess
+import sys
 from dataclasses import dataclass, field
 from pathlib import Path, PurePosixPath
 
@@ -813,3 +814,100 @@ def mode_table(policy: Policy) -> str:
         rows.append(f"| `{rule.id}` | {rule.mode} | {paths} | {trigger} | {'yes' if rule.overridable else 'no'} | "
                     f"{rule.reason} |")
     return "\n".join(rows)
+
+
+# ---------------------------------------------------------------- command line
+
+
+def default_base(repo: Path) -> str | None:
+    """The merge base with origin/main, else main, else None."""
+
+    for candidate in ("origin/main", "main"):
+        result = subprocess.run(["git", "-C", str(repo), "merge-base", "HEAD", candidate],
+                                capture_output=True, text=True)
+        if result.returncode == 0 and result.stdout.strip():
+            return result.stdout.strip()
+    return None
+
+
+def fix_hints(receipt: dict) -> list[str]:
+    """What to do about a failing receipt, read from its fields rather than its messages."""
+
+    hints = []
+    if any(entry["required"] != "none" and not entry["covered_by"] for entry in receipt["paths"]):
+        hints.append("python tools/ng.py new <slug> --mode <mode>; name the changed paths in its risk.md; "
+                     "fill it until `ng validate` passes")
+    approvals = receipt["approvals"]
+    needs_human = (receipt["required_mode"] == "standard+authority" or approvals["dependency_lane"]
+                   or bool(receipt["overrides"]))
+    if needs_human and not approvals["pr_author"]:
+        hints.append("pass --pr-author <login> so the approval check can exclude the author")
+    elif needs_human and not approvals["human_approvers"]:
+        hints.append("ask a human reviewer other than the PR author and the bot identities to approve the PR")
+    if any("is not overridable" in failure for failure in receipt["failures"]):
+        hints.append("remove the `## Policy override` entry for a rule that cannot be overridden")
+    if any(failure.startswith(f"{POLICY_PATH} in this change is malformed") for failure in receipt["failures"]):
+        hints.append(f"fix {POLICY_PATH} so it parses (`--policy-ref head --print-table` shows the error)")
+    return hints
+
+
+def run_cli(args) -> int:
+    """`ng required-mode`: 0 pass, 1 fail (0 with --advisory), 2 for a bad ref or malformed input."""
+
+    repo = args.repo.resolve()
+    try:
+        base = args.base or default_base(repo)
+        if base is None:
+            print("required-mode: no base found; pass --base <ref>", file=sys.stderr)
+            return 2
+        if args.head is not None:
+            want = _git(repo, "rev-parse", f"{args.head}^{{commit}}").strip()
+            have = _git(repo, "rev-parse", "HEAD").strip()
+            if want != have:
+                print(f"required-mode: --head {args.head} is not checked out in {repo}", file=sys.stderr)
+                return 2
+        ref = {"base": base, "head": args.head or WORKTREE}.get(args.policy_ref, args.policy_ref)
+        policy = load_policy(repo, ref, args.policy_file)
+        if args.print_table:
+            print(mode_table(policy))
+            return 0
+        approvals = []
+        if args.approvals_json is not None:
+            approvals = json.loads(args.approvals_json.read_text(encoding="utf-8"))
+            if not isinstance(approvals, list) or not all(
+                isinstance(review, dict) and isinstance(review.get("user") or {}, dict) for review in approvals
+            ):
+                raise PolicyError("--approvals-json must hold a JSON list of review objects")
+        receipt = evaluate(
+            repo,
+            base,
+            args.head,
+            policy,
+            base_policy_text=policy_text(repo, base),
+            head_policy_text=policy_text(repo, args.head or WORKTREE),
+            approvals=approvals,
+            pr_author=args.pr_author,
+        )
+    except (PolicyError, GitError, OSError, ValueError) as error:
+        print(f"required-mode: {error}", file=sys.stderr)
+        return 2
+    if args.json:
+        print(json.dumps(receipt, indent=2, ensure_ascii=False))
+    else:
+        for entry in receipt["paths"]:
+            if entry["required"] == "none":
+                continue
+            cover = ", ".join(entry["covered_by"]) or "-"
+            print(f"{entry['path']} -> {entry['required']} [{', '.join(entry['rules']) or 'default'}]  "
+                  f"covered_by: {cover}")
+        print(f"required mode: {receipt['required_mode']}  verdict: {receipt['verdict'].upper()}")
+        for failure in receipt["failures"]:
+            print(f"- {failure}")
+        if receipt["skills"]:
+            print(f"skills this change calls for: {', '.join(receipt['skills'])}")
+        if receipt["verdict"] == "fail":
+            for hint in fix_hints(receipt):
+                print(f"fix: {hint}")
+    if receipt["verdict"] == "fail" and not args.advisory:
+        return 1
+    return 0

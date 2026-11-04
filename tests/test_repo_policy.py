@@ -43,6 +43,10 @@ BEFORE = {
     "plugins/nuclear-grade-guard/.claude-plugin/plugin.json": "{}\n",
     ".github/workflows/ci.yml": "jobs: {}\n",
     "nuclear_grade/consequence.py": "X = 1\n",
+    "challenge-results/build.py": "MIN_RUNS = 5\n",
+    "challenge-results/adjudications.json": "{\"rulings\": []}\n",
+    "challenge-results/results/run-001.json": "{}\n",
+    "tests/test_challenge_results.py": "def test_x():\n    pass\n",
     "nuclear_grade/two_party.py": "def check_two_party():\n    pass\n",
     "nuclear_grade/cli.py": "HELP = 'old'\nGATE = None\n",
     "nuclear_grade/metrics.py": "MODEL = None\n",
@@ -72,6 +76,10 @@ AFTER = {
     "plugins/nuclear-grade-guard/.claude-plugin/plugin.json": "{\"version\": \"1\"}\n",
     ".github/workflows/ci.yml": "jobs: {test: {}}\n",
     "nuclear_grade/consequence.py": "X = 2\n",
+    "challenge-results/build.py": "MIN_RUNS = 1\n",
+    "challenge-results/adjudications.json": "{\"rulings\": [{\"run_id\": \"x\"}]}\n",
+    "challenge-results/results/run-001.json": "{\"outcome\": \"ok\"}\n",
+    "tests/test_challenge_results.py": "def test_x():\n    assert True\n",
     "nuclear_grade/two_party.py": "def check_two_party():\n    return\n",
     "nuclear_grade/cli.py": "HELP = 'new'\nGATE = None\n",
     "nuclear_grade/metrics.py": "MODEL = 'claude-opus-5-5'\n",
@@ -101,6 +109,10 @@ EXPECTED = {
     "plugins/nuclear-grade-guard/.claude-plugin/plugin.json": "standard",  # plugin manifest
     ".github/workflows/ci.yml": "standard+authority",
     "nuclear_grade/consequence.py": "standard",
+    "challenge-results/build.py": "standard",  # computes the published outcome shares
+    "challenge-results/adjudications.json": "standard",  # human rulings override scores
+    "challenge-results/results/run-001.json": "none",  # per-run data; RESULTS.md carries the claim rules
+    "tests/test_challenge_results.py": "standard",
     "nuclear_grade/two_party.py": "standard",  # ng_validate delegates to it
     "nuclear_grade/cli.py": "none",  # ordinary CLI text, no gate wiring touched
     "nuclear_grade/metrics.py": "standard",  # model id in executable code

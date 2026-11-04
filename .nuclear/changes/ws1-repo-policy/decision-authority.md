@@ -13,7 +13,7 @@ This validator checks record structure and declared consistency only. It does no
 - **Policy custodian:** FlyFission (repository owner); the rule ships in the engine merged as #123.
 - **Policy digest:** sha256:cddfb6f3ba08960ac405262ece164fb13bfb2c31d9d07488a937b1671569cf44
 - **Policy valid through:** not applicable: the rule holds until a later change to `nuclear_grade/consequence.py` alters it, and that change is itself gated.
-- **Action identity:** `.nuclear/consequence-policy.json` with sha256 `b7d857f122e139e1028b3de60b3ad2221274ef77e47f928072669bfff1ed0a4f`, on branch `claude/ws1-repo-policy`.
+- **Action identity:** `.nuclear/consequence-policy.json` with sha256 `c004f37922f0ed1fd15c59c735d04251ac0ea5e23ca526c2476058f1d1d299c0`, on branch `claude/ws1-repo-policy`.
 - **Decision status:** pending maintainer review
 - **Reversible:** yes; revert the commit, and CI does not read the file yet.
 - **Consequence if wrong:** once CI reads it, a wrong rule either leaves a trust surface without a record or asks for records on ordinary work.
@@ -26,7 +26,7 @@ Allowed coded source states (the field remains named `Raw state`) are `observed`
 
 | Evidence ID | Raw state | Scope / basis | Intended use / V&V status | Custody / profile link |
 |---|---|---|---|---|
-| E-001 | observed | `tests/test_repo_policy.py`, 31 tests, run locally and in CI on the PR | supports the rule mapping; self-check | [verification.md custody profile](verification.md#evidence-custody-and-coupling) |
+| E-001 | observed | `tests/test_repo_policy.py`, 35 tests, run locally and in CI on the PR | supports the rule mapping; self-check | [verification.md custody profile](verification.md#evidence-custody-and-coupling) |
 | E-002 | observed | the `dependency_lane` block and the path-match check against `git ls-files` | supports lane configuration; self-check | [verification.md custody profile](verification.md#evidence-custody-and-coupling) |
 | E-003 | observed | backtest over the 49 first-parent commits ending at `31e0a9e` | supports the cost and shortfall picture; not ground truth | [verification.md custody profile](verification.md#evidence-custody-and-coupling) |
 

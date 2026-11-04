@@ -21,7 +21,7 @@
 |---|---|---|---|---|---|---|---|
 | 1 | Start from the draft policy used for the #123 backtest; add `tests/test_hooks.py` to trust tests and a `gate-cli` content rule | REQ-001..005 | #123 merged | draft policy; master plan WS1 decisions | `.nuclear/consequence-policy.json` | parses; renders with `--print-table` | 12 rules |
 | 2 | Check every path pattern against tracked files | REQ-001 | step 1 | `git ls-files` | list of non-matching patterns | each non-match explained | done |
-| 3 | Pin representative paths to decided modes | REQ-001..004 | step 1 | owner decisions | `tests/test_repo_policy.py` | 31 tests pass | done |
+| 3 | Pin representative paths to decided modes | REQ-001..004 | step 1 | owner decisions | `tests/test_repo_policy.py` | 35 tests pass | done |
 | 4 | Backtest over the last 49 merged commits; list commits whose own record fell short | all | step 1 | `tools/ng_policy_backtest.py` | counts and list in `verification.md` | reproducible command | done |
 | 5 | Correct the engine record's stale backtest row, with a note | none | step 4 | `.nuclear/changes/ws1-consequence-engine/verification.md` | corrected row | re-run matches | done |
 

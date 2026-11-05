@@ -722,6 +722,21 @@ def test_install_gemini_dry_run_lists_both_scopes_and_flags_unverified(tmp_path)
     assert not (repo / ".gemini").exists()
 
 
+def test_install_opencode_dry_run_lists_both_scopes_and_flags_unverified(tmp_path):
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    project = run_ng("install", "opencode", "--scope", "project", "--repo", str(repo), "--dry-run")
+    user = run_ng("install", "opencode", "--dry-run")
+
+    assert project.returncode == 0, project.stderr
+    assert user.returncode == 0, user.stderr
+    assert str(repo / ".opencode" / "skills") in project.stdout
+    assert str(Path.home() / ".config" / "opencode" / "skills") in user.stdout
+    assert "OpenCode" in project.stdout
+    assert "best-known default" in project.stdout
+    assert not (repo / ".opencode").exists()
+
+
 def test_install_full_installs_every_skill(tmp_path):
     dest = tmp_path / "skills"
     result = run_ng("install", "codex", "--full", "--dest", str(dest))
@@ -826,6 +841,9 @@ def test_install_dest_resolution_per_tool(tmp_path, monkeypatch):
     # Gemini CLI: .gemini/skills in the workspace, ~/.gemini/skills for the user.
     assert ng_cli.install_dest("gemini", "user", repo) == home / ".gemini" / "skills"
     assert ng_cli.install_dest("gemini", "project", repo) == repo / ".gemini" / "skills"
+    # OpenCode: .opencode/skills in the project, ~/.config/opencode/skills globally.
+    assert ng_cli.install_dest("opencode", "user", repo) == home / ".config" / "opencode" / "skills"
+    assert ng_cli.install_dest("opencode", "project", repo) == repo / ".opencode" / "skills"
 
 
 # --- ng mcp-config --------------------------------------------------------------
@@ -861,6 +879,18 @@ def test_mcp_config_gemini_uses_settings_json(tmp_path):
     assert result.returncode == 0, result.stderr
     assert ".gemini/settings.json" in result.stdout
     assert "mcpServers" in result.stdout
+
+
+def test_mcp_config_opencode_uses_mcp_key_and_local_command(tmp_path):
+    result = run_ng("mcp-config", "opencode")
+
+    assert result.returncode == 0, result.stderr
+    body = result.stdout[result.stdout.index("{"):result.stdout.rindex("}") + 1]
+    config = json.loads(body)
+    server = config["mcp"]["nuclear-grade"]
+    assert server["type"] == "local"
+    assert server["command"] == ["python", "-m", "nuclear_grade.mcp_server"]
+    assert "mcpServers" not in result.stdout
 
 
 def test_mcp_config_rejects_unknown_tool(tmp_path):

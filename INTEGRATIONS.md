@@ -2,7 +2,7 @@
 
 Install Nuclear-grade once and let your agent reach for its skills the way it
 already reaches for any other installed skill — in Codex, Claude Code, Cursor,
-Windsurf, and VS Code.
+Windsurf, VS Code, and Gemini CLI.
 
 ## How it works
 
@@ -31,6 +31,7 @@ checkout (`python tools/ng.py install …`) or via the installed console script
 | Cursor | `… install cursor` | user `~/.cursor/skills/`; project `.cursor/skills/` | user or project |
 | Windsurf | `… install windsurf` | user `~/.codeium/windsurf/skills/`; project `.windsurf/skills/` | user or project |
 | VS Code + Copilot | `… install vscode` | project `.github/skills/`; user `~/.config/github-copilot/skills/` | user or project |
+| Gemini CLI | `… install gemini` | user `~/.gemini/skills/`; project `.gemini/skills/` | user or project |
 
 Default scope is `user` (available in every project); pass `--scope project --repo .`
 for a single repo. Or fan out to every detected tool in one step:
@@ -42,7 +43,9 @@ for a single repo. Or fan out to every detected tool in one step:
 
 > Codex, Claude Code, Cursor, and Windsurf paths are confirmed against current
 > docs. VS Code's project path (`.github/skills`) is confirmed; its user-scope
-> path is a best-known default — the command flags it. If your install differs,
+> path is a best-known default — the command flags it. Gemini CLI's paths match
+> its [skills docs](https://geminicli.com/docs/cli/skills/) but haven't been
+> checked in a live session yet, so the command flags those too. If your install differs,
 > point it anywhere with `--dest <path>`.
 
 ### Claude Code: the native plugin
@@ -203,6 +206,7 @@ The server (`python -m nuclear_grade.mcp_server`) exposes `validate_change_recor
 | Cursor | `.cursor/mcp.json` | `mcpServers` |
 | Windsurf | `~/.codeium/windsurf/mcp_config.json` | `mcpServers` |
 | VS Code + Copilot | `.vscode/mcp.json` | `servers` (note: not `mcpServers`) |
+| Gemini CLI | `.gemini/settings.json` (or `~/.gemini/settings.json`) | `mcpServers` |
 
 **Why opt-in:** an MCP server's tool schemas load into the model's context every
 session whether used or not (~1k tokens per tool); skills load only short

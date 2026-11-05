@@ -707,6 +707,21 @@ def test_install_core_installs_router_plus_core_seven(tmp_path):
     assert (dest / "using-nuclear-grade" / "SKILL.md").exists()
 
 
+def test_install_gemini_dry_run_lists_both_scopes_and_flags_unverified(tmp_path):
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    project = run_ng("install", "gemini", "--scope", "project", "--repo", str(repo), "--dry-run")
+    user = run_ng("install", "gemini", "--dry-run")
+
+    assert project.returncode == 0, project.stderr
+    assert user.returncode == 0, user.stderr
+    assert str(repo / ".gemini" / "skills") in project.stdout
+    assert str(Path.home() / ".gemini" / "skills") in user.stdout
+    assert "Gemini CLI" in project.stdout
+    assert "best-known default" in project.stdout
+    assert not (repo / ".gemini").exists()
+
+
 def test_install_full_installs_every_skill(tmp_path):
     dest = tmp_path / "skills"
     result = run_ng("install", "codex", "--full", "--dest", str(dest))
@@ -808,6 +823,9 @@ def test_install_dest_resolution_per_tool(tmp_path, monkeypatch):
     # VS Code + Copilot: project is .github/skills (NOT .vscode); user is ~/.config/github-copilot.
     assert ng_cli.install_dest("vscode", "project", repo) == repo / ".github" / "skills"
     assert ng_cli.install_dest("vscode", "user", repo) == home / ".config" / "github-copilot" / "skills"
+    # Gemini CLI: .gemini/skills in the workspace, ~/.gemini/skills for the user.
+    assert ng_cli.install_dest("gemini", "user", repo) == home / ".gemini" / "skills"
+    assert ng_cli.install_dest("gemini", "project", repo) == repo / ".gemini" / "skills"
 
 
 # --- ng mcp-config --------------------------------------------------------------
@@ -835,6 +853,14 @@ def test_mcp_config_claude_uses_mcpservers_key(tmp_path):
     assert result.returncode == 0, result.stderr
     assert "mcpServers" in result.stdout
     assert "claude mcp add" in result.stdout
+
+
+def test_mcp_config_gemini_uses_settings_json(tmp_path):
+    result = run_ng("mcp-config", "gemini")
+
+    assert result.returncode == 0, result.stderr
+    assert ".gemini/settings.json" in result.stdout
+    assert "mcpServers" in result.stdout
 
 
 def test_mcp_config_rejects_unknown_tool(tmp_path):

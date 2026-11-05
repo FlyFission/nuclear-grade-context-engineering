@@ -135,19 +135,22 @@ MODE_FILES = {
 # controls both profiles. Catalog loading stays inside commands so malformed metadata
 # cannot block `--help` or `doctor` at module import time.
 
-INSTALL_TOOLS = ("codex", "claude", "cursor", "windsurf", "vscode")
+INSTALL_TOOLS = ("codex", "claude", "cursor", "windsurf", "vscode", "gemini")
 TOOL_LABELS = {
     "codex": "Codex CLI",
     "claude": "Claude Code",
     "cursor": "Cursor",
     "windsurf": "Windsurf",
     "vscode": "VS Code + Copilot",
+    "gemini": "Gemini CLI",
 }
 # Skill-directory paths confirmed against each tool's current docs (Codex, Claude
 # Code, Cursor, Windsurf). VS Code's project path (.github/skills) is confirmed,
 # but its user-scope path is a best-known default, so VS Code stays unverified:
 # unverified tools print a "verify / override with --dest" note so a wrong default
 # is obvious and recoverable rather than silently writing to the wrong place.
+# Gemini CLI's paths match its docs but have not been checked in a live Gemini
+# CLI session, so it stays unverified too.
 VERIFIED_TOOLS = frozenset({"codex", "claude", "cursor", "windsurf"})
 INSTALL_MANIFEST = ".nuclear-grade-install.json"
 
@@ -759,6 +762,10 @@ def install_dest(tool: str, scope: str, repo: Path) -> Path:
     if tool == "vscode":
         # VS Code + Copilot: project .github/skills (team-shared); user ~/.config/github-copilot/skills.
         return (repo / ".github" / "skills") if scope == "project" else _vscode_user_skills()
+    if tool == "gemini":
+        # Gemini CLI reads .gemini/skills (workspace) and ~/.gemini/skills (user).
+        # See https://geminicli.com/docs/cli/skills/
+        return (repo / ".gemini" / "skills") if scope == "project" else (home / ".gemini" / "skills")
     raise ValueError(f"unknown tool: {tool}")
 
 
@@ -923,6 +930,8 @@ def handle_mcp_config(args: argparse.Namespace) -> int:
             "cursor": (".cursor/mcp.json (project) or ~/.cursor/mcp.json (user)", "mcpServers"),
             "windsurf": ("~/.codeium/windsurf/mcp_config.json", "mcpServers"),
             "vscode": (".vscode/mcp.json", "servers"),
+            # https://github.com/google-gemini/gemini-cli/blob/main/docs/tools/mcp-server.md
+            "gemini": (".gemini/settings.json (project) or ~/.gemini/settings.json (user)", "mcpServers"),
         }[tool]
         snippet = _mcp_json(top_key)
 

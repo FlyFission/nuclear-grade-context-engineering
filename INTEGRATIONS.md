@@ -107,7 +107,7 @@ Codex-native capabilities:
 | Repo asset | In the Codex plugin? | Why |
 |---|---|---|
 | `skills/` | **Yes** | Exported via `plugin.json` `skills`; Codex routes to them by `description`. |
-| `agents/` | No | These are **Claude** PROVE subagent definitions. Codex subagent packaging is not supported here; treat them as Claude-only until converted (see [`agents/README.md`](agents/README.md)). |
+| `agents/` | No | These are **Claude** PROVE subagent definitions. Codex subagent packaging is not supported here; treat them as Claude-only until converted (see [`docs/02-operating-system/prove-subagents.md`](docs/02-operating-system/prove-subagents.md)). |
 | `commands/` | No | Paste-ready prompt cards, not Codex slash commands. Open them from a checkout and paste. |
 | `templates/`, `.nuclear/` | No | Repo assets the skills and `ng` CLI use. The `ng init`/`ng new` commands copy them into a target repo; the Codex plugin does not. |
 | `tools/ng.py` | No | A repo-side CLI you run from a checkout. The plugin adds no `ng` command to your `PATH`. |

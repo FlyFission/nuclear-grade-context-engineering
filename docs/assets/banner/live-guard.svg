@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" width="1200" height="360" role="img" aria-labelledby="t d">
+  <title id="t">Nuclear-grade Context Engineering</title>
+  <desc id="d">A terminal plays a short session: install with pipx install nuclear-grade, set up a repo, then the guard denies an agent edit to the CI workflow, asks a person before a force push, and links a claim to its evidence.</desc>
+  <style>
+    .sans { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace; font-size: 17px; }
+    .ln { animation: show 16s steps(1, end) infinite backwards; }
+    .l1 { animation-delay: .3s; } .l2 { animation-delay: 1.4s; } .l3 { animation-delay: 2.2s; } .l4 { animation-delay: 3.6s; }
+    .l5 { animation-delay: 4.4s; } .l6 { animation-delay: 5.8s; } .l7 { animation-delay: 6.6s; } .l8 { animation-delay: 8s; } .l9 { animation-delay: 8.8s; }
+    @keyframes show { 0% { opacity: 0; } 1% { opacity: 1; } 95% { opacity: 1; } 100% { opacity: 0; } }
+    .cursor { animation: blink 1.1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .ln, .cursor { animation: none; } }
+  </style>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B1528"/><stop offset="1" stop-color="#15243D"/>
+    </linearGradient>
+    <linearGradient id="rule" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#3A5BA8"/><stop offset=".5" stop-color="#5BC8B3"/><stop offset="1" stop-color="#FFD24D"/>
+    </linearGradient>
+    <clipPath id="card"><rect width="1200" height="360" rx="22"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#card)">
+    <rect width="1200" height="360" fill="url(#bg)"/>
+
+    <g class="sans">
+      <text x="56" y="128" fill="#F4F7FC" font-size="48" font-weight="800" letter-spacing="1">NUCLEAR-GRADE</text>
+      <text x="58" y="166" fill="#9DB6E0" font-size="20" font-weight="600" letter-spacing="7.5">CONTEXT ENGINEERING</text>
+      <rect x="58" y="186" width="420" height="3" rx="1.5" fill="url(#rule)"/>
+      <text x="57" y="228" fill="#D7E0EE" font-size="22" font-weight="500">Let AI do serious software work</text>
+      <text x="57" y="258" fill="#D7E0EE" font-size="22" font-weight="500">and stay in control of what ships.</text>
+      <text x="57" y="300" fill="#7FA0C9" font-size="17" font-style="italic">The agent proposes. The checks and a person decide.</text>
+    </g>
+
+    <!-- terminal -->
+    <rect x="548" y="34" width="616" height="292" rx="14" fill="#070D18" stroke="#2C4468" stroke-width="1.5"/>
+    <rect x="548" y="34" width="616" height="34" rx="14" fill="#111C30"/>
+    <rect x="548" y="54" width="616" height="14" fill="#111C30"/>
+    <circle cx="572" cy="51" r="6" fill="#E5534B"/><circle cx="592" cy="51" r="6" fill="#E0A82E"/><circle cx="612" cy="51" r="6" fill="#3FB950"/>
+    <text class="sans" x="856" y="56" text-anchor="middle" fill="#7F93B3" font-size="14">your repo</text>
+
+    <g class="mono" xml:space="preserve">
+      <text class="ln l1" x="570" y="98"><tspan fill="#5BC8B3">$</tspan><tspan fill="#E8EEF7"> pipx install nuclear-grade</tspan></text>
+      <text class="ln l2" x="570" y="124"><tspan fill="#5BC8B3">$</tspan><tspan fill="#E8EEF7"> nuclear-grade init --all</tspan></text>
+      <text class="ln l3" x="590" y="150" fill="#8FB3D9">added: agent rules · guard · CI check</text>
+      <text class="ln l4" x="570" y="182" fill="#9DB6E0">agent → edit .github/workflows/ci.yml</text>
+      <text class="ln l5" x="590" y="208"><tspan fill="#FF7B72" font-weight="700">DENY</tspan><tspan fill="#C9D3E2">  a person reviews trust files</tspan></text>
+      <text class="ln l6" x="570" y="240" fill="#9DB6E0">agent → git push --force origin main</text>
+      <text class="ln l7" x="590" y="266"><tspan fill="#FFD24D" font-weight="700">ASK </tspan><tspan fill="#C9D3E2">  waiting for your OK</tspan></text>
+      <text class="ln l8" x="570" y="298"><tspan fill="#5BC8B3">$</tspan><tspan fill="#E8EEF7"> nuclear-grade validate</tspan></text>
+      <text class="ln l9" x="836" y="298"><tspan fill="#3FB950" font-weight="700">OK</tspan><tspan fill="#C9D3E2">  claims have evidence</tspan></text>
+    </g>
+  </g>
+  <rect x="1" y="1" width="1198" height="358" rx="21" fill="none" stroke="#283C5C" stroke-width="2"/>
+</svg>

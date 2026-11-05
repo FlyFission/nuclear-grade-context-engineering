@@ -1,15 +1,11 @@
 <div align="center">
 
-<img src="docs/assets/landing-banner.svg" alt="Nuclear-grade Context Engineering: let AI do serious software work and stay in control of what ships. Go fast while exploring; slow down when the work becomes a promise." width="820">
-
-<br/>
-
-**A simple, evidence-first way to let AI do serious software work and stay in control of what ships.**
+<img src="docs/assets/banner/control-rods.svg" alt="Nuclear-grade Context Engineering: let AI do serious software work and stay in control of what ships. Install with pipx install nuclear-grade." width="820">
 
 [![CI](https://github.com/FlyFission/nuclear-grade-context-engineering/actions/workflows/ci.yml/badge.svg)](https://github.com/FlyFission/nuclear-grade-context-engineering/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-2E7D45.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3A5BA8.svg)](pyproject.toml)
-[![No build step](https://img.shields.io/badge/setup-no%20build%20step-5B49A6.svg)](#quick-start)
+[![PyPI](https://img.shields.io/pypi/v/nuclear-grade.svg?color=5B49A6)](https://pypi.org/project/nuclear-grade/)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-B07400.svg)](CONTRIBUTING.md)
 [![Evidence records](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FFlyFission%2Fnuclear-grade-context-engineering%2Fmain%2F.nuclear%2Fbadge.json)](.nuclear/changes/)
 
@@ -25,7 +21,15 @@ A small, dependency-free toolkit that keeps agent work questioned, controlled, a
 - **Checks that ignore the agent's narrative**: a CI validator, receipts with file digests, and an opt-in hook that stops agents editing the files that judge them.
 - **Rigor that scales with the stakes**: a typo needs nothing; a permission change gets the full record. Skills and prompt cards for Claude Code, Codex, Cursor, and more.
 
-Borrows high-consequence engineering discipline, not its regulations ([limits](#limits)).
+Try it on your own repo in a minute:
+
+```bash
+pipx install nuclear-grade   # or: pip install nuclear-grade
+cd your-repo
+nuclear-grade init --all     # agent rules file, the guard, and a CI check
+```
+
+It borrows its habits from high-consequence engineering. It does not claim to meet that field's regulations ([limits](#limits)).
 
 <p align="center"><img src="docs/assets/demo/demo.gif" width="900" alt="Terminal demo, about 30 seconds. A simulated agent write to .github/workflows/ci.yml is denied by the PreToolUse gate; a simulated force-push to main is routed to a human; a passing change record's JSON receipt still reports two open evidence items and the badge counts open items; an unfilled change record fails validation."></p>
 
@@ -70,6 +74,18 @@ Copy [that example](docs/03-worked-examples/ai-agent-tool-permissions/) as your 
 
 ## Quick start
 
+**Any tool, from PyPI:**
+
+```bash
+pipx install nuclear-grade
+nuclear-grade init --all                      # AGENTS.md, the guard, and the CI check
+nuclear-grade install claude                  # or codex, cursor, windsurf, vscode, gemini, opencode
+nuclear-grade new my-change --mode quick      # start a change record, fill two files
+nuclear-grade validate .nuclear/changes/my-change
+```
+
+`init` on its own adds just the `.nuclear/` folder; `--all` adds everything. `install` copies the skills to where your agent tool looks for them ([`INSTALL.md`](INSTALL.md)). Using an agent? Point it at [`AGENTS.md`](AGENTS.md), the brief agents read first.
+
 **Claude Code** (the repo is its own plugin marketplace):
 
 ```bash
@@ -79,15 +95,9 @@ Copy [that example](docs/03-worked-examples/ai-agent-tool-permissions/) as your 
 /reload-plugins
 ```
 
-The main plugin adds the skills and command cards: no hooks, nothing runs on its own, and no `ng` on your `PATH`; the CLI runs from a checkout. The optional guard is a separate plugin that stops the agent editing the files that judge it and asks before a tag, publish, or force-push ([`HOOKS.md`](HOOKS.md)).
+The main plugin adds the skills and command cards. It has no hooks and runs nothing on its own; for the `nuclear-grade` command, install it from PyPI as above. The optional guard is a separate plugin that stops the agent editing the files that judge it and asks before a tag, publish, or force-push ([`HOOKS.md`](HOOKS.md)).
 
-**Any tool, or plain files:**
-
-1. Clone and install (no third-party dependencies; the installed command is `nuclear-grade`): [`INSTALL.md`](INSTALL.md).
-2. `python tools/ng.py doctor .` and `python tools/ng.py list`.
-3. `python tools/ng.py new <slug> --mode quick`, fill two files, then `python tools/ng.py validate .nuclear/changes/<slug>`.
-
-Using an agent? Point it at [`AGENTS.md`](AGENTS.md), the brief agents read first.
+**From a clone, with no install:** every command also runs as `python tools/ng.py <command>` from a checkout, with no third-party dependencies.
 
 | You get | What it does | Start here |
 |---|---|---|

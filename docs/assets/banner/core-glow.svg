@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" width="1200" height="360" role="img" aria-labelledby="t d">
+  <title id="t">Nuclear-grade Context Engineering</title>
+  <desc id="d">A slow blue reactor glow behind the title. Let AI do serious software work and stay in control of what ships. Install with pipx install nuclear-grade.</desc>
+  <style>
+    .sans { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace; }
+    .breathe { animation: breathe 6s ease-in-out infinite; transform-origin: 600px 150px; }
+    @keyframes breathe { 0%, 100% { opacity: .55; transform: scale(.94); } 50% { opacity: 1; transform: scale(1.06); } }
+    .sweep { animation: sweep 5s linear infinite; }
+    @keyframes sweep { from { transform: translateX(-600px); } to { transform: translateX(600px); } }
+    .rise { animation: rise 8s linear infinite; }
+    .p2 { animation-delay: -2s; } .p3 { animation-delay: -4s; } .p4 { animation-delay: -6s; } .p5 { animation-delay: -1s; } .p6 { animation-delay: -5s; }
+    @keyframes rise { 0% { transform: translateY(40px); opacity: 0; } 20% { opacity: .9; } 100% { transform: translateY(-260px); opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .breathe, .sweep, .rise { animation: none; } }
+  </style>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#08111F"/><stop offset="1" stop-color="#0F1E36"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#58C4FF" stop-opacity=".55"/><stop offset=".45" stop-color="#2B7BE0" stop-opacity=".22"/><stop offset="1" stop-color="#1B4FA8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="rule" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#3A5BA8"/><stop offset=".5" stop-color="#5BC8B3"/><stop offset="1" stop-color="#FFD24D"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/><stop offset=".5" stop-color="#FFFFFF" stop-opacity=".85"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
+      <rect x="3" y="3" width="30" height="30" rx="5" fill="none" stroke="#1E3354" stroke-width="1"/>
+    </pattern>
+    <clipPath id="card"><rect width="1200" height="360" rx="22"/></clipPath>
+    <clipPath id="ruleclip"><rect x="330" y="186" width="540" height="4" rx="2"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#card)">
+    <rect width="1200" height="360" fill="url(#bg)"/>
+    <rect width="1200" height="360" fill="url(#grid)" opacity=".7"/>
+    <ellipse class="breathe" cx="600" cy="150" rx="430" ry="170" fill="url(#glow)"/>
+
+    <g fill="#7FD3FF">
+      <circle class="rise" cx="180" cy="330" r="2.5"/><circle class="rise p2" cx="300" cy="340" r="2"/><circle class="rise p3" cx="420" cy="335" r="1.8"/>
+      <circle class="rise p4" cx="790" cy="338" r="2.2"/><circle class="rise p5" cx="910" cy="332" r="2"/><circle class="rise p6" cx="1030" cy="340" r="2.6"/>
+    </g>
+
+    <g class="sans" text-anchor="middle">
+      <text x="600" y="118" fill="#F4F7FC" font-size="80" font-weight="800" letter-spacing="2">NUCLEAR-GRADE</text>
+      <text x="600" y="166" fill="#9DB6E0" font-size="30" font-weight="600" letter-spacing="13">CONTEXT ENGINEERING</text>
+    </g>
+    <rect x="330" y="186" width="540" height="4" rx="2" fill="url(#rule)"/>
+    <g clip-path="url(#ruleclip)"><rect class="sweep" x="480" y="186" width="240" height="4" fill="url(#shine)"/></g>
+
+    <text class="sans" x="600" y="232" text-anchor="middle" fill="#D7E0EE" font-size="25" font-weight="500">Let AI do serious software work and stay in control of what ships.</text>
+
+    <rect x="410" y="262" width="380" height="50" rx="25" fill="#0A1426" stroke="#3A5B8A" stroke-width="1.5"/>
+    <text class="mono" x="600" y="294" text-anchor="middle" font-size="21" fill="#E8EEF7"><tspan fill="#5BC8B3">$</tspan> pipx install nuclear-grade</text>
+  </g>
+  <rect x="1" y="1" width="1198" height="358" rx="21" fill="none" stroke="#283C5C" stroke-width="2"/>
+</svg>

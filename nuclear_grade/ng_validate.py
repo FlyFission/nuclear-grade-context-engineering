@@ -529,8 +529,10 @@ def _check_evidence_custody(
             messages.append(f"{md_file.name} invalid Evidence ID: {evidence_id}")
         claim_ids = [item.strip() for item in re.split(r"[,;/]", claim_id) if item.strip()]
         if not claim_ids or any(not RECORD_ID_PATTERN.fullmatch(item) for item in claim_ids):
+            shown = claim_id if claim_id else "(empty)"
             messages.append(
-                f"{md_file.name} evidence {evidence_id} has invalid Claim ID declaration"
+                f"{md_file.name} evidence {evidence_id} has invalid Claim ID declaration: "
+                f'Claim ID "{shown}" should list IDs separated by commas, like REQ-001, REQ-002'
             )
         if decisive not in DECISIVE_VALUES:
             messages.append(

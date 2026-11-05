@@ -9,6 +9,8 @@
 
 | REQ-005 | [review-run checker](../../../nuclear_grade/review_run.py), existing validate CLI and [templates](../../../templates/review-run/README.md) | E-003 | pass |
 
+| REQ-006 | review-run in-flight accounting; template and panel caller-lock protocol | E-004 | pass |
+
 E-003 is the behavioral CLI regression and full repository check recorded in verification.
 
 E-001 is the reproducible structural/docs verification in [verification](verification.md), not an

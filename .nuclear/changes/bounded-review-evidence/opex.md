@@ -35,3 +35,8 @@ The scoped wording passes the recorded checks and remains pending human PR revie
 ## Source-lineage note
 
 An original operational refinement of existing evidence custody and evaluation discipline; see the repository [source map](../../../docs/00-standards-foundation/source-map.md). No compliance, independence, efficacy, or formal assurance claim.
+
+Parallel follow-up: terminal-only accounting missed in-flight budget races. REQ-006 adds
+in-flight reservations plus the actual caller-lock/atomic-persistence protocol; E-004 tests
+counted slots, pending potential and sticky stop semantics. External synchronization is required
+and is not claimed as a validator capability.

@@ -46,7 +46,7 @@ A panel's worth is the number of ways its seats can fail differently, not its he
 ## Process
 
 1. State the verdict at stake, the boundary, and the mode that earns the cost. Quick gets a self-check; Standard gets one independent method; a panel is for Nuclear / Tier 0 and trust-bearing calls. If you cannot name the consequence that earns the seats, stop. Do not let an audit widen silently.
-2. For a new bounded run, fill `templates/review-run/` records in the packet and pin the budget authorization before calls. Before every call, require `python tools/ng.py validate <packet> --before-review` to pass; append every outcome and retain full reservations. No automatic budget reset or semantic retry.
+2. Pin `templates/review-run/` records for new runs. Under the shared caller lock, re-read and require `python tools/ng.py validate <packet> --before-review`; atomically reserve the same ID as `in_flight` before launch. Settle that ID under the lock; retain full reservations and external history. Follow the template locking protocol; no budget reset or semantic retry.
 3. Freeze the packet at a pinned revision. Redact it, record its contents and digest, give every first-pass seat exactly that. If it exceeds its bound, partition and say so -- never truncate load-bearing code silently.
 4. Compose the seats. For each, write the axis it varies and the blind spot it covers. Count distinct axes and model families separately from seat count. Two seats on one family are one family with two voices. For a trust-bearing verdict, state the minimum acceptable coupling profile before the first pass, not after. Nuclear / Tier 0 raises the floor: name all three independence axes -- technical, managerial, financial -- plus the rung-4 CI and human backstops (`independence-architecture.md`).
 5. Run the first pass independently. No seat sees another's conclusion. Withhold the actor's own conclusion where feasible -- a stated preferred answer is the sycophancy path in `evaluation-integrity.md` §2.
@@ -110,7 +110,7 @@ Inputs:
 
 Do this:
 - State the verdict and boundary; stop if the mode does not earn the seats. For a trust-bearing verdict, state the minimum acceptable coupling profile before the first pass.
-- Before every call, run `python tools/ng.py validate <packet> --before-review` with pinned `templates/review-run/` records; retain every outcome.
+- Under the caller lock, run `python tools/ng.py validate <packet> --before-review`, then atomically reserve `in_flight` before launch per `templates/review-run/`.
 - Freeze one packet; redact it, record its digest, partition rather than truncate.
 - Per seat, name the axis it varies; count distinct axes and model families separately from seat count; Nuclear / Tier 0 also names the three independence axes plus rung-4 CI and human backstops.
 - Run the first pass independently, withholding the actor's own conclusion; where stakes call for it, add an anonymized challenge round attacking the strongest claims.

@@ -156,3 +156,63 @@ def test_calibration_stop_cannot_mislabel_ordinary_review_findings(run):
     record["authorization_sha256"] = write_json(path / "review-authorization.v1.json", auth)
     record["attempts"] = [attempt("old", "calibration_failed")]
     assert "ordinary findings are usable opinions" in check(run).stdout
+
+
+def parallel_budget(run, *, required=4, ceiling=4):
+    path, auth, record = run
+    auth.update(required_usable_cases=required, attempt_ceiling=ceiling, transport_reserve=0,
+                reservation_ceiling=ceiling * 100)
+    record["authorization_sha256"] = write_json(path / "review-authorization.v1.json", auth)
+    return record
+
+
+def test_four_reserved_in_flight_attempts_block_fifth_under_four_cap(run):
+    record = parallel_budget(run)
+    record["attempts"] = [attempt(str(i), "in_flight") for i in range(4)]
+    assert check(run, before=False).returncode == 0
+    result = check(run)
+    assert result.returncode == 1
+    assert "total attempt ceiling" in result.stdout
+
+
+def test_pending_potential_keeps_feasible_target_admissible(run):
+    record = parallel_budget(run)
+    record["attempts"] = [attempt(str(i), "in_flight") for i in range(3)]
+    assert check(run).returncode == 0
+
+
+def test_pending_cannot_claim_usable_credit_or_opinion(run):
+    record = parallel_budget(run)
+    record["attempts"] = [attempt("pending", "in_flight") | {"coverage_credit": True}]
+    assert "no review support or coverage credit" in check(run).stdout
+    record["attempts"][0].update(coverage_credit=False, opinion="non_support")
+    assert "only usable reviews have" in check(run).stdout
+
+
+def test_pending_retains_full_reservation(run):
+    record = parallel_budget(run)
+    record["attempts"] = [attempt("pending", "in_flight") | {"reserved_units": 0}]
+    assert "full reservation" in check(run).stdout
+
+
+def test_pending_settles_same_id_without_consuming_extra_slot(run):
+    record = parallel_budget(run)
+    record["attempts"] = [attempt(str(i), "in_flight") for i in range(3)]
+    assert check(run).returncode == 0
+    record["attempts"][0] = attempt("0") | {"opinion": "non_support"}
+    assert check(run).returncode == 0
+    record["attempts"].append(attempt("0"))
+    assert "duplicate attempt id" in check(run).stdout
+
+
+def test_unknown_blocks_new_dispatch_even_with_later_pending_or_settled_peers(run):
+    record = parallel_budget(run, required=2)
+    record["attempts"] = [attempt("failed", "unknown"), attempt("peer", "in_flight"), attempt("settled")]
+    assert check(run, before=False).returncode == 0
+    assert "stop condition" in check(run).stdout
+
+
+def test_in_flight_cannot_be_retried_using_transport_reserve(run):
+    run[2]["attempts"] = [attempt("pending", "in_flight")]
+    run[2]["next_attempt"].update(recovery_of="pending", case_id="pending")
+    assert "earlier transport failure" in check(run).stdout

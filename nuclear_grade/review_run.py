@@ -75,7 +75,7 @@ def check_review_run(packet: Path, *, before_review: bool = False) -> list[str]:
         require(auth["stop_on"] == ["calibration_failed", "unknown"], "stop_on must preserve calibration_failed and unknown")
         require(isinstance(run["attempts"], list), "attempts must be a list")
         prior: dict[str, dict] = {}
-        ordinary = recovered = usable = 0
+        ordinary = recovered = usable = pending = 0
         stopped = False
         for attempt in run["attempts"] + ([run["next_attempt"]] if before_review else []):
             proposed = before_review and attempt is run["next_attempt"]
@@ -86,7 +86,8 @@ def check_review_run(packet: Path, *, before_review: bool = False) -> list[str]:
             require(item["id"] not in prior, "duplicate attempt id")
             require(isinstance(item["case_id"], str) and bool(item["case_id"].strip()), "case_id must be nonempty")
             require(item["runtime_sha256"] == auth["runtime_sha256"], "attempt runtime differs from authorization")
-            require(not stopped, "stop condition blocks further dispatch; preserve history for budget-owner disposition")
+            if proposed:
+                require(not stopped, "stop condition blocks further dispatch; preserve history for budget-owner disposition")
             if "recovery_of" in item:
                 original = prior.get(item["recovery_of"]) if isinstance(item["recovery_of"], str) else None
                 require(original is not None and original["outcome"] == "transport_failed",
@@ -109,7 +110,7 @@ def check_review_run(packet: Path, *, before_review: bool = False) -> list[str]:
                 require(timestamp(item["started_at"]) >= approved, "attempt predates authorization")
                 require(type(item["reserved_units"]) is int and item["reserved_units"] == reservation,
                         "every attempt retains its full reservation")
-                require(item["outcome"] in {"usable", "transport_failed", "calibration_failed", "unknown"}, "invalid outcome")
+                require(item["outcome"] in {"usable", "in_flight", "transport_failed", "calibration_failed", "unknown"}, "invalid outcome")
                 require(item["opinion"] in {"support", "non_support"} if item["outcome"] == "usable"
                         else item["opinion"] is None, "only usable reviews have support/non_support opinions")
                 require(item["outcome"] != "calibration_failed" or auth["scope"] == "calibration",
@@ -117,10 +118,12 @@ def check_review_run(packet: Path, *, before_review: bool = False) -> list[str]:
                 require(type(item["coverage_credit"]) is bool and item["coverage_credit"] == (item["outcome"] == "usable"),
                         "failed or unknown attempts supply no review support or coverage credit")
                 usable += item["outcome"] == "usable"
-                stopped = item["outcome"] in auth["stop_on"]
+                pending += item["outcome"] == "in_flight"
+                # Already-launched peers may settle later; none may clear a recorded stop.
+                stopped = stopped or item["outcome"] in auth["stop_on"]
                 prior[item["id"]] = item
         if before_review:
-            require(required - usable <= ceiling - len(run["attempts"]),
+            require(required - usable <= pending + ceiling - len(run["attempts"]),
                     "required usable cases infeasible within remaining attempt ceiling")
         return []
     except (InvalidRun, ValueError, TypeError, KeyError, OSError) as error:

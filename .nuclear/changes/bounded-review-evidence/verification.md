@@ -79,3 +79,28 @@ diff hygiene passed. Regenerated badge is 75 records / 42 open items. Badge rege
 checked against the staged derived file before commit. Initial full local execution without
 venv PATH failed the demo's spawned `python`; environment corrected, no repo workaround added.
 The standalone validator's sibling-module loading was checked by the challenge tests and full suite.
+
+## Parallel reservation follow-up — E-004
+
+Root review found that terminal-only history could allow multiple workers to pass admission
+against the same unreserved snapshot. Added `in_flight` outcomes counted against all attempt
+pools with full reservation, no opinion and no usable credit. Pending requests contribute only
+potential completions to feasibility; they cannot be retried through the transport reserve.
+A stop is sticky across later peer settlements. Structural history may retain already-launched
+peers after a stop appears, while new admission blocks. This does not authenticate past launch
+timing or authorize launching after a known stop.
+
+Seven additional CLI cases cover four pending/four cap rejecting a fifth, three pending plus one
+slot remaining feasible, false pending credit/opinion, reduced reservation, same-ID settlement,
+unknown plus later peers still blocking admission, and no recovery of pending attempts. Total:
+38 admission regressions. The tests failed on missing in-flight support before the fix and passed
+afterward. Full final follow-up suite: **1000 passed, 2 skipped in 35.28 seconds**.
+Ruff, doctor, strict-custody packet validation, release identity, token budget, badge parity and
+diff hygiene passed. The derived badge remains 75 records / 42 open items.
+
+The panel skill, generated prompt/fixture and template require all dispatcher and settlement
+writers to share a caller lock: re-read, admit, atomically persist the proposed ID as in-flight
+with its full reservation, validate written history, then launch. Settle that same ID under the
+lock while retaining external history. The validator supplies no mutex, atomic writer or provider
+interceptor; concurrent safety depends on the caller honoring that protocol. No SDK or runner
+was added. Evidence remains the disclosed local self-check under E-001 custody.

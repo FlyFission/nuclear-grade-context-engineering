@@ -98,7 +98,11 @@ transport-only reserve inside that ceiling. A reserve is optional; without one, 
 binds until the budget owner explicitly amends it. Never waive a cap retroactively. For new bounded review runs, use the
 [versioned records and pre-call admission command](../../templates/review-run/README.md):
 `python tools/ng.py validate <packet> --before-review`. It rejects infeasible remaining coverage
-as well as overspend; a narrative budget alone no longer satisfies the panel workflow.
+as well as overspend. Under a shared caller lock, re-read, admit, then atomically persist an
+`in_flight` full reservation before launch; settle that same ID under the lock. Pending requests
+consume attempt slots and provide potential completion capacity, never usable coverage. The
+validator is read-only; unlocked concurrent checks are not reservations. A narrative budget alone
+no longer satisfies the panel workflow.
 
 Every dispatched attempt counts, including a pre-provider failure. Keep failed and unknown
 attempts immutable, retain their full operational reservation, and grant them no review support.

@@ -27,7 +27,7 @@ The same marketplace lists a second, separate plugin with one job: it registers 
 
 It denies agent edits to trust surfaces (CI workflows, Claude settings and hooks, the charter) and asks you before a force push, a tag or release, a package publish, or an `rm -rf` outside the working folder. It never answers allow. It needs `python3` on your `PATH`; if `python3` is missing, the matched tool calls are blocked until you fix it. Turn it off with `/plugin disable nuclear-grade-guard@nuclear-grade`, or remove it with `/plugin uninstall nuclear-grade-guard@nuclear-grade`. To put the gate in one repo for everyone on it, use `init --hook` (below).
 
-## Install into Codex, Cursor, Windsurf, VS Code, or Gemini CLI
+## Install into Codex, Cursor, Windsurf, VS Code, Gemini CLI, or OpenCode
 
 Nuclear-grade's skills are plain `SKILL.md` files that every modern agent tool
 auto-surfaces by their `description` — the same files work unmodified across
@@ -40,6 +40,7 @@ python tools/ng.py install claude         # ~/.claude/skills
 python tools/ng.py install cursor         # ~/.cursor/skills
 python tools/ng.py install windsurf --scope project --repo .   # .windsurf/skills (project-scoped)
 python tools/ng.py install gemini         # ~/.gemini/skills
+python tools/ng.py install opencode       # ~/.config/opencode/skills
 ```
 
 Or fan out to every detected tool in one step:

@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "scope": "calibration",
+  "approved_by": "",
+  "approved_at": "",
+  "required_usable_cases": 2,
+  "attempt_ceiling": 3,
+  "transport_reserve": 1,
+  "reservation_per_attempt": 100,
+  "reservation_ceiling": 300,
+  "runtime_sha256": "",
+  "stop_on": ["calibration_failed", "unknown"]
+}

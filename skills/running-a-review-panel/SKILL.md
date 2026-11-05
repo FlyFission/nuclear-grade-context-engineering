@@ -41,7 +41,7 @@ The repo already says high-consequence verdicts should use a panel, and that "a 
 - The candidate at a pinned revision, the evidence to freeze -- diff, plan, source paths, prior verification records -- and the exclusions.
 - The available seats and what each varies: model family, mechanism, brief, or human judgment.
 - Redaction rules for proprietary or secret material.
-- The verification budget, and confirmation the work under review does not control it.
+- The verification budget, and confirmation the work under review does not control it. Before calls, declare usable cases, total attempts, transport reserve, and stops per `docs/02-operating-system/evaluation-integrity.md` §5.
 
 ## Process
 
@@ -52,7 +52,8 @@ The repo already says high-consequence verdicts should use a panel, and that "a 
 5. Run a challenge round when the stakes call for it. Anonymize the submissions; require each seat to attack the strongest claims rather than restate its own, and to name where its reasoning may be correlated with another's.
 6. Record panel health beside the result: every seat dropped, timed out, invalid, or given a truncated packet. A panel that planned five axes and delivered two is a **degraded panel** and is reported as one. Health is a condition on the verdict, not a footnote.
 7. Synthesize by evidence, not by vote. Deduplicate claims, attribute each to its axes, keep the strongest opposing case even when one seat held it, and give each material finding a falsification test.
-8. Verify here, then dispose. Read the code path, run the test, or inspect the authoritative source for every finding you intend to act on; mark each `verified`, `rejected`, or `unresolved`, and never promote an unverified finding to a recommendation. Report the decision first, then verified blockers, non-blockers, dissent, panel health, and next checks. A split panel on a high-consequence call blocks and surfaces the split to a human.
+8. Consolidate source-demonstrated fixes before follow-up. Preserve unchanged exact-state support and cited dissent; obtain only changed or missing required views within budget. Never repeat panels for agreement.
+9. Verify here, then dispose. Read the code path, run the test, or inspect the authoritative source for every finding you intend to act on; mark each `verified`, `rejected`, or `unresolved`, and never promote an unverified finding to a recommendation. Report the decision first, then verified blockers, non-blockers, dissent, panel health, and next checks. A split panel on a high-consequence call blocks and surfaces the split to a human.
 
 ## Outputs
 

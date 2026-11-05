@@ -31,7 +31,7 @@ Portable command prompt generated from `skills/running-a-review-panel/SKILL.md`.
 - The candidate at a pinned revision, the evidence to freeze -- diff, plan, source paths, prior verification records -- and the exclusions.
 - The available seats and what each varies: model family, mechanism, brief, or human judgment.
 - Redaction rules for proprietary or secret material.
-- The verification budget, and confirmation the work under review does not control it.
+- The verification budget, and confirmation the work under review does not control it. Before calls, declare usable cases, total attempts, transport reserve, and stops per `docs/02-operating-system/evaluation-integrity.md` §5.
 
 ## Prompt text
 

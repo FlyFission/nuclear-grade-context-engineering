@@ -89,7 +89,35 @@ and verifying every finding against live source — is
 
 ---
 
-## 5. Exit criteria
+## 5. Bounded runs and follow-up review
+
+Before the first model call, distinguish **required usable cases** from the **total attempt
+ceiling**, and name the stop conditions, resource reservations, and frozen candidate/runtime
+identities. If transport recovery is needed, prospectively authorize a small, separately counted
+transport-only reserve inside that ceiling. A reserve is optional; without one, the original cap
+binds until the budget owner explicitly amends it. Never waive a cap retroactively.
+
+Every dispatched attempt counts, including a pre-provider failure. Keep failed and unknown
+attempts immutable, retain their full operational reservation, and grant them no review support.
+Reported usage and reserved capacity are separate facts. A transport-only reserve may supply a new
+immutable case after a verified transport repair; it never authorizes retrying a missed critical
+semantic defect to seek agreement. Keep original and repaired runtime identities and histories
+separate. Exhaustion or a semantic stop condition blocks acceptance; it does not start another run.
+
+After initial reviews settle, consolidate demonstrated source fixes before buying replacement
+views. Bind support to exact current states, including the full record, actual source/context/definition/table
+witnesses, and model-visible contract and material identities. Retain support only when those
+dependencies remain unchanged; review changed or missing states under the original coverage
+requirements. No ad hoc semantic-equivalence waiver substitutes for that identity check. A new
+non-supporting opinion reopens disposition completeness; it need not trigger fresh generation
+before source-based disposition. Dispose of faithful dissent against
+the actual source and delivered packet, preserving the contrary opinion and cited ruling. Repeated
+panels or model agreement cannot replace that source decision. Reopen only for changed evidence,
+a missing required view, or an explicit escalation, within the authorized budget.
+
+---
+
+## 6. Exit criteria
 
 Evaluation integrity is being practiced when:
 

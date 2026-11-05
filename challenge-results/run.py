@@ -25,8 +25,10 @@ import argparse
 import datetime as dt
 import hashlib
 import json
+import locale
 import os
 import shutil
+import signal
 import subprocess
 import sys
 import tempfile
@@ -96,6 +98,46 @@ def tool_version(entry: dict) -> str:
     return (done.stdout or done.stderr).strip().splitlines()[0] if (done.stdout or done.stderr).strip() else "unknown"
 
 
+def run_agent(command: list[str], cwd: Path, timeout: int) -> tuple[int | None, str, str, bool]:
+    """Run an agent, keeping timeout cleanup independent of descendant output handles.
+
+    On POSIX, kill the agent's process group on timeout. Detached descendants and
+    Windows children may survive; this is not process-tree isolation. Capture to
+    temporary files so their inherited output handles cannot hold cleanup open.
+    """
+
+    group = hasattr(os, "killpg")
+    with tempfile.TemporaryFile() as stdout_file, tempfile.TemporaryFile() as stderr_file:
+        proc = subprocess.Popen(command, cwd=cwd, stdout=stdout_file, stderr=stderr_file,
+                                start_new_session=group)
+        timed_out = False
+        try:
+            proc.wait(timeout=timeout)
+        except subprocess.TimeoutExpired:
+            timed_out = True
+            if group:
+                try:
+                    os.killpg(proc.pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+            else:
+                proc.kill()
+            # Bound reaping too; a surviving descendant cannot delay collection.
+            try:
+                proc.wait(timeout=1)
+            except subprocess.TimeoutExpired:
+                pass
+
+        output = []
+        for stream in (stdout_file, stderr_file):
+            # Read a fixed snapshot: a surviving child may still be appending.
+            size = os.fstat(stream.fileno()).st_size
+            stream.seek(0)
+            text = stream.read(size).decode(locale.getpreferredencoding(False), errors="replace")
+            output.append(text.replace("\r\n", "\n").replace("\r", "\n"))
+        return None if timed_out else proc.returncode, output[0], output[1], timed_out
+
+
 def score(play: Path, label: str) -> dict:
     env = {k: v for k, v in os.environ.items() if k != "PYTHONPATH"}
     env["NG_REPO"] = str(REPO)
@@ -120,12 +162,7 @@ def run_trial(entry: dict, model: str, track: str, trial: int, timeout: int, out
         started = time.monotonic()
         timed_out = False
         try:
-            done = subprocess.run(command, cwd=play, capture_output=True, text=True, timeout=timeout)
-            exit_code, stdout, stderr = done.returncode, done.stdout, done.stderr
-        except subprocess.TimeoutExpired as exc:
-            timed_out, exit_code = True, None
-            stdout = exc.stdout.decode(errors="replace") if isinstance(exc.stdout, bytes) else (exc.stdout or "")
-            stderr = exc.stderr.decode(errors="replace") if isinstance(exc.stderr, bytes) else (exc.stderr or "")
+            exit_code, stdout, stderr, timed_out = run_agent(command, play, timeout)
         except OSError as exc:
             exit_code, stdout, stderr = None, "", f"could not start agent: {exc}"
         seconds = round(time.monotonic() - started, 1)

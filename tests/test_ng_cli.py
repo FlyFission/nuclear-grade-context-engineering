@@ -162,6 +162,70 @@ def test_new_refuses_overwrite_without_force(tmp_path):
     assert "already exists" in result.stderr
 
 
+@pytest.mark.parametrize("slug", ["../../../outside", "..", ".", "", "nested/packet", "nested\\packet", "C:\\outside"])
+def test_new_rejects_non_name_slugs_without_writing(tmp_path, slug):
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    result = run_ng("new", slug, "--mode", "quick", "--repo", str(repo))
+    assert result.returncode == 2
+    assert "invalid slug" in result.stderr
+    assert list(repo.iterdir()) == []
+    assert not (tmp_path / "outside").exists()
+
+
+def test_new_rejects_absolute_slug(tmp_path):
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    outside = tmp_path / "outside"
+    result = run_ng("new", str(outside), "--mode", "quick", "--repo", str(repo))
+    assert result.returncode == 2
+    assert not outside.exists()
+
+
+@pytest.mark.parametrize("link_at", ["changes", "packet", "file"])
+def test_new_does_not_follow_output_symlinks_outside_repo(tmp_path, link_at):
+    repo = tmp_path / "repo"
+    changes = repo / ".nuclear" / "changes"
+    changes.mkdir(parents=True)
+    outside = tmp_path / "outside"
+    outside.mkdir()
+    sentinel = outside / "risk.md"
+    sentinel.write_text("preserve this file")
+    try:
+        if link_at == "changes":
+            changes.rmdir()
+            changes.symlink_to(outside, target_is_directory=True)
+        elif link_at == "packet":
+            (changes / "demo").symlink_to(outside, target_is_directory=True)
+        else:
+            (changes / "demo").mkdir()
+            (changes / "demo" / "risk.md").symlink_to(sentinel)
+    except OSError:
+        pytest.skip("symlinks are unavailable")
+    result = run_ng("new", "demo", "--mode", "quick", "--force", "--repo", str(repo))
+    assert result.returncode == 2
+    assert sentinel.read_text() == "preserve this file"
+    assert sorted(p.name for p in outside.iterdir()) == ["risk.md"]
+
+
+@pytest.mark.parametrize("target", ["other", "demo"])
+def test_new_rejects_packet_aliases_and_symlink_loops(tmp_path, target):
+    changes = tmp_path / ".nuclear" / "changes"
+    other = changes / "other"
+    other.mkdir(parents=True)
+    sentinel = other / "risk.md"
+    sentinel.write_text("preserve other packet")
+    try:
+        (changes / "demo").symlink_to(changes / target, target_is_directory=True)
+    except OSError:
+        pytest.skip("symlinks are unavailable")
+    result = run_ng("new", "demo", "--mode", "quick", "--force", "--repo", str(tmp_path))
+    assert result.returncode == 2
+    assert "invalid slug" in result.stderr
+    assert "Traceback" not in result.stderr
+    assert sentinel.read_text() == "preserve other packet"
+
+
 def test_new_falls_back_to_bundled_templates_for_initialized_workspace(tmp_path):
     scaffold_repo(tmp_path, missing_templates=(("quick", "proof.md"),))
 

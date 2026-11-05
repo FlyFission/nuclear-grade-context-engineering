@@ -1,0 +1,78 @@
+{
+  "docs/05-reference/release-review.md": [
+    "attacker@evil.com"
+  ],
+  "evals/skill-benchmark-pilot/REPORT.md": [
+    "attacker@evil.com"
+  ],
+  "evals/skill-benchmark-pilot/data/all-skills-pilot/graded_results_all.json": [
+    "attacker@evil.com"
+  ],
+  "evals/skill-benchmark-pilot/data/all-skills-pilot/runs/stress-testing-agent-changes__with_skill__trial1.json": [
+    "attacker@evil.com"
+  ],
+  "evals/skill-benchmark-pilot/data/all-skills-pilot/runs/stress-testing-agent-changes__without_skill__trial1.json": [
+    "attacker@evil.com"
+  ],
+  "evals/skill-control-ladder/data/graded.json": [
+    "attacker@evil.com",
+    "finance@ourcompany.com",
+    "x@evil.com"
+  ],
+  "evals/skill-control-ladder/data/runs/stress-testing-agent-changes__C0_bare__trial1.json": [
+    "attacker@evil.com"
+  ],
+  "evals/skill-control-ladder/data/runs/stress-testing-agent-changes__C1_generic_nudge__trial1.json": [
+    "finance@ourcompany.com"
+  ],
+  "evals/skill-control-ladder/data/runs/stress-testing-agent-changes__C1_generic_nudge__trial2.json": [
+    "attacker@evil.com"
+  ],
+  "evals/skill-control-ladder/data/runs/stress-testing-agent-changes__C1_generic_nudge__trial3.json": [
+    "x@evil.com"
+  ],
+  "evals/skill-control-ladder/data/runs/stress-testing-agent-changes__C2_description_only__trial1.json": [
+    "attacker@evil.com"
+  ],
+  "evals/skill-control-ladder/data/runs/stress-testing-agent-changes__C3_compressed__trial2.json": [
+    "attacker@evil.com"
+  ],
+  "evals/skill-control-ladder/data/runs/stress-testing-agent-changes__C3_compressed__trial3.json": [
+    "attacker@evil.com"
+  ],
+  "evals/skill-control-ladder/data/runs/stress-testing-agent-changes__C4_full_skill__trial1.json": [
+    "attacker@evil.com"
+  ],
+  "evals/skill-control-ladder/data/v1-contemporaneous/runs/stress-testing-agent-changes__C0_bare__trial1.json": [
+    "attacker@evil.com"
+  ],
+  "evals/skill-control-ladder/data/v1-contemporaneous/runs/stress-testing-agent-changes__C0_bare__trial2.json": [
+    "support-internal@ourcompany.com",
+    "x@evil.com"
+  ],
+  "evals/skill-control-ladder/data/v1-contemporaneous/runs/stress-testing-agent-changes__C1_generic_nudge__trial1.json": [
+    "attacker@evil.com"
+  ],
+  "evals/skill-control-ladder/data/v1-contemporaneous/runs/stress-testing-agent-changes__C1_generic_nudge__trial2.json": [
+    "jane@x.com"
+  ],
+  "evals/skill-control-ladder/data/v1-contemporaneous/runs/stress-testing-agent-changes__C1_generic_nudge__trial3.json": [
+    "attacker@evil.com"
+  ],
+  "evals/skill-control-ladder/data/v1-contemporaneous/runs/stress-testing-agent-changes__C2_description_only__trial1.json": [
+    "attacker@evil.com"
+  ],
+  "evals/skill-control-ladder/data/v1-contemporaneous/runs/stress-testing-agent-changes__C2_description_only__trial2.json": [
+    "attacker@x.com"
+  ],
+  "evals/skill-control-ladder/data/v1-contemporaneous/runs/stress-testing-agent-changes__C3_compressed__trial3.json": [
+    "attacker@evil.com",
+    "jane@x.com"
+  ],
+  "evals/skill-control-ladder/data/v1-contemporaneous/runs/stress-testing-agent-changes__C4_full_skill__trial2.json": [
+    "attacker@evil.com"
+  ],
+  "evals/skill-control-ladder/data/v1-contemporaneous/runs/stress-testing-agent-changes__C4_full_skill__trial3.json": [
+    "attacker@evil.com"
+  ]
+}

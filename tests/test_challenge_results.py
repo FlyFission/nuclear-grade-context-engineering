@@ -134,3 +134,46 @@ def test_a_record_that_fails_validation_is_not_called_no_record():
 def test_an_invalid_record_that_misses_more_than_validation_keeps_the_old_outcome(check):
     build = load("build")
     assert build.outcome(_graded_own_work(**{check: "FAIL"}), {}) == build.UNFLAGGED
+
+
+@pytest.mark.skipif(sys.platform == "win32", reason="POSIX process-group cleanup")
+def test_trial_timeout_stops_child_before_scoring(tmp_path):
+    import time
+
+    run = load("run")
+    marker = tmp_path / "late.txt"
+    child = f"import time; time.sleep(2); open({str(marker)!r}, 'w').write('late')"
+    code = f"import subprocess, sys, time; subprocess.Popen([sys.executable, '-c', {child!r}]); time.sleep(30)"
+    entry = {"id": "timeout", "label": "Timeout", "command": [sys.executable, "-c", code]}
+    out = tmp_path / "results"
+    out.mkdir()
+    result = run.run_trial(entry, "", "rules", 1, 0.3, out, False)
+    time.sleep(2.2)
+    assert result["timed_out"] and result["agent_exit_code"] is None
+    assert not marker.exists(), "a timed-out agent's child kept running during scoring"
+
+
+@pytest.mark.parametrize("fallback", [False, True])
+def test_agent_timeout_returns_with_descendant_output_open(tmp_path, monkeypatch, fallback):
+    import time
+
+    run = load("run")
+    if fallback:
+        monkeypatch.delattr(run.os, "killpg", raising=False)
+    child = "import time; print('child', flush=True); time.sleep(3)"
+    code = (
+        "import subprocess, sys, time; print('partial', flush=True); "
+        f"subprocess.Popen([sys.executable, '-c', {child!r}], start_new_session=True); time.sleep(30)"
+    )
+    started = time.monotonic()
+    exit_code, stdout, stderr, timed_out = run.run_agent([sys.executable, "-c", code], tmp_path, 0.3)
+    assert time.monotonic() - started < 2, "cleanup waited for a descendant's output handle"
+    assert timed_out and exit_code is None
+    assert "partial" in stdout
+    assert stderr == ""
+
+
+def test_agent_success_keeps_exit_code_and_output(tmp_path):
+    run = load("run")
+    command = [sys.executable, "-c", "import sys; print('out'); print('err', file=sys.stderr); sys.exit(7)"]
+    assert run.run_agent(command, tmp_path, 5) == (7, "out\n", "err\n", False)

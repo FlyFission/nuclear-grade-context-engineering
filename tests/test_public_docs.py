@@ -1,3 +1,4 @@
+import json
 import re
 from pathlib import Path
 from urllib.parse import unquote
@@ -43,10 +44,17 @@ RESIDUE_SCAN_TREES = (
     "starter-kit",
     "tools",
     "challenge",
+    "challenge-results",
+    ".github",
+    "agents",
+    "plugins",
+    "skills-beta",
+    "skills-deprecated",
+    "nuclear_grade",
 )
 
 # Residue has appeared in prose (.md) and in checked-in run transcripts (.json).
-RESIDUE_SCAN_SUFFIXES = (".md", ".json", ".jsonl", ".txt", ".py", ".tex", ".csv")
+RESIDUE_SCAN_SUFFIXES = (".md", ".json", ".jsonl", ".txt", ".py", ".tex", ".csv", ".diff", ".patch", ".yml", ".yaml", ".svg", ".sh")
 
 # Internal codenames and machine-specific absolute paths that must not ship in
 # any repository tree. Split so this test file never matches itself. `/home/`
@@ -61,6 +69,7 @@ TREE_RESIDUE = (
 
 
 def _iter_residue_scan_files():
+    yield from (path for path in ROOT.iterdir() if path.is_file() and path.suffix in RESIDUE_SCAN_SUFFIXES)
     for tree in RESIDUE_SCAN_TREES:
         base = ROOT / tree
         if not base.exists():
@@ -76,6 +85,49 @@ PERSONAL_EMAIL = re.compile(
     + r")\.[a-z]{2,}",
     re.IGNORECASE,
 )
+
+# Classify all mailbox domains, not just consumer providers. Existing fictional
+# attack addresses are reviewed per file in a small explicit fixture inventory.
+MAILBOX = re.compile(r"(?<![A-Za-z0-9._%+-])[A-Za-z0-9._%+-]+@([A-Za-z0-9.-]+\.[A-Za-z]{2,})(?![A-Za-z0-9.-])")
+
+
+def _unreviewed_mailboxes(path, text, reviewed):
+    allowed = reviewed.get(path.as_posix(), ())
+    for match in MAILBOX.finditer(text):
+        domain = match.group(1).lower()
+        reserved = domain.endswith((".invalid", ".test", ".example")) or any(
+            domain == name or domain.endswith("." + name) for name in ("example.com", "example.org", "example.net")
+        )
+        if not reserved and match.group() not in allowed:
+            yield match
+
+
+def test_artifact_scan_covers_challenge_transcripts_diffs_and_yaml(tmp_path, monkeypatch):
+    monkeypatch.setitem(globals(), "ROOT", tmp_path)
+    for name in ("run.transcript.txt", "run.diff", "settings.yaml", "settings.yml"):
+        path = tmp_path / "challenge-results" / "results" / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("fixture")
+    assert {p.name for p in _iter_residue_scan_files()} == {"run.transcript.txt", "run.diff", "settings.yaml", "settings.yml"}
+
+
+def test_custom_domain_mailbox_requires_explicit_review():
+    address = "person@private-" + "company.com"
+    path = Path("challenge-results/results/run.diff")
+    assert len(list(_unreviewed_mailboxes(path, "+ contact: " + address, {}))) == 1
+    assert not list(_unreviewed_mailboxes(path, address, {path.as_posix(): [address]}))
+    assert len(list(_unreviewed_mailboxes(Path("another.diff"), address, {path.as_posix(): [address]}))) == 1
+    assert not list(_unreviewed_mailboxes(path, "person@example.invalid", {}))
+
+
+def test_public_artifacts_have_no_unreviewed_mailboxes():
+    reviewed = json.loads((ROOT / "tests/fixtures/public-email-examples.json").read_text())
+    offenders = []
+    for path in _iter_residue_scan_files():
+        if any(_unreviewed_mailboxes(path.relative_to(ROOT), path.read_text(errors="replace"), reviewed)):
+            offenders.append(path.relative_to(ROOT).as_posix())
+    # Only paths: never repeat a leaked value into CI logs.
+    assert not offenders, "unreviewed mailbox in: " + ", ".join(sorted(offenders))
 
 BOUNDARY_PHRASES = (
     "NQA-1 evidence",

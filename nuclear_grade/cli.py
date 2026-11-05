@@ -14,7 +14,7 @@ import shutil
 import subprocess
 import sys
 from dataclasses import dataclass
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -935,9 +935,34 @@ def handle_mcp_config(args: argparse.Namespace) -> int:
     return 0
 
 
+def change_record_path(repo: Path, slug: str, mode: str) -> Path:
+    """Validate a single packet name and its resolved output paths before writing.
+
+    This checks existing symlinks, not concurrent filesystem mutation; it is not
+    a sandbox for a hostile process modifying the same directory.
+    """
+    if not slug or slug in (".", "..") or "/" in slug or "\\" in slug or PureWindowsPath(slug).drive:
+        raise ValueError("invalid slug: use a single directory name")
+    repo = repo.resolve()
+    changes = (repo / ".nuclear" / "changes").resolve()
+    candidate = changes / slug
+    if candidate.is_symlink():
+        raise ValueError("packet directory must not be a symlink")
+    packet = candidate.resolve()
+    if not changes.is_relative_to(repo) or packet == changes or not packet.is_relative_to(changes):
+        raise ValueError("invalid slug: output must stay under the repository's .nuclear/changes")
+    if any(not (packet / name).resolve().is_relative_to(packet) for name in MODE_FILES[mode]):
+        raise ValueError("invalid slug: output file redirects outside the packet")
+    return packet
+
+
 def handle_new(args: argparse.Namespace) -> int:
     repo = args.repo.resolve()
-    packet = repo / ".nuclear" / "changes" / args.slug
+    try:
+        packet = change_record_path(repo, args.slug, args.mode)
+    except (OSError, RuntimeError, ValueError) as exc:
+        print(f"invalid slug: {exc}", file=sys.stderr)
+        return 2
     files = MODE_FILES[args.mode]
     templates = template_root_for(repo, args.mode)
     writes = [PlannedWrite(packet, is_dir=True)]

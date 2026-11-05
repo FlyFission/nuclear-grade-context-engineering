@@ -87,6 +87,35 @@ def test_new_change_record_rejects_path_traversal(tmp_path):
     assert message.startswith("invalid slug")
 
 
+@pytest.mark.parametrize("slug", ["nested/packet", "nested\\packet", "C:\\outside", "", ".", ".."])
+def test_new_change_record_requires_a_single_name(tmp_path, slug):
+    assert new_change_record(slug, "quick", str(tmp_path)).startswith("invalid slug")
+    assert list(tmp_path.iterdir()) == []
+
+
+def test_new_change_record_rejects_redirected_changes_directory(tmp_path):
+    repo = tmp_path / "repo"
+    (repo / ".nuclear").mkdir(parents=True)
+    outside = tmp_path / "outside"
+    outside.mkdir()
+    try:
+        (repo / ".nuclear" / "changes").symlink_to(outside, target_is_directory=True)
+    except OSError:
+        pytest.skip("symlinks are unavailable")
+    assert new_change_record("demo", "quick", str(repo)).startswith("invalid slug")
+    assert list(outside.iterdir()) == []
+
+
+def test_new_change_record_handles_symlink_loop_as_invalid(tmp_path):
+    changes = tmp_path / ".nuclear" / "changes"
+    changes.mkdir(parents=True)
+    try:
+        (changes / "loop").symlink_to(changes / "loop", target_is_directory=True)
+    except OSError:
+        pytest.skip("symlinks are unavailable")
+    assert new_change_record("loop", "quick", str(tmp_path)).startswith("invalid slug")
+
+
 def test_status_lists_packets(tmp_path):
     new_change_record("demo", "standard", str(tmp_path))
 

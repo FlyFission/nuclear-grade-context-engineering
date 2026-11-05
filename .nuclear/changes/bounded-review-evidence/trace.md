@@ -7,6 +7,10 @@
 | REQ-003 | proving-claims hash/derivation section | E-001 | pass |
 | REQ-004 | panel follow-up step; proving-claims parity section | E-001 | pass |
 
+| REQ-005 | [review-run checker](../../../nuclear_grade/review_run.py), existing validate CLI and [templates](../../../templates/review-run/README.md) | E-003 | pass |
+
+E-003 is the behavioral CLI regression and full repository check recorded in verification.
+
 E-001 is the reproducible structural/docs verification in [verification](verification.md), not an
 experiment demonstrating agent adherence or a reproduction of the motivating application runs.
 

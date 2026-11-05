@@ -95,14 +95,20 @@ Before the first model call, distinguish **required usable cases** from the **to
 ceiling**, and name the stop conditions, resource reservations, and frozen candidate/runtime
 identities. If transport recovery is needed, prospectively authorize a small, separately counted
 transport-only reserve inside that ceiling. A reserve is optional; without one, the original cap
-binds until the budget owner explicitly amends it. Never waive a cap retroactively.
+binds until the budget owner explicitly amends it. Never waive a cap retroactively. For new bounded review runs, use the
+[versioned records and pre-call admission command](../../templates/review-run/README.md):
+`python tools/ng.py validate <packet> --before-review`. It rejects infeasible remaining coverage
+as well as overspend; a narrative budget alone no longer satisfies the panel workflow.
 
 Every dispatched attempt counts, including a pre-provider failure. Keep failed and unknown
 attempts immutable, retain their full operational reservation, and grant them no review support.
 Reported usage and reserved capacity are separate facts. A transport-only reserve may supply a new
 immutable case after a verified transport repair; it never authorizes retrying a missed critical
 semantic defect to seek agreement. Keep original and repaired runtime identities and histories
-separate. Exhaustion or a semantic stop condition blocks acceptance; it does not start another run.
+separate. A complete source-grounded non-supporting opinion is still a usable review, not a calibration
+failure. Here a semantic stop means a prospectively declared calibration failure, such as missing
+a seeded critical defect; ordinary source findings permit correction and fresh exact-state review.
+Exhaustion or a declared calibration stop condition blocks acceptance; it does not start another run.
 
 After initial reviews settle, consolidate demonstrated source fixes before buying replacement
 views. Bind support to exact current states, including the full record, actual source/context/definition/table

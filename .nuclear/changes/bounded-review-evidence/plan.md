@@ -1,12 +1,12 @@
 # Plan — bounded review evidence
 
-1. Amend evaluation-integrity's bounded-run guidance and route the panel skill into it.
-2. Extend proving-claims with native-boundary, hash-freeze, metadata-derivation and measured-parity controls.
-3. Regenerate command cards; run command-parity/skill/public-doc/token tests, doctor, packet validation, and diff hygiene.
-4. Commit and open a draft PR. Do not merge, publish a release, or refresh installed skills.
+1. Add opt-in `review-run.v1.json` and separately pinned authorization templates; validate records on the existing packet-checking path.
+2. Require `validate PACKET --before-review` in new bounded-panel workflows. Reject malformed, overspent, infeasible, unsupported or stopped attempts before dispatch; no reset/amendment engine.
+3. Keep existing doctrine refinements for native ingress, stable proof hashes, parity and exact-state follow-up; regenerate cards and deliberately update the panel prompt fixture.
+4. Run behavioral CLI regressions and full repository pytest, lint, doctor, tokens, release identity, strict packet validation, compile and generated badge parity.
+5. Commit and update the draft PR around the actual gate. Do not merge or refresh installed skills.
 
-Scope excludes application runtime code, provider calls, new checker semantics, and new review councils.
-Narrow checks cover prose contracts and repository integration; no executable implementation changes.
+Non-goals: application runtime code, provider interception/calls, authenticated authority, external append-only storage, automatic budget amendment or new review councils.
 
 ## Required links
 

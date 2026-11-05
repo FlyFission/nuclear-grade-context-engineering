@@ -8,6 +8,11 @@
 
 | [Generated panel card](../../../commands/ng-panel.md), [proof card](../../../commands/ng-prove.md) | generated from skill inputs | regenerated matching input routes | change author | E-001 | source skill changes |
 
+| [Evidence badge](../../badge.json) | stale derived count after packet addition | regenerated 75 records / 42 open items | change author | E-002 | packet inventory changes |
+
+| [Validator integration](../../../nuclear_grade/ng_validate.py), [CLI](../../../nuclear_grade/cli.py), [run checker](../../../nuclear_grade/review_run.py) | no pre-call run admission | opt-in versioned declared-budget gate | change author | E-003 | schema/CLI/admission changes |
+| [Run templates](../../../templates/review-run/README.md), [behavior tests](../../../tests/test_review_run.py), [prompt fixture](../../../tests/fixtures/command_prompts.json) | no executable run protocol | actionable setup and accepted/rejected CLI regressions | change author | E-003 | protocol changes |
+
 Base: origin/main 7f7e9bd. Installed source remains pinned to 3609ff2; these candidate edits are
 isolated in a worktree and do not establish a new accepted baseline.
 

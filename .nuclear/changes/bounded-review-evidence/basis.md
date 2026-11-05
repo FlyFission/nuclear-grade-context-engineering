@@ -3,6 +3,7 @@
 - REQ-001: distinguish usable-case requirements from total attempts and prospectively bounded transport recovery; no retroactive cap waiver or semantic retry-to-agreement.
 - REQ-002: separately prove actual native ingress and canonical envelope bounds; a repair must not implicitly expand other limits.
 - REQ-003: bind long proof to stable dependency hashes; disclose metadata derivation separately from fresh semantic replay.
+- REQ-005: enforce opt-in pre-call admission for a proposed next attempt: pinned prospective budget/runtime, distinct cases, remaining feasibility, ordinary/reserve/total limits, repair evidence and semantic/unknown stops. Preserve old packet behavior without v1 artifacts or flag.
 - REQ-004: prefer measured, parity-proven bottleneck fixes and changed/missing-state follow-up over repeated expensive work.
 
 The operational report supplied for this change described a native wrapper rejected before a

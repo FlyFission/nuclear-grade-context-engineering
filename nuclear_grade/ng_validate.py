@@ -13,6 +13,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 if __package__:
+    from .review_run import check_review_run
     from .two_party import ClaimParty, check_two_party, declarations_text
 else:
     # Loaded by file path outside the package (challenge/score.py does this to
@@ -31,6 +32,12 @@ else:
     ClaimParty = _two_party.ClaimParty
     check_two_party = _two_party.check_two_party
     declarations_text = _two_party.declarations_text
+    _review_run_spec = _importlib_util.spec_from_file_location(
+        f"{__name__}_review_run", Path(__file__).with_name("review_run.py")
+    )
+    _review_run = _importlib_util.module_from_spec(_review_run_spec)
+    _review_run_spec.loader.exec_module(_review_run)
+    check_review_run = _review_run.check_review_run
 
 PLACEHOLDER_MARKER = "NUCLEAR-GRADE-PLACEHOLDER"
 # A packet deliberately abandoned with a recorded rationale carries this marker.
@@ -212,6 +219,7 @@ def validate_packet(
     require_custody: bool = False,
     require_authority: bool = False,
     require_two_party: bool = False,
+    before_review: bool = False,
 ) -> ValidationResult:
     packet_path = Path(packet)
     messages: list[str] = []
@@ -298,6 +306,7 @@ def validate_packet(
             if phrase not in ship_text.lower():
                 messages.append(f"ship.md must mention {phrase}")
 
+    messages.extend(check_review_run(packet_path, before_review=before_review))
     return ValidationResult(not messages, messages)
 
 

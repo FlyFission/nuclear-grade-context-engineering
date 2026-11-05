@@ -31,7 +31,7 @@ Portable command prompt generated from `skills/running-a-review-panel/SKILL.md`.
 - The candidate at a pinned revision, the evidence to freeze -- diff, plan, source paths, prior verification records -- and the exclusions.
 - The available seats and what each varies: model family, mechanism, brief, or human judgment.
 - Redaction rules for proprietary or secret material.
-- The verification budget, and confirmation the work under review does not control it. Before calls, declare usable cases, total attempts, transport reserve, and stops per `docs/02-operating-system/evaluation-integrity.md` §5.
+- Budget owner outside the work under review; usable cases, total attempts, transport reserve and stops (`evaluation-integrity.md` §5).
 
 ## Prompt text
 
@@ -47,6 +47,7 @@ Inputs:
 
 Do this:
 - State the verdict and boundary; stop if the mode does not earn the seats. For a trust-bearing verdict, state the minimum acceptable coupling profile before the first pass.
+- Before every call, run `python tools/ng.py validate <packet> --before-review` with pinned `templates/review-run/` records; retain every outcome.
 - Freeze one packet; redact it, record its digest, partition rather than truncate.
 - Per seat, name the axis it varies; count distinct axes and model families separately from seat count; Nuclear / Tier 0 also names the three independence axes plus rung-4 CI and human backstops.
 - Run the first pass independently, withholding the actor's own conclusion; where stakes call for it, add an anonymized challenge round attacking the strongest claims.

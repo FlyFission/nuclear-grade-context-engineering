@@ -1,8 +1,8 @@
 # Verification — bounded review evidence
 
 **Status: pass.** E-001: 58 targeted tests passed; all remaining commands below passed. These check prose contracts, generated-card
-parity and repository integration, not runtime behavior or agent adherence. The full suite was
-not needed for this docs/skill-only diff; no executable code, templates or checker behavior changed.
+parity and repository integration, not runtime behavior or agent adherence. The initial revision changed wording only. Its narrow check set missed
+the derived evidence badge required by CI; the follow-up below records its correction.
 
 ```bash
 .venv/bin/python -m pytest -q tests/test_skill_contracts.py tests/test_command_contracts.py tests/test_command_parity.py tests/test_public_docs.py tests/test_tokens.py
@@ -38,3 +38,44 @@ The scoped wording passes the recorded checks and remains pending human PR revie
 ## Source-lineage note
 
 An original operational refinement of existing evidence custody and evaluation discipline; see the repository [source map](../../../docs/00-standards-foundation/source-map.md). No compliance, independence, efficacy, or formal assurance claim.
+
+## CI follow-up — E-002
+
+The first CI run [41955221353](https://github.com/FlyFission/nuclear-grade-context-engineering/actions/runs/41955221353)
+failed on Python 3.11, 3.12 and 3.13 at "Evidence badge must match the records". The new packet
+correctly increased the generated count from 74 to 75; the checked-in badge was stale. This was
+a change-caused omission, not a baseline defect. Regenerated `.nuclear/badge.json`; open items remain
+42. The badge correction changes no doctrine; subsequent user steering adds the executable admission control below. E-002 uses the same disclosed
+author/local-runner custody and coupling as E-001.
+
+Follow-up verification: full pytest, Ruff, doctor, token audit, strict-custody packet validation,
+release identity, Python compilation, badge regeneration idempotence and diff hygiene. Actual
+results are recorded before the correction commit. CI remains a separate hosted check.
+
+## Operational admission — E-003
+
+User steering required the lessons to change an actual decision. Added a read-only opt-in gate
+on `validate --before-review`; the updated panel skill and generated prompt require invoking it
+before each new bounded-run call. No v1 artifact/flag means old packet validation stays unchanged.
+
+The first new CLI test failed because `--before-review` did not exist. After implementation,
+31 CLI tests pass: valid initial dispatch and transport repair, old-packet compatibility,
+malformed schema/authorization, digest and runtime changes, missing repair proof, reserve and
+ordinary/total exhaustion, duplicate cases, unsupported failed credit, reservations and stop conditions.
+A concrete regression has 16 required cases / 16 attempts, nine attempts / eight usable: plain
+structural validation can retain the history, while pre-call admission rejects eight needed with
+only seven slots. The checker does not authorize a fresh amended run or silently reset history.
+
+Unknown and a missed-critical calibration failure both block automatic continuation but remain different outcomes.
+Usable support and non-support opinions both count as coverage, and normal corpus dissent permits
+a fresh changed-state case within budget. Scope review rejects calibration-failure mislabeling.
+Explicit owner disposition may authorize a separate preserved-history amended run outside this
+v1 gate; no permanent prohibition on authorized recovery is implied. Local evidence remains
+self-check under E-001's disclosed custody; no provider interception or approval authentication.
+
+Full final checks: **993 passed, 2 skipped in 34.93 seconds** with the worktree venv on PATH.
+Ruff, doctor, tokens, release identity, strict-custody packet validation, Python compilation and
+diff hygiene passed. Regenerated badge is 75 records / 42 open items. Badge regeneration is
+checked against the staged derived file before commit. Initial full local execution without
+venv PATH failed the demo's spawned `python`; environment corrected, no repo workaround added.
+The standalone validator's sibling-module loading was checked by the challenge tests and full suite.

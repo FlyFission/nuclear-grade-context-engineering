@@ -2,11 +2,11 @@
 
 ## Release decision
 
-**Decision: defer to human PR review.** Local proof supports reviewing the prose change; it does
+**Decision: defer to human PR review.** Local proof supports reviewing the prose and opt-in admission change; it does
 not establish that an agent will follow it. No merge, release, or installed-skill refresh authorized
 by this packet. Residual risk: wording can still be misapplied; preserve human budget authority.
 
-Rollback: revert the change commit. Monitoring: review future bounded-run packets for explicit
+Rollback: revert the change commits; old packets require no migration. Monitoring: review future bounded-run packets for explicit
 ceilings and truthful proof reuse; reopen if transport recovery is used to evade a semantic stop.
 
 ## Required links

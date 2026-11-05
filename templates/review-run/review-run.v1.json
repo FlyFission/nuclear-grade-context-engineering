@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "authorization_sha256": "",
+  "attempts": [],
+  "next_attempt": {
+    "id": "A001",
+    "case_id": "case-001",
+    "runtime_sha256": ""
+  }
+}

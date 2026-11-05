@@ -4,9 +4,11 @@
 
 - **Mode:** Standard
 
-Skill instructions change how agents plan and accept review evidence.
+Skill instructions and an opt-in validator gate change how agents admit the next review call.
 Owner: change author; merge authority: human reviewer. Decision question: can observed operating
 failures be prevented by clarifying existing controls without a new workflow engine?
+
+Risk: a self-consistent record can be forged by the change actor; the checker is read-only and checks declarations, not approval authenticity or a provider dispatch. Budget/history must remain under external custody for stronger reliance.
 
 Risk: recovery wording could permit retry-to-agreement or silently expand a cap. Controls explicitly
 preserve total ceilings, immutable failed/unknown history, full reservations, semantic stop conditions,

@@ -11,7 +11,7 @@ type: software
 license: MIT
 repository-code: "https://github.com/FlyFission/nuclear-grade-context-engineering"
 version: "0.7.0"
-date-released: "2026-11-03"
+date-released: "2026-11-05"
 keywords:
   - configuration-management
   - software-assurance

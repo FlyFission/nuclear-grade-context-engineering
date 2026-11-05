@@ -6,7 +6,7 @@ These entries record public-facing changes. They do not claim the project is a m
 
 ## [Unreleased]
 
-## [0.7.0] - 2026-11-03
+## [0.7.0] - 2026-11-05
 
 ### Changed
 

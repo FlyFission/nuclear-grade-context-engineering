@@ -6,6 +6,8 @@ These entries record public-facing changes. They do not claim the project is a m
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-11-03
+
 ### Changed
 
 - The package page is ready for PyPI: author, keywords, classifiers, and project links in `pyproject.toml`, and README links and images that point at GitHub when shown on PyPI. CI and the release build run `twine check --strict`. Nothing is published yet.

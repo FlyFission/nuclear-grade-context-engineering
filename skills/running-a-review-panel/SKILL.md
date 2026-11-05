@@ -7,7 +7,7 @@ description: Convenes several reviewers on one frozen evidence packet, names the
 
 ## Overview
 
-The repo already says high-consequence verdicts should use a panel, and that "a panel that shares one biased brief is not three independent views, it is one view voiced three times" (`docs/02-operating-system/evaluation-integrity.md` §4). It has not said how to build one. This is that procedure. Its central move is making each seat declare the axis it varies -- model family, mechanism, brief, or human judgment -- because a panel's worth is not its headcount but the number of ways it can fail differently. It also separates the panel's *result* from its *health*: a panel degraded to two correlated seats still returns a confident unanimous verdict. And nothing it says is actionable until checked against live source here -- a blocking finding is a reason to look, not an authorization to fix.
+A panel's worth is the number of ways its seats can fail differently, not its headcount. Declare each seat's diversity axis, preserve dissent, and separate the result from panel health. A degraded panel can still return a confident unanimous verdict. Verify every actionable finding against live source: a blocking finding is a reason to look, not authorization to fix.
 
 ## Decision contract
 
@@ -41,18 +41,20 @@ The repo already says high-consequence verdicts should use a panel, and that "a 
 - The candidate at a pinned revision, the evidence to freeze -- diff, plan, source paths, prior verification records -- and the exclusions.
 - The available seats and what each varies: model family, mechanism, brief, or human judgment.
 - Redaction rules for proprietary or secret material.
-- The verification budget, and confirmation the work under review does not control it.
+- Budget owner outside the work under review; usable cases, total attempts, transport reserve and stops (`evaluation-integrity.md` §5).
 
 ## Process
 
 1. State the verdict at stake, the boundary, and the mode that earns the cost. Quick gets a self-check; Standard gets one independent method; a panel is for Nuclear / Tier 0 and trust-bearing calls. If you cannot name the consequence that earns the seats, stop. Do not let an audit widen silently.
-2. Freeze the packet at a pinned revision. Redact it, record its contents and digest, give every first-pass seat exactly that. If it exceeds its bound, partition and say so -- never truncate load-bearing code silently.
-3. Compose the seats. For each, write the axis it varies and the blind spot it covers. Count distinct axes and model families separately from seat count. Two seats on one family are one family with two voices. For a trust-bearing verdict, state the minimum acceptable coupling profile before the first pass, not after. Nuclear / Tier 0 raises the floor: name all three independence axes -- technical, managerial, financial -- plus the rung-4 CI and human backstops (`independence-architecture.md`).
-4. Run the first pass independently. No seat sees another's conclusion. Withhold the actor's own conclusion where feasible -- a stated preferred answer is the sycophancy path in `evaluation-integrity.md` §2.
-5. Run a challenge round when the stakes call for it. Anonymize the submissions; require each seat to attack the strongest claims rather than restate its own, and to name where its reasoning may be correlated with another's.
-6. Record panel health beside the result: every seat dropped, timed out, invalid, or given a truncated packet. A panel that planned five axes and delivered two is a **degraded panel** and is reported as one. Health is a condition on the verdict, not a footnote.
-7. Synthesize by evidence, not by vote. Deduplicate claims, attribute each to its axes, keep the strongest opposing case even when one seat held it, and give each material finding a falsification test.
-8. Verify here, then dispose. Read the code path, run the test, or inspect the authoritative source for every finding you intend to act on; mark each `verified`, `rejected`, or `unresolved`, and never promote an unverified finding to a recommendation. Report the decision first, then verified blockers, non-blockers, dissent, panel health, and next checks. A split panel on a high-consequence call blocks and surfaces the split to a human.
+2. Pin `templates/review-run/` records for new runs. Under the shared caller lock, re-read and require `python tools/ng.py validate <packet> --before-review`; atomically reserve the same ID as `in_flight` before launch. Settle that ID under the lock; retain full reservations and external history. Follow the template locking protocol; no budget reset or semantic retry.
+3. Freeze the packet at a pinned revision. Redact it, record its contents and digest, give every first-pass seat exactly that. If it exceeds its bound, partition and say so -- never truncate load-bearing code silently.
+4. Compose the seats. For each, write the axis it varies and the blind spot it covers. Count distinct axes and model families separately from seat count. Two seats on one family are one family with two voices. For a trust-bearing verdict, state the minimum acceptable coupling profile before the first pass, not after. Nuclear / Tier 0 raises the floor: name all three independence axes -- technical, managerial, financial -- plus the rung-4 CI and human backstops (`independence-architecture.md`).
+5. Run the first pass independently. No seat sees another's conclusion. Withhold the actor's own conclusion where feasible -- a stated preferred answer is the sycophancy path in `evaluation-integrity.md` §2.
+6. Run a challenge round when the stakes call for it. Anonymize the submissions; require each seat to attack the strongest claims rather than restate its own, and to name where its reasoning may be correlated with another's.
+7. Record panel health beside the result: every seat dropped, timed out, invalid, or given a truncated packet. A panel that planned five axes and delivered two is a **degraded panel** and is reported as one. Health is a condition on the verdict, not a footnote.
+8. Synthesize by evidence, not by vote. Deduplicate claims, attribute each to its axes, keep the strongest opposing case even when one seat held it, and give each material finding a falsification test.
+9. Consolidate source-demonstrated fixes before follow-up. Preserve unchanged exact-state support and cited dissent; obtain only changed or missing required views within budget. Never repeat panels for agreement.
+10. Verify here, then dispose. Read the code path, run the test, or inspect the authoritative source for every finding you intend to act on; mark each `verified`, `rejected`, or `unresolved`, and never promote an unverified finding to a recommendation. Report the decision first, then verified blockers, non-blockers, dissent, panel health, and next checks. A split panel on a high-consequence call blocks and surfaces the split to a human.
 
 ## Outputs
 
@@ -108,6 +110,7 @@ Inputs:
 
 Do this:
 - State the verdict and boundary; stop if the mode does not earn the seats. For a trust-bearing verdict, state the minimum acceptable coupling profile before the first pass.
+- Under the caller lock, run `python tools/ng.py validate <packet> --before-review`, then atomically reserve `in_flight` before launch per `templates/review-run/`.
 - Freeze one packet; redact it, record its digest, partition rather than truncate.
 - Per seat, name the axis it varies; count distinct axes and model families separately from seat count; Nuclear / Tier 0 also names the three independence axes plus rung-4 CI and human backstops.
 - Run the first pass independently, withholding the actor's own conclusion; where stakes call for it, add an anonymized challenge round attacking the strongest claims.

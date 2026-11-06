@@ -17,6 +17,7 @@ concurrency:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
@@ -98,6 +99,7 @@ jobs:
 
   wheel-smoke:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: validate
     steps:
       - name: Check out repository
@@ -159,6 +161,7 @@ jobs:
     # otherwise the server could break and CI would stay green. Both supported SDK
     # majors run, because the extra's range (`mcp>=1.0,<3`) admits both.
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: validate
     strategy:
       fail-fast: false
@@ -187,6 +190,7 @@ jobs:
     # required check -- a red build would read as green. (Pattern from uber/ADR's CI.)
     name: CI gate
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     needs: [validate, wheel-smoke, mcp-smoke]
     if: always()
     steps:

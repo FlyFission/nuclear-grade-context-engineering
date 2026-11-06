@@ -6,6 +6,8 @@ These entries record public-facing changes. They do not claim the project is a m
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-11-05
+
 ### Changed
 
 - The package page is ready for PyPI: author, keywords, classifiers, and project links in `pyproject.toml`, and README links and images that point at GitHub when shown on PyPI. CI and the release build run `twine check --strict`. Nothing is published yet.
@@ -35,6 +37,7 @@ These entries record public-facing changes. They do not claim the project is a m
 ### Fixed
 
 - `challenge/score.py` no longer calls an autouse fixture in a new test file "tampering"; it only counts in an original test file. The scorer also stops reading the template field "OPEX or post-release learning trigger" as a plan to release. `challenge-results` gives a record that names the widening but does not validate its own outcome; it used to report "no record". All three were found in unpublished trial runs and are logged in `challenge-results/METHOD.md`.
+- `challenge-results/run.py`: run IDs carry a random part so runs never overwrite each other; a timeout stops every process the agent started; the saved diff is taken against the starting commit, so committed work is kept; and each run records the operating system and container image. `build.py` needs passing tests before a run counts as "record does not validate", and refuses a ruling with a missing field. Found in a code review before any published round, and logged in `challenge-results/METHOD.md`.
 
 ## [0.6.0] - 2026-10-12
 

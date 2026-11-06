@@ -3,7 +3,7 @@
 ## Selected mode
 
 - **Mode:** Standard
-- **Why:** The change edits all 29 generated command cards, which are controlled prompts, and changes what Claude Code may do with them: the cards stop being something the model can call on its own. A change in AI power routes to Standard.
+- **Why:** The change edits every generated command card (29 when written, 30 after `ng-fact-check` arrived from `main`), which are controlled prompts, and changes what Claude Code may do with them: the cards stop being something the model can call on its own. A change in AI power routes to Standard.
 
 ## Decision
 

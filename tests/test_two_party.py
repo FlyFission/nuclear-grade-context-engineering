@@ -796,3 +796,30 @@ def test_every_declaration_filter_preserves_length():
     sample = "a <!-- b --> c\n```\nd\n```\n    e\n<pre>\nf\n</pre>\n<div>\ng\n\nh `<!--` i\n"
     for f in (_visible, strip_indented_code, strip_html_blocks):
         assert len(f(sample)) == len(sample), f.__name__
+
+
+# A placeholder in the change-actor or evidence-author cell left nothing to
+# compare the verifier against, so an agent could verify its own work.
+@pytest.mark.parametrize("actor", ["change actor", "TBD", "agent", "<actor>", "ben + TBD"])
+def test_custody_placeholder_change_actor_is_not_a_second_party(tmp_path, actor):
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n")
+    parties = {"C-001": [ClaimParty("custody E-001", "tools", "agent:claude", actor, "direct witnessing")]}
+    messages: list[str] = []
+    check_two_party(pkt, messages, custody_parties=parties)
+    assert any("C-001" in m and "change actor is empty or a placeholder" in m for m in messages), actor
+
+
+@pytest.mark.parametrize("author", ["TBD", "the author", "agent", "N/A"])
+def test_authorship_placeholder_author_is_not_a_second_party(tmp_path, author):
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n", AUTH_HEADER + f"| C-001 | {author} | agent:claude |\n")
+    messages: list[str] = []
+    check_two_party(pkt, messages)
+    assert any("C-001" in m and "evidence author is empty or a placeholder" in m for m in messages), author
+
+
+def test_named_change_actor_with_distinct_verifier_still_counts(tmp_path):
+    pkt = _packet(tmp_path, "| C-001 | m | c | pass | e | - |\n")
+    parties = {"C-001": [ClaimParty("custody E-001", "tools", "ben", "agent:claude", "direct witnessing")]}
+    messages: list[str] = []
+    check_two_party(pkt, messages, custody_parties=parties)
+    assert messages == []

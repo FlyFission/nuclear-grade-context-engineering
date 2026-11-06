@@ -37,7 +37,7 @@ Boundary: this skill builds the claim-to-evidence trace that feeds other decisio
 
 - `basis.md`, `trace.md`, `verification.md`, and `ship.md`.
 - Test commands, CI runs, reviews, logs, diffs, screenshots, and source links.
-- Known gaps and leftover risks.
+- Known gaps and leftover risks. For expensive runs, apply "Scope expensive proof to the actual boundary" below.
 
 ## Process
 
@@ -50,6 +50,13 @@ Boundary: this skill builds the claim-to-evidence trace that feeds other decisio
 7. Record the gaps and how they affect the release.
 8. For each load-bearing claim, record evidence custody: who generated, selected, transformed or summarized, executed or captured, retained, and presented it.
 9. Record the actor–evidence coupling profile on the actor, context, mechanism, authority, and resource axes. Do not collapse the profile into a score or rung. If the profile is too coupled for the consequence, add independent reproduction or diverse verification, or carry the gap as residual risk — do not count the actor's self-check as independent. See `docs/02-operating-system/actor-evidence-independence.md`.
+
+## Scope expensive proof to the actual boundary
+
+- Before a long static replay, freeze and record exact source, tool/helper, configuration, and runtime hashes. Check them again at completion; concurrent changes invalidate the affected proof. Schedule edits before the freeze rather than repeatedly rerunning an unstable target.
+- Reuse a pinned core proof only while its dependencies remain unchanged. A hash-only output inventory update may derive metadata from that proof when the dependency check and derivation are explicit; label it metadata-derived, retain the original evidence, and never report a fresh semantic replay. Audit the actual delivered inventory separately.
+- Test the actual native client ingress separately from its canonical downstream envelope. Wrapper bytes can exceed a local bound even when the provider body fits. Use a bounded no-forward native probe before paid generation, then a regression through the real bridge and independent overflow rejection at each guard. A local ingress repair does not authorize higher provider, source, output, reservation, or default limits.
+- Measure the specific bottleneck before expanding tooling. Prefer a small optimization with exact serialized-output parity and unchanged rejection behavior, including ordering, gaps, and overlaps, over a replacement engine. Keep packet sizing separate from full-plan construction; reuse frozen phase proof instead of repeating costly diagnostic compiles. A single timing or memory observation does not establish a speed multiplier or root cause.
 
 ## Outputs
 

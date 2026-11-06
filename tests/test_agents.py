@@ -63,7 +63,7 @@ def test_runner_requires_execution_authorization_beyond_plan_acceptance():
 
 
 def test_readme_carries_the_honesty_caveat():
-    readme = (AGENTS / "README.md").read_text(encoding="utf-8")
+    readme = (ROOT / "docs" / "02-operating-system" / "prove-subagents.md").read_text(encoding="utf-8")
     assert "permissionMode" in readme, "must document the plugin permissionMode limit (F6)"
     assert ".claude/agents/" in readme, "must point to where real confinement lives"
     assert "not a perimeter" in readme.lower()

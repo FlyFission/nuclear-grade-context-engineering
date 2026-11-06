@@ -46,7 +46,7 @@ def test_wheel_packages_only_namespaced_package():
 def test_version_is_stamped():
     config = _config()
 
-    assert config["project"]["version"] == "0.6.0"
+    assert config["project"]["version"] == "0.7.0"
 
 
 def _version_line(rel_path: str) -> str:

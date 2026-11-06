@@ -135,19 +135,23 @@ MODE_FILES = {
 # controls both profiles. Catalog loading stays inside commands so malformed metadata
 # cannot block `--help` or `doctor` at module import time.
 
-INSTALL_TOOLS = ("codex", "claude", "cursor", "windsurf", "vscode")
+INSTALL_TOOLS = ("codex", "claude", "cursor", "windsurf", "vscode", "gemini", "opencode")
 TOOL_LABELS = {
     "codex": "Codex CLI",
     "claude": "Claude Code",
     "cursor": "Cursor",
     "windsurf": "Windsurf",
     "vscode": "VS Code + Copilot",
+    "gemini": "Gemini CLI",
+    "opencode": "OpenCode",
 }
 # Skill-directory paths confirmed against each tool's current docs (Codex, Claude
 # Code, Cursor, Windsurf). VS Code's project path (.github/skills) is confirmed,
 # but its user-scope path is a best-known default, so VS Code stays unverified:
 # unverified tools print a "verify / override with --dest" note so a wrong default
 # is obvious and recoverable rather than silently writing to the wrong place.
+# Gemini CLI's paths match its docs but have not been checked in a live Gemini
+# CLI session, so it stays unverified too. The same goes for OpenCode.
 VERIFIED_TOOLS = frozenset({"codex", "claude", "cursor", "windsurf"})
 INSTALL_MANIFEST = ".nuclear-grade-install.json"
 
@@ -414,6 +418,10 @@ def build_parser() -> argparse.ArgumentParser:
         help="Declared two-party integrity check: every `pass` claim in a Standard packet must name a "
         "verifier distinct from its change actor (declared identities, not proof of independence). "
         "Recommended for any Standard packet that contains a pass claim.",
+    )
+    validate_parser.add_argument(
+        "--before-review", action="store_true",
+        help="Require a pinned v1 review run and admit its proposed next attempt before a model call.",
     )
     validate_parser.set_defaults(handler=handle_validate)
 
@@ -755,6 +763,14 @@ def install_dest(tool: str, scope: str, repo: Path) -> Path:
     if tool == "vscode":
         # VS Code + Copilot: project .github/skills (team-shared); user ~/.config/github-copilot/skills.
         return (repo / ".github" / "skills") if scope == "project" else _vscode_user_skills()
+    if tool == "gemini":
+        # Gemini CLI reads .gemini/skills (workspace) and ~/.gemini/skills (user).
+        # See https://geminicli.com/docs/cli/skills/
+        return (repo / ".gemini" / "skills") if scope == "project" else (home / ".gemini" / "skills")
+    if tool == "opencode":
+        # OpenCode reads .opencode/skills (project) and ~/.config/opencode/skills
+        # (global). See https://opencode.ai/docs/skills
+        return (repo / ".opencode" / "skills") if scope == "project" else (home / ".config" / "opencode" / "skills")
     raise ValueError(f"unknown tool: {tool}")
 
 
@@ -906,7 +922,21 @@ def handle_mcp_config(args: argparse.Namespace) -> int:
     """
 
     tool = args.tool
-    if tool == "codex":
+    if tool == "opencode":
+        # OpenCode keeps MCP servers under "mcp", as a local command array.
+        # See https://opencode.ai/docs/mcp-servers
+        path = "opencode.json (project) or ~/.config/opencode/opencode.json (user)"
+        snippet = (
+            "{\n"
+            '  "mcp": {\n'
+            '    "nuclear-grade": {\n'
+            '      "type": "local",\n'
+            '      "command": ["python", "-m", "nuclear_grade.mcp_server"]\n'
+            "    }\n"
+            "  }\n"
+            "}\n"
+        )
+    elif tool == "codex":
         path = "~/.codex/config.toml"
         snippet = (
             "[mcp_servers.nuclear_grade]\n"
@@ -919,6 +949,8 @@ def handle_mcp_config(args: argparse.Namespace) -> int:
             "cursor": (".cursor/mcp.json (project) or ~/.cursor/mcp.json (user)", "mcpServers"),
             "windsurf": ("~/.codeium/windsurf/mcp_config.json", "mcpServers"),
             "vscode": (".vscode/mcp.json", "servers"),
+            # https://github.com/google-gemini/gemini-cli/blob/main/docs/tools/mcp-server.md
+            "gemini": (".gemini/settings.json (project) or ~/.gemini/settings.json (user)", "mcpServers"),
         }[tool]
         snippet = _mcp_json(top_key)
 
@@ -954,6 +986,7 @@ def handle_validate(args: argparse.Namespace) -> int:
         require_custody=args.strict_custody,
         require_authority=args.strict_authority,
         require_two_party=args.two_party,
+        before_review=args.before_review,
     )
     if args.json:
         receipt = build_receipt(
@@ -964,6 +997,7 @@ def handle_validate(args: argparse.Namespace) -> int:
             strict_two_party=args.two_party,
             validator_version=_validator_version(),
         )
+        receipt["before_review"] = args.before_review
         print(json.dumps(receipt, indent=2, ensure_ascii=False))
         return 0 if result.ok else 1
     if result.ok:

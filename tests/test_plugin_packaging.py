@@ -39,16 +39,28 @@ def test_marketplace_lists_the_plugin_at_repo_root():
 
 def test_components_live_at_plugin_root_not_inside_claude_plugin():
     # Claude Code discovers skills/commands/agents/hooks at the plugin ROOT;
-    # only the manifests belong in .claude-plugin/.
+    # only the manifests and the listing icon belong in .claude-plugin/.
     assert (ROOT / "skills").is_dir()
     assert (ROOT / "commands").is_dir()
     assert not (PLUGIN_DIR / "skills").exists()
     assert not (PLUGIN_DIR / "commands").exists()
 
     names = {p.name for p in PLUGIN_DIR.iterdir()}
-    assert names == {"plugin.json", "marketplace.json"}, (
+    assert names == {"plugin.json", "marketplace.json", "icon.png"}, (
         f"unexpected files in .claude-plugin/: {sorted(names)}"
     )
+
+
+def test_plugin_icon_meets_directory_rules():
+    # The plugin directory wants a square PNG, 512 to 2048 px a side, under 2 MB.
+    icon = PLUGIN_DIR / "icon.png"
+    data = icon.read_bytes()
+    assert data[:8] == b"\x89PNG\r\n\x1a\n", "icon.png must be a PNG"
+    width = int.from_bytes(data[16:20], "big")
+    height = int.from_bytes(data[20:24], "big")
+    assert width == height, f"icon must be square, got {width}x{height}"
+    assert 512 <= width <= 2048, f"icon side must be 512 to 2048 px, got {width}"
+    assert len(data) < 2 * 1024 * 1024, "icon must be under 2 MB"
 
 
 def test_skills_are_discoverable():

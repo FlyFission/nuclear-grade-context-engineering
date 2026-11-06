@@ -24,6 +24,11 @@ The check reads two declarations, whichever the packet carries:
    packet declares. Columns are found by header (claim, author, verifier), in
    any order; a table whose headers do not name all three declares nothing.
 
+Either way the party the verifier is compared against (the custody row's change
+actor, or the authorship row's evidence author) must itself be named. A
+placeholder there (``change actor``, ``TBD``, ``agent``) leaves nothing to compare
+against, so the row is not a second party, whatever its verifier says.
+
 The parser is asymmetric on purpose, so every parsing mistake fails closed:
 
 - Claims are read generously, from the raw file. No markup (comment, fence,
@@ -585,8 +590,24 @@ def _h2_section(text: str, title_prefix: str) -> str:
     return "\n".join(lines)
 
 
+def _reference(party: ClaimParty) -> str:
+    """The identity a row's verifier is compared against."""
+    return party.change_actor if party.source.startswith("custody") else party.author
+
+
+def _unnamed(value: str) -> bool:
+    """True when a cell, or any name in it, is empty or a placeholder.
+
+    A verifier can only be shown distinct from a party that is named. `change
+    actor`, `TBD`, or `ben + TBD` leave an actor unnamed, so they fail closed.
+    """
+    return _is_empty_party(value) or any(_is_empty_party(p) for p in _split_names(value))
+
+
 def _is_second_party(party: ClaimParty, packet_actors: set[str]) -> bool:
     if _is_empty_party(party.verifier):
+        return False
+    if _unnamed(_reference(party)):
         return False
     verifier = _norm(party.verifier)
     if party.source.startswith("custody"):
@@ -627,6 +648,13 @@ def _why_not(cid: str, parties: list[ClaimParty], packet_actors: set[str]) -> st
             "empty or a placeholder; a load-bearing claim needs a named second party."
         )
     for party in named:
+        if _unnamed(_reference(party)):
+            role = "change actor" if party.source.startswith("custody") else "evidence author"
+            return (
+                f"verification.md: claim {cid} names a verifier, but its {role} is empty "
+                f"or a placeholder ('{_reference(party)}', {party.source}); name the "
+                f"{role} so the verifier can be shown to be someone else."
+            )
         excluded = _identities(party.change_actor)
         if not party.source.startswith("custody"):
             excluded |= _identities(party.author) | packet_actors

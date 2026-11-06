@@ -297,6 +297,8 @@ permissions:
 jobs:
   validate-change-records:
     runs-on: ubuntu-latest
+    # Without this a hung step holds the runner for GitHub's 360-minute default.
+    timeout-minutes: 10
     steps:
       - name: Check out repository
         uses: actions/checkout@v4  # pin to a full commit SHA for production

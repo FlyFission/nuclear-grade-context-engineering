@@ -1,6 +1,7 @@
 """This repository's own consequence policy: it parses, and representative changes get
 the modes the owner decided (master plan WS1, decisions 1-2)."""
 
+import ast
 import json
 import os
 import re
@@ -48,6 +49,7 @@ BEFORE = {
     "challenge-results/results/run-001.json": "{}\n",
     "tests/test_challenge_results.py": "def test_x():\n    pass\n",
     "nuclear_grade/two_party.py": "def check_two_party():\n    pass\n",
+    "nuclear_grade/review_run.py": "def check_review_run():\n    pass\n",
     "nuclear_grade/cli.py": "HELP = 'old'\nGATE = None\n",
     "nuclear_grade/metrics.py": "MODEL = None\n",
     "nuclear_grade/tokens.py": "LIMIT = 1\n",
@@ -81,6 +83,7 @@ AFTER = {
     "challenge-results/results/run-001.json": "{\"outcome\": \"ok\"}\n",
     "tests/test_challenge_results.py": "def test_x():\n    assert True\n",
     "nuclear_grade/two_party.py": "def check_two_party():\n    return\n",
+    "nuclear_grade/review_run.py": "def check_review_run():\n    return\n",
     "nuclear_grade/cli.py": "HELP = 'new'\nGATE = None\n",
     "nuclear_grade/metrics.py": "MODEL = 'claude-opus-5-5'\n",
     "nuclear_grade/tokens.py": "LIMIT = 2\n",
@@ -114,6 +117,7 @@ EXPECTED = {
     "challenge-results/results/run-001.json": "none",  # per-run data; RESULTS.md carries the claim rules
     "tests/test_challenge_results.py": "standard",
     "nuclear_grade/two_party.py": "standard",  # ng_validate delegates to it
+    "nuclear_grade/review_run.py": "standard",  # ng_validate delegates to it too
     "nuclear_grade/cli.py": "none",  # ordinary CLI text, no gate wiring touched
     "nuclear_grade/metrics.py": "standard",  # model id in executable code
     "nuclear_grade/tokens.py": "none",  # ordinary code needs tests only (owner decision 1)
@@ -178,6 +182,35 @@ def test_every_validator_with_a_test_suite_has_that_suite_in_trust_tests():
         suite = f"tests/test_{Path(module).stem}.py"
         if (ROOT / suite).is_file():
             assert suite in rules["trust-tests"].paths, suite
+
+
+# A validator's own package imports decide what it checks, so they need the same rule.
+# cli.py is the one exception: mcp_server.py imports its handlers, and the gate-cli
+# content rule covers it instead.
+IMPORT_EXCEPTIONS = {"nuclear_grade/cli.py"}
+
+
+def _package_imports(path: Path) -> set[str]:
+    source = path.read_text(encoding="utf-8")
+    found = set(re.findall(r'with_name\("(\w+)\.py"\)', source))
+    for node in ast.walk(ast.parse(source)):
+        if isinstance(node, ast.ImportFrom):
+            if node.level == 1 and node.module:
+                found.add(node.module.split(".")[0])
+            elif node.module and node.module.startswith("nuclear_grade."):
+                found.add(node.module.split(".")[1])
+            elif node.module == "nuclear_grade":
+                found |= {alias.name for alias in node.names}
+    return {f"nuclear_grade/{name}.py" for name in found if (ROOT / "nuclear_grade" / f"{name}.py").is_file()}
+
+
+def test_every_module_a_validator_imports_is_a_validator():
+    policy = consequence.load_policy(ROOT, consequence.WORKTREE)
+    validators = next(rule for rule in policy.rules if rule.id == "validators").paths
+    modules = [path for path in validators if path.startswith("nuclear_grade/") and "*" not in path]
+    for module in modules:
+        for dependency in sorted(_package_imports(ROOT / module) - IMPORT_EXCEPTIONS):
+            assert dependency in validators, f"{module} imports {dependency}"
 
 
 def test_every_check_ci_runs_by_name_needs_at_least_standard():

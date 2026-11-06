@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/assets/banner/control-rods.svg" alt="Nuclear-grade Context Engineering: let AI do serious software work and stay in control of what ships. Install with pipx install nuclear-grade." width="820">
+<img src="docs/assets/banner/core-glow.svg" alt="Nuclear-grade Context Engineering, over a reactor core glowing blue under water: let AI do serious software work and stay in control of what ships. Install with pipx install nuclear-grade." width="820">
 
 [![CI](https://github.com/FlyFission/nuclear-grade-context-engineering/actions/workflows/ci.yml/badge.svg)](https://github.com/FlyFission/nuclear-grade-context-engineering/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-2E7D45.svg)](LICENSE)

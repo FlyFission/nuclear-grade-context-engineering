@@ -3,12 +3,13 @@
 Five subagents map onto the **PROVE** beats, each with tool boundaries that *encode* the authority
 split the doctrine already demands. They are an **opt-in, Standard+-only** companion to the
 single-agent path — five subagents on a typo is the busywork the lifecycle rejects.
+The five definitions live in [`agents/`](../../agents/). This page sits outside that folder so Claude Code doesn't read it as a sixth agent.
 
 Concretely, the observer and judge create **role separation with a partially coupled evidence path**:
 the runner that makes the change is not the nominal observer or verdict role. This can reduce direct
 self-review, but it does not prevent the shared orchestrator, model lineage, context, budget, or
 administrative domain from carrying the same error into every stage. That is an in-loop mitigation from
-[`../docs/02-operating-system/actor-evidence-independence.md`](../docs/02-operating-system/actor-evidence-independence.md)
+[`actor-evidence-independence.md`](actor-evidence-independence.md)
 — not independent verification. The honesty note below records where the coupling remains.
 
 | Beat | Subagent | Covers | Tool authority |
@@ -49,4 +50,4 @@ These are **Claude** subagent definitions. The Codex plugin
 these as Codex-native subagents — Codex subagent packaging is not wired up here.
 Use them through Claude Code (the marketplace plugin ships them), or convert them
 to a Codex-supported form before relying on them there. See the Codex section of
-[`../INTEGRATIONS.md`](../INTEGRATIONS.md).
+[`INTEGRATIONS.md`](../../INTEGRATIONS.md).

@@ -25,7 +25,7 @@ Portable command prompt generated from `skills/proving-claims/SKILL.md`. To chan
 
 - `basis.md`, `trace.md`, `verification.md`, and `ship.md`.
 - Test commands, CI runs, reviews, logs, diffs, screenshots, and source links.
-- Known gaps and leftover risks.
+- Known gaps and leftover risks. For expensive runs, apply "Scope expensive proof to the actual boundary" below.
 
 ## Prompt text
 

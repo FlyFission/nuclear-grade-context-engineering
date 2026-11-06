@@ -26,11 +26,14 @@ import datetime as dt
 import hashlib
 import json
 import os
+import platform
 import shutil
+import signal
 import subprocess
 import sys
 import tempfile
 import time
+import uuid
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -62,6 +65,8 @@ def git(cwd: Path, *args: str) -> str:
 
 
 def fresh_copy(parent: Path, track: str = "rules") -> Path:
+    """Copy the challenge into a new git repository with one root commit, ``start``."""
+
     play = parent / "ng-challenge"
     shutil.copytree(CHALLENGE, play, ignore=shutil.ignore_patterns("__pycache__", ".pytest_cache"))
     if track == "plain":
@@ -96,6 +101,43 @@ def tool_version(entry: dict) -> str:
     return (done.stdout or done.stderr).strip().splitlines()[0] if (done.stdout or done.stderr).strip() else "unknown"
 
 
+def run_agent(command: list[str], cwd: Path, timeout: int) -> tuple[int | None, str, str, bool]:
+    """Run the agent and return (exit code, stdout, stderr, timed out).
+
+    The agent starts in its own process group, so a timeout stops every process it
+    started, not only the CLI. Otherwise a child left running could keep editing the
+    folder while it is staged and scored.
+    """
+
+    group = hasattr(os, "killpg")
+    proc = subprocess.Popen(
+        command, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, start_new_session=group
+    )
+    try:
+        stdout, stderr = proc.communicate(timeout=timeout)
+        return proc.returncode, stdout, stderr, False
+    except subprocess.TimeoutExpired:
+        if group:
+            try:
+                os.killpg(proc.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+        else:
+            proc.kill()
+        stdout, stderr = proc.communicate()
+        return None, stdout or "", stderr or "", True
+
+
+def environment() -> dict:
+    """Where the run happened. METHOD.md asks each round to record the OS and container image."""
+
+    return {
+        "os": platform.platform(),
+        "python": platform.python_version(),
+        "container_image": os.environ.get("NG_CONTAINER_IMAGE") or "not recorded (set NG_CONTAINER_IMAGE)",
+    }
+
+
 def score(play: Path, label: str) -> dict:
     env = {k: v for k, v in os.environ.items() if k != "PYTHONPATH"}
     env["NG_REPO"] = str(REPO)
@@ -113,24 +155,26 @@ def score(play: Path, label: str) -> dict:
 
 def run_trial(entry: dict, model: str, track: str, trial: int, timeout: int, out_dir: Path, keep: bool) -> dict:
     stamp = dt.datetime.now(dt.UTC).strftime("%Y%m%dT%H%M%SZ")
-    run_id = f"{entry['id']}-{(model or 'default').replace('/', '_')}-{track}-{stamp}-t{trial}"
+    # The random part keeps two runs started in the same second, or two harness
+    # processes running side by side, from writing over each other's files.
+    run_id = f"{entry['id']}-{(model or 'default').replace('/', '_')}-{track}-{stamp}-t{trial}-{uuid.uuid4().hex[:8]}"
+    if (out_dir / f"{run_id}.json").exists():
+        raise FileExistsError(f"refusing to overwrite an earlier run: {run_id}")
     with tempfile.TemporaryDirectory(prefix="ng-challenge-results-") as tmp:
         play = fresh_copy(Path(tmp), track)
         command = build_command(entry, model)
         started = time.monotonic()
         timed_out = False
         try:
-            done = subprocess.run(command, cwd=play, capture_output=True, text=True, timeout=timeout)
-            exit_code, stdout, stderr = done.returncode, done.stdout, done.stderr
-        except subprocess.TimeoutExpired as exc:
-            timed_out, exit_code = True, None
-            stdout = exc.stdout.decode(errors="replace") if isinstance(exc.stdout, bytes) else (exc.stdout or "")
-            stderr = exc.stderr.decode(errors="replace") if isinstance(exc.stderr, bytes) else (exc.stderr or "")
+            exit_code, stdout, stderr, timed_out = run_agent(command, play, timeout)
         except OSError as exc:
             exit_code, stdout, stderr = None, "", f"could not start agent: {exc}"
         seconds = round(time.monotonic() - started, 1)
         git(play, "add", "-A")
-        diff = git(play, "diff", "--cached", "HEAD")
+        # Diff against the starting commit, not HEAD: an agent that commits its work
+        # moves HEAD, and the saved diff would then miss what the scorer judged.
+        root = git(play, "rev-list", "--max-parents=0", "HEAD").split()[0]
+        diff = git(play, "diff", "--cached", root)
         label = f"{entry['label']} ({model})" if model else entry["label"]
         scorecard = score(play, label)
         if keep:
@@ -161,6 +205,7 @@ def run_trial(entry: dict, model: str, track: str, trial: int, timeout: int, out
         "tokens": None,
         "transcript_sha256": hashlib.sha256(transcript.encode()).hexdigest(),
         "diff_sha256": hashlib.sha256(diff.encode()).hexdigest(),
+        "environment": environment(),
         "challenge_commit": git(REPO, "rev-parse", "HEAD").strip() if (REPO / ".git").exists() else "unknown",
     }
     (out_dir / f"{run_id}.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")

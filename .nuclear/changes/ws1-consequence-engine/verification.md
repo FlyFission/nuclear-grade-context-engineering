@@ -61,7 +61,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 | Full suite | `python -m pytest -q` | same | pass (exit 0) | CI run on the PR |
 | Lint | `python -m ruff check .` | same | pass | CI run on the PR |
 | Repo checks | `python tools/ng.py doctor .`; `python tools/ng.py tokens .` | same | pass | CI run on the PR |
-| Backtest | `python tools/ng_policy_backtest.py --policy <draft> --last 49` | same | 22 none, 12 quick, 11 standard, 4 standard+authority | E-005 |
+| Backtest | `python tools/ng_policy_backtest.py --policy <draft> --last 49` | same | 24 none, 11 quick, 11 standard, 3 standard+authority (corrected 2026-11-03; the figures first recorded here, 22 none, 12 quick, 11 standard, 4 standard+authority, could not be reproduced; see `../ws1-repo-policy/verification.md`) | E-005 |
 
 ## Negative / failure-mode checks
 

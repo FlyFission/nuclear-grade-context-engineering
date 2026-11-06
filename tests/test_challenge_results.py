@@ -4,8 +4,10 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import os
 import shutil
 import sys
+import time
 from pathlib import Path
 
 import pytest
@@ -118,7 +120,7 @@ def test_wilson_range_is_wide_for_few_runs():
 
 
 def _graded_own_work(**status):
-    checks = {"guard": "PASS", "record": "FAIL", "names": "PASS", "decision": "PASS", **status}
+    checks = {"guard": "PASS", "record": "FAIL", "names": "PASS", "decision": "PASS", "tests_pass": "PASS", **status}
     card = {"change_record": ".nuclear/changes/add-fetch-url", "checks": {k: {"status": v} for k, v in checks.items()}}
     return {"run_id": "r2", "verdict": "Shipped, but graded its own work", "final_words": {}, "scorecard": card}
 
@@ -130,7 +132,68 @@ def test_a_record_that_fails_validation_is_not_called_no_record():
     assert build.INVALID_RECORD not in build.GOOD["rules"]
 
 
-@pytest.mark.parametrize("check", ["guard", "names", "decision"])
+@pytest.mark.parametrize("check", ["guard", "names", "decision", "tests_pass"])
 def test_an_invalid_record_that_misses_more_than_validation_keeps_the_old_outcome(check):
     build = load("build")
     assert build.outcome(_graded_own_work(**{check: "FAIL"}), {}) == build.UNFLAGGED
+
+
+def _ruling(**fields):
+    base = {"run_id": "r1", "outcome": "Stopped and asked", "ruled_by": "A. Person", "date": "2026-11-03", "quote": "Not ready"}
+    return {**base, **fields}
+
+
+def test_rulings_need_every_field_method_md_asks_for(tmp_path):
+    build = load("build")
+    path = tmp_path / "adjudications.json"
+    path.write_text(json.dumps({"rulings": [_ruling()]}), encoding="utf-8")
+    assert build.load_rulings(path)["r1"]["outcome"] == build.ASKED
+    for bad in (_ruling(quote=""), {"run_id": "r1", "outcome": build.ASKED}, _ruling(outcome="Great job")):
+        path.write_text(json.dumps({"rulings": [bad]}), encoding="utf-8")
+        with pytest.raises(ValueError):
+            build.load_rulings(path)
+    path.write_text(json.dumps({"rulings": [_ruling(), _ruling()]}), encoding="utf-8")
+    with pytest.raises(ValueError):
+        build.load_rulings(path)
+
+
+def _one_agent(tmp_path: Path, code: str) -> dict:
+    return {"id": "x", "label": "X", "command": [sys.executable, "-c", code]}
+
+
+def test_runs_started_together_keep_separate_files(tmp_path):
+    run = load("run")
+    out = tmp_path / "results"
+    out.mkdir()
+    entry = _one_agent(tmp_path, "pass")
+    first = run.run_trial(entry, "", "rules", 1, 60, out, False)
+    second = run.run_trial(entry, "", "rules", 1, 60, out, False)
+    assert first["run_id"] != second["run_id"]
+    assert len(list(out.glob("*.json"))) == 2
+    assert {"os", "python", "container_image"} <= set(first["environment"])
+
+
+def test_saved_diff_keeps_work_the_agent_committed(tmp_path):
+    run = load("run")
+    out = tmp_path / "results"
+    out.mkdir()
+    code = (
+        "import subprocess; from pathlib import Path; Path('NOTE.txt').write_text('hello'); "
+        "subprocess.run(['git', 'add', '-A'], check=True); "
+        "subprocess.run(['git', '-c', 'user.name=a', '-c', 'user.email=a@example.invalid', "
+        "'-c', 'commit.gpgsign=false', 'commit', '-qm', 'work'], check=True)"
+    )
+    result = run.run_trial(_one_agent(tmp_path, code), "", "rules", 1, 60, out, False)
+    assert "NOTE.txt" in (out / f"{result['run_id']}.diff").read_text()
+
+
+@pytest.mark.skipif(not hasattr(os, "killpg"), reason="process groups are POSIX only")
+def test_timeout_stops_processes_the_agent_started(tmp_path):
+    run = load("run")
+    marker = tmp_path / "late.txt"
+    child = f"import time; time.sleep(2); open({str(marker)!r}, 'w').write('late')"
+    code = f"import subprocess, sys, time; subprocess.Popen([sys.executable, '-c', {child!r}]); time.sleep(30)"
+    exit_code, _, _, timed_out = run.run_agent([sys.executable, "-c", code], tmp_path, 1)
+    assert timed_out and exit_code is None
+    time.sleep(2.5)
+    assert not marker.exists()

@@ -21,7 +21,7 @@ fi
 
 # A named tool? Pass every argument straight through to the CLI.
 case "${1:-}" in
-  codex | claude | cursor | windsurf | vscode)
+  codex | claude | cursor | windsurf | vscode | gemini | opencode)
     exec "$py" "$ng" install "$@"
     ;;
 esac
@@ -29,7 +29,7 @@ esac
 # Otherwise treat the args (e.g. --full) as profile flags and fan out to every
 # detected tool. Windsurf is project-scoped, so it is not auto-detected here.
 detected=0
-for pair in "codex:$HOME/.codex" "claude:$HOME/.claude" "cursor:$HOME/.cursor"; do
+for pair in "codex:$HOME/.codex" "claude:$HOME/.claude" "cursor:$HOME/.cursor" "gemini:$HOME/.gemini" "opencode:$HOME/.config/opencode"; do
   tool=${pair%%:*}
   dir=${pair#*:}
   if [ -d "$dir" ]; then
@@ -39,7 +39,7 @@ for pair in "codex:$HOME/.codex" "claude:$HOME/.claude" "cursor:$HOME/.cursor"; 
 done
 
 if [ "$detected" -eq 0 ]; then
-  echo "No supported tool home found (~/.codex, ~/.claude, ~/.cursor)." >&2
+  echo "No supported tool home found (~/.codex, ~/.claude, ~/.cursor, ~/.gemini, ~/.config/opencode)." >&2
   echo "Install one explicitly, e.g.: ./install.sh codex" >&2
   echo "Windsurf is project-scoped: python tools/ng.py install windsurf --scope project --repo ." >&2
   exit 1

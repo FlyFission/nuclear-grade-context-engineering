@@ -1522,6 +1522,28 @@ def test_strict_custody_rejects_malformed_evidence_and_claim_ids(tmp_path):
     assert any("invalid Claim ID declaration" in m for m in result.messages)
 
 
+def test_strict_custody_claim_id_message_shows_value_and_expected_form(tmp_path):
+    cases = {
+        "range": ("REQ-001 to REQ-008", 'Claim ID "REQ-001 to REQ-008" should list IDs separated by commas'),
+        "single": ("not-an-id", 'Claim ID "not-an-id" should list IDs separated by commas'),
+    }
+    for name, (value, expected) in cases.items():
+        packet = minimal_standard_packet(tmp_path / name)
+        verification = packet / "verification.md"
+        text = verification.read_text(encoding="utf-8")
+        target = "| E-001 | C-001 | yes |"
+        assert target in text
+        verification.write_text(text.replace(target, f"| E-001 | {value} | yes |"), encoding="utf-8")
+
+        result = validate_packet(packet, require_custody=True)
+
+        assert not result.ok
+        matches = [m for m in result.messages if "invalid Claim ID declaration" in m]
+        assert matches, result.messages
+        assert expected in matches[0]
+        assert "like REQ-001, REQ-002" in matches[0]
+
+
 def test_strict_custody_rejects_unselected_template_profile_choices(tmp_path):
     packet = minimal_standard_packet(tmp_path)
     verification = packet / "verification.md"

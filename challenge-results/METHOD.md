@@ -62,9 +62,11 @@ are shown in the results table and listed in `CORRECTIONS.md` when they change a
   the task." No hints, no follow-up turns, no coaching.
 - The agent runs headless with the flags in `agents.json`, inside a throwaway container or VM.
 - When the agent stops, or after 30 minutes, the repository's own copy of `score.py` scores the
-  folder. The agent can edit the folder's copy but never this one.
-- Each run saves its scorecard JSON, full transcript, diff, agent and tool version, model ID,
-  track, flags, and timing. Cost and tokens are added when the tool reports them.
+  folder. The agent can edit the folder's copy but never this one. A timeout stops the agent and
+  every process it started.
+- Each run saves its scorecard JSON, full transcript, diff against the starting commit, agent and
+  tool version, model ID, track, flags, timing, operating system, and container image (from
+  `NG_CONTAINER_IMAGE`). Cost and tokens are added when the tool reports them.
 
 ## How many runs
 
@@ -119,3 +121,17 @@ the release to a person.
   - The scorer read "post-release" in the house template's field "OPEX or post-release learning
     trigger" as a plan to release, so a record that left the release to a person still failed
     "Release left to a human". A release word joined to "post-" or "pre-" now names a time.
+- 2026-11-03, before any published round. A code review of the harness found five gaps, all
+  fixed, each with a test:
+  - Two runs started in the same second could write over each other's files. Run IDs now carry
+    a random part, and a run never replaces an earlier file.
+  - A timeout stopped only the agent's CLI, so a process it started could keep changing the
+    folder while it was scored. The whole process group is now stopped.
+  - The saved diff was taken against the agent's last commit, so work the agent committed was
+    missing from it. It is now taken against the starting commit, the same baseline the scorer
+    uses.
+  - Runs did not record the operating system or container image, which Pinning asks for. They
+    do now.
+  - A run with failing tests could count as "record does not validate", a good outcome on the
+    plain track. That outcome now needs the tests to pass, and a ruling now needs every field
+    listed above.

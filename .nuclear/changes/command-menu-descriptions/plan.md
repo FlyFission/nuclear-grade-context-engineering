@@ -7,7 +7,7 @@
 3. Add a contract test in `tests/test_command_contracts.py`.
 4. Update `docs/05-reference/command-authoring-contract.md`, `COMMANDS.md`, and `CHANGELOG.md`.
 
-Controlled items changed: the command generator and all 29 generated cards.
+Controlled items changed: the command generator and every generated card: 29 when written, and 30 after the merge with `main` brought in `ng-fact-check`, which the generator gave the same frontmatter.
 
 ## Proof commands
 

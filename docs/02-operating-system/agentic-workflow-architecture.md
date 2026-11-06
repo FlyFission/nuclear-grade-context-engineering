@@ -64,7 +64,7 @@ flowchart LR
 
 ### How this maps onto PROVE
 
-The repo's [PROVE pipeline](../../agents/README.md) already embodies the split:
+The repo's [PROVE pipeline](prove-subagents.md) already embodies the split:
 
 - The [**planner**](../../agents/planner.md) is read-only over product code and writes the
   stage contract — it is the **control plane**. It defines, before any build, what each slice

@@ -281,3 +281,31 @@ def test_skill_output_score_rejects_unknown_skill_in_manifest(tmp_path):
 
     assert result.returncode == 1
     assert "unknown skill" in (result.stdout + result.stderr)
+
+
+def test_outcome_stagnation_case_rejects_activity_only_and_quality_shortcuts():
+    """Fixture discrimination, not an observed model win or semantic proof."""
+    from tools.ng_skill_output_score import load_cases, score_output
+
+    case = load_cases(CASES)["staying-on-mission-output-02"]
+    activity_only = (
+        "The goal, success criteria, non-goals, current action and attempts are recorded. "
+        "RE-ANCHOR, ESCALATE or STOP are the choices. All checks passed; revise preparation."
+    )
+    corrected = (
+        "STOP the repeated batch: accepted deliverables stayed 4 to 4 at the checkpoint. "
+        "Inspect one source through transformation, field contract and final artifact to "
+        "determine whether the governing action was lost. Make one supported correction; "
+        "the acceptance check must pass the unchanged quality gates on that record. "
+        "The stop condition is a failed correction or no supported bounded fix; escalate."
+    )
+    weak = score_output(case, "baseline", activity_only)
+    strong = score_output(case, "skill", corrected)
+    assert weak.required_present < weak.required_total
+    assert strong.required_present == strong.required_total
+    assert strong.forbidden_present == 0
+    assert strong.score > weak.score
+
+    for shortcut in case.forbidden:
+        scored = score_output(case, "skill", corrected + ". " + shortcut)
+        assert scored.forbidden_present > 0

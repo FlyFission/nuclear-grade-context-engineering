@@ -19,7 +19,7 @@ The anchor is also the clarity that lets authority move to the edge: it is the c
 - **Artifact observed:** the written anchor (`.nuclear/mission.md`, `## Mission anchor` in `risk.md`, or `.nuclear/charter.md`) and the current action/diff -> a recorded continue/re-anchor/escalate/stop decision, updated anchor, and any justification row.
 - **Decision affected:** block -- continue / re-anchor / escalate / stop, plus the restated goal anchor.
 - **Failure class:** mission-drift (an action serving a swapped-in goal, a crossed non-goal, or a standard loosened "just this once").
-- **Next action:** stop and return to the anchor when a non-goal would be crossed with no justification; 3 failed attempts or scope you cannot check escalates to the owner.
+- **Next action:** stop and return to the anchor when a non-goal would be crossed with no justification; a missed outcome checkpoint stops the repeated batch for one blocking-path inspection and bounded strategy change; 3 failed goal attempts or scope you cannot check escalates to the owner.
 
 ## When to Use
 
@@ -27,6 +27,7 @@ The anchor is also the clarity that lets authority move to the edge: it is the c
 - Scope is growing. New files, features, or layers show up that no one asked for.
 - The same action, file, or fix keeps getting retried with no progress. That is a loop.
 - The agent is spending a lot (high token use) but you can see little real progress.
+- Local checks pass and preparation artifacts grow, but accepted deliverables miss the agreed checkpoint.
 - A reviewer or agent is working from memory of the goal instead of a written anchor.
 - A non-goal is about to be crossed, or a standard is about to be loosened "just this once."
 - Context was reset, shrunk, or handed off, so the goal must be set again before work goes on.
@@ -42,6 +43,7 @@ The anchor is also the clarity that lets authority move to the edge: it is the c
 - The mission anchor: `.nuclear/mission.md`, the `## Mission anchor` in `risk.md`, or the issue or pull request it came from.
 - The repo charter (`.nuclear/charter.md`) when there is one: the lasting principles the work must not break.
 - The current action and what was tried recently, including how many times.
+- Accepted deliverables before and after the last work batch, the agreed checkpoint, and any blocking acceptance failure.
 - The files the change touches, the diff so far, and the stated non-goals.
 
 ## Process
@@ -49,7 +51,10 @@ The anchor is also the clarity that lets authority move to the edge: it is the c
 1. Restate the mission anchor from the written record, not from memory: the goal, the success criteria, and the non-goals.
 2. Test the current action against the anchor. Ask plainly: does this action move a success criterion forward, or does it serve some smaller goal that got swapped in?
 3. Step back one level before you decide. Look at the goal and the overall design, not just the line in front of you, so you decide from the right height.
-4. Check for a loop and count the attempts. If the same goal has failed 3 times, or the same action or fix is being retried, stop trying the next version.
+4. Check for a loop and count attempts against the success criterion, not the local check result. If the same goal has failed 3 times, or the same action or fix is being retried, stop trying the next version. A green source/size check, new packet, or successful preparation step does not reset that count.
+   - Compare accepted deliverables before and after the work batch at the agreed checkpoint. If none was agreed, check before starting the next repeated batch. A missed outcome checkpoint triggers a strategy change even when every local check passed; do not wait for three command failures.
+   - Inspect one blocked deliverable end to end: source -> transformation -> field contract -> stored or rendered artifact -> acceptance failure. Compare required meaning with the actual output; check whether quoting, truncation, schema assumptions, or repair rules removed the governing action. Treat these as hypotheses until inspected.
+   - Select one bounded diagnostic or correction that can change the blocking result, with an observable acceptance check and a stop condition. If no such step is supported, escalate the specific blocker. Do not respond with another preparation revision, review council, tracking layer, or wholesale reauthoring of accepted records. Preserve existing source, semantic, paired review, and closure gates; do not improve the count by weakening acceptance.
 5. Check for standards drift against the charter and any countable warning lines. Examples: a file or function passing a size limit, a skipped check, or accepting weaker evidence than you agreed to. One normalized exception is a finding, not a rounding error.
 6. Decide and record one of three outcomes:
    - Re-anchor: the action serves the mission. Restate the anchor and keep going.
@@ -70,6 +75,7 @@ The anchor is also the clarity that lets authority move to the edge: it is the c
 - The anchor in the written record matches the anchor the decision was tested against.
 - Crossed non-goals have a justification row, not a quiet edit.
 - The attempt count and loop check were actually done, not assumed.
+- The decision names accepted-deliverable counts before/after and the checkpoint; a missed checkpoint names the inspected failure path and bounded next step or specific escalation.
 
 ## Escalation
 
@@ -84,6 +90,7 @@ The anchor is also the clarity that lets authority move to the edge: it is the c
 - "One more try will do it." After three failures, the approach is the problem, not the next try.
 - "We can loosen this standard just this once." "Once" is how a bad habit becomes normal. Record it as a justified exception or do not do it.
 - "I remember the goal." Memory drifts over a long session. Read the written anchor.
+- "All local checks are green, so another preparation wave is progress." Accepted outcomes and the blocking failure decide that.
 - "Restating the mission counts as checking it." Restating without honestly testing the current action against it is just for show.
 
 ## Red Flags
@@ -106,6 +113,7 @@ Inputs:
 - charter principles in play:
 - current action:
 - recent attempts at this objective (how many, what variants):
+- accepted deliverables before/after, agreed checkpoint, blocking acceptance failure:
 - affected files / diff so far:
 
 Do this:
@@ -113,7 +121,9 @@ Do this:
 - Zoom out one layer; judge at the level of the goal and the architecture, not the detail.
 - Test the current action against the success criteria and the non-goals.
 - Decide whether the action serves the mission, or a smaller local goal that has quietly replaced it.
-- Check the loop: if the same goal has failed 3 times, stop trying the next variant.
+- Check the loop against accepted outcomes: 3 failed goal attempts stop the next variant; green local checks do not reset the count.
+- If the outcome checkpoint is missed, inspect one blocked source -> transformation -> field contract -> final artifact -> acceptance path before another work batch.
+- Choose one bounded diagnostic/correction with an acceptance check and stop condition, or escalate the specific blocker. Preserve all quality gates; do not add preparation loops or reauthor accepted records.
 - Check for slipping standards against the charter and any countable tripwires.
 
 Return one decision:

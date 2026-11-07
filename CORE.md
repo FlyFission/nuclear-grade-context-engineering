@@ -35,7 +35,7 @@ The Core 7 are the habits that make that slowdown cheap.
 | # | Skill | Fires when |
 |---|---|---|
 | 4 | [`double-checking-before-acting`](skills/double-checking-before-acting/SKILL.md) | An irreversible cut-point is about to happen — file write, broad command, credential use, model swap, public claim, release action. |
-| 5 | [`staying-on-mission`](skills/staying-on-mission/SKILL.md) | Work drifts, the same fix repeats, or standards slip one small step at a time. |
+| 5 | [`staying-on-mission`](skills/staying-on-mission/SKILL.md) | Work drifts, the same fix repeats, accepted outcomes stall despite green local checks, or standards slip. |
 | 6 | [`checking-release-readiness`](skills/checking-release-readiness/SKILL.md) | A change approaches merge or release. Ship / block / defer / ship-with-named-risk — pick one and back it. |
 | 7 | [`learning-from-experience`](skills/learning-from-experience/SKILL.md) | Something went wrong or nearly did, and a safeguard should change. |
 

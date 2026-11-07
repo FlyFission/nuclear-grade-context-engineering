@@ -173,6 +173,7 @@ If a skill changes decisions but says so only in vague prose, amend its receipt 
 - Should trigger: The agent keeps adding features no one asked for; check whether we have drifted from the objective.
 - Should trigger: We have retried this fix three times without progress; should we re-anchor, escalate, or stop?
 - Should trigger: This small edit looks useful locally, but I cannot trace it to a mission success criterion.
+- Should trigger: Three preparation waves passed source and size checks, but no additional document passed acceptance at our checkpoint; the next plan proposes another preparation revision.
 - Should not trigger: Fix a README typo and show the diff.
 - Should not trigger: Explain what this small helper function does.
 

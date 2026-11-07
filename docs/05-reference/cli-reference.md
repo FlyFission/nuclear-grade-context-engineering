@@ -5,7 +5,8 @@
 ## Commands
 
 ```bash
-python tools/ng.py init [repo] [--dry-run] [--yes]
+python tools/ng.py init [repo] [--dry-run] [--yes] [--agents] [--hook] [--ci] [--all]
+python tools/ng.py scaffold-ci [repo] [--dry-run] [--force]
 python tools/ng.py new <slug> --mode quick|standard [--repo .] [--force]
 python tools/ng.py validate <packet> [--strict-custody] [--strict-authority] [--two-party] [--json]
 python tools/ng.py doctor [repo]
@@ -14,12 +15,15 @@ python tools/ng.py status [repo]
 python tools/ng.py eval [repo]
 python tools/ng.py decisions [repo] [--all]
 python tools/ng.py badge [repo] [--out .nuclear/badge.json]
+python tools/ng.py required-mode [--base REF] [--head REF] [--policy-ref base|head|WORKTREE|REF] [--approvals-json FILE] [--pr-author LOGIN] [--json] [--advisory] [--print-table]
 python -m nuclear_grade.release [--repo .] [--tag vX.Y.Z]
 ```
 
 ## Behavior
 
-- `init` creates `.nuclear/README.md` and `.nuclear/changes/`.
+- `init` creates `.nuclear/README.md`, `.nuclear/charter.md`, `.nuclear/mission.md`, and `.nuclear/changes/`. Plain `init` stops if any of those files exists, unless you pass `--yes`.
+- `init` add-ons are opt-in. `--agents` copies the starter `AGENTS.md` to the repo root. `--hook` copies the `PreToolUse` gate to `.claude/hooks/pre_tool_use.py` and adds one entry to `.claude/settings.json`, keeping every other key and hook; it stops without writing anything if that file is not a JSON object it can merge, and adds nothing when the gate is already registered. `--ci` writes the same workflow as `scaffold-ci`. `--all` turns on all three. With an add-on, existing files are kept and reported, `--yes` overwrites only the add-on files, and `--dry-run` lists every file it would create or update. See `../../HOOKS.md`.
+- `scaffold-ci` writes `.github/workflows/nuclear-grade.yml`, the out-of-band gate that validates change records in CI. `--force` overwrites an existing file.
 - `new` copies Quick or Standard templates from the target repo when they are there. If not, it copies them from this Nuclear-grade checkout.
 - `validate` hands off to `tools/ng_validate.py`. For a Standard packet, `--strict-custody` requires evidence IDs, claim IDs, decisive status, raw-artifact references, all custody roles, matching actor/context/mechanism/authority/resource profiles with a basis, a classification, and an admissibility or residual-risk disposition. For a Standard packet, `--strict-authority` also activates strict custody and requires `decision-authority.md`, all nine decision rights, exact links to evidence declared in `verification.md`, allowed raw states and authority values, bounded negative scope, and a derived result compatible with the recorded `apply` allocation or a non-clearing override. Quick packets reject `--strict-authority` instead of silently skipping it. `--json` prints a versioned receipt (packet file digests, packet-scoped git state, validator version, and evidence-status counts) with the same exit code; see `../02-operating-system/validators.md`. These checks establish declared structural consistency only, not identity, truth, authorization, policy adequacy or evaluation, semantic adequacy, effective human control, or substantive independence. `--two-party` is a declared two-party integrity check, recommended for any Standard packet that contains a `pass` claim. It fails any `pass` claim with no declared verifier distinct from the change actor on evidence not classified as a self-check (see `docs/02-operating-system/validators.md`); it compares declared identities and is not proof of independence.
 - `doctor` checks a Nuclear-grade distribution repo for public files, contracts, and templates. In a target repo that has been set up, it checks `.nuclear/README.md` and `.nuclear/changes/`.
@@ -29,7 +33,8 @@ python -m nuclear_grade.release [--repo .] [--tag vX.Y.Z]
 - `decisions` is the **operator receipt**: it rolls up every skill's `## Decision contract` and prints the `block` and `warn` signals (the one decision each skill can move and its tier), keeping `observe`-tier skills in telemetry so the receipt does not become audit-the-audit. `--all` also lists the telemetry rows. It is the generated, single-source view a reviewer scans instead of reading 31 skills; the per-skill receipt stays the source of truth. See `docs/05-reference/skill-authoring-contract.md`.
 
 - `badge` writes a shields.io endpoint JSON counting active change records and their open evidence items (fail, gap, deferred, planned) as declared in Status, Result, or Outcome table cells and `Status:` lines; status words in free prose are not read, and a record with no readable declaration counts as needing attention. It turns yellow when items are open and red when a record needs attention. Closed records are left out. It never says certified, compliant, or passing.
-- `python -m nuclear_grade.release` checks that `pyproject.toml`, both plugin manifests, `CITATION.cff`, and a dated `CHANGELOG.md` section declare the same version and date; with `--tag`, that the tag is `v<version>`. See `releasing.md`.
+- `required-mode` reads a git diff (base to head, or base to the working tree) and `.nuclear/consequence-policy.json` (read from the base by default, so a change cannot loosen the policy that judges it; with no policy file, a built-in default covers `.github/workflows/**` and the gate's own files). Each changed path gets a minimum mode (`none`, `quick`, `standard`, `standard+authority`) from the highest matching rule; claim rules count only net-new, non-negated claim wording. A requirement is covered only by a change record **added in this diff** that is open, declares a high enough mode, names the path in its `risk.md`, and passes `validate` with the flags that mode needs (`--strict-custody` from Standard; `--strict-authority` too for `standard+authority`). `standard+authority`, policy overrides, and the dependency lane also need an APPROVED review from an account other than the PR author and the configured bot identities, read from `--approvals-json` (CI passes the GitHub reviews). Editing the policy itself always requires `standard+authority`. Exit 0 pass, 1 fail (0 with `--advisory`), 2 for a bad ref or malformed policy. `--json` prints a versioned receipt. The result is a mechanical minimum that judgment can raise; it is a structural check, not a finding that the change or its evidence is adequate. `tools/ng_policy_backtest.py` classifies past commits with a candidate policy before it is enforced. This repository's own policy is `.nuclear/consequence-policy.json`; `python tools/ng.py required-mode --policy-ref WORKTREE --print-table` renders its rules.
+- `python -m nuclear_grade.release` checks that `pyproject.toml`, the three plugin manifests, `CITATION.cff`, and a dated `CHANGELOG.md` section declare the same version and date; with `--tag`, that the tag is `v<version>`. See `releasing.md`.
 
 ## Boundary note
 

@@ -18,7 +18,7 @@ from pathlib import Path
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from nuclear_grade import gen_commands
+from nuclear_grade import consequence, gen_commands
 from nuclear_grade.badge import build_badge, summarize
 from nuclear_grade.efficacy import run_all as run_efficacy
 from nuclear_grade.metrics import build_inventory
@@ -30,6 +30,7 @@ from nuclear_grade.ng_validate import (
     validate_packet,
 )
 from nuclear_grade.receipt import build_receipt
+from nuclear_grade.skill_catalog import CatalogError, load_catalog, load_yaml_projections
 from nuclear_grade.tokens import (
     build_report,
     check_budgets,
@@ -43,6 +44,13 @@ from nuclear_grade.tokens import (
 PACKAGE_DIR = Path(__file__).resolve().parent
 REPO_ROOT = PACKAGE_DIR.parent
 BUNDLED_ROOT = PACKAGE_DIR / "_bundled"
+CATALOG_ROOT = REPO_ROOT if (REPO_ROOT / "skill-catalog.json").is_file() else BUNDLED_ROOT
+
+
+def _load_distribution_catalog():
+    """Load catalog lazily so diagnostics and help survive a malformed catalog."""
+
+    return load_catalog(CATALOG_ROOT)
 
 
 def _resolve_resource_root(name: str) -> Path:
@@ -61,6 +69,34 @@ def _resolve_resource_root(name: str) -> Path:
 
 SKILLS = _resolve_resource_root("skills")
 COMMANDS = _resolve_resource_root("commands")
+# Sources for the opt-in `init --agents` and `init --hook` add-ons.
+STARTER_AGENTS = _resolve_resource_root("starter-kit") / "core" / "AGENTS.md"
+GATE_SCRIPT = _resolve_resource_root("hooks") / "pre_tool_use.py"
+
+# The Claude Code PreToolUse entry for the blocking gate. HOOKS.md, the
+# nuclear-grade-guard plugin's hooks/hooks.json, and `init --hook` share these
+# values; tests/test_plugin_packaging.py fails if they drift apart.
+GATE_MATCHER = "Write|Edit|MultiEdit|NotebookEdit|Bash|PowerShell"
+GATE_TIMEOUT_SECONDS = 10
+PROJECT_GATE_SCRIPT = "${CLAUDE_PROJECT_DIR}/.claude/hooks/pre_tool_use.py"
+INIT_ADDONS = ("agents", "hook", "ci")
+
+
+def gate_hook_entry(script: str) -> dict:
+    """One PreToolUse matcher group that runs the gate in exec form and blocks the
+    tool call if the gate itself fails or times out."""
+    return {
+        "matcher": GATE_MATCHER,
+        "hooks": [
+            {
+                "type": "command",
+                "command": "python3",
+                "args": [script],
+                "timeout": GATE_TIMEOUT_SECONDS,
+                "onFailure": "block",
+            }
+        ],
+    }
 
 QUICK_FILES = ("risk.md", "proof.md")
 STANDARD_FILES = ("risk.md", "basis.md", "plan.md", "trace.md", "verification.md", "ship.md")
@@ -92,35 +128,31 @@ MODE_FILES = {
 
 # --- `ng install`: cross-tool skill distribution --------------------------------
 # Skills auto-surface in each tool by their frontmatter `description` (the model
-# picks them when a request matches); installing is just placing the same SKILL.md
-# files where the tool looks for them. The lean `--core` profile ships the
-# always-first router plus the Core 7 dispositions (see CORE.md); `--full` ships
-# every skill under skills/*/.
-CORE_SKILLS = (
-    "using-nuclear-grade",  # the always-first router
-    "questioning-attitude",
-    "rating-change-risk",
-    "proving-claims",
-    "double-checking-before-acting",
-    "staying-on-mission",
-    "checking-release-readiness",
-    "learning-from-experience",
-)
+# picks them when a request matches). The lean ``--core`` profile is declared in
+# skill-catalog.json and ships the always-first router plus the Core 7 dispositions;
+# ``--full`` ships every promoted skill. Lifecycle status, not folder enumeration,
+# controls both profiles. Catalog loading stays inside commands so malformed metadata
+# cannot block `--help` or `doctor` at module import time.
 
-INSTALL_TOOLS = ("codex", "claude", "cursor", "windsurf", "vscode")
+INSTALL_TOOLS = ("codex", "claude", "cursor", "windsurf", "vscode", "gemini", "opencode")
 TOOL_LABELS = {
     "codex": "Codex CLI",
     "claude": "Claude Code",
     "cursor": "Cursor",
     "windsurf": "Windsurf",
     "vscode": "VS Code + Copilot",
+    "gemini": "Gemini CLI",
+    "opencode": "OpenCode",
 }
 # Skill-directory paths confirmed against each tool's current docs (Codex, Claude
 # Code, Cursor, Windsurf). VS Code's project path (.github/skills) is confirmed,
 # but its user-scope path is a best-known default, so VS Code stays unverified:
 # unverified tools print a "verify / override with --dest" note so a wrong default
 # is obvious and recoverable rather than silently writing to the wrong place.
+# Gemini CLI's paths match its docs but have not been checked in a live Gemini
+# CLI session, so it stays unverified too. The same goes for OpenCode.
 VERIFIED_TOOLS = frozenset({"codex", "claude", "cursor", "windsurf"})
+INSTALL_MANIFEST = ".nuclear-grade-install.json"
 
 REQUIRED_PUBLIC_FILES = (
     "README.md",
@@ -336,6 +368,18 @@ def build_parser() -> argparse.ArgumentParser:
     init_parser.add_argument("repo", nargs="?", default=".", type=Path)
     init_parser.add_argument("--dry-run", action="store_true")
     init_parser.add_argument("--yes", action="store_true", help="Overwrite managed files when needed.")
+    init_parser.add_argument(
+        "--agents", action="store_true", help="Also copy the starter AGENTS.md into the repo root."
+    )
+    init_parser.add_argument(
+        "--hook",
+        action="store_true",
+        help="Also install the PreToolUse gate for Claude Code (.claude/hooks/ and .claude/settings.json).",
+    )
+    init_parser.add_argument(
+        "--ci", action="store_true", help="Also write the out-of-band CI workflow (the same file as scaffold-ci)."
+    )
+    init_parser.add_argument("--all", action="store_true", help="Same as --agents --hook --ci.")
     init_parser.set_defaults(handler=handle_init)
 
     new_parser = subcommands.add_parser("new", help="Create a packet (quick, standard, cm, or golden-path).")
@@ -373,6 +417,10 @@ def build_parser() -> argparse.ArgumentParser:
         help="Declared two-party integrity check: every `pass` claim in a Standard packet must name a "
         "verifier distinct from its change actor (declared identities, not proof of independence). "
         "Recommended for any Standard packet that contains a pass claim.",
+    )
+    validate_parser.add_argument(
+        "--before-review", action="store_true",
+        help="Require a pinned v1 review run and admit its proposed next attempt before a model call.",
     )
     validate_parser.set_defaults(handler=handle_validate)
 
@@ -501,6 +549,39 @@ def build_parser() -> argparse.ArgumentParser:
     )
     badge_parser.set_defaults(handler=handle_badge)
 
+    required_parser = subcommands.add_parser(
+        "required-mode",
+        help="Required change-record mode for a diff, from the consequence policy (structural check).",
+    )
+    required_parser.add_argument("--repo", type=Path, default=Path("."))
+    required_parser.add_argument(
+        "--base", default=None, help="Base ref. Default: merge-base of HEAD with origin/main, then main."
+    )
+    required_parser.add_argument(
+        "--head", default=None, help="Head ref; must be checked out in --repo. Default: the working tree."
+    )
+    required_parser.add_argument(
+        "--policy-ref",
+        default="base",
+        help="Where to read .nuclear/consequence-policy.json: base (default), head, WORKTREE, or a ref.",
+    )
+    required_parser.add_argument(
+        "--policy-file", type=Path, default=None, help="Read the policy from this file instead (backtests)."
+    )
+    required_parser.add_argument(
+        "--approvals-json",
+        type=Path,
+        default=None,
+        help="PR reviews as returned by the GitHub API (a JSON list); CI supplies this.",
+    )
+    required_parser.add_argument("--pr-author", default=None, help="PR author login; CI supplies this.")
+    required_parser.add_argument("--json", action="store_true", help="Print the JSON receipt.")
+    required_parser.add_argument("--advisory", action="store_true", help="Report the verdict but exit 0.")
+    required_parser.add_argument(
+        "--print-table", action="store_true", help="Print the policy as a Markdown table and exit."
+    )
+    required_parser.set_defaults(handler=handle_required_mode)
+
     return parser
 
 
@@ -521,7 +602,73 @@ def handle_init(args: argparse.Namespace) -> int:
         PlannedWrite(repo / ".nuclear" / "charter.md", content=CHARTER_TEMPLATE),
         PlannedWrite(repo / ".nuclear" / "mission.md", content=MISSION_TEMPLATE),
     ]
-    return apply_writes(writes, dry_run=args.dry_run, overwrite=args.yes)
+    addons = [name for name in INIT_ADDONS if getattr(args, "all", False) or getattr(args, name, False)]
+    if not addons:
+        # Plain `init` keeps its original contract: refuse to touch existing files without --yes.
+        return apply_writes(writes, dry_run=args.dry_run, overwrite=args.yes)
+
+    settings_path = repo / ".claude" / "settings.json"
+    settings = None
+    if "hook" in addons:
+        settings, error = plan_gate_settings(settings_path)
+        if error:
+            print(error, file=sys.stderr)
+            return 2
+
+    # With an add-on, `init` works in a repo that was initialized earlier: workspace files
+    # that already exist are always kept, and an existing add-on file is kept unless --yes.
+    for write in writes:
+        if not write.is_dir and write.path.exists():
+            print(f"kept existing: {write.path}")
+    writes = [write for write in writes if write.is_dir or not write.path.exists()]
+    if "agents" in addons:
+        writes.append(PlannedWrite(repo / "AGENTS.md", source=STARTER_AGENTS))
+    if "hook" in addons:
+        writes.append(PlannedWrite(repo / ".claude" / "hooks", is_dir=True))
+        writes.append(PlannedWrite(repo / ".claude" / "hooks" / GATE_SCRIPT.name, source=GATE_SCRIPT))
+    if "ci" in addons:
+        writes.extend(ci_writes(repo))
+
+    code = apply_writes(writes, dry_run=args.dry_run, overwrite=args.yes, keep_existing=True)
+    if code or "hook" not in addons:
+        return code
+    if settings is None:
+        print(f"already registered: PreToolUse gate in {settings_path}")
+    elif args.dry_run:
+        verb = "update" if settings_path.exists() else "create"
+        print(f"would {verb}: {settings_path} (add the PreToolUse gate entry)")
+    else:
+        verb = "updated" if settings_path.exists() else "created"
+        settings_path.write_text(json.dumps(settings, indent=2) + "\n", encoding="utf-8")
+        print(f"{verb}: {settings_path} (added the PreToolUse gate entry)")
+        print("Start a new Claude Code session so it loads the gate; it needs python3 on PATH. See HOOKS.md.")
+    return 0
+
+
+def plan_gate_settings(path: Path) -> tuple[dict | None, str | None]:
+    """Merge the gate's PreToolUse entry into a Claude Code settings file.
+
+    Returns (settings to write, None), or (None, None) when an entry already runs
+    pre_tool_use.py, or (None, error) when the file cannot be merged safely. Every
+    other key and hook in the file is kept as it is.
+    """
+    data: dict = {}
+    if path.exists():
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as exc:
+            return None, f"cannot merge {path}: not readable JSON ({type(exc).__name__}). Add the entry by hand; see HOOKS.md."
+        if not isinstance(data, dict):
+            return None, f"cannot merge {path}: the top level is not a JSON object. Add the entry by hand; see HOOKS.md."
+    hooks = data.get("hooks", {})
+    entries = hooks.get("PreToolUse", []) if isinstance(hooks, dict) else None
+    if not isinstance(entries, list):
+        return None, f"cannot merge {path}: `hooks` or `hooks.PreToolUse` has an unexpected shape. Add the entry by hand; see HOOKS.md."
+    if any(GATE_SCRIPT.name in json.dumps(entry) for entry in entries):
+        return None, None
+    merged = dict(data)
+    merged["hooks"] = {**hooks, "PreToolUse": [*entries, gate_hook_entry(PROJECT_GATE_SCRIPT)]}
+    return merged, None
 
 
 def _validator_version() -> str:
@@ -557,7 +704,11 @@ def _validator_version() -> str:
 
 
 def handle_scaffold_ci(args: argparse.Namespace) -> int:
-    repo = args.repo.resolve()
+    return apply_writes(ci_writes(args.repo.resolve()), dry_run=args.dry_run, overwrite=args.force)
+
+
+def ci_writes(repo: Path) -> list[PlannedWrite]:
+    """The planned writes for the out-of-band CI workflow (shared by scaffold-ci and init --ci)."""
     pinned = _validator_version()
     content = CI_WORKFLOW_TEMPLATE
     if pinned:
@@ -568,11 +719,10 @@ def handle_scaffold_ci(args: argparse.Namespace) -> int:
         content = content.replace("nuclear-grade==NG_VERSION", "nuclear-grade")
         content = content.replace("@vNG_VERSION", "@main")
     workflow = repo / ".github" / "workflows" / "nuclear-grade.yml"
-    writes = [
+    return [
         PlannedWrite(repo / ".github" / "workflows", is_dir=True),
         PlannedWrite(workflow, content=content),
     ]
-    return apply_writes(writes, dry_run=args.dry_run, overwrite=args.force)
 
 
 def _vscode_user_skills() -> Path:
@@ -612,15 +762,29 @@ def install_dest(tool: str, scope: str, repo: Path) -> Path:
     if tool == "vscode":
         # VS Code + Copilot: project .github/skills (team-shared); user ~/.config/github-copilot/skills.
         return (repo / ".github" / "skills") if scope == "project" else _vscode_user_skills()
+    if tool == "gemini":
+        # Gemini CLI reads .gemini/skills (workspace) and ~/.gemini/skills (user).
+        # See https://geminicli.com/docs/cli/skills/
+        return (repo / ".gemini" / "skills") if scope == "project" else (home / ".gemini" / "skills")
+    if tool == "opencode":
+        # OpenCode reads .opencode/skills (project) and ~/.config/opencode/skills
+        # (global). See https://opencode.ai/docs/skills
+        return (repo / ".opencode" / "skills") if scope == "project" else (home / ".config" / "opencode" / "skills")
     raise ValueError(f"unknown tool: {tool}")
 
 
 def handle_install(args: argparse.Namespace) -> int:
+    try:
+        skill_catalog = _load_distribution_catalog()
+    except CatalogError as exc:
+        print(str(exc), file=sys.stderr)
+        return 2
+
     if args.full:
-        names = [path.parent.name for path in sorted(SKILLS.glob("*/SKILL.md"))]
+        names = [entry.id for entry in skill_catalog.promoted]
         profile = "full"
     else:
-        names = list(CORE_SKILLS)
+        names = [entry.id for entry in skill_catalog.profile("core")]
         profile = "core"
 
     missing = [name for name in names if not (SKILLS / name / "SKILL.md").is_file()]
@@ -631,6 +795,66 @@ def handle_install(args: argparse.Namespace) -> int:
     repo = args.repo.resolve()
     dest = Path(args.dest).expanduser().resolve() if args.dest is not None else install_dest(args.tool, args.scope, repo)
 
+    manifest_path = dest / INSTALL_MANIFEST
+    if manifest_path.is_file():
+        try:
+            installed_state = json.loads(manifest_path.read_text(encoding="utf-8"))
+            previous_names = installed_state["skills"]
+            if (
+                installed_state.get("schema_version") != 1
+                or not isinstance(previous_names, list)
+                or any(
+                    not isinstance(name, str)
+                    or not name
+                    or Path(name).name != name
+                    or name in {".", ".."}
+                    for name in previous_names
+                )
+            ):
+                raise ValueError("invalid install manifest shape")
+        except (OSError, json.JSONDecodeError, KeyError, TypeError, ValueError) as exc:
+            print(
+                f"cannot reconcile previous Nuclear-grade install at {dest}: {exc}; "
+                f"inspect or remove {manifest_path}",
+                file=sys.stderr,
+            )
+            return 2
+        stale = sorted(
+            name for name in set(previous_names) - set(names) if (dest / name).exists()
+        )
+        if stale:
+            print(
+                "previously installed skill(s) are no longer in the selected profile: "
+                + ", ".join(stale),
+                file=sys.stderr,
+            )
+            print(
+                "remove those installer-owned directories after review, then rerun install; "
+                "Nuclear-grade will not delete host files automatically",
+                file=sys.stderr,
+            )
+            return 2
+    elif dest.is_dir():
+        known_ids = {entry.id for entry in skill_catalog.entries}
+        existing_known = {
+            path.name
+            for path in dest.iterdir()
+            if path.is_dir() and path.name in known_ids and (path / "SKILL.md").is_file()
+        }
+        stale = sorted(existing_known - set(names))
+        if stale:
+            print(
+                "pre-manifest Nuclear-grade skill(s) are outside the selected profile: "
+                + ", ".join(stale),
+                file=sys.stderr,
+            )
+            print(
+                "review and remove the stale Nuclear-grade directories, then rerun install; "
+                "unrecognized co-located skill directories are not claimed or deleted",
+                file=sys.stderr,
+            )
+            return 2
+
     # Reuse apply_writes for dry-run, parent creation, and copy. An install is an
     # update, so overwrite refreshes existing skill files when re-run.
     writes: list[PlannedWrite] = [PlannedWrite(dest, is_dir=True)]
@@ -639,6 +863,17 @@ def handle_install(args: argparse.Namespace) -> int:
         writes.append(PlannedWrite(dest / name, is_dir=True))
         for src in sorted(path for path in skill_dir.rglob("*") if path.is_file()):
             writes.append(PlannedWrite(dest / name / src.relative_to(skill_dir), source=src))
+    writes.append(
+        PlannedWrite(
+            manifest_path,
+            content=json.dumps(
+                {"schema_version": 1, "profile": profile, "skills": names},
+                indent=2,
+                sort_keys=True,
+            )
+            + "\n",
+        )
+    )
 
     code = apply_writes(writes, dry_run=args.dry_run, overwrite=True)
     if code != 0:
@@ -686,7 +921,21 @@ def handle_mcp_config(args: argparse.Namespace) -> int:
     """
 
     tool = args.tool
-    if tool == "codex":
+    if tool == "opencode":
+        # OpenCode keeps MCP servers under "mcp", as a local command array.
+        # See https://opencode.ai/docs/mcp-servers
+        path = "opencode.json (project) or ~/.config/opencode/opencode.json (user)"
+        snippet = (
+            "{\n"
+            '  "mcp": {\n'
+            '    "nuclear-grade": {\n'
+            '      "type": "local",\n'
+            '      "command": ["python", "-m", "nuclear_grade.mcp_server"]\n'
+            "    }\n"
+            "  }\n"
+            "}\n"
+        )
+    elif tool == "codex":
         path = "~/.codex/config.toml"
         snippet = (
             "[mcp_servers.nuclear_grade]\n"
@@ -699,6 +948,8 @@ def handle_mcp_config(args: argparse.Namespace) -> int:
             "cursor": (".cursor/mcp.json (project) or ~/.cursor/mcp.json (user)", "mcpServers"),
             "windsurf": ("~/.codeium/windsurf/mcp_config.json", "mcpServers"),
             "vscode": (".vscode/mcp.json", "servers"),
+            # https://github.com/google-gemini/gemini-cli/blob/main/docs/tools/mcp-server.md
+            "gemini": (".gemini/settings.json (project) or ~/.gemini/settings.json (user)", "mcpServers"),
         }[tool]
         snippet = _mcp_json(top_key)
 
@@ -734,6 +985,7 @@ def handle_validate(args: argparse.Namespace) -> int:
         require_custody=args.strict_custody,
         require_authority=args.strict_authority,
         require_two_party=args.two_party,
+        before_review=args.before_review,
     )
     if args.json:
         receipt = build_receipt(
@@ -744,6 +996,7 @@ def handle_validate(args: argparse.Namespace) -> int:
             strict_two_party=args.two_party,
             validator_version=_validator_version(),
         )
+        receipt["before_review"] = args.before_review
         print(json.dumps(receipt, indent=2, ensure_ascii=False))
         return 0 if result.ok else 1
     if result.ok:
@@ -909,6 +1162,12 @@ def handle_badge(args: argparse.Namespace) -> int:
     return 0
 
 
+def handle_required_mode(args: argparse.Namespace) -> int:
+    # The whole command lives in the engine module, so the policy's path rule for
+    # nuclear_grade/consequence.py covers every line that decides the gate's exit code.
+    return consequence.run_cli(args)
+
+
 def handle_eval(args: argparse.Namespace) -> int:
     repo = args.repo.resolve()
     try:
@@ -963,8 +1222,14 @@ def handle_tokens(args: argparse.Namespace) -> int:
     print(
         f"\nSkill totals: descriptions {report.skill_description_total} tokens "
         f"(host may shorten or omit), bodies {report.skill_body_total} tokens "
-        f"(loaded when selected)."
+        f"(loaded when selected), body p95 {report.skill_body_p95}."
     )
+    if (repo / "skill-catalog.json").is_file():
+        core_description, core_body = report.profile_totals("core")
+        print(
+            f"Core profile: descriptions {core_description} tokens, "
+            f"selected bodies {core_body} tokens."
+        )
 
     commands = report.of_kind("command")
     if commands:
@@ -1131,9 +1396,18 @@ def handle_gen_commands(args: argparse.Namespace) -> int:
     return 0
 
 
-def apply_writes(writes: list[PlannedWrite], dry_run: bool, overwrite: bool) -> int:
+def apply_writes(writes: list[PlannedWrite], dry_run: bool, overwrite: bool, keep_existing: bool = False) -> int:
+    """Apply planned writes after checking all of them first.
+
+    An existing file stops the run (exit 2) unless ``overwrite``; with ``keep_existing``
+    it is left untouched and reported instead.
+    """
+    kept = set()
     for write in writes:
         if write.path.exists() and not write.is_dir and not overwrite:
+            if keep_existing:
+                kept.add(write.path)
+                continue
             print(f"already exists: {write.path}", file=sys.stderr)
             return 2
         if write.source is not None and not write.source.exists():
@@ -1141,6 +1415,9 @@ def apply_writes(writes: list[PlannedWrite], dry_run: bool, overwrite: bool) -> 
             return 2
 
     for write in writes:
+        if write.path in kept:
+            print(f"kept existing: {write.path} (pass --yes to overwrite)")
+            continue
         if dry_run:
             action = "would create directory" if write.is_dir else "would create"
             print(f"{action}: {write.path}")
@@ -1190,6 +1467,23 @@ def collect_doctor_failures(repo: Path) -> list[str]:
 
     if not catalog.exists():
         failures.append("missing nuclear-grade.yaml")
+
+    lifecycle_catalog = None
+    try:
+        lifecycle_catalog = load_catalog(repo)
+    except CatalogError as exc:
+        failures.extend(str(exc).splitlines())
+    if lifecycle_catalog is not None and catalog.exists():
+        projected_skills, projected_commands = load_yaml_projections(repo)
+        promoted_ids = [entry.id for entry in lifecycle_catalog.promoted]
+        if projected_skills != promoted_ids:
+            failures.append(
+                "nuclear-grade.yaml skills projection differs from promoted skill-catalog.json entries"
+            )
+        if projected_commands != lifecycle_catalog.command_map:
+            failures.append(
+                "nuclear-grade.yaml command_map projection differs from skill-catalog.json"
+            )
 
     if not skills_dir.exists():
         failures.append(f"missing skills directory: {skills_dir.name}")

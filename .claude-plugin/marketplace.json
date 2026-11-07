@@ -9,6 +9,11 @@
       "name": "nuclear-grade",
       "source": "./",
       "description": "Risk-graded context-engineering skills, command prompts, and change-record templates. No hooks are configured, so nothing runs automatically; the bundled ng CLI is included for repo-side use (run from a checkout) and runs nothing on its own."
+    },
+    {
+      "name": "nuclear-grade-guard",
+      "source": "./plugins/nuclear-grade-guard",
+      "description": "Opt-in blocking gate. Registers one PreToolUse hook that denies agent edits to trust surfaces and asks a human before force pushes, tags, releases, publishes, and risky deletes. Needs python3 on PATH. See HOOKS.md."
     }
   ]
 }

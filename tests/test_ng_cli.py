@@ -1,3 +1,4 @@
+import json
 import shutil
 import subprocess
 import sys
@@ -6,6 +7,7 @@ from pathlib import Path
 import pytest
 
 from nuclear_grade.ng_validate import CLOSURE_MARKER
+from nuclear_grade.skill_catalog import load_catalog
 from tests.test_ng_validate import (
     COMMON_TAIL,
     add_decision_authority,
@@ -544,7 +546,142 @@ def test_scaffold_ci_refuses_overwrite_without_force(tmp_path):
     assert run_ng("scaffold-ci", str(tmp_path), "--force").returncode == 0
 
 
+# --- ng init add-ons: --agents, --hook, --ci, --all --------------------------------
+
+
+def _tree(root: Path) -> dict[str, bytes]:
+    return {str(p.relative_to(root)): p.read_bytes() for p in sorted(root.rglob("*")) if p.is_file()}
+
+
+def test_plain_init_still_refuses_existing_files(tmp_path):
+    assert run_ng("init", str(tmp_path)).returncode == 0
+
+    result = run_ng("init", str(tmp_path))
+    assert result.returncode == 2
+    assert "already exists" in result.stderr
+    assert not (tmp_path / "AGENTS.md").exists()
+    assert not (tmp_path / ".claude").exists()
+
+
+def test_init_all_dry_run_lists_every_change_and_writes_nothing(tmp_path):
+    result = run_ng("init", str(tmp_path), "--all", "--dry-run")
+
+    assert result.returncode == 0, result.stderr
+    for rel in ("AGENTS.md", ".claude/hooks/pre_tool_use.py", ".github/workflows/nuclear-grade.yml",
+                ".claude/settings.json", ".nuclear/charter.md"):
+        assert str(tmp_path / rel) in result.stdout, rel
+    assert list(tmp_path.iterdir()) == []
+
+
+def test_init_all_writes_agents_hook_and_ci(tmp_path):
+    result = run_ng("init", str(tmp_path), "--all")
+
+    assert result.returncode == 0, result.stderr
+    assert (tmp_path / "AGENTS.md").read_bytes() == (ROOT / "starter-kit" / "core" / "AGENTS.md").read_bytes()
+    assert (tmp_path / ".claude" / "hooks" / "pre_tool_use.py").read_bytes() == (
+        ROOT / "hooks" / "pre_tool_use.py"
+    ).read_bytes()
+    assert (tmp_path / ".github" / "workflows" / "nuclear-grade.yml").is_file()
+    assert (tmp_path / ".nuclear" / "charter.md").is_file()
+    settings = json.loads((tmp_path / ".claude" / "settings.json").read_text(encoding="utf-8"))
+    assert settings == {"hooks": {"PreToolUse": [ng_cli.gate_hook_entry(ng_cli.PROJECT_GATE_SCRIPT)]}}
+
+
+def test_init_ci_matches_scaffold_ci(tmp_path):
+    assert run_ng("init", str(tmp_path / "a"), "--ci").returncode == 0
+    assert run_ng("scaffold-ci", str(tmp_path / "b")).returncode == 0
+
+    rel = Path(".github") / "workflows" / "nuclear-grade.yml"
+    assert (tmp_path / "a" / rel).read_bytes() == (tmp_path / "b" / rel).read_bytes()
+
+
+def test_init_addon_keeps_existing_files_and_workspace(tmp_path):
+    assert run_ng("init", str(tmp_path)).returncode == 0
+    (tmp_path / ".nuclear" / "charter.md").write_text("my charter\n", encoding="utf-8")
+    (tmp_path / "AGENTS.md").write_text("my agents\n", encoding="utf-8")
+
+    result = run_ng("init", str(tmp_path), "--agents", "--yes")
+    assert result.returncode == 0, result.stderr
+    # --yes overwrites add-on files only; the workspace records are never replaced by an add-on run.
+    assert (tmp_path / ".nuclear" / "charter.md").read_text(encoding="utf-8") == "my charter\n"
+    assert "kept existing" in result.stdout
+    assert "Agent guidance" in (tmp_path / "AGENTS.md").read_text(encoding="utf-8")
+
+    (tmp_path / "AGENTS.md").write_text("my agents\n", encoding="utf-8")
+    result = run_ng("init", str(tmp_path), "--agents")
+    assert result.returncode == 0, result.stderr
+    assert (tmp_path / "AGENTS.md").read_text(encoding="utf-8") == "my agents\n"
+    assert "pass --yes to overwrite" in result.stdout
+
+
+def test_init_hook_merges_into_existing_settings(tmp_path):
+    settings_path = tmp_path / ".claude" / "settings.json"
+    settings_path.parent.mkdir()
+    other_hook = {"matcher": "Bash", "hooks": [{"type": "command", "command": "echo hi"}]}
+    existing = {"model": "x", "permissions": {"deny": ["Read(./.env)"]},
+                "hooks": {"PreToolUse": [other_hook], "Stop": []}}
+    settings_path.write_text(json.dumps(existing), encoding="utf-8")
+
+    assert run_ng("init", str(tmp_path), "--hook").returncode == 0
+    merged = json.loads(settings_path.read_text(encoding="utf-8"))
+    assert merged["model"] == "x" and merged["permissions"] == existing["permissions"]
+    assert merged["hooks"]["Stop"] == []
+    assert merged["hooks"]["PreToolUse"] == [other_hook, ng_cli.gate_hook_entry(ng_cli.PROJECT_GATE_SCRIPT)]
+
+    # Re-running is idempotent: the gate is registered once.
+    result = run_ng("init", str(tmp_path), "--hook", "--yes")
+    assert result.returncode == 0, result.stderr
+    assert "already registered" in result.stdout
+    assert json.loads(settings_path.read_text(encoding="utf-8")) == merged
+
+
+@pytest.mark.parametrize("content", ["{not json", "[]", '{"hooks": []}', '{"hooks": {"PreToolUse": {}}}'])
+def test_init_hook_refuses_settings_it_cannot_merge(tmp_path, content):
+    settings_path = tmp_path / ".claude" / "settings.json"
+    settings_path.parent.mkdir()
+    settings_path.write_text(content, encoding="utf-8")
+
+    result = run_ng("init", str(tmp_path), "--hook", "--yes")
+    assert result.returncode == 2
+    assert "cannot merge" in result.stderr
+    assert settings_path.read_text(encoding="utf-8") == content
+    assert not (tmp_path / ".nuclear").exists(), "nothing is written when the settings file cannot be merged"
+
+
+def test_init_hook_dry_run_leaves_settings_untouched(tmp_path):
+    settings_path = tmp_path / ".claude" / "settings.json"
+    settings_path.parent.mkdir()
+    settings_path.write_text('{"model": "x"}', encoding="utf-8")
+    before = _tree(tmp_path)
+
+    result = run_ng("init", str(tmp_path), "--hook", "--dry-run")
+    assert result.returncode == 0, result.stderr
+    assert f"would update: {settings_path}" in result.stdout
+    assert _tree(tmp_path) == before
+    assert not (tmp_path / ".nuclear").exists()
+
+
+def test_installed_gate_denies_agent_edits_to_its_own_settings(tmp_path):
+    assert run_ng("init", str(tmp_path), "--hook").returncode == 0
+    payload = json.dumps({"tool_name": "Edit", "tool_input": {"file_path": ".claude/settings.json"},
+                          "cwd": str(tmp_path)})
+    proc = subprocess.run([sys.executable, str(tmp_path / ".claude" / "hooks" / "pre_tool_use.py")],
+                          input=payload, text=True, capture_output=True, check=False, cwd=tmp_path)
+    assert json.loads(proc.stdout)["hookSpecificOutput"]["permissionDecision"] == "deny"
+
+
 # --- ng install -----------------------------------------------------------------
+
+
+def test_cli_help_builds_without_loading_lifecycle_catalog(monkeypatch):
+    def fail_if_loaded(_root):
+        raise AssertionError("catalog loaded during parser construction")
+
+    monkeypatch.setattr(ng_cli, "load_catalog", fail_if_loaded)
+    parser = ng_cli.build_parser()
+
+    assert parser.parse_args(["list"]).command == "list"
+
 
 ALL_SKILLS = sorted(path.parent.name for path in (ROOT / "skills").glob("*/SKILL.md"))
 
@@ -563,10 +700,41 @@ def test_install_core_installs_router_plus_core_seven(tmp_path):
     result = run_ng("install", "codex", "--dest", str(dest))
 
     assert result.returncode == 0, result.stderr
-    installed = sorted(path.name for path in dest.iterdir())
-    assert installed == sorted(ng_cli.CORE_SKILLS)
+    installed = sorted(path.name for path in dest.iterdir() if path.is_dir())
+    expected_core = [entry.id for entry in load_catalog(ROOT).profile("core")]
+    assert installed == sorted(expected_core)
     assert len(installed) == 8
     assert (dest / "using-nuclear-grade" / "SKILL.md").exists()
+
+
+def test_install_gemini_dry_run_lists_both_scopes_and_flags_unverified(tmp_path):
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    project = run_ng("install", "gemini", "--scope", "project", "--repo", str(repo), "--dry-run")
+    user = run_ng("install", "gemini", "--dry-run")
+
+    assert project.returncode == 0, project.stderr
+    assert user.returncode == 0, user.stderr
+    assert str(repo / ".gemini" / "skills") in project.stdout
+    assert str(Path.home() / ".gemini" / "skills") in user.stdout
+    assert "Gemini CLI" in project.stdout
+    assert "best-known default" in project.stdout
+    assert not (repo / ".gemini").exists()
+
+
+def test_install_opencode_dry_run_lists_both_scopes_and_flags_unverified(tmp_path):
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    project = run_ng("install", "opencode", "--scope", "project", "--repo", str(repo), "--dry-run")
+    user = run_ng("install", "opencode", "--dry-run")
+
+    assert project.returncode == 0, project.stderr
+    assert user.returncode == 0, user.stderr
+    assert str(repo / ".opencode" / "skills") in project.stdout
+    assert str(Path.home() / ".config" / "opencode" / "skills") in user.stdout
+    assert "OpenCode" in project.stdout
+    assert "best-known default" in project.stdout
+    assert not (repo / ".opencode").exists()
 
 
 def test_install_full_installs_every_skill(tmp_path):
@@ -574,7 +742,7 @@ def test_install_full_installs_every_skill(tmp_path):
     result = run_ng("install", "codex", "--full", "--dest", str(dest))
 
     assert result.returncode == 0, result.stderr
-    installed = sorted(path.name for path in dest.iterdir())
+    installed = sorted(path.name for path in dest.iterdir() if path.is_dir())
     assert installed == ALL_SKILLS
     assert len(installed) >= 20
 
@@ -594,7 +762,42 @@ def test_install_is_idempotent_update(tmp_path):
     second = run_ng("install", "codex", "--dest", str(dest))
 
     assert second.returncode == 0, second.stderr
-    assert len(list(dest.iterdir())) == 8
+    assert len([path for path in dest.iterdir() if path.is_dir()]) == 8
+
+
+def test_install_blocks_premanifest_profile_shrink_with_known_skill_dirs(tmp_path):
+    dest = tmp_path / "skills"
+    core_ids = {entry.id for entry in load_catalog(ROOT).profile("core")}
+    extra = next(name for name in ALL_SKILLS if name not in core_ids)
+    (dest / "using-nuclear-grade").mkdir(parents=True)
+    (dest / "using-nuclear-grade" / "SKILL.md").write_text("legacy\n", encoding="utf-8")
+    (dest / extra).mkdir()
+    (dest / extra / "SKILL.md").write_text("legacy\n", encoding="utf-8")
+
+    result = run_ng("install", "codex", "--dest", str(dest))
+
+    assert result.returncode == 2
+    assert "pre-manifest Nuclear-grade skill(s) are outside the selected profile" in result.stderr
+    assert extra in result.stderr
+    assert not (dest / ".nuclear-grade-install.json").exists()
+
+
+def test_install_blocks_when_previously_owned_skill_becomes_stale(tmp_path):
+    dest = tmp_path / "skills"
+    assert run_ng("install", "codex", "--dest", str(dest)).returncode == 0
+
+    manifest = json.loads((dest / ".nuclear-grade-install.json").read_text(encoding="utf-8"))
+    manifest["skills"].append("obsolete-skill")
+    (dest / ".nuclear-grade-install.json").write_text(json.dumps(manifest), encoding="utf-8")
+    (dest / "obsolete-skill").mkdir()
+    (dest / "obsolete-skill" / "SKILL.md").write_text("stale\n", encoding="utf-8")
+
+    result = run_ng("install", "codex", "--dest", str(dest))
+
+    assert result.returncode == 2
+    assert "previously installed skill(s) are no longer in the selected profile" in result.stderr
+    assert "obsolete-skill" in result.stderr
+    assert (dest / "obsolete-skill" / "SKILL.md").exists()
 
 
 def test_install_unverified_tool_warns_to_verify_path(tmp_path):
@@ -635,6 +838,12 @@ def test_install_dest_resolution_per_tool(tmp_path, monkeypatch):
     # VS Code + Copilot: project is .github/skills (NOT .vscode); user is ~/.config/github-copilot.
     assert ng_cli.install_dest("vscode", "project", repo) == repo / ".github" / "skills"
     assert ng_cli.install_dest("vscode", "user", repo) == home / ".config" / "github-copilot" / "skills"
+    # Gemini CLI: .gemini/skills in the workspace, ~/.gemini/skills for the user.
+    assert ng_cli.install_dest("gemini", "user", repo) == home / ".gemini" / "skills"
+    assert ng_cli.install_dest("gemini", "project", repo) == repo / ".gemini" / "skills"
+    # OpenCode: .opencode/skills in the project, ~/.config/opencode/skills globally.
+    assert ng_cli.install_dest("opencode", "user", repo) == home / ".config" / "opencode" / "skills"
+    assert ng_cli.install_dest("opencode", "project", repo) == repo / ".opencode" / "skills"
 
 
 # --- ng mcp-config --------------------------------------------------------------
@@ -662,6 +871,26 @@ def test_mcp_config_claude_uses_mcpservers_key(tmp_path):
     assert result.returncode == 0, result.stderr
     assert "mcpServers" in result.stdout
     assert "claude mcp add" in result.stdout
+
+
+def test_mcp_config_gemini_uses_settings_json(tmp_path):
+    result = run_ng("mcp-config", "gemini")
+
+    assert result.returncode == 0, result.stderr
+    assert ".gemini/settings.json" in result.stdout
+    assert "mcpServers" in result.stdout
+
+
+def test_mcp_config_opencode_uses_mcp_key_and_local_command(tmp_path):
+    result = run_ng("mcp-config", "opencode")
+
+    assert result.returncode == 0, result.stderr
+    body = result.stdout[result.stdout.index("{"):result.stdout.rindex("}") + 1]
+    config = json.loads(body)
+    server = config["mcp"]["nuclear-grade"]
+    assert server["type"] == "local"
+    assert server["command"] == ["python", "-m", "nuclear_grade.mcp_server"]
+    assert "mcpServers" not in result.stdout
 
 
 def test_mcp_config_rejects_unknown_tool(tmp_path):

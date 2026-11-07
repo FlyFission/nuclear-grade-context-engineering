@@ -88,7 +88,9 @@ actor the packet declares). Custody governs a claim it covers, so a lighter tabl
 self-check. Claims are read from any table with a claim column and a status column, located by
 header; emphasis, code spans, and links are stripped, and a status is read by its leading word.
 Placeholder verifiers such as `none`, `TBD.`, `<reviewer>`, `self`, or `no separate verifier` count as
-empty. A strict run fails on a claim row whose status cannot be read, on a claim the custody record
+empty. The party a verifier is compared against (the custody row's change actor, or the
+authorship row's evidence author) must be named too: a placeholder such as `change actor` or `TBD`
+there leaves nothing to compare, so that row is not a second party. A strict run fails on a claim row whose status cannot be read, on a claim the custody record
 cites but no claim table lists, and when it finds no claim rows at all. Without the flag, existing packets are unaffected, except one that declares a
 `## Claim authorship` table, which is held to it. The check compares declared identity strings. It
 uses each identity's root to catch common aliases (`Claude`, `claude-opus-5.5`, and

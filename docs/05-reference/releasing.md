@@ -7,7 +7,7 @@ Pattern lineage: uber/ADR's release procedure (the tag must match the version, a
 ## Before the tag
 
 1. Write or update the ship-readiness record for the release (`checking-release-readiness`). The release stance changes only with that record.
-2. Set the same version in `pyproject.toml`, `.claude-plugin/plugin.json`, `.codex-plugin/plugin.json`, and `CITATION.cff`.
+2. Set the same version in `pyproject.toml`, `.claude-plugin/plugin.json`, `.codex-plugin/plugin.json`, `plugins/nuclear-grade-guard/.claude-plugin/plugin.json`, and `CITATION.cff`.
 3. Move the `[Unreleased]` entries in `CHANGELOG.md` under `## [X.Y.Z] - YYYY-MM-DD`, and set `CITATION.cff` `date-released` to the same date.
 4. Run the gates in `../../GOVERNANCE.md`, plus:
 
@@ -34,8 +34,11 @@ A pushed tag is never moved or reused. A correction ships as a new version.
 
 The `pypi` job runs only when the repository variable `PUBLISH_TO_PYPI` is `true`. Before turning it on:
 
-1. Create a `pypi` environment in the repository settings and add required reviewers.
-2. On PyPI, add a Trusted Publisher for this repository, workflow `release.yml`, and environment `pypi`.
+1. Create a `pypi` environment in the repository settings (Settings, Environments, New environment), add required reviewers, and limit its deployment branches and tags to `v*` tags.
+2. On PyPI, add a Trusted Publisher. Before the first upload the project does not exist yet, so use a pending publisher (Your account, Publishing, Add a new pending publisher) with project name `nuclear-grade`, owner `FlyFission`, repository `nuclear-grade-context-engineering`, workflow `release.yml`, and environment `pypi`.
+3. Set the repository variable `PUBLISH_TO_PYPI` to `true` (Settings, Secrets and variables, Actions, Variables).
+
+CI and the release build both run `twine check --strict`, so a package page that would not render on PyPI fails before any upload. PyPI shows `README.md` without the repo around it, so the build points its relative links and images at GitHub (`hatch-fancy-pypi-readme` in `pyproject.toml`); the file itself is unchanged.
 
 Publishing uses OIDC, so there is no long-lived token to leak. The package is not on PyPI today.
 

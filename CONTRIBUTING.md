@@ -6,6 +6,16 @@ Nuclear-grade is an open, software-native synthesis and reference implementation
 
 By taking part, you agree to follow the [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
 
+## Your first contribution
+
+New here? Welcome. A few good places to start:
+
+- Issues labeled [`good first issue`](https://github.com/FlyFission/nuclear-grade-context-engineering/labels/good%20first%20issue) are small, have a clear finish line, and say which files to look at.
+- Run the [15-minute challenge](challenge/README.md) on your coding agent and post what happened with the challenge result form. Results that make this repo look bad are just as welcome.
+- Found a confusing sentence or a broken link? A one-line fix is a real contribution.
+
+If you are unsure whether an idea fits, ask in [Discussions](https://github.com/FlyFission/nuclear-grade-context-engineering/discussions) first. We're happy to help you shape it before you spend a weekend on it.
+
 ## Ground rules
 
 - Do not claim this repo meets DOE, NRC, NASA, NIST, CISA, ASME, EPRI, IEEE, IEC, ISO, ANSI/ANS, NEI, or any other outside standard.
@@ -25,9 +35,20 @@ python -m ruff check .
 python tools/ng.py doctor .
 python tools/ng.py tokens .
 python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions --strict-custody
+python -m nuclear_grade.release
+python tools/ng.py validate <packet-dir>   # each change record you added or changed: .nuclear/changes/<slug>,
+                                           # challenge/.nuclear/changes/<slug>, or a worked example's .nuclear/changes/<slug>
+python tools/ng.py badge . --out .nuclear/badge.json  # CI fails if the committed badge is stale
+git diff --check
 ```
 
-These are the fast local checks shared with CI; the workflow remains the source of truth.
+The commands before `git diff --check` are the fast local checks shared with CI. If the
+badge command changes `.nuclear/badge.json` (it will whenever you add or edit a change
+record), commit the regenerated file; CI fails when the committed badge does not match the
+records. `git diff --check` catches whitespace errors in the proposed diff. The workflow
+remains the source of truth.
+
+Create change records with `python tools/ng.py new <slug> --mode <mode>` rather than by hand, and write `~/` in records, never an absolute home path: the residue test rejects absolute paths.
 
 Also scan new public docs for overclaiming. Lean on phrases like:
 

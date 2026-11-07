@@ -2,7 +2,7 @@
 
 Install Nuclear-grade once and let your agent reach for its skills the way it
 already reaches for any other installed skill — in Codex, Claude Code, Cursor,
-Windsurf, and VS Code.
+Windsurf, VS Code, Gemini CLI, and OpenCode.
 
 ## How it works
 
@@ -31,6 +31,8 @@ checkout (`python tools/ng.py install …`) or via the installed console script
 | Cursor | `… install cursor` | user `~/.cursor/skills/`; project `.cursor/skills/` | user or project |
 | Windsurf | `… install windsurf` | user `~/.codeium/windsurf/skills/`; project `.windsurf/skills/` | user or project |
 | VS Code + Copilot | `… install vscode` | project `.github/skills/`; user `~/.config/github-copilot/skills/` | user or project |
+| Gemini CLI | `… install gemini` | user `~/.gemini/skills/`; project `.gemini/skills/` | user or project |
+| OpenCode | `… install opencode` | user `~/.config/opencode/skills/`; project `.opencode/skills/` | user or project |
 
 Default scope is `user` (available in every project); pass `--scope project --repo .`
 for a single repo. Or fan out to every detected tool in one step:
@@ -42,7 +44,10 @@ for a single repo. Or fan out to every detected tool in one step:
 
 > Codex, Claude Code, Cursor, and Windsurf paths are confirmed against current
 > docs. VS Code's project path (`.github/skills`) is confirmed; its user-scope
-> path is a best-known default — the command flags it. If your install differs,
+> path is a best-known default — the command flags it. Gemini CLI's paths match
+> its [skills docs](https://geminicli.com/docs/cli/skills/) but haven't been
+> checked in a live session yet, so the command flags those too. The same is
+> true of OpenCode's paths, from its [skills docs](https://opencode.ai/docs/skills). If your install differs,
 > point it anywhere with `--dest <path>`.
 
 ### Claude Code: the native plugin
@@ -57,7 +62,26 @@ surfaces the skills **and** the command prompts with no copying:
 ```
 
 The plugin configures **no hooks**, so nothing runs automatically. The optional
-always-on routing hooks remain opt-in — see [`HOOKS.md`](HOOKS.md).
+hooks stay opt-in; see [`HOOKS.md`](HOOKS.md).
+
+**Optional guard plugin.** The same marketplace lists `nuclear-grade-guard`, a
+separate plugin whose only job is to register the blocking `PreToolUse` gate:
+
+```bash
+/plugin install nuclear-grade-guard@nuclear-grade
+/reload-plugins
+```
+
+It denies agent edits to trust surfaces (CI workflows, Claude settings and
+hooks, the charter, the gate's own files) and asks you before a force push, a
+tag or release, a package publish, an `rm -rf` outside the working folder, or a
+download piped into a shell. It never answers allow, and it blocks the call if
+the gate itself cannot run, so it needs `python3` on your `PATH`. Turn it off
+with `/plugin disable nuclear-grade-guard@nuclear-grade`, or remove it with
+`/plugin uninstall nuclear-grade-guard@nuclear-grade`. For one repo and everyone
+on it, `nuclear-grade init --hook` writes the same gate into the project's
+`.claude/` folder instead. [`HOOKS.md`](HOOKS.md) covers what it guards, how it
+compares with Claude Code's own permission rules, and where it falls short.
 
 ### Codex: the plugin package and skill installer
 
@@ -88,7 +112,7 @@ Codex-native capabilities:
 | Repo asset | In the Codex plugin? | Why |
 |---|---|---|
 | `skills/` | **Yes** | Exported via `plugin.json` `skills`; Codex routes to them by `description`. |
-| `agents/` | No | These are **Claude** PROVE subagent definitions. Codex subagent packaging is not supported here; treat them as Claude-only until converted (see [`agents/README.md`](agents/README.md)). |
+| `agents/` | No | These are **Claude** PROVE subagent definitions. Codex subagent packaging is not supported here; treat them as Claude-only until converted (see [`docs/02-operating-system/prove-subagents.md`](docs/02-operating-system/prove-subagents.md)). |
 | `commands/` | No | Paste-ready prompt cards, not Codex slash commands. Open them from a checkout and paste. |
 | `templates/`, `.nuclear/` | No | Repo assets the skills and `ng` CLI use. The `ng init`/`ng new` commands copy them into a target repo; the Codex plugin does not. |
 | `tools/ng.py` | No | A repo-side CLI you run from a checkout. The plugin adds no `ng` command to your `PATH`. |
@@ -108,7 +132,9 @@ Codex pulls in the matching skill on its own — no slash command needed.
 plugin surfaces both the skills **and** the `commands/` prompt cards as native
 slash commands with no copying, and it ships the PROVE subagents in `agents/`.
 The Codex plugin exports skills only; commands and agents stay repo-side. Both
-tiers configure **no hooks**, so nothing runs automatically on install.
+the main Claude Code plugin and the Codex plugin configure **no hooks**, so
+nothing runs automatically on install. The gate comes only from the separate,
+opt-in `nuclear-grade-guard` plugin above.
 
 **Verified manifest constraints.** Codex's manifest loader caps each
 `interface.defaultPrompt` entry at **128 characters** — an over-long prompt is
@@ -182,6 +208,8 @@ The server (`python -m nuclear_grade.mcp_server`) exposes `validate_change_recor
 | Cursor | `.cursor/mcp.json` | `mcpServers` |
 | Windsurf | `~/.codeium/windsurf/mcp_config.json` | `mcpServers` |
 | VS Code + Copilot | `.vscode/mcp.json` | `servers` (note: not `mcpServers`) |
+| Gemini CLI | `.gemini/settings.json` (or `~/.gemini/settings.json`) | `mcpServers` |
+| OpenCode | `opencode.json` (or `~/.config/opencode/opencode.json`) | `mcp` (each server is `"type": "local"` with a `command` array) |
 
 **Why opt-in:** an MCP server's tool schemas load into the model's context every
 session whether used or not (~1k tokens per tool); skills load only short

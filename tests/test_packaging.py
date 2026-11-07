@@ -27,6 +27,13 @@ def test_wheel_force_includes_top_level_resources():
     assert force_include["templates"] == "nuclear_grade/_bundled/templates"
     assert force_include["skills"] == "nuclear_grade/_bundled/skills"
     assert force_include["commands"] == "nuclear_grade/_bundled/commands"
+    # `init --hook` and `init --agents` copy these from a wheel install.
+    assert force_include["hooks/pre_tool_use.py"] == "nuclear_grade/_bundled/hooks/pre_tool_use.py"
+    assert force_include["starter-kit/core/AGENTS.md"] == "nuclear_grade/_bundled/starter-kit/core/AGENTS.md"
+    # The wheel is built from the sdist, so every force-included source must ship in it.
+    sdist = config["tool"]["hatch"]["build"]["targets"]["sdist"]["include"]
+    for source in force_include:
+        assert "/" + source.split("/")[0] in sdist, source
 
 
 def test_wheel_packages_only_namespaced_package():
@@ -39,7 +46,7 @@ def test_wheel_packages_only_namespaced_package():
 def test_version_is_stamped():
     config = _config()
 
-    assert config["project"]["version"] == "0.6.0"
+    assert config["project"]["version"] == "0.7.0"
 
 
 def _version_line(rel_path: str) -> str:

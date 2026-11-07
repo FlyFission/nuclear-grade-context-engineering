@@ -57,6 +57,17 @@ STYLE = f"""
 }}
 """
 
+# Skill-family colors, one per family in SKILL_FAMILIES order. Emitted only into
+# figures that use them, so other figures' files do not change.
+FAMILY_STYLE = """
+.fam0{fill:#0E1A30} .fam1{fill:#B4531A} .fam2{fill:#2F5FB3} .fam3{fill:#2E7D45}
+.fam4{fill:#6B4BA8} .fam5{fill:#1F7A7A} .fam6{fill:#B23A48}
+@media (prefers-color-scheme: dark){
+.fam0{fill:#F4F7FC} .fam1{fill:#F2A066} .fam2{fill:#8FB0E6} .fam3{fill:#7BCB8E}
+.fam4{fill:#B9A2E8} .fam5{fill:#6FCFCF} .fam6{fill:#F08A96}
+}
+"""
+
 CHAR_SANS = 7.4  # avg advance at 13px, 600 weight
 CHAR_MONO = 6.0  # advance at 9.5-10px mono
 
@@ -140,11 +151,12 @@ class Fig:
 
     # ---- output ---------------------------------------------------------
     def render(self) -> str:
+        family_css = FAMILY_STYLE if any('class="fam' in n for n in self.nodes) else ""
         head = (
             f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {self.w} {self.h}" width="{self.w}" '
             f'height="{self.h}" role="img" aria-labelledby="t d">\n'
             f"<title id=\"t\">{escape(self.title)}</title>\n<desc id=\"d\">{escape(self.desc)}</desc>\n"
-            f"<style>{STYLE}</style>\n<defs>\n"
+            f"<style>{STYLE}{family_css}</style>\n<defs>\n"
             + "".join(
                 f'<marker id="{i}" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">'
                 f'<polygon class="{c}" points="0 0, 8 3, 0 6"/></marker>\n'
@@ -194,7 +206,7 @@ def lifecycle(clearance: bool):
     f = Fig(name, 1000, 360 if clearance else 300,
             "Nuclear-grade lifecycle",
             "Question, Discover, Specify, Plan, Execute, Verify, Review, then the Decide gate. "
-            "Ship or defer leads to Baseline, Operate, Learn; block returns to Plan; "
+            "Ship leads to Baseline, Operate, Learn; block or defer returns to Plan; "
             "Learn feeds the next Question." + (" A separate Cleared-to-apply-now gate sits between "
                                                 "Decide and Baseline and holds while clearance is lapsed." if clearance else ""),
             "The change lifecycle · eleven beats")
@@ -211,12 +223,12 @@ def lifecycle(clearance: bool):
     f.arrow([n[-1]["r"], dec["l"]])
     # block: Decide -> Plan, over the top
     f.arrow([dec["t"], (dec["cx"], 68), (n[3]["cx"], 68), n[3]["t"]], "ln-acc", dashed=True,
-            label="block", at=((dec["cx"] + n[3]["cx"]) / 2, 68))
+            label="block / defer", at=((dec["cx"] + n[3]["cx"]) / 2, 68))
     y2 = 220 if not clearance else 252
     xs = dec["cx"]
     if clearance:
         clr = f.box(xs - 64, 192, 128, 64, "Cleared to\napply now?", kind="focal", shape="diamond")
-        f.arrow([dec["b"], clr["t"]], "ln-acc", label="ship / defer", at=(xs, 166))
+        f.arrow([dec["b"], clr["t"]], "ln-acc", label="ship", at=(xs, 166))
         # hold / lapsed self-loop on the right
         f.arrow([clr["r"], (clr["r"][0] + 40, clr["cy"]), (clr["r"][0] + 40, clr["y"] - 4),
                  (clr["cx"] + 18, clr["y"] - 4), (clr["cx"] + 18, clr["y"] + 9)],
@@ -233,7 +245,7 @@ def lifecycle(clearance: bool):
     if clearance:
         f.arrow([src["b"], base["t"]], "ln-acc", label="yes")
     else:
-        f.arrow([src["b"], base["t"]], "ln-acc", label="ship / defer")
+        f.arrow([src["b"], base["t"]], "ln-acc", label="ship")
     f.arrow([base["l"], op["r"]])
     f.arrow([op["l"], le["r"]])
     f.arrow([le["l"], (n[0]["cx"], le["cy"]), n[0]["b"]], dashed=True,
@@ -281,16 +293,16 @@ def pro():
     links = [
         lambda P: dict(pts=[P["p"]["b"], (P["p"]["cx"], P["e"]["y"] - 26), (P["e"]["cx"], P["e"]["y"] - 26), P["e"]["t"]]),
         lambda P: dict(pts=[P["dec"]["b"], (P["dec"]["cx"], P["b"]["y"] - 30), (P["b"]["cx"], P["b"]["y"] - 30), P["b"]["t"]],
-                       style="ln-acc", label="ship / defer", at=((P["dec"]["cx"] + P["b"]["cx"]) / 2 + 120, P["b"]["y"] - 30)),
+                       style="ln-acc", label="ship", at=((P["dec"]["cx"] + P["b"]["cx"]) / 2 + 120, P["b"]["y"] - 30)),
         lambda P: dict(pts=[P["dec"]["r"], (P["dec"]["r"][0] + 32, P["dec"]["cy"]), (P["dec"]["r"][0] + 32, P["p"]["cy"]), P["p"]["r"]],
-                       style="ln-acc", dashed=True, label="block", at=(P["dec"]["r"][0] + 32, (P["dec"]["cy"] + P["p"]["cy"]) / 2)),
+                       style="ln-acc", dashed=True, label="block / defer", at=(P["dec"]["r"][0] + 32, (P["dec"]["cy"] + P["p"]["cy"]) / 2)),
         lambda P: dict(pts=[P["l"]["r"], (P["l"]["r"][0] + 40, P["l"]["cy"]), (P["l"]["r"][0] + 40, P["l"]["y"] + 52),
                             (180, P["l"]["y"] + 52), (180, P["q"]["cy"]), P["q"]["l"]],
                        dashed=True, label="lessons feed the next basis", at=(400, P["l"]["y"] + 52)),
     ]
     bands("pro", "PRO: Plan · Run · Operate", "PRO · the path in three moves", rows, links,
           "Three bands. Plan: Question, Discover, Specify, Plan. Run: Execute, Verify, Review, Decide. "
-          "Operate: Baseline, Operate, Learn. Decide ships or defers to Baseline, blocks back to Plan; "
+          "Operate: Baseline, Operate, Learn. Decide ships to Baseline, or blocks or defers back to Plan; "
           "lessons feed the next Question.")
 
 
@@ -299,7 +311,7 @@ def prove():
     f = Fig("prove", 1280, 620, "PROVE: Plan · Run · Observe · Verdict · Educate",
             "Five bands. Plan: Question, Discover, Specify, Plan. Run: Execute. Observe: Verify, Review. "
             "Verdict: Decide, then Cleared to apply now, which holds while clearance is lapsed. "
-            "Educate: Baseline, Operate, Learn. Block returns to Plan; lessons feed the next Question.",
+            "Educate: Baseline, Operate, Learn. Block or defer returns to Plan; lessons feed the next Question.",
             "PROVE · the path in five moves")
     W, H, C, BH = 104, 40, 124, 84
     x0 = 176
@@ -327,7 +339,7 @@ def prove():
         ids = [i[1] for i in items]
         for a, b in zip(ids, ids[1:], strict=False):
             f.arrow([P[a]["r"], P[b]["l"]], "ln-acc" if a == "dec" else "ln",
-                    label="ship / defer" if a == "dec" else None)
+                    label="ship" if a == "dec" else None)
         y += BH + 16
     f.arrow([P["p"]["b"], P["e"]["t"]])
     f.arrow([P["e"]["b"], P["v"]["t"]])
@@ -340,7 +352,7 @@ def prove():
     d, pl = P["dec"], P["p"]
     gx = (cx(2) + cx(3)) / 2
     f.arrow([d["l"], (gx, d["cy"]), (gx, pl["b"][1] + 14), (pl["x"] + 20, pl["b"][1] + 14), (pl["x"] + 20, pl["b"][1])],
-            "ln-acc", dashed=True, label="block", at=(gx, P["e"]["cy"]))
+            "ln-acc", dashed=True, label="block / defer", at=(gx, P["e"]["cy"]))
     lo, q = P["l"], P["q"]
     f.arrow([lo["r"], (lo["r"][0] + 24, lo["cy"]), (lo["r"][0] + 24, 596), (148, 596), (148, q["cy"]), q["l"]],
             dashed=True, label="lessons feed the next basis", at=(600, 596))
@@ -429,8 +441,8 @@ def control_loop(clearance: bool):
     name = "control-loop-cleared" if clearance else "control-loop"
     f = Fig(name, 1040, 300, "Configuration control loop",
             "Controlled items (code, prompts, models, dependencies, docs, releases) receive a change; evidence names "
-            "pass or gap; Decide on purpose. Ship or defer saves the baseline, which is operated and yields lessons "
-            "that feed the next change. Block returns to the change."
+            "pass or gap; Decide on purpose. Only a ship decision saves the baseline, which is operated and yields lessons "
+            "that feed the next change. Block or defer returns to the change."
             + (" A Cleared-to-apply-now gate holds while clearance is lapsed." if clearance else ""),
             "Configuration control · the loop")
     y = 92
@@ -441,12 +453,12 @@ def control_loop(clearance: bool):
     f.arrow([ci["r"], ch["l"]])
     f.arrow([ch["r"], ev["l"]])
     f.arrow([ev["r"], dec["l"]])
-    f.arrow([dec["t"], (dec["cx"], 64), (ch["cx"], 64), ch["t"]], "ln-acc", dashed=True, label="block",
+    f.arrow([dec["t"], (dec["cx"], 64), (ch["cx"], 64), ch["t"]], "ln-acc", dashed=True, label="block / defer",
             at=((dec["cx"] + ch["cx"]) / 2, 64))
     y2 = 220
     if clearance:
         clr = f.box(852, y - 2, 128, 68, "Cleared to\napply now?", kind="focal", shape="diamond")
-        f.arrow([dec["r"], clr["l"]], "ln-acc", label="ship / defer", at=(838, dec["cy"] - 14))
+        f.arrow([dec["r"], clr["l"]], "ln-acc", label="ship", at=(838, dec["cy"] - 14))
         f.arrow([clr["r"], (clr["r"][0] + 20, clr["cy"]), (clr["r"][0] + 20, clr["y"] - 14), (clr["cx"], clr["y"] - 14), clr["t"]],
                 dashed=True, r=6)
         f.label(clr["cx"] + 30, clr["y"] - 14, "hold / lapsed")
@@ -454,7 +466,7 @@ def control_loop(clearance: bool):
         f.arrow([clr["b"], bl["t"]], "ln-acc", label="yes")
     else:
         bl = f.box(dec["cx"] - 96, y2, 192, 52, "Saved baseline", "the approved version", kind="store")
-        f.arrow([dec["b"], bl["t"]], "ln-acc", label="ship / defer")
+        f.arrow([dec["b"], bl["t"]], "ln-acc", label="ship")
     op = f.box(bl["x"] - 180, y2 + 4, 132, 44, "Operate")
     le = f.box(op["x"] - 200, y2 + 4, 152, 44, "Lessons learned")
     f.arrow([bl["l"], op["r"]])
@@ -480,34 +492,55 @@ def skill_map(name, overlays_on):
         ("lfo", "learning-from-experience", None),
     ]
     ROW = 52
+    TOP = 34  # room for the family legend under the title
     rows_for = {sid: max(1, len(overlays_on.get(sid, []))) for sid, *_ in spine}
     total_rows = sum(rows_for.values())
-    h = 96 + total_rows * ROW + 40
-    WIDTH = 1280
+    h = 96 + TOP + total_rows * ROW + 40
+    WIDTH = 1304
     f = Fig(name, WIDTH, h, "Skill map",
             "The core path runs from using-nuclear-grade through questioning-attitude, rating-change-risk, "
             "creating-change-records, proving-claims, checking-release-readiness, recording-a-known-good-version and "
             "learning-from-experience, which feeds back to questioning-attitude. Rating-change-risk branches to "
             "choosing-what-to-control and checking-what-a-change-affects. "
-            "Heavier overlays switch on by consequence, each labeled with its trigger.",
+            "Heavier overlays switch on by consequence, each labeled with its trigger. "
+            "A colored stripe gives each skill's family (start here, before you act, records and versions, "
+            "evidence and verdicts, trust and public claims, delegation and structure, when it goes wrong); "
+            "a gold dot marks the Core 7, which apply to every change.",
             "Skill map · core path and consequence overlays")
+    family_of = {nm: i for i, (_, skills) in enumerate(SKILL_FAMILIES) for nm, _ in skills}
+
+    def skill(x, y, w, hh, nm, sub=None, kind="step"):
+        b = f.box(x, y, w, hh, nm, sub, kind=kind)
+        f.nodes.append(f'<rect class="fam{family_of[nm]}" x="{x + 1.5}" y="{y + 6}" width="4" height="{hh - 12}" rx="2"/>')
+        if nm in CORE7:
+            f.nodes.append(f'<circle class="acc" cx="{x + w - 12}" cy="{y + hh / 2}" r="3.5"/>')
+        return b
+
+    lx = 28
+    for i, (fam, _) in enumerate(SKILL_FAMILIES):
+        f.nodes.append(f'<rect class="fam{i}" x="{lx}" y="58" width="4" height="12" rx="2"/>')
+        f.text(lx + 10, 68, fam.lower(), "lbl", "muted", anchor="start")
+        lx += 10 + int(len(fam) * CHAR_MONO * 1.04) + 22
+    f.nodes.append(f'<circle class="acc" cx="{lx + 2}" cy="64" r="3.5"/>')
+    f.text(lx + 10, 68, "core 7: every change", "lbl", "muted", anchor="start")
+
     SX, SW = 340, 248
     OX = SX + SW + 200
-    y = 80
+    y = 80 + TOP
     pos = {}
-    f.group(OX - 24, 60, WIDTH - OX - 4, total_rows * ROW + 36, "Heavier overlays — switch on by consequence")
-    f.group(SX - 24, 60, SW + 48, total_rows * ROW + 36, "Core path", cls="band")
+    f.group(OX - 24, 60 + TOP, WIDTH - OX - 4, total_rows * ROW + 36, "Heavier overlays — switch on by consequence")
+    f.group(SX - 24, 60 + TOP, SW + 48, total_rows * ROW + 36, "Core path", cls="band")
     for sid, nm, sub in spine:
         kind = "focal" if sid == "ung" else "step"
-        pos[sid] = f.box(SX, y + 4, SW, 40 if not sub else 44, nm, sub, kind=kind)
+        pos[sid] = skill(SX, y + 4, SW, 40 if not sub else 44, nm, sub, kind=kind)
         chains = overlays_on.get(sid, [])
         oy = y + 4
         for chain in chains:
             prev = None
             ox = OX
             for lab, edge in chain:
-                w = max(150, int(len(lab) * CHAR_SANS + 28) // 4 * 4)
-                b = f.box(ox, oy, w, 40, lab, kind="opt" if prev is None else "opt")
+                w = max(150, int(len(lab) * CHAR_SANS + 40) // 4 * 4)
+                b = skill(ox, oy, w, 40, lab, kind="opt")
                 if prev is None:
                     src = pos[sid]
                     sy = oy + 20
@@ -527,8 +560,8 @@ def skill_map(name, overlays_on):
         f.arrow([pos[a]["b"], pos[b]["t"]])
     # side branch: controlled config touched
     ccr, _ccp = pos["ccr"], pos["ccp"]
-    ici = f.box(28, ccr["y"] + 52, 248, 40, "choosing-what-to-control")
-    sci = f.box(28, ici["y"] + 72, 248, 40, "checking-what-a-change-affects")
+    ici = skill(28, ccr["y"] + 52, 248, 40, "choosing-what-to-control")
+    sci = skill(28, ici["y"] + 72, 248, 40, "checking-what-a-change-affects")
     f.arrow([ccr["l"], (ici["cx"], ccr["cy"]), ici["t"]], label="controlled config touched",
             at=(ici["cx"] + 24, ccr["cy"]))
     f.arrow([ici["b"], sci["t"]])

@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Questions and ideas
+    url: https://github.com/FlyFission/nuclear-grade-context-engineering/discussions
+    about: Ask how to use it, share a near miss, or float an idea before writing it up.
+  - name: Report a security problem
+    url: https://github.com/FlyFission/nuclear-grade-context-engineering/security/policy
+    about: Please report vulnerabilities privately, as SECURITY.md describes.

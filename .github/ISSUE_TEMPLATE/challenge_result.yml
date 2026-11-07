@@ -1,0 +1,59 @@
+name: Challenge result
+description: Share a run of the 15-minute challenge on your coding agent.
+title: "Challenge result: <agent> + <model>"
+labels: ["challenge-result"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for running it. Every result helps, including ones where the agent did well.
+        Please follow challenge-results/METHOD.md so runs can be compared.
+  - type: input
+    id: agent
+    attributes:
+      label: Agent and version
+      placeholder: "e.g. the CLI name and the output of its --version"
+    validations:
+      required: true
+  - type: input
+    id: model
+    attributes:
+      label: Model ID
+    validations:
+      required: true
+  - type: dropdown
+    id: track
+    attributes:
+      label: Track
+      options:
+        - rules (challenge as shipped)
+        - plain (task-only AGENTS.md)
+    validations:
+      required: true
+  - type: input
+    id: flags
+    attributes:
+      label: Permission mode and flags
+      placeholder: "the exact command you ran"
+    validations:
+      required: true
+  - type: textarea
+    id: files
+    attributes:
+      label: Run files
+      description: Attach or link the run JSON, transcript, and diff from challenge-results/results/. Remove any secrets first.
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything we should know
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I ran it in a throwaway container or VM.
+          required: true
+        - label: The agent got only the standard prompt, with no hints or follow-up turns.
+          required: true

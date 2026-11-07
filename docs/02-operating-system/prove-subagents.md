@@ -3,18 +3,19 @@
 Five subagents map onto the **PROVE** beats, each with tool boundaries that *encode* the authority
 split the doctrine already demands. They are an **opt-in, Standard+-only** companion to the
 single-agent path — five subagents on a typo is the busywork the lifecycle rejects.
+The five definitions live in [`agents/`](../../agents/). This page sits outside that folder so Claude Code doesn't read it as a sixth agent.
 
 Concretely, the observer and judge create **role separation with a partially coupled evidence path**:
 the runner that makes the change is not the nominal observer or verdict role. This can reduce direct
 self-review, but it does not prevent the shared orchestrator, model lineage, context, budget, or
 administrative domain from carrying the same error into every stage. That is an in-loop mitigation from
-[`../docs/02-operating-system/actor-evidence-independence.md`](../docs/02-operating-system/actor-evidence-independence.md)
+[`actor-evidence-independence.md`](actor-evidence-independence.md)
 — not independent verification. The honesty note below records where the coupling remains.
 
 | Beat | Subagent | Covers | Tool authority |
 |---|---|---|---|
 | **P — Plan** | `planner` | Question · Discover · Specify · Plan | Read/Grep/Glob/WebFetch + write only to the packet; no Bash, no code edits |
-| **R — Run** | `runner` | Execute | Edit/Write/Bash inside the approved plan; opens after the human gate; may fan out |
+| **R — Run** | `runner` | Execute | Edit/Write/Bash inside the accepted plan; opens after explicit execution authorization; may fan out |
 | **O — Observe** | `observer` | Verify · Review | Read + Bash; no product-code writes |
 | **V — Verdict** | `judge` | Decide | Read-only and context-separated from the runner; still coupled through the orchestrator and possibly model/resources |
 | **E — Educate** | `educator` | Baseline · Operate · Learn | Writes baseline + lessons + charter into `.nuclear/` |
@@ -49,4 +50,4 @@ These are **Claude** subagent definitions. The Codex plugin
 these as Codex-native subagents — Codex subagent packaging is not wired up here.
 Use them through Claude Code (the marketplace plugin ships them), or convert them
 to a Codex-supported form before relying on them there. See the Codex section of
-[`../INTEGRATIONS.md`](../INTEGRATIONS.md).
+[`INTEGRATIONS.md`](../../INTEGRATIONS.md).

@@ -69,6 +69,10 @@ re-cited as settled by every run that loads it. The guards in `context-window-di
 
 - **Every durable entry carries its evidence and source.** A lesson cites what happened and
   how it was verified; a baseline links its verification. Confidence is not a source.
+- **Preserve source priority without widening scope.** During extraction or compaction, keep
+  explicit human corrections and decisions ahead of agent narration and tool chatter, but
+  retain the task or workspace scope that made them true. A local instruction must not
+  silently become a general fact or preference.
 - **Retrieved memory is a hypothesis, not authority.** A later agent treats a recalled lesson
   the way it treats any input — something to confirm against the current system, not a
   settled instruction. This matters most when the recalled "fact" traces back to an untrusted
@@ -122,4 +126,8 @@ in [`../00-standards-foundation/source-map.md`](../00-standards-foundation/sourc
 (Tier 9) — in particular LangChain's persistent cross-run memory lifetime, the Agentic Context
 Engineering (ACE) finding that incremental delta updates beat wholesale rewrites, and the
 context-poisoning failure mode — together with the operating-experience and
-configuration-management habits already used across this repo. No compliance claim is made.
+configuration-management habits already used across this repo. The source-priority boundary
+was also cross-checked against OpenAI Codex's September 8, 2026
+[memory v2 evidence-selection change](https://github.com/openai/codex/commit/6924ce636b2186948f2332ac9460b5871b50aa2f),
+which labels and prioritizes human input while keeping extracted evidence bounded. That is
+implementation evidence, not a claim of comparative effectiveness. No compliance claim is made.

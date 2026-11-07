@@ -122,9 +122,11 @@ Planning and building are different authority phases, and naming the line keeps 
 read-only planner from sliding into an unreviewed writer. During the question,
 specification, and plan phases the agent is read-only over product code: its writes are
 confined to the change-record packet, and it prepares, but does not take, release
-actions. Build authority over product code opens only after the plan clears its
-human-approved gate (the `plan.md` review checkpoints — Requirements / Design / Tasks
-approved). This is the self-modification boundary above, applied in time: the control
+actions. Build authority over product code opens only after a human explicitly authorizes
+execution of the accepted plan. Acceptance of the plan's contents alone is not permission
+to act; an approval signal must preserve whether it accepts the artifact, authorizes execution,
+or does both. The `plan.md` review checkpoints cover Requirements / Design / Tasks acceptance.
+This is the self-modification boundary above, applied in time: the control
 that approves the plan must sit where the planning agent cannot rewrite it. See the
 agent-drafts-spec workflow in `CORE.md`.
 

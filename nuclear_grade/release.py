@@ -1,10 +1,10 @@
 """Release-identity consistency check.
 
-One version must mean one thing everywhere it is declared: `pyproject.toml`, both
-plugin manifests, `CITATION.cff`, a dated `CHANGELOG.md` section, and (at release
-time) the git tag. CI runs this without `--tag` so drift is caught on every PR; the
-release workflow runs it with `--tag` so a tag that disagrees with the files it
-ships never publishes.
+One version must mean one thing everywhere it is declared: `pyproject.toml`, the
+plugin manifests (including the `nuclear-grade-guard` plugin), `CITATION.cff`, a
+dated `CHANGELOG.md` section, and (at release time) the git tag. CI runs this
+without `--tag` so drift is caught on every PR; the release workflow runs it with
+`--tag` so a tag that disagrees with the files it ships never publishes.
 
     python -m nuclear_grade.release [--repo .] [--tag v0.6.0]
 
@@ -20,7 +20,11 @@ import re
 import tomllib
 from pathlib import Path
 
-MANIFESTS = (".claude-plugin/plugin.json", ".codex-plugin/plugin.json")
+MANIFESTS = (
+    ".claude-plugin/plugin.json",
+    ".codex-plugin/plugin.json",
+    "plugins/nuclear-grade-guard/.claude-plugin/plugin.json",
+)
 _CHANGELOG_SECTION = r"^## \[{version}\] - (\d{{4}}-\d{{2}}-\d{{2}})\s*$"
 
 

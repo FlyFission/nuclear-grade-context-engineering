@@ -468,3 +468,37 @@ def test_npm_public_like_words_are_not_publish(tmp_path):
 def test_npm_prefixes_and_parent_traversal_ask(tmp_path, command):
     """Review findings: `npm publ` and `.github/tmp/../workflows/ci.yml` returned no decision."""
     assert _kind(_decide(tmp_path, "Bash", {"command": command})) == "ask", command
+
+
+# --- the nuclear-grade-guard plugin: protect the plugin copy and its off switches ---------
+
+
+def test_writes_into_the_plugin_cache_are_denied(tmp_path, monkeypatch):
+    # A plugin install keeps its copy of the gate under ~/.claude/plugins/; editing it disables the gate.
+    monkeypatch.setenv("HOME", str(tmp_path / "home"))
+    target = tmp_path / "home" / ".claude" / "plugins" / "cache" / "nuclear-grade" / "hooks" / "pre_tool_use.py"
+    assert _kind(_decide(tmp_path / "proj", "Edit", {"file_path": str(target)})) == "deny"
+
+
+@pytest.mark.parametrize(
+    "command",
+    [
+        "claude plugin disable nuclear-grade-guard@nuclear-grade",
+        "claude plugin uninstall nuclear-grade-guard@nuclear-grade",
+        "claude plugins remove nuclear-grade-guard",
+        "claude plugin --scope project disable nuclear-grade-guard",
+        "claude plugin marketplace remove nuclear-grade",
+        "claude plugin marketplace rm nuclear-grade",
+        "cat ~/.claude/plugins/installed_plugins.json",
+    ],
+)
+def test_switching_off_a_plugin_from_the_shell_asks(tmp_path, command):
+    assert _kind(_decide(tmp_path, "Bash", {"command": command})) == "ask"
+
+
+@pytest.mark.parametrize(
+    "command",
+    ["claude plugin install nuclear-grade-guard@nuclear-grade", "claude plugin list", "claude plugin enable x"],
+)
+def test_other_plugin_commands_are_not_gated(tmp_path, command):
+    assert _decide(tmp_path, "Bash", {"command": command}) is None

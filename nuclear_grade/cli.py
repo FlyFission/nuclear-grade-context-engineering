@@ -29,7 +29,12 @@ from nuclear_grade.ng_validate import (
     has_closure_note,
     validate_packet,
 )
-from nuclear_grade.receipt import build_receipt
+from nuclear_grade.receipt import (
+    acceptance_summary,
+    build_receipt,
+    is_open_to_decision,
+    verify_receipt,
+)
 from nuclear_grade.skill_catalog import CatalogError, load_catalog, load_yaml_projections
 from nuclear_grade.tokens import (
     build_report,
@@ -400,6 +405,25 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Print a versioned JSON receipt (file digests, git state, evidence-status counts) "
         "instead of OK/FAILED lines. Exit codes are unchanged.",
+    )
+    validate_parser.add_argument(
+        "--require-eligible",
+        action="store_true",
+        help="Exit 1 unless the acceptance block reads open_to_decision (or with open items). "
+        "Without it, exit codes keep their old meaning: record structure only. Even with it, "
+        "the result is not an approval.",
+    )
+    validate_parser.add_argument(
+        "--verify-receipt",
+        type=Path,
+        metavar="FILE",
+        help="Check a stored receipt against the packet as it is now. Prints bound, stale, or "
+        "invalid, and exits 1 unless bound.",
+    )
+    validate_parser.add_argument(
+        "--expect-commit",
+        metavar="SHA",
+        help="With --verify-receipt, also require the receipt to have been issued at this commit.",
     )
     validate_parser.add_argument(
         "--strict-custody",
@@ -987,26 +1011,45 @@ def handle_validate(args: argparse.Namespace) -> int:
         require_two_party=args.two_party,
         before_review=args.before_review,
     )
+    receipt = build_receipt(
+        args.packet,
+        result,
+        strict_custody=args.strict_custody,
+        strict_authority=args.strict_authority,
+        strict_two_party=args.two_party,
+        validator_version=_validator_version(),
+    )
+    receipt["before_review"] = args.before_review
+    code = 0 if result.ok else 1
+    if args.require_eligible and not is_open_to_decision(receipt):
+        code = 1
+    binding = None
+    if args.verify_receipt is not None:
+        try:
+            stored = json.loads(args.verify_receipt.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as error:
+            stored = None
+            binding = {"state": "invalid", "reasons": [f"could not read receipt: {error}"], "checked": []}
+        if binding is None:
+            binding = verify_receipt(stored, args.packet, expected_commit=args.expect_commit)
+        if binding["state"] != "bound":
+            code = 1
+        receipt["receipt_binding"] = binding
     if args.json:
-        receipt = build_receipt(
-            args.packet,
-            result,
-            strict_custody=args.strict_custody,
-            strict_authority=args.strict_authority,
-            strict_two_party=args.two_party,
-            validator_version=_validator_version(),
-        )
-        receipt["before_review"] = args.before_review
         print(json.dumps(receipt, indent=2, ensure_ascii=False))
-        return 0 if result.ok else 1
+        return code
     if result.ok:
         print(f"OK: {args.packet}")
-        return 0
-
-    print(f"FAILED: {args.packet}")
-    for message in result.messages:
-        print(f"- {message}")
-    return 1
+    else:
+        print(f"FAILED: {args.packet}")
+        for message in result.messages:
+            print(f"- {message}")
+    print(acceptance_summary(receipt["acceptance"]))
+    if binding is not None:
+        print(f"Receipt {binding['state']}: {args.verify_receipt}")
+        for reason in binding["reasons"]:
+            print(f"  - {reason}")
+    return code
 
 
 def handle_doctor(args: argparse.Namespace) -> int:

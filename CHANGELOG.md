@@ -6,6 +6,18 @@ These entries record public-facing changes. They do not claim the project is a m
 
 ## [Unreleased]
 
+### Added
+
+- Typed acceptance block in the validation receipt (schema version 2). `ng validate` now prints an `Acceptance:` line beside `OK`, and `--json` carries an `acceptance` object that keeps record structure, evidence status, per-row claim support, declared-independence checks, release eligibility, authorized decision, and apply permission apart. There is no single "trusted" boolean, release eligibility never reads "approved", and decision and apply permission are always `not_assessed`. The evidence-trust propagation rule is now read as an advisory input to the receipt; it is still not part of `validate_packet`.
+- `ng validate --verify-receipt FILE [--expect-commit SHA]` reports a stored receipt as `bound`, `stale`, or `invalid`, and catches an edited acceptance block. `--require-eligible` makes a record that is not open to a decision exit 1. Default exit codes are unchanged.
+- `tests/test_acceptance_adversarial.py`: fixtures organized by property (input binding, receipt integrity, freshness, evidence status, claim completeness, authority, consumer consistency, compatibility), checked by weakening each control. Approval replay and out-of-packet artifact swaps are marked as expected failures until decision custody exists.
+
+### Changed
+
+- The MCP `validate_change_record` tool appends the same `Acceptance:` line, so a client cannot reduce the result to a bare OK.
+- Evidence rows keyed by an id with a letter suffix, such as `C-004a`, are now recognized as claim rows.
+- `.nuclear/consequence-policy.json` lists `nuclear_grade/propagation.py` as a validator and the propagation and adversarial suites as trust tests, because the receipt now imports the former.
+
 ## [0.7.0] - 2026-11-05
 
 ### Changed

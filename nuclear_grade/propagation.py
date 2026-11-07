@@ -1,4 +1,4 @@
-"""Evidence-trust propagation for change packets (proposal, not yet wired in).
+"""Evidence-trust propagation for change packets (advisory input to the receipt).
 
 Ports Palantir Foundry's marking-propagation idea to the packet model: a derived
 thing inherits the trust of its weakest source, so a packet (a baseline
@@ -8,10 +8,12 @@ propagates a security marking to derived datasets, this propagates evidence
 an author typed.
 
 This module is intentionally standalone and stdlib-only, matching the
-``_check_*(..., messages)`` style of ``nuclear_grade.ng_validate`` so it can drop
-into ``validate_packet`` later behind a maintainer decision on severity. It is
-NOT imported by the validator yet; landing it as a gate is tracked as a planned
-claim in the accompanying change packet.
+``_check_*(..., messages)`` style of ``nuclear_grade.ng_validate``. The receipt's
+acceptance block reads it as an advisory input (weakest claim status and
+unrecorded deferrals). It is NOT part of ``validate_packet``: measured over this
+repository's own records it would fail 21 of 56 Standard-style records, and its
+model has no dependency edges, so making it a pass/fail gate waits on a typed
+dependency model.
 
 Trust order (worst to best): ``fail`` < ``gap`` = ``planned`` < ``deferred`` <
 ``pass``. ``not applicable`` is neutral and excluded from the minimum. A packet
@@ -39,13 +41,18 @@ STATUS_RANK: dict[str, int | None] = {
 
 PROMOTABLE_RANK = 3  # only an all-pass packet promotes
 
-_CLAIM_ID = re.compile(r"^(?P<id>[A-Z][A-Z0-9]*-?\d+)(?:\s|$)")
+_CLAIM_ID = re.compile(r"^(?P<id>[A-Z][A-Z0-9]*-?\d+[a-z]?)(?:\s|$)")
 
 
 def _claim_id(cell: str) -> str | None:
     """Return the leading claim id, allowing a short description after it."""
     match = _CLAIM_ID.match(cell)
     return match.group("id") if match else None
+
+
+def claim_id(cell: str) -> str | None:
+    """Public form of the claim-id reader, for callers that parse other tables."""
+    return _claim_id(cell)
 
 
 def parse_claim_statuses(verification_text: str) -> list[tuple[str, str]]:

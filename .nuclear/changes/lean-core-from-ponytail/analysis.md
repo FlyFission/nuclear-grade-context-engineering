@@ -71,7 +71,15 @@ So the tension the maintainer feels is real and is measured: the doctrine is dee
 Ponytail is lazy about the solution and never about reading.
 Nuclear-grade must be lazy about the ceremony and never about the evidence.
 
-Rigor lives in three places and only three: the floor that is never cut, the graded escalation when stakes appear, and who controlled the evidence. Everything else should be Ponytail-sized.
+The owner's correction (2026-11-07): consequence grading, human gates, and custody do not necessarily make the code better. They make it defensible after the fact. So sort every control by when it acts:
+
+| Acts when | Examples | Ponytail has it | Packaging |
+|---|---|---|---|
+| While the code is written | read callers, lowest rung, one test, mark the shortcut, name the one fact | yes | always on, a few hundred words, nothing to load |
+| At one decision point | which state, whether to stop for a person | no | one sentence, fires on seven trap surfaces, said once |
+| After the fact | record, trace, custody, two-party, badge | no | only for trust-bearing work; never a condition for ordinary edits; left unchanged |
+
+Today all three tiers are packaged the same way, as skills with the same section count under the same router with the same gravity. That is the over-complication. The over-simplification would be deleting tier three because it does not improve the code, and then having nothing when an agent widens its own permissions in a commit nobody read.
 
 Where rigor wins and Ponytail's pattern is not adopted:
 

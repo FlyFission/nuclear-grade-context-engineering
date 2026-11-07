@@ -32,7 +32,9 @@
 
 | Risk / gap | Impact | Disposition | Owner | Recheck trigger |
 |---|---|---|---|---|
-| Compression measured at five bullets, not at a full rewrite | a phase 2 body could lose a decision-changing line | mitigate; REQ-007 gate before any body ships | maintainer | phase 2 re-run |
+| Compression measured at five bullets, not at a four-section rewrite | a phase 2 body could lose a decision-changing line | mitigate; REQ-007 gate before any body ships | maintainer | phase 2 re-run |
+| Narrowing the trap list to seven surfaces | a user-visible change with real consequence gets no stop | accept with the backtest as the check; the policy still grades by path | maintainer | phase 2 backtest |
+| The validator grows to accept two record shapes | more code on a trust surface | mitigate; existing tests frozen, every record re-validated | maintainer | phase 3 |
 | Eval grader and fit reader share a model family with the drafter | correlated error; structured check only | accept; stated in every phase record | maintainer | an external run of the harness |
 | One reviewer on the card text | a softened floor could pass one read | mitigate; the floor has a grep test and the diff is small | maintainer | phase 1 review |
 | D1 persona unresolved | tone and compression of the card | defer | maintainer | after phase 1 draft |
@@ -63,12 +65,12 @@
 
 - Decision: defer
 - Decision maker: Ben Huffer (maintainer)
-- Rationale: this record asks for approval of a specification. The decision it carries is whether phase 1 may start, which the owner gives by marking D2 to D4 and D6 to D8 in `plan.md`. Until then: defer.
+- Rationale: this record asks for approval of a specification. The decision it carries is whether phase 1 may start, which the owner gives by marking D2, D3, D4, and D8 in `plan.md`. Until then: defer.
 - Decision question answered by evidence? yes/no: no; the baseline evidence motivates the work, and the gates that answer the question run in the phases.
 - Verdict owner's authority axis relative to the actor: separated; the maintainer did not draft the text.
 - Minimum coupling profile for this consequence met? yes / no; gap if no: yes for a specification; the decisive gates are specified with their custody.
 - Decision rests on primary evidence the reviewer can reproduce, not the actor's narrative? yes/no: yes; every number has a command or a report path.
-- Conditions attached: no phase starts before its frontier marks; the hook phase needs a human merge.
+- Conditions attached: no phase starts before its frontier marks; the hook phase and the validator phase need a human merge; the trap sentence and the stop for a person are never cut.
 - Decision posture: conservative enough.
 - Abort or rollback trigger: the owner strikes the specification.
 - OPEX or post-release learning trigger: if a phase gate fails, the lesson goes to that phase's record and to `learning-from-experience`.

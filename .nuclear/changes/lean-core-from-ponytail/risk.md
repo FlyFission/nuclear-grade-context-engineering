@@ -16,13 +16,13 @@ informed: contributors via the draft pull request
 - Date: 2026-11-07
 - Current lifecycle phase: Specify
 - Current work phase: candidate
-- Summary: an umbrella specification and phased plan for making Nuclear-grade's operative surface as small as Ponytail's while keeping the three things Ponytail does not have: a graded escalation, a human gate, and evidence custody. This record changes no code. Each phase runs as its own record and its own pull request.
+- Summary: an umbrella specification and phased plan for cutting the in-session bureaucracy to Ponytail scale: one 400-word always-on card, no per-prompt reminder, two agent-facing states on seven trap surfaces, four-section skills, one-file Quick and three-file Standard records, lenses demoted to reference, plus the four Ponytail habits that change code while it is written. The after-the-fact machinery (validator, two-party, gate, policy, badge) is left as it is. This record changes no code. Each phase runs as its own record and pull request.
 
 ## Mission anchor
 
-- Objective: an agent running Nuclear-grade reads a few hundred words, not a few thousand, and still says the mode, proves the claim, and leaves the verdict to a person.
-- Success criteria: the always-on card is at or under its word budget; Core 7 bodies are at or under their token budget; the control-ladder and routing scores do not fall past the agreed margin; the mode rule lives in one place.
-- Non-goals / forbidden directions: no merge of skills (the consolidation protocol already failed on fit); no change to what the validator checks; no change to custody or two-party rules; no efficacy claim relative to Ponytail; no new always-on text.
+- Objective: an ordinary edit under Nuclear-grade costs the agent one 400-word card and three closing lines, no record and no reminder; a change on one of seven trap surfaces still stops for a person; the after-the-fact checks still run unchanged.
+- Success criteria: always-on tokens for an ordinary edit under 1,500; a filled Quick record under 30 lines in one file; Core 7 bodies at four sections and under 600 words; control-ladder and routing scores not past the margin; the mode rule in the card only.
+- Non-goals / forbidden directions: no merge of skills; no change to what the validator, two-party check, gate, or policy decide beyond accepting the smaller record shapes; no efficacy claim relative to Ponytail; no new always-on text; the trap sentence and the stop for a person are never cut to save words.
 - Drift check: if a phase adds words to an always-on surface, or softens the floor, stop and re-anchor.
 - Traces to: `.nuclear/charter.md` articles 9 (graded rigor), 12 (operational unambiguity), 15 (two-speed control); `MAXIMS.md` "minimum sufficient context".
 
@@ -44,7 +44,9 @@ informed: contributors via the draft pull request
 | the other five Core 7 skills | skills | rewrite to the operative register and budget | `../../../CORE.md` |
 | `commands/*.md` | generated command cards | regenerate from the lean skills | `../../../COMMANDS.md` |
 | `CORE.md`, `QUICKSTART.md` | public docs | restatements of the mode rule collapse to the card plus links | `../../../CORE.md` |
-| `nuclear_grade/tokens.py` budgets, `tests/test_skill_contracts.py` | budget gate and contract tests | new ceilings and a parity test | `../../../docs/05-reference/skills-token-audit.md` |
+| `nuclear_grade/tokens.py` budgets, `tests/test_skill_contracts.py` | budget gate and contract tests | new ceilings, four-section contract, parity test | `../../../docs/05-reference/skills-token-audit.md` |
+| `templates/quick/`, `templates/standard/`, `nuclear_grade/ng_validate.py` | record templates and validator | one-file Quick, three-file Standard; validator accepts both shapes; policy mode Standard (`validators`) | `../../consequence-policy.json` |
+| `docs/02-operating-system/work-type-lens.md`, `archetype-lens.md`, `hpi-overlays.md` | doctrine | demoted from steps to reference | `../../../CORE.md` |
 | `evals/skill-control-ladder/`, `evals/skill-routing-cases.jsonl` | evidence | the non-inferiority gate | `../../../evals/skill-control-ladder/README.md` |
 
 ## Threshold screen

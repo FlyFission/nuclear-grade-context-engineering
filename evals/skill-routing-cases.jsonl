@@ -168,3 +168,4 @@
 {"id": "checking-facts-trigger-04", "skill": "checking-facts", "prompt": "Two blog posts agree on the benchmark number we cite; verify it against the original paper or data.", "expected": "trigger"}
 {"id": "checking-facts-nontrigger-01", "skill": "checking-facts", "prompt": "Does our README call the DOE handbook an influence or imply we comply with it?", "expected": "not-trigger"}
 {"id": "checking-facts-nontrigger-02", "skill": "checking-facts", "prompt": "Map each claim in this change record to the tests that back it.", "expected": "not-trigger"}
+{"id": "staying-on-mission-green-checks-stall", "skill": "staying-on-mission", "prompt": "Three preparation waves passed source and size checks, but no additional document passed acceptance at our checkpoint. Should we revise preparation again?", "expected": "trigger"}

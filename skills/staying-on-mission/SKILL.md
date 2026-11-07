@@ -7,19 +7,19 @@ description: Tests the current work against a written, lasting mission anchor an
 
 ## Overview
 
-Mission drift is when an agent keeps shipping work that no longer serves the original goal. It comes in two forms. The first is intent drift: scope creeps, the goal quietly gets swapped for a smaller one, or the agent wins the task but loses the mission. The second is standards drift: the work gets a little less careful each time you accept one more small exception. Letting a bad habit become normal this way is called the normalization of deviance.
-
-This skill keeps a written mission anchor in front of the work. When an action stops serving that anchor, you make one of three choices: re-anchor, escalate, or stop. The anchor has three parts: the goal, the success criteria (how you know you are done), and the clear non-goals (what you are deliberately not doing). One named person owns the anchor. That person is responsible for whether this change still serves its mission. Every small action still has to trace back to that larger mission.
-
-The anchor is also the clarity that lets authority move to the edge: it is the commander's intent that keeps a decentralized decision aligned with the goal. Push decisions to where the information is, but only against a clear, shared anchor — otherwise local wins quietly drift from the mission.
+Mission drift replaces the goal with local activity or weakens standards through
+repeated exceptions (normalization of deviance). Test work against a written
+mission anchor: goal, success criteria, non-goals, and one named owner. Choose
+re-anchor, escalate, or stop. The anchor is the commander's intent: it lets
+decisions move to the edge without letting local wins replace the mission.
 
 ## Decision contract
 
-- **Claim checked:** the current action was tested against the written anchor's goal, success criteria, and non-goals, the loop and attempt count were actually run, and any crossed non-goal or loosened standard has a justification row, not a quiet edit.
-- **Artifact observed:** the written anchor (`.nuclear/mission.md`, `## Mission anchor` in `risk.md`, or `.nuclear/charter.md`) and the current action/diff -> a recorded continue/re-anchor/escalate/stop decision, updated anchor, and any justification row.
+- **Claim checked:** the action was tested against the written goal, success criteria, and non-goals; attempts were counted; crossed non-goals or loosened standards have justification rows.
+- **Artifact observed:** written anchor and current action/diff -> decision, updated anchor, and any justification row.
 - **Decision affected:** block -- continue / re-anchor / escalate / stop, plus the restated goal anchor.
 - **Failure class:** mission-drift (an action serving a swapped-in goal, a crossed non-goal, or a standard loosened "just this once").
-- **Next action:** stop and return to the anchor when a non-goal would be crossed with no justification; a missed outcome checkpoint stops the repeated batch for one blocking-path inspection and bounded strategy change; 3 failed goal attempts or scope you cannot check escalates to the owner.
+- **Next action:** stop unjustified non-goal crossings; a missed outcome checkpoint stops the repeated batch for one blocking-path inspection and strategy change; escalate 3 failed goal attempts or uncheckable scope to the owner.
 
 ## When to Use
 
@@ -48,14 +48,14 @@ The anchor is also the clarity that lets authority move to the edge: it is the c
 
 ## Process
 
-1. Restate the mission anchor from the written record, not from memory: the goal, the success criteria, and the non-goals.
-2. Test the current action against the anchor. Ask plainly: does this action move a success criterion forward, or does it serve some smaller goal that got swapped in?
-3. Step back one level before you decide. Look at the goal and the overall design, not just the line in front of you, so you decide from the right height.
-4. Check for a loop and count attempts against the success criterion, not the local check result. If the same goal has failed 3 times, or the same action or fix is being retried, stop trying the next version. A green source/size check, new packet, or successful preparation step does not reset that count.
-   - Compare accepted deliverables before and after the work batch at the agreed checkpoint. If none was agreed, check before starting the next repeated batch. A missed outcome checkpoint triggers a strategy change even when every local check passed; do not wait for three command failures.
-   - Inspect one blocked deliverable end to end: source -> transformation -> field contract -> stored or rendered artifact -> acceptance failure. Compare required meaning with the actual output; check whether quoting, truncation, schema assumptions, or repair rules removed the governing action. Treat these as hypotheses until inspected.
-   - Select one bounded diagnostic or correction that can change the blocking result, with an observable acceptance check and a stop condition. If no such step is supported, escalate the specific blocker. Do not respond with another preparation revision, review council, tracking layer, or wholesale reauthoring of accepted records. Preserve existing source, semantic, paired review, and closure gates; do not improve the count by weakening acceptance.
-5. Check for standards drift against the charter and any countable warning lines. Examples: a file or function passing a size limit, a skipped check, or accepting weaker evidence than you agreed to. One normalized exception is a finding, not a rounding error.
+1. Read the written anchor: goal, success criteria, non-goals.
+2. Test whether the current action advances a success criterion or a substituted local goal.
+3. Judge from the level of the goal and overall design before deciding.
+4. Count attempts against the success criterion. After 3 failed goal attempts, or repeated retries, stop the next variant. Green source/size checks, packets, and preparation steps do not reset the count.
+   - Compare accepted deliverables before/after at the agreed checkpoint; if none exists, check before the next repeated batch. A missed checkpoint triggers strategy change despite green checks.
+   - Inspect one blocked source -> transformation -> field contract -> final artifact -> acceptance failure. Check whether quoting, truncation, schema assumptions, or repair removed the governing action; these are hypotheses until inspected.
+   - Choose one supported, bounded diagnostic/correction with an acceptance check and stop condition, or escalate the specific blocker. Preserve existing source, semantic, paired review, and closure gates. Do not substitute preparation revisions, councils, tracking layers, wholesale reauthoring, or weaker acceptance.
+5. Check standards drift against the charter and countable tripwires: size limits, skipped checks, or weakened evidence. One normalized exception is a finding.
 6. Decide and record one of three outcomes:
    - Re-anchor: the action serves the mission. Restate the anchor and keep going.
    - Escalate: the action would cross a non-goal or loosen a standard for a good reason. Write a justification row (what is being crossed, why, and why there is no simpler path) and get the owner's decision.
@@ -80,26 +80,23 @@ The anchor is also the clarity that lets authority move to the edge: it is the c
 ## Escalation
 
 - Escalate to the owner after 3 failed attempts at the same goal, on any security-sensitive or hard-to-undo action, or on scope you cannot check against the anchor.
-- Report the state plainly and right away: what the goal is, what was tried, what is blocked, and your recommendation. Bad news has to travel up unchanged. A softened report is itself a kind of drift.
+- Report the goal, attempts, blocker, and recommendation immediately, without softening bad news.
 - Stop when the work would cross a non-goal with no good justification, or when no one owns the anchor.
 
 ## Common Rationalizations
 
-- "While I am here, I will also fix this." Side work is the most common scope drift. Capture it as a separate change.
-- "This is basically what they asked for." "Basically" means the goal got swapped. Check the success criteria, not the vibe.
-- "One more try will do it." After three failures, the approach is the problem, not the next try.
-- "We can loosen this standard just this once." "Once" is how a bad habit becomes normal. Record it as a justified exception or do not do it.
-- "I remember the goal." Memory drifts over a long session. Read the written anchor.
-- "All local checks are green, so another preparation wave is progress." Accepted outcomes and the blocking failure decide that.
-- "Restating the mission counts as checking it." Restating without honestly testing the current action against it is just for show.
+- "While I am here..." Capture side work separately.
+- "Basically what they asked for." Check the actual success criteria.
+- "One more try." Three failed goal attempts require escalation.
+- "Just this once." Justify a standards exception or reject it.
+- "I remember the goal." Read the written anchor.
+- "All checks passed." Check accepted outcomes, not preparation activity.
+- "I restated the mission." Test the action against it.
 
 ## Red Flags
 
 - The current action cannot be tied to a success criterion in the anchor.
-- Scope has grown, but the anchor was never updated to justify it.
-- The same file, action, or fix has been retried several times.
-- A non-goal was crossed by an edit instead of by a recorded decision.
-- A standard was loosened without a justification row.
+- Scope grows without an updated anchor, retries repeat, or a non-goal/standard is crossed without a recorded justification.
 - A behavior with no parent in the original scope appeared (a new retry, cache, fallback call, or permission) and inherited the original grade instead of being re-tiered (`rating-change-risk`).
 - Progress is measured by activity (tokens, edits) instead of by success criteria met.
 

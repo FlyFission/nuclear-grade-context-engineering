@@ -1,12 +1,18 @@
 # Verification — outcome stagnation
 
-Status: pass for local repository checks. Full pytest completed with exit 0
-(791 collected, 790 passed, 1 skipped); Ruff, doctor, token budget,
-strict-custody worked-example validation, this packet's strict-custody validation,
-and git diff --check passed. The deliberate prompt change also updates its
-controlled golden fixture. The demo subprocess needs the venv on PATH; the final
-full run used that PATH. Final skill wording/parity checks rerun after the last
-wording adjustment. No live agent trial or downstream adoption was run.
+Status: pass for corrected local combined-tree checks. Initial pinned-base checks passed (790 tests, 1 skipped), but PR #147's
+merged-tree CI run 42334228497 failed two token-budget tests in every Python
+validate job. Current main had introduced aggregate gates absent from the local
+pinned checkout: skill p95 was 3476 > 3400 and Core body 20220 > 19500.
+
+Correction: merge main at 06e762e into this branch and condense repeated mission
+prose while retaining the outcome checkpoint, failure-path inspection, bounded
+correction/escalation, and unchanged quality gates. No budgets were raised.
+Combined-tree measurement: p95 3212; Core body 19495 (limit 19500).
+Ruff, doctor, release identity, token budget, strict-custody example and packet
+validation, compilation, and diff checks pass. Updated-main full pytest passed
+(exit 0; 1138 collected, 1137 passed, 1 skipped).
+Evidence remains author-coupled self-check; no live adoption or throughput claim.
 
 ## Evidence custody and coupling
 

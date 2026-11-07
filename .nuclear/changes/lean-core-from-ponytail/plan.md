@@ -36,6 +36,7 @@ These are the choices only the owner can make. Mark each `approved`, `revised: .
 | D7 | One-file Quick and three-file Standard; three threshold dimensions; custody only for decisive claims under `--strict-custody` (REQ-005) | approve | keep six files, shrink each | pending |
 | D8 | Non-inferiority margin: mean −0.05, single skill −0.17, routing recall not lower (REQ-007) | approve | stricter −0.03 / −0.10 | pending |
 | D9 | Lenses and HPI screen become reference, not steps (REQ-010) | approve | keep the archetype floor as one line in the rating skill | pending |
+| D11 | Run the catch-rate benchmark (REQ-012) before phase 2 ships, so the lean pass is measured against a real catch rate and not only the rubric | approve; it is the number the project lacks | after the lean pass only | pending |
 | D10 | The other 24 skills: same four-section rewrite in a later record, or demote the ones with `observe` tier to docs | rewrite the ones with `block` or `warn`; demote `observe` | rewrite all | held |
 
 ## Build sequence
@@ -51,6 +52,7 @@ Each phase is its own record and pull request. A phase that fails its gate stops
 | 3 | Records: one-file Quick and three-file Standard templates; `ng new` emits them; validator accepts both shapes; three-dimension screen; custody only for decisive claims under `--strict-custody`; lenses and HPI screen become reference | REQ-005, 010 | phase 1; D7, D9 | `ng new`, `ng validate` | `templates/`; `nuclear_grade/ng_validate.py`; `tests/test_ng_validate.py`; 6k tokens | new templates; validator change; tests | `pytest tests/test_ng_validate.py tests/test_two_party.py`; validate every existing record still passes | both shapes validate; existing records untouched |
 | 4 | Markers and review: `ng debt`; review shape in the two review skills; grep-callers rule | REQ-008, 009 | phase 2; D5 | `ng debt` | the two skills; Ponytail `ponytail-review.toml` as shape reference; 3k tokens | `nuclear_grade/debt.py`; tests; edited skills | targeted pytest; routing cases for the two skills | tests green; recall unchanged |
 | 5 | Deletion pass and report: the seven mode-rule restatements collapse to the card; disclaimer repeats collapse to `DISCLAIMER.md` plus one line in root files; refresh the token audit with before and after, including any score that fell | REQ-011, 010 | phases 1 to 4 | public docs | `ng tokens .#Repeated prose blocks`; link check; 2k tokens per page | edited pages; dated audit section | `pytest tests/test_public_docs.py`; link check; `ng tokens .` | always-on tokens under 1,500; mode rule in one place |
+| 6 | Catch-rate benchmark: register the protocol; write the seeded trap tasks (extend `challenge/`) and hidden-check tasks; scorer; run the three arms on the current catalog before phase 2 ships, and again after | REQ-012 | D11; protocol registered before phase 2 ships | `evals/catch-rate/` | Ponytail `benchmarks/results/2026-10-07-agentic.md` as method reference; `challenge/README.md`; `evals/skill-control-ladder/scripts/`; 8k tokens | `PROTOCOL.md`, tasks, `score.py`, `REPORT.md` | scorer tests; a dry run of each arm on three tasks | report published with the loss, if any, stated |
 
 For any slice whose work is model-mediated, the determinism posture is: the card and skill text are drafted by a model and are not replayable; the parity, budget, contract, validator, and routing checks are deterministic; the control-ladder re-run uses the harness's recorded model, grader, and rubric and is replayable from its data files.
 
@@ -72,6 +74,7 @@ For any slice whose work is model-mediated, the determinism posture is: the card
 | `docs/02-operating-system/work-type-lens.md`, `archetype-lens.md`, `hpi-overlays.md` | reference, no longer required by any skill or template | REQ-010 | gates become pages | maintainer |
 | `CORE.md`, `QUICKSTART.md`, root docs | link to the card; disclaimer repeats collapse | REQ-011 | one source | maintainer |
 | `docs/05-reference/skills-token-audit.md` | dated refresh | REQ-007 | honest before and after | maintainer |
+| `evals/catch-rate/` | new | REQ-012 | the catch-rate number | maintainer |
 
 ## Non-goals
 

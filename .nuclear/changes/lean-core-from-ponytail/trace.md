@@ -25,6 +25,7 @@ All rows are `planned`. This record specifies; the phases build and prove.
 | REQ-009 | markers harvested by `ng debt` | `basis.md` | `plan.md` phase 4 / `nuclear_grade/debt.py` | CLI and test | local proof | E-009 | defer | planned |
 | REQ-010 | lenses and HPI screen demoted to reference; no efficacy claim | `basis.md` | `plan.md` phases 3, 5 / docs, skills, templates | edits; phrase test | peer review | E-002, E-004 | defer | planned |
 | REQ-011 | tier three unchanged; always-on under 1,500 tokens; mode rule in the card only | `basis.md` | `plan.md` phases 3, 5 / existing tests, `tokens.py` | existing tests; budget; link test | local proof | E-001, E-010 | defer | planned |
+| REQ-012 | catch-rate benchmark, three arms, pre-registered | `basis.md` | `plan.md` phase 6 / `evals/catch-rate/` | protocol first; code-scored | independent verification | E-011 | defer | planned |
 
 ## Evidence chain
 

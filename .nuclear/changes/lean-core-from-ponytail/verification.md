@@ -44,6 +44,7 @@ Run at commit `06e762e` on 2026-11-07.
 | REQ-005 | local proof | deterministic test | `pytest tests/test_ng_validate.py tests/test_two_party.py`; `ng validate` on every existing record | both shapes validate; no existing record breaks | planned | E-008 | phase 3 |
 | REQ-009 | local proof | deterministic test | `pytest tests/test_debt.py` | both markers listed; no-trigger markers flagged | planned | E-009 | phase 4 |
 | REQ-011 | local proof | deterministic test | link test; existing validator, two-party, hook, policy, badge tests unchanged | mode rule in the card only; tier-three tests pass unmodified | planned | E-010 | phase 5 |
+| REQ-012 | local proof | independent verification | three-arm run per `evals/catch-rate/PROTOCOL.md`, scored by code, run by a maintainer or CI | report with per-arm trap catch, defect catch, hidden-check pass, tokens, time, cost | planned | E-011 | phase 6 |
 | baseline | local proof | deterministic test | the commands in the baseline table | numbers reproduce at `06e762e` | pass | the table above | none |
 
 ## Verification type guide
@@ -66,6 +67,7 @@ Depth and method follow `docs/02-operating-system/verification-methods-and-depth
 | E-008 | REQ-005 | yes | validator test output and the re-validation of every existing record | AI agent | test file | CI | none | CI | git | phase record | maintainer |
 | E-009 | REQ-009 | no | pytest output | AI agent | test file | CI | none | CI | git | phase record | maintainer |
 | E-010 | REQ-011 | no | link test and unchanged tier-three test output | AI agent | test files | CI | none | CI | git | phase record | maintainer |
+| E-011 | REQ-012 | yes | per-task result files and `REPORT.md` | AI agent | the benchmark harness | pre-registered tasks | `score.py` | maintainer or CI | `evals/catch-rate/data/` | `REPORT.md` | maintainer |
 
 ### Coupling profile
 
@@ -81,6 +83,7 @@ Depth and method follow `docs/02-operating-system/verification-methods-and-depth
 | E-008 | partially separated; the agent that changes the validator also writes its new tests, but the existing tests and records are frozen | separated; runs in CI | separated; code | separated; the maintainer merges a Standard record | separated; CI runner | independent reproduction | admitted when the existing tests and every existing record pass unmodified |
 | E-009 | separated; the test is frozen before the harvester ships | separated; runs in CI | separated; code | separated; CI decides | separated; CI runner | independent reproduction | admitted when green |
 | E-010 | separated; tier-three tests predate this work and are not edited | separated; runs in CI | separated; code | separated; CI decides | separated; CI runner | independent reproduction | admitted when green |
+| E-011 | partially separated; the drafting agent writes tasks but the protocol and thresholds are registered before any arm runs | separated; headless fresh folders run by a maintainer or CI | separated; scored by code, not a model | separated; thresholds fixed in the protocol | separated; the harness's own runs | independent reproduction | admitted when the protocol is followed; deviations listed in the report |
 
 - **Evidence pattern used:** independent reproduction for the deterministic gates; diverse verification for the eval re-run and the fit reads; direct witnessing by the maintainer for the card text.
 - **Verdict owner:** Ben Huffer (maintainer).

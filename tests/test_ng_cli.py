@@ -134,6 +134,27 @@ def test_new_quick_packet_copies_templates(tmp_path):
     assert (packet / "proof.md").read_text(encoding="utf-8") == "# quick proof.md from repo\n"
 
 
+def test_new_says_a_fresh_record_must_be_filled_before_validate(tmp_path):
+    scaffold_repo(tmp_path)
+    result = run_ng("new", "demo", "--mode", "quick", "--repo", str(tmp_path))
+
+    assert result.returncode == 0, result.stderr
+    assert "next: fill in risk.md and proof.md" in result.stdout
+    assert "NUCLEAR-GRADE-PLACEHOLDER" in result.stdout
+    assert ".nuclear/changes/demo" in result.stdout
+    assert "a blank record should never pass" in result.stdout
+
+
+def test_new_prints_no_next_steps_when_it_refuses(tmp_path):
+    scaffold_repo(tmp_path)
+    assert run_ng("new", "demo", "--mode", "quick", "--repo", str(tmp_path)).returncode == 0
+
+    result = run_ng("new", "demo", "--mode", "quick", "--repo", str(tmp_path))
+
+    assert result.returncode != 0
+    assert "next:" not in result.stdout
+
+
 def test_new_standard_packet_copies_templates(tmp_path):
     scaffold_repo(tmp_path)
     result = run_ng("new", "demo", "--mode", "standard", "--repo", str(tmp_path))

@@ -126,6 +126,7 @@ The workflow has two speeds. While you explore and try ideas you can throw away,
 
 ```bash
 python tools/ng.py new fix-badge-count --mode quick
+# fill in risk.md and proof.md, delete the placeholder line in each, then:
 python tools/ng.py validate .nuclear/changes/fix-badge-count
 ```
 
@@ -148,6 +149,7 @@ The decision question comes first, not last. If the question is wrong, your proo
 
 ```bash
 python tools/ng.py new add-agent-boundary --mode standard
+# fill in the six files, delete the placeholder line in each, then:
 python tools/ng.py validate .nuclear/changes/add-agent-boundary
 ```
 

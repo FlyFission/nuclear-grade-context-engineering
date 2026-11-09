@@ -976,7 +976,28 @@ def handle_new(args: argparse.Namespace) -> int:
         PlannedWrite(packet / name, source=templates / args.mode / name)
         for name in files
     )
-    return apply_writes(writes, dry_run=False, overwrite=args.force)
+    code = apply_writes(writes, dry_run=False, overwrite=args.force)
+    if code == 0:
+        print_new_next_steps(packet, files)
+    return code
+
+
+def print_new_next_steps(packet: Path, files: tuple[str, ...] | list[str]) -> None:
+    """Tell the user that a fresh record fails validation until it is filled.
+
+    An untouched scaffold fails `validate` on purpose (a blank record must never
+    pass), so say so up front instead of letting the first run look broken.
+    """
+    try:
+        shown = packet.relative_to(Path.cwd())
+    except ValueError:
+        shown = packet
+    names = list(files)
+    listed = names[0] if len(names) == 1 else f"{', '.join(names[:-1])} and {names[-1]}"
+    print()
+    print(f"next: fill in {listed}, then delete the NUCLEAR-GRADE-PLACEHOLDER line in each.")
+    print(f"then: nuclear-grade validate {shown.as_posix()}")
+    print("validate fails until the record is filled in; a blank record should never pass.")
 
 
 def handle_validate(args: argparse.Namespace) -> int:

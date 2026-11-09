@@ -6,6 +6,10 @@ These entries record public-facing changes. They do not claim the project is a m
 
 ## [Unreleased]
 
+### Fixed
+
+- The Quick start in the README and WORKFLOWS.md ran `validate` straight after `new`, which fails because a fresh record is blank. The steps now say to fill in the files and delete the placeholder line first, and that a blank record failing is on purpose. `new` also prints these next steps after it creates a record.
+
 ## [0.7.0] - 2026-11-05
 
 ### Changed

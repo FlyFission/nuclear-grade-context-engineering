@@ -80,11 +80,12 @@ Copy [that example](docs/03-worked-examples/ai-agent-tool-permissions/) as your 
 pipx install nuclear-grade
 nuclear-grade init --all                      # AGENTS.md, the guard, and the CI check
 nuclear-grade install claude                  # or codex, cursor, windsurf, vscode, gemini, opencode
-nuclear-grade new my-change --mode quick      # start a change record, fill two files
+nuclear-grade new my-change --mode quick      # start a change record: risk.md and proof.md
+# fill in both files and delete the placeholder line at the top of each, then:
 nuclear-grade validate .nuclear/changes/my-change
 ```
 
-`init` on its own adds just the `.nuclear/` folder; `--all` adds everything. `install` copies the skills to where your agent tool looks for them ([`INSTALL.md`](INSTALL.md)). Using an agent? Point it at [`AGENTS.md`](AGENTS.md), the brief agents read first.
+`validate` fails on a fresh record until you fill it in, and it lists what is still missing. That is on purpose: a blank record should never pass. `init` on its own adds just the `.nuclear/` folder; `--all` adds everything. `install` copies the skills to where your agent tool looks for them ([`INSTALL.md`](INSTALL.md)). Using an agent? Point it at [`AGENTS.md`](AGENTS.md), the brief agents read first.
 
 **Claude Code** (the repo is its own plugin marketplace):
 

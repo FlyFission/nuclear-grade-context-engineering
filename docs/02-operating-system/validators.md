@@ -113,7 +113,7 @@ reproduction or diverse verification, and a reviewer with real authority — not
 actor wrote and linted.
 
 **Built output: validation receipt.** `ng validate <packet> --json` prints a versioned
-`nuclear-grade.validation-receipt` (schema version 1) instead of the OK/FAILED lines, with the same
+`nuclear-grade.validation-receipt` (schema version 2) instead of the OK/FAILED lines, with the same
 exit code. It records the structural result and messages, the strict flags, a SHA-256 for every file in
 the packet plus one digest over the set, the repository commit, whether the packet itself has
 uncommitted changes, the validator and Python versions, and counts of each evidence status declared in
@@ -122,6 +122,23 @@ planned) keeps a structurally passing packet that still carries open gaps from r
 same reason uber/ADR reports partial coverage as its own state. The digests let an out-of-band rerun
 show it checked the same bytes. The receipt is not a signature — anyone who can edit the packet can
 regenerate it — and it proves nothing about whether the evidence is adequate, independent, or true.
+
+Schema version 2 adds an `acceptance` block that keeps separate propositions apart and has no overall
+"trusted" boolean: record structure; evidence status; per-row claim support (with the weakest status and
+advisory notes from the evidence-trust propagation rule); which declared-independence checks ran;
+release eligibility; authorized decision; and apply permission. Release eligibility reads `blocked`
+(structure invalid, a `fail`, `gap`, or `planned` item, or a claim declared in `basis.md` with no
+verification row), `undetermined` (no claim rows could be read, so the record cannot be assessed), or
+`open_to_decision` (with or without deferred items). It never reads "approved": authorized decision and
+apply permission are always `not_assessed`, because declared identities in a Markdown file are not
+authentication. The propagation rule is advisory input only. Measured over this repository's own
+records it would fail 21 of 56 Standard-style records, and it has no dependency edges, so alternatives,
+shared assumptions, and conditional validity are not modeled; a typed dependency model comes first.
+`ng validate --verify-receipt FILE` reports a stored receipt as `bound`, `stale` (other bytes, an added
+or removed file, or another commit), or `invalid` (its digest does not match its own file list, or its
+acceptance block differs from what these bytes yield). A version 1 receipt reads as `undetermined`. The
+fixtures in `tests/test_acceptance_adversarial.py` attack this path by property, and mark two known gaps
+(approval replay after a change, and an artifact kept outside the packet) as expected failures.
 
 **Built opt-in check: evidence-conditioned decision authority.** For a Standard packet,
 `ng validate <packet> --strict-authority` requires `decision-authority.md` and checks that prepare,

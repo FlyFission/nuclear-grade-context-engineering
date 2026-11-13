@@ -62,7 +62,7 @@ Then:
 1. **Question first.** Name the decision question, the assumptions, the one fact that would change the decision, the evidence gaps, and the stop conditions.
 2. **Build the smallest record that fits the mode.** On the administrative floor there is no packet — the commit message, naming the files changed and the one-line reason, is the record. Otherwise build the smallest record that fits the mode under `.nuclear/changes/<slug>/`. Adopting for the first time? Take the Core 7 habits from `CORE.md` and switch on ancillary clusters by trigger, not all at once.
 3. **Write the least you need:** what the change must do, what it must prove, the files it touches, and the claims it must not make.
-4. **Keep build work tied to the claims and their evidence.** If the chosen path stops fitting, write down where you left it and why.
+4. **Keep build work tied to the claims and their evidence.** If the chosen path stops fitting, write down where you left it and why. When local checks pass but accepted deliverables miss the agreed checkpoint, run `staying-on-mission` before another work batch; inspect the blocking artifact and change the strategy rather than polishing the process.
 5. **Slow down at the promise boundary** — before you accept a claim, write public wording, save an approved version, ship a release, or change what an agent may do.
 6. **Run the checker** on Quick or Standard-plus records (`python tools/ng.py validate .nuclear/changes/<slug>`).
 7. **Stop before release** if the evidence status, the rollback, the monitoring, the decision, the baseline trigger, or the legal wording is unclear.

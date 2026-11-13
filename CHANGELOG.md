@@ -6,6 +6,11 @@ These entries record public-facing changes. They do not claim the project is a m
 
 ## [Unreleased]
 
+### Changed
+
+- The workflow that `ng scaffold-ci` writes now sets `timeout-minutes: 10` on its validation job, so a stuck run no longer holds the required check for GitHub's 360-minute default. Repositories that already scaffolded keep their file; re-run with `--force` to pick it up.
+- This repository's own `ci.yml` and `release.yml` set a timeout on every job, and `tests/test_workflow_timeouts.py` fails if a job loses it or sets one over 60 minutes. Record: `.nuclear/changes/ci-job-timeouts`.
+
 ## [0.7.0] - 2026-11-05
 
 ### Changed

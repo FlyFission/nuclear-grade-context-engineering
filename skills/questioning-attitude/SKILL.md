@@ -47,7 +47,8 @@ This is the front door. Before an agent builds, merges, or releases, find the re
 5. Ask what evidence would change the decision. If nothing could change it, the question is not useful yet.
 6. Check the facts before you trust memory, confidence, or anything an agent generated.
 7. Name the conditions that should make you pause, hold, or escalate.
-8. Pick the next step: quick proof, a standard spec, a briefing pack, a handoff, a self-check, a control record, a goal or drift check, or a release decision.
+8. When the concern is a potentially inferior solution rather than merely an unverified assumption, offer `reconsidering-the-approach` to compare different mechanisms; this cannot itself change the accepted design basis.
+9. Pick the next step: quick proof, a standard spec, a briefing pack, a handoff, a self-check, a control record, a goal or drift check, or a release decision.
 
 ## Outputs
 

@@ -175,7 +175,10 @@ token_budgets:
   skill_body_p95_max: 3400
   command_total_max: 34000
   core_description_total_max: 900
-  # The two always-on front-door skills now offer the optional Council once on\n  # unresolved consequential alternatives. CI measured 19,924 core-body tokens;\n  # 20,400 retains about 2.4% edit headroom without preloading Council content.\n  core_body_total_max: 20400
+  # The two always-on front-door skills now offer the optional Council once on
+  # unresolved consequential alternatives. CI measured 19,924 core-body tokens;
+  # 20,400 retains about 2.4% edit headroom without preloading Council content.
+  core_body_total_max: 20400
   repeated_block_max_files: 8
 boundaries:
   license: MIT

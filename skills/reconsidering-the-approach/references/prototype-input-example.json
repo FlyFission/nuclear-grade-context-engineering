@@ -1,0 +1,15 @@
+{
+  "hard_gates": ["acceptance_tests", "data_boundary"],
+  "metrics": {
+    "p95_latency_ms": {"direction": "min", "weight": 2},
+    "cost_per_1k_runs_usd": {"direction": "min", "weight": 1}
+  },
+  "candidates": [
+    {"name": "simple_core", "gates": {"acceptance_tests": true, "data_boundary": true},
+     "results": {"p95_latency_ms": 120, "cost_per_1k_runs_usd": 3.2}, "evidence": "ILLUSTRATIVE_ONLY"},
+    {"name": "agent_orchestrated", "gates": {"acceptance_tests": true, "data_boundary": null},
+     "results": {"p95_latency_ms": 95, "cost_per_1k_runs_usd": 4.5}, "evidence": "ILLUSTRATIVE_ONLY"},
+    {"name": "fast_unsafe", "gates": {"acceptance_tests": false, "data_boundary": true},
+     "results": {"p95_latency_ms": 60, "cost_per_1k_runs_usd": 2.1}, "evidence": "ILLUSTRATIVE_ONLY"}
+  ]
+}

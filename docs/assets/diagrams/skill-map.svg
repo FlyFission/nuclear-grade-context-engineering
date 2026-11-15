@@ -52,6 +52,7 @@
 <rect class="band" x="316" y="94" width="296" height="1076" rx="8"/>
 <text x="330" y="112" class="eye soft" text-anchor="start">CORE PATH</text>
 <path class="ln" stroke-width="1.2" d="M588,190.0 L788,190.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M960,190.0 L992,190.0" marker-end="url(#m-muted)"/>
 <path class="ln" stroke-width="1.2" d="M588,242.0 L788,242.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
 <path class="ln" stroke-width="1.2" d="M976,242.0 L1008,242.0" marker-end="url(#m-muted)"/>
 <path class="ln" stroke-width="1.2" d="M588,250.0 L604,250.0 Q612,250.0 612,258.0 L612,286 Q612,294 620,294 L788,294.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
@@ -109,6 +110,9 @@
 <rect class="n-opt" stroke-width="1" x="788" y="170" width="172" height="40" rx="6"/>
 <text x="874.0" y="194.0" class="name ink" text-anchor="middle">staying-on-mission</text>
 <rect class="fam1" x="789.5" y="176" width="4" height="28" rx="2"/>
+<rect class="n-opt" stroke-width="1" x="992" y="170" width="232" height="40" rx="6"/>
+<text x="1108.0" y="194.0" class="name ink" text-anchor="middle">reconsidering-the-approach</text>
+<rect class="fam1" x="993.5" y="176" width="4" height="28" rx="2"/>
 <circle class="acc" cx="948" cy="190.0" r="3.5"/>
 <rect class="n-step" stroke-width="1" x="340" y="222" width="248" height="40" rx="6"/>
 <text x="464.0" y="246.0" class="name ink" text-anchor="middle">rating-change-risk</text>

@@ -1,5 +1,5 @@
 ---
-description: "Challenges a chosen strategy by generating genuinely different ways to achieve the same outcome."
+description: "Generates rigorously challenged alternative solutions and implementation decisions for uncertain or consequential choices."
 disable-model-invocation: true
 ---
 
@@ -9,52 +9,55 @@ Portable command prompt generated from `skills/reconsidering-the-approach/SKILL.
 
 ## Use when
 
-- User invokes `/ng-rethink`, asks for a Wise Council, or wants competing solutions.
-- A consequential design is costly to reverse, has no examined alternative, or encounters contradictory requirements.
-- Several iterations failed, a material constraint changed, or a better mechanism may exist.
+- Explicit `/ng-rethink`, Wise Council, architect's debate, creative invention, alternative designs or pre-mortem of the *approach*.
+- A costly or hard-to-reverse choice requires creative options and a defensible discriminating experiment.
+- The operator elects to investigate a substantive uncertainty surfaced during ordinary Nuclear-grade work.
+- A current design appears stuck or contradictory and a different mechanism could satisfy the same accepted requirements.
 
 ## Do not use when
 
-- For simple assumption/fact checking; use `questioning-attitude` or `checking-facts`.
-- For independent review of a trust-bearing verdict; use `running-a-review-panel`.
-- For mission drift alone; use `staying-on-mission`.
-- For authority to change a baseline or ship; use `deciding-who-decides`, `declaring-intent` and release controls.
-- During an active incident before containment; use `responding-to-incidents`.
+- For ordinary assumption or factual verification, use `questioning-attitude` or `checking-facts`.
+- For independent proof of a trust-bearing verdict, use `running-a-review-panel`.
+- For goal drift only, use `staying-on-mission`; for change-impact or owner authority use `checking-what-a-change-affects` and `deciding-who-decides`.
+- For automatic blocking of a release or approval, use `checking-release-readiness`.
+- For incident response or stopping agents, use `responding-to-incidents` or the separate SCRAM workflow.
 
 ## Inputs
 
-- Current stage, goal, accepted success criteria, non-goals and constraints.
-- Repository files, approved design/ADR, evidence, prior attempts and uncertainty.
-- Requested depth (quick, standard, deep or creative), decision owner and allowed resources.
+- User-selected focus, task mode (`imagine`, `decide`, `challenge`, `design`, `build`, `audit`) and depth (`quick`, `standard`, `deep`, `creative`).
+- Source paths, current stage and work type, accepted goal, non-goals, interfaces, hard constraints, approved basis and prior alternatives.
+- Evidence and unknowns, decision owner, authorized tools/model access, cost/latency budget, prototype execution authority.
 
 ## Prompt text
 
 ```text
-Run /ng-rethink at quick | standard (default) | deep | creative depth.
+Run /ng-rethink for this decision. Mode: imagine | decide | challenge | design | build | audit.
+Depth: quick | standard (default) | deep | creative.
 
-Inputs:
-- current stage, accepted outcome, hard constraints and decision owner:
-- code / documents / approved ADR / source evidence:
-- alternatives considered, uncertainties, reversibility and budget:
+Ground in actual files, requirements, accepted basis and evidence. Cast complementary visionary,
+systems, contrarian and engineering lenses using documented reasoning frameworks. Compare at
+least three materially different mechanisms (Creative: eight raw ideas BEFORE critique).
+Run three rounds: initial positions, identity-masked challenge, synthesis preserving dissent.
+Use pre-mortem, hard-constraint gates, discriminating tests and measurable reversal criteria.
+Deep: map disagreement and independently meta-audit the synthesis.
+When justified, define fair competing-prototype benchmarks; claim measured results only if run.
+Produce a draft ADR, exact file/interface/test plan for technical decisions; build only when
+authorized by the user and the existing Nuclear-grade process.
 
-Read the real basis. Compare the no-change case with materially different solutions, using opposing perspectives. In Creative mode, produce at least eight distinct mechanisms before critique. Preserve minority dissent, unknowns, and actual reviewer independence.
-
-Return:
-- decision under challenge and alternative approaches
-- strongest objection, lowest-cost discriminating test and measurable reversal signal
-- CONTINUE, REFINE, REOPEN or ESCALATE, owner and lifecycle re-entry stage
-- one artifact-producing next action
-
-Do not alter approved baselines or authorize releases. Route consequential decisions through existing Nuclear-grade change control. Make no formal V&V, compliance, certification, safety or security guarantee.
+Return the recommendation, strongest objection, decisive evidence or missing fact,
+CONTINUE/REFINE/REOPEN/ESCALATE with owner and lifecycle re-entry stage, and one concrete
+artifact-producing action. Do not change accepted baselines or release authority by consensus.
+No formal verification, security, certification, nuclear compliance or safety claim.
 ```
 
 ## Verification
 
-- Alternatives vary the actual mechanism, address the same goal and honor hard constraints.
-- Material dissent survives synthesis and factual claims are sourced or explicitly unverified.
-- The decision owner, reversal signal, re-entry stage and artifact are named.
-- The output reports real models, tests, tool use and degraded reviewers honestly.
-- No accepted basis, authority, evidence gate or release state changed through council consensus.
+- Independent positions, masked critique, dissent and hard-constraint vetoes survive synthesis; no unverified claim is elevated to FACT.
+- Standard/Deep offer three *different* mechanisms or a specific feasibility exception; Creative contains eight options **before** any grading.
+- Comparisons disclose weights/sensitivity and measured-vs-proposed results; missing data is not silently scored.
+- A real model, tool, or test is only named as used if it actually ran. A single model with five lenses is not independent review.
+- ADR/plan do not override accepted requirements or bypass controls; next decision, owner, re-entry stage, and reversal signal are explicit.
+- Evaluate usefulness against a simpler approach using `references/evaluation.md`; formal completeness is not proof of decision quality.
 
 ## Full skill
 

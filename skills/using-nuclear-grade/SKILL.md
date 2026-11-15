@@ -60,7 +60,8 @@ When one is present, justify the mode in the record or escalate — do not let "
 Then:
 
 1. **Question first.** Name the decision question, the assumptions, the one fact that would change the decision, the evidence gaps, and the stop conditions.
-2. **Build the smallest record that fits the mode.** On the administrative floor there is no packet — the commit message, naming the files changed and the one-line reason, is the record. Otherwise build the smallest record that fits the mode under `.nuclear/changes/<slug>/`. Adopting for the first time? Take the Core 7 habits from `CORE.md` and switch on ancillary clusters by trigger, not all at once.
+2. **Offer optional reconsideration when warranted.** A user-requested `/ng-rethink` or an expensive architecture without an evaluated alternative may invoke `reconsidering-the-approach` without bypassing classification, approved bases or decision rights.
+3. **Build the smallest record that fits the mode.** On the administrative floor there is no packet — the commit message, naming the files changed and the one-line reason, is the record. Otherwise build the smallest record that fits the mode under `.nuclear/changes/<slug>/`. Adopting for the first time? Take the Core 7 habits from `CORE.md` and switch on ancillary clusters by trigger, not all at once.
 3. **Write the least you need:** what the change must do, what it must prove, the files it touches, and the claims it must not make.
 4. **Keep build work tied to the claims and their evidence.** If the chosen path stops fitting, write down where you left it and why.
 5. **Slow down at the promise boundary** — before you accept a claim, write public wording, save an approved version, ship a release, or change what an agent may do.

@@ -9,7 +9,7 @@ This council does not itself approve changes. A winning alternative produces a *
 - Candidates considered and discarded, why each was rejected, and the strongest minority objection
 - Selection rationale, observed evidence, unknowns, assumptions, cost/schedule uncertainty and sensitivity
 - Invariants and non-negotiable guardrails (correctness, security, privacy, performance, boundary/authority)
-- Data model/schema, interface and API contracts, integration boundaries and dependent modules
+- Data model/schema, interfaces and API contracts, integration boundaries and dependent modules
 - Rollout/migration, data compatibility, rollback/compensation, irreversible side effects
 - Verification strategy, test acceptance gates, owners and evidence paths
 - Observable reversal/kill criteria and milestone

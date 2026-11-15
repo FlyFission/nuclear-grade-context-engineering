@@ -571,10 +571,16 @@ def skill_map(name, overlays_on):
     f.arrow([(lfo["x"], lfo["cy"]), (lx, lfo["cy"]), (lx, qa["cy"]), qa["l"]], "ln-acc", dashed=True)
     f.text(lx - 12, lfo["cy"] - 10, "durable control", "lbl", "acc", anchor="end", layer=f.labels)
     f.text(lx - 12, lfo["cy"] + 4, "update ↺", "lbl", "acc", anchor="end", layer=f.labels)
+    if overlays_on.get("operator"):
+        # SCRAM is an operator-originated hold at any stage, not a consequence of
+        # analysis. Keep it outside the normal core-to-review path.
+        sc = skill(34, pos["qa"]["y"], 248, 40, "scramming-agent-work", kind="opt")
+        f.arrow([pos["qa"]["l"], sc["r"]], "ln-acc", dashed=True)
     f.save()
 
 
 FULL_OVERLAYS = {
+    "operator": [[("scramming-agent-work", "operator SCRAM")]],  # independent stop trigger, drawn beside QA
     "qa": [[("staying-on-mission", "long drifting session"), ("reconsidering-the-approach", None)]],
     "ccr": [[("deciding-who-decides", "irreversible action"), ("declaring-intent", None)],
             [("vetting-outside-code-and-models", "outside dep / model")],
@@ -782,6 +788,7 @@ SKILL_FAMILIES = [
         ("deciding-who-decides", "may the agent act alone?"),
         ("staying-on-mission", "work drifts, loops, or slips"),
         ("reconsidering-the-approach", "optional rethink, user-invoked"),
+        ("scramming-agent-work", "operator stop + plain status"),
     ]),
     ("Records and versions", [
         ("creating-change-records", "open or update a change record"),

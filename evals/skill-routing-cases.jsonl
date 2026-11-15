@@ -175,3 +175,8 @@
 {"id":"reconsidering-the-approach-not-trigger-01","skill":"reconsidering-the-approach","prompt":"Fix this spelling error and show the diff, no need for alternate architecture analysis","expected":"not-trigger"}
 {"id":"reconsidering-the-approach-not-trigger-02","skill":"reconsidering-the-approach","prompt":"We lack the current API rate limit; look up the documented number without running a council","expected":"not-trigger"}
 {"id":"reconsidering-the-approach-not-trigger-03","skill":"reconsidering-the-approach","prompt":"You may offer a rethink if alternatives are unresolved, but do not launch it until I accept","expected":"not-trigger"}
+{"id":"scramming-agent-work-trigger-01","skill":"scramming-agent-work","prompt":"/ng-scram: stop agent work now and tell me which jobs confirmed stopping and which remain unknown","expected":"trigger"}
+{"id":"scramming-agent-work-trigger-02","skill":"scramming-agent-work","prompt":"Freeze all my registered agents and give a plain-English turnover showing reversible and irreversible work","expected":"trigger"}
+{"id":"scramming-agent-work-trigger-03","skill":"scramming-agent-work","prompt":"SCRAM this coding run; hold until I explicitly tell you to resume","expected":"trigger"}
+{"id":"scramming-agent-work-not-trigger-01","skill":"scramming-agent-work","prompt":"Run /ng-rethink to challenge the architecture without stopping the agents","expected":"not-trigger"}
+{"id":"scramming-agent-work-not-trigger-02","skill":"scramming-agent-work","prompt":"Summarize what the README says about SCRAM but do not invoke it","expected":"not-trigger"}

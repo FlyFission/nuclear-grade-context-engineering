@@ -318,6 +318,14 @@ The Council is **user-invoked only**. For evaluation, distinguish an operator-re
 - Should not trigger: Check that the cited API rate limit matches official documentation.
 - Should not trigger: Convene independent reviewers to approve this security-sensitive release.
 
+### `scramming-agent-work`
+
+- Should trigger: /ng-scram — stop initiating tasks and give me a plain-language status of known agents and reversible work.
+- Should trigger: Freeze this agentic build, account for outstanding jobs, and explain what can be undone.
+- Should trigger: Immediate hold and turnover before any deployment workflow resumes.
+- Should not trigger: Rethink an architecture without stopping work; use /ng-rethink.
+- Should not trigger: Convene reviewers for a release decision without a stop request.
+
 ## Source-lineage note
 
 This evaluation prompt bank is an original Nuclear-grade artifact informed by public skill-authoring practice: concise skills, realistic trigger prompts, baseline-vs-skill comparison, and iterative trigger-description improvement. It does not create formal assurance, compliance, certification, safety, security, or regulatory adequacy.

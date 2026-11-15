@@ -268,6 +268,14 @@
       "invocation": "user",
       "role": "discipline",
       "command": "ng-rethink"
+    },
+    {
+      "id": "scramming-agent-work",
+      "path": "skills/scramming-agent-work/SKILL.md",
+      "status": "promoted",
+      "invocation": "user",
+      "role": "discipline",
+      "command": "ng-scram"
     }
   ]
 }

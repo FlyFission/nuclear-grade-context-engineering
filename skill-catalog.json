@@ -265,7 +265,7 @@
       "id": "reconsidering-the-approach",
       "path": "skills/reconsidering-the-approach/SKILL.md",
       "status": "promoted",
-      "invocation": "both",
+      "invocation": "user",
       "role": "discipline",
       "command": "ng-rethink"
     }

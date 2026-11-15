@@ -72,6 +72,7 @@ skills:
   - running-a-review-panel
   - checking-facts
   - reconsidering-the-approach
+  - scramming-agent-work
 commands:
   - ng-question.md
   - ng-classify.md
@@ -104,6 +105,7 @@ commands:
   - ng-panel.md
   - ng-fact-check.md
   - ng-rethink.md
+  - ng-scram.md
 command_map:
   # Compatibility projection of promoted command-backed skills from
   # skill-catalog.json. The lifecycle registry is the semantic owner; this flat map
@@ -140,6 +142,7 @@ command_map:
   running-a-review-panel: ng-panel
   checking-facts: ng-fact-check
   reconsidering-the-approach: ng-rethink
+  scramming-agent-work: ng-scram
 token_budgets:
   # Per-file token ceilings enforced by `ng tokens` (see nuclear_grade/tokens.py).
   # Seeded above the measured maxima with headroom, so the gate blocks regression,
@@ -170,10 +173,10 @@ token_budgets:
   description_max: 200
   skill_body_max: 3900
   command_max: 1700
-  skill_description_total_max: 3750
-  skill_body_total_max: 73500
+  skill_description_total_max: 4000
+  skill_body_total_max: 77000
   skill_body_p95_max: 3400
-  command_total_max: 34000
+  command_total_max: 35500
   core_description_total_max: 900
   # The two always-on front-door skills now offer the optional Council once on
   # unresolved consequential alternatives. CI measured 19,924 core-body tokens;

@@ -99,6 +99,7 @@
 <text x="926" y="68" class="lbl muted" text-anchor="start">when it goes wrong</text>
 <circle class="acc" cx="1062" cy="64" r="3.5"/>
 <text x="1070" y="68" class="lbl muted" text-anchor="start">core 7: every change</text>
+<path class="ln-acc" stroke-width="1.2" d="M340,190.0 L282,190.0" stroke-dasharray="5 4" marker-end="url(#m-acc)"/>
 <rect class="n-focal" stroke-width="1.4" x="340" y="118" width="248" height="44" rx="6"/>
 <text x="464.0" y="137.5" class="name ink" text-anchor="middle">using-nuclear-grade</text>
 <text x="464.0" y="152.5" class="sub soft" text-anchor="middle">router · entry point</text>
@@ -203,6 +204,9 @@
 <rect class="n-step" stroke-width="1" x="28" y="346" width="248" height="40" rx="6"/>
 <text x="152.0" y="370.0" class="name ink" text-anchor="middle">checking-what-a-change-affects</text>
 <rect class="fam2" x="29.5" y="352" width="4" height="28" rx="2"/>
+<rect class="n-opt" stroke-width="1" x="34" y="170" width="248" height="40" rx="6"/>
+<text x="158.0" y="194.0" class="name ink" text-anchor="middle">scramming-agent-work</text>
+<rect class="fam1" x="35.5" y="176" width="4" height="28" rx="2"/>
 <rect class="mask" x="632.0" y="182" width="136.0" height="15" rx="2"/>
 <text x="700.0" y="193.5" class="lbl muted" text-anchor="middle">long drifting session</text>
 <rect class="mask" x="638.0" y="234" width="124.0" height="15" rx="2"/>

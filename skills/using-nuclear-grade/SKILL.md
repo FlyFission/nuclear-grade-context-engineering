@@ -41,6 +41,9 @@ The repo charter (`.nuclear/charter.md`) holds the lasting rules every change fo
 
 ## Process
 
+When an operator says SCRAM or explicitly requests immediate stop-and-debrief, route directly to `scramming-agent-work` before ordinary preflight, classification, brainstorming, or further mutation. A hold is a control action, not a newly authorized change or an excuse to skip incident containment. Do not state that external agents have stopped without runtime evidence.
+
+
 **Preflight read-only, then classify out loud.** Perform only the bounded read-only preflight needed to inspect the request, repository state, existing records, and other accessible source of truth. Do not write files, use credentials, call a mutating API, publish, deploy, merge, or release during preflight. Then state the mode this change earns: the **administrative floor** (no packet; the commit message is the record), **Quick**, or **Standard-plus** (Standard, or a stronger human-reviewed mode), plus the **one fact** that sets it. This declaration of intent is required before the first mutation, external side effect, credential use, publication, or release action. Re-state it whenever the change grows.
 
 The **administrative floor** is the mode below Quick: it fits only a purely administrative, instantly reversible change that crosses no trust boundary — a typo, a comment, formatting, a dead-link fix, a doc-only bump — and carries no packet, with the commit message (the files changed and the one-line reason) as its record. Any trap below lifts it to at least Quick, and **when in doubt it is Quick, not the floor**. The floor never waives the always-on Core habits (see `docs/02-operating-system/activation-thresholds.md` and `MAXIMS.md`).

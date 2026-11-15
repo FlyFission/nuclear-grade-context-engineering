@@ -35,7 +35,7 @@ tools. `ng install` places them where each tool looks:
 
 ```bash
 python tools/ng.py install codex          # ~/.agents/skills (Core set; install once)
-python tools/ng.py install codex --full   # all 32 skills
+python tools/ng.py install codex --full   # all 33 skills
 python tools/ng.py install claude         # ~/.claude/skills
 python tools/ng.py install cursor         # ~/.cursor/skills
 python tools/ng.py install windsurf --scope project --repo .   # .windsurf/skills (project-scoped)

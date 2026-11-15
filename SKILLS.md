@@ -8,13 +8,14 @@ For directional pilot evidence on the 28 skills included in the July 2026 run â€
 
 ## The skills
 
-<p align="center"><img src="docs/assets/diagrams/skill-catalog.svg" alt="The skill catalog: 31 skills in seven families (start here; before you act; records and versions; evidence and verdicts; trust and public claims; delegation and structure; when it goes wrong), each with the situation that calls for it, Core 7 marked" width="100%"></p>
+<p align="center"><img src="docs/assets/diagrams/skill-catalog.svg" alt="The skill catalog: 32 skills in seven families (start here; before you act; records and versions; evidence and verdicts; trust and public claims; delegation and structure; when it goes wrong), each with the situation that calls for it, Core 7 marked" width="100%"></p>
 
 How a skill gets picked and what it leaves behind: [`docs/diagrams.md`](docs/diagrams.md#10-how-a-skill-is-invoked).
 
 | Skill | Use it when | What you get |
 |---|---|---|
 | [`questioning-attitude`](skills/questioning-attitude/SKILL.md) | You need to challenge assumptions before work, review, or a release moves ahead | The assumptions, the gaps in evidence, and clear stop conditions |
+| [`reconsidering-the-approach`](skills/reconsidering-the-approach/SKILL.md) | Reconsider the design mechanism, specification or strategy at any stage | Alternatives, dissent, reversal criterion and a governed disposition |
 | [`using-nuclear-grade`](skills/using-nuclear-grade/SKILL.md) | You are starting to use this workflow on a change or a repo | The right mode, where the record goes, and the path to evidence |
 | [`choosing-what-to-control`](skills/choosing-what-to-control/SKILL.md) | You need to decide which files and settings must stay under control | A short list of what to keep under control |
 | [`checking-what-a-change-affects`](skills/checking-what-a-change-affects/SKILL.md) | You want to know what else a change touches and what must be re-checked | A list of ripple effects and re-check triggers |

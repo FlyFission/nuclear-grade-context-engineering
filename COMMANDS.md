@@ -7,6 +7,7 @@ These are portable command prompts: plain Markdown prompt cards you can paste in
 | Prompt | Use it when | What you get |
 |---|---|---|
 | [`ng-question`](commands/ng-question.md) | You want to challenge assumptions before you build, review, or release | Assumptions, gaps, and stop conditions |
+| [`ng-rethink`](commands/ng-rethink.md) | Find fundamentally better approaches at any lifecycle stage | Competing mechanisms, strongest dissent and a next artifact |
 | [`ng-classify`](commands/ng-classify.md) | You need to pick how careful to be | The chosen mode and what it must prove |
 | [`ng-new`](commands/ng-new.md) | You are starting a change record | The record files |
 | [`ng-what-to-control`](commands/ng-what-to-control.md) | You need to decide what to keep under control | A short list of what to control |

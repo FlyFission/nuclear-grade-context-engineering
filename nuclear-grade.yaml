@@ -71,6 +71,7 @@ skills:
   - verifying-final-artifacts
   - running-a-review-panel
   - checking-facts
+  - reconsidering-the-approach
 commands:
   - ng-question.md
   - ng-classify.md
@@ -102,6 +103,7 @@ commands:
   - ng-verify-artifact.md
   - ng-panel.md
   - ng-fact-check.md
+  - ng-rethink.md
 command_map:
   # Compatibility projection of promoted command-backed skills from
   # skill-catalog.json. The lifecycle registry is the semantic owner; this flat map
@@ -137,6 +139,7 @@ command_map:
   verifying-final-artifacts: ng-verify-artifact
   running-a-review-panel: ng-panel
   checking-facts: ng-fact-check
+  reconsidering-the-approach: ng-rethink
 token_budgets:
   # Per-file token ceilings enforced by `ng tokens` (see nuclear_grade/tokens.py).
   # Seeded above the measured maxima with headroom, so the gate blocks regression,
@@ -167,10 +170,10 @@ token_budgets:
   description_max: 200
   skill_body_max: 3900
   command_max: 1700
-  skill_description_total_max: 3580
-  skill_body_total_max: 70500
+  skill_description_total_max: 3750
+  skill_body_total_max: 73500
   skill_body_p95_max: 3400
-  command_total_max: 32600
+  command_total_max: 34000
   core_description_total_max: 900
   core_body_total_max: 19500
   repeated_block_max_files: 8

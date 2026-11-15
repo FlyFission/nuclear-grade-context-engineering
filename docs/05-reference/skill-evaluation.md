@@ -308,6 +308,14 @@ The scorer reports required-skill recall, unnecessary-selection precision, accep
 - Should not trigger: Map each claim in this change record to the tests that back it.
 - Should not trigger: Fix the typo in the contributing guide.
 
+### `reconsidering-the-approach`
+
+- Should trigger: /ng-rethink deep — before locking this expensive architecture, is there a fundamentally better approach?
+- Should trigger: Invent genuinely different implementations of the same approved outcome before writing the spec.
+- Should trigger: We have attempted three variations of this design without success; reconsider the design mechanism.
+- Should not trigger: Check that the cited API rate limit matches official documentation.
+- Should not trigger: Convene independent reviewers to approve this security-sensitive release.
+
 ## Source-lineage note
 
 This evaluation prompt bank is an original Nuclear-grade artifact informed by public skill-authoring practice: concise skills, realistic trigger prompts, baseline-vs-skill comparison, and iterative trigger-description improvement. It does not create formal assurance, compliance, certification, safety, security, or regulatory adequacy.

@@ -575,7 +575,7 @@ def skill_map(name, overlays_on):
 
 
 FULL_OVERLAYS = {
-    "qa": [[("staying-on-mission", "long drifting session")]],
+    "qa": [[("staying-on-mission", "long drifting session"), ("reconsidering-the-approach", None)]],
     "ccr": [[("deciding-who-decides", "irreversible action"), ("declaring-intent", None)],
             [("vetting-outside-code-and-models", "outside dep / model")],
             [("breaking-down-the-work", "scope to split"), ("organizing-project-folders", None)]],
@@ -595,7 +595,7 @@ FULL_OVERLAYS = {
             [("reporting-shared-defects", "others carry it")]],
 }
 SHORT_OVERLAYS = {
-    "qa": FULL_OVERLAYS["qa"],
+    "qa": [[("staying-on-mission", "long drifting session")]],  # compact map omits opt-in Council
     "ccp": FULL_OVERLAYS["ccp"],
     "pc": FULL_OVERLAYS["pc"][:1],
     "rsr": FULL_OVERLAYS["rsr"][:2],
@@ -781,6 +781,7 @@ SKILL_FAMILIES = [
         ("declaring-intent", "a reviewer must see the why first"),
         ("deciding-who-decides", "may the agent act alone?"),
         ("staying-on-mission", "work drifts, loops, or slips"),
+        ("reconsidering-the-approach", "optional rethink, user-invoked"),
     ]),
     ("Records and versions", [
         ("creating-change-records", "open or update a change record"),

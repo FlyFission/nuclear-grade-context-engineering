@@ -310,6 +310,8 @@ The scorer reports required-skill recall, unnecessary-selection precision, accep
 
 ### `reconsidering-the-approach`
 
+The Council is **user-invoked only**. For evaluation, distinguish an operator-requested Council from a normal-path advisory suggestion. A major uncertainty may warrant one nonblocking question offering `/ng-rethink`, but a declined offer, trivial fact lookup, or routine implementation task must not load the Council. See `skills/reconsidering-the-approach/references/evaluation.md` for the blind baseline-versus-Council evaluation plan. No superiority finding is established without that test.
+
 - Should trigger: /ng-rethink deep — before locking this expensive architecture, is there a fundamentally better approach?
 - Should trigger: Invent genuinely different implementations of the same approved outcome before writing the spec.
 - Should trigger: We have attempted three variations of this design without success; reconsider the design mechanism.

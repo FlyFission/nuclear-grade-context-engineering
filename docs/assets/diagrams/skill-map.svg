@@ -83,6 +83,7 @@
 <path class="ln" stroke-width="1.2" d="M340,242.0 L160.0,242.0 Q152.0,242.0 152.0,250.0 L152.0,274" marker-end="url(#m-muted)"/>
 <path class="ln" stroke-width="1.2" d="M152.0,314 L152.0,346" marker-end="url(#m-muted)"/>
 <path class="ln-acc" stroke-width="1.2" d="M340,970.0 L332,970.0 Q324,970.0 324,962.0 L324,198.0 Q324,190.0 332,190.0 L340,190.0" stroke-dasharray="5 4" marker-end="url(#m-acc)"/>
+<path class="ln-acc" stroke-width="1.2" d="M340,190.0 L282,190.0" stroke-dasharray="5 4" marker-end="url(#m-acc)"/>
 <rect class="fam0" x="28" y="58" width="4" height="12" rx="2"/>
 <text x="38" y="68" class="lbl muted" text-anchor="start">start here</text>
 <rect class="fam1" x="122" y="58" width="4" height="12" rx="2"/>
@@ -99,7 +100,6 @@
 <text x="926" y="68" class="lbl muted" text-anchor="start">when it goes wrong</text>
 <circle class="acc" cx="1062" cy="64" r="3.5"/>
 <text x="1070" y="68" class="lbl muted" text-anchor="start">core 7: every change</text>
-<path class="ln-acc" stroke-width="1.2" d="M340,190.0 L282,190.0" stroke-dasharray="5 4" marker-end="url(#m-acc)"/>
 <rect class="n-focal" stroke-width="1.4" x="340" y="118" width="248" height="44" rx="6"/>
 <text x="464.0" y="137.5" class="name ink" text-anchor="middle">using-nuclear-grade</text>
 <text x="464.0" y="152.5" class="sub soft" text-anchor="middle">router · entry point</text>

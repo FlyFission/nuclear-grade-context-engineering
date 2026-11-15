@@ -52,6 +52,7 @@ EXPECTED_SKILLS = {
     "verifying-final-artifacts",
     "running-a-review-panel",
     "checking-facts",
+    "reconsidering-the-approach",
 }
 
 REQUIRED_SECTIONS = (

@@ -168,3 +168,10 @@
 {"id": "checking-facts-trigger-04", "skill": "checking-facts", "prompt": "Two blog posts agree on the benchmark number we cite; verify it against the original paper or data.", "expected": "trigger"}
 {"id": "checking-facts-nontrigger-01", "skill": "checking-facts", "prompt": "Does our README call the DOE handbook an influence or imply we comply with it?", "expected": "not-trigger"}
 {"id": "checking-facts-nontrigger-02", "skill": "checking-facts", "prompt": "Map each claim in this change record to the tests that back it.", "expected": "not-trigger"}
+{"id":"reconsidering-the-approach-trigger-01","skill":"reconsidering-the-approach","prompt":"/ng-rethink deep: examine this repository's architecture using three competing mechanisms and a full wise council","expected":"trigger"}
+{"id":"reconsidering-the-approach-trigger-02","skill":"reconsidering-the-approach","prompt":"/ng-rethink creative: generate eight different mechanisms for this design problem before evaluating any of them","expected":"trigger"}
+{"id":"reconsidering-the-approach-trigger-03","skill":"reconsidering-the-approach","prompt":"Cast a visionary wise council to invent alternatives and produce a draft ADR and build plan","expected":"trigger"}
+{"id":"reconsidering-the-approach-trigger-04","skill":"reconsidering-the-approach","prompt":"I accept your suggestion to run /ng-rethink and compare competing prototypes before locking the architecture","expected":"trigger"}
+{"id":"reconsidering-the-approach-not-trigger-01","skill":"reconsidering-the-approach","prompt":"Fix this spelling error and show the diff, no need for alternate architecture analysis","expected":"not-trigger"}
+{"id":"reconsidering-the-approach-not-trigger-02","skill":"reconsidering-the-approach","prompt":"We lack the current API rate limit; look up the documented number without running a council","expected":"not-trigger"}
+{"id":"reconsidering-the-approach-not-trigger-03","skill":"reconsidering-the-approach","prompt":"You may offer a rethink if alternatives are unresolved, but do not launch it until I accept","expected":"not-trigger"}

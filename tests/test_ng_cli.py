@@ -134,6 +134,71 @@ def test_new_quick_packet_copies_templates(tmp_path):
     assert (packet / "proof.md").read_text(encoding="utf-8") == "# quick proof.md from repo\n"
 
 
+def test_new_says_a_fresh_record_must_be_filled_before_validate(tmp_path):
+    scaffold_repo(tmp_path)
+    result = run_ng("new", "demo", "--mode", "quick", "--repo", str(tmp_path))
+
+    assert result.returncode == 0, result.stderr
+    assert "next: fill in risk.md and proof.md" in result.stdout
+    assert "NUCLEAR-GRADE-PLACEHOLDER" in result.stdout
+    assert ".nuclear/changes/demo" in result.stdout
+    assert "a blank record should never pass" in result.stdout
+    # Run from a source checkout, so the hint uses the checkout command.
+    assert "then: python tools/ng.py validate" in result.stdout
+
+
+def test_new_cm_records_say_validate_needs_a_quick_or_standard_record(tmp_path):
+    scaffold_repo(tmp_path)
+    for name in ng_cli.CM_FILES:
+        path = tmp_path / "templates" / "cm" / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(f"# cm {name} from repo\n", encoding="utf-8")
+
+    result = run_ng("new", "demo", "--mode", "cm", "--repo", str(tmp_path))
+
+    assert result.returncode == 0, result.stderr
+    assert "validate needs a Quick or Standard record" in result.stdout
+    assert f"python tools/ng.py new demo --repo {tmp_path.as_posix()} --mode quick" in result.stdout
+
+    quick = run_ng("new", "demo", "--mode", "quick", "--repo", str(tmp_path))
+
+    assert quick.returncode == 0, quick.stderr
+    assert "validate needs a Quick or Standard record" not in quick.stdout
+
+
+def test_invoked_command_matches_how_the_cli_was_run(monkeypatch, tmp_path):
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(sys, "argv", ["/usr/local/bin/nuclear-grade", "new"])
+    assert ng_cli.invoked_command() == "nuclear-grade"
+
+    (tmp_path / "tools").mkdir()
+    monkeypatch.setattr(sys, "argv", [str(tmp_path / "tools" / "ng.py"), "new"])
+    assert ng_cli.invoked_command() == "python tools/ng.py"
+
+    spaced = tmp_path / "my checkout" / "tools" / "ng.py"
+    monkeypatch.setattr(sys, "argv", [str(spaced), "new"])
+    monkeypatch.chdir(tmp_path.parent)
+    assert ng_cli.invoked_command() == f"python '{tmp_path.name}/my checkout/tools/ng.py'"
+
+
+def test_new_quick_record_does_not_ask_for_another_record(tmp_path):
+    scaffold_repo(tmp_path)
+    result = run_ng("new", "demo", "--mode", "quick", "--repo", str(tmp_path))
+
+    assert result.returncode == 0, result.stderr
+    assert "also:" not in result.stdout
+
+
+def test_new_prints_no_next_steps_when_it_refuses(tmp_path):
+    scaffold_repo(tmp_path)
+    assert run_ng("new", "demo", "--mode", "quick", "--repo", str(tmp_path)).returncode == 0
+
+    result = run_ng("new", "demo", "--mode", "quick", "--repo", str(tmp_path))
+
+    assert result.returncode != 0
+    assert "next:" not in result.stdout
+
+
 def test_new_standard_packet_copies_templates(tmp_path):
     scaffold_repo(tmp_path)
     result = run_ng("new", "demo", "--mode", "standard", "--repo", str(tmp_path))

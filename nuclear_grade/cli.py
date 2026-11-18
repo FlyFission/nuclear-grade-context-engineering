@@ -10,6 +10,7 @@ import argparse
 import json
 import os
 import re
+import shlex
 import shutil
 import sys
 from dataclasses import dataclass
@@ -976,7 +977,57 @@ def handle_new(args: argparse.Namespace) -> int:
         PlannedWrite(packet / name, source=templates / args.mode / name)
         for name in files
     )
-    return apply_writes(writes, dry_run=False, overwrite=args.force)
+    code = apply_writes(writes, dry_run=False, overwrite=args.force)
+    if code == 0:
+        print_new_next_steps(packet, files, repo)
+    return code
+
+
+def invoked_command() -> str:
+    """Return the command the user ran, so printed hints work as typed.
+
+    A PyPI install runs `nuclear-grade`; a source checkout runs `python tools/ng.py`,
+    where `nuclear-grade` may not be on PATH.
+    """
+    script = Path(sys.argv[0]) if sys.argv and sys.argv[0] else Path("nuclear-grade")
+    if script.name != "ng.py":
+        return "nuclear-grade"
+    try:
+        shown = script.resolve().relative_to(Path.cwd().resolve())
+    except ValueError:
+        shown = script
+    return f"python {shlex.quote(shown.as_posix())}"
+
+
+def print_new_next_steps(
+    packet: Path, files: tuple[str, ...] | list[str], repo: Path | None = None
+) -> None:
+    """Tell the user that a fresh record fails validation until it is filled.
+
+    An untouched scaffold fails `validate` on purpose (a blank record must never
+    pass), so say so up front instead of letting the first run look broken.
+    """
+    try:
+        shown = packet.relative_to(Path.cwd())
+    except ValueError:
+        shown = packet
+    command = invoked_command()
+    repo_arg = ""
+    if repo is not None and repo.resolve() != Path.cwd().resolve():
+        repo_arg = f" --repo {shlex.quote(repo.as_posix())}"
+    names = list(files)
+    listed = names[0] if len(names) == 1 else f"{', '.join(names[:-1])} and {names[-1]}"
+    print()
+    print(f"next: fill in {listed}, then delete the NUCLEAR-GRADE-PLACEHOLDER line in each.")
+    if "risk.md" not in names and not (packet / "risk.md").exists():
+        # CM and golden-path files are supporting records. `validate` needs the
+        # Quick or Standard risk.md beside them, so say how to add it first.
+        print(
+            "also: these are supporting records. validate needs a Quick or Standard record "
+            f"in the same folder: {command} new {packet.name}{repo_arg} --mode quick (or --mode standard)"
+        )
+    print(f"then: {command} validate {shlex.quote(shown.as_posix())}")
+    print("validate fails until the record is filled in; a blank record should never pass.")
 
 
 def handle_validate(args: argparse.Namespace) -> int:

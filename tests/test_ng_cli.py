@@ -143,6 +143,8 @@ def test_new_says_a_fresh_record_must_be_filled_before_validate(tmp_path):
     assert "NUCLEAR-GRADE-PLACEHOLDER" in result.stdout
     assert ".nuclear/changes/demo" in result.stdout
     assert "a blank record should never pass" in result.stdout
+    # Run from a source checkout, so the hint uses the checkout command.
+    assert "then: python tools/ng.py validate" in result.stdout
 
 
 def test_new_cm_records_say_validate_needs_a_quick_or_standard_record(tmp_path):
@@ -156,12 +158,22 @@ def test_new_cm_records_say_validate_needs_a_quick_or_standard_record(tmp_path):
 
     assert result.returncode == 0, result.stderr
     assert "validate needs a Quick or Standard record" in result.stdout
-    assert "nuclear-grade new demo --mode quick" in result.stdout
+    assert "python tools/ng.py new demo --mode quick" in result.stdout
 
     quick = run_ng("new", "demo", "--mode", "quick", "--repo", str(tmp_path))
 
     assert quick.returncode == 0, quick.stderr
     assert "validate needs a Quick or Standard record" not in quick.stdout
+
+
+def test_invoked_command_matches_how_the_cli_was_run(monkeypatch, tmp_path):
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(sys, "argv", ["/usr/local/bin/nuclear-grade", "new"])
+    assert ng_cli.invoked_command() == "nuclear-grade"
+
+    (tmp_path / "tools").mkdir()
+    monkeypatch.setattr(sys, "argv", [str(tmp_path / "tools" / "ng.py"), "new"])
+    assert ng_cli.invoked_command() == "python tools/ng.py"
 
 
 def test_new_quick_record_does_not_ask_for_another_record(tmp_path):

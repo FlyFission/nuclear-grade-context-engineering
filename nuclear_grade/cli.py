@@ -982,6 +982,22 @@ def handle_new(args: argparse.Namespace) -> int:
     return code
 
 
+def invoked_command() -> str:
+    """Return the command the user ran, so printed hints work as typed.
+
+    A PyPI install runs `nuclear-grade`; a source checkout runs `python tools/ng.py`,
+    where `nuclear-grade` may not be on PATH.
+    """
+    script = Path(sys.argv[0]) if sys.argv and sys.argv[0] else Path("nuclear-grade")
+    if script.name != "ng.py":
+        return "nuclear-grade"
+    try:
+        shown = script.resolve().relative_to(Path.cwd().resolve())
+    except ValueError:
+        shown = script
+    return f"python {shown.as_posix()}"
+
+
 def print_new_next_steps(packet: Path, files: tuple[str, ...] | list[str]) -> None:
     """Tell the user that a fresh record fails validation until it is filled.
 
@@ -992,6 +1008,7 @@ def print_new_next_steps(packet: Path, files: tuple[str, ...] | list[str]) -> No
         shown = packet.relative_to(Path.cwd())
     except ValueError:
         shown = packet
+    command = invoked_command()
     names = list(files)
     listed = names[0] if len(names) == 1 else f"{', '.join(names[:-1])} and {names[-1]}"
     print()
@@ -1001,9 +1018,9 @@ def print_new_next_steps(packet: Path, files: tuple[str, ...] | list[str]) -> No
         # Quick or Standard risk.md beside them, so say how to add it first.
         print(
             "also: these are supporting records. validate needs a Quick or Standard record "
-            f"in the same folder: nuclear-grade new {packet.name} --mode quick (or --mode standard)"
+            f"in the same folder: {command} new {packet.name} --mode quick (or --mode standard)"
         )
-    print(f"then: nuclear-grade validate {shown.as_posix()}")
+    print(f"then: {command} validate {shown.as_posix()}")
     print("validate fails until the record is filled in; a blank record should never pass.")
 
 

@@ -996,6 +996,13 @@ def print_new_next_steps(packet: Path, files: tuple[str, ...] | list[str]) -> No
     listed = names[0] if len(names) == 1 else f"{', '.join(names[:-1])} and {names[-1]}"
     print()
     print(f"next: fill in {listed}, then delete the NUCLEAR-GRADE-PLACEHOLDER line in each.")
+    if "risk.md" not in names and not (packet / "risk.md").exists():
+        # CM and golden-path files are supporting records. `validate` needs the
+        # Quick or Standard risk.md beside them, so say how to add it first.
+        print(
+            "also: these are supporting records. validate needs a Quick or Standard record "
+            f"in the same folder: nuclear-grade new {packet.name} --mode quick (or --mode standard)"
+        )
     print(f"then: nuclear-grade validate {shown.as_posix()}")
     print("validate fails until the record is filled in; a blank record should never pass.")
 

@@ -145,6 +145,33 @@ def test_new_says_a_fresh_record_must_be_filled_before_validate(tmp_path):
     assert "a blank record should never pass" in result.stdout
 
 
+def test_new_cm_records_say_validate_needs_a_quick_or_standard_record(tmp_path):
+    scaffold_repo(tmp_path)
+    for name in ng_cli.CM_FILES:
+        path = tmp_path / "templates" / "cm" / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(f"# cm {name} from repo\n", encoding="utf-8")
+
+    result = run_ng("new", "demo", "--mode", "cm", "--repo", str(tmp_path))
+
+    assert result.returncode == 0, result.stderr
+    assert "validate needs a Quick or Standard record" in result.stdout
+    assert "nuclear-grade new demo --mode quick" in result.stdout
+
+    quick = run_ng("new", "demo", "--mode", "quick", "--repo", str(tmp_path))
+
+    assert quick.returncode == 0, quick.stderr
+    assert "validate needs a Quick or Standard record" not in quick.stdout
+
+
+def test_new_quick_record_does_not_ask_for_another_record(tmp_path):
+    scaffold_repo(tmp_path)
+    result = run_ng("new", "demo", "--mode", "quick", "--repo", str(tmp_path))
+
+    assert result.returncode == 0, result.stderr
+    assert "also:" not in result.stdout
+
+
 def test_new_prints_no_next_steps_when_it_refuses(tmp_path):
     scaffold_repo(tmp_path)
     assert run_ng("new", "demo", "--mode", "quick", "--repo", str(tmp_path)).returncode == 0

@@ -175,6 +175,11 @@ def test_invoked_command_matches_how_the_cli_was_run(monkeypatch, tmp_path):
     monkeypatch.setattr(sys, "argv", [str(tmp_path / "tools" / "ng.py"), "new"])
     assert ng_cli.invoked_command() == "python tools/ng.py"
 
+    spaced = tmp_path / "my checkout" / "tools" / "ng.py"
+    monkeypatch.setattr(sys, "argv", [str(spaced), "new"])
+    monkeypatch.chdir(tmp_path.parent)
+    assert ng_cli.invoked_command() == f"python '{tmp_path.name}/my checkout/tools/ng.py'"
+
 
 def test_new_quick_record_does_not_ask_for_another_record(tmp_path):
     scaffold_repo(tmp_path)

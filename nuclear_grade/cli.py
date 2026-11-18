@@ -996,7 +996,7 @@ def invoked_command() -> str:
         shown = script.resolve().relative_to(Path.cwd().resolve())
     except ValueError:
         shown = script
-    return f"python {shown.as_posix()}"
+    return f"python {shlex.quote(shown.as_posix())}"
 
 
 def print_new_next_steps(

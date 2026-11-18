@@ -10,6 +10,7 @@ import argparse
 import json
 import os
 import re
+import shlex
 import shutil
 import sys
 from dataclasses import dataclass
@@ -978,7 +979,7 @@ def handle_new(args: argparse.Namespace) -> int:
     )
     code = apply_writes(writes, dry_run=False, overwrite=args.force)
     if code == 0:
-        print_new_next_steps(packet, files)
+        print_new_next_steps(packet, files, repo)
     return code
 
 
@@ -998,7 +999,9 @@ def invoked_command() -> str:
     return f"python {shown.as_posix()}"
 
 
-def print_new_next_steps(packet: Path, files: tuple[str, ...] | list[str]) -> None:
+def print_new_next_steps(
+    packet: Path, files: tuple[str, ...] | list[str], repo: Path | None = None
+) -> None:
     """Tell the user that a fresh record fails validation until it is filled.
 
     An untouched scaffold fails `validate` on purpose (a blank record must never
@@ -1009,6 +1012,9 @@ def print_new_next_steps(packet: Path, files: tuple[str, ...] | list[str]) -> No
     except ValueError:
         shown = packet
     command = invoked_command()
+    repo_arg = ""
+    if repo is not None and repo.resolve() != Path.cwd().resolve():
+        repo_arg = f" --repo {shlex.quote(repo.as_posix())}"
     names = list(files)
     listed = names[0] if len(names) == 1 else f"{', '.join(names[:-1])} and {names[-1]}"
     print()
@@ -1018,9 +1024,9 @@ def print_new_next_steps(packet: Path, files: tuple[str, ...] | list[str]) -> No
         # Quick or Standard risk.md beside them, so say how to add it first.
         print(
             "also: these are supporting records. validate needs a Quick or Standard record "
-            f"in the same folder: {command} new {packet.name} --mode quick (or --mode standard)"
+            f"in the same folder: {command} new {packet.name}{repo_arg} --mode quick (or --mode standard)"
         )
-    print(f"then: {command} validate {shown.as_posix()}")
+    print(f"then: {command} validate {shlex.quote(shown.as_posix())}")
     print("validate fails until the record is filled in; a blank record should never pass.")
 
 

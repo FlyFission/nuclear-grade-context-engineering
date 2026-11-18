@@ -158,7 +158,7 @@ def test_new_cm_records_say_validate_needs_a_quick_or_standard_record(tmp_path):
 
     assert result.returncode == 0, result.stderr
     assert "validate needs a Quick or Standard record" in result.stdout
-    assert "python tools/ng.py new demo --mode quick" in result.stdout
+    assert f"python tools/ng.py new demo --repo {tmp_path.as_posix()} --mode quick" in result.stdout
 
     quick = run_ng("new", "demo", "--mode", "quick", "--repo", str(tmp_path))
 

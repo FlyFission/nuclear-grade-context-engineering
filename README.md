@@ -188,9 +188,13 @@ flowchart LR
 
 How they fit together: the core path every change walks, and the heavier skills that switch on when the change calls for them (each arrow is labeled with its trigger):
 
-<p align="center"><img src="docs/assets/diagrams/skill-map.svg" alt="Skill map: the core path runs from using-nuclear-grade through questioning-attitude, rating-change-risk, creating-change-records, proving-claims, checking-release-readiness, recording-a-known-good-version, and learning-from-experience, which loops back to questioning-attitude. Each core step branches to heavier skills that switch on by consequence, each arrow labeled with its trigger; all 31 skills appear." width="100%"></p>
+<p align="center"><img src="docs/assets/diagrams/skill-map.svg" alt="Skill map: the core path runs from using-nuclear-grade through questioning-attitude, rating-change-risk, creating-change-records, proving-claims, checking-release-readiness, recording-a-known-good-version, and learning-from-experience, which loops back to questioning-attitude. Each core step branches to heavier skills that switch on by consequence, each arrow labeled with its trigger; all 33 skills appear." width="100%"></p>
 
-All 31 by family, with a one-line "use when" for each: [`SKILLS.md`](SKILLS.md). Which skills fire for which kind of change: [`CORE.md`](CORE.md).
+All 33 by family, with a one-line "use when" for each: [`SKILLS.md`](SKILLS.md). Which skills fire for which kind of change: [`CORE.md`](CORE.md).
+
+**Optional decision reset:** `/ng-rethink` invokes an in-depth Wise Council for genuinely competing approaches, creative invention, pre-mortems and architecture-to-code planning. The skill is **user-invoked only**; ordinary Nuclear-grade questioning may offer it once on consequential unresolved alternatives, but never runs it automatically or makes acceptance a gate. See [`reconsidering-the-approach`](skills/reconsidering-the-approach/SKILL.md).
+
+**Operator hold:** `/ng-scram` suspends further voluntary work, requests available runtime cancellations, and reports what has stopped, what remains uncertain, completed progress, and reversible or irreversible effects. The skill does **not** guarantee a distributed shutdown; unconfirmed workers remain visible. See [`scramming-agent-work`](skills/scramming-agent-work/SKILL.md).
 
 ## Adopt at your pace
 

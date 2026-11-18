@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 582" width="1180" height="582" role="img" aria-labelledby="t d">
 <title id="t">The skill catalog</title>
-<desc id="d">31 skills in seven families, each with the situation that calls for it. Start here: the using-nuclear-grade router, questioning-attitude, rating-change-risk. Before you act: double-checking, declaring intent, deciding who decides, staying on mission. Records and versions: change records, stale records, approved versions, change impact, agent run records. Evidence and verdicts: proving claims, checking facts, code review, final artifacts, stress tests, review panels, release readiness. Trust and public claims: outside code and models, legal and safety wording, source claims. Delegation and structure: briefing, handoffs, work breakdown, folders. When it goes wrong: incidents, lessons, deficiencies, shared defects. A gold dot marks the Core 7, which apply to every change.</desc>
+<desc id="d">33 skills in seven families, each with the situation that calls for it. Start here: the using-nuclear-grade router, questioning-attitude, rating-change-risk. Before you act: double-checking, declaring intent, deciding who decides, staying on mission. Records and versions: change records, stale records, approved versions, change impact, agent run records. Evidence and verdicts: proving claims, checking facts, code review, final artifacts, stress tests, review panels, release readiness. Trust and public claims: outside code and models, legal and safety wording, source claims. Delegation and structure: briefing, handoffs, work breakdown, folders. When it goes wrong: incidents, lessons, deficiencies, shared defects. A gold dot marks the Core 7, which apply to every change.</desc>
 <style>
 .bg{fill:#F7F6F2} .ink{fill:#0E1A30} .muted{fill:#46536B} .soft{fill:#5A6680}
 .acc{fill:#8A5A00} .lnk{fill:#2F4F94}
@@ -38,11 +38,11 @@
 <marker id="m-lnk" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="lnk" points="0 0, 8 3, 0 6"/></marker>
 </defs>
 <rect class="bg" width="1180" height="582" rx="10"/>
-<text x="28" y="34" class="eye soft">SKILLS · 31 JOBS IN SEVEN FAMILIES</text>
+<text x="28" y="34" class="eye soft">SKILLS · 33 JOBS IN SEVEN FAMILIES</text>
 <line class="rule" x1="28" y1="44" x2="1152" y2="44"/>
 <rect class="band" x="30" y="64" width="270" height="150" rx="8"/>
 <text x="44" y="82" class="eye soft" text-anchor="start">START HERE</text>
-<rect class="band" x="316" y="64" width="270" height="184" rx="8"/>
+<rect class="band" x="316" y="64" width="270" height="252" rx="8"/>
 <text x="330" y="82" class="eye soft" text-anchor="start">BEFORE YOU ACT</text>
 <rect class="band" x="602" y="64" width="270" height="252" rx="8"/>
 <text x="616" y="82" class="eye soft" text-anchor="start">RECORDS AND VERSIONS</text>
@@ -72,6 +72,10 @@
 <circle class="acc" cx="332" cy="216" r="3.5"/>
 <text x="342" y="220" class="nm ink" text-anchor="start">staying-on-mission</text>
 <text x="342" y="233" class="sub soft" text-anchor="start">work drifts, loops, or slips</text>
+<text x="342" y="254" class="nm ink" text-anchor="start">reconsidering-the-approach</text>
+<text x="342" y="267" class="sub soft" text-anchor="start">optional rethink, user-invoked</text>
+<text x="342" y="288" class="nm ink" text-anchor="start">scramming-agent-work</text>
+<text x="342" y="301" class="sub soft" text-anchor="start">operator stop + plain status</text>
 <text x="628" y="118" class="nm ink" text-anchor="start">creating-change-records</text>
 <text x="628" y="131" class="sub soft" text-anchor="start">open or update a change record</text>
 <text x="628" y="152" class="nm ink" text-anchor="start">closing-stale-packets</text>

@@ -50,7 +50,10 @@ def test_repository_catalog_is_complete_and_matches_compatibility_projections():
     assert len(catalog.entries) == len(list((ROOT / "skills").glob("*/SKILL.md")))
     assert {entry.id for entry in catalog.promoted} == set(projected_skills)
     assert catalog.command_map == projected_commands
-    assert {entry.id for entry in catalog.model_routable} == {entry.id for entry in catalog.promoted}
+    assert {entry.id for entry in catalog.model_routable} == {entry.id for entry in catalog.promoted if entry.invocation in {"model", "both"} and entry.role != "reference"}
+    assert "reconsidering-the-approach" not in {entry.id for entry in catalog.model_routable}
+    assert "scramming-agent-work" not in {entry.id for entry in catalog.model_routable}
+    assert "reconsidering-the-approach" in {entry.id for entry in catalog.user_invocable}
     assert all(entry.status == "promoted" for entry in catalog.entries)
     assert len(catalog.profile("core")) == 8
     assert catalog.profile("core")[0].id == "using-nuclear-grade"

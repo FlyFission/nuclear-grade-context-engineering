@@ -38,6 +38,8 @@ EXPECTED_COMMANDS = {
     "ng-verify-artifact.md",
     "ng-panel.md",
     "ng-fact-check.md",
+    "ng-rethink.md",
+    "ng-scram.md",
 }
 
 # Command cards are generated from their skills (nuclear_grade/gen_commands.py),

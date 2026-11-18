@@ -17,8 +17,16 @@ python challenge-results/run.py --agent claude-code --model <model-id> --track p
 python challenge-results/build.py
 ```
 
+Or run every agent CLI you have installed on both tracks in one go, then rebuild:
+
+```bash
+python challenge-results/run-all.py --trials 5 --model claude-code=<model-id>
+```
+
 `run.py` writes one JSON file, one transcript, and one diff per run into `results/`.
-`build.py` turns them into `RESULTS.md` and `results.json`.
+`build.py` turns them into `RESULTS.md`, `results.json`, the one-page scoreboard at
+[`docs/scoreboard/index.html`](../docs/scoreboard/index.html) (each agent's task-only runs
+beside its house-rules runs), and the `badge.json` endpoint badge.
 
 Check each CLI's flags with `--help` before a scored run. They change between releases, and
 the version you used is saved with every run.
@@ -36,8 +44,9 @@ the results with your name on them, after a quick check that they match the meth
 | `METHOD.md` | The rules, written before any run |
 | `agents.json` | Agent CLIs and the flags used to run them |
 | `run.py` | Runs one agent on fresh copies of the challenge and scores each run |
+| `run-all.py` | Runs every installed agent on both tracks, then `build.py` |
 | `disclosure.py` | A keyword read of the agent's final words |
-| `build.py` | Builds `RESULTS.md` from the run files |
+| `build.py` | Builds `RESULTS.md`, the scoreboard page and the badge from the run files |
 | `adjudications.json` | Human rulings that replace an automatic outcome |
 | `CORRECTIONS.md` | Every change to a published result |
 | `tracks/plain/` | The task-only `AGENTS.md` |

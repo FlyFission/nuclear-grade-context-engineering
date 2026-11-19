@@ -52,6 +52,7 @@
 <rect class="band" x="316" y="94" width="296" height="1076" rx="8"/>
 <text x="330" y="112" class="eye soft" text-anchor="start">CORE PATH</text>
 <path class="ln" stroke-width="1.2" d="M588,190.0 L788,190.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
+<path class="ln" stroke-width="1.2" d="M960,190.0 L992,190.0" marker-end="url(#m-muted)"/>
 <path class="ln" stroke-width="1.2" d="M588,242.0 L788,242.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
 <path class="ln" stroke-width="1.2" d="M976,242.0 L1008,242.0" marker-end="url(#m-muted)"/>
 <path class="ln" stroke-width="1.2" d="M588,250.0 L604,250.0 Q612,250.0 612,258.0 L612,286 Q612,294 620,294 L788,294.0" stroke-dasharray="5 4" marker-end="url(#m-muted)"/>
@@ -82,6 +83,7 @@
 <path class="ln" stroke-width="1.2" d="M340,242.0 L160.0,242.0 Q152.0,242.0 152.0,250.0 L152.0,274" marker-end="url(#m-muted)"/>
 <path class="ln" stroke-width="1.2" d="M152.0,314 L152.0,346" marker-end="url(#m-muted)"/>
 <path class="ln-acc" stroke-width="1.2" d="M340,970.0 L332,970.0 Q324,970.0 324,962.0 L324,198.0 Q324,190.0 332,190.0 L340,190.0" stroke-dasharray="5 4" marker-end="url(#m-acc)"/>
+<path class="ln-acc" stroke-width="1.2" d="M340,190.0 L282,190.0" stroke-dasharray="5 4" marker-end="url(#m-acc)"/>
 <rect class="fam0" x="28" y="58" width="4" height="12" rx="2"/>
 <text x="38" y="68" class="lbl muted" text-anchor="start">start here</text>
 <rect class="fam1" x="122" y="58" width="4" height="12" rx="2"/>
@@ -110,6 +112,9 @@
 <text x="874.0" y="194.0" class="name ink" text-anchor="middle">staying-on-mission</text>
 <rect class="fam1" x="789.5" y="176" width="4" height="28" rx="2"/>
 <circle class="acc" cx="948" cy="190.0" r="3.5"/>
+<rect class="n-opt" stroke-width="1" x="992" y="170" width="232" height="40" rx="6"/>
+<text x="1108.0" y="194.0" class="name ink" text-anchor="middle">reconsidering-the-approach</text>
+<rect class="fam1" x="993.5" y="176" width="4" height="28" rx="2"/>
 <rect class="n-step" stroke-width="1" x="340" y="222" width="248" height="40" rx="6"/>
 <text x="464.0" y="246.0" class="name ink" text-anchor="middle">rating-change-risk</text>
 <rect class="fam0" x="341.5" y="228" width="4" height="28" rx="2"/>
@@ -199,6 +204,9 @@
 <rect class="n-step" stroke-width="1" x="28" y="346" width="248" height="40" rx="6"/>
 <text x="152.0" y="370.0" class="name ink" text-anchor="middle">checking-what-a-change-affects</text>
 <rect class="fam2" x="29.5" y="352" width="4" height="28" rx="2"/>
+<rect class="n-opt" stroke-width="1" x="34" y="170" width="248" height="40" rx="6"/>
+<text x="158.0" y="194.0" class="name ink" text-anchor="middle">scramming-agent-work</text>
+<rect class="fam1" x="35.5" y="176" width="4" height="28" rx="2"/>
 <rect class="mask" x="632.0" y="182" width="136.0" height="15" rx="2"/>
 <text x="700.0" y="193.5" class="lbl muted" text-anchor="middle">long drifting session</text>
 <rect class="mask" x="638.0" y="234" width="124.0" height="15" rx="2"/>

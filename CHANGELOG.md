@@ -18,6 +18,10 @@ These entries record public-facing changes. They do not claim the project is a m
 - Evidence rows keyed by an id with a letter suffix, such as `C-004a`, are now recognized as claim rows.
 - `.nuclear/consequence-policy.json` lists `nuclear_grade/propagation.py` as a validator and the propagation and adversarial suites as trust tests, because the receipt now imports the former.
 
+### Fixed
+
+- The Quick start in the README and WORKFLOWS.md ran `validate` straight after `new`, which fails because a fresh record is blank. The steps now say to fill in the files and delete the placeholder line first, and that a blank record failing is on purpose. `new` also prints these next steps after it creates a record, and for CM or golden-path records it says to add the Quick or Standard record that `validate` needs.
+
 ## [0.7.0] - 2026-11-05
 
 ### Changed

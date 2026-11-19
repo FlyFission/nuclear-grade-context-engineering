@@ -308,6 +308,24 @@ The scorer reports required-skill recall, unnecessary-selection precision, accep
 - Should not trigger: Map each claim in this change record to the tests that back it.
 - Should not trigger: Fix the typo in the contributing guide.
 
+### `reconsidering-the-approach`
+
+The Council is **user-invoked only**. For evaluation, distinguish an operator-requested Council from a normal-path advisory suggestion. A major uncertainty may warrant one nonblocking question offering `/ng-rethink`, but a declined offer, trivial fact lookup, or routine implementation task must not load the Council. See `skills/reconsidering-the-approach/references/evaluation.md` for the blind baseline-versus-Council evaluation plan. No superiority finding is established without that test.
+
+- Should trigger: /ng-rethink deep — before locking this expensive architecture, is there a fundamentally better approach?
+- Should trigger: Invent genuinely different implementations of the same approved outcome before writing the spec.
+- Should trigger: We have attempted three variations of this design without success; reconsider the design mechanism.
+- Should not trigger: Check that the cited API rate limit matches official documentation.
+- Should not trigger: Convene independent reviewers to approve this security-sensitive release.
+
+### `scramming-agent-work`
+
+- Should trigger: /ng-scram — stop initiating tasks and give me a plain-language status of known agents and reversible work.
+- Should trigger: Freeze this agentic build, account for outstanding jobs, and explain what can be undone.
+- Should trigger: Immediate hold and turnover before any deployment workflow resumes.
+- Should not trigger: Rethink an architecture without stopping work; use /ng-rethink.
+- Should not trigger: Convene reviewers for a release decision without a stop request.
+
 ## Source-lineage note
 
 This evaluation prompt bank is an original Nuclear-grade artifact informed by public skill-authoring practice: concise skills, realistic trigger prompts, baseline-vs-skill comparison, and iterative trigger-description improvement. It does not create formal assurance, compliance, certification, safety, security, or regulatory adequacy.

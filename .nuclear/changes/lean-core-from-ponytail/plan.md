@@ -109,7 +109,8 @@ python tools/ng.py validate .nuclear/changes/lean-core-from-ponytail
 python tools/ng.py tokens .
 python -m pytest -q tests/test_skill_contracts.py tests/test_public_docs.py
 python tools/ng_skill_catalog_route_score.py
-python tools/ng_policy_backtest.py --policy .nuclear/consequence-policy.json --last 49
+# backtest against the pinned corpus: 49 first-parent commits from 31e0a9e (the baseline's checkout), not from HEAD
+git worktree add /tmp/ng-backtest 31e0a9e && python tools/ng_policy_backtest.py --repo /tmp/ng-backtest --policy .nuclear/consequence-policy.json --last 49
 # control-ladder re-run: evals/skill-control-ladder/scripts/, same model, grader, and rubric as REPORT.md
 ```
 

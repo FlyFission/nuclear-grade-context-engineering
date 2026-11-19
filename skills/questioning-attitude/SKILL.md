@@ -47,7 +47,8 @@ This is the front door. Before an agent builds, merges, or releases, find the re
 5. Ask what evidence would change the decision. If nothing could change it, the question is not useful yet.
 6. Check the facts before you trust memory, confidence, or anything an agent generated.
 7. Name the conditions that should make you pause, hold, or escalate.
-8. Pick the next step: quick proof, a standard spec, a briefing pack, a handoff, a self-check, a control record, a goal or drift check, or a release decision.
+8. If a consequential **choice between mechanisms** remains underdetermined after ordinary evidence checks (conflicting design drivers, a load-bearing unknown, or no examined alternative), optionally **offer once**: "Would you like to run `/ng-rethink` to explore alternatives?" Identify the one issue it would resolve. Do not invoke the council automatically, repeat a declined offer, or bypass current evidence/authority rules; use `reconsidering-the-approach` only on acceptance.
+9. Pick the next step: quick proof, a standard spec, a briefing pack, a handoff, a self-check, a control record, a goal or drift check, or a release decision.
 
 ## Outputs
 

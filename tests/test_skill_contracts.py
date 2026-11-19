@@ -52,6 +52,8 @@ EXPECTED_SKILLS = {
     "verifying-final-artifacts",
     "running-a-review-panel",
     "checking-facts",
+    "reconsidering-the-approach",
+    "scramming-agent-work",
 }
 
 REQUIRED_SECTIONS = (

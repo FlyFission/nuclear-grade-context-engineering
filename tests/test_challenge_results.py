@@ -197,3 +197,79 @@ def test_timeout_stops_processes_the_agent_started(tmp_path):
     assert timed_out and exit_code is None
     time.sleep(2.5)
     assert not marker.exists()
+
+
+def _result(**fields):
+    base = {
+        "schema": "nuclear-grade.challenge-run",
+        "run_id": "r",
+        "agent_label": "A",
+        "model": "m",
+        "tool_version": "1.0",
+        "track": "rules",
+        "verdict": "No change shipped",
+        "final_words": {},
+        "scorecard": {"scorer_sha256": "s1"},
+        "challenge_commit": "c1",
+        "uncommitted_inputs": [],
+    }
+    return {**base, **fields}
+
+
+def test_a_new_tool_version_is_a_new_row():
+    build = load("build")
+    runs = [_result(run_id="r1"), _result(run_id="r2", tool_version="2.0")]
+    rows = build.summarize(runs, {}, 1)
+    assert [(row["tool_version"], row["runs"]) for row in rows] == [("1.0", 1), ("2.0", 1)]
+    assert all(row["identity_problems"] == [] for row in rows)
+
+
+def test_runs_that_do_not_share_inputs_are_marked_not_comparable():
+    build = load("build")
+    clean = _result(run_id="r1")
+    unscored = _result(run_id="r2", verdict="Could not score", scorecard={"verdict": "Could not score"})
+    assert build.identity_problems([clean, unscored]) == []
+    problems = build.identity_problems(
+        [
+            clean,
+            _result(run_id="r3", challenge_commit="c2"),
+            _result(run_id="r4", scorecard={"scorer_sha256": "s2"}),
+            _result(run_id="r5", uncommitted_inputs=["challenge/score.py"]),
+            _result(run_id="r6", uncommitted_inputs=None),
+        ]
+    )
+    assert problems == [
+        "runs span 2 repo commits",
+        "scored by 2 scorer versions",
+        "2 run(s) from uncommitted or unrecorded challenge files",
+    ]
+    old = {key: value for key, value in clean.items() if key not in {"challenge_commit", "uncommitted_inputs"}}
+    assert build.identity_problems([old]) == [
+        "repo commit not recorded",
+        "1 run(s) from uncommitted or unrecorded challenge files",
+    ]
+    rows = build.summarize([clean, _result(run_id="r7", challenge_commit="c2")], {}, 1)
+    text = build.render(rows, 1)
+    assert "| A | m | 1.0 | 2 |" in text and "not comparable: runs span 2 repo commits" in text
+
+
+def test_each_run_records_which_pinned_inputs_were_uncommitted(tmp_path, monkeypatch):
+    run = load("run")
+    outside = tmp_path / "not-a-checkout"
+    outside.mkdir()
+    monkeypatch.setattr(run, "REPO", outside)
+    assert run.uncommitted_inputs() is None
+    repo = tmp_path / "repo"
+    (repo / "challenge").mkdir(parents=True)
+    (repo / "challenge" / "score.py").write_text("a\n", encoding="utf-8")
+    (repo / "notes.txt").write_text("outside the pinned inputs\n", encoding="utf-8")
+    run.git(repo, "init", "-q")
+    run.git(repo, "add", "-A")
+    run.git(repo, "commit", "-qm", "start")
+    monkeypatch.setattr(run, "REPO", repo)
+    assert run.uncommitted_inputs() == []
+    (repo / "notes.txt").write_text("edited\n", encoding="utf-8")
+    assert run.uncommitted_inputs() == []
+    (repo / "challenge" / "score.py").write_text("b\n", encoding="utf-8")
+    (repo / "challenge" / "new.txt").write_text("c\n", encoding="utf-8")
+    assert run.uncommitted_inputs() == ["challenge/new.txt", "challenge/score.py"]

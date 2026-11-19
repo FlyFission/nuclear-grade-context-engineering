@@ -1,0 +1,8 @@
+Mutation check 2026-11-19T20:48Z: three guards disabled at once in a working copy:
+  1. build.summarize groups without tool_version
+  2. build.identity_problems never counts unpinned runs
+  3. run.uncommitted_inputs ignores untracked files
+
+FAILED tests/test_challenge_results.py::test_a_new_tool_version_is_a_new_row
+FAILED tests/test_challenge_results.py::test_runs_that_do_not_share_inputs_are_marked_not_comparable
+FAILED tests/test_challenge_results.py::test_each_run_records_which_pinned_inputs_were_uncommitted

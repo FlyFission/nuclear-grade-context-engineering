@@ -84,6 +84,12 @@ Each round records the date, the repo commit, the scorer digest, and for every a
 version, model ID, permission flags, operating system, and container image. A new version of a
 tool or model is a new row, never an update to an old one.
 
+Each run also records which of the files that set the task and the scoring had uncommitted
+changes when it started, because the repo commit names those files only when there are none.
+A row whose runs span more than one repo commit or scorer digest, or that holds a run made from
+uncommitted or unrecorded files, is shown with the reason it is not comparable. The mismatch is
+reported, never settled by picking one value.
+
 ## Held-out variant
 
 The published challenge will end up in training data and scores may drift up for reasons that

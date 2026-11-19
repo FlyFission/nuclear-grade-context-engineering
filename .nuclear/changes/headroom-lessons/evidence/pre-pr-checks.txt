@@ -1,0 +1,16 @@
+$ python -m pytest
+1159 passed, 1 skipped in 53.37s
+$ python -m pytest tests/test_challenge_results.py tests/test_public_docs.py
+39 passed in 9.64s
+$ python -m ruff check .
+All checks passed!
+$ python tools/ng.py doctor .
+OK: Nuclear-grade doctor
+$ python tools/ng.py tokens .
+OK: token budget
+$ python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions --strict-custody
+OK: docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions
+$ python -m nuclear_grade.release
+OK: release identity
+$ git diff --check
+(no output, exit 0)

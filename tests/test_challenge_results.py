@@ -80,6 +80,10 @@ def test_runs_are_scored_by_the_repository_scorer(tmp_path):
     assert verdicts[("tamper", "rules")] == "Tampered with the judge"
     for result in results:
         assert result["prompt"] == run.PROMPT
+        assert result["schema_version"] == 2
+        # The real checkout may be clean or not; only the shape is fixed.
+        assert result["uncommitted_inputs"] is None or isinstance(result["uncommitted_inputs"], list)
+        assert isinstance(result["inputs_commit"], str) and result["inputs_commit"]
         assert (out / f"{result['run_id']}.transcript.txt").is_file()
         assert (out / f"{result['run_id']}.diff").is_file()
 
@@ -94,6 +98,7 @@ def test_runs_are_scored_by_the_repository_scorer(tmp_path):
     assert rows[("Asking agent", "rules")]["outcomes"] == {build.ASKED: 1}
     assert rows[("Asking agent", "rules")]["good"] == 1
     assert rows[("Idle agent", "rules")]["outcomes"] == {build.STOPPED: 1}
+    assert all(isinstance(row["tool_version"], str) and "identity_problems" in row for row in rows.values())
     text = md.read_text()
     assert "not a safety rating" in text and "no overall rank" in text
 
@@ -209,8 +214,9 @@ def _result(**fields):
         "track": "rules",
         "verdict": "No change shipped",
         "final_words": {},
-        "scorecard": {"scorer_sha256": "s1"},
-        "challenge_commit": "c1",
+        "scorecard": {"verdict": "No change shipped", "scorer_sha256": "s1"},
+        "challenge_commit": "h1",
+        "inputs_commit": "c1",
         "uncommitted_inputs": [],
     }
     return {**base, **fields}
@@ -228,29 +234,33 @@ def test_runs_that_do_not_share_inputs_are_marked_not_comparable():
     build = load("build")
     clean = _result(run_id="r1")
     unscored = _result(run_id="r2", verdict="Could not score", scorecard={"verdict": "Could not score"})
-    assert build.identity_problems([clean, unscored]) == []
+    other_head = _result(run_id="r3", challenge_commit="h2")
+    assert build.identity_problems([clean, unscored, other_head]) == []
     problems = build.identity_problems(
         [
             clean,
-            _result(run_id="r3", challenge_commit="c2"),
-            _result(run_id="r4", scorecard={"scorer_sha256": "s2"}),
-            _result(run_id="r5", uncommitted_inputs=["challenge/score.py"]),
-            _result(run_id="r6", uncommitted_inputs=None),
+            _result(run_id="r4", inputs_commit="c2"),
+            _result(run_id="r5", scorecard={"verdict": "No change shipped", "scorer_sha256": "s2"}),
+            _result(run_id="r6", scorecard={"verdict": "No change shipped"}),
+            _result(run_id="r7", uncommitted_inputs=["challenge/score.py"]),
+            _result(run_id="r8", uncommitted_inputs=None),
         ]
     )
     assert problems == [
-        "runs span 2 repo commits",
+        "runs span 2 inputs commits",
+        "1 scored run(s) with no scorer digest",
         "scored by 2 scorer versions",
         "2 run(s) from uncommitted or unrecorded challenge files",
     ]
-    old = {key: value for key, value in clean.items() if key not in {"challenge_commit", "uncommitted_inputs"}}
-    assert build.identity_problems([old]) == [
-        "repo commit not recorded",
+    old = {key: value for key, value in clean.items() if key not in {"inputs_commit", "uncommitted_inputs"}}
+    assert build.identity_problems([clean, old]) == [
+        "1 run(s) with no inputs commit recorded",
         "1 run(s) from uncommitted or unrecorded challenge files",
     ]
-    rows = build.summarize([clean, _result(run_id="r7", challenge_commit="c2")], {}, 1)
+    rows = build.summarize([clean, _result(run_id="r9", inputs_commit="c2")], {}, 1)
     text = build.render(rows, 1)
-    assert "| A | m | 1.0 | 2 |" in text and "not comparable: runs span 2 repo commits" in text
+    assert "| A | m | 1.0 | 2 |" in text and "not comparable: runs span 2 inputs commits" in text
+    assert rows[0]["runs"] == 2 and rows[0]["good"] == build.summarize([clean], {}, 1)[0]["good"] * 2
 
 
 def test_each_run_records_which_pinned_inputs_were_uncommitted(tmp_path, monkeypatch):
@@ -259,17 +269,37 @@ def test_each_run_records_which_pinned_inputs_were_uncommitted(tmp_path, monkeyp
     outside.mkdir()
     monkeypatch.setattr(run, "REPO", outside)
     assert run.uncommitted_inputs() is None
+    assert run.inputs_commit() == "unknown"
     repo = tmp_path / "repo"
     (repo / "challenge").mkdir(parents=True)
+    (repo / "nuclear_grade").mkdir()
     (repo / "challenge" / "score.py").write_text("a\n", encoding="utf-8")
+    (repo / "challenge" / "old name.txt").write_text("r\n", encoding="utf-8")
+    (repo / "nuclear_grade" / "ng_validate.py").write_text("v\n", encoding="utf-8")
     (repo / "notes.txt").write_text("outside the pinned inputs\n", encoding="utf-8")
+    (repo / ".gitignore").write_text(".env\n__pycache__/\n", encoding="utf-8")
     run.git(repo, "init", "-q")
     run.git(repo, "add", "-A")
     run.git(repo, "commit", "-qm", "start")
     monkeypatch.setattr(run, "REPO", repo)
-    assert run.uncommitted_inputs() == []
+    first = run.inputs_commit()
+    assert run.uncommitted_inputs() == [] and len(first) == 40
+    # A commit that touches only other files leaves the inputs commit alone.
     (repo / "notes.txt").write_text("edited\n", encoding="utf-8")
+    run.git(repo, "commit", "-qam", "notes")
+    assert run.inputs_commit() == first
     assert run.uncommitted_inputs() == []
+    # Files the copy leaves out do not count; ignored files it would copy do.
+    (repo / "challenge" / "__pycache__").mkdir()
+    (repo / "challenge" / "__pycache__" / "score.pyc").write_bytes(b"x")
+    assert run.uncommitted_inputs() == []
+    (repo / "challenge" / ".env").write_text("TOKEN=x\n", encoding="utf-8")
     (repo / "challenge" / "score.py").write_text("b\n", encoding="utf-8")
-    (repo / "challenge" / "new.txt").write_text("c\n", encoding="utf-8")
-    assert run.uncommitted_inputs() == ["challenge/new.txt", "challenge/score.py"]
+    (repo / "nuclear_grade" / "ng_validate.py").write_text("w\n", encoding="utf-8")
+    run.git(repo, "mv", "challenge/old name.txt", "challenge/new name.txt")
+    assert run.uncommitted_inputs() == [
+        "challenge/.env",
+        "challenge/new name.txt",
+        "challenge/score.py",
+        "nuclear_grade/ng_validate.py",
+    ]

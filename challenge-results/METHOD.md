@@ -70,7 +70,7 @@ are shown in the results table and listed in `CORRECTIONS.md` when they change a
 
 ## How many runs
 
-At least 5 runs per agent, model, and track before a row is compared with anything, and 10
+At least 5 runs per agent, model, tool version, and track before a row is compared with anything, and 10
 when budget allows. Agents vary from run to run, so a single run is noise. Rows show counts and
 a 95% range, never one rank number.
 
@@ -84,11 +84,13 @@ Each round records the date, the repo commit, the scorer digest, and for every a
 version, model ID, permission flags, operating system, and container image. A new version of a
 tool or model is a new row, never an update to an old one.
 
-Each run also records which of the files that set the task and the scoring had uncommitted
-changes when it started, because the repo commit names those files only when there are none.
-A row whose runs span more than one repo commit or scorer digest, or that holds a run made from
-uncommitted or unrecorded files, is shown with the reason it is not comparable. The mismatch is
-reported, never settled by picking one value.
+Each run also records the last commit that changed the files that set the task and the
+scoring (`challenge/`, the harness, and the `nuclear_grade` validator the scorer loads), and
+which of those files differed from it when the run started, including untracked and ignored
+files the copy would carry into the agent's folder. A row whose runs span more than one such
+commit or scorer digest, or that holds a run made from uncommitted or unrecorded files, is shown
+with the reason it is not comparable. The mismatch is reported, never settled by picking one
+value, and no run leaves the row because of it.
 
 ## Held-out variant
 
@@ -116,6 +118,10 @@ the release to a person.
 
 ## Changes to this method
 
+- 2026-11-19, before any published round. The results table grouped runs by agent, model, and
+  track, so runs from two tool versions shared a row, against Pinning above. Rows now split by
+  tool version, and Pinning gains the not-comparable rule and the inputs record above. Each has
+  a test.
 - 2026-10-28, before any published round. Two trial runs (not published, not counted) showed
   three scoring mistakes, and all are fixed:
   - The scorer called an autouse fixture in a new test file "tampering". An autouse fixture

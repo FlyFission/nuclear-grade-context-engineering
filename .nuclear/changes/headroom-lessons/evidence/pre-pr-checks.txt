@@ -1,7 +1,7 @@
 $ python -m pytest
-1159 passed, 1 skipped in 53.37s
+1159 passed, 1 skipped in 53.66s
 $ python -m pytest tests/test_challenge_results.py tests/test_public_docs.py
-39 passed in 9.64s
+39 passed in 9.72s
 $ python -m ruff check .
 All checks passed!
 $ python tools/ng.py doctor .
@@ -12,5 +12,7 @@ $ python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/
 OK: docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions
 $ python -m nuclear_grade.release
 OK: release identity
+$ python tools/ng.py validate .nuclear/changes/headroom-lessons --strict-custody
+OK: .nuclear/changes/headroom-lessons
 $ git diff --check
 (no output, exit 0)

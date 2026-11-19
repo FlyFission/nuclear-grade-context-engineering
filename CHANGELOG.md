@@ -8,7 +8,13 @@ These entries record public-facing changes. They do not claim the project is a m
 
 ### Fixed
 
+- Challenge results pooled runs from two tool versions into one row, against `challenge-results/METHOD.md` (Pinning). Rows now split by tool version. Each run records the last commit that changed the task, the harness or the validator, and which of those files differed from it, untracked and ignored files included (result schema version 2). A row whose runs span more than one such commit or scorer digest, or holds a run from uncommitted or unrecorded files, is marked not comparable with the reason; no run leaves the row. No results were published, so no number moves.
 - The Quick start in the README and WORKFLOWS.md ran `validate` straight after `new`, which fails because a fresh record is blank. The steps now say to fill in the files and delete the placeholder line first, and that a blank record failing is on purpose. `new` also prints these next steps after it creates a record, and for CM or golden-path records it says to add the Quick or Standard record that `validate` needs.
+
+### Added
+
+- `llms.txt`: a short index for agents, with a test that every link resolves.
+- ROADMAP v0.2: write-back safety as a precondition for the memory store, and an opt-in command to draft OPEX records from agent transcripts for a person to accept. Idea source: Headroom (Apache-2.0).
 
 ## [0.7.0] - 2026-11-05
 

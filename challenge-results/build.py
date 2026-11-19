@@ -4,14 +4,14 @@
     python challenge-results/build.py [--results DIR] [--out RESULTS.md] [--min-runs 5]
 
 Each run gets one plain outcome from its scorecard, the keyword read of its final
-words, and any human ruling in adjudications.json. Runs are grouped by agent,
-model, and track. Every row shows counts for each outcome and the share of runs
+words, and any human ruling in adjudications.json. Every row shows counts for each outcome and the share of runs
 with a good outcome, with a 95% Wilson range so a handful of runs reads as
 uncertain. Runs are grouped by agent, model, tool version and track, so a new
 tool version is a new row (METHOD.md, Pinning). Rows under --min-runs are
-listed and marked as too few to compare. A row whose runs do not share one repo
-commit and one scorer digest, or that holds a run made from uncommitted or
-unrecorded challenge files, is marked not comparable and says why. There is no
+listed and marked as too few to compare. A row whose runs do not share one
+inputs commit (the last commit that changed the task, harness or validator) and
+one scorer digest, or that holds a run made from uncommitted or unrecorded
+files, is marked not comparable and says why. There is no
 overall rank. Stdlib only.
 """
 
@@ -142,16 +142,18 @@ def identity_problems(items: list[dict]) -> list[str]:
     """
 
     problems = []
-    commits = {run.get("challenge_commit") or "unknown" for run in items}
-    if len(commits) > 1:
-        problems.append(f"runs span {len(commits)} repo commits")
-    elif commits == {"unknown"}:
-        problems.append("repo commit not recorded")
-    scorers = {
-        (run.get("scorecard") or {}).get("scorer_sha256")
-        for run in items
-        if (run.get("scorecard") or {}).get("scorer_sha256")
-    }
+    commits = [run.get("inputs_commit") or "unknown" for run in items]
+    known = {commit for commit in commits if commit != "unknown"}
+    if len(known) > 1:
+        problems.append(f"runs span {len(known)} inputs commits")
+    if "unknown" in commits:
+        problems.append(f"{commits.count('unknown')} run(s) with no inputs commit recorded")
+    scored = [run for run in items if (run.get("scorecard") or {}).get("verdict", UNSCORED) != UNSCORED]
+    scorers = {(run.get("scorecard") or {}).get("scorer_sha256") for run in scored}
+    if None in scorers or "" in scorers:
+        missing = sum(1 for run in scored if not (run.get("scorecard") or {}).get("scorer_sha256"))
+        problems.append(f"{missing} scored run(s) with no scorer digest")
+    scorers -= {None, ""}
     if len(scorers) > 1:
         problems.append(f"scored by {len(scorers)} scorer versions")
     unpinned = sum(1 for run in items if run.get("uncommitted_inputs") != [])
@@ -183,7 +185,7 @@ def summarize(runs: list[dict], rulings: dict[str, dict], min_runs: int) -> list
                 "outcomes": {o: counts[o] for o in OUTCOMES if counts[o]},
                 "enough_runs": n >= min_runs,
                 "identity_problems": identity_problems(items),
-                "repo_commits": sorted({run.get("challenge_commit") or "unknown" for run in items}),
+                "inputs_commits": sorted({run.get("inputs_commit") or "unknown" for run in items}),
                 "scorer_sha256": sorted(
                     {
                         (run.get("scorecard") or {}).get("scorer_sha256")

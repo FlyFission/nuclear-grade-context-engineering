@@ -21,6 +21,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 | REQ-002 | local proof | deterministic test / eval | `test_scaffold_ci_workflow_declares_a_bounded_timeout` runs `ng scaffold-ci` into a temp directory and checks the output | no problems reported | pass | E-001 | none |
 | REQ-003 | local proof | deterministic test / eval | six defect cases, the reusable-workflow case and five no-jobs cases; plus the unchanged files failing the test | each defect reported once; unchanged files fail | pass | E-001 | none |
 | REV-001 | local proof | review | independent read-only review of the diff | findings recorded and each dispositioned | pass | E-003 | the reviewer is the same model family; a person has not yet reviewed |
+| CI-001 | local proof | CI run | this PR's own CI on head `d67905e`, run 44611756415: `validate` on Python 3.11, 3.12 and 3.13, `mcp-smoke` on both MCP majors, `wheel-smoke` and `CI gate` | every job concludes `success`; the new test runs inside `validate` | pass | E-004 | one run; the PR's workflow checking itself |
 
 ## Evidence custody and coupling
 
@@ -31,6 +32,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 | E-001 | REQ-001 | yes | `evidence/failed-first.txt`: 3 failures with the three fix files reverted, 16 passing on the branch | AI agent | AI agent | AI agent | none; raw pytest result | AI agent locally; GitHub Actions on the PR | GitHub Actions logs | AI agent | maintainer review (pending) |
 | E-002 | REQ-001 | yes | `evidence/job-times.input.csv`, `evidence/job-times.py`, `evidence/job-times.txt`, `evidence/digests.txt` | AI agent | GitHub Actions API; Python script | AI agent | AI agent transcribed the timings; the script computes | GitHub tool; local toolchain | this record | AI agent | maintainer review (pending) |
 | E-003 | REV-001 | yes | the reviewer's written findings | AI agent | independent reviewer agent (fresh context, read-only) | AI agent | AI agent summarized the findings | independent reviewer agent | this record | AI agent | maintainer review (pending) |
+| E-004 | CI-001 | no | https://github.com/FlyFission/nuclear-grade-context-engineering/actions/runs/44611756415 (7 of 7 jobs `success`; slowest `validate (3.12)` 89 s, inside the recorded worst of 92 s) | AI agent | GitHub Actions | AI agent | none | GitHub Actions | GitHub | AI agent | CI outside the session |
 
 ### Coupling profile
 
@@ -39,6 +41,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 | E-001 | coupled; the agent wrote the fix and the test | coupled; one session wrote both | partially separated; GitHub Actions re-runs the test outside the session | partially separated; the maintainer decides the merge | partially separated; CI runs on GitHub's runners | self-check | admitted as self-check; carried into `ship.md` |
 | E-002 | coupled; the agent selected which runs to read | coupled; one session | partially separated; GitHub produced the timings, the agent transcribed them (no `gh` access), the script computes | partially separated; the maintainer decides the merge | partially separated; GitHub's records | self-check | admitted; 7 runs, job IDs in every row so each can be re-read [Ship limits](ship.md) |
 | E-003 | partially separated; a different agent instance reviewed, same model family | partially separated; fresh context, briefed by the author | separated; read-only review with its own commands | partially separated; the maintainer decides the merge | coupled; same container | self-check | admitted as a challenge, not as independent verification; a person still reviews [Ship limits](ship.md) |
+| E-004 | coupled; the agent chose the PR and the workflow under test | coupled; same repository and branch | separated; GitHub Actions runners | partially separated; the maintainer decides the merge | separated; GitHub's runners | self-check | admitted; the capped workflow ran with its own caps in force [Ship limits](ship.md) |
 
 - **Evidence pattern used:** actor-selected primary artifacts; the test is re-run by CI; a separate agent reviewed.
 - **Verdict owner:** maintainer (FlyFission).

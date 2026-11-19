@@ -5,7 +5,7 @@
 - Slug: lean-core-from-ponytail
 - Related basis: [`basis.md`](basis.md)
 - Owner: Ben Huffer (maintainer); drafted by an AI agent
-- Date: 2026-11-07
+- Date: 2026-11-07; re-validated 2026-11-19 after merging `main`
 - Verification scope: the baseline numbers this specification rests on, and the gates each phase must pass. Every phase row is `planned`; the baseline rows are `pass` because they were run for this record.
 
 ## Evidence status legend

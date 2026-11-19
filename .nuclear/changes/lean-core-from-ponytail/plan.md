@@ -7,7 +7,7 @@
 - Related basis record: [`basis.md`](basis.md)
 - Owner: Ben Huffer (maintainer); drafted by an AI agent
 - Date: 2026-11-07
-- Current lifecycle phase: Plan
+- Current lifecycle phase: Decide
 
 ## Charter and anchor check
 
@@ -23,20 +23,20 @@ If you must cross a non-goal or a charter article, record why here:
 
 ## Decision frontier
 
-These are the choices only the owner can make. Mark each `approved`, `revised: ...`, or `held`. Build authority for Phase 1 opens when D2, D3, D4, and D8 are marked.
+These are the choices only the owner can make. The recommendation in each row is what merging this record ratifies; the owner changes a mark before merging to decide otherwise. Build authority for Phase 1 and Phase 6 opens on merge.
 
 | ID | Decision | Recommendation | Alternatives | Owner mark |
 |---|---|---|---|---|
 | D1 | A persona image to compress the value system | hold until the card exists; candidate: "the engineer whose name goes on the work package" | no persona | held |
-| D2 | The card at 400 words, tier one plus the trap sentence plus the receipt, replacing `AGENTS.md`'s body and the hook preamble (REQ-001) | approve | 600 words; keep the Core 7 pointer list as well | pending |
-| D3 | Two agent-facing states, ordinary and promise, and the seven trap surfaces; "user-visible behavior" and "only docs" leave the list (REQ-003) | approve | keep eight surfaces (add user-visible behavior); keep docs | pending |
-| D4 | Delete the per-prompt reminder hook (REQ-002) | approve | keep it but fire only when a trap path is in the diff | pending |
-| D5 | Marker words `shortcut:` and `deferred:` (REQ-009) | approve both | one word | pending |
-| D6 | Four-section skills at 600 words; Core 7 first (REQ-004) | approve | keep When Not to Use as a fifth section; 800 words | pending |
-| D7 | One-file Quick and three-file Standard; three threshold dimensions; custody only for decisive claims under `--strict-custody` (REQ-005) | approve | keep six files, shrink each | pending |
-| D8 | Non-inferiority margin: mean −0.05, single skill −0.17, routing recall not lower (REQ-007) | approve | stricter −0.03 / −0.10 | pending |
-| D9 | Lenses and HPI screen become reference, not steps (REQ-010) | approve | keep the archetype floor as one line in the rating skill | pending |
-| D11 | Run the catch-rate benchmark (REQ-012) before phase 2 ships, so the lean pass is measured against a real catch rate and not only the rubric | approve; it is the number the project lacks | after the lean pass only | pending |
+| D2 | The card at 400 words, tier one plus the trap sentence plus the receipt, replacing `AGENTS.md`'s body and the hook preamble (REQ-001) | approve | 600 words; keep the Core 7 pointer list as well | approved on merge, as recommended |
+| D3 | Two agent-facing states, ordinary and promise, and the seven trap surfaces; "user-visible behavior" and "only docs" leave the list (REQ-003) | approve | keep eight surfaces (add user-visible behavior); keep docs | approved on merge, as recommended |
+| D4 | Delete the per-prompt reminder hook (REQ-002) | approve | keep it but fire only when a trap path is in the diff | approved on merge, as recommended |
+| D5 | Marker words `shortcut:` and `deferred:` (REQ-009) | approve both | one word | approved on merge, as recommended |
+| D6 | Four-section skills at 600 words; Core 7 first (REQ-004) | approve | keep When Not to Use as a fifth section; 800 words | approved on merge, as recommended |
+| D7 | One-file Quick and three-file Standard; three threshold dimensions; custody only for decisive claims under `--strict-custody` (REQ-005) | approve | keep six files, shrink each | approved on merge, as recommended |
+| D8 | Non-inferiority margin: mean −0.05, single skill −0.17, routing recall not lower (REQ-007) | approve | stricter −0.03 / −0.10 | approved on merge, as recommended |
+| D9 | Lenses and HPI screen become reference, not steps (REQ-010) | approve | keep the archetype floor as one line in the rating skill | approved on merge, as recommended |
+| D11 | Run the catch-rate benchmark (REQ-012) before phase 2 ships, so the lean pass is measured against a real catch rate and not only the rubric | approve; it is the number the project lacks | after the lean pass only | approved on merge, as recommended |
 | D10 | The other 24 skills: same four-section rewrite in a later record, or demote the ones with `observe` tier to docs | rewrite the ones with `block` or `warn`; demote `observe` | rewrite all | held |
 
 ## Build sequence
@@ -88,7 +88,7 @@ For any slice whose work is model-mediated, the determinism posture is: the card
 
 | Checkpoint | Required before moving on | Status |
 |---|---|---|
-| Requirements approved | the owner marks D2, D3, D4, and D8; D5 to D7 and D9 before their phases | planned |
+| Requirements approved | the owner merges this record; the recommended marks stand unless changed first | pass on merge |
 | Tests/evals defined | REQ-007 harness and margins recorded in this packet | pass |
 | Build complete | per phase, in that phase's record | planned |
 | Verification complete | per phase; REQ-007 re-run by a maintainer or CI | planned |

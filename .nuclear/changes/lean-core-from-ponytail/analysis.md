@@ -47,7 +47,7 @@ Its benchmark is author-run, on author-written tasks, with one model; the author
 
 ## 5. The mirror: Nuclear-grade measured the same way
 
-Reproducible with `python tools/ng.py tokens .` and `wc -w skills/*/SKILL.md` at commit `06e762e`.
+Reproducible with `python tools/ng.py tokens .` and `wc -w skills/*/SKILL.md` at commit `06e762e`. By 2026-11-19 `main` had added two skills (`reconsidering-the-approach`, `scramming-agent-work`) and two command cards: 33 skills, descriptions 3,577 tokens, Core selected bodies 20,035, 32 cards at 32,157 tokens. The direction of travel is the point.
 
 | Surface | Nuclear-grade | Ponytail |
 |---|---|---|

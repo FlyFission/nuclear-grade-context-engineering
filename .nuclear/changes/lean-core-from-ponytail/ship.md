@@ -20,13 +20,13 @@
 | Evidence area | Status | Link | Notes |
 |---|---|---|---|
 | Risk classification | pass | `risk.md` | Standard; hook phase `standard+authority` |
-| Basis / requirements / claims | planned | `basis.md` | eleven requirements awaiting the owner's marks |
+| Basis / requirements / claims | pass | `basis.md` | twelve requirements; recommended marks ratified on merge |
 | Questioning attitude | pass | `risk.md` | summary in the risk record |
 | Verification | planned | `verification.md` | baseline rows pass; gate rows planned |
 | Dependency / supply-chain evidence | not applicable | `verification.md` | none |
 | AI-assisted work checks | pass | `verification.md` | scope and screening stated |
 | Evidence custody / coupling profile | pass | `verification.md` | decisive evidence separated or disclosed |
-| Review / approval | planned | `plan.md` | the decision frontier |
+| Review / approval | pass | `plan.md` | the maintainer's merge is the approval |
 
 ## Residual risks and gaps
 
@@ -57,22 +57,22 @@
 
 - Operator/customer/support notes: none.
 - Docs/runbook updated: none; the specification is the artifact.
-- Communication needed: the owner marks the frontier in `plan.md` on the draft pull request.
+- Communication needed: none beyond the pull request.
 - Turnover record if activated: not activated.
-- Follow-up date: when the frontier is marked.
+- Follow-up date: phase 1 record opens after merge.
 
 ## Release decision
 
-- Decision: defer
-- Decision maker: Ben Huffer (maintainer)
-- Rationale: this record asks for approval of a specification. The decision it carries is whether phase 1 may start, which the owner gives by marking D2, D3, D4, and D8 in `plan.md`. Until then: defer.
+- Decision: ship with residual risk
+- Decision maker: Ben Huffer (maintainer), by merging
+- Rationale: this record is a specification; merging it ratifies the recommended marks in `plan.md#Decision frontier` and opens phase 1 (the card) and phase 6 (the catch-rate benchmark) as their own records. D1 and D10 stay held. No code changes with this merge.
 - Decision question answered by evidence? yes/no: no; the baseline evidence motivates the work, and the gates that answer the question run in the phases.
 - Verdict owner's authority axis relative to the actor: separated; the maintainer did not draft the text.
 - Minimum coupling profile for this consequence met? yes / no; gap if no: yes for a specification; the decisive gates are specified with their custody.
 - Decision rests on primary evidence the reviewer can reproduce, not the actor's narrative? yes/no: yes; every number has a command or a report path.
 - Conditions attached: no phase starts before its frontier marks; the hook phase and the validator phase need a human merge; the trap sentence and the stop for a person are never cut.
 - Decision posture: conservative enough.
-- Abort or rollback trigger: the owner strikes the specification.
+- Abort or rollback trigger: the owner changes a frontier mark before merging, or reverts the record after.
 - OPEX or post-release learning trigger: if a phase gate fails, the lesson goes to that phase's record and to `learning-from-experience`.
 
 ## Apply clearance

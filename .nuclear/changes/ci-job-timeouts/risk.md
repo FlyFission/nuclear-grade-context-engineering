@@ -11,12 +11,12 @@
 
 - **Objective:** a hung step can hold a runner for minutes, not for GitHub's 360-minute default.
 - **Success criterion:** all 9 repository jobs and the scaffold job declare an integer `timeout-minutes` between 1 and 60; the new test fails on the old files and passes on the new.
-- **Non-goals:** no change to any step, trigger, permission, action pin or job order; no timeout tuning beyond sizing from one measured run; no CI path filtering; no change to the policy file.
+- **Non-goals:** no change to any step, trigger, permission, action pin or job order; no timeout tuning beyond checking the proposed caps against the 7 runs recorded in `evidence/`; no CI path filtering; no change to the policy file.
 
 ## Questioning-attitude summary
 
-- The fact that would change the decision: a job that legitimately runs longer than its cap. The slowest job in the measured run took 76 s against a 20-minute cap, so the margin is large for `ci.yml`. `release.yml` runs only on tags; its one run (v0.7.0) took 3 min 18 s end to end by workflow timestamps, against caps of 10 to 15 minutes per job.
-- The fact still unknown: whether the `pypi` job's `environment: pypi` approval wait counts toward `timeout-minutes`. Not confirmed: the reviewer believed it does not but could not read the relevant documentation section, and I did not check. See `ship.md`.
+- The fact that would change the decision: a job that legitimately runs longer than its cap. Across 7 recorded runs (6 CI runs on `main`, 2026-11-05 to 2026-11-18, and the v0.7.0 release run) the smallest margin is 12.7 times: release `build` took 71 s against a 15-minute cap, and `validate` took at most 92 s against 20 minutes (`evidence/job-times.txt`).
+- The fact still unknown: whether the `pypi` job's `environment: pypi` approval wait counts toward `timeout-minutes`. GitHub's documentation does not say so explicitly (see `basis.md`). The v0.7.0 `pypi` job waited 71 s between being created and starting, against at most 3 s for the other 47 jobs, and ran for 21 s once started, so that wait was outside its measured run time. That is one observation, not a guarantee for a long wait.
 
 ## Affected configuration items
 
@@ -36,12 +36,12 @@
 | Reversibility | high | revert the commit; no state, no published artifact |
 | Detectability | high | a too-low cap fails loudly and visibly in the run |
 | Trust boundary | yes | `.github/**` is gate infrastructure; the repository policy rule `ci` is `standard+authority` and not overridable |
-| Uncertainty | medium | one release run and one CI run measured; approval-wait behavior unconfirmed |
+| Uncertainty | medium | 7 runs recorded (6 CI, 1 release); approval-wait behavior is inferred from one observation, not documented |
 
 ## HPI work-mode screen
 
 - Work mode: rule-based edit of 9 job headers plus one new test.
-- Error-likely situation: a cap that is tighter than a real run. Control: caps are at least 10x above the measured CI job times and 3x above the whole measured release run per job; the approval-wait question is carried as a gap.
+- Error-likely situation: a cap that is tighter than a real run. Control: every cap is at least 12.7 times the worst recorded job time (`evidence/job-times.txt`); the approval-wait question is carried as a gap in `ship.md`.
 
 ## Selected mode
 

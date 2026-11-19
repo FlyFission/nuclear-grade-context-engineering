@@ -30,8 +30,8 @@ Hung job holds a runner for the 360-minute default (basis)
 
 | Gap | Why it matters | Disposition | Owner | Recheck trigger |
 |---|---|---|---|---|
-| Only one release run observed | a cap could be too tight on a slower day | carry to `ship.md`; watch the next tagged release | maintainer | next tag |
-| Environment approval wait vs timeout unknown | the `pypi` job could time out while waiting | carry to `ship.md` | maintainer | next tag |
+| Only one release run observed | a cap could be too tight on a slower day; release margins are 12.7 times or more | carry to `ship.md`; watch the next tagged release | maintainer | next tag |
+| Environment approval wait vs timeout not documented | the `pypi` job could time out while waiting if the wait counts; one observation says the 71 s wait did not show in its 21 s run time | carry to `ship.md` | maintainer | next tag |
 
 ## Required links
 

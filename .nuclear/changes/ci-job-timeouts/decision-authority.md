@@ -27,7 +27,7 @@ Allowed coded source states (the field remains named `Raw state`) are `observed`
 | Evidence ID | Raw state | Scope / basis | Intended use / V&V status | Custody / profile link |
 |---|---|---|---|---|
 | E-001 | observed | `tests/test_workflow_timeouts.py` failing on the unchanged files and passing on the changed ones, run locally and re-run by CI on the PR | supports REQ-001..003; self-check | [verification.md custody profile](verification.md#evidence-custody-and-coupling) |
-| E-002 | observed | job durations of run 42293941938 on `main` | supports cap sizing for `ci.yml` only; one run | [verification.md custody profile](verification.md#evidence-custody-and-coupling) |
+| E-002 | observed | per-job times of 7 runs (6 CI on `main`, 1 release), transcribed from the GitHub jobs API, computed by `evidence/job-times.py` | supports cap sizing for `ci.yml` and `release.yml`; 48 timings, release from one run | [verification.md custody profile](verification.md#evidence-custody-and-coupling) |
 | E-003 | observed | the independent reviewer's findings | a challenge to the change, not verification | [verification.md custody profile](verification.md#evidence-custody-and-coupling) |
 
 Every Evidence ID in this file must be declared in `verification.md`. The evidence state is an author-coded, source-linked determination, not a sensor-raw fact or a conclusion about control, authorization, adequacy, completeness, or independence.

@@ -1,0 +1,15 @@
+Nuclear-grade CI and release, 7 runs, 48 job timings
+run time = started_at to completed_at of the job; wait = created_at to started_at
+
+workflow job               n  min s  median s  max s  max wait s  cap min  cap / max
+ci       validate         18     54        70     92           3       20      13.0x
+ci       mcp-smoke        12     14        17     36           3       15      25.0x
+ci       wheel-smoke       6     17        20     22           3       15      40.9x
+ci       ci-gate           6      2         3      4           3        5      75.0x
+release  build             1     71        71     71           3       15      12.7x
+release  pypi              1     21        21     21          71       10      28.6x
+release  mcp-smoke         2     16        17     18           3       15      50.0x
+release  wheel-smoke       1     11        11     11           3       15      81.8x
+release  github-release    1      6         6      6           3       10     100.0x
+
+Median wait for every job except release pypi: 3 s; largest: 3 s. Release pypi wait: 71 s.

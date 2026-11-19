@@ -19,12 +19,13 @@
 
 | # | Task | Reqs | Prereqs | Inputs (`file#section`) + budget | Outputs / artifact | Proof | Stop/done |
 |---|---|---|---|---|---|---|---|
-| 1 | Read recent job durations | REQ-001 | none | GitHub Actions run 42293941938 | cap sizing | E-002 | done |
+| 1 | Read recent job durations: 6 CI runs on `main` and the v0.7.0 release run | REQ-001 | none | GitHub Actions jobs API, saved as `evidence/job-times.input.csv` | cap sizing | E-002 | done |
 | 2 | Add `timeout-minutes` after `runs-on` in 9 jobs | REQ-001 | step 1 | `.github/workflows/*.yml` | 9 added lines | E-001 | done |
 | 3 | Add the key and a comment to the scaffold workflow text | REQ-002 | none | `nuclear_grade/cli.py` | 2 added lines | E-001 | done |
 | 4 | Write the test and watch it fail on the old files | REQ-003 | steps 2-3 | `tests/test_workflow_timeouts.py` | 3 failures before, 16 passes after | E-001 | done |
 | 5 | Independent review of the diff | all | step 4 | the diff and sources | review findings | E-003 | done |
-| 6 | Act on the review: reword the test docstring, add the changelog entry, record the release run time | all | step 5 | review report | `CHANGELOG.md`, this record | E-003 | done |
+| 6 | Act on the review: reword the test docstring, add the changelog entry | all | step 5 | review report | `CHANGELOG.md`, this record | E-003 | done |
+| 7 | Merge `main` (14 commits, one CHANGELOG conflict); extend the timing evidence to 7 runs with a script and digests; read GitHub's documentation on approval wait; add the unsigned Signature section | all | step 6 | `main`, the jobs API, GitHub docs via a fetching agent | `evidence/`, `ship.md` | E-002 | done |
 
 ## Affected files and assets
 

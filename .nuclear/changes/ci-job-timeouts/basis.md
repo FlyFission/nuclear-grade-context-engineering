@@ -23,7 +23,7 @@ None of the 9 jobs in this repository's two workflows declared `timeout-minutes`
 
 | Unacceptable outcome | Hazard kind (fault / insufficiency) | Consequence | Prevent / detect / mitigate |
 |---|---|---|---|
-| A cap shorter than a real run fails CI or a release | fault | blocked merge or release; rerun fixes it | generous caps; measured CI runtime; release caps flagged unmeasured |
+| A cap shorter than a real run fails CI or a release | fault | blocked merge or release; rerun fixes it | generous caps checked against 7 recorded runs; release rests on one run |
 | The checker passes a workflow it did not understand | insufficiency | false assurance | the checker fails when it sees no jobs; unit tests cover each defect |
 | A downstream scaffold user loses a long validation | fault | their gate times out at 10 minutes | the scaffold job only validates packets (seconds in this repository's CI); documented in `ship.md` |
 
@@ -31,9 +31,9 @@ None of the 9 jobs in this repository's two workflows declared `timeout-minutes`
 
 | Assumption / constraint | Fact / assumption / unknown | Basis or source | Invalidation trigger | Owner |
 |---|---|---|---|---|
-| `ci.yml` jobs finish far inside their caps | fact for the sampled run | run 42293941938: slowest job 76 s, whole run under 2 minutes | a job nearing 50% of its cap | maintainer |
-| `release.yml` jobs finish inside their caps | fact for one run | the v0.7.0 release run (42122799962) took 3 min 18 s end to end by created and updated time; per-job times not read | a job nearing 50% of its cap | maintainer |
-| An environment approval wait does not count toward `timeout-minutes` | unknown | not checked in this change | the first `pypi` job that waits for approval | maintainer |
+| `ci.yml` jobs finish far inside their caps | fact for 6 runs | `evidence/job-times.txt`: worst `validate` 92 s, `mcp-smoke` 36 s, `wheel-smoke` 22 s, `ci-gate` 4 s | a job nearing 50% of its cap | maintainer |
+| `release.yml` jobs finish inside their caps | fact for one run | the v0.7.0 release run (42122799962): `build` 71 s, `mcp-smoke` 16 to 18 s, `wheel-smoke` 11 s, `github-release` 6 s, `pypi` 21 s (`evidence/job-times.txt`) | a job nearing 50% of its cap | maintainer |
+| An environment approval wait does not count toward `timeout-minutes` | unknown: the documentation is silent; one observation points to excluded | GitHub's limits page, as reported by a fetching agent, says the workflow-run limit "includes execution duration, and time spent on waiting and approval" and the job limit is "6 hours of execution time"; the workflow syntax page says protection rules "must pass before a job referencing the environment is sent to a runner". Neither page says whether the wait counts toward `timeout-minutes`. Observed: the v0.7.0 `pypi` job waited 71 s before starting and ran 21 s | a `pypi` job cancelled while waiting; any long approval wait | maintainer |
 | PyYAML is installed wherever the test must run | fact for CI | `ci.yml` installs `pyyaml`; the test skips without it, like `test_scaffold_ci_emits_parseable_yaml` | removing `pyyaml` from the CI install step | maintainer |
 
 ## Grounding status

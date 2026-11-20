@@ -33,6 +33,7 @@ import pytest
 
 from nuclear_grade import receipt as receipts
 from nuclear_grade.mcp_server import validate_change_record
+from nuclear_grade.ng_validate import EVIDENCE_STATUSES, ValidationResult
 from tests.test_ng_cli import run_ng
 from tests.test_ng_validate import minimal_quick_packet, minimal_standard_packet
 from tests.test_receipt import WORKED_EXAMPLE, receipt_for
@@ -372,6 +373,56 @@ def test_a_recorded_status_counts_whatever_the_column_is_called(tmp_path, header
     assert acceptance["release_eligibility"]["state"] == expected
     assert acceptance["evidence_status"]["state"] == ("complete" if status == "pass" else "open")
     assert receipts.verify_receipt(receipt_for(packet), packet)["state"] == "bound"
+
+
+@pytest.mark.parametrize(
+    ("declaration", "expected"),
+    [
+        ("- **Status:** **gap**", "blocked"),
+        ("- **Status:** **fail**", "blocked"),
+        ("- **Status:** **planned**", "blocked"),
+        ("- Status: *gap*", "blocked"),
+        ("- Status: `gap`", "blocked"),
+        ("- **Status**: **deferred**", "open_to_decision_with_open_items"),
+        ("- **Status:** **pass**", "open_to_decision"),
+        ("- Status: pass", "open_to_decision"),
+    ],
+)
+def test_emphasis_around_a_quick_status_cannot_hide_it(tmp_path, declaration, expected):
+    packet = minimal_quick_packet(tmp_path)
+    proof = packet / "proof.md"
+    proof.write_text(proof.read_text(encoding="utf-8").replace("- Status: pass", declaration), encoding="utf-8")
+    acceptance = receipt_for(packet)["acceptance"]
+    assert acceptance["release_eligibility"]["state"] == expected
+    assert acceptance["evidence_status"]["state"] == ("complete" if expected == "open_to_decision" else "open")
+
+
+def test_a_record_with_no_readable_status_is_undetermined_not_eligible():
+    """Defense in depth: valid structure and zero readable statuses must never read as eligible."""
+    nothing_read = dict.fromkeys(EVIDENCE_STATUSES, 0)
+    for mode, support in (("quick", {"state": "not_applicable", "rows": []}), ("standard", {"state": "recognized", "rows": []})):
+        verdict = receipts._release_eligibility(ValidationResult(True, []), mode, nothing_read, support)
+        assert verdict["state"] == "undetermined", mode
+        assert "no evidence status declaration could be read" in verdict["reasons"][0]
+
+
+@pytest.mark.parametrize("heading", ["### Additional claims", "#### Deeper still", "### Safety claims"])
+def test_a_subsection_of_the_claims_section_is_still_scanned(tmp_path, heading):
+    packet = minimal_standard_packet(tmp_path)
+    declare(packet, f"\n{heading}\n\n| ID | Requirement | Evidence |\n|---|---|---|\n| C-002 | Critical | Test |")
+    acceptance = receipt_for(packet)["acceptance"]
+    assert acceptance["claim_support"]["declared_without_verification_row"] == ["C-002"]
+    assert acceptance["release_eligibility"]["state"] == "blocked"
+
+
+@pytest.mark.parametrize("heading", ["## Assumptions", "# Appendix"])
+def test_a_sibling_or_ancestor_section_is_not_scanned_for_claims(tmp_path, heading):
+    packet = minimal_standard_packet(tmp_path)
+    declare(packet, f"\n{heading}\n\n| ID | Note |\n|---|---|\n| A-001 | not a claim |\n| Free text | still not a claim |")
+    acceptance = receipt_for(packet)["acceptance"]
+    assert acceptance["claim_support"]["declared_without_verification_row"] == []
+    assert acceptance["claim_support"]["unreadable_declarations"] == 0
+    assert acceptance["release_eligibility"]["state"] == "open_to_decision"
 
 
 def test_free_text_claim_rows_are_undetermined_not_eligible(tmp_path):

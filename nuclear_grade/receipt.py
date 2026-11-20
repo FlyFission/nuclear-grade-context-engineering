@@ -81,7 +81,7 @@ _STATUS_TOKEN = re.compile(
     r"(?<!\bno )(?<!\bnot )\b(not applicable|pass|fail|gap|deferred|planned)\b", re.IGNORECASE
 )
 _STATUS_DECLARATION = re.compile(
-    r"\bstatus\**[ \t]*:\**[ \t]*(?P<value>`?(not applicable|pass|fail|gap|deferred|planned)\b[^\n]*)",
+    r"\bstatus\**[ \t]*:\**[ \t]*(?P<value>[`*_]*(not applicable|pass|fail|gap|deferred|planned)\b[^\n]*)",
     re.IGNORECASE,
 )
 # Parenthetical notes explain a status ("not applicable (no release planned)"); they declare none.
@@ -197,6 +197,7 @@ def _status_counts(packet: Path, mode: str) -> dict[str, int]:
 
 
 _SEPARATOR_CELL = re.compile(r"^:?-{2,}:?$")
+_HEADING = re.compile(r"^(#{1,6})[ \t]+(.*)")
 
 
 def _declared_claims(packet: Path) -> tuple[list[str], int]:
@@ -209,11 +210,17 @@ def _declared_claims(packet: Path) -> tuple[list[str], int]:
     if not basis.is_file():
         return [], 0
     in_section = in_table = False
+    section_level = 0
     ids: list[str] = []
     unreadable = 0
     for line in basis.read_text(encoding="utf-8").splitlines():
-        if line.startswith("#"):
-            in_section = "derived requirements or claims" in line.lower()
+        heading = _HEADING.match(line)
+        if heading:
+            level = len(heading.group(1))
+            if "derived requirements or claims" in heading.group(2).lower():
+                in_section, section_level = True, level
+            elif in_section and level <= section_level:
+                in_section = False  # a sibling or ancestor heading ends the section; a subsection does not
             in_table = False
             continue
         if not in_section:
@@ -267,6 +274,8 @@ def _release_eligibility(
         blocked.append("record structure is invalid")
     if mode == UNSPECIFIED_MODE:
         undetermined.append("the packet mode could not be determined")
+    elif not any(statuses.values()):
+        undetermined.append("no evidence status declaration could be read, so the record cannot be assessed")
     for status in ("fail", "gap", "planned"):
         if statuses.get(status):
             blocked.append(f"{statuses[status]} evidence item(s) declared '{status}'")

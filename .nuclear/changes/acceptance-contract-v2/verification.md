@@ -52,7 +52,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 | Method | Command / review / eval | Environment | Result | Evidence link |
 |---|---|---|---|---|
 | Baseline | `python -m pytest -q` before the change | Linux container, Python 3.11 | pass | E-001 |
-| Adversarial suite | `python -m pytest -q tests/test_acceptance_adversarial.py` | same | 86 passed, 2 expected failures | E-001 |
+| Adversarial suite | `python -m pytest -q tests/test_acceptance_adversarial.py` | same | 100 passed, 2 expected failures | E-001 |
 | Full suite | `python -m pytest -q` | same | pass (exit 0) | CI run on the PR |
 | Lint and repo checks | `python -m ruff check .`; `python tools/ng.py doctor .`; `python tools/ng.py tokens .`; `python -m nuclear_grade.release` | same | pass | CI run on the PR |
 | Policy consistency | `python -m pytest -q tests/test_repo_policy.py` | same | pass after `propagation.py` and the two suites were listed | E-001 |
@@ -92,6 +92,8 @@ Run before the rule was used. Of 56 Standard-style records, 35 were clean, 14 ta
 | A claim declared in `basis.md` with a formatted id (`**C-002**`, backticks, underscores, a link) was silently dropped from the completeness check (automated review finding, verified) | six formatted-id cases; ids are now read with emphasis, ticks and link syntax removed, in both tables | `blocked`, names the claim; failed on the previous code | E-001 |
 | A declared row with no readable id vanished from the check (same finding) | free-text id case; header and separator rows are excluded | `undetermined`, counts the rows; failed on the previous code | E-001 |
 | A claim row recorded as `fail` still returned `open_to_decision` when the table header was not a status or result column (automated review finding, verified and the most serious of the set) | status by header matrix over `Result status`, `Verdict`, `Outcome`, `Disposition`, `Check`; each status takes the larger of the status-column count and the claim-row count | `fail`, `gap`, `planned` block; `deferred` is open with items; the block still verifies `bound`; the `Verdict`, `Disposition` and `Check` cases failed on the previous code | E-001 |
+| A Quick proof with an emphasized status (`- **Status:** **gap**`) read as complete and open to a decision, because the inline status reader missed the emphasis while the structural validator accepted it (automated review finding, verified) | eight declaration forms (emphasis, italics, ticks, bold label); the reader now accepts emphasis around the value; a record with valid structure and no readable status at all is `undetermined` | `blocked` for gap, fail, planned; open with items for deferred; five of the eight failed on the previous code, the rest are controls | E-001 |
+| A claim table under a subsection of the claims section (`### Additional claims`) was outside the completeness scan (same review) | the scan now tracks heading depth: subsections stay in, a sibling or ancestor heading ends it; three subsection cases and two sibling or ancestor cases | `blocked`, names the claim; the sibling cases stay `open_to_decision`; the three subsection cases failed on the previous code | E-001 |
 | The policy fails to list an imported module | `test_every_module_a_validator_imports_is_a_validator` | failed on the first run, caught `receipt.py` importing `propagation.py`; fixed in the policy | E-001 |
 
 ## AI-assisted work checks

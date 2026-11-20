@@ -391,12 +391,12 @@ def test_each_declared_status_maps_to_one_eligibility(tmp_path, status, expected
     assert eligibility(packet) == expected
 
 
-def test_a_decorated_status_cell_cannot_create_eligibility(tmp_path):
+def test_a_decorated_status_cell_is_read_not_ignored(tmp_path):
     packet = minimal_standard_packet(tmp_path)
     set_status(packet, "pass — see the log")
     acceptance = receipt_for(packet)["acceptance"]
-    assert acceptance["claim_support"]["state"] == "unrecognized"
-    assert acceptance["release_eligibility"]["state"] == "undetermined"
+    assert acceptance["claim_support"]["rows"] == [{"id": "C-001", "status": "pass"}]
+    assert acceptance["release_eligibility"]["state"] == "open_to_decision"
 
 
 def test_quick_packet_gap_blocks_and_pass_does_not(tmp_path):
@@ -575,6 +575,86 @@ def test_a_subsection_of_the_claims_section_is_still_scanned(tmp_path, heading):
 def test_a_sibling_or_ancestor_section_is_not_scanned_for_claims(tmp_path, heading):
     packet = minimal_standard_packet(tmp_path)
     declare(packet, f"\n{heading}\n\n| ID | Note |\n|---|---|\n| A-001 | not a claim |\n| Free text | still not a claim |")
+    acceptance = receipt_for(packet)["acceptance"]
+    assert acceptance["claim_support"]["declared_without_verification_row"] == []
+    assert acceptance["claim_support"]["unreadable_declarations"] == 0
+    assert acceptance["release_eligibility"]["state"] == "open_to_decision"
+
+
+def with_claim_rows(packet: Path, rows: str, header: str = "Verdict") -> None:
+    verification = packet / "verification.md"
+    verification.write_text(
+        verification.read_text(encoding="utf-8")
+        .replace("| Claim | Result status |", f"| Claim | {header} |")
+        .replace(VERIFICATION_ROW, f"{VERIFICATION_ROW}\n{rows}"),
+        encoding="utf-8",
+    )
+
+
+@pytest.mark.parametrize(
+    "cell",
+    [
+        "fail",
+        "**fail**",
+        "`fail`",
+        "_fail_",
+        "FAIL",
+        "Fail",
+        "fail (local)",
+        "**fail** (local)",
+        "fail — see the log",
+        "fail - see the log",
+        "fail. See the log.",
+        "fail: it broke",
+        "fail; pass",
+        "pass; fail",
+        "gap",
+        "**gap**",
+        "planned",
+        "**planned**",
+    ],
+)
+def test_a_decorated_failure_in_a_claim_row_blocks_whatever_the_header(tmp_path, cell):
+    packet = minimal_standard_packet(tmp_path)
+    with_claim_rows(packet, f"| C-002 | {cell} | test |")
+    acceptance = receipt_for(packet)["acceptance"]
+    assert acceptance["release_eligibility"]["state"] == "blocked"
+    assert acceptance["evidence_status"]["state"] == "open"
+    assert receipts.verify_receipt(receipt_for(packet), packet)["state"] == "bound"
+
+
+@pytest.mark.parametrize("cell", ["pass", "**pass**", "PASS", "pass (CI)", "pass — see the log", "pass: all green", "not applicable"])
+def test_a_decorated_pass_in_a_claim_row_does_not_block(tmp_path, cell):
+    packet = minimal_standard_packet(tmp_path)
+    with_claim_rows(packet, f"| C-002 | {cell} | test |")
+    assert receipt_for(packet)["acceptance"]["release_eligibility"]["state"] == "open_to_decision"
+
+
+@pytest.mark.parametrize("cell", ["pass all four tests", "must pass before release", "a gap in coverage", "failing"])
+def test_prose_that_mentions_a_status_word_is_not_a_status(tmp_path, cell):
+    packet = minimal_standard_packet(tmp_path)
+    declare(packet, "| C-002 | Critical | Test |")
+    with_claim_rows(packet, f"| C-002 | {cell} | test |")
+    acceptance = receipt_for(packet)["acceptance"]
+    assert {"id": "C-002", "status": "pass"} not in acceptance["claim_support"]["rows"]
+    assert acceptance["claim_support"]["declared_without_verification_row"] == ["C-002"]
+    assert acceptance["release_eligibility"]["state"] == "blocked"
+    assert "no readable verification row" in " ".join(acceptance["release_eligibility"]["reasons"])
+
+
+def test_a_fenced_example_cannot_satisfy_a_declared_claim(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    declare(packet, "| C-002 | Critical | Test |")
+    append(packet, "verification.md", "\n```markdown\n| C-002 | pass | example only |\n```\n")
+    acceptance = receipt_for(packet)["acceptance"]
+    assert acceptance["claim_support"]["declared_without_verification_row"] == ["C-002"]
+    assert acceptance["release_eligibility"]["state"] == "blocked"
+
+
+@pytest.mark.parametrize("fence", ["```", "~~~", "````"])
+def test_a_fenced_example_in_the_claims_section_is_not_a_declaration(tmp_path, fence):
+    packet = minimal_standard_packet(tmp_path)
+    declare(packet, f"\n{fence}\n| ID | Example |\n|---|---|\n| C-009 | Not a real claim |\n| Free text | nor this |\n{fence}\n")
     acceptance = receipt_for(packet)["acceptance"]
     assert acceptance["claim_support"]["declared_without_verification_row"] == []
     assert acceptance["claim_support"]["unreadable_declarations"] == 0

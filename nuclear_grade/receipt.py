@@ -51,13 +51,13 @@ from nuclear_grade.ng_validate import (
     _markdown_tables,
     _normalize_table_label,
     _section_text,
+    _strip_code_blocks,
     validate_packet,
 )
 from nuclear_grade.propagation import (
     check_promotion,
     claim_id,
     effective_status,
-    parse_claim_statuses,
 )
 
 RECEIPT_SCHEMA = "nuclear-grade.validation-receipt"
@@ -232,7 +232,7 @@ def _declared_claims(packet: Path) -> tuple[list[str], int]:
     basis = packet / "basis.md"
     if not basis.is_file():
         return [], 0
-    section = _section_text(basis.read_text(encoding="utf-8"), "## derived requirements or claims")
+    section = _section_text(_strip_code_blocks(basis.read_text(encoding="utf-8")), "## derived requirements or claims")
     in_table = False
     ids: list[str] = []
     unreadable = 0
@@ -261,6 +261,47 @@ def _declared_claims(packet: Path) -> tuple[list[str], int]:
     return ids, unreadable
 
 
+_STATUS_WORD = r"(?:not applicable|pass|fail|gap|deferred|planned)"
+_STATUS_ONLY = re.compile(rf"{_STATUS_WORD}(?:\s*[;,]\s*{_STATUS_WORD})*", re.IGNORECASE)
+_EXPLANATION = re.compile(r"\s*:\s")
+
+
+def _cell_status(cell: str) -> str | None:
+    """The status a table cell declares, or None if it does not declare one.
+
+    Emphasis, code ticks, case, a parenthetical, and a trailing explanation after a dash, a colon or a
+    sentence stop are ignored. After that the cell must be nothing but status words (a composite such as
+    ``pass; gap`` reads as its weakest), so prose that merely mentions "pass" is not a status.
+    """
+    if _CHOICE_LIST.search(cell):
+        return None
+    head = _DECLARATION_END.split(cell.strip(), maxsplit=1)[0]
+    head = _EXPLANATION.split(head, maxsplit=1)[0]
+    cleaned = _normalize_table_label(_PARENTHETICAL.sub(" ", head))
+    if not _STATUS_ONLY.fullmatch(cleaned):
+        return None
+    return effective_status([token.group(0).lower() for token in re.finditer(_STATUS_WORD, cleaned)])
+
+
+def _claim_rows(text: str) -> list[tuple[str, str]]:
+    """``(claim id, status)`` for each table row keyed by a claim id that declares a status.
+
+    Fenced examples are blanked first: an illustration is not evidence.
+    """
+    rows: list[tuple[str, str]] = []
+    for line in _strip_code_blocks(text).splitlines():
+        if not line.lstrip().startswith("|"):
+            continue
+        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+        row_id = claim_id(cells[0]) if len(cells) > 1 else None
+        if row_id is None:
+            continue
+        status = next((found for found in map(_cell_status, cells[1:]) if found), None)
+        if status is not None:
+            rows.append((row_id, status))
+    return rows
+
+
 def _claim_support(packet: Path, mode: str) -> dict[str, Any]:
     """Per-row status from verification.md. Not a score: a row is evidence status, not truth."""
     if mode != STANDARD_MODE:
@@ -269,7 +310,7 @@ def _claim_support(packet: Path, mode: str) -> dict[str, Any]:
     rows: list[tuple[str, str]] = []
     advisory: list[str] = []
     if verification.is_file():
-        rows = parse_claim_statuses(verification.read_text(encoding="utf-8"))
+        rows = _claim_rows(verification.read_text(encoding="utf-8"))
         check_promotion(packet, advisory)
     seen = {row_id for row_id, _ in rows}
     declared, unreadable = _declared_claims(packet)
@@ -306,7 +347,7 @@ def _release_eligibility(
         )
     if support["state"] == "recognized":
         for missing in support.get("declared_without_verification_row", []):
-            blocked.append(f"claim {missing} is declared in basis.md but has no verification row")
+            blocked.append(f"claim {missing} is declared in basis.md but has no readable verification row")
     if blocked:
         state, reasons = "blocked", blocked + undetermined
     elif undetermined:

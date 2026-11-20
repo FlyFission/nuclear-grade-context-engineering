@@ -25,7 +25,7 @@
 External roadmap review: a verdict must not read as approval, and "implemented" is not "effective"
   -> REQ-001..006 (basis)
   -> receipt.py, cli.py, mcp_server.py, consequence policy (design)
-  -> 137 test cases by property, 7 weakened-control reruns, a sweep of 82 earlier records (verification)
+  -> 170 test cases by property, 7 weakened-control reruns, a sweep of 82 earlier records (verification)
   -> agent-generated evidence, re-run by CI; maintainer review and merge (custody, authority)
   -> ship with the gaps named
 ```

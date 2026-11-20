@@ -18,14 +18,15 @@
 | REQ-004 | missing CLIs are skipped by name | `basis.md` | `plan.md` step 3 / `challenge-results/run-all.py#plan` | PATH check | local proof | `verification.md` E-005 | ship | pass |
 | REQ-005 | one line per tool version; not-comparable reasons shown | `basis.md` | `plan.md` step 4 / `challenge-results/build.py#scoreboard_pairs` | version in the pair key | local proof | `verification.md` E-006 | ship | pass |
 | REQ-006 | silent runs listed with what changed and links | `basis.md` | `plan.md` step 5 / `challenge-results/build.py#silent_replays` | outcome filter, `html.escape` | local proof | `verification.md` E-007 | ship | pass |
+| REQ-007 | one container per agent, repo read-only, own sign-in only | `basis.md` | `plan.md` step 6 / `challenge-results/container/round.sh` | read-only mount, per-agent key list | local proof | `verification.md` E-008 | ship | pass |
 
 ## Evidence chain
 
 ```text
 results exist only as a Markdown table; a round takes one command per agent per track
-  -> REQ-001..006 (basis)
+  -> REQ-001..007 (basis)
   -> renderers in build.py; run-all.py (design)
-  -> seven harness tests and a dry run (verification)
+  -> nine harness tests, a dry run and a container run (verification)
   -> agent-generated evidence, re-run by CI; maintainer review (custody)
 ```
 

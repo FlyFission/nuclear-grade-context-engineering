@@ -5,6 +5,7 @@ from __future__ import annotations
 import importlib.util
 import json
 import os
+import re
 import shutil
 import sys
 import time
@@ -301,3 +302,32 @@ def test_run_all_skips_agents_whose_cli_is_missing():
     assert run_all.parse_models(["here=model-1"]) == {"here": "model-1"}
     with pytest.raises(SystemExit):
         run_all.parse_models(["here"])
+
+
+def test_run_all_can_leave_the_rebuild_to_the_host(tmp_path, monkeypatch):
+    spec = importlib.util.spec_from_file_location("ng_challenge_results_run_all_nb", HARNESS / "run-all.py")
+    run_all = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(run_all)
+    agents_file = tmp_path / "agents.json"
+    agents_file.write_text(
+        json.dumps({"agents": [{"id": "here", "label": "Here", "command": [sys.executable, "{prompt}"]}]}),
+        encoding="utf-8",
+    )
+    calls = []
+    monkeypatch.setattr(run_all.subprocess, "run", lambda command, **_: calls.append(command))
+    assert run_all.main(["--agents-file", str(agents_file), "--trials", "1", "--no-build"]) == 0
+    assert calls and not any(str(HARNESS / "build.py") in command for command in calls)
+
+
+def test_container_round_keeps_the_repo_read_only_and_each_sign_in_with_its_own_agent():
+    round_sh = (HARNESS / "container" / "round.sh").read_text(encoding="utf-8")
+    dockerfile = (HARNESS / "container" / "Dockerfile").read_text(encoding="utf-8")
+    assert '-v "$repo:/repo:ro"' in round_sh
+    assert '-v "$repo/challenge-results/results:/repo/challenge-results/results"' in round_sh
+    assert "run-all.py --no-build" in round_sh and "NG_CONTAINER_IMAGE=" in round_sh
+    keys = dict(re.findall(r'^\s+([a-z-]+)\) echo "([A-Z_ ]*)" ;;$', round_sh, re.MULTILINE))
+    assert "OPENAI_API_KEY" not in keys["claude-code"].split()
+    assert "ANTHROPIC_API_KEY" not in keys["codex"].split()
+    assert "--env-file" not in round_sh  # an env file would hand every key to every agent
+    for name in ("CLAUDE_CODE", "CODEX", "GEMINI_CLI", "OPENCODE", "COPILOT"):
+        assert re.search(rf"^ARG {name}_VERSION=\d+\.\d+\.\d+$", dockerfile, re.MULTILINE), name

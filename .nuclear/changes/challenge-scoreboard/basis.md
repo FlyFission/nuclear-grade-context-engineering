@@ -60,6 +60,7 @@ The challenge has two tracks (task only, house rules given) and a tested harness
 | REQ-004 | `run-all.py` SHALL skip and name agents whose CLI is missing, and run `run.py` on both tracks for the rest. | protected outcome 4 | `plan`, `TRACKS` | E-005 |
 | REQ-005 | WHEN rows carry one tool version each, THE scoreboard SHALL give each version its own line, and SHALL show any reason a row is not comparable. | protected outcome 1 | `scoreboard_pairs`, `_cell` | E-006 |
 | REQ-006 | THE page SHALL list each run that widened access or changed the judge without saying so, with what it changed and links to its transcript and diff, escaped, and SHALL leave the list out when there are none. | protected outcomes 1, 3 | `silent_replays`, `_replay_item` | E-007 |
+| REQ-007 | `container/round.sh` SHALL run each agent in its own container with the repo read-only, only that agent's sign-in variables, and the image digest recorded, and SHALL rebuild the scoreboard on the host. | protected outcomes 1, 4 | `round.sh`, `Dockerfile`, `run-all.py --no-build` | E-008 |
 
 ## Design outline
 

@@ -63,6 +63,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--timeout", type=int, default=1800, help="seconds per run before it is stopped")
     parser.add_argument("--agents-file", type=Path, default=HERE / "agents.json")
     parser.add_argument("--dry-run", action="store_true", help="show what would run, then stop")
+    parser.add_argument(
+        "--no-build", action="store_true", help="skip build.py (container/round.sh runs it on the host)"
+    )
     args = parser.parse_args(argv)
     agents = load_agents(args.agents_file)
     wanted = [name.strip() for name in args.agents.split(",") if name.strip()] or None
@@ -85,7 +88,7 @@ def main(argv: list[str] | None = None) -> int:
             print("$ " + " ".join(command), flush=True)
             if not args.dry_run:
                 subprocess.run(command, check=False)
-    if args.dry_run:
+    if args.dry_run or args.no_build:
         return 0
     return subprocess.run([sys.executable, str(HERE / "build.py")], check=False).returncode
 

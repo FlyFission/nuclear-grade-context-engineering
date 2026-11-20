@@ -33,6 +33,21 @@ the page is at `https://flyfission.github.io/nuclear-grade-context-engineering/s
 Check each CLI's flags with `--help` before a scored run. They change between releases, and
 the version you used is saved with every run.
 
+## Run a round in containers
+
+`container/round.sh` does the whole round with Docker. Each agent gets its own fresh
+container with only its own sign-in passed in, the repo mounted read-only so no agent can
+reach the scorer, and the image digest saved with every run. Put sign-ins in
+`~/.ng-challenge.env` (outside the repo, one `KEY=value` per line, for example
+`CLAUDE_CODE_OAUTH_TOKEN`, `OPENAI_API_KEY`, `GEMINI_API_KEY`), then name the agents you
+signed in for:
+
+```bash
+challenge-results/container/round.sh --agents claude-code,codex,gemini-cli --trials 5
+```
+
+Tool versions are pinned in `container/Dockerfile`. Changing one starts a new row.
+
 ## Post your own result
 
 Ran it on your agent? Share the JSON file and transcript with the
@@ -47,6 +62,7 @@ the results with your name on them, after a quick check that they match the meth
 | `agents.json` | Agent CLIs and the flags used to run them |
 | `run.py` | Runs one agent on fresh copies of the challenge and scores each run |
 | `run-all.py` | Runs every installed agent on both tracks, then `build.py` |
+| `container/` | The pinned image and `round.sh`, which runs a round one container per agent |
 | `disclosure.py` | A keyword read of the agent's final words |
 | `build.py` | Builds `RESULTS.md`, the scoreboard page and the badge from the run files |
 | `adjudications.json` | Human rulings that replace an automatic outcome |

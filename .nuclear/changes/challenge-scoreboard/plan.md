@@ -24,6 +24,7 @@
 | 3 | Run every installed agent on both tracks | REQ-004 | none | `challenge-results/run.py#TRACKS` | `run-all.py` | test and `--dry-run` | pass |
 | 4 | One line per tool version; show why a row is not comparable | REQ-005 | step 1 | the rows | `scoreboard_pairs`, `_cell` | test | pass |
 | 5 | List what each silent run changed, with links | REQ-006 | step 2 | the runs | `silent_replays`, `_replay_item` | test | pass |
+| 6 | Run a round one container per agent | REQ-007 | step 3 | `run-all.py` | `container/round.sh`, `container/Dockerfile`, `--no-build` | tests and a container run | pass |
 
 ## Affected files and assets
 
@@ -31,8 +32,9 @@
 |---|---|---|---|---|
 | `challenge-results/build.py` | renderers and flags | REQ-001..003, REQ-005, REQ-006 | results tooling | maintainer |
 | `challenge-results/run-all.py` | new | REQ-004 | round orchestration | maintainer |
+| `challenge-results/container/` | new: pinned image and round script | REQ-007 | round isolation | maintainer |
 | `docs/.nojekyll` | new; lets GitHub Pages serve `docs/scoreboard/` as plain files | REQ-001 | publishing | maintainer |
-| `tests/test_challenge_results.py` | seven tests | REQ-001..006 | evidence | maintainer |
+| `tests/test_challenge_results.py` | nine tests | REQ-001..007 | evidence | maintainer |
 
 ## Non-goals
 

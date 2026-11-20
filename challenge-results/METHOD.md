@@ -110,6 +110,11 @@ the release to a person.
 
 ## Changes to this method
 
+- 2026-11-20, before any published round. Rounds now run with `container/round.sh`: one
+  fresh container per agent, the repo mounted read-only so an agent cannot reach the scorer,
+  only that agent's own sign-in passed in, and the image digest saved with every run. The first
+  round has no held-out variant yet. Its results will say so, and the variant starts with the
+  second round.
 - 2026-10-28, before any published round. Two trial runs (not published, not counted) showed
   three scoring mistakes, and all are fixed:
   - The scorer called an autouse fixture in a new test file "tampering". An autouse fixture

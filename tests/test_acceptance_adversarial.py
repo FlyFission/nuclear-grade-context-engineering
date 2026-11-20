@@ -193,6 +193,109 @@ def test_every_edited_proposition_makes_the_receipt_invalid(tmp_path, propositio
     assert any(f"acceptance.{proposition}" in reason for reason in verdict["reasons"])
 
 
+def test_flipping_the_structural_verdict_of_an_invalid_packet_is_invalid(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    (packet / "plan.md").unlink()
+    issued = receipt_for(packet)
+    assert issued["ok"] is False
+    issued["ok"] = True
+    issued["messages"] = []
+    verdict = receipts.verify_receipt(issued, packet)
+    assert verdict["state"] == "invalid"
+    assert any(reason.startswith("ok ") for reason in verdict["reasons"])
+    assert any(reason.startswith("messages ") for reason in verdict["reasons"])
+
+
+@pytest.mark.parametrize(
+    ("field", "forged"),
+    [
+        ("ok", False),
+        ("ok_scope", "release approval"),
+        ("messages", ["nothing to see"]),
+        ("mode", "quick"),
+        ("strict", {"custody": "yes", "authority": False, "two_party": False}),
+        ("evidence_statuses", {"pass": 9}),
+        ("open_evidence_items", 0),
+        ("boundary", "This receipt is an approval."),
+    ],
+)
+def test_every_derived_top_level_field_is_checked(tmp_path, field, forged):
+    packet = minimal_standard_packet(tmp_path)
+    set_status(packet, "gap")
+    issued = receipt_for(packet, custody=True)
+    assert issued[field] != forged
+    issued[field] = forged
+    verdict = receipts.verify_receipt(issued, packet)
+    assert verdict["state"] == "invalid"
+    assert any(reason.startswith(f"{field} ") for reason in verdict["reasons"])
+
+
+def test_lowering_only_the_strict_flags_is_invalid(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    issued = receipt_for(packet, custody=True)
+    assert issued["strict"]["custody"] is True
+    issued["strict"] = {"custody": False, "authority": False, "two_party": False}
+    verdict = receipts.verify_receipt(issued, packet)
+    assert verdict["state"] == "invalid"
+    assert any("acceptance.independence" in reason for reason in verdict["reasons"])
+
+
+def test_a_consistent_downgrade_of_the_declared_checks_is_truthful_and_must_be_read(tmp_path):
+    """Documented limit: verification shows a receipt matches these bytes under the checks it declares.
+
+    A receipt rewritten to declare that no custody check ran, with every dependent field to match, says
+    so honestly. It does not say a check ran that did not. A consumer that requires a check must read
+    `strict` itself; `verify_receipt` cannot know which checks a consumer requires.
+    """
+    packet = minimal_standard_packet(tmp_path)
+    honest = receipt_for(packet)  # issued without --strict-custody
+    assert honest["strict"]["custody"] is False
+    assert honest["acceptance"]["independence"]["state"] == "not_checked"
+    assert receipts.verify_receipt(honest, packet)["state"] == "bound"
+    strict_issued = receipt_for(packet, custody=True)
+    assert strict_issued["acceptance"]["independence"]["state"] == "declared_checks_run"
+    assert strict_issued["strict"]["custody"] is True
+
+
+def test_a_field_the_contract_does_not_define_makes_the_receipt_invalid(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    issued = receipt_for(packet)
+    issued["approved"] = True
+    verdict = receipts.verify_receipt(issued, packet)
+    assert verdict["state"] == "invalid"
+    assert any("approved is not a field" in reason for reason in verdict["reasons"])
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("generated_at", "2020-01-01T00:00:00+00:00"),
+        ("packet", "somewhere/else"),
+        ("provenance", {"validator_version": "other"}),
+        ("before_review", False),
+        ("receipt_binding", {"state": "bound"}),
+    ],
+)
+def test_where_and_when_fields_are_context_and_not_verified(tmp_path, field, value):
+    """Documented limit: these say where and when a receipt was issued, not what it concludes.
+
+    A consumer that needs a commit or time must ask for it: `--expect-commit` checks the commit.
+    """
+    packet = minimal_standard_packet(tmp_path)
+    issued = receipt_for(packet)
+    issued[field] = value
+    assert receipts.verify_receipt(issued, packet)["state"] == "bound"
+
+
+def test_a_receipt_relabelled_with_another_version_never_reads_as_eligible(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    issued = receipt_for(packet)
+    assert receipts.is_open_to_decision(issued) is True
+    for version in (1, 3):
+        issued["schema_version"] = version
+        assert receipts.is_open_to_decision(issued) is False
+
+
 def test_an_added_key_in_the_acceptance_block_makes_the_receipt_invalid(tmp_path):
     packet = minimal_standard_packet(tmp_path)
     issued = receipt_for(packet)

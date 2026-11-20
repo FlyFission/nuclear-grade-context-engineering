@@ -139,8 +139,12 @@ records it would fail 21 of 56 Standard-style records, and it has no dependency 
 shared assumptions, and conditional validity are not modeled; a typed dependency model comes first.
 `ng validate --verify-receipt FILE` reports a stored receipt as `bound`, `stale` (other bytes, an added
 or removed file, or another commit), or `invalid` (its digest does not match its own file list, or any
-proposition or key in its acceptance block differs from what these bytes yield, or a version 2 receipt has
-no block). A receipt that is not a supported version 2 receipt, or whose block claims a decision or apply
+derived field differs from what these bytes yield, or it carries a field the contract does not define, or a
+version 2 receipt has no acceptance block). For a version 2 receipt, verification rebuilds the whole receipt from
+the packet and the strict flags it declares, then compares the verdict, messages, mode, flags, status counts,
+boundary text, file digests, and every acceptance proposition. Only where and when it was issued (time, path,
+provenance) is not compared; `--expect-commit` checks the commit. Verification shows a receipt matches these bytes
+under the checks it declares, so a consumer that requires a check must read the strict flags itself. A receipt that is not a supported version 2 receipt, or whose block claims a decision or apply
 permission, reads as `undetermined`. The
 fixtures in `tests/test_acceptance_adversarial.py` attack this path by property, and mark two known gaps
 (approval replay after a change, and an artifact kept outside the packet) as expected failures.

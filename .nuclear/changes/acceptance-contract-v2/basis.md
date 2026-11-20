@@ -18,7 +18,7 @@
 |---|---|---|
 | A structurally valid record is never read as approval | the original misreading | REQ-001, REQ-002 |
 | A receipt for other bytes or another commit is recognized as such | evidence swaps and stale receipts | REQ-003 |
-| A hand-edited receipt cannot raise its own eligibility | the acceptance block sits outside the digest | REQ-003 |
+| A hand-edited receipt cannot raise its own eligibility | the verdict, messages, and acceptance block sit outside the digest | REQ-003 |
 | Old receipts never read as eligible | compatibility without silent upgrade | REQ-004 |
 | Every consumer shows the same result | no path collapses it back to one boolean | REQ-005 |
 
@@ -64,7 +64,7 @@
 |---|---|---|---|---|
 | REQ-001 | THE RECEIPT SHALL report structure, evidence status, claim support, declared-independence checks, release eligibility, authorized decision, and apply permission as separate fields, with no overall boolean and no eligibility value that reads as approval. | protected outcome 1 | `build_acceptance` | E-001 |
 | REQ-002 | RELEASE ELIGIBILITY SHALL be `blocked` for invalid structure, a `fail`, `gap`, or `planned` item, or a declared claim with no verification row; `undetermined` when claim rows cannot be read; otherwise open to a decision. | protected outcome 1 | `_release_eligibility` | E-001, E-003 |
-| REQ-003 | `verify_receipt` SHALL report `bound`, `stale`, or `invalid`, covering changed, added, and removed files, another commit, an edited digest, and an edited acceptance block. | protected outcomes 2, 3 | `verify_receipt` | E-001, E-002 |
+| REQ-003 | `verify_receipt` SHALL report `bound`, `stale`, or `invalid`, covering changed, added, and removed files, another commit, an edited digest, and any edited derived field of the receipt, including the acceptance block. | protected outcomes 2, 3 | `verify_receipt` | E-001, E-002 |
 | REQ-004 | A version 1, hand-built, or malformed receipt SHALL NOT read as eligible. | protected outcome 4 | `read_acceptance` | E-001 |
 | REQ-005 | THE CLI text, CLI JSON, exit codes, and MCP tool SHALL agree, and default exit codes SHALL keep their old meaning. | protected outcome 5 | `handle_validate`, `validate_change_record` | E-001 |
 | REQ-006 | THE PROPAGATION RULE SHALL be advisory input only and SHALL NOT be called by `validate_packet`. | unacceptable outcome 3 | receipt reads it; validator does not | E-001, E-003 |

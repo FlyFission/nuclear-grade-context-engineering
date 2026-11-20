@@ -70,6 +70,23 @@ BOUNDARY = (
     "Structural check only. The digests show which bytes were checked; they do not show the "
     "evidence is adequate, independent, or true, and this receipt is not a signature."
 )
+# Fields of a version 2 receipt that are derived from the packet bytes and the strict flags, and so
+# can be rebuilt and compared. The rest record where and when the receipt was made.
+_DERIVED_FIELDS = (
+    "schema",
+    "schema_version",
+    "mode",
+    "ok",
+    "ok_scope",
+    "messages",
+    "strict",
+    "evidence_statuses",
+    "open_evidence_items",
+    "acceptance",
+    "inputs",
+    "boundary",
+)
+_CONTEXT_FIELDS = ("generated_at", "packet", "provenance", "before_review", "receipt_binding")
 ACCEPTANCE_NOTE = (
     "A positive structural result is not approval. Release eligibility only says whether recorded "
     "evidence leaves the change open to a human decision; the validator does not authenticate "
@@ -456,46 +473,58 @@ def verify_receipt(
             )
     if reasons:
         return {"state": "stale", "reasons": reasons, "checked": checked}
-    # The bytes match. The acceptance block sits outside the digest, so recompute all of it from
-    # these bytes and the strict flags the receipt records, and refuse a block that differs in
-    # any proposition, key, or value. A version 2 receipt must carry one.
+    # The bytes match. Everything else a version 2 receipt says about them, except where and when it
+    # was issued, is derived from them: so rebuild the whole receipt with the strict flags it
+    # records and compare every derived field, not only the digested file list. An edited verdict,
+    # message list, status count, boundary text, or acceptance proposition therefore reads
+    # invalid, as does a field the contract does not define.
+    if receipt.get("schema_version") != RECEIPT_SCHEMA_VERSION:
+        return {"state": "bound", "reasons": [], "checked": checked}
     block = receipt.get("acceptance")
-    if isinstance(block, dict):
-        checked.append("acceptance")
-        strict = receipt.get("strict") if isinstance(receipt.get("strict"), dict) else {}
-        fresh = validate_packet(
-            packet,
-            require_custody=bool(strict.get("custody")),
-            require_authority=bool(strict.get("authority")),
-            require_two_party=bool(strict.get("two_party")),
-            before_review=bool(receipt.get("before_review")),
-        )
-        mode = _effective_mode(packet)
-        expected = build_acceptance(
-            packet,
-            fresh,
-            mode,
-            _status_counts(packet, mode),
-            strict_custody=bool(strict.get("custody")),
-            strict_authority=bool(strict.get("authority")),
-            strict_two_party=bool(strict.get("two_party")),
-        )
-        if block != expected:
-            keys = [key for key in expected if block.get(key) != expected[key]]
-            keys += sorted(key for key in block if key not in expected)
-            return {
-                "state": "invalid",
-                "reasons": [
-                    f"acceptance.{key} does not match what these bytes yield; the block was edited" for key in keys
-                ],
-                "checked": checked,
-            }
-    elif receipt.get("schema_version") == RECEIPT_SCHEMA_VERSION:
+    if not isinstance(block, dict):
         return {
             "state": "invalid",
             "reasons": ["a version 2 receipt must carry an acceptance block; it was removed or is not an object"],
             "checked": checked,
         }
+    checked.append("derived-fields")
+    strict = receipt.get("strict") if isinstance(receipt.get("strict"), dict) else {}
+    provenance = receipt.get("provenance") if isinstance(receipt.get("provenance"), dict) else {}
+    flags = {name: bool(strict.get(name)) for name in ("custody", "authority", "two_party")}
+    fresh = validate_packet(
+        packet,
+        require_custody=flags["custody"],
+        require_authority=flags["authority"],
+        require_two_party=flags["two_party"],
+        before_review=bool(receipt.get("before_review")),
+    )
+    rebuilt = build_receipt(
+        packet,
+        fresh,
+        strict_custody=flags["custody"],
+        strict_authority=flags["authority"],
+        strict_two_party=flags["two_party"],
+        validator_version=str(provenance.get("validator_version") or ""),
+    )
+    problems: list[str] = []
+    for key in _DERIVED_FIELDS:
+        if receipt.get(key) == rebuilt[key]:
+            continue
+        if key == "acceptance":
+            names = [name for name in rebuilt[key] if block.get(name) != rebuilt[key][name]]
+            names += sorted(name for name in block if name not in rebuilt[key])
+            problems += [
+                f"acceptance.{name} does not match what these bytes yield; the block was edited" for name in names
+            ]
+        else:
+            problems.append(f"{key} does not match what these bytes yield; the receipt was edited")
+    problems += [
+        f"{key} is not a field of the receipt contract"
+        for key in sorted(receipt)
+        if key not in _DERIVED_FIELDS and key not in _CONTEXT_FIELDS
+    ]
+    if problems:
+        return {"state": "invalid", "reasons": problems, "checked": checked}
     return {"state": "bound", "reasons": [], "checked": checked}
 
 

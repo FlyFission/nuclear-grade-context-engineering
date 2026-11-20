@@ -179,8 +179,8 @@ def _status_counts(packet: Path, mode: str) -> dict[str, int]:
     evidence_file = packet / ("proof.md" if mode == QUICK_MODE else "verification.md")
     if not evidence_file.is_file():
         return counts
-    # A fenced example is not evidence: blank it before reading any status.
-    text = _strip_code_blocks(evidence_file.read_text(encoding="utf-8"))
+    # A fenced example or an HTML comment is not evidence: blank it before reading any status.
+    text = _evidence_view(evidence_file.read_text(encoding="utf-8"))
     # Statuses are also declared inline, as Quick bullets (`- Status: gap`) or mid-sentence
     # (`... Status: deferred — ...`). An unfilled template (`pass / fail / gap`) is not counted.
     # Table rows are counted by the table pass below; scan only prose lines here so a
@@ -216,6 +216,36 @@ def _status_counts(packet: Path, mode: str) -> dict[str, int]:
     return counts
 
 
+_INLINE_CODE = re.compile(r"(?<!`)(`+)(?!`)(.+?)(?<!`)\1(?!`)", re.DOTALL)
+_HTML_COMMENT = re.compile(r"<!--.*?(?:-->|\Z)", re.DOTALL)
+
+
+def _blank(text: str) -> str:
+    """Blank every visible character but keep line breaks, so line structure survives."""
+    return re.sub(r"[^\r\n]", " ", text)
+
+
+def _strip_html_comments(text: str) -> str:
+    """Blank HTML comments, which a rendered page does not show. An unterminated one hides the rest.
+
+    A ``<!--`` inside an inline code span is text, not a comment, so code spans are masked first.
+    """
+    masked = _INLINE_CODE.sub(lambda match: "x" * len(match.group(0)), text)
+    pieces: list[str] = []
+    last = 0
+    for match in _HTML_COMMENT.finditer(masked):
+        pieces.append(text[last : match.start()])
+        pieces.append(_blank(text[match.start() : match.end()]))
+        last = match.end()
+    pieces.append(text[last:])
+    return "".join(pieces)
+
+
+def _evidence_view(text: str) -> str:
+    """The part of a Markdown file that counts as a record: not a fenced example, not a comment."""
+    return _strip_html_comments(_strip_code_blocks(text))
+
+
 _SEPARATOR_CELL = re.compile(r"^:?-{2,}:?$")
 _HEADING = re.compile(r"^[ \t]{0,3}(#{1,6})[ \t]+(.*)")
 
@@ -233,7 +263,7 @@ def _declared_claims(packet: Path) -> tuple[list[str], int]:
     basis = packet / "basis.md"
     if not basis.is_file():
         return [], 0
-    section = _section_text(_strip_code_blocks(basis.read_text(encoding="utf-8")), "## derived requirements or claims")
+    section = _section_text(_evidence_view(basis.read_text(encoding="utf-8")), "## derived requirements or claims")
     in_table = False
     ids: list[str] = []
     unreadable = 0
@@ -287,10 +317,10 @@ def _cell_status(cell: str) -> str | None:
 def _claim_rows(text: str) -> list[tuple[str, str]]:
     """``(claim id, status)`` for each table row keyed by a claim id that declares a status.
 
-    Fenced examples are blanked first: an illustration is not evidence.
+    Fenced examples and HTML comments are blanked first: an illustration or a retired result is not evidence.
     """
     rows: list[tuple[str, str]] = []
-    for line in _strip_code_blocks(text).splitlines():
+    for line in _evidence_view(text).splitlines():
         if not line.lstrip().startswith("|"):
             continue
         cells = [cell.strip() for cell in line.strip().strip("|").split("|")]

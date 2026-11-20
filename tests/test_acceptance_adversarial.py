@@ -698,6 +698,77 @@ def test_a_fenced_claim_table_in_a_standard_packet_is_never_evidence(tmp_path):
     assert acceptance["evidence_status"] == {"state": "complete", "open_items": 0}
 
 
+@pytest.mark.parametrize(
+    "hidden",
+    [
+        "<!-- | C-002 | pass | example only | -->",
+        "<!--\n| C-002 | pass | example only |\n-->",
+        "<!-- retired\n| C-002 | pass | old |\n   still a comment -->",
+        "<!--\n| C-002 | pass | never closed |",
+        "<!-- a --> <!--\n| C-002 | pass | x |\n-->",
+    ],
+)
+def test_an_html_comment_cannot_satisfy_a_declared_claim(tmp_path, hidden):
+    packet = minimal_standard_packet(tmp_path)
+    declare(packet, "| C-002 | Critical | Test |")
+    append(packet, "verification.md", f"\n{hidden}\n")
+    acceptance = receipt_for(packet)["acceptance"]
+    assert acceptance["claim_support"]["declared_without_verification_row"] == ["C-002"]
+    assert acceptance["release_eligibility"]["state"] == "blocked"
+
+
+def test_a_commented_declaration_is_not_a_declaration(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    declare(packet, "<!--\n| C-009 | Retired claim | x |\n| Free text | nor this | x |\n-->")
+    acceptance = receipt_for(packet)["acceptance"]
+    assert acceptance["claim_support"]["declared_without_verification_row"] == []
+    assert acceptance["claim_support"]["unreadable_declarations"] == 0
+    assert acceptance["release_eligibility"]["state"] == "open_to_decision"
+
+
+@pytest.mark.parametrize(
+    ("declared", "hidden", "state"),
+    [
+        ("- Status: unknown", "<!-- - Status: pass -->", "undetermined"),
+        ("- Status: unknown", "<!--\n- Status: pass\n-->", "undetermined"),
+        ("- Status: unknown", "<!--\n- **Status:** **pass**", "undetermined"),
+        ("- Status: gap", "<!-- - Status: pass -->", "blocked"),
+        ("- Status: pass", "<!-- - Status: fail -->", "open_to_decision"),
+    ],
+)
+def test_a_commented_status_is_never_evidence(tmp_path, declared, hidden, state):
+    packet = minimal_quick_packet(tmp_path)
+    proof = packet / "proof.md"
+    proof.write_text(proof.read_text(encoding="utf-8").replace("- Status: pass", declared) + f"\n{hidden}\n", encoding="utf-8")
+    assert receipt_for(packet)["acceptance"]["release_eligibility"]["state"] == state
+
+
+@pytest.mark.parametrize(
+    "mention",
+    [
+        "Note: `<!--` inside inline code is text.",
+        "Note: ``<!-- also `tick` -->`` is text.",
+        "```\n<!-- inside a fence\n```",
+    ],
+)
+def test_a_comment_marker_in_code_is_text_and_hides_nothing(tmp_path, mention):
+    """The trap this repository has hit before: an `<!--` in code must not open a comment."""
+    packet = minimal_standard_packet(tmp_path)
+    declare(packet, "| C-002 | Critical | Test |")
+    append(packet, "verification.md", f"\n{mention}\n\n| C-002 | pass | real |\n")
+    acceptance = receipt_for(packet)["acceptance"]
+    assert acceptance["claim_support"]["declared_without_verification_row"] == []
+    assert acceptance["release_eligibility"]["state"] == "open_to_decision"
+
+
+def test_blanking_a_comment_keeps_the_line_structure():
+    text = "a\n<!--\nb\n-->\nc\n"
+    blanked = receipts._strip_html_comments(text)
+    assert len(blanked) == len(text)
+    assert blanked.count("\n") == text.count("\n")
+    assert blanked.splitlines()[0] == "a" and blanked.splitlines()[-1] == "c"
+
+
 def test_a_fenced_example_cannot_satisfy_a_declared_claim(tmp_path):
     packet = minimal_standard_packet(tmp_path)
     declare(packet, "| C-002 | Critical | Test |")

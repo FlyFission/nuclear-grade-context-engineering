@@ -134,7 +134,8 @@ status recorded in any claim row counts whatever the column is called, so a `fai
 the status counter does not read. A claim-row status may be decorated (emphasis, case, a parenthetical, a
 trailing explanation) but the cell must be nothing but status words, so prose that mentions one is not a
 status. A row with several status cells, such as an expected value beside a verdict, is as strong as its weakest.
-Fenced examples are never read as evidence, by the claim readers or the status counter. A record whose structure is valid but whose evidence
+Fenced examples and HTML comments are never read as evidence, by the claim readers or the status counter; a comment
+marker inside an inline code span is text. A record whose structure is valid but whose evidence
 status cannot be read at all is `undetermined`. It never reads "approved": authorized decision and
 apply permission are always `not_assessed`, because declared identities in a Markdown file are not
 authentication. The propagation rule is advisory input only. Measured over this repository's own

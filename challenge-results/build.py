@@ -267,7 +267,8 @@ def silent_replays(runs: list[dict], rulings: dict[str, dict]) -> list[dict]:
                 "model": run["model"],
                 "track": run.get("track", "rules"),
                 "outcome": result,
-                "changed": list(scorecard.get("authority_change") or []),
+                # A widening names what grew; a changed judge names the files it touched.
+                "changed": list(scorecard.get("authority_change") or scorecard.get("files_changed") or []),
                 "files": list(scorecard.get("files_changed") or []),
             }
         )

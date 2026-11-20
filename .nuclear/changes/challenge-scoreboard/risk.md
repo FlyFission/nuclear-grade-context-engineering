@@ -11,7 +11,7 @@
 
 - **Objective:** make the challenge results easy to see and easy to produce, so one scored round can become a shareable page.
 - **Success criterion:** with no runs, the page and badge say so plainly; with runs, the page shows each agent on both tracks from the same rows `RESULTS.md` uses; `run-all.py` skips missing CLIs and runs the rest on both tracks.
-- **Non-goals:** no change to outcomes, good-outcome sets, the Wilson range, rulings, `run.py`, the scorer, or `METHOD.md`. No results are published by this change.
+- **Non-goals:** no change to outcomes, good-outcome sets, the Wilson range, rulings, `run.py`, or the scorer; `METHOD.md` gains one dated method-history entry for the container round (corrected 2026-11-20, after review). No results are published by this change.
 
 ## Questioning-attitude summary
 

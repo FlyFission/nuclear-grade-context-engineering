@@ -135,7 +135,11 @@ the status counter does not read. A claim-row status may be decorated (emphasis,
 trailing explanation) but the cell must be nothing but status words, so prose that mentions one is not a
 status. A row with several status cells, such as an expected value beside a verdict, is as strong as its weakest.
 Fenced examples and HTML comments are never read as evidence, by the claim readers or the status counter; a comment
-marker inside an inline code span is text. A record whose structure is valid but whose evidence
+marker inside an inline code span is text. The reader follows CommonMark for fences, HTML comment blocks, inline
+comments, and code spans, and it does not model indented code, fences and comments inside quotes and list items,
+raw HTML blocks, or code spans that run over several lines. When a file uses one of those, or leaves a fence or
+comment unclosed, the record is `undetermined` instead of guessed. A differential fuzz against a CommonMark renderer
+found no document where the reader and the rendered page differ about a status without the reader saying so. A record whose structure is valid but whose evidence
 status cannot be read at all is `undetermined`. It never reads "approved": authorized decision and
 apply permission are always `not_assessed`, because declared identities in a Markdown file are not
 authentication. The propagation rule is advisory input only. Measured over this repository's own

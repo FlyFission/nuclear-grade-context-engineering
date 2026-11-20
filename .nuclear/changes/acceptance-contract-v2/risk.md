@@ -28,7 +28,7 @@
 | `nuclear_grade/cli.py` | `--require-eligible`, `--verify-receipt`, `--expect-commit`; `Acceptance:` line in text output |
 | `nuclear_grade/mcp_server.py` | `validate_change_record` appends the `Acceptance:` line |
 | `.nuclear/consequence-policy.json` | policy edit: `propagation.py` joins `validators`; two suites join `trust-tests` |
-| `tests/test_acceptance_adversarial.py` | new, 204 test cases including 2 strict expected failures |
+| `tests/test_acceptance_adversarial.py` | new, 258 test cases including 2 strict expected failures |
 | `docs/05-reference/cli-reference.md`, `docs/02-operating-system/validators.md`, `CHANGELOG.md` | document the contract |
 | `.nuclear/badge.json` | regenerated |
 
@@ -38,7 +38,7 @@
 |---|---|---|
 | Consequence | high | the receipt is the artifact CI and reviewers read as the validator's verdict |
 | Reversibility | high | additive fields and flags; revert the commit; default exit codes unchanged |
-| Detectability | high | deterministic; 204 test cases; mutation-checked |
+| Detectability | high | deterministic; 258 test cases; mutation-checked |
 | Trust boundary | yes | validator, receipt, and the consequence policy itself |
 | Uncertainty | medium | the eligibility split has no owner-labelled ground truth |
 

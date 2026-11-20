@@ -26,7 +26,10 @@ independence check ran. Approval replay and out-of-packet evidence swaps are mar
 from __future__ import annotations
 
 import json
+import random
+import re
 import subprocess
+from html.parser import HTMLParser
 from pathlib import Path
 
 import pytest
@@ -705,7 +708,6 @@ def test_a_fenced_claim_table_in_a_standard_packet_is_never_evidence(tmp_path):
         "<!--\n| C-002 | pass | example only |\n-->",
         "<!-- retired\n| C-002 | pass | old |\n   still a comment -->",
         "<!--\n| C-002 | pass | never closed |",
-        "<!-- a --> <!--\n| C-002 | pass | x |\n-->",
     ],
 )
 def test_an_html_comment_cannot_satisfy_a_declared_claim(tmp_path, hidden):
@@ -715,6 +717,15 @@ def test_an_html_comment_cannot_satisfy_a_declared_claim(tmp_path, hidden):
     acceptance = receipt_for(packet)["acceptance"]
     assert acceptance["claim_support"]["declared_without_verification_row"] == ["C-002"]
     assert acceptance["release_eligibility"]["state"] == "blocked"
+
+
+def test_a_comment_closed_on_its_own_line_hides_nothing_after_it(tmp_path):
+    """CommonMark: the line holding `-->` ends the HTML block, so a second `<!--` on it is inert."""
+    packet = minimal_standard_packet(tmp_path)
+    declare(packet, "| C-002 | Critical | Test |")
+    append(packet, "verification.md", "\n<!-- a --> <!--\n\n| C-002 | pass | real, and visible |\n")
+    acceptance = receipt_for(packet)["acceptance"]
+    assert acceptance["claim_support"]["declared_without_verification_row"] == []
 
 
 def test_a_commented_declaration_is_not_a_declaration(tmp_path):
@@ -761,9 +772,191 @@ def test_a_comment_marker_in_code_is_text_and_hides_nothing(tmp_path, mention):
     assert acceptance["release_eligibility"]["state"] == "open_to_decision"
 
 
+def quick_with(tmp_path, declared: str, tail: str) -> str:
+    packet = minimal_quick_packet(tmp_path)
+    proof = packet / "proof.md"
+    proof.write_text(proof.read_text(encoding="utf-8").replace("- Status: pass", declared) + tail, encoding="utf-8")
+    return receipt_for(packet)["acceptance"]["release_eligibility"]["state"]
+
+
+@pytest.mark.parametrize(
+    "tail",
+    [
+        "\n<!--\n```\n-->\n- Status: gap\n",
+        "\n<!-- ``` -->\n- Status: gap\n",
+        "\n<!--\n~~~\n-->\n- Status: gap\n",
+        "\n<!-- ````md -->\n- Status: gap\n",
+        "\n```\n<!--\n```\n- Status: gap\n",
+        "\n~~~\n<!--\n~~~\n- Status: gap\n",
+    ],
+)
+def test_a_fence_marker_in_a_comment_and_a_comment_marker_in_a_fence_hide_nothing(tmp_path, tail):
+    """The failure a review found: each context must not be able to mis-open the other."""
+    assert quick_with(tmp_path, "- Status: pass", tail) == "blocked"
+    assert quick_with(tmp_path, "- Status: unknown", tail) == "blocked"
+
+
+def test_a_fence_marker_in_a_comment_hides_a_later_failure_in_a_standard_packet_no_longer(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    declare(packet, "| C-002 | Critical | Test |")
+    append(packet, "verification.md", "\n<!--\n```\n-->\n\n| C-002 | fail | real |\n")
+    acceptance = receipt_for(packet)["acceptance"]
+    assert {"id": "C-002", "status": "fail"} in acceptance["claim_support"]["rows"]
+    assert acceptance["release_eligibility"]["state"] == "blocked"
+
+
+@pytest.mark.parametrize(
+    ("tail", "construct"),
+    [
+        ("\n- Status: pass\n```\n- Status: fail\n", "never closed"),
+        ("\n<!--\n- Status: pass\n", "never closed"),
+        ("\nx <!-- start\n- Status: pass\n", "not closed on the line where it opens"),
+        ("\nx <!-- a\nb --> y\n- Status: pass\n", "not closed on the line where it opens"),
+        ("\n- <!--\n- Status: pass\n-->\n", "inside a quote or list item"),
+        ("\n> <!--\nStatus: pass\n-->\n", "inside a quote or list item"),
+        ("\n- ```\n  Status: pass\n  ```\n", "inside a quote or list item"),
+        ("\n    - Status: pass\n", "indented text that mentions a status"),
+        ("\n\t- Status: pass\n", "indented text that mentions a status"),
+        ("\n<pre>\n- Status: pass\n</pre>\n", "raw HTML block"),
+        ("\n<script>\nStatus: pass\n</script>\n", "raw HTML block"),
+        ("\n`two\nStatus: pass\nlines`\n", "code span that continues"),
+        ("\n<!-- a --> <!--\n- Status: pass\n", "left open on the line that closes"),
+        ("\n</details>\n```\nStatus: pass\n  ```\n", "raw HTML block that contains a fence"),
+    ],
+)
+def test_a_construct_the_reader_cannot_read_faithfully_withholds_eligibility(tmp_path, tail, construct):
+    packet = minimal_quick_packet(tmp_path)
+    proof = packet / "proof.md"
+    proof.write_text(proof.read_text(encoding="utf-8") + tail, encoding="utf-8")
+    eligibility = receipt_for(packet)["acceptance"]["release_eligibility"]
+    assert eligibility["state"] == "undetermined"
+    assert any(construct in reason for reason in eligibility["reasons"])
+
+
+def test_a_stray_comment_opener_does_not_hide_a_later_failure(tmp_path):
+    """Reading a stray `<!--` as a comment to the end of the file would lose a real failure."""
+    assert quick_with(tmp_path, "- Status: pass", "\nx <!-- start\n\n- Status: gap\n") == "blocked"
+
+
+def test_a_tag_name_in_a_code_span_is_text_outside_a_raw_html_paragraph(tmp_path):
+    """A record that talks about `<pre>` or `<script>` in code must stay readable, as one real record here does."""
+    assert quick_with(tmp_path, "- Status: pass", "\nThe note mentions `<pre>` and `<script>` in code.\n") == "open_to_decision"
+    assert quick_with(tmp_path, "- Status: pass", "\n| CX-1 | a literal `<!--` and `<pre>` | yes |\n") == "open_to_decision"
+
+
+def test_the_same_mention_inside_a_raw_html_paragraph_is_a_real_tag(tmp_path):
+    """Backticks are not code spans in a raw HTML block, so the tag is real and hides what follows."""
+    packet = minimal_quick_packet(tmp_path)
+    proof = packet / "proof.md"
+    proof.write_text(proof.read_text(encoding="utf-8") + "\n<details>\nmention `<script>` here\n- Status: gap\n", encoding="utf-8")
+    eligibility = receipt_for(packet)["acceptance"]["release_eligibility"]
+    assert eligibility["state"] in {"blocked", "undetermined"}  # never eligible; blocked if the gap is also read
+    assert any("raw HTML block" in reason for reason in eligibility["reasons"])
+
+
+def test_a_top_level_fence_is_not_closed_by_a_list_item_line(tmp_path):
+    visible = receipts._evidence_view("```md\n\n- ```\nStatus: deferred\n")
+    assert "deferred" not in visible
+
+
+# Documents from a differential fuzz against a CommonMark renderer (markdown-it-py), with the statuses the
+# rendered page shows. The reader may differ from the page only if it reports that it could not read the
+# file faithfully. These are plain data, so the check runs without the third-party parser.
+RENDERED_CORPUS = [
+    ("    - Status: fail\n", []),
+    ("x <!-- start\n- Status: gap\n", ["gap"]),
+    ("<!--\n```\n-->\n- Status: gap\n", ["gap"]),
+    ("<!-- ``` -->\n- Status: gap\n", ["gap"]),
+    ("~~~\n<!--\n~~~\n- Status: gap\n", ["gap"]),
+    ("```\n<!--\n```\n- Status: gap\n", ["gap"]),
+    ("- Status: pass\n```\n- Status: fail\n", ["pass"]),
+    ("```md\n\n<!-->\n- ```\nStatus: deferred\n", []),
+    ("<!-- a --> <!--\n- Status: gap\n", []),
+    ("`two\nStatus: deferred\nlines`\n", []),
+    ("</details>\n```\nStatus: gap\n  ```\n", ["gap"]),
+    ("<pre>\n- Status: pass\n", []),
+    ("- <!--\n- Status: gap\n-->\n", []),
+    ("> <!--\nStatus: fail\n-->\n", []),
+    ("\t- Status: gap\n", []),
+    ("- Status: **gap**\n", ["gap"]),
+    ("Status: `pass`\n", []),
+    ("x <!-- a\nb --> y\n- Status: fail\n", ["fail"]),
+    ("<!--->\n- Status: gap\n", ["gap"]),
+    ("<!-->\n- Status: gap\n", ["gap"]),
+    ("text <!-- a --> text\n- Status: gap\n", ["gap"]),
+    ("a `<!--` b\n- Status: gap\n", ["gap"]),
+    ("<!--\n- Status: pass\n-->\n- Status: gap\n", ["gap"]),
+    ("<!-- - Status: pass -->\n- Status: gap\n", ["gap"]),
+    ("<details>\nmention `<script>` and `<style>`\n- Status: gap\n", []),
+    ("mention `<pre>` in code\n- Status: gap\n", ["gap"]),
+    ("text <pre> text\n- Status: gap\n", []),
+    ("| CX-18 | A literal `<!--` and `<pre>` in code | yes |\n- Status: gap\n", ["gap"]),
+]
+_STATUS_LINE = re.compile(r"Status:\s*\**\s*([a-z]+)")
+
+
+@pytest.mark.parametrize(("document", "rendered"), RENDERED_CORPUS)
+def test_the_reader_matches_the_rendered_page_or_says_it_cannot(document, rendered):
+    view, notes = receipts._scan_evidence(document)
+    assert sorted(_STATUS_LINE.findall(view)) == rendered or notes
+
+
+_FUZZ_LINES = [
+    "- Status: gap", "- Status: pass", "- Status: fail", "Status: deferred", "", "text", "```", "~~~", "````", "```md",
+    "<!--", "-->", "<!-- note -->", "<!-- ``` -->", "<!-- - Status: pass -->", "a `<!--` b", "x <!-- start", "end --> y",
+    "   ```", "    - Status: fail", "> - Status: gap", "- <!-- c -->", "- <!--", "> <!--", "> ```", "- ```", "  ```",
+    "  - Status: gap", "1. Status: fail", "# Heading", "---", "text <!-- a --> text", "<!-->", "<!--->",
+    "- Status: **gap**", "text <pre> text", "mention `<pre>` in code", "mention `<script>` and `<style>`", "<pre>", "</pre>", "<script>", "</script>", "<div>", "</div>", "\t- Status: gap",
+    "Heading", "=======", "| C-001 | Status: gap |", "`two", "lines`", "Status: `pass`", "<span>Status: fail</span>",
+]
+
+
+class _RenderedText(HTMLParser):
+    _BLOCK = {"p", "li", "ul", "ol", "td", "th", "tr", "table", "blockquote", "pre", "code", "div", "details",
+              "summary", "h1", "h2", "h3", "h4", "h5", "h6", "hr", "br", "script", "style", "textarea", "span"}
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.in_code = 0
+        self.text: list[str] = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag in self._BLOCK:
+            self.text.append("\x00")
+        self.in_code += tag in ("pre", "code")
+
+    def handle_endtag(self, tag):
+        if tag in ("pre", "code") and self.in_code:
+            self.in_code -= 1
+        if tag in self._BLOCK:
+            self.text.append("\x00")
+
+    def handle_data(self, data):
+        if not self.in_code:
+            self.text.append(data)
+
+
+def test_the_reader_never_silently_disagrees_with_a_commonmark_renderer():
+    """Differential fuzz. Runs where markdown-it-py is installed; the corpus above covers the rest."""
+    markdown_it = pytest.importorskip("markdown_it")
+    renderer = markdown_it.MarkdownIt("commonmark", {"html": True})
+    silent = []
+    for seed in range(4):
+        rng = random.Random(seed)
+        for _ in range(750):
+            document = "\n".join(rng.choice(_FUZZ_LINES) for _ in range(rng.randint(2, 9))) + "\n"
+            page = _RenderedText()
+            page.feed(renderer.render(document))
+            rendered = sorted(_STATUS_LINE.findall("".join(page.text)))
+            view, notes = receipts._scan_evidence(document)
+            if sorted(_STATUS_LINE.findall(view)) != rendered and not notes:
+                silent.append((document, rendered))
+    assert not silent, silent[:3]
+
+
 def test_blanking_a_comment_keeps_the_line_structure():
     text = "a\n<!--\nb\n-->\nc\n"
-    blanked = receipts._strip_html_comments(text)
+    blanked = receipts._evidence_view(text)
     assert len(blanked) == len(text)
     assert blanked.count("\n") == text.count("\n")
     assert blanked.splitlines()[0] == "a" and blanked.splitlines()[-1] == "c"

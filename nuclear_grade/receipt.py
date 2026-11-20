@@ -51,7 +51,6 @@ from nuclear_grade.ng_validate import (
     _markdown_tables,
     _normalize_table_label,
     _section_text,
-    _strip_code_blocks,
     validate_packet,
 )
 from nuclear_grade.propagation import (
@@ -216,8 +215,11 @@ def _status_counts(packet: Path, mode: str) -> dict[str, int]:
     return counts
 
 
-_INLINE_CODE = re.compile(r"(?<!`)(`+)(?!`)(.+?)(?<!`)\1(?!`)", re.DOTALL)
-_HTML_COMMENT = re.compile(r"<!--.*?(?:-->|\Z)", re.DOTALL)
+_INLINE_CODE = re.compile(r"(?<!`)(`+)(?!`)(.+?)(?<!`)\1(?!`)")
+# What may precede a block start on a line: block quote markers and list item markers.
+_CONTAINER = re.compile(r"^(?:[ \t]{0,3}>[ \t]?|[ \t]{0,3}(?:[-+*]|\d{1,9}[.)])[ \t]+)*[ \t]{0,3}")
+_FENCE_OPEN = re.compile(r"(`{3,}|~{3,})(.*)$")
+_FENCE_CLOSE = re.compile(r"(`{3,}|~{3,})[ \t]*$")
 
 
 def _blank(text: str) -> str:
@@ -225,25 +227,177 @@ def _blank(text: str) -> str:
     return re.sub(r"[^\r\n]", " ", text)
 
 
-def _strip_html_comments(text: str) -> str:
-    """Blank HTML comments, which a rendered page does not show. An unterminated one hides the rest.
+_RAW_HTML = re.compile(r"<(?:pre|script|style|textarea)(?:[\s>]|$)", re.IGNORECASE)
 
-    A ``<!--`` inside an inline code span is text, not a comment, so code spans are masked first.
+
+def _indent(line: str) -> int:
+    """Leading columns, counting a tab as four."""
+    columns = 0
+    for character in line:
+        if character == " ":
+            columns += 1
+        elif character == "\t":
+            columns += 4
+        else:
+            break
+    return columns
+
+
+_COMPLETE_COMMENT = re.compile(r"<!--.*?-->")
+
+
+def _dangling_opener(text: str) -> bool:
+    """Whether a raw HTML line still holds a ``<!--`` after its complete comments are removed.
+
+    A page that passes the line through opens a comment there that runs to the end of the document,
+    while a strict CommonMark reading shows the lines after it, so the two cannot be reconciled.
     """
-    masked = _INLINE_CODE.sub(lambda match: "x" * len(match.group(0)), text)
-    pieces: list[str] = []
-    last = 0
-    for match in _HTML_COMMENT.finditer(masked):
-        pieces.append(text[last : match.start()])
-        pieces.append(_blank(text[match.start() : match.end()]))
-        last = match.end()
-    pieces.append(text[last:])
-    return "".join(pieces)
+    return "<!--" in _COMPLETE_COMMENT.sub("", text)
+
+
+_HTML_TAG_LINE = re.compile(r"^ {0,3}</?[A-Za-z][A-Za-z0-9-]*(?:[\s/>]|$)")
+_MARKER_TEXT = re.compile(r"`{3,}|~{3,}|<!--|-->")
+
+
+def _html_block_hides_markdown(lines: list[str], index: int) -> bool:
+    """Whether an HTML block starting here runs over a fence or comment marker before its blank line."""
+    for later in lines[index:]:
+        if not later.strip():
+            return False
+        if _MARKER_TEXT.search(later):
+            return True
+    return False
+
+
+_STATUS_TEXT = re.compile(r"\b(?:not applicable|pass|fail|gap|deferred|planned)\b", re.IGNORECASE)
+_BLOCK_START = re.compile(r"^(?:[ \t]{0,3}(?:[-+*]|\d{1,9}[.)])[ \t]|[ \t]{0,3}[>#]|[ \t]{0,3}(?:`{3,}|~{3,})|[ \t]{0,3}<!--)")
 
 
 def _evidence_view(text: str) -> str:
-    """The part of a Markdown file that counts as a record: not a fenced example, not a comment."""
-    return _strip_html_comments(_strip_code_blocks(text))
+    """The evidence the reader may use. See ``_scan_evidence`` for what it hides and when it gives up."""
+    return _scan_evidence(text)[0]
+
+
+def _scan_evidence(text: str) -> tuple[str, list[str]]:
+    """The part of a Markdown file that counts as a record, and why it may be misread.
+
+    The view is what a rendered page shows as text: fenced code blocks and HTML comments are blanked,
+    following CommonMark. One pass tracks the contexts together, so none can mis-open another: inside a
+    fence a ``<!--`` is text, and inside a comment a fence marker is text.
+
+    * A comment that starts a line (after quote or list markers) is an HTML block: every line up to
+      and including the one holding ``-->`` is raw, and an unterminated one runs to the end.
+    * A comment that starts mid-line is inline: it ends at ``-->``, which may be on a later line of the
+      same paragraph. If none comes before the paragraph ends, it is literal text.
+    * A ``<!--`` inside an inline code span is text. An unterminated fence runs to the end.
+
+    Container rules and indented code are not modelled, so the second value lists constructs where this
+    view could differ from a rendered page about a status: an unterminated fence or comment, a stray
+    comment opener, a fence inside a quote or list item, and indented text that mentions a status. The
+    caller must not grant eligibility when it is not empty. Line structure is kept.
+    """
+    lines = text.splitlines(keepends=True)
+    out: list[str] = []
+    notes: list[str] = []
+    fence: tuple[str, int, bool] | None = None
+    html_block = False
+    inline_comment = False
+    raw_html = False  # inside a raw HTML paragraph, where backticks are not code spans
+    for index, line in enumerate(lines):
+        body = line.rstrip("\r\n")
+        newline = line[len(body) :]
+        if fence is not None:
+            # A top-level fence is closed only by a top-level line. One opened inside a quote or list
+            # item is already flagged, so any container prefix is tolerated on its closing line.
+            closing = _FENCE_CLOSE.match(body[len(_CONTAINER.match(body).group(0)) :] if fence[2] else body.lstrip(" ") if len(body) - len(body.lstrip(" ")) <= 3 else "")
+            if closing and closing.group(1)[0] == fence[0] and len(closing.group(1)) >= fence[1]:
+                fence = None
+            out.append(_blank(body) + newline)
+            continue
+        if html_block:
+            html_block = "-->" not in body
+            if not html_block and _dangling_opener(body[body.find("-->") + 3 :]):
+                notes.append("a comment opener left open on the line that closes a comment")
+            out.append(_blank(body) + newline)
+            continue
+        prefix = ""
+        if inline_comment:
+            end = body.find("-->")
+            if end < 0:
+                out.append(_blank(body) + newline)
+                continue
+            prefix, body, inline_comment = _blank(body[: end + 3]), body[end + 3 :], False
+        else:
+            lead = len(_CONTAINER.match(body).group(0))
+            if _indent(body) >= 4 and _STATUS_TEXT.search(body):
+                notes.append("indented text that mentions a status (it may be a code block)")
+            if _HTML_TAG_LINE.match(body) and _html_block_hides_markdown(lines, index):
+                notes.append("a raw HTML block that contains a fence or comment marker, which a page leaves inert")
+            if not body.strip():
+                raw_html = False
+            elif _HTML_TAG_LINE.match(body):
+                raw_html = True
+            if _RAW_HTML.search(body if raw_html else _INLINE_CODE.sub("", body)):
+                notes.append("a raw HTML block (pre, script, style or textarea) whose content is not shown")
+            opening = _FENCE_OPEN.match(body, lead)
+            if opening and not (opening.group(1)[0] == "`" and "`" in opening.group(2)):
+                if lead > 0:
+                    notes.append("a fenced block inside a quote or list item")
+                fence = (opening.group(1)[0], len(opening.group(1)), lead > 0)
+                out.append(_blank(body) + newline)
+                continue
+            if body.startswith("<!--", lead):
+                if lead > 0 and body[:lead].strip():
+                    notes.append("an HTML comment inside a quote or list item")
+                html_block = body.find("-->", lead + 2) < 0
+                if not html_block and _dangling_opener(body[lead:]):
+                    notes.append("a comment opener left open on the line that closes a comment")
+                out.append(_blank(body) + newline)
+                continue
+        if "`" in _INLINE_CODE.sub("", body) and not _FENCE_OPEN.match(body, lead if not inline_comment else 0):
+            notes.append("a code span that continues onto another line")
+        visible, inline_comment, stray = _blank_inline_comments(body, lines, index)
+        if stray:
+            notes.append("an HTML comment that is not closed on the line where it opens")
+        out.append(prefix + visible + newline)
+    if fence is not None:
+        notes.append("a fenced block that is never closed")
+    if html_block or inline_comment:
+        notes.append("an HTML comment that is never closed")
+    return "".join(out), sorted(set(notes))
+
+
+def _blank_inline_comments(body: str, lines: list[str], index: int) -> tuple[str, bool, bool]:
+    """Blank inline HTML comments in one line.
+
+    Returns the line, whether a comment is still open on the next line, and whether the line held a
+    comment opener that is not closed on its own line (so it either spans lines or is literal text).
+    """
+    masked = _INLINE_CODE.sub(lambda match: "x" * len(match.group(0)), body)
+    pieces: list[str] = []
+    position = 0
+    while True:
+        start = masked.find("<!--", position)
+        if start < 0:
+            pieces.append(body[position:])
+            return "".join(pieces), False, False
+        end = body.find("-->", start + 2)
+        if end >= 0:
+            pieces.extend((body[position:start], _blank(body[start : end + 3])))
+            position = end + 3
+            continue
+        # No close on this line: it is a comment only if one comes before the paragraph ends. Another
+        # block start (a list item, quote, heading, fence, or comment block) also ends the paragraph.
+        for later in lines[index + 1 :]:
+            if not later.strip() or _BLOCK_START.match(later):
+                break
+            if "-->" in later:
+                # Where this paragraph ends depends on block rules not modelled here, so a comment
+                # that spans lines is read as a comment but reported.
+                pieces.extend((body[position:start], _blank(body[start:])))
+                return "".join(pieces), True, True
+        pieces.append(body[position:])
+        return "".join(pieces), False, True
 
 
 _SEPARATOR_CELL = re.compile(r"^:?-{2,}:?$")
@@ -357,11 +511,26 @@ def _claim_support(packet: Path, mode: str) -> dict[str, Any]:
     }
 
 
+def _evidence_notes(packet: Path, mode: str) -> list[str]:
+    """Constructs in the evidence files that this reader cannot read faithfully, by file."""
+    names = ("proof.md",) if mode == QUICK_MODE else ("verification.md", "basis.md") if mode == STANDARD_MODE else ()
+    notes: list[str] = []
+    for name in names:
+        path = packet / name
+        if path.is_file():
+            notes.extend(f"{name} has {note}" for note in _scan_evidence(path.read_text(encoding="utf-8"))[1])
+    return notes
+
+
 def _release_eligibility(
-    result: ValidationResult, mode: str, statuses: dict[str, int], support: dict[str, Any]
+    result: ValidationResult,
+    mode: str,
+    statuses: dict[str, int],
+    support: dict[str, Any],
+    notes: list[str] | None = None,
 ) -> dict[str, Any]:
     blocked: list[str] = []
-    undetermined: list[str] = []
+    undetermined: list[str] = [f"{note}; the reader cannot tell what a rendered page shows" for note in notes or []]
     if not result.ok:
         blocked.append("record structure is invalid")
     if mode == UNSPECIFIED_MODE:
@@ -430,7 +599,7 @@ def build_acceptance(
             },
             "note": "Declared identities and coupling only; not proof of independence.",
         },
-        "release_eligibility": _release_eligibility(result, mode, statuses, support),
+        "release_eligibility": _release_eligibility(result, mode, statuses, support, _evidence_notes(packet, mode)),
         "authorized_decision": {"state": NOT_ASSESSED},
         "apply_permission": {"state": NOT_ASSESSED},
         "note": ACCEPTANCE_NOTE,

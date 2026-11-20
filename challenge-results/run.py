@@ -97,6 +97,17 @@ def load_agents(path: Path) -> dict[str, dict]:
     return {entry["id"]: entry for entry in data["agents"]}
 
 
+def agent_config_digest(entry: dict) -> str:
+    """SHA-256 of the agent entry a run used, whichever --agents-file it came from.
+
+    The entry holds the command, permission flags and model arguments, so two runs
+    under one label with different flags get different digests.
+    """
+
+    canonical = json.dumps(entry, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+
+
 def build_command(entry: dict, model: str) -> list[str]:
     command = [part.replace("{prompt}", PROMPT) for part in entry["command"]]
     if model:
@@ -251,6 +262,7 @@ def run_trial(entry: dict, model: str, track: str, trial: int, timeout: int, out
         "agent_label": entry["label"],
         "model": model or "tool default",
         "tool_version": tool_version(entry),
+        "agent_config_sha256": agent_config_digest(entry),
         "track": track,
         "trial": trial,
         "prompt": PROMPT,

@@ -10,8 +10,8 @@ uncertain. Runs are grouped by agent, model, tool version and track, so a new
 tool version is a new row (METHOD.md, Pinning). Rows under --min-runs are
 listed and marked as too few to compare. A row whose runs do not share one
 inputs commit (the last commit that changed the task, harness or validator) and
-one scorer digest, or that holds a run made from uncommitted or unrecorded
-files, is marked not comparable and says why. There is no overall rank. It also
+one scorer digest and one agent configuration, or that holds a run made from
+uncommitted or unrecorded files, is marked not comparable and says why. There is no overall rank. It also
 writes a one-page scoreboard (docs/scoreboard/index.html) that sets each agent's
 task-only runs beside its house-rules runs, and a shields.io endpoint badge.
 Stdlib only.
@@ -151,6 +151,11 @@ def identity_problems(items: list[dict]) -> list[str]:
         problems.append(f"runs span {len(known)} inputs commits")
     if "unknown" in commits:
         problems.append(f"{commits.count('unknown')} run(s) with no inputs commit recorded")
+    configs = [run.get("agent_config_sha256") for run in items]
+    if len({config for config in configs if config}) > 1:
+        problems.append(f"runs used {len({config for config in configs if config})} agent configurations")
+    if not all(configs):
+        problems.append(f"{sum(1 for config in configs if not config)} run(s) with no agent configuration recorded")
     scored = [run for run in items if (run.get("scorecard") or {}).get("verdict", UNSCORED) != UNSCORED]
     scorers = {(run.get("scorecard") or {}).get("scorer_sha256") for run in scored}
     if None in scorers or "" in scorers:

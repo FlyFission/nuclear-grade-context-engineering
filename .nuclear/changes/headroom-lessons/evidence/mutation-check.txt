@@ -27,3 +27,11 @@ FAILED tests/test_challenge_results.py::test_runs_that_do_not_share_inputs_are_m
 
 ## restored
 18 passed in 7.18s
+
+## 7. mismatched agent configurations not flagged (added 2026-11-20 after bot review)
+FAILED tests/test_challenge_results.py::test_runs_that_do_not_share_inputs_are_marked_not_comparable
+FAILED tests/test_challenge_results.py::test_the_agent_configuration_a_run_used_is_part_of_its_identity
+2 failed, 26 passed in 7.98s
+
+## restored after mutation 7
+28 passed in 8.11s

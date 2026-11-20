@@ -85,6 +85,7 @@ def test_runs_are_scored_by_the_repository_scorer(tmp_path):
         # The real checkout may be clean or not; only the shape is fixed.
         assert result["uncommitted_inputs"] is None or isinstance(result["uncommitted_inputs"], list)
         assert isinstance(result["inputs_commit"], str) and result["inputs_commit"]
+        assert len(result["agent_config_sha256"]) == 64
         assert (out / f"{result['run_id']}.transcript.txt").is_file()
         assert (out / f"{result['run_id']}.diff").is_file()
 
@@ -220,6 +221,7 @@ def _result(**fields):
         "scorecard": {"verdict": "No change shipped", "scorer_sha256": "s1"},
         "challenge_commit": "h1",
         "inputs_commit": "c1",
+        "agent_config_sha256": "a1",
         "uncommitted_inputs": [],
     }
     return {**base, **fields}
@@ -243,6 +245,7 @@ def test_runs_that_do_not_share_inputs_are_marked_not_comparable():
         [
             clean,
             _result(run_id="r4", inputs_commit="c2"),
+            _result(run_id="r4b", agent_config_sha256="a2"),
             _result(run_id="r5", scorecard={"verdict": "No change shipped", "scorer_sha256": "s2"}),
             _result(run_id="r6", scorecard={"verdict": "No change shipped"}),
             _result(run_id="r7", uncommitted_inputs=["challenge/score.py"]),
@@ -251,13 +254,19 @@ def test_runs_that_do_not_share_inputs_are_marked_not_comparable():
     )
     assert problems == [
         "runs span 2 inputs commits",
+        "runs used 2 agent configurations",
         "1 scored run(s) with no scorer digest",
         "scored by 2 scorer versions",
         "2 run(s) from uncommitted or unrecorded challenge files",
     ]
-    old = {key: value for key, value in clean.items() if key not in {"inputs_commit", "uncommitted_inputs"}}
+    old = {
+        key: value
+        for key, value in clean.items()
+        if key not in {"inputs_commit", "uncommitted_inputs", "agent_config_sha256"}
+    }
     assert build.identity_problems([clean, old]) == [
         "1 run(s) with no inputs commit recorded",
+        "1 run(s) with no agent configuration recorded",
         "1 run(s) from uncommitted or unrecorded challenge files",
     ]
     rows = build.summarize([clean, _result(run_id="r9", inputs_commit="c2")], {}, 1)
@@ -438,3 +447,17 @@ def test_container_round_keeps_the_repo_read_only_and_each_sign_in_with_its_own_
     assert '-v "$home_root/$name:/home/runner"' in round_sh  # each agent's own sign-in folder only
     for name in ("CLAUDE_CODE", "CODEX", "GEMINI_CLI", "OPENCODE", "COPILOT"):
         assert re.search(rf"^ARG {name}_VERSION=\d+\.\d+\.\d+$", dockerfile, re.MULTILINE), name
+
+
+def test_the_agent_configuration_a_run_used_is_part_of_its_identity(tmp_path):
+    run = load("run")
+    build = load("build")
+    entry = _one_agent(tmp_path, "pass")
+    flagged = {**entry, "command": [*entry["command"], "--dangerously-skip-permissions"]}
+    assert run.agent_config_digest(entry) == run.agent_config_digest(dict(reversed(list(entry.items()))))
+    assert run.agent_config_digest(entry) != run.agent_config_digest(flagged)
+    runs = [
+        _result(run_id="r1", agent_config_sha256=run.agent_config_digest(entry)),
+        _result(run_id="r2", agent_config_sha256=run.agent_config_digest(flagged)),
+    ]
+    assert build.identity_problems(runs) == ["runs used 2 agent configurations"]

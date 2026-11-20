@@ -10,7 +10,7 @@ An AI agent (Claude Code) wrote this change and this record under the owner's in
 |---|---|---|---|
 | E-001 | REQ-001 | `test_a_new_tool_version_is_a_new_row`. Fails when grouping drops the tool version (mutation 1) | pass |
 | E-002 | REQ-002 | `test_each_run_records_which_pinned_inputs_were_uncommitted` covers: a temporary git repo, a commit to other files, skipped cache folders, an ignored `.env`, a renamed file with a space, and an edited validator. `test_runs_are_scored_by_the_repository_scorer` checks schema version 2 and the field shapes in real runs. The first test fails under mutations 3, 4 and 5 | pass |
-| E-003 | REQ-003 | `test_runs_that_do_not_share_inputs_are_marked_not_comparable` covers each reason, unscored runs and a different HEAD with no flag, old schema-1 runs, the rendered note, and unchanged counts. Fails under mutations 1, 2 and 6 | pass |
+| E-003 | REQ-003 | `test_runs_that_do_not_share_inputs_are_marked_not_comparable` and `test_the_agent_configuration_a_run_used_is_part_of_its_identity` cover each reason, unscored runs and a different HEAD with no flag, old schema-1 runs, the rendered note, and unchanged counts. Fails under mutations 1, 2, 6 and 7 | pass |
 | E-004 | REQ-005 | `test_llms_txt_links_resolve_and_stay_clean` | pass |
 | E-005 | REQ-004, REQ-006 | Read against the code and against `tests/test_public_docs.py`; the independent review's wording findings are dispositioned below | pass |
 | E-006 | No regressions | `evidence/pre-pr-checks.txt`: full pytest, ruff, doctor, tokens, the worked-example validation, release identity and `git diff --check` | pass |
@@ -39,6 +39,13 @@ Mutation runs are in `evidence/mutation-check.txt`. Each guard was disabled on i
 | 14 | ROADMAP OPEX item named a source with no link (nit) | Pinned link to `headroom/learn/loops.py` added |
 | 15 | The Quick risk record was wrong on two counts: (a) the not-comparable rule is new, not already in the method; (b) a rebuild cannot recover unrecorded inputs. It also needed a CM record or a reason (should-fix) | Mode raised to Standard to match earlier harness packets; (a) and (b) are corrected in [`risk.md`](risk.md); the CM reason is stated there |
 | — | Badge stale | Regenerated with this packet |
+
+### Review bots on the pull request (2026-11-20)
+
+| Finding | Disposition |
+|---|---|
+| Codex and Copilot: a custom `--agents-file` can change the command and permission flags under one label while the pinned inputs stay clean | Fixed. Each run records `agent_config_sha256`, a digest of the agent entry it used; a row with more than one is not comparable; mutation 7 |
+| Copilot: `build.py` should be a pinned input, since its outcome logic sets the published counts | Not adopted. `build.py` rebuilds every row from the kept run files in one pass, so all runs in a table are always aggregated by the same code; a per-run record of it would never differ within a table. A change to it is reviewed as a code change and logged in `METHOD.md` |
 
 ## Evidence custody and coupling
 

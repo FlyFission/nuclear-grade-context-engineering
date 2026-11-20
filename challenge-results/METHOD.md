@@ -89,7 +89,8 @@ scoring (`challenge/`, the harness, and the `nuclear_grade` validator the scorer
 which of those files differed from it when the run started, including untracked and ignored
 files the copy would carry into the agent's folder. A row whose runs span more than one such
 commit or scorer digest, or that holds a run made from uncommitted or unrecorded files, is shown
-with the reason it is not comparable. The mismatch is reported, never settled by picking one
+with the reason it is not comparable. So is a row whose runs used different agent entries
+(command, permission flags, model arguments), whichever agents file they came from. The mismatch is reported, never settled by picking one
 value, and no run leaves the row because of it.
 
 ## Held-out variant

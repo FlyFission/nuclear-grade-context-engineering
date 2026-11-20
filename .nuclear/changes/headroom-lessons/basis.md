@@ -8,7 +8,7 @@ Before the first published round, challenge results compare only runs that share
 
 - **REQ-001:** Runs with different tool versions shall be in different rows.
 - **REQ-002:** Each run shall record the last commit that changed a pinned input (`challenge/`, the harness including `run-all.py`, the plain track, and the `nuclear_grade` validator the scorer loads), and which pinned inputs differed from it when the run started. Untracked and ignored files count, except the folders the copy leaves out (`__pycache__`, `.pytest_cache`).
-- **REQ-003:** A row shall be marked not comparable, with the reason, when its runs span more than one inputs commit or scorer digest, when a scored run has no scorer digest, or when it holds a run made from uncommitted or unrecorded inputs. The marking shall not change a row's counts, good-outcome share or range.
+- **REQ-003:** Each run shall record a digest of the agent entry it used (command, permission flags, model arguments), whichever `--agents-file` it came from. A row shall be marked not comparable, with the reason, when its runs span more than one inputs commit, scorer digest or agent configuration, when a scored run has no scorer digest, or when it holds a run made from uncommitted or unrecorded inputs. The marking shall not change a row's counts, good-outcome share or range.
 - **REQ-004:** `METHOD.md` shall state the rule and log the change with its date.
 - **REQ-005:** `llms.txt` shall link only to files that exist, and a test shall check this.
 - **REQ-006:** ROADMAP v0.2 shall record write-back safety as a precondition for the memory store, and an opt-in item to draft OPEX from transcripts that never edits instruction files itself, each with a pinned link to its idea source.

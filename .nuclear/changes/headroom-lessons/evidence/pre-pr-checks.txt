@@ -1,8 +1,8 @@
-After merging origin/main at 08eff07:
+After merging origin/main at 08eff07 and the agent-configuration fix:
 $ python -m pytest
-1168 passed, 1 skipped in 64.31s (0:01:04)
+1169 passed, 1 skipped in 65.53s (0:01:05)
 $ python -m pytest tests/test_challenge_results.py tests/test_public_docs.py
-48 passed in 10.86s
+49 passed in 11.27s
 $ python -m ruff check .
 All checks passed!
 $ python tools/ng.py doctor .

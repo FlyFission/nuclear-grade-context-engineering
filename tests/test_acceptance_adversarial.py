@@ -295,6 +295,85 @@ def test_a_declared_claim_with_no_verification_row_blocks(tmp_path):
     assert any("C-002" in reason for reason in acceptance["release_eligibility"]["reasons"])
 
 
+def declare(packet: Path, row: str) -> None:
+    basis = packet / "basis.md"
+    basis.write_text(
+        basis.read_text(encoding="utf-8").replace(
+            "| C-001 | Demo claim | Test |\n", f"| C-001 | Demo claim | Test |\n{row}\n"
+        ),
+        encoding="utf-8",
+    )
+
+
+@pytest.mark.parametrize("cell", ["**C-002**", "`C-002`", "__C-002__", "_C-002_", "[C-002](plan.md)", "**C-002** Critical"])
+def test_markdown_in_a_declared_id_cannot_hide_a_missing_claim(tmp_path, cell):
+    packet = minimal_standard_packet(tmp_path)
+    declare(packet, f"| {cell} | Critical claim | Test |")
+    acceptance = receipt_for(packet)["acceptance"]
+    assert acceptance["claim_support"]["declared_without_verification_row"] == ["C-002"]
+    assert acceptance["release_eligibility"]["state"] == "blocked"
+
+
+def test_a_declared_row_with_no_readable_id_is_undetermined_not_absent(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    declare(packet, "| The safety claim | Critical claim | Test |")
+    acceptance = receipt_for(packet)["acceptance"]
+    assert acceptance["claim_support"]["unreadable_declarations"] == 1
+    assert acceptance["release_eligibility"]["state"] == "undetermined"
+    assert "no readable claim id" in acceptance["release_eligibility"]["reasons"][0]
+
+
+def test_header_and_separator_rows_are_not_declarations(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    basis = packet / "basis.md"
+    basis.write_text(
+        basis.read_text(encoding="utf-8")
+        + "\n| ID | Second table | Notes |\n|:---|:---:|---:|\n| C-001 | Same claim again | Test |\n",
+        encoding="utf-8",
+    )
+    acceptance = receipt_for(packet)["acceptance"]
+    assert acceptance["claim_support"]["unreadable_declarations"] == 0
+    assert acceptance["release_eligibility"]["state"] == "open_to_decision"
+
+
+def test_a_formatted_id_in_the_verification_table_is_still_a_claim_row(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    verification = packet / "verification.md"
+    verification.write_text(
+        verification.read_text(encoding="utf-8").replace(VERIFICATION_ROW, "| **C-001** | pass | test |"),
+        encoding="utf-8",
+    )
+    acceptance = receipt_for(packet)["acceptance"]
+    assert acceptance["claim_support"]["rows"] == [{"id": "C-001", "status": "pass"}]
+    assert acceptance["release_eligibility"]["state"] == "open_to_decision"
+
+
+@pytest.mark.parametrize("header", ["Result status", "Verdict", "Outcome", "Disposition", "Check"])
+@pytest.mark.parametrize(
+    ("status", "expected"),
+    [
+        ("fail", "blocked"),
+        ("gap", "blocked"),
+        ("planned", "blocked"),
+        ("deferred", "open_to_decision_with_open_items"),
+        ("pass", "open_to_decision"),
+    ],
+)
+def test_a_recorded_status_counts_whatever_the_column_is_called(tmp_path, header, status, expected):
+    packet = minimal_standard_packet(tmp_path)
+    verification = packet / "verification.md"
+    verification.write_text(
+        verification.read_text(encoding="utf-8")
+        .replace("| Claim | Result status | Evidence link |", f"| Claim | {header} | Evidence link |")
+        .replace(VERIFICATION_ROW, f"| C-001 | {status} | test |"),
+        encoding="utf-8",
+    )
+    acceptance = receipt_for(packet)["acceptance"]
+    assert acceptance["release_eligibility"]["state"] == expected
+    assert acceptance["evidence_status"]["state"] == ("complete" if status == "pass" else "open")
+    assert receipts.verify_receipt(receipt_for(packet), packet)["state"] == "bound"
+
+
 def test_free_text_claim_rows_are_undetermined_not_eligible(tmp_path):
     packet = minimal_standard_packet(tmp_path)
     verification = packet / "verification.md"

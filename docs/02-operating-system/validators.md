@@ -128,8 +128,10 @@ Schema version 2 adds an `acceptance` block that keeps separate propositions apa
 advisory notes from the evidence-trust propagation rule); which declared-independence checks ran;
 release eligibility; authorized decision; and apply permission. Release eligibility reads `blocked`
 (structure invalid, a `fail`, `gap`, or `planned` item, or a claim declared in `basis.md` with no
-verification row), `undetermined` (no claim rows could be read, so the record cannot be assessed), or
-`open_to_decision` (with or without deferred items). It never reads "approved": authorized decision and
+verification row), `undetermined` (no claim rows could be read, or a row declared in `basis.md` has an id that
+cannot be read, so the record cannot be assessed), or `open_to_decision` (with or without deferred items). A
+status recorded in any claim row counts whatever the column is called, so a `fail` cannot be lost to a header
+the status counter does not read. It never reads "approved": authorized decision and
 apply permission are always `not_assessed`, because declared identities in a Markdown file are not
 authentication. The propagation rule is advisory input only. Measured over this repository's own
 records it would fail 21 of 56 Standard-style records, and it has no dependency edges, so alternatives,

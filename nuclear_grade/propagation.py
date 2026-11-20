@@ -44,9 +44,19 @@ PROMOTABLE_RANK = 3  # only an all-pass packet promotes
 _CLAIM_ID = re.compile(r"^(?P<id>[A-Z][A-Z0-9]*-?\d+[a-z]?)(?:\s|$)")
 
 
+_MD_LINK = re.compile(r"\[([^\]]*)\]\([^)]*\)")
+
+
+def _plain(cell: str) -> str:
+    """The cell without emphasis, code ticks, or link syntax: ``**C-002**`` reads as ``C-002``."""
+    text = _MD_LINK.sub(r"\1", cell)
+    text = text.replace("**", "").replace("__", "").replace("`", "")
+    return text.strip().strip("_*").strip()
+
+
 def _claim_id(cell: str) -> str | None:
     """Return the leading claim id, allowing a short description after it."""
-    match = _CLAIM_ID.match(cell)
+    match = _CLAIM_ID.match(_plain(cell))
     return match.group("id") if match else None
 
 

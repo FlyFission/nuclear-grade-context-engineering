@@ -196,23 +196,44 @@ def _status_counts(packet: Path, mode: str) -> dict[str, int]:
     return counts
 
 
-def _declared_claim_ids(packet: Path) -> list[str]:
-    """Claim ids a Standard packet declares under basis.md "Derived requirements or claims"."""
+_SEPARATOR_CELL = re.compile(r"^:?-{2,}:?$")
+
+
+def _declared_claims(packet: Path) -> tuple[list[str], int]:
+    """Claim ids a Standard packet declares under basis.md "Derived requirements or claims".
+
+    Also returns how many data rows in that section had no readable claim id. Such a row is a
+    declaration the completeness check cannot see, so the caller must not treat it as absent.
+    """
     basis = packet / "basis.md"
     if not basis.is_file():
-        return []
-    in_section = False
+        return [], 0
+    in_section = in_table = False
     ids: list[str] = []
+    unreadable = 0
     for line in basis.read_text(encoding="utf-8").splitlines():
         if line.startswith("#"):
             in_section = "derived requirements or claims" in line.lower()
+            in_table = False
             continue
-        if in_section and line.lstrip().startswith("|"):
-            cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
-            declared = claim_id(cells[0]) if cells else None
-            if declared and declared not in ids:
+        if not in_section:
+            continue
+        if not line.lstrip().startswith("|"):
+            in_table = False
+            continue
+        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+        if not in_table:  # the first row of each table is its header
+            in_table = True
+            continue
+        if all(_SEPARATOR_CELL.match(cell) for cell in cells if cell):
+            continue
+        declared = claim_id(cells[0]) if cells else None
+        if declared:
+            if declared not in ids:
                 ids.append(declared)
-    return ids
+        elif any(cells):
+            unreadable += 1
+    return ids, unreadable
 
 
 def _claim_support(packet: Path, mode: str) -> dict[str, Any]:
@@ -226,11 +247,13 @@ def _claim_support(packet: Path, mode: str) -> dict[str, Any]:
         rows = parse_claim_statuses(verification.read_text(encoding="utf-8"))
         check_promotion(packet, advisory)
     seen = {row_id for row_id, _ in rows}
+    declared, unreadable = _declared_claims(packet)
     return {
         "state": "recognized" if rows else "unrecognized",
         "rows": [{"id": row_id, "status": status} for row_id, status in rows],
         "weakest_status": effective_status([status for _, status in rows]) if rows else None,
-        "declared_without_verification_row": [i for i in _declared_claim_ids(packet) if i not in seen],
+        "declared_without_verification_row": [i for i in declared if i not in seen],
+        "unreadable_declarations": unreadable,
         "propagation_advisories": advisory,
     }
 
@@ -249,6 +272,11 @@ def _release_eligibility(
             blocked.append(f"{statuses[status]} evidence item(s) declared '{status}'")
     if support["state"] == "unrecognized":
         undetermined.append("no claim-to-evidence rows keyed by claim id were recognized in verification.md")
+    if support.get("unreadable_declarations"):
+        undetermined.append(
+            f"{support['unreadable_declarations']} row(s) declared in basis.md have no readable claim id, "
+            "so their verification cannot be checked"
+        )
     if support["state"] == "recognized":
         for missing in support.get("declared_without_verification_row", []):
             blocked.append(f"claim {missing} is declared in basis.md but has no verification row")
@@ -276,6 +304,13 @@ def build_acceptance(
 ) -> dict[str, Any]:
     """Typed acceptance propositions. Each one is separate; none implies another."""
     support = _claim_support(packet, mode)
+    # Two readers see the verification table: the status-column counter and the claim-row
+    # reader. They can disagree (a "Verdict" header, say), and a recorded failure must never be
+    # lost to that, so each status takes the larger of the two counts.
+    row_counts = dict.fromkeys(EVIDENCE_STATUSES, 0)
+    for row in support["rows"]:
+        row_counts[row["status"]] = row_counts.get(row["status"], 0) + 1
+    statuses = {status: max(count, row_counts.get(status, 0)) for status, count in statuses.items()}
     open_items = sum(statuses[status] for status in OPEN_STATUSES)
     return {
         "contract": ACCEPTANCE_CONTRACT,

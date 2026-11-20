@@ -1,0 +1,21 @@
+After merging origin/main at 08eff07 and the agent-configuration fix:
+$ python -m pytest
+1169 passed, 1 skipped in 65.53s (0:01:05)
+$ python -m pytest tests/test_challenge_results.py tests/test_public_docs.py
+49 passed in 11.27s
+$ python -m ruff check .
+All checks passed!
+$ python tools/ng.py doctor .
+OK: Nuclear-grade doctor
+$ python tools/ng.py tokens .
+OK: token budget
+$ python tools/ng.py validate docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions --strict-custody
+OK: docs/03-worked-examples/ai-agent-tool-permissions/.nuclear/changes/add-agent-tool-permissions
+$ python -m nuclear_grade.release
+OK: release identity
+$ python tools/ng.py validate .nuclear/changes/headroom-lessons --strict-custody
+OK: .nuclear/changes/headroom-lessons
+$ python challenge-results/build.py (outputs to a scratch folder)
+wrote R.md, i.html and b.json (0 rows)
+$ git diff --check
+(no output, exit 0)

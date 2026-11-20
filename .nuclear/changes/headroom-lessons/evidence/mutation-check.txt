@@ -1,0 +1,37 @@
+Mutation check 2026-11-19T21:00Z. Each guard is disabled on its own in the working copy, tests/test_challenge_results.py is run, and both files are restored before the next one.
+
+## 1. rows not split by tool version
+FAILED tests/test_challenge_results.py::test_a_new_tool_version_is_a_new_row
+FAILED tests/test_challenge_results.py::test_runs_that_do_not_share_inputs_are_marked_not_comparable
+2 failed, 16 passed in 7.40s
+
+## 2. unpinned runs never counted
+FAILED tests/test_challenge_results.py::test_runs_that_do_not_share_inputs_are_marked_not_comparable
+1 failed, 17 passed in 7.35s
+
+## 3. ignored files not read
+FAILED tests/test_challenge_results.py::test_each_run_records_which_pinned_inputs_were_uncommitted
+1 failed, 17 passed in 7.24s
+
+## 4. validator not pinned
+FAILED tests/test_challenge_results.py::test_each_run_records_which_pinned_inputs_were_uncommitted
+1 failed, 17 passed in 7.03s
+
+## 5. inputs commit taken from HEAD
+FAILED tests/test_challenge_results.py::test_each_run_records_which_pinned_inputs_were_uncommitted
+1 failed, 17 passed in 7.09s
+
+## 6. scored runs without a digest not flagged
+FAILED tests/test_challenge_results.py::test_runs_that_do_not_share_inputs_are_marked_not_comparable
+1 failed, 17 passed in 7.33s
+
+## restored
+18 passed in 7.18s
+
+## 7. mismatched agent configurations not flagged (added 2026-11-20 after bot review)
+FAILED tests/test_challenge_results.py::test_runs_that_do_not_share_inputs_are_marked_not_comparable
+FAILED tests/test_challenge_results.py::test_the_agent_configuration_a_run_used_is_part_of_its_identity
+2 failed, 26 passed in 7.98s
+
+## restored after mutation 7
+28 passed in 8.11s

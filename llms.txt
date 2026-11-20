@@ -1,0 +1,35 @@
+# Nuclear-grade Context Engineering
+
+> Small habits from high-consequence engineering, applied to AI-assisted software work: question the change, write down what it must do, prove the claims that matter, and leave the ship call to a person. Markdown-first, with a local checker (`tools/ng.py`). Not a compliance, certification or assurance framework; see DISCLAIMER.md.
+
+Agents: start with AGENTS.md, then open the one change record your task names under `.nuclear/changes/<slug>/`. Load skills by trigger through the decision matrix in CORE.md; do not preload this whole list.
+
+## Start here
+
+- [AGENTS.md](AGENTS.md): rules for agents working in this repo
+- [CORE.md](CORE.md): the core habits and the decision matrix that routes a trigger to a skill
+- [QUICKSTART.md](QUICKSTART.md): build one change record and prove one claim in about 15 minutes
+- [INSTALL.md](INSTALL.md): install the skills, the Claude Code plugin or the CLI
+
+## Reference
+
+- [CONTEXT.md](CONTEXT.md): the repo's domain vocabulary
+- [SKILLS.md](SKILLS.md): the skill catalog, for discovery rather than preloading
+- [skill-catalog.json](skill-catalog.json): machine-readable catalog of each skill's status, plus the install profiles
+- [COMMANDS.md](COMMANDS.md): paste-ready command prompts
+- [WORKFLOWS.md](WORKFLOWS.md): how the modes and records fit together
+- [HOOKS.md](HOOKS.md): the opt-in session hooks and the blocking tool-use gate
+- [INTEGRATIONS.md](INTEGRATIONS.md): per-host install paths and their standing context cost
+- [docs/05-reference/cli-reference.md](docs/05-reference/cli-reference.md): the main `ng` subcommands; `python tools/ng.py --help` lists all
+
+## Before you claim anything
+
+- [DISCLAIMER.md](DISCLAIMER.md): what this project is not
+- [CONTRIBUTING.md](CONTRIBUTING.md): the pre-PR checks and the wording to avoid
+- [EXAMPLES.md](EXAMPLES.md): the worked example that tests check
+
+## Optional
+
+- [ROADMAP.md](ROADMAP.md): planned work, not shipped features
+- [challenge/README.md](challenge/README.md): a seeded-trap task for trying an agent
+- [docs/README.md](docs/README.md): the full documentation map

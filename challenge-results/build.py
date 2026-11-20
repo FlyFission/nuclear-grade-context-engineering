@@ -4,13 +4,17 @@
     python challenge-results/build.py [--results DIR] [--out RESULTS.md] [--min-runs 5]
 
 Each run gets one plain outcome from its scorecard, the keyword read of its final
-words, and any human ruling in adjudications.json. Runs are grouped by agent,
-model, and track. Every row shows counts for each outcome and the share of runs
+words, and any human ruling in adjudications.json. Every row shows counts for each outcome and the share of runs
 with a good outcome, with a 95% Wilson range so a handful of runs reads as
-uncertain. Rows under --min-runs are listed and marked as too few to compare.
-There is no overall rank. It also writes a one-page scoreboard (docs/scoreboard/index.html)
-that sets each agent's task-only runs beside its house-rules runs, and a shields.io
-endpoint badge. Stdlib only.
+uncertain. Runs are grouped by agent, model, tool version and track, so a new
+tool version is a new row (METHOD.md, Pinning). Rows under --min-runs are
+listed and marked as too few to compare. A row whose runs do not share one
+inputs commit (the last commit that changed the task, harness or validator) and
+one scorer digest and one agent configuration, or that holds a run made from
+uncommitted or unrecorded files, is marked not comparable and says why. There is no overall rank. It also
+writes a one-page scoreboard (docs/scoreboard/index.html) that sets each agent's
+task-only runs beside its house-rules runs, and a shields.io endpoint badge.
+Stdlib only.
 """
 
 from __future__ import annotations
@@ -132,12 +136,47 @@ def load_rulings(path: Path) -> dict[str, dict]:
     return rulings
 
 
+def identity_problems(items: list[dict]) -> list[str]:
+    """Why the runs in one row cannot be pooled as one measurement, or an empty list.
+
+    A mismatch is shown, never resolved by picking one value. Runs that could not
+    be scored carry no scorer digest and stay in the row; they do not count as a
+    second scorer.
+    """
+
+    problems = []
+    commits = [run.get("inputs_commit") or "unknown" for run in items]
+    known = {commit for commit in commits if commit != "unknown"}
+    if len(known) > 1:
+        problems.append(f"runs span {len(known)} inputs commits")
+    if "unknown" in commits:
+        problems.append(f"{commits.count('unknown')} run(s) with no inputs commit recorded")
+    configs = [run.get("agent_config_sha256") for run in items]
+    if len({config for config in configs if config}) > 1:
+        problems.append(f"runs used {len({config for config in configs if config})} agent configurations")
+    if not all(configs):
+        problems.append(f"{sum(1 for config in configs if not config)} run(s) with no agent configuration recorded")
+    scored = [run for run in items if (run.get("scorecard") or {}).get("verdict", UNSCORED) != UNSCORED]
+    scorers = {(run.get("scorecard") or {}).get("scorer_sha256") for run in scored}
+    if None in scorers or "" in scorers:
+        missing = sum(1 for run in scored if not (run.get("scorecard") or {}).get("scorer_sha256"))
+        problems.append(f"{missing} scored run(s) with no scorer digest")
+    scorers -= {None, ""}
+    if len(scorers) > 1:
+        problems.append(f"scored by {len(scorers)} scorer versions")
+    unpinned = sum(1 for run in items if run.get("uncommitted_inputs") != [])
+    if unpinned:
+        problems.append(f"{unpinned} run(s) from uncommitted or unrecorded challenge files")
+    return problems
+
+
 def summarize(runs: list[dict], rulings: dict[str, dict], min_runs: int) -> list[dict]:
-    groups: dict[tuple[str, str, str], list[dict]] = defaultdict(list)
+    groups: dict[tuple[str, str, str, str], list[dict]] = defaultdict(list)
     for run in runs:
-        groups[(run["agent_label"], run["model"], run.get("track", "rules"))].append(run)
+        key = (run["agent_label"], run["model"], run.get("tool_version") or "unknown", run.get("track", "rules"))
+        groups[key].append(run)
     rows = []
-    for (label, model, track), items in groups.items():
+    for (label, model, version, track), items in groups.items():
         counts = Counter(outcome(run, rulings) for run in items)
         n = len(items)
         good = sum(counts[o] for o in GOOD[track])
@@ -147,17 +186,26 @@ def summarize(runs: list[dict], rulings: dict[str, dict], min_runs: int) -> list
                 "agent": label,
                 "model": model,
                 "track": track,
-                "tool_versions": sorted({run["tool_version"] for run in items}),
+                "tool_version": version,
                 "runs": n,
                 "good": good,
                 "range_95": [round(low, 3), round(high, 3)],
                 "outcomes": {o: counts[o] for o in OUTCOMES if counts[o]},
                 "enough_runs": n >= min_runs,
+                "identity_problems": identity_problems(items),
+                "inputs_commits": sorted({run.get("inputs_commit") or "unknown" for run in items}),
+                "scorer_sha256": sorted(
+                    {
+                        (run.get("scorecard") or {}).get("scorer_sha256")
+                        for run in items
+                        if (run.get("scorecard") or {}).get("scorer_sha256")
+                    }
+                ),
                 "human_rulings": sum(1 for run in items if run["run_id"] in rulings),
                 "run_ids": sorted(run["run_id"] for run in items),
             }
         )
-    rows.sort(key=lambda r: (r["track"], r["agent"].lower(), r["model"]))
+    rows.sort(key=lambda r: (r["track"], r["agent"].lower(), r["model"], r["tool_version"]))
     return rows
 
 
@@ -183,16 +231,23 @@ def render(rows: list[dict], min_runs: int) -> str:
             continue
         good_names = ", ".join(o for o in OUTCOMES if o in GOOD[track])
         lines += [f"Good outcomes on this track: {good_names}.", ""]
-        lines += ["| Agent | Model | Runs | Good outcomes (95% range) | What happened |", "|---|---|---|---|---|"]
+        lines += [
+            "| Agent | Model | Tool version | Runs | Good outcomes (95% range) | What happened |",
+            "|---|---|---|---|---|---|",
+        ]
         for row in part:
             low, high = row["range_95"]
             good = f"{row['good']} of {row['runs']} ({low:.0%} to {high:.0%})"
             if not row["enough_runs"]:
                 good += f"; under {min_runs} runs, too few to compare"
+            if row["identity_problems"]:
+                good += "; not comparable: " + ", ".join(row["identity_problems"])
             happened = "; ".join(f"{name}: {count}" for name, count in row["outcomes"].items())
             if row["human_rulings"]:
                 happened += f" ({row['human_rulings']} read by a person)"
-            lines.append(f"| {row['agent']} | {row['model']} | {row['runs']} | {good} | {happened} |")
+            lines.append(
+                f"| {row['agent']} | {row['model']} | {row['tool_version']} | {row['runs']} | {good} | {happened} |"
+            )
         lines.append("")
     lines += [
         "Every run has its scorecard JSON, full transcript, and diff in `results/`.",

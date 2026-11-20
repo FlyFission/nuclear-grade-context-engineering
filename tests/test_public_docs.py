@@ -479,3 +479,16 @@ def test_repo_trees_contain_no_personal_email_addresses():
         if PERSONAL_EMAIL.search(text):
             offenders.append(str(path.relative_to(ROOT)))
     assert not offenders, "personal email address found in:\n" + "\n".join(sorted(offenders))
+
+
+def test_llms_txt_links_resolve_and_stay_clean():
+    """llms.txt is the agent-facing index; a moved file must not leave it pointing nowhere."""
+    text = (ROOT / "llms.txt").read_text(encoding="utf-8")
+    assert text.startswith("# Nuclear-grade Context Engineering\n")
+    targets = re.findall(r"\]\(([^)]+)\)", text)
+    assert "AGENTS.md" in targets and "DISCLAIMER.md" in targets
+    for target in targets:
+        assert not target.startswith(("http://", "https://", "/")), f"llms.txt link is not repo-relative: {target}"
+        assert (ROOT / target).exists(), f"llms.txt links to missing {target}"
+    for unsafe in UNSAFE_RESIDUE:
+        assert unsafe not in text, f"llms.txt contains {unsafe}"

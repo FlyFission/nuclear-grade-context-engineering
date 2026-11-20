@@ -135,8 +135,10 @@ authentication. The propagation rule is advisory input only. Measured over this 
 records it would fail 21 of 56 Standard-style records, and it has no dependency edges, so alternatives,
 shared assumptions, and conditional validity are not modeled; a typed dependency model comes first.
 `ng validate --verify-receipt FILE` reports a stored receipt as `bound`, `stale` (other bytes, an added
-or removed file, or another commit), or `invalid` (its digest does not match its own file list, or its
-acceptance block differs from what these bytes yield). A version 1 receipt reads as `undetermined`. The
+or removed file, or another commit), or `invalid` (its digest does not match its own file list, or any
+proposition or key in its acceptance block differs from what these bytes yield, or a version 2 receipt has
+no block). A receipt that is not a supported version 2 receipt, or whose block claims a decision or apply
+permission, reads as `undetermined`. The
 fixtures in `tests/test_acceptance_adversarial.py` attack this path by property, and mark two known gaps
 (approval replay after a change, and an artifact kept outside the packet) as expected failures.
 

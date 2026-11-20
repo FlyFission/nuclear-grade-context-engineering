@@ -7,7 +7,7 @@ organized by the property under test, not by a target count:
 | Property             | Attack                                                              |
 |----------------------|---------------------------------------------------------------------|
 | input binding        | a receipt for other bytes, added or removed files, another commit  |
-| receipt integrity    | a receipt or its acceptance block edited after it was issued        |
+| receipt integrity    | a receipt or any proposition in its acceptance block edited         |
 | freshness            | an approval or artifact that outlives a change (known gaps, xfail)  |
 | evidence status      | fail, gap, planned, deferred, and decorated status cells           |
 | claim completeness   | a declared claim with no verification row; free-text claim rows     |
@@ -170,6 +170,44 @@ def test_an_artifact_inside_the_packet_cannot_be_swapped_unnoticed(tmp_path):
     verdict = receipts.verify_receipt(issued, packet)
     assert verdict["state"] == "stale"
     assert any("test-output.txt changed" in reason for reason in verdict["reasons"])
+
+
+@pytest.mark.parametrize(
+    ("proposition", "forged"),
+    [
+        ("authorized_decision", {"state": "approved"}),
+        ("apply_permission", {"state": "allowed"}),
+        ("independence", {"state": "declared_checks_run", "checks": {"custody": True}, "note": "x"}),
+        ("claim_support", {"state": "recognized", "rows": [], "weakest_status": "pass"}),
+        ("evidence_integrity", {"state": "verified"}),
+        ("note", "Approved."),
+    ],
+)
+def test_every_edited_proposition_makes_the_receipt_invalid(tmp_path, proposition, forged):
+    packet = minimal_standard_packet(tmp_path)
+    issued = receipt_for(packet)
+    issued["acceptance"][proposition] = forged
+    verdict = receipts.verify_receipt(issued, packet)
+    assert verdict["state"] == "invalid"
+    assert any(f"acceptance.{proposition}" in reason for reason in verdict["reasons"])
+
+
+def test_an_added_key_in_the_acceptance_block_makes_the_receipt_invalid(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    issued = receipt_for(packet)
+    issued["acceptance"]["approved"] = True
+    verdict = receipts.verify_receipt(issued, packet)
+    assert verdict["state"] == "invalid"
+    assert any("acceptance.approved" in reason for reason in verdict["reasons"])
+
+
+def test_a_version_2_receipt_with_its_acceptance_block_removed_is_invalid(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    issued = receipt_for(packet)
+    del issued["acceptance"]
+    assert receipts.verify_receipt(issued, packet)["state"] == "invalid"
+    issued["acceptance"] = "open_to_decision"
+    assert receipts.verify_receipt(issued, packet)["state"] == "invalid"
 
 
 # ---- freshness: known gaps, kept visible -------------------------------------------------
@@ -400,6 +438,56 @@ def test_a_version_1_receipt_never_reads_as_eligible(tmp_path):
     block = receipts.read_acceptance(legacy)
     assert block["release_eligibility"]["state"] == "undetermined"
     assert receipts.is_open_to_decision(legacy) is False
+
+
+def test_a_state_that_only_starts_like_an_eligible_one_is_not_eligible():
+    receipt = {
+        "schema": receipts.RECEIPT_SCHEMA,
+        "schema_version": receipts.RECEIPT_SCHEMA_VERSION,
+        "acceptance": {
+            "contract": receipts.ACCEPTANCE_CONTRACT,
+            "release_eligibility": {"state": "open_to_decision_but_blocked", "reasons": []},
+            "authorized_decision": {"state": "not_assessed"},
+            "apply_permission": {"state": "not_assessed"},
+        },
+    }
+    assert receipts.is_open_to_decision(receipt) is False
+    assert receipts.read_acceptance(receipt)["release_eligibility"]["state"] == "undetermined"
+
+
+@pytest.mark.parametrize(
+    "envelope",
+    [
+        {},
+        {"schema": receipts.RECEIPT_SCHEMA},
+        {"schema": receipts.RECEIPT_SCHEMA, "schema_version": 1},
+        {"schema": receipts.RECEIPT_SCHEMA, "schema_version": 3},
+        {"schema": receipts.RECEIPT_SCHEMA, "schema_version": True},
+        {"schema": receipts.RECEIPT_SCHEMA, "schema_version": "2"},
+        {"schema": "something-else", "schema_version": receipts.RECEIPT_SCHEMA_VERSION},
+    ],
+)
+def test_a_receipt_without_the_supported_envelope_is_never_eligible(envelope):
+    receipt = {
+        **envelope,
+        "acceptance": {
+            "contract": receipts.ACCEPTANCE_CONTRACT,
+            "release_eligibility": {"state": "open_to_decision", "reasons": []},
+            "authorized_decision": {"state": "not_assessed"},
+            "apply_permission": {"state": "not_assessed"},
+        },
+    }
+    assert receipts.is_open_to_decision(receipt) is False
+
+
+@pytest.mark.parametrize("name", ["authorized_decision", "apply_permission"])
+def test_a_block_that_claims_a_decision_or_apply_permission_is_never_eligible(tmp_path, name):
+    packet = minimal_standard_packet(tmp_path)
+    issued = receipt_for(packet)
+    assert receipts.is_open_to_decision(issued) is True
+    issued["acceptance"][name] = {"state": "approved"}
+    assert receipts.is_open_to_decision(issued) is False
+    assert "never assesses" in receipts.read_acceptance(issued)["release_eligibility"]["reasons"][0]
 
 
 def test_a_hand_built_block_without_the_contract_is_treated_as_legacy():

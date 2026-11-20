@@ -18,8 +18,8 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 |---|---|---|---|---|---|---|---|
 | REQ-001 | local proof | deterministic test / eval | `test_no_verdict_collapses_to_one_boolean_or_to_approval`; `test_forged_approval_text_changes_nothing`; `test_a_clean_record_is_open_to_a_decision_but_not_decided` | no `approved`, `eligible`, `trusted`, `ok`, or `safe` key; decision and apply always `not_assessed`; eligibility drawn from a closed set of four | pass | E-001 | none |
 | REQ-002 | local proof | deterministic test / eval | status-to-eligibility parametrization over `pass`, `deferred`, `gap`, `fail`, `planned`; declared-claim, decorated-cell, free-text, and quick-packet cases; sweep of 82 earlier records | each input yields its one named state | pass | E-001, E-003 | the split has no owner-labelled ground truth |
-| REQ-003 | local proof | deterministic test / eval | changed, added, removed file; another commit; edited file list; edited acceptance block; edited structural verdict; in-packet artifact swap; non-receipt inputs | each yields its own result and reason | pass | E-001, E-002 | an artifact kept outside the packet is not covered (expected failure) |
-| REQ-004 | local proof | deterministic test / eval | version 1 receipt; block without the contract; non-dict block | never reads as eligible | pass | E-001 | none |
+| REQ-003 | local proof | deterministic test / eval | changed, added, removed file; another commit; edited file list; any one of six edited acceptance propositions, an added key, or a removed block; edited structural verdict; in-packet artifact swap; non-receipt inputs | each yields its own result and reason | pass | E-001, E-002 | an artifact kept outside the packet is not covered (expected failure) |
+| REQ-004 | local proof | deterministic test / eval | version 1 receipt; unsupported or non-integer version; block without the contract; unknown or prefix-matching state; a block that claims a decision or apply permission; non-dict block | never reads as eligible | pass | E-001 | none |
 | REQ-005 | local proof | deterministic test / eval | CLI JSON equals library; CLI text and MCP string show eligibility beside `OK`; `--require-eligible` exit codes; `--verify-receipt` bound, stale, unreadable; default exit code for a `gap` record stays 0 | consumers agree; default exit unchanged | pass | E-001 | none |
 | REQ-006 | local proof | inspection and test | `validate_packet` does not import `propagation`; the worked example reports two advisories and stays valid; sweep of 82 earlier records | advisory only | pass | E-001, E-003 | needs a typed dependency model before it can gate |
 
@@ -52,7 +52,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 | Method | Command / review / eval | Environment | Result | Evidence link |
 |---|---|---|---|---|
 | Baseline | `python -m pytest -q` before the change | Linux container, Python 3.11 | pass | E-001 |
-| Adversarial suite | `python -m pytest -q tests/test_acceptance_adversarial.py` | same | 30 passed, 2 expected failures | E-001 |
+| Adversarial suite | `python -m pytest -q tests/test_acceptance_adversarial.py` | same | 52 passed, 2 expected failures | E-001 |
 | Full suite | `python -m pytest -q` | same | pass (exit 0) | CI run on the PR |
 | Lint and repo checks | `python -m ruff check .`; `python tools/ng.py doctor .`; `python tools/ng.py tokens .`; `python -m nuclear_grade.release` | same | pass | CI run on the PR |
 | Policy consistency | `python -m pytest -q tests/test_repo_policy.py` | same | pass after `propagation.py` and the two suites were listed | E-001 |
@@ -87,6 +87,8 @@ Run before the rule was used. Of 56 Standard-style records, 35 were clean, 14 ta
 | A fabricated external citation is caught | cite a nonexistent regulation | not caught; the block reports `independence: not_checked` | E-001 |
 | Approval survives a material change | approval line, then edit | not caught; strict expected failure | E-001 |
 | A raw artifact outside the packet is swapped | swap after issue | not caught; strict expected failure | E-001 |
+| `verify_receipt` compared only three of the eight acceptance propositions, so a hand-set `approved` still read `bound` (automated review finding, verified) | `test_every_edited_proposition_makes_the_receipt_invalid` over six propositions, an added key, and a removed or non-object block; the whole block is now compared with the recomputed one | `invalid`, names the proposition; the six cases failed on the previous code | E-001 |
+| The reader accepted a prefix match on the eligibility state and never checked the receipt envelope or that decision and apply permission read `not_assessed` (automated review finding, verified) | `test_a_state_that_only_starts_like_an_eligible_one_is_not_eligible`, seven envelope cases, two block-claims-a-decision cases; the state set is closed and the version is an exact integer | `undetermined`; all cases failed on the previous code | E-001 |
 | The policy fails to list an imported module | `test_every_module_a_validator_imports_is_a_validator` | failed on the first run, caught `receipt.py` importing `propagation.py`; fixed in the policy | E-001 |
 
 ## AI-assisted work checks

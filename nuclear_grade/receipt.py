@@ -63,6 +63,8 @@ RECEIPT_SCHEMA = "nuclear-grade.validation-receipt"
 RECEIPT_SCHEMA_VERSION = 2
 ACCEPTANCE_CONTRACT = "nuclear-grade.acceptance/1"
 NOT_ASSESSED = "not_assessed"
+ELIGIBLE_STATES = ("open_to_decision", "open_to_decision_with_open_items")
+ELIGIBILITY_STATES = ("blocked", "undetermined", *ELIGIBLE_STATES)
 OPEN_STATUSES = ("fail", "gap", "deferred", "planned")
 BOUNDARY = (
     "Structural check only. The digests show which bytes were checked; they do not show the "
@@ -299,28 +301,52 @@ def build_acceptance(
     }
 
 
-def read_acceptance(receipt: dict[str, Any]) -> dict[str, Any]:
-    """The acceptance block of any receipt. A version 1 or malformed receipt is never eligible."""
-    block = receipt.get("acceptance") if isinstance(receipt, dict) else None
-    if (
-        isinstance(block, dict)
-        and block.get("contract") == ACCEPTANCE_CONTRACT
-        and isinstance(block.get("release_eligibility"), dict)
-    ):
-        return block
+def _legacy_acceptance(reason: str) -> dict[str, Any]:
     return {
         "contract": None,
-        "release_eligibility": {
-            "state": "undetermined",
-            "reasons": ["the receipt predates or lacks the acceptance contract"],
-        },
+        "release_eligibility": {"state": "undetermined", "reasons": [reason]},
         "authorized_decision": {"state": NOT_ASSESSED},
         "apply_permission": {"state": NOT_ASSESSED},
     }
 
 
+def read_acceptance(receipt: dict[str, Any]) -> dict[str, Any]:
+    """The acceptance block of a receipt, as stored. It is read, not verified.
+
+    Anything that is not a well-formed version 2 receipt reads as ``undetermined``, never as
+    eligible: a missing or unsupported schema or version, another contract, an eligibility
+    state outside the closed set, or a decision or apply permission that is not
+    ``not_assessed`` (this validator cannot assess either). Use ``verify_receipt`` to check
+    that a stored block still matches the packet.
+    """
+    if not isinstance(receipt, dict):
+        return _legacy_acceptance("not a receipt")
+    version = receipt.get("schema_version")
+    if (
+        receipt.get("schema") != RECEIPT_SCHEMA
+        or type(version) is not int
+        or version != RECEIPT_SCHEMA_VERSION
+    ):
+        return _legacy_acceptance("the receipt predates or lacks the acceptance contract")
+    block = receipt.get("acceptance")
+    if not isinstance(block, dict) or block.get("contract") != ACCEPTANCE_CONTRACT:
+        return _legacy_acceptance("the receipt predates or lacks the acceptance contract")
+    eligibility = block.get("release_eligibility")
+    if (
+        not isinstance(eligibility, dict)
+        or eligibility.get("state") not in ELIGIBILITY_STATES
+        or not isinstance(eligibility.get("reasons"), list)
+    ):
+        return _legacy_acceptance("the acceptance block has an unsupported eligibility state")
+    for name in ("authorized_decision", "apply_permission"):
+        proposition = block.get(name)
+        if not isinstance(proposition, dict) or proposition.get("state") != NOT_ASSESSED:
+            return _legacy_acceptance(f"the acceptance block claims {name}, which this validator never assesses")
+    return block
+
+
 def is_open_to_decision(receipt: dict[str, Any]) -> bool:
-    return read_acceptance(receipt)["release_eligibility"].get("state", "").startswith("open_to_decision")
+    return read_acceptance(receipt)["release_eligibility"].get("state") in ELIGIBLE_STATES
 
 
 def acceptance_summary(acceptance: dict[str, Any]) -> str:
@@ -386,8 +412,9 @@ def verify_receipt(
             )
     if reasons:
         return {"state": "stale", "reasons": reasons, "checked": checked}
-    # The bytes match. The acceptance block sits outside the digest, so recompute it from these
-    # bytes and the strict flags the receipt records, and refuse a block someone edited.
+    # The bytes match. The acceptance block sits outside the digest, so recompute all of it from
+    # these bytes and the strict flags the receipt records, and refuse a block that differs in
+    # any proposition, key, or value. A version 2 receipt must carry one.
     block = receipt.get("acceptance")
     if isinstance(block, dict):
         checked.append("acceptance")
@@ -409,13 +436,22 @@ def verify_receipt(
             strict_authority=bool(strict.get("authority")),
             strict_two_party=bool(strict.get("two_party")),
         )
-        for key in ("structural_validity", "evidence_status", "release_eligibility"):
-            if block.get(key) != expected[key]:
-                return {
-                    "state": "invalid",
-                    "reasons": [f"acceptance.{key} does not match what these bytes yield; the block was edited"],
-                    "checked": checked,
-                }
+        if block != expected:
+            keys = [key for key in expected if block.get(key) != expected[key]]
+            keys += sorted(key for key in block if key not in expected)
+            return {
+                "state": "invalid",
+                "reasons": [
+                    f"acceptance.{key} does not match what these bytes yield; the block was edited" for key in keys
+                ],
+                "checked": checked,
+            }
+    elif receipt.get("schema_version") == RECEIPT_SCHEMA_VERSION:
+        return {
+            "state": "invalid",
+            "reasons": ["a version 2 receipt must carry an acceptance block; it was removed or is not an object"],
+            "checked": checked,
+        }
     return {"state": "bound", "reasons": [], "checked": checked}
 
 

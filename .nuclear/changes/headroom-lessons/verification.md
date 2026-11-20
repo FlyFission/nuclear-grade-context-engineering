@@ -15,6 +15,8 @@ An AI agent (Claude Code) wrote this change and this record under the owner's in
 | E-005 | REQ-004, REQ-006 | Read against the code and against `tests/test_public_docs.py`; the independent review's wording findings are dispositioned below | pass |
 | E-006 | No regressions | `evidence/pre-pr-checks.txt`: full pytest, ruff, doctor, tokens, the worked-example validation, release identity and `git diff --check` | pass |
 
+After `main` gained the scoreboard (#153), the branch was merged with it. Three conflicts (the `build.py` docstring, `METHOD.md` change entries and new tests) were resolved by keeping both sides. `run-all.py`, which now launches `run.py`, was added to the pinned inputs. The scoreboard already reads `tool_version` and `identity_problems`, and its tests pass with this change. Full suite after the merge: `1168 passed, 1 skipped` (`evidence/pre-pr-checks.txt`).
+
 Mutation runs are in `evidence/mutation-check.txt`. Each guard was disabled on its own, the test file was run, and the files were restored before the next mutation.
 
 ### Independent review: findings and dispositions

@@ -1,7 +1,8 @@
+After merging origin/main at 08eff07:
 $ python -m pytest
-1159 passed, 1 skipped in 53.66s
+1168 passed, 1 skipped in 64.31s (0:01:04)
 $ python -m pytest tests/test_challenge_results.py tests/test_public_docs.py
-39 passed in 9.72s
+48 passed in 10.86s
 $ python -m ruff check .
 All checks passed!
 $ python tools/ng.py doctor .
@@ -14,5 +15,7 @@ $ python -m nuclear_grade.release
 OK: release identity
 $ python tools/ng.py validate .nuclear/changes/headroom-lessons --strict-custody
 OK: .nuclear/changes/headroom-lessons
+$ python challenge-results/build.py (outputs to a scratch folder)
+wrote R.md, i.html and b.json (0 rows)
 $ git diff --check
 (no output, exit 0)

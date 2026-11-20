@@ -7,7 +7,7 @@ Before the first published round, challenge results compare only runs that share
 ## Requirements
 
 - **REQ-001:** Runs with different tool versions shall be in different rows.
-- **REQ-002:** Each run shall record the last commit that changed a pinned input (`challenge/`, the harness, the plain track, and the `nuclear_grade` validator the scorer loads), and which pinned inputs differed from it when the run started. Untracked and ignored files count, except the folders the copy leaves out (`__pycache__`, `.pytest_cache`).
+- **REQ-002:** Each run shall record the last commit that changed a pinned input (`challenge/`, the harness including `run-all.py`, the plain track, and the `nuclear_grade` validator the scorer loads), and which pinned inputs differed from it when the run started. Untracked and ignored files count, except the folders the copy leaves out (`__pycache__`, `.pytest_cache`).
 - **REQ-003:** A row shall be marked not comparable, with the reason, when its runs span more than one inputs commit or scorer digest, when a scored run has no scorer digest, or when it holds a run made from uncommitted or unrecorded inputs. The marking shall not change a row's counts, good-outcome share or range.
 - **REQ-004:** `METHOD.md` shall state the rule and log the change with its date.
 - **REQ-005:** `llms.txt` shall link only to files that exist, and a test shall check this.

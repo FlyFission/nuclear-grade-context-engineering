@@ -52,6 +52,7 @@ RESULT_SCHEMA_VERSION = 2
 PINNED_INPUTS = (
     "challenge",
     "challenge-results/run.py",
+    "challenge-results/run-all.py",
     "challenge-results/disclosure.py",
     "challenge-results/agents.json",
     "challenge-results/tracks",

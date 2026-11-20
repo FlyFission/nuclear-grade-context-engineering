@@ -35,13 +35,18 @@ the version you used is saved with every run.
 
 ## Run a round in containers
 
-`container/round.sh` does the whole round with Docker. Each agent gets its own fresh
-container with only its own sign-in passed in, the repo mounted read-only so no agent can
-reach the scorer, and the image digest saved with every run. Sign-ins stay outside the repo:
+`container/round.sh` does the whole round with Docker. Every run gets its own fresh
+container with only that agent's sign-in passed in, the repo mounted read-only so no agent
+can change the scorer, the results folder hidden, and the image digest saved with the run.
+The run's files are copied out after the container stops, and the results page is built on
+your machine at the end. The challenge is open-book, so agents can still read the scorer.
+Sign-ins stay outside the repo:
 variables in `~/.ng-challenge/agents.env` (one `KEY=value` per line, for example
 `CLAUDE_CODE_OAUTH_TOKEN`, `OPENAI_API_KEY`, `GEMINI_API_KEY`), and, for CLIs that keep their
 sign-in in a file, a home folder per agent at `~/.ng-challenge/home/<agent>/` (for example
-`~/.ng-challenge/home/codex/.codex/auth.json`). Each agent sees only its own. Then name the
+`~/.ng-challenge/home/codex/.codex/auth.json`). The sign-in file is read as plain
+`KEY=value` lines and never run. Each agent sees only its own, and its home folder is copied
+fresh into every run, so nothing one run leaves behind reaches the next. Then name the
 agents you signed in for:
 
 ```bash

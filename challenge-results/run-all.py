@@ -76,6 +76,7 @@ def main(argv: list[str] | None = None) -> int:
     if not to_run:
         print("no installed agents to run")
         return 1
+    failed = False
     for name in to_run:
         for track in TRACKS:
             command = [
@@ -87,10 +88,18 @@ def main(argv: list[str] | None = None) -> int:
                 command += ["--model", models[name]]
             print("$ " + " ".join(command), flush=True)
             if not args.dry_run:
-                subprocess.run(command, check=False)
-    if args.dry_run or args.no_build:
+                # run.py records every agent outcome, failures included, and exits 0.
+                # A nonzero exit means the harness itself broke, so the round is incomplete.
+                done = subprocess.run(command, check=False)
+                if done.returncode != 0:
+                    print(f"harness error: {name} on {track} exited {done.returncode}", file=sys.stderr)
+                    failed = True
+    if args.dry_run:
         return 0
-    return subprocess.run([sys.executable, str(HERE / "build.py")], check=False).returncode
+    if not args.no_build:
+        built = subprocess.run([sys.executable, str(HERE / "build.py")], check=False).returncode
+        failed = failed or built != 0
+    return 1 if failed else 0
 
 
 if __name__ == "__main__":

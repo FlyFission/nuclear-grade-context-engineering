@@ -7,6 +7,7 @@ import json
 import os
 import re
 import shutil
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -257,6 +258,12 @@ def test_scoreboard_lists_what_each_silent_run_changed_with_its_transcript_and_d
     assert "<i>Agent</i>" not in page
     assert "What the silent runs changed" not in build.render_scoreboard([], 5)
 
+    judge = {
+        **silent, "run_id": "codex-m1-plain-1", "verdict": "Tampered with the judge",
+        "scorecard": {"authority_change": [], "files_changed": ["judge/test_tool_runner.py"], "checks": {}},
+    }
+    assert build.silent_replays([judge], {})[0]["changed"] == ["judge/test_tool_runner.py"]
+
 
 def test_scoreboard_escapes_agent_and_model_names():
     build = load("build")
@@ -314,21 +321,65 @@ def test_run_all_can_leave_the_rebuild_to_the_host(tmp_path, monkeypatch):
         encoding="utf-8",
     )
     calls = []
-    monkeypatch.setattr(run_all.subprocess, "run", lambda command, **_: calls.append(command))
+
+    def fake_run(command, **_):
+        calls.append(command)
+        return subprocess.CompletedProcess(command, 0)
+
+    monkeypatch.setattr(run_all.subprocess, "run", fake_run)
     assert run_all.main(["--agents-file", str(agents_file), "--trials", "1", "--no-build"]) == 0
     assert calls and not any(str(HARNESS / "build.py") in command for command in calls)
+
+
+def test_run_all_fails_when_the_harness_breaks_but_still_rebuilds(tmp_path, monkeypatch):
+    spec = importlib.util.spec_from_file_location("ng_challenge_results_run_all_err", HARNESS / "run-all.py")
+    run_all = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(run_all)
+    agents_file = tmp_path / "agents.json"
+    agents_file.write_text(
+        json.dumps({"agents": [{"id": "here", "label": "Here", "command": [sys.executable, "{prompt}"]}]}),
+        encoding="utf-8",
+    )
+    calls = []
+
+    def fake_run(command, **_):
+        calls.append(command)
+        broke = "run.py" in command[1] and "plain" in command
+        return subprocess.CompletedProcess(command, 1 if broke else 0)
+
+    monkeypatch.setattr(run_all.subprocess, "run", fake_run)
+    assert run_all.main(["--agents-file", str(agents_file), "--trials", "1"]) == 1
+    assert str(HARNESS / "build.py") in calls[-1]
 
 
 def test_container_round_keeps_the_repo_read_only_and_each_sign_in_with_its_own_agent():
     round_sh = (HARNESS / "container" / "round.sh").read_text(encoding="utf-8")
     dockerfile = (HARNESS / "container" / "Dockerfile").read_text(encoding="utf-8")
     assert '-v "$repo:/repo:ro"' in round_sh
-    assert '-v "$repo/challenge-results/results:/repo/challenge-results/results"' in round_sh
-    assert "run-all.py --no-build" in round_sh and "NG_CONTAINER_IMAGE=" in round_sh
+    assert "challenge-results/run.py" in round_sh and "NG_CONTAINER_IMAGE=" in round_sh
     keys = dict(re.findall(r'^\s+([a-z-]+)\) echo "([A-Z_ ]*)" ;;$', round_sh, re.MULTILINE))
     assert "OPENAI_API_KEY" not in keys["claude-code"].split()
     assert "ANTHROPIC_API_KEY" not in keys["codex"].split()
-    assert "--env-file" not in round_sh  # an env file would hand every key to every agent
-    assert '-v "$home_root/$name:/home/runner"' in round_sh  # each agent's own sign-in folder only
+    assert '-v "$empty:/repo/challenge-results/results:ro"' in round_sh  # other runs' evidence is hidden
+    assert "--out /tmp/ng-out" in round_sh and 'docker cp "$cid:/tmp/ng-out/." "$results/"' in round_sh
+    assert '-v "$home_root/$name:/seed:ro"' in round_sh  # own sign-in only, never written back
+    assert round_sh.count("--env-file") == 1 and "--env-file \"$agent_env\"" in round_sh  # one agent's keys only
+    assert "--first-trial" in round_sh
+    assert '. "$env_file"' not in round_sh and "source " not in round_sh  # the env file is data, never run
     for name in ("CLAUDE_CODE", "CODEX", "GEMINI_CLI", "OPENCODE", "COPILOT"):
         assert re.search(rf"^ARG {name}_VERSION=\d+\.\d+\.\d+$", dockerfile, re.MULTILINE), name
+
+
+def test_container_round_reads_the_env_file_as_data(tmp_path):
+    round_sh = (HARNESS / "container" / "round.sh").read_text(encoding="utf-8")
+    body = re.search(r"^env_value\(\) \{\n.*?^\}\n", round_sh, re.MULTILINE | re.DOTALL).group(0)
+    env_file = tmp_path / "agents.env"
+    marker = tmp_path / "ran"
+    env_file.write_text(
+        f"# comment\nexport GEMINI_API_KEY=\"g-1\"\nOPENAI_API_KEY=$(touch {marker})\nANTHROPIC_API_KEY=a=b\n",
+        encoding="utf-8",
+    )
+    script = f'env_file="{env_file}"\n{body}\nfor k in GEMINI_API_KEY OPENAI_API_KEY ANTHROPIC_API_KEY NONE; do printf "%s|" "$(env_value $k)"; done'
+    done = subprocess.run(["bash", "-c", script], capture_output=True, text=True, check=True)
+    assert done.stdout == f"g-1|$(touch {marker})|a=b||"
+    assert not marker.exists()

@@ -50,6 +50,7 @@ from nuclear_grade.ng_validate import (
     _detect_mode,
     _markdown_tables,
     _normalize_table_label,
+    _section_text,
     validate_packet,
 )
 from nuclear_grade.propagation import (
@@ -61,6 +62,7 @@ from nuclear_grade.propagation import (
 
 RECEIPT_SCHEMA = "nuclear-grade.validation-receipt"
 RECEIPT_SCHEMA_VERSION = 2
+SUPPORTED_RECEIPT_VERSIONS = (1, RECEIPT_SCHEMA_VERSION)
 ACCEPTANCE_CONTRACT = "nuclear-grade.acceptance/1"
 NOT_ASSESSED = "not_assessed"
 ELIGIBLE_STATES = ("open_to_decision", "open_to_decision_with_open_items")
@@ -214,11 +216,15 @@ def _status_counts(packet: Path, mode: str) -> dict[str, int]:
 
 
 _SEPARATOR_CELL = re.compile(r"^:?-{2,}:?$")
-_HEADING = re.compile(r"^(#{1,6})[ \t]+(.*)")
+_HEADING = re.compile(r"^[ \t]{0,3}(#{1,6})[ \t]+(.*)")
 
 
 def _declared_claims(packet: Path) -> tuple[list[str], int]:
     """Claim ids a Standard packet declares under basis.md "Derived requirements or claims".
+
+    The section is found with the structural validator's own heading reader, so indentation, extra
+    spaces, closing hashes, case, and Setext headings are treated exactly as the validator treats
+    them. Subsections stay inside it; a top-level heading ends it.
 
     Also returns how many data rows in that section had no readable claim id. Such a row is a
     declaration the completeness check cannot see, so the caller must not treat it as absent.
@@ -226,21 +232,16 @@ def _declared_claims(packet: Path) -> tuple[list[str], int]:
     basis = packet / "basis.md"
     if not basis.is_file():
         return [], 0
-    in_section = in_table = False
-    section_level = 0
+    section = _section_text(basis.read_text(encoding="utf-8"), "## derived requirements or claims")
+    in_table = False
     ids: list[str] = []
     unreadable = 0
-    for line in basis.read_text(encoding="utf-8").splitlines():
+    for line in section.splitlines():
         heading = _HEADING.match(line)
         if heading:
-            level = len(heading.group(1))
-            if "derived requirements or claims" in heading.group(2).lower():
-                in_section, section_level = True, level
-            elif in_section and level <= section_level:
-                in_section = False  # a sibling or ancestor heading ends the section; a subsection does not
+            if len(heading.group(1)) == 1:
+                break  # a top-level heading is an ancestor of the section and ends it
             in_table = False
-            continue
-        if not in_section:
             continue
         if not line.lstrip().startswith("|"):
             in_table = False
@@ -438,6 +439,13 @@ def verify_receipt(
     reasons: list[str] = []
     if not isinstance(receipt, dict) or receipt.get("schema") != RECEIPT_SCHEMA:
         return {"state": "invalid", "reasons": ["not a nuclear-grade validation receipt"], "checked": []}
+    version = receipt.get("schema_version")
+    if type(version) is not int or version not in SUPPORTED_RECEIPT_VERSIONS:
+        return {
+            "state": "invalid",
+            "reasons": [f"unsupported receipt schema version {version!r}; supported: 1 (file digests only), 2"],
+            "checked": [],
+        }
     inputs = receipt.get("inputs")
     recorded = inputs.get("files") if isinstance(inputs, dict) else None
     digest = inputs.get("digest") if isinstance(inputs, dict) else None

@@ -142,7 +142,8 @@ or removed file, or another commit), or `invalid` (its digest does not match its
 derived field differs from what these bytes yield, or it carries a field the contract does not define, or a
 version 2 receipt has no acceptance block). For a version 2 receipt, verification rebuilds the whole receipt from
 the packet and the strict flags it declares, then compares the verdict, messages, mode, flags, status counts,
-boundary text, file digests, and every acceptance proposition. Only where and when it was issued (time, path,
+boundary text, file digests, and every acceptance proposition. A schema version other than 1 or 2, or none, is `invalid`; version 1 verifies file digests only and never reads
+as eligible. Only where and when it was issued (time, path,
 provenance) is not compared; `--expect-commit` checks the commit. Verification shows a receipt matches these bytes
 under the checks it declares, so a consumer that requires a check must read the strict flags itself. A receipt that is not a supported version 2 receipt, or whose block claims a decision or apply
 permission, reads as `undetermined`. The

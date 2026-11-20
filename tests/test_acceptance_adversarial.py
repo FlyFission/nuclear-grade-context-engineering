@@ -287,6 +287,33 @@ def test_where_and_when_fields_are_context_and_not_verified(tmp_path, field, val
     assert receipts.verify_receipt(issued, packet)["state"] == "bound"
 
 
+@pytest.mark.parametrize("version", [0, 3, 99, True, "2", 2.0, None, "missing"])
+def test_an_unsupported_receipt_version_is_invalid_not_bound(tmp_path, version):
+    packet = minimal_standard_packet(tmp_path)
+    issued = receipt_for(packet)
+    if version == "missing":
+        del issued["schema_version"]
+    else:
+        issued["schema_version"] = version
+    # edit the verdict and the block too: nothing about an unsupported receipt may verify
+    issued["ok"] = not issued["ok"]
+    issued["acceptance"]["release_eligibility"] = {"state": "open_to_decision", "reasons": []}
+    verdict = receipts.verify_receipt(issued, packet)
+    assert verdict["state"] == "invalid"
+    assert "unsupported receipt schema version" in verdict["reasons"][0]
+
+
+def test_a_version_1_receipt_still_verifies_its_file_bindings_and_is_never_eligible(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    issued = receipt_for(packet)
+    issued["schema_version"] = 1
+    assert receipts.verify_receipt(issued, packet)["state"] == "bound"
+    assert receipts.verify_receipt(issued, packet)["checked"] == ["inputs.files", "inputs.digest"]
+    assert receipts.is_open_to_decision(issued) is False
+    append(packet, "plan.md", "\nlate edit\n")
+    assert receipts.verify_receipt(issued, packet)["state"] == "stale"
+
+
 def test_a_receipt_relabelled_with_another_version_never_reads_as_eligible(tmp_path):
     packet = minimal_standard_packet(tmp_path)
     issued = receipt_for(packet)
@@ -413,6 +440,32 @@ def declare(packet: Path, row: str) -> None:
 def test_markdown_in_a_declared_id_cannot_hide_a_missing_claim(tmp_path, cell):
     packet = minimal_standard_packet(tmp_path)
     declare(packet, f"| {cell} | Critical claim | Test |")
+    acceptance = receipt_for(packet)["acceptance"]
+    assert acceptance["claim_support"]["declared_without_verification_row"] == ["C-002"]
+    assert acceptance["release_eligibility"]["state"] == "blocked"
+
+
+@pytest.mark.parametrize(
+    "heading",
+    [
+        "## Derived requirements or claims",
+        "  ## Derived requirements or claims",
+        "   ## Derived requirements or claims",
+        "## Derived requirements  or claims",
+        "##   Derived requirements or claims",
+        "## Derived requirements or claims ##",
+        "## DERIVED REQUIREMENTS OR CLAIMS",
+        "Derived requirements or claims\n------------------------------",
+    ],
+)
+def test_the_claims_heading_is_read_the_way_the_validator_reads_it(tmp_path, heading):
+    packet = minimal_standard_packet(tmp_path)
+    basis = packet / "basis.md"
+    text = basis.read_text(encoding="utf-8")
+    assert "## Derived requirements or claims" in text
+    text = text.replace("## Derived requirements or claims", heading)
+    text = text.replace("| C-001 | Demo claim | Test |\n", "| C-001 | Demo claim | Test |\n| C-002 | Critical | Test |\n")
+    basis.write_text(text, encoding="utf-8")
     acceptance = receipt_for(packet)["acceptance"]
     assert acceptance["claim_support"]["declared_without_verification_row"] == ["C-002"]
     assert acceptance["release_eligibility"]["state"] == "blocked"

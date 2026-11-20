@@ -48,9 +48,9 @@ from nuclear_grade.ng_validate import (
     ValidationResult,
     _declared_mode,
     _detect_mode,
+    _markdown_h2_sections,
     _markdown_tables,
     _normalize_table_label,
-    _section_text,
     validate_packet,
 )
 from nuclear_grade.propagation import (
@@ -99,7 +99,8 @@ _STATUS_TOKEN = re.compile(
     r"(?<!\bno )(?<!\bnot )\b(not applicable|pass|fail|gap|deferred|planned)\b", re.IGNORECASE
 )
 _STATUS_DECLARATION = re.compile(
-    r"(?<![A-Za-z0-9])status[*_]*[ \t]*:[*_]*[ \t]*(?P<value>[`*_]*(not applicable|pass|fail|gap|deferred|planned)\b[^\n]*)",
+    r"(?<![A-Za-z0-9])status[*_]*[ \t]*:[*_]*[ \t]*"
+    r"(?P<value>[`*_]*(not applicable|pass|fail|gap|deferred|planned)\b(?:(?!(?<![A-Za-z0-9])status[*_]*[ \t]*:)[^\n])*)",
     re.IGNORECASE,
 )
 # Parenthetical notes explain a status ("not applicable (no release planned)"); they declare none.
@@ -295,6 +296,8 @@ def _html_block_hides_markdown(lines: list[str], index: int) -> bool:
 
 
 _STATUS_TEXT = re.compile(r"\b(?:not applicable|pass|fail|gap|deferred|planned)\b", re.IGNORECASE)
+# A pipe-table delimiter row ("--- | ---", "|:--|--:|"). The table readers take only rows that start with a pipe.
+_TABLE_DELIMITER = re.compile(r"^[ \t]*(?:>[ \t]*)*(?:[-+*][ \t]+)?\|?[ \t]*:?-{2,}:?[ \t]*(?:\|[ \t]*:?-{2,}:?[ \t]*)+\|?[ \t]*$")
 _BLOCK_START = re.compile(r"^(?:[ \t]{0,3}(?:[-+*]|\d{1,9}[.)])[ \t]|[ \t]{0,3}[>#]|[ \t]{0,3}(?:`{3,}|~{3,})|[ \t]{0,3}<!--)")
 
 
@@ -318,7 +321,8 @@ def _scan_evidence(text: str) -> tuple[str, list[str]]:
 
     Container rules and indented code are not modelled, so the second value lists constructs where this
     view could differ from a rendered page about a status: an unterminated fence or comment, a stray
-    comment opener, a fence inside a quote or list item, and indented text that mentions a status. The
+    comment opener, a fence inside a quote or list item, a table whose rows do not start with a pipe, and
+    indented text that mentions a status. The
     caller must not grant eligibility when it is not empty. Line structure is kept.
     """
     lines = text.splitlines(keepends=True)
@@ -384,6 +388,10 @@ def _scan_evidence(text: str) -> tuple[str, list[str]]:
         visible, inline_comment, stray = _blank_inline_comments(body, lines, index)
         if stray:
             notes.append("an HTML comment that is not closed on the line where it opens")
+        if _TABLE_DELIMITER.match(visible) and not (
+            visible.lstrip().startswith("|") and index > 0 and lines[index - 1].lstrip().startswith("|")
+        ):
+            notes.append("a table that does not start each row with a pipe, or sits inside a quote or list item")
         outside_code = visible if raw_html else _INLINE_CODE.sub("", visible)
         # Markup before or inside a label and its value changes how it reads; markup after it does not.
         if any(_MARKUP.search(outside_code[: label.end() + 16]) for label in _STATUS_LABEL_WORD.finditer(outside_code)):
@@ -445,9 +453,9 @@ _HEADING = re.compile(r"^[ \t]{0,3}(#{1,6})[ \t]+(.*)")
 def _declared_claims(packet: Path) -> tuple[list[str], int]:
     """Claim ids a Standard packet declares under basis.md "Derived requirements or claims".
 
-    The section is found with the structural validator's own heading reader, so indentation, extra
-    spaces, closing hashes, case, and Setext headings are treated exactly as the validator treats
-    them. Subsections stay inside it; a top-level heading ends it.
+    Every section with that title is read, found with the structural validator's own heading reader,
+    so indentation, extra spaces, closing hashes, case, and Setext headings are treated exactly as the
+    validator treats them. Subsections stay inside a section; a top-level heading ends it.
 
     Also returns how many data rows in that section had no readable claim id. Such a row is a
     declaration the completeness check cannot see, so the caller must not treat it as absent.
@@ -455,7 +463,28 @@ def _declared_claims(packet: Path) -> tuple[list[str], int]:
     basis = packet / "basis.md"
     if not basis.is_file():
         return [], 0
-    section = _section_text(_evidence_view(basis.read_text(encoding="utf-8")), "## derived requirements or claims")
+    sections = _sections(_evidence_view(basis.read_text(encoding="utf-8")), "derived requirements or claims")
+    ids: list[str] = []
+    unreadable = 0
+    for section in sections:
+        found, missed = _declared_in_section(section)
+        ids.extend(declared for declared in found if declared not in ids)
+        unreadable += missed
+    return ids, unreadable
+
+
+def _sections(text: str, title: str) -> list[str]:
+    """Every H2 section with this normalized title, by the structural validator's own heading reader."""
+    lines, starts = _markdown_h2_sections(text)
+    found: list[str] = []
+    for position, (start, heading) in enumerate(starts):
+        if heading == title:
+            end = starts[position + 1][0] if position + 1 < len(starts) else len(lines)
+            found.append("".join(lines[start:end]))
+    return found
+
+
+def _declared_in_section(section: str) -> tuple[list[str], int]:
     in_table = False
     ids: list[str] = []
     unreadable = 0

@@ -1295,3 +1295,63 @@ def test_every_record_in_this_repository_yields_a_well_formed_verdict():
         acceptance = receipt_for(packet)["acceptance"]
         assert acceptance["release_eligibility"]["state"] in ELIGIBILITY_STATES, packet
         assert acceptance["authorized_decision"]["state"] == "not_assessed", packet
+
+
+# --- Later declarations on one line, repeated claims sections, tables the row reader skips -----------
+
+
+@pytest.mark.parametrize(
+    "line",
+    [
+        "- Status: pass. Status: gap.",
+        "- Status: pass — local check; Status: gap — review pending",
+        "- Status: pass; Status: fail",
+        "- **Status:** pass. **Status:** gap.",
+        "- Status: pass (local). Status: deferred (later).",
+    ],
+)
+def test_every_status_declaration_on_one_line_is_read(tmp_path, line):
+    packet = minimal_quick_packet(tmp_path)
+    append(packet, "proof.md", f"\n{line}\n")
+    acceptance = receipt_for(packet)["acceptance"]
+    assert acceptance["evidence_status"]["open_items"] >= 1
+    assert acceptance["release_eligibility"]["state"] in ("blocked", "open_to_decision_with_open_items")
+
+
+@pytest.mark.parametrize(
+    "heading",
+    [
+        "## Derived requirements or claims",
+        "## derived requirements or claims ##",
+        "   ## Derived requirements or claims",
+        "Derived requirements or claims\n------------------------------",
+    ],
+)
+def test_a_later_claims_section_is_read_as_well_as_the_first(tmp_path, heading):
+    packet = minimal_standard_packet(tmp_path)
+    append(packet, "basis.md", f"\n{heading}\n\n| ID | Claim | Verification |\n|---|---|---|\n| C-002 | Critical | Test |\n")
+    acceptance = receipt_for(packet)["acceptance"]
+    assert acceptance["claim_support"]["declared_without_verification_row"] == ["C-002"]
+    assert acceptance["release_eligibility"]["state"] == "blocked"
+
+
+@pytest.mark.parametrize(
+    "table",
+    [
+        "Claim | Status\n--- | ---\nC-002 | fail",
+        "> | Claim | Status |\n> |---|---|\n> | C-002 | fail |",
+        "- Claim | Status\n  --- | ---\n  C-002 | fail",
+    ],
+)
+def test_a_table_the_row_reader_skips_withholds_eligibility(tmp_path, table):
+    packet = minimal_standard_packet(tmp_path)
+    append(packet, "verification.md", f"\n{table}\n")
+    eligibility = receipt_for(packet)["acceptance"]["release_eligibility"]
+    assert eligibility["state"] == "undetermined"
+    assert any("does not start each row with a pipe" in reason for reason in eligibility["reasons"])
+
+
+def test_a_normal_table_and_a_setext_rule_are_not_flagged(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    append(packet, "verification.md", "\nHeading\n-------\n\n| Claim | Status |\n|:--|--:|\n| C-001 | pass |\n")
+    assert receipt_for(packet)["acceptance"]["release_eligibility"]["state"] == "open_to_decision"

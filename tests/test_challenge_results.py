@@ -329,5 +329,6 @@ def test_container_round_keeps_the_repo_read_only_and_each_sign_in_with_its_own_
     assert "OPENAI_API_KEY" not in keys["claude-code"].split()
     assert "ANTHROPIC_API_KEY" not in keys["codex"].split()
     assert "--env-file" not in round_sh  # an env file would hand every key to every agent
+    assert '-v "$home_root/$name:/home/runner"' in round_sh  # each agent's own sign-in folder only
     for name in ("CLAUDE_CODE", "CODEX", "GEMINI_CLI", "OPENCODE", "COPILOT"):
         assert re.search(rf"^ARG {name}_VERSION=\d+\.\d+\.\d+$", dockerfile, re.MULTILINE), name

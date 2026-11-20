@@ -8,16 +8,21 @@
 # cannot reach the scorer; only challenge-results/results/ is writable. Everything
 # except --agents goes to run-all.py unchanged.
 #
-# Sign-ins are read from the file in NG_AGENTS_ENV (default ~/.ng-challenge.env),
-# kept outside the repo so it is never copied, mounted or committed. One KEY=value per
-# line. An agent with no sign-in still runs, and its failed runs are published like
-# any other (METHOD.md, How many runs), so name only agents you have signed in for.
+# Sign-ins live outside the repo, so they are never copied, mounted or committed:
+# - ~/.ng-challenge/agents.env (or NG_AGENTS_ENV): one KEY=value per line. Each agent
+#   sees only its own variables, listed in keys_for below.
+# - ~/.ng-challenge/home/<agent>/ (or NG_HOME_ROOT/<agent>/): if it exists, it becomes
+#   that agent's home folder in the container, for CLIs that keep their sign-in in a
+#   file (for example .codex/auth.json or .gemini/). Only that agent's container sees it.
+# An agent with no sign-in still runs, and its failed runs are published like any
+# other (METHOD.md, How many runs), so name only agents you have signed in for.
 set -euo pipefail
 
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 repo="$(cd "$here/../.." && pwd)"
 image="${NG_IMAGE:-ng-challenge}"
-env_file="${NG_AGENTS_ENV:-$HOME/.ng-challenge.env}"
+env_file="${NG_AGENTS_ENV:-$HOME/.ng-challenge/agents.env}"
+home_root="${NG_HOME_ROOT:-$HOME/.ng-challenge/home}"
 
 # The sign-in variables each agent may see. Nothing else from the file is passed.
 keys_for() {
@@ -68,9 +73,16 @@ for name in "${names[@]}"; do
       env_args+=(-e "$key")
     fi
   done
-  echo "== $name ($(( ${#env_args[@]} / 2 )) sign-in variable(s) passed)"
+  home_args=()
+  if [[ -d "$home_root/$name" ]]; then
+    home_args=(-v "$home_root/$name:/home/runner")
+  fi
+  has_home=no
+  if [[ ${#home_args[@]} -gt 0 ]]; then has_home=yes; fi
+  echo "== $name: $(( ${#env_args[@]} / 2 )) sign-in variable(s), own home folder: $has_home"
   docker run --rm \
     ${env_args[@]+"${env_args[@]}"} \
+    ${home_args[@]+"${home_args[@]}"} \
     -e NG_CONTAINER_IMAGE="$image@$digest" \
     -v "$repo:/repo:ro" \
     -v "$repo/challenge-results/results:/repo/challenge-results/results" \

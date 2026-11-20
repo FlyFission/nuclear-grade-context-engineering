@@ -22,14 +22,17 @@
 | 1 | Pair rows and count silent widenings | REQ-001, REQ-002 | none | `challenge-results/build.py#summarize` | `scoreboard_pairs`, `silent_widenings` | tests | pass |
 | 2 | Render the page and badge | REQ-002, REQ-003 | step 1 | the rows | `render_scoreboard`, `render_badge` | tests | pass |
 | 3 | Run every installed agent on both tracks | REQ-004 | none | `challenge-results/run.py#TRACKS` | `run-all.py` | test and `--dry-run` | pass |
+| 4 | One line per tool version; show why a row is not comparable | REQ-005 | step 1 | the rows | `scoreboard_pairs`, `_cell` | test | pass |
+| 5 | List what each silent run changed, with links | REQ-006 | step 2 | the runs | `silent_replays`, `_replay_item` | test | pass |
 
 ## Affected files and assets
 
 | File / asset | Change expected | Requirements covered | Why it matters | Owner |
 |---|---|---|---|---|
-| `challenge-results/build.py` | renderers and flags | REQ-001..003 | results tooling | maintainer |
+| `challenge-results/build.py` | renderers and flags | REQ-001..003, REQ-005, REQ-006 | results tooling | maintainer |
 | `challenge-results/run-all.py` | new | REQ-004 | round orchestration | maintainer |
-| `tests/test_challenge_results.py` | five tests | REQ-001..004 | evidence | maintainer |
+| `docs/.nojekyll` | new; lets GitHub Pages serve `docs/scoreboard/` as plain files | REQ-001 | publishing | maintainer |
+| `tests/test_challenge_results.py` | seven tests | REQ-001..006 | evidence | maintainer |
 
 ## Non-goals
 

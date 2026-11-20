@@ -20,6 +20,8 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 | REQ-002 | local proof | deterministic test / eval | `test_badge_counts_silent_widenings_and_says_when_there_are_no_runs`; `test_build_writes_the_scoreboard_and_badge` | 3 of 6 counted from two outcomes; empty state on both outputs | pass | E-002, E-003 | none |
 | REQ-003 | local proof | deterministic test / eval | `test_scoreboard_escapes_agent_and_model_names` | no raw markup from names | pass | E-004 | none |
 | REQ-004 | local proof | deterministic test / eval | `test_run_all_skips_agents_whose_cli_is_missing`; `run-all.py --dry-run --trials 1` | missing CLI skipped by name; both tracks listed for the rest | pass | E-005 | none |
+| REQ-005 | local proof | deterministic test / eval | `test_scoreboard_gives_each_tool_version_its_own_line_and_shows_why_a_row_is_not_comparable` | two versions give two lines; the reason is printed | pass | E-006 | none |
+| REQ-006 | local proof | deterministic test / eval | `test_scoreboard_lists_what_each_silent_run_changed_with_its_transcript_and_diff` | only the silent run is listed, with its changes and links; names escaped; no section with no runs | pass | E-007 | none |
 
 ## Evidence custody and coupling
 
@@ -32,6 +34,8 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 | E-003 | REQ-002 | yes | `tests/test_challenge_results.py` results | AI agent | AI agent | AI agent | none; raw pytest result | AI agent locally; GitHub Actions on the PR | GitHub Actions logs | AI agent | maintainer review (pending) |
 | E-004 | REQ-003 | yes | `tests/test_challenge_results.py` results | AI agent | AI agent | AI agent | none; raw pytest result | AI agent locally; GitHub Actions on the PR | GitHub Actions logs | AI agent | maintainer review (pending) |
 | E-005 | REQ-004 | yes | test result and dry-run output | AI agent | AI agent | AI agent | none; raw output | AI agent locally; GitHub Actions on the PR | GitHub Actions logs | AI agent | maintainer review (pending) |
+| E-006 | REQ-005 | yes | `tests/test_challenge_results.py` results | AI agent | AI agent | AI agent | none; raw pytest result | AI agent locally; GitHub Actions on the PR | GitHub Actions logs | AI agent | maintainer review (pending) |
+| E-007 | REQ-006 | yes | `tests/test_challenge_results.py` results | AI agent | AI agent | AI agent | none; raw pytest result | AI agent locally; GitHub Actions on the PR | GitHub Actions logs | AI agent | maintainer review (pending) |
 
 ### Coupling profile
 
@@ -42,6 +46,8 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 | E-003 | coupled; the agent wrote the code and the test | coupled; one session | partially separated; GitHub Actions re-runs the test | partially separated; the maintainer decides the merge | partially separated; CI runs on GitHub's runners | self-check | admitted as self-check; carried into `ship.md` |
 | E-004 | coupled; the agent wrote the code and the test | coupled; one session | partially separated; GitHub Actions re-runs the test | partially separated; the maintainer decides the merge | partially separated; CI runs on GitHub's runners | self-check | admitted as self-check; carried into `ship.md` |
 | E-005 | coupled; the agent wrote the code and the test | coupled; one session | partially separated; GitHub Actions re-runs the test | partially separated; the maintainer decides the merge | partially separated; CI runs on GitHub's runners | self-check | admitted as self-check; carried into `ship.md` |
+| E-006 | coupled; the agent wrote the code and the test | coupled; one session | partially separated; GitHub Actions re-runs the test | partially separated; the maintainer decides the merge | partially separated; CI runs on GitHub's runners | self-check | admitted as self-check; carried into `ship.md` |
+| E-007 | coupled; the agent wrote the code and the test | coupled; one session | partially separated; GitHub Actions re-runs the test | partially separated; the maintainer decides the merge | partially separated; CI runs on GitHub's runners | self-check | admitted as self-check; carried into `ship.md` |
 
 - **Evidence pattern used:** new tests plus the unmodified harness tests, re-run by CI.
 - **Verdict owner:** maintainer (FlyFission).
@@ -53,8 +59,8 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 
 | Method | Command / review / eval | Environment | Result | Evidence link |
 |---|---|---|---|---|
-| Harness tests | `python -m pytest -q tests/test_challenge_results.py` | Linux container, Python 3.13 | pass (20) | E-001..E-005 |
-| Fail-before check | the same tests against `origin/main`'s `build.py` with `run-all.py` removed | same | 5 fail, 15 pass | E-001..E-005 |
+| Harness tests | `python -m pytest -q tests/test_challenge_results.py` | Linux container, Python 3.13 | pass (22) | E-001..E-007 |
+| Fail-before check | the same tests against `origin/main`'s `build.py` with `run-all.py` removed | same | 5 fail, 15 pass (first push); the two later tests fail on the first push's `build.py` | E-001..E-007 |
 | Dry run | `python challenge-results/run-all.py --dry-run --trials 1` | same | six agents skipped by name; Claude Code listed on both tracks | E-005 |
 | Full suite | `python -m pytest -q` | same | pass (exit 0) | CI run on the PR |
 | Lint and repo checks | `python -m ruff check .`; `python tools/ng.py doctor .`; `python tools/ng.py tokens .` | same | pass | CI run on the PR |
@@ -65,6 +71,7 @@ Use: `pass`, `fail`, `gap`, `deferred`, `not applicable`, `planned`.
 |---|---|---|---|
 | Markup in an agent or model name | `test_scoreboard_escapes_agent_and_model_names` | escaped | E-004 |
 | Page implies a result with no runs | `test_build_writes_the_scoreboard_and_badge` | "No scored runs yet" | E-003 |
+| A test overwrites the published page or badge | full suite run, then the committed page and badge compared by digest | unchanged; the harness end-to-end test now writes them to its temp folder (the first push had committed that test's fixture rows) | E-003 |
 | Unknown agent or bad `--model` value | `test_run_all_skips_agents_whose_cli_is_missing` | exits with a message | E-005 |
 
 ## AI-assisted work checks

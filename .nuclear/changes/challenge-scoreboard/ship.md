@@ -15,7 +15,7 @@
 
 | Area | Status | Link |
 |---|---|---|
-| REQ-001..004 | pass | [`verification.md`](verification.md) |
+| REQ-001..006 | pass | [`verification.md`](verification.md) |
 | Independence of evidence | gap | the new tests are self-check |
 | Real results | deferred | the page shows the empty state until the first scored round |
 

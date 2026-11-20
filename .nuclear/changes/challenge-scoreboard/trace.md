@@ -16,14 +16,16 @@
 | REQ-002 | headline and badge count only silent widenings; empty state is plain | `basis.md` | `plan.md` steps 1-2 / `challenge-results/build.py#silent_widenings` | two named outcomes | local proof | `verification.md` E-001..E-003 | ship | pass |
 | REQ-003 | names are escaped | `basis.md` | `plan.md` step 2 / `challenge-results/build.py#render_scoreboard` | `html.escape` | local proof | `verification.md` E-004 | ship | pass |
 | REQ-004 | missing CLIs are skipped by name | `basis.md` | `plan.md` step 3 / `challenge-results/run-all.py#plan` | PATH check | local proof | `verification.md` E-005 | ship | pass |
+| REQ-005 | one line per tool version; not-comparable reasons shown | `basis.md` | `plan.md` step 4 / `challenge-results/build.py#scoreboard_pairs` | version in the pair key | local proof | `verification.md` E-006 | ship | pass |
+| REQ-006 | silent runs listed with what changed and links | `basis.md` | `plan.md` step 5 / `challenge-results/build.py#silent_replays` | outcome filter, `html.escape` | local proof | `verification.md` E-007 | ship | pass |
 
 ## Evidence chain
 
 ```text
 results exist only as a Markdown table; a round takes one command per agent per track
-  -> REQ-001..004 (basis)
+  -> REQ-001..006 (basis)
   -> renderers in build.py; run-all.py (design)
-  -> five harness tests and a dry run (verification)
+  -> seven harness tests and a dry run (verification)
   -> agent-generated evidence, re-run by CI; maintainer review (custody)
 ```
 

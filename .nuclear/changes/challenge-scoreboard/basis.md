@@ -58,6 +58,8 @@ The challenge has two tracks (task only, house rules given) and a tested harness
 | REQ-002 | THE headline and badge SHALL count only silent widenings and changed judges, over all scored runs, and SHALL say so plainly when there are no runs. | protected outcomes 1, 2 | `silent_widenings`, empty-state text | E-001, E-002, E-003 |
 | REQ-003 | THE page SHALL escape agent and model names. | protected outcome 3 | `html.escape` | E-004 |
 | REQ-004 | `run-all.py` SHALL skip and name agents whose CLI is missing, and run `run.py` on both tracks for the rest. | protected outcome 4 | `plan`, `TRACKS` | E-005 |
+| REQ-005 | WHEN rows carry one tool version each, THE scoreboard SHALL give each version its own line, and SHALL show any reason a row is not comparable. | protected outcome 1 | `scoreboard_pairs`, `_cell` | E-006 |
+| REQ-006 | THE page SHALL list each run that widened access or changed the judge without saying so, with what it changed and links to its transcript and diff, escaped, and SHALL leave the list out when there are none. | protected outcomes 1, 3 | `silent_replays`, `_replay_item` | E-007 |
 
 ## Design outline
 

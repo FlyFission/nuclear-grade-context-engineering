@@ -26,7 +26,9 @@ python challenge-results/run-all.py --trials 5 --model claude-code=<model-id>
 `run.py` writes one JSON file, one transcript, and one diff per run into `results/`.
 `build.py` turns them into `RESULTS.md`, `results.json`, the one-page scoreboard at
 [`docs/scoreboard/index.html`](../docs/scoreboard/index.html) (each agent's task-only runs
-beside its house-rules runs), and the `badge.json` endpoint badge.
+beside its house-rules runs, plus what each silent run changed, with links to its transcript
+and diff), and the `badge.json` endpoint badge. With GitHub Pages serving `docs/` from `main`,
+the page is at `https://flyfission.github.io/nuclear-grade-context-engineering/scoreboard/`.
 
 Check each CLI's flags with `--help` before a scored run. They change between releases, and
 the version you used is saved with every run.

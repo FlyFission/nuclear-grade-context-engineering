@@ -642,6 +642,62 @@ def test_prose_that_mentions_a_status_word_is_not_a_status(tmp_path, cell):
     assert "no readable verification row" in " ".join(acceptance["release_eligibility"]["reasons"])
 
 
+@pytest.mark.parametrize(
+    ("expected", "verdict", "state"),
+    [
+        ("pass", "fail", "blocked"),
+        ("pass", "**fail**", "blocked"),
+        ("pass", "gap", "blocked"),
+        ("pass", "planned (CI)", "blocked"),
+        ("fail", "pass", "blocked"),
+        ("pass", "deferred", "open_to_decision_with_open_items"),
+        ("pass", "pass", "open_to_decision"),
+        ("pass", "not applicable", "open_to_decision"),
+    ],
+)
+def test_a_row_is_only_as_strong_as_its_weakest_status_cell(tmp_path, expected, verdict, state):
+    packet = minimal_standard_packet(tmp_path)
+    verification = packet / "verification.md"
+    verification.write_text(
+        verification.read_text(encoding="utf-8")
+        .replace("| Claim | Result status | Evidence link |", "| Claim | Expected | Verdict | Evidence link |")
+        .replace("|---|---|---|\n| C-001 | pass | test |", f"|---|---|---|---|\n| C-001 | {expected} | {verdict} | test |"),
+        encoding="utf-8",
+    )
+    acceptance = receipt_for(packet)["acceptance"]
+    assert acceptance["release_eligibility"]["state"] == state
+    assert receipts.verify_receipt(receipt_for(packet), packet)["state"] == "bound"
+
+
+@pytest.mark.parametrize(
+    ("declared", "fenced", "state"),
+    [
+        ("- Status: unknown", "- Status: pass", "undetermined"),
+        ("- Status: unknown", "- **Status:** **pass**", "undetermined"),
+        ("- Status: gap", "- Status: pass", "blocked"),
+        ("- Status: pass", "- Status: fail", "open_to_decision"),
+        ("- Status: pass", "- Status: gap", "open_to_decision"),
+    ],
+)
+@pytest.mark.parametrize("fence", ["```", "~~~"])
+def test_a_fenced_status_example_is_never_evidence(tmp_path, declared, fenced, state, fence):
+    packet = minimal_quick_packet(tmp_path)
+    proof = packet / "proof.md"
+    proof.write_text(
+        proof.read_text(encoding="utf-8").replace("- Status: pass", declared) + f"\n{fence}markdown\n{fenced}\n{fence}\n",
+        encoding="utf-8",
+    )
+    assert receipt_for(packet)["acceptance"]["release_eligibility"]["state"] == state
+
+
+def test_a_fenced_claim_table_in_a_standard_packet_is_never_evidence(tmp_path):
+    packet = minimal_standard_packet(tmp_path)
+    append(packet, "verification.md", "\n```markdown\n| Claim | Result status | Evidence link |\n|---|---|---|\n| C-001 | fail | example |\n```\n")
+    acceptance = receipt_for(packet)["acceptance"]
+    assert acceptance["release_eligibility"]["state"] == "open_to_decision"
+    assert acceptance["evidence_status"] == {"state": "complete", "open_items": 0}
+
+
 def test_a_fenced_example_cannot_satisfy_a_declared_claim(tmp_path):
     packet = minimal_standard_packet(tmp_path)
     declare(packet, "| C-002 | Critical | Test |")

@@ -179,7 +179,8 @@ def _status_counts(packet: Path, mode: str) -> dict[str, int]:
     evidence_file = packet / ("proof.md" if mode == QUICK_MODE else "verification.md")
     if not evidence_file.is_file():
         return counts
-    text = evidence_file.read_text(encoding="utf-8")
+    # A fenced example is not evidence: blank it before reading any status.
+    text = _strip_code_blocks(evidence_file.read_text(encoding="utf-8"))
     # Statuses are also declared inline, as Quick bullets (`- Status: gap`) or mid-sentence
     # (`... Status: deferred — ...`). An unfilled template (`pass / fail / gap`) is not counted.
     # Table rows are counted by the table pass below; scan only prose lines here so a
@@ -296,9 +297,11 @@ def _claim_rows(text: str) -> list[tuple[str, str]]:
         row_id = claim_id(cells[0]) if len(cells) > 1 else None
         if row_id is None:
             continue
-        status = next((found for found in map(_cell_status, cells[1:]) if found), None)
-        if status is not None:
-            rows.append((row_id, status))
+        # Every status cell counts, not the first: a table may hold an expected value beside the
+        # actual verdict, and the row is only as strong as its weakest recognized status.
+        found = [status for status in map(_cell_status, cells[1:]) if status]
+        if found:
+            rows.append((row_id, effective_status(found)))
     return rows
 
 

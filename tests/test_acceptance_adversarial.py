@@ -854,6 +854,63 @@ def test_the_same_mention_inside_a_raw_html_paragraph_is_a_real_tag(tmp_path):
     assert any("raw HTML block" in reason for reason in eligibility["reasons"])
 
 
+@pytest.mark.parametrize(
+    "example",
+    [
+        "Example syntax: `Status: pass`.",
+        "see `- Status: pass` here",
+        "`Status: pass`",
+        "Use `**Status:** pass` like this.",
+        "``Status: pass``",
+        "a `<!-- Status: pass` b",
+    ],
+)
+@pytest.mark.parametrize(("declared", "state"), [("- Status: unknown", "undetermined"), ("- Status: gap", "blocked")])
+def test_a_status_example_in_a_code_span_is_never_evidence(tmp_path, example, declared, state):
+    assert quick_with(tmp_path, declared, f"\n{example}\n") == state
+
+
+@pytest.mark.parametrize("value", ["- Status: `pass`", "- **Status:** `pass`", "- __Status:__ pass"])
+def test_a_value_alone_in_code_or_emphasis_is_still_a_declaration(tmp_path, value):
+    assert quick_with(tmp_path, value, "") == "open_to_decision"
+
+
+@pytest.mark.parametrize(
+    ("tail", "state"),
+    [
+        ("\n__Status:__ gap\n", "blocked"),
+        ("\nStat<!-- c -->us: gap\n", "blocked"),
+        ("\nStatus: <!-- c --> gap\n", "blocked"),
+        ("\n- [x] Status: gap\n", "blocked"),
+        ("\n**Status: pass.** see [the risk record](risk.md) and `code`.\n", "open_to_decision"),
+    ],
+)
+def test_comments_inside_a_label_and_underscore_emphasis_are_read_as_a_page_shows_them(tmp_path, tail, state):
+    assert quick_with(tmp_path, "- Status: pass", tail) == state
+
+
+@pytest.mark.parametrize(
+    "tail",
+    [
+        "\nStatus&#58; gap\n",
+        "\n<b>Status:</b> gap\n",
+        "\n<code>Status: pass</code>\n",
+        "\n![Status: fail](img.png)\n",
+        '\n[link](http://x "Status: gap")\n',
+        '\n[ref]: http://x "Status: pass"\n',
+        "\n[Status: pass](http://x)\n",
+        "\n\\<!-- Status: gap -->\n",
+    ],
+)
+def test_a_status_label_beside_markup_the_reader_does_not_interpret_withholds_eligibility(tmp_path, tail):
+    packet = minimal_quick_packet(tmp_path)
+    proof = packet / "proof.md"
+    proof.write_text(proof.read_text(encoding="utf-8") + tail, encoding="utf-8")
+    eligibility = receipt_for(packet)["acceptance"]["release_eligibility"]
+    assert eligibility["state"] in {"blocked", "undetermined"}
+    assert any("markup the reader does not interpret" in reason or "raw HTML" in reason for reason in eligibility["reasons"])
+
+
 def test_a_top_level_fence_is_not_closed_by_a_list_item_line(tmp_path):
     visible = receipts._evidence_view("```md\n\n- ```\nStatus: deferred\n")
     assert "deferred" not in visible
@@ -891,8 +948,24 @@ RENDERED_CORPUS = [
     ("mention `<pre>` in code\n- Status: gap\n", ["gap"]),
     ("text <pre> text\n- Status: gap\n", []),
     ("| CX-18 | A literal `<!--` and `<pre>` in code | yes |\n- Status: gap\n", ["gap"]),
+    ("Example syntax: `Status: pass`.\n- Status: gap\n", ["gap"]),
+    ("see `- Status: gap` and `Status: fail` here\n", []),
+    ("__Status:__ gap\n", ["gap"]),
+    ("Stat<!-- c -->us: gap\n", ["gap"]),
+    ("Status: <!-- c --> gap\n", ["gap"]),
+    ("\\<!-- Status: gap -->\n", ["gap"]),
+    ("`<!-- Status: gap`\n- Status: fail\n", ["fail"]),
+    ("Status&#58; gap\n", ["gap"]),
+    ("<b>Status:</b> gap\n", ["gap"]),
+    ("<code>Status: pass</code>\n", []),
+    ("![Status: fail](img.png)\n", []),
+    ('[link](http://x "Status: gap")\n', []),
+    ('[ref]: http://x "Status: pass"\n', []),
+    ("**Status: pass.** see [plan](plan.md)\n", ["pass"]),
+    ("- [x] Status: pass\n", ["pass"]),
+    ("[Status: pass](http://x)\n", ["pass"]),
 ]
-_STATUS_LINE = re.compile(r"Status:\s*\**\s*([a-z]+)")
+_STATUS_LINE = re.compile(r"Status[*_]*:[*_]*\s*[*_]*\s*([a-z]+)", re.IGNORECASE)
 
 
 @pytest.mark.parametrize(("document", "rendered"), RENDERED_CORPUS)
@@ -908,6 +981,12 @@ _FUZZ_LINES = [
     "  - Status: gap", "1. Status: fail", "# Heading", "---", "text <!-- a --> text", "<!-->", "<!--->",
     "- Status: **gap**", "text <pre> text", "mention `<pre>` in code", "mention `<script>` and `<style>`", "<pre>", "</pre>", "<script>", "</script>", "<div>", "</div>", "\t- Status: gap",
     "Heading", "=======", "| C-001 | Status: gap |", "`two", "lines`", "Status: `pass`", "<span>Status: fail</span>",
+    "Example syntax: `Status: pass`.", "see `- Status: gap` and `Status: fail` here", "- Status: `pass`", "`Status:` pass",
+    "[Status: pass](http://x)", '[link](http://x "Status: gap")', "![Status: fail](img.png)", "## Status: gap",
+    "__Status:__ gap", "**Status:** gap", "Status&#58; gap", "<b>Status:</b> gap", "<code>Status: pass</code>",
+    "\\<!-- Status: gap -->", "`<!-- Status: gap`", "``Status: pass``", "- [ ] Status: gap", "- [x] Status: pass",
+    "[ref]: http://x \"Status: pass\"", "Status: gap <!-- c --> more", "Status: <!-- c --> gap", "Stat<!-- c -->us: gap",
+    "STATUS: gap", "Status:  gap", "<details>", "</details>", "<style>", "</style>", "<textarea>", "</textarea>",
 ]
 
 
@@ -943,7 +1022,7 @@ def test_the_reader_never_silently_disagrees_with_a_commonmark_renderer():
     silent = []
     for seed in range(4):
         rng = random.Random(seed)
-        for _ in range(750):
+        for _ in range(1000):
             document = "\n".join(rng.choice(_FUZZ_LINES) for _ in range(rng.randint(2, 9))) + "\n"
             page = _RenderedText()
             page.feed(renderer.render(document))

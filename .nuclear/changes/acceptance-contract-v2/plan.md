@@ -23,7 +23,7 @@
 | 2 | Add `build_acceptance`, `read_acceptance`, schema version 2 | REQ-001, REQ-002, REQ-004 | step 1 | `receipt.py` | acceptance block | fixtures | done |
 | 3 | Add `verify_receipt` and recompute the block | REQ-003 | step 2 | `receipt.py` | bound/stale/invalid | fixtures | done |
 | 4 | Wire flags and the Acceptance line into CLI and MCP | REQ-005 | steps 2, 3 | `cli.py`, `mcp_server.py` | three flags, one line | consumer fixtures | done |
-| 5 | Write the fixture suite by property | all | steps 2, 3 | `tests/test_acceptance_adversarial.py` | 258 test cases | suite passes | done |
+| 5 | Write the fixture suite by property | all | steps 2, 3 | `tests/test_acceptance_adversarial.py` | 302 test cases | suite passes | done |
 | 6 | Weaken each control and rerun | REQ-003, REQ-004 | step 5 | scratch script | 7 of 7 caught | E-002 | done |
 | 7 | Fix the policy-test findings: `propagation.py` and two suites into the policy | none | step 2 | `.nuclear/consequence-policy.json` | policy edit | `tests/test_repo_policy.py` | done |
 | 8 | Docs, changelog, badge | none | steps 2-4 | docs | text | public-doc tests | done |

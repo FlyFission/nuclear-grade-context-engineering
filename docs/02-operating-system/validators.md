@@ -136,8 +136,10 @@ trailing explanation) but the cell must be nothing but status words, so prose th
 status. A row with several status cells, such as an expected value beside a verdict, is as strong as its weakest.
 Fenced examples and HTML comments are never read as evidence, by the claim readers or the status counter; a comment
 marker inside an inline code span is text. The reader follows CommonMark for fences, HTML comment blocks, inline
-comments, and code spans, and it does not model indented code, fences and comments inside quotes and list items,
-raw HTML blocks, or code spans that run over several lines. When a file uses one of those, or leaves a fence or
+comments, and code spans. A code span that holds a whole status declaration is an example and is not read; a value
+alone in code, as in a status followed by a code-formatted `pass`, is a declaration. It does not model indented
+code, fences and comments inside quotes and list items, raw HTML blocks, code spans that run over several lines, or
+markup that changes how a status label reads (character references, inline tags, image alt text, link titles). When a file uses one of those, or leaves a fence or
 comment unclosed, the record is `undetermined` instead of guessed. A differential fuzz against a CommonMark renderer
 found no document where the reader and the rendered page differ about a status without the reader saying so. A record whose structure is valid but whose evidence
 status cannot be read at all is `undetermined`. It never reads "approved": authorized decision and

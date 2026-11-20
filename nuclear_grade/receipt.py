@@ -99,7 +99,7 @@ _STATUS_TOKEN = re.compile(
     r"(?<!\bno )(?<!\bnot )\b(not applicable|pass|fail|gap|deferred|planned)\b", re.IGNORECASE
 )
 _STATUS_DECLARATION = re.compile(
-    r"\bstatus\**[ \t]*:\**[ \t]*(?P<value>[`*_]*(not applicable|pass|fail|gap|deferred|planned)\b[^\n]*)",
+    r"(?<![A-Za-z0-9])status[*_]*[ \t]*:[*_]*[ \t]*(?P<value>[`*_]*(not applicable|pass|fail|gap|deferred|planned)\b[^\n]*)",
     re.IGNORECASE,
 )
 # Parenthetical notes explain a status ("not applicable (no release planned)"); they declare none.
@@ -227,6 +227,31 @@ def _blank(text: str) -> str:
     return re.sub(r"[^\r\n]", " ", text)
 
 
+_STATUS_LABEL = re.compile(r"(?s).*?(?<![A-Za-z0-9])status[*_]*[ \t]*:", re.IGNORECASE)
+
+
+def _blank_example_spans(line: str) -> str:
+    """Blank inline code spans that hold a whole status declaration: an example, not a record.
+
+    A value alone in code, as in ``Status: `pass```, is a supported declaration and is kept.
+    """
+
+    def blank_example(match: re.Match[str]) -> str:
+        return _blank(match.group(0)) if _STATUS_LABEL.match(match.group(2)) else match.group(0)
+
+    return _INLINE_CODE.sub(blank_example, line)
+
+
+# Markup that changes what a page shows as text, so a status label next to it cannot be read from the raw line.
+_MARKUP = re.compile(
+    r"&(?:#\d+|#[xX][0-9A-Fa-f]+|[A-Za-z][A-Za-z0-9]*);"  # character references
+    r"|<(?![A-Za-z][A-Za-z0-9+.-]*:[^\s>]*>)/?[A-Za-z][^>]*>"  # inline HTML, but not an autolink
+    r"|!\["  # image alt text
+    r"|\]\("  # link destination and title
+    r"|^[ \t]{0,3}\[[^\]]+\]:"  # link reference definition
+    r"|\\[!-/:-@\[-`{-~]"  # backslash escape
+)
+_STATUS_LABEL_WORD = re.compile(r"(?<![A-Za-z0-9])status(?![A-Za-z0-9])", re.IGNORECASE)
 _RAW_HTML = re.compile(r"<(?:pre|script|style|textarea)(?:[\s>]|$)", re.IGNORECASE)
 
 
@@ -359,6 +384,14 @@ def _scan_evidence(text: str) -> tuple[str, list[str]]:
         visible, inline_comment, stray = _blank_inline_comments(body, lines, index)
         if stray:
             notes.append("an HTML comment that is not closed on the line where it opens")
+        outside_code = visible if raw_html else _INLINE_CODE.sub("", visible)
+        # Markup before or inside a label and its value changes how it reads; markup after it does not.
+        if any(_MARKUP.search(outside_code[: label.end() + 16]) for label in _STATUS_LABEL_WORD.finditer(outside_code)):
+            notes.append("a status label next to markup the reader does not interpret (entities, inline tags, images, links, escapes)")
+        if not raw_html:
+            visible = _blank_example_spans(visible)
+        elif any(_STATUS_LABEL.match(span.group(2)) for span in _INLINE_CODE.finditer(visible)):
+            notes.append("a status example in backticks next to raw HTML, where a page may not show it as code")
         out.append(prefix + visible + newline)
     if fence is not None:
         notes.append("a fenced block that is never closed")
@@ -376,15 +409,20 @@ def _blank_inline_comments(body: str, lines: list[str], index: int) -> tuple[str
     masked = _INLINE_CODE.sub(lambda match: "x" * len(match.group(0)), body)
     pieces: list[str] = []
     position = 0
+    search_from = 0
     while True:
-        start = masked.find("<!--", position)
+        start = masked.find("<!--", search_from)
+        if start >= 0 and start > 0 and masked[start - 1] == "\\":
+            search_from = start + 4  # an escaped `\<` is text, not a comment opener
+            continue
         if start < 0:
             pieces.append(body[position:])
             return "".join(pieces), False, False
         end = body.find("-->", start + 2)
         if end >= 0:
-            pieces.extend((body[position:start], _blank(body[start : end + 3])))
-            position = end + 3
+            # A comment on one line is removed, not blanked: a page joins the text on either side.
+            pieces.append(body[position:start])
+            position = search_from = end + 3
             continue
         # No close on this line: it is a comment only if one comes before the paragraph ends. Another
         # block start (a list item, quote, heading, fence, or comment block) also ends the paragraph.

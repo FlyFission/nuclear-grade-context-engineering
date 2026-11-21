@@ -28,6 +28,7 @@ from nuclear_grade.cli import (
     template_root_for,
 )
 from nuclear_grade.ng_validate import detect_packet_mode, validate_packet
+from nuclear_grade.receipt import acceptance_summary, build_receipt
 
 
 def validate_change_record(
@@ -46,7 +47,9 @@ def validate_change_record(
     is not its change actor (custody rows; an independent reproducer may generate
     and witness its own re-run if ship.md discloses it) or, in a Claim authorship
     row, not its evidence author or any change actor. These are declared
-    identities, not proof of independence. Returns OK or the list of structural gaps. It does not judge
+    identities, not proof of independence. Returns OK or the list of structural gaps, followed by an
+    Acceptance line that keeps release eligibility separate from structure (structure OK is never
+    approval; decision and apply permission are not assessed). It does not judge
     whether the code is correct, safe, secure, compliant, authorized, or genuinely
     independent.
     """
@@ -57,10 +60,19 @@ def validate_change_record(
         require_authority=strict_authority,
         require_two_party=two_party,
     )
+    receipt = build_receipt(
+        Path(packet_path),
+        result,
+        strict_custody=strict_custody,
+        strict_authority=strict_authority,
+        strict_two_party=two_party,
+        validator_version="mcp",
+    )
+    summary = acceptance_summary(receipt["acceptance"])
     if result.ok:
-        return f"OK: {packet_path} is structurally complete."
+        return f"OK: {packet_path} is structurally complete.\n{summary}"
     gaps = "\n".join(f"- {message}" for message in result.messages)
-    return f"FAILED: {packet_path}\n{gaps}"
+    return f"FAILED: {packet_path}\n{gaps}\n{summary}"
 
 
 def doctor(repo_path: str = ".") -> str:

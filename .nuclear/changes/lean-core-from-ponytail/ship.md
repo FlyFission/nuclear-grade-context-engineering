@@ -65,7 +65,7 @@
 
 - Decision: ship with residual risk
 - Decision maker: Ben Huffer (maintainer), by merging
-- Rationale: this record is a specification; merging it ratifies the recommended marks in `plan.md#Decision frontier` and opens phase 1 (the card) and phase 6 (the catch-rate benchmark) as their own records. D1 and D10 stay held. No code changes with this merge.
+- Rationale: this record is a specification; merging it ratifies the recommended marks in `plan.md#Decision frontier` and opens phase 6a (the catch-rate benchmark protocol and untreated baseline) first, then phase 1 (the card), each as its own record. D1 and D10 stay held. No code changes with this merge.
 - Decision question answered by evidence? yes/no: no; the baseline evidence motivates the work, and the gates that answer the question run in the phases.
 - Verdict owner's authority axis relative to the actor: separated; the maintainer did not draft the text.
 - Minimum coupling profile for this consequence met? yes / no; gap if no: yes for a specification; the decisive gates are specified with their custody.

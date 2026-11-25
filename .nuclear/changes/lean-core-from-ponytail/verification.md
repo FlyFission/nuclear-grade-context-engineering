@@ -44,7 +44,7 @@ Run at commit `06e762e` on 2026-11-07.
 | REQ-005 | local proof | deterministic test | `pytest tests/test_ng_validate.py tests/test_two_party.py`; `ng validate` on every existing record | both shapes validate; no existing record breaks | planned | E-008 | phase 3 |
 | REQ-009 | local proof | deterministic test | `pytest tests/test_debt.py` | both markers listed; no-trigger markers flagged | planned | E-009 | phase 4 |
 | REQ-011 | local proof | deterministic test | link test; existing validator, two-party, hook, policy, badge tests unchanged | mode rule in the card only; tier-three tests pass unmodified | planned | E-010 | phase 5 |
-| REQ-012 | local proof | independent verification | three-arm run per `evals/catch-rate/PROTOCOL.md`, scored by code, run by a maintainer or CI | report with per-arm trap catch, defect catch, hidden-check pass, tokens, time, cost | planned | E-011 | phase 6 |
+| REQ-012 | local proof | independent verification | three-arm run per `evals/catch-rate/PROTOCOL.md`, scored by code, run by a maintainer or CI | report with per-arm trap catch, defect catch, hidden-check pass, tokens, time, cost | planned | E-011 | phases 6a, 6b |
 | baseline | local proof | deterministic test | the commands in the baseline table | numbers reproduce at `06e762e` | pass | the table above | none |
 
 ## Verification type guide

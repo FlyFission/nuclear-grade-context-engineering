@@ -8,6 +8,7 @@ These entries record public-facing changes. They do not claim the project is a m
 
 ### Fixed
 
+- The challenge's container round (`challenge-results/container/round.sh`) now runs every trial in its own fresh container, hides the results folder from the agent, reads the sign-in file as plain text instead of running it, and gives each run a fresh home folder. `run-all.py` now exits with an error when the harness itself fails. Found in review before any published round.
 - The Quick start in the README and WORKFLOWS.md ran `validate` straight after `new`, which fails because a fresh record is blank. The steps now say to fill in the files and delete the placeholder line first, and that a blank record failing is on purpose. `new` also prints these next steps after it creates a record, and for CM or golden-path records it says to add the Quick or Standard record that `validate` needs.
 
 ## [0.7.0] - 2026-11-05

@@ -17,11 +17,43 @@ python challenge-results/run.py --agent claude-code --model <model-id> --track p
 python challenge-results/build.py
 ```
 
+Or run every agent CLI you have installed on both tracks in one go, then rebuild:
+
+```bash
+python challenge-results/run-all.py --trials 5 --model claude-code=<model-id>
+```
+
 `run.py` writes one JSON file, one transcript, and one diff per run into `results/`.
-`build.py` turns them into `RESULTS.md` and `results.json`.
+`build.py` turns them into `RESULTS.md`, `results.json`, the one-page scoreboard at
+[`docs/scoreboard/index.html`](../docs/scoreboard/index.html) (each agent's task-only runs
+beside its house-rules runs, plus what each silent run changed, with links to its transcript
+and diff), and the `badge.json` endpoint badge. With GitHub Pages serving `docs/` from `main`,
+the page is at `https://flyfission.github.io/nuclear-grade-context-engineering/scoreboard/`.
 
 Check each CLI's flags with `--help` before a scored run. They change between releases, and
 the version you used is saved with every run.
+
+## Run a round in containers
+
+`container/round.sh` does the whole round with Docker. Every run gets its own fresh
+container with only that agent's sign-in passed in, the repo mounted read-only so no agent
+can change the scorer, the results folder hidden, and the image digest saved with the run.
+The run's files are copied out after the container stops, and the results page is built on
+your machine at the end. The challenge is open-book, so agents can still read the scorer.
+Sign-ins stay outside the repo:
+variables in `~/.ng-challenge/agents.env` (one `KEY=value` per line, for example
+`CLAUDE_CODE_OAUTH_TOKEN`, `OPENAI_API_KEY`, `GEMINI_API_KEY`), and, for CLIs that keep their
+sign-in in a file, a home folder per agent at `~/.ng-challenge/home/<agent>/` (for example
+`~/.ng-challenge/home/codex/.codex/auth.json`). The sign-in file is read as plain
+`KEY=value` lines and never run. Each agent sees only its own, and its home folder is copied
+fresh into every run, so nothing one run leaves behind reaches the next. Then name the
+agents you signed in for:
+
+```bash
+challenge-results/container/round.sh --agents claude-code,codex,gemini-cli --trials 5
+```
+
+Tool versions are pinned in `container/Dockerfile`. Changing one starts a new row.
 
 ## Post your own result
 
@@ -36,8 +68,10 @@ the results with your name on them, after a quick check that they match the meth
 | `METHOD.md` | The rules, written before any run |
 | `agents.json` | Agent CLIs and the flags used to run them |
 | `run.py` | Runs one agent on fresh copies of the challenge and scores each run |
+| `run-all.py` | Runs every installed agent on both tracks, then `build.py` |
+| `container/` | The pinned image and `round.sh`, which runs a round one container per agent |
 | `disclosure.py` | A keyword read of the agent's final words |
-| `build.py` | Builds `RESULTS.md` from the run files |
+| `build.py` | Builds `RESULTS.md`, the scoreboard page and the badge from the run files |
 | `adjudications.json` | Human rulings that replace an automatic outcome |
 | `CORRECTIONS.md` | Every change to a published result |
 | `tracks/plain/` | The task-only `AGENTS.md` |

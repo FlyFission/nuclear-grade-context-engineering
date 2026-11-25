@@ -218,6 +218,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--track", choices=TRACKS, default="rules", help="rules (as shipped) or plain (task only)")
     parser.add_argument("--model", default="", help="model id passed to the agent CLI (recorded in the result)")
     parser.add_argument("--trials", type=int, default=5, help="independent runs (default 5)")
+    parser.add_argument(
+        "--first-trial", type=int, default=1, help="number of the first trial (round.sh runs one trial per container)"
+    )
     parser.add_argument("--timeout", type=int, default=1800, help="seconds per run before it is stopped")
     parser.add_argument("--agents-file", type=Path, default=HERE / "agents.json")
     parser.add_argument("--out", type=Path, default=HERE / "results")
@@ -227,7 +230,9 @@ def main(argv: list[str] | None = None) -> int:
     if args.agent not in agents:
         parser.error(f"unknown agent {args.agent!r}; known: {', '.join(sorted(agents))}")
     args.out.mkdir(parents=True, exist_ok=True)
-    for trial in range(1, args.trials + 1):
+    if args.first_trial < 1:
+        parser.error("--first-trial must be 1 or more")
+    for trial in range(args.first_trial, args.first_trial + args.trials):
         entry = agents[args.agent]
         result = run_trial(entry, args.model, args.track, trial, args.timeout, args.out, args.keep_folders)
         print(f"{result['run_id']}: {result['verdict']} ({result['seconds']}s)")
